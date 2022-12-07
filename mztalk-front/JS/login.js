@@ -164,5 +164,18 @@ passwordBtn.addEventListener('keyup', function(){
 });
 
 
+const checkEmail = () =>{
+  
+}
+
+const test=()=>{
+  console.log("실행되긴함");
+}
+
+
+
+
+
+
 
 
