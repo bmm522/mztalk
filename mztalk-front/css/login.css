@@ -328,3 +328,82 @@ a.link-copy {
   text-decoration: none;
 }
 
+.find-link:link:hover{
+  transition: 0.7s;
+  text-size-adjust: 100px;
+}
+
+.socialBtn{
+  width: 70px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgb(235, 235, 208);
+margin-left: 15px;
+  text-align: center;
+  display: inline-block;
+}
+
+
+#socialBtnDiv{
+  text-align: center;
+}
+
+#googleBtn{
+  color : black;
+  background-color: white;
+  border: 1px solid rgb(238, 157, 157);
+}
+
+#googleBtn:hover{
+  color : white;
+  background-color: red;
+  border: 1px solid rgb(238, 157, 157);
+  transition: 0.7s;
+  width:73px;
+  height: 50px;;
+}
+
+#facebookBtn{
+  color : black;
+  background-color: white;
+  border: 1px solid rgb(69, 57, 231);
+}
+
+#facebookBtn:hover{
+  color : white;
+  background-color: rgb(15, 11, 228);
+  border: 1px solid rgb(135, 97, 241);
+  transition: 0.7s;
+  width:73px;
+  height: 50px;;
+}
+
+#kakaoBtn{
+  color : black;
+  background-color: white;
+  border: 1px solid rgb(229, 233, 11);
+}
+
+#kakaoBtn:hover{
+  color : white;
+  background-color: rgb(245, 229, 14);
+  border: 1px solid rgb(229, 233, 17);
+  transition: 0.7s;
+  width:73px;
+  height: 50px;;
+}
+
+#naverBtn{
+  color : black;
+  background-color: white;
+  border: 1px solid rgb(11, 233, 29);
+}
+
+#naverBtn:hover{
+  color : white;
+  background-color: rgb(14, 245, 45);
+  border: 1px solid rgb(12, 236, 23);
+  transition: 0.7s;
+  width:73px;
+  height: 50px;;
+}

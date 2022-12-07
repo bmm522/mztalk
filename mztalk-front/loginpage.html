@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-     <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon"> 
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"> 
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/login.css">
@@ -36,9 +35,9 @@
                   <p>당신이 원하는 모든것이 있는 곳 MZTALK</p>
                 </div>
                 <div>
-                  <div class="find"><a href="find-id-modal" class="find-link" data-toggle="modal">아이디를 잊어버리셨나요?</a></div>
+                  <div class="find"><a style="cursor:pointer;" class="find-link" id="find-id-link" onclick="findId();">아이디를 잊어버리셨나요?</a></div>
                   <br>
-                  <div class="find"><a href="#" class="find-link">비밀번호를 잊어버리셨나요?</a></div>
+                  <div class="find"><a style="cursor:pointer;" class="find-link" id="find-pwd-link" onclick="findPwd();">비밀번호를 잊어버리셨나요?</a></div>
                 </div>
                 
                 <div class="btn-back">
@@ -104,7 +103,14 @@
                       <label for="password-in">Your Password</label>
                       <input type="text" name="password_in" id="password-in" />
                     </div>
-          
+                    <br>
+                    <br>
+                    <div id="socialBtnDiv">
+                    <button class="socialBtn" type="button" id="googleBtn">Google</button>
+                    <button class="socialBtn" type="button" id="facebookBtn">FaceBook</button>
+                    <button class="socialBtn" type="button" id="kakaoBtn">Kakao</button>
+                    <button class="socialBtn" type="button" id="naverBtn">Naver</button>
+                    </div>
                     <button class="btn-sign btn-in">Sign In</button>
                   </form>
                   <p>Haven't an account? <a href="#" class="link-up">Sign Up</a></p>
@@ -114,7 +120,9 @@
               <article class="signup-right">
                 <i class="fas fa-2x fa-bars bars-style"></i>
                 <p><a class="link-copy" href="http://collectui.com/designers/dnes/sign-up" target="_blank">©Copyright 2020</a></p>
-          
+                
+
+
               </article>
             </section>
           </main>

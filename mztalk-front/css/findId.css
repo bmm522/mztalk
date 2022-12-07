@@ -1,0 +1,87 @@
+
+.custom-btn {
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+     box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+     7px 7px 20px 0px rgba(0,0,0,.1),
+     4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+  }
+  
+    .textBox{
+      width:300px;
+      height:50px;
+      border-color: bisque;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      
+      
+    }
+    #total-form{
+      overflow: hidden;
+    }
+  
+    #input-form{
+  
+      margin: auto; 
+      transition-duration: 10s;
+      overflow: hidden;
+    }
+    .btn-14 {
+    background: rgb(255,151,0);
+    border: none;
+    z-index: 1;
+  }
+  .btn-14:after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 0;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: 5px;
+    background-color: #eaf818;
+    background-image: linear-gradient(315deg, #eaf818 0%, #f6fc9c 74%);
+     box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5)
+     7px 7px 20px 0px rgba(0,0,0,.1),
+     4px 4px 5px 0px rgba(0,0,0,.1);
+    transition: all 0.3s ease;
+  }
+  .btn-14:hover {
+    color: #000;
+  }
+  .btn-14:hover:after {
+    top: auto;
+    bottom: 0;
+    height: 100%;
+  }
+  .btn-14:active {
+    top: 2px;
+  }
+  #result{
+    text-align: center; 
+    transition: all 2s ease;
+    margin-top: 800px;
+    overflow-y: hidden;
+    position: absolute;
+  
+  }
+  
+  #total-form{
+    height: 600px;
+    position: absolute;
+  }
+  
+  
