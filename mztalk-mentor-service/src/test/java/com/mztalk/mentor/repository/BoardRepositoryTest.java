@@ -1,7 +1,6 @@
 package com.mztalk.mentor.repository;
 
-import com.mztalk.mentor.domain.Entity.Board;
-import org.assertj.core.api.Assertions;
+import com.mztalk.mentor.domain.entity.Board;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +18,8 @@ class BoardRepositoryTest {
     @Test
     public void saveTest() throws Exception {
         //given
-        Board board1 = new Board();
-        Board board2 = new Board();
+        Board board1 = Board.builder().build();
+        Board board2 = Board.builder().build();
 
         //when
         Board savedBoard1 = boardRepository.save(board1);
@@ -34,11 +33,8 @@ class BoardRepositoryTest {
     @Test
     public void findTest() throws Exception {
         //given
-        Board board1 = new Board();
-        Board board2 = new Board();
-
-        board1.setTitle("수학");
-        board2.setTitle("영어");
+        Board board1 = Board.builder().title("수학").build();
+        Board board2 = Board.builder().title("영어").build();
 
         boardRepository.save(board1);
         boardRepository.save(board2);

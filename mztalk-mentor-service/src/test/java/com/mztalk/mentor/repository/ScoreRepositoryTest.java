@@ -1,12 +1,10 @@
 package com.mztalk.mentor.repository;
 
-import com.mztalk.mentor.domain.Entity.Mentee;
-import com.mztalk.mentor.domain.Entity.Mentor;
-import com.mztalk.mentor.domain.Entity.Score;
+import com.mztalk.mentor.domain.entity.Mentee;
+import com.mztalk.mentor.domain.entity.Score;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -31,8 +29,8 @@ class ScoreRepositoryTest {
     @Test
     public void saveTest() throws Exception {
         //given
-        Score score1 = new Score();
-        Score score2 = new Score();
+        Score score1 = Score.builder().build();
+        Score score2 = Score.builder().build();
 
         //when
         Score savedScore1 = scoreRepository.save(score1);
@@ -45,25 +43,16 @@ class ScoreRepositoryTest {
     @Test
     public void findTest() throws Exception {
         //given
-        Mentee mentee1 = new Mentee();
-        mentee1.setNickname("menteeA");
-
-        Mentee mentee2 = new Mentee();
-        mentee2.setNickname("menteeB");
+        Mentee mentee1 = Mentee.builder().nickname("menteeA").build();
+        Mentee mentee2 = Mentee.builder().nickname("menteeA").build();
 
         em.persist(mentee1);
         em.persist(mentee2);
         em.flush();
         em.clear();
 
-        Score score1 = new Score();
-        Score score2 = new Score();
-
-        score1.setCount(5.0D);
-        score2.setCount(4.0D);
-
-        score1.setMentee(mentee1);
-        score2.setMentee(mentee2);
+        Score score1 = Score.builder().count(5.0D).mentee(mentee1).build();
+        Score score2 = Score.builder().count(4.0D).mentee(mentee2).build();
 
         scoreRepository.save(score1);
         scoreRepository.save(score2);

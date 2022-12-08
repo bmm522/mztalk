@@ -1,15 +1,12 @@
-package com.mztalk.mentor.domain.Entity;
+package com.mztalk.mentor.domain.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="FILE")
 public class File extends BaseTimeEntity{
 
@@ -24,5 +21,11 @@ public class File extends BaseTimeEntity{
     private String uploadFileName;
     private String storeFileName;
     private String extension;
-
+    @Builder
+    public File(Application application, String uploadFileName, String storeFileName, String extension) {
+        this.application = application;
+        this.uploadFileName = uploadFileName;
+        this.storeFileName = storeFileName;
+        this.extension = extension;
+    }
 }

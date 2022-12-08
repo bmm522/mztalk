@@ -1,7 +1,7 @@
 package com.mztalk.mentor.repository;
 
-import com.mztalk.mentor.domain.Entity.Board;
-import com.mztalk.mentor.domain.Entity.Participant;
+import com.mztalk.mentor.domain.entity.Board;
+import com.mztalk.mentor.domain.entity.Participant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,11 +25,9 @@ class ParticipantRepositoryTest {
     @Test
     public void saveTest() throws Exception {
         //given
-        Participant participant1 = new Participant();
-        Participant participant2 = new Participant();
+        Participant participant1 = Participant.builder().name("menteeA").build();
+        Participant participant2 = Participant.builder().name("menteeB").build();
 
-        participant1.setName("menteeA");
-        participant2.setName("menteeB");
         //when
         Participant savedParticipant1 = participantRepository.save(participant1);
         Participant savedParticipant2 = participantRepository.save(participant2);
@@ -44,21 +42,16 @@ class ParticipantRepositoryTest {
     @Test
     public void findTest() throws Exception {
         //given
-        Board math = new Board("수학", 10000);
-        Board english = new Board("영어", 20000);
+        Board math = Board.builder().title("수학").salary(10000).build();
+        Board english = Board.builder().title("영어").salary(20000).build();
 
         em.persist(math);
         em.persist(english);
         em.flush();
         em.clear();
 
-        Participant participant1 = new Participant();
-        Participant participant2 = new Participant();
-
-        participant1.setName("menteeA");
-        participant2.setName("menteeB");
-        participant1.setBoard(math);
-        participant2.setBoard(english);
+        Participant participant1 = Participant.builder().board(math).name("menteeA").build();
+        Participant participant2 = Participant.builder().board(english).name("menteeB").build();
 
         participantRepository.save(participant1);
         participantRepository.save(participant2);

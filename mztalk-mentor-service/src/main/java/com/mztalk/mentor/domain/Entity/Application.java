@@ -1,10 +1,8 @@
-package com.mztalk.mentor.domain.Entity;
+package com.mztalk.mentor.domain.entity;
 
 import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,8 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="APPLICATION")
 public class Application extends BaseTimeEntity{
 
@@ -23,6 +20,9 @@ public class Application extends BaseTimeEntity{
 
     @OneToOne(fetch = FetchType.LAZY)
     private Mentor mentor;
+
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<File> files = new ArrayList<>();
 
     private String name;
 
@@ -36,12 +36,25 @@ public class Application extends BaseTimeEntity{
 
     private String account;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<File> files = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private AuthStatus authStatus;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Enumerated(EnumType.STRING)
-    private AuthStatus authStatus;
+    @Builder
+    public Application(Mentor mentor, List<File> files, String name, String phone,
+                       String email, String job, String bank, String account,
+                       AuthStatus authStatus, Status status) {
+        this.mentor = mentor;
+        this.files = files;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.job = job;
+        this.bank = bank;
+        this.account = account;
+        this.authStatus = authStatus;
+        this.status = status;
+    }
 }

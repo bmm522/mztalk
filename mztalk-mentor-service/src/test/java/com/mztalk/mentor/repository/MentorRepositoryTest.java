@@ -1,6 +1,6 @@
 package com.mztalk.mentor.repository;
 
-import com.mztalk.mentor.domain.Entity.Mentor;
+import com.mztalk.mentor.domain.entity.Mentor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +20,8 @@ class MentorRepositoryTest {
     @Test
     public void saveTest() throws Exception {
         //given
-        Mentor mentor1 = new Mentor();
-        Mentor mentor2 = new Mentor();
+        Mentor mentor1 = Mentor.builder().build();
+        Mentor mentor2 = Mentor.builder().build();
 
         //when
         Mentor savedMentor1 = mentorRepository.save(mentor1);
@@ -35,8 +35,8 @@ class MentorRepositoryTest {
     @Test
     public void findTest() throws Exception {
         //given
-        Mentor mentor1 = new Mentor();
-        Mentor mentor2 = new Mentor();
+        Mentor mentor1 = Mentor.builder().build();
+        Mentor mentor2 = Mentor.builder().build();
 
         mentorRepository.save(mentor1);
         mentorRepository.save(mentor2);
@@ -53,8 +53,8 @@ class MentorRepositoryTest {
     @Test
     public void findAllTest() throws Exception {
         //given
-        Mentor mentor1 = new Mentor();
-        Mentor mentor2 = new Mentor();
+        Mentor mentor1 = Mentor.builder().build();
+        Mentor mentor2 = Mentor.builder().build();
         mentorRepository.save(mentor1);
         mentorRepository.save(mentor2);
 

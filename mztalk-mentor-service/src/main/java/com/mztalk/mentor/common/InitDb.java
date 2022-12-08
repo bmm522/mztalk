@@ -1,6 +1,6 @@
 package com.mztalk.mentor.common;
 
-import com.mztalk.mentor.domain.Entity.Category;
+import com.mztalk.mentor.domain.entity.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

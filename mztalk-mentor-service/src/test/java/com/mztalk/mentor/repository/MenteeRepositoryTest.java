@@ -1,6 +1,6 @@
 package com.mztalk.mentor.repository;
 
-import com.mztalk.mentor.domain.Entity.Mentee;
+import com.mztalk.mentor.domain.entity.Mentee;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,9 +20,8 @@ class MenteeRepositoryTest {
     @Test
     public void saveTest() throws Exception {
         //given
-        Mentee mentee1 = new Mentee();
-        Mentee mentee2 = new Mentee();
-
+        Mentee mentee1 = Mentee.builder().build();
+        Mentee mentee2 = Mentee.builder().build();
         //when
         Mentee savedMentee1 = menteeRepository.save(mentee1);
         Mentee savedMentee2 = menteeRepository.save(mentee2);
@@ -43,14 +42,12 @@ class MenteeRepositoryTest {
     @Test
     public void findTest() throws Exception {
         //given
-        Mentee mentee1 = new Mentee();
-        Mentee mentee2 = new Mentee();
-
-        mentee1.setNickname("nickname1");
-        mentee2.setNickname("nickname2");
+        Mentee mentee1 = Mentee.builder().nickname("nickname1").build();
+        Mentee mentee2 = Mentee.builder().nickname("nickname2").build();
 
         menteeRepository.save(mentee1);
         menteeRepository.save(mentee2);
+
         //when
         Mentee findMentee1 = menteeRepository.findById(mentee1.getId()).get();
         Mentee findMentee2 = menteeRepository.findById(mentee2.getId()).get();
@@ -63,9 +60,9 @@ class MenteeRepositoryTest {
     @Test
     public void findAllTest() throws Exception {
         //given
-        Mentee mentee1 = new Mentee();
-        Mentee mentee2 = new Mentee();
-        Mentee mentee3 = new Mentee();
+        Mentee mentee1 = Mentee.builder().build();
+        Mentee mentee2 = Mentee.builder().build();
+        Mentee mentee3 = Mentee.builder().build();
 
         menteeRepository.save(mentee1);
         menteeRepository.save(mentee2);

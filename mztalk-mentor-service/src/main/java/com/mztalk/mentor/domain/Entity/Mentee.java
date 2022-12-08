@@ -1,8 +1,6 @@
-package com.mztalk.mentor.domain.Entity;
+package com.mztalk.mentor.domain.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,8 +8,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="MENTEE")
 public class Mentee extends BaseTimeEntity{
 
@@ -22,15 +19,23 @@ public class Mentee extends BaseTimeEntity{
     private String nickname;
 
     @OneToMany
-    private List<Payment> payments = new ArrayList<>();
-
-    @OneToMany
     private List<Participant> participants = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "mentees")
-    private List<Mentor> mentors = new ArrayList<>();
+    @OneToMany
+    private List<Payment> payments = new ArrayList<>();
 
     @OneToMany
     private List<Score> scores;
 
+    @ManyToMany(mappedBy = "mentees")
+    private List<Mentor> mentors = new ArrayList<>();
+    @Builder
+    public Mentee(String nickname, List<Participant> participants,
+                  List<Payment> payments, List<Score> scores, List<Mentor> mentors) {
+        this.nickname = nickname;
+        this.participants = participants;
+        this.payments = payments;
+        this.scores = scores;
+        this.mentors = mentors;
+    }
 }

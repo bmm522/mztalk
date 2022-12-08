@@ -1,29 +1,19 @@
-package com.mztalk.mentor.domain.Entity;
+package com.mztalk.mentor.domain.entity;
 
 import com.mztalk.mentor.domain.Status;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="PARTICIPANT")
 public class Participant extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name="participant_id")
     private Long id;
-
-    private String name; //멘티 신청시 이름
-
-    private String phone; //멘티 신청시 핸드폰 번호
-
-    @Column(nullable = true)
-    private String message; // 멘티 신청시 남길 메시지(자유양식)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
@@ -33,8 +23,23 @@ public class Participant extends BaseTimeEntity{
     @JoinColumn(name = "mentee_id")
     private Mentee mentee;
 
+    private String name; //멘티 신청시 이름
+
+    private String phone; //멘티 신청시 핸드폰 번호
+
+    @Column(nullable = true)
+    private String message; // 멘티 신청시 남길 메시지(자유양식)
+
     @Enumerated(EnumType.STRING)
     private Status status;
-
-
+    @Builder
+    public Participant(Board board, Mentee mentee, String name, String phone,
+                       String message, Status status) {
+        this.board = board;
+        this.mentee = mentee;
+        this.name = name;
+        this.phone = phone;
+        this.message = message;
+        this.status = status;
+    }
 }

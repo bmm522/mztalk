@@ -1,9 +1,7 @@
-package com.mztalk.mentor.domain.Entity;
+package com.mztalk.mentor.domain.entity;
 
 import com.mztalk.mentor.domain.Status;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,8 +9,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="BOARD")
 public class Board extends BaseTimeEntity{
 
@@ -28,12 +25,6 @@ public class Board extends BaseTimeEntity{
     @JoinColumn(name="category_id")
     private Category category;
 
-    @OneToMany
-    private List<Payment> payments = new ArrayList<>();
-
-    @OneToMany
-    private List<Participant> participants = new ArrayList<>();
-
     private String title;
 
     private String content; // 글내용
@@ -44,16 +35,28 @@ public class Board extends BaseTimeEntity{
 
     private int salary; //시급
 
+    @OneToMany
+    private List<Participant> participants = new ArrayList<>();
+
+    @OneToMany
+    private List<Payment> payments = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public void addMentor(Mentor mentor){
+    @Builder
+    public Board(Mentor mentor, Category category, String title, String content, String introduction,
+                 String career, int salary, List<Participant> participants,
+                 List<Payment> payments, Status status) {
         this.mentor = mentor;
-        mentor.addBoard(this);
-    }
-
-    public Board(String title, int salary) {
+        this.category = category;
         this.title = title;
+        this.content = content;
+        this.introduction = introduction;
+        this.career = career;
         this.salary = salary;
+        this.participants = participants;
+        this.payments = payments;
+        this.status = status;
     }
 }

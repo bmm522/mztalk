@@ -1,13 +1,10 @@
 package com.mztalk.mentor.repository;
 
-import com.mztalk.mentor.domain.Entity.Application;
+import com.mztalk.mentor.domain.entity.Application;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +21,8 @@ class ApplicationRepositoryTest {
     @Test
     public void saveTest() throws Exception {
         //given
-        Application application1 = new Application();
-        Application application2 = new Application();
+        Application application1 = Application.builder().build();
+        Application application2 = Application.builder().build();
 
         //when
         Application savedMentor1 = applicationRepository.save(application1);
@@ -39,7 +36,7 @@ class ApplicationRepositoryTest {
     @Test
     public void findTest() throws Exception {
         //given
-        Application application = new Application();
+        Application application = Application.builder().build();
         applicationRepository.save(application);
 
         //when
@@ -52,13 +49,8 @@ class ApplicationRepositoryTest {
     @Test
     public void findAllTest() throws Exception {
         //given
-        Application application1 = new Application();
-        Application application2 = new Application();
-
-        application1.setName("memberA");
-        application2.setName("memberB");
-        application1.setBank("신한은행");
-        application2.setBank("국민은행");
+        Application application1 = Application.builder().name("memberA").bank("신한은행").build();
+        Application application2 = Application.builder().name("memberB").bank("국민은행").build();
 
         applicationRepository.save(application1);
         applicationRepository.save(application2);
