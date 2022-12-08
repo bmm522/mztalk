@@ -583,11 +583,23 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         }),
     })
    
-    .then(res => {  
+    .then(res => {
+      let result =   res.headers.get('LoginResult');
       console.log('통신성공');
-      console.log(res.headers.get('Authorization'));
-      console.log(res.headers.get('RefreshToken'));
-      console.log(res.headers.get('LoginResult'));
+      if(result =='Not found userId or userPassword'){
+        alert('아이디 또는 비밀번호가 틀렸습니다.');
+        document.getElementById('userId').value = "";
+        document.getElementById('password-in').value ="";
+      } else if(result =='Fail Login'){
+        alert('로그인을 실패하였습니다.');
+        document.getElementById('userId').value = "";
+        document.getElementById('password-in').value ="";
+      } else {
+        localStorage.setItem("Authorization", res.headers.get('Authorization'));
+        localStorage.setItem("RefreshToken", res.headers.get('RefreshToken'));
+        window.open('main.html', '_self');
+      }
+
     });
   }
   
