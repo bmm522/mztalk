@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BoardMentee extends BaseTimeEntity{
+public class RequestMentee extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name="board_mentee_id")

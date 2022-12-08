@@ -1,5 +1,6 @@
 package com.mztalk.mentor.domain.Entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Category {
 
     @Id @GeneratedValue
@@ -22,6 +24,7 @@ public class Category {
 
     @OneToMany
     private List<Board> boards = new ArrayList<>();
+
 
 
 }
