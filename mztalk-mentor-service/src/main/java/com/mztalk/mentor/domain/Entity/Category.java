@@ -1,19 +1,20 @@
 package com.mztalk.mentor.domain.Entity;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
+@NoArgsConstructor
 public class Category {
 
-    @Id@GeneratedValue
+    @Id @GeneratedValue
     @Column(name = "category_id")
     private Long id;
 
@@ -21,4 +22,6 @@ public class Category {
 
     @OneToMany
     private List<Board> boards = new ArrayList<>();
+
+
 }

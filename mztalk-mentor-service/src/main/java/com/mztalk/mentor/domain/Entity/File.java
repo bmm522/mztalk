@@ -1,14 +1,15 @@
 package com.mztalk.mentor.domain.Entity;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class File extends BaseTimeEntity{
 
     @Id @GeneratedValue

@@ -1,15 +1,16 @@
 package com.mztalk.mentor.domain.Entity;
 
 import com.mztalk.mentor.domain.Status;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class Payment extends BaseTimeEntity{
 
     @Id @GeneratedValue
@@ -28,6 +29,7 @@ public class Payment extends BaseTimeEntity{
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
 
 
 

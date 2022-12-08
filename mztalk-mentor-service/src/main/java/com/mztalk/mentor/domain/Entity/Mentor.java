@@ -1,17 +1,18 @@
 package com.mztalk.mentor.domain.Entity;
 
 import com.mztalk.mentor.domain.Status;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
+@NoArgsConstructor
 public class Mentor extends BaseTimeEntity{
 
     @Id

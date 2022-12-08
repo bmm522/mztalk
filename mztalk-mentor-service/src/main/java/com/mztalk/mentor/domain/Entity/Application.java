@@ -1,22 +1,27 @@
 package com.mztalk.mentor.domain.Entity;
 
+import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
+@NoArgsConstructor
 public class Application extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name ="application_id")
     private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Mentor mentor;
 
     private String name;
 
@@ -38,5 +43,4 @@ public class Application extends BaseTimeEntity{
 
     @Enumerated(EnumType.STRING)
     private AuthStatus authStatus;
-
 }

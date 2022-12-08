@@ -1,8 +1,8 @@
 package com.mztalk.mentor.domain.Entity;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +10,8 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class Mentee extends BaseTimeEntity{
 
     @Id @GeneratedValue
@@ -26,5 +27,6 @@ public class Mentee extends BaseTimeEntity{
     private List<Mentor> mentors = new ArrayList<>();
 
     @OneToMany
-    private List<Score> scores = new ArrayList<>();
+    private List<Score> scores;
+
 }
