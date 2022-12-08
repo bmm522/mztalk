@@ -8,6 +8,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ParticipantDto {
 
     private Long id;

@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BoardDto {
-
 
     private Long id;
     private Mentor mentor;

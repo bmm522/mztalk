@@ -4,6 +4,8 @@ import com.mztalk.mentor.domain.entity.Application;
 import lombok.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class FileDto {
 
     private Long id;

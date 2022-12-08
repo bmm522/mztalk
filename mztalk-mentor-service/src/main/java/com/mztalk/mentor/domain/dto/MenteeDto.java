@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MenteeDto {
 
     private Long id;
