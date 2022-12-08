@@ -53,7 +53,7 @@ public class LoginAuthenticationService extends UsernamePasswordAuthenticationFi
                 logger.error("Fail Login");
                 return authentication;
             }
-
+            response.addHeader(LoginStatusProperties.STATUS, "Login Success");
             return authentication;
         } catch (IOException e) {
             e.printStackTrace();

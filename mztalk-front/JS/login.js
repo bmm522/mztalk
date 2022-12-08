@@ -563,4 +563,33 @@ const authBlurText = () =>{
 
 
 
+document.getElementById('sign-in-btn').addEventListener('click', function(){
+  
 
+  let userId = document.getElementById('userId').value;
+  let password = document.getElementById('password-in').value;
+
+  if(userId == "" || password == ""){
+    alert('아이디 또는 비밀번호를 입력해주세요');
+  } else {
+    fetch("http://localhost:8000/login",{
+        method: "POST",
+        headers:{
+            "Content-Type":"application/json",            
+        },
+        body:JSON.stringify({
+            username : userId,
+            password : password
+        }),
+    })
+   
+    .then(res => {  
+      console.log('통신성공');
+      console.log(res.headers.get('Authorization'));
+      console.log(res.headers.get('RefreshToken'));
+      console.log(res.headers.get('LoginResult'));
+    });
+  }
+  
+  
+});
