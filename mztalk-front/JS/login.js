@@ -368,7 +368,7 @@ document.getElementById('nickname').addEventListener('keyup',function(){
   })
   .then((res)=> res.json())
   .then(res=>{
-
+    console.log(res.checkResult);
     if(nickname.length >1){
      
       if(res.checkResult == 'available'){
