@@ -22,6 +22,7 @@ public class RequestMentee extends BaseTimeEntity{
 
     private String phone; //멘티 신청시 핸드폰 번호
 
+    @Column(nullable = true)
     private String message; // 멘티 신청시 남길 메시지(자유양식)
 
     @ManyToOne(fetch = FetchType.LAZY)

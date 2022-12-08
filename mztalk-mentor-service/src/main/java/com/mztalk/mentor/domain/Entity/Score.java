@@ -19,6 +19,7 @@ public class Score extends BaseTimeEntity{
 
     private int count;
 
+    @Column(nullable = true)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)

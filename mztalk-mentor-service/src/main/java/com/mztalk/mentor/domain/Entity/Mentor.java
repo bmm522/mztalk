@@ -22,6 +22,7 @@ public class Mentor extends BaseTimeEntity{
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="application_id")
     private Application application;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "mentor")
@@ -38,6 +39,11 @@ public class Mentor extends BaseTimeEntity{
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    public void addBoard(Board board){
+        Mentor mentor = new Mentor();
+        mentor.board = board;
+    }
 
 
 }

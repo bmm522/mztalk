@@ -47,4 +47,9 @@ public class Board extends BaseTimeEntity{
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    public void addMentor(Mentor mentor){
+        this.mentor = mentor;
+        mentor.addBoard(this);
+    }
+
 }
