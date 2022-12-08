@@ -183,6 +183,37 @@ function findPwd(){
 }
 
 
+const isIdVaildText = () =>{
+  let checkIdDiv = document.getElementById('checkId');
+  checkIdDiv.innerHTML = '아이디는 최소 4글자 이상이어야 합니다.';
+  checkIdDiv.style.color = 'red';
+  document.getElementById('checkIdResult').value = "fail";
+}
+
+
+const idSuccessText = () => {
+  let checkIdDiv = document.getElementById('checkId');
+  checkIdDiv.innerHTML = '사용가능합니다.';
+  checkIdDiv.style.color = 'green';
+  document.getElementById('checkIdResult').value = "success";
+}
+
+const idFailText = () => {
+  let checkIdDiv = document.getElementById('checkId');
+  checkIdDiv.innerHTML = '중복된 아이디 입니다.';
+  checkIdDiv.style.color = 'red';
+  document.getElementById('checkIdResult').value = "fail";
+}
+
+const idBlurText = () => {
+  let checkIdDiv = document.getElementById('checkId');
+  checkIdDiv.innerHTML = '';
+  
+}
+
+
+
+
 
 
 
