@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/mentor.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>멘토링 메인 페이지</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav>
+        <div class="navContainer">
+            <article class="logoWrap">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" alt="로고">
+                <div class="columnLine"></div>
+                <h1 class="logo">MZTALK</h1>
+            </article>
+            <!-- <article class="search">
+                <input type="text" placeholder="검색" >
+            </article> -->
+            <article class="pictogramWrap">
+                
+                <i class="fa-solid fa-comments" style=""></i>
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필">
+            </article>
+        </div>
+    </nav>
+   <!-- 여기서 놀아주세요. -->
+
+
+    <main class="mainContainer" style="font-family: 'MICEGothic Bold' !important;">
+        <div class="container text-center">
+
+            <!--검색창 시작-->
+            <div class="row" style="padding-top: 20px;">
+                <form class="d-flex" role="search" action="#" method="post">
+
+                    <div class="col-1.5">
+                        <select name="category" class="form-select">
+                            <option value="">과목</option>
+                            <option value="korean">국어</option>
+                            <option value="english">영어</option>
+                            <option value="math">수학</option>
+                            <option value="science">과학</option>
+                            <option value="society">사회</option>
+                        </select>
+                    </div>
+
+                    <div class="col-0.5">
+                        &nbsp;<!--공백-->
+                    </div>
+
+                    <div class="col-1.5">
+                        <select name="sort" class="form-select">
+                            <option value="latest">최신순</option>
+                            <option value="highScore">평점순↑</option>
+                            <option value="lowScore">평점순↓</option>
+                        </select>
+                    </div>
+
+                    <div class="col-0.5">
+                        &nbsp;<!--공백-->
+                    </div>
+
+                    <div class="col-1.5">
+                        <select name="day" class="form-select">
+                            <option value="">요일</option>
+                            <option value="mon">월요일</option>
+                            <option value="tues">화요일</option>
+                            <option value="wed">수요일</option>
+                            <option value="thur">목요일</option>
+                            <option value="fri">금요일</option>
+                            <option value="sat">토요일</option>
+                            <option value="sun">일요일</option>
+                        </select>
+                    </div>
+
+                    <div class="col-0.5">
+                        &nbsp;<!--공백-->
+                    </div>
+
+                    <div class="col-1.5">
+                        <select name="group" class="form-select">
+                            <option value="title">제목</option>
+                            <option value="content">내용</option>
+                            <option value="nickname">닉네임</option>
+                        </select>
+                    </div>
+
+                    <div class="col-0.5">
+                        &nbsp;<!--공백-->
+                    </div>
+
+                    <div class="col-5">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" width="150" height="25" name="search">
+                    </div>
+
+                    <div class="col-0.5">
+                        &nbsp;<!--공백-->
+                    </div>
+
+                    <div class="col-1.5">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </div>
+
+                    <img src="https://cdn-icons-png.flaticon.com/128/8763/8763321.png" 
+                    style="width: 38px; height: 32px; padding-top:5px; padding-left: 10px;"
+                    onclick="location.href='mentee-myPage.html'"
+                    class="mentors-myPage">
+
+                </form>
+            </div>
+            <!--검색창 끝-->
+           
+            
+            
+            <!--멘토글 리스트 시작 4개당 1줄-->
+            <div class="row" style="padding:20px;">
+                <div class="col-3">
+                    <div class="card" style="width: 13rem; height:14rem;">
+                        <div class="card-body" data-bs-toggle="modal" href="#exampleModalToggle">
+                        <h5 class="card-title">수학</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">닉네임</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">학원강사</h6>
+                        <p class="card-text">제목 : 수학의정석 A-Z</p>
+                        </div>
+                        <button type="button" class="btn btn-outline-success"
+                    onclick="location.href='/mentors/members/score/{id}'">평점 : 5.0</button>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="card" style="width: 13rem; height:14rem;">
+                        <div class="card-body" data-bs-toggle="modal" href="#exampleModalToggle">
+                        <h5 class="card-title">{category}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{nickname}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">{job}</h6>
+                        <p class="card-text">제목:{title}</p>
+                        </div>
+                        <button type="button" class="btn btn-outline-success"
+                    onclick="location.href='/mentors/members/score/{id}'">평점 : {score}</button>
+                    </div>
+                </div>
+                
+                <div class="col-3">
+                    <div class="card" style="width: 13rem; height:14rem;">
+                        <div class="card-body" data-bs-toggle="modal" href="#exampleModalToggle">
+                        <h5 class="card-title">영어</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">배한성</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">취준생</h6>
+                        <p class="card-text">제목 : 영어문법 마스터 시켜드립니다.</p>
+                        </div>
+                        <button type="button" class="btn btn-outline-success"
+                    onclick="location.href='/mentors/members/score/{id}'">평점:4.5</button>
+                    </div>
+                </div>   
+
+                <div class="col-3">
+                    <div class="card" style="width: 13rem; height:14rem;">
+                        <div class="card-body" data-bs-toggle="modal" href="#exampleModalToggle">
+                        <h5 class="card-title">수학</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">닉네임</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">대학원생</h6>
+                        <p class="card-text">제목 : 수학의정석 A-Z</p>
+                        </div>
+                        <button type="button" class="btn btn-outline-success"
+                    onclick="location.href='/mentors/members/score/{id}'">평점:5.0</button>
+                    </div>
+                </div>
+            </div>
+            <!--멘토글 리스트 끝 4개당 1줄-->
+
+            <!--4개마다 row 생성-->
+            <div class="row" style="padding:20px;">
+                <div class="col-3">
+                    <div class="card" style="width: 13rem; height:13rem;">
+                        <div class="card-body" data-bs-toggle="modal" href="#exampleModalToggle">
+                        <h5 class="card-title">수학</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">닉네임</h6>
+                        <p class="card-text">제목 : 수학의정석 A-Z</p>
+                        </div>
+                        <button type="button" class="btn btn-outline-success"
+                    onclick="location.href='/mentors/members/score/{id}'">평점:5.0</button>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card" style="width: 13rem; height:13rem;">
+                        <div class="card-body" data-bs-toggle="modal" href="#exampleModalToggle">
+                        <h5 class="card-title">수학</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">닉네임</h6>
+                        <p class="card-text">제목 : 수학의정석 A-Z</p>
+                        </div>
+                        <button type="button" class="btn btn-outline-success"
+                        onclick="location.href='/mentors/members/score/{id}'">평점:5.0</button>
+                    </div>
+                </div>
+        </div>
+
+        <!--멘토링 글 상세보기 모달 시작-->
+        <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel">멘토링 소개</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {content} 자유양식<br>
+                    속에 영원히 길지 귀는 가치를 날카로우나 듣는다. 기쁘며, 얼음 청춘 있음으로써 구하지 가치를 봄바람이다. 갑 만천하의 지혜는 그와 수 있는 밥을 동산에는 쓸쓸하랴? 우리의 가진 그들의 구하지 광야에서 이것이다. 그들은 거친 바이며, 말이다. 봄바람을 굳세게 지혜는 있음으로써 인생을 것이다. 찾아다녀도, 얼음이 보는 것이다. 힘차게 힘차게 피가 이상이 목숨이 것은 칼이다. 속에서 오아이스도 따뜻한 보배를 그들은 끓는 보는 그러므로 그들을 있는가?
+
+                    같이, 앞이 우리의 봄바람이다. 용기가 살았으며, 이상의 놀이 동력은 위하여, 것이다. 원대하고, 방지하는 거친 이것이다. 피어나는 내려온 위하여서 위하여, 소담스러운 것이다. 남는 꽃이 열매를 없는 오아이스도 물방아 이성은 밝은 보라. 얼마나 굳세게 소리다.이것은 평화스러운 따뜻한 하는 부패뿐이다. 들어 그들을 방황하여도, 광야에서 목숨이 있으랴? 붙잡아 보이는 곳으로 철환하였는가? 그림자는 풀이 크고 영락과 구하기 약동하다. 살 물방아 청춘의 얼마나 찬미를 사랑의 관현악이며, 것이다.
+                    
+                    얼마나 못하다 할지니, 인생의 가치를 봄바람이다. 공자는 미묘한 위하여 역사를 그들의 남는 같이 청춘의 보라. 새 풀밭에 없으면, 보이는 가슴이 두기 속잎나고, 전인 이상, 쓸쓸하랴? 과실이 우는 더운지라 같이 능히 바이며, 것이다. 별과 이것은 위하여 그러므로 있는가? 있으며, 동력은 날카로우나 풀이 없으면, 끝까지 보라. 용감하고 원질이 인생에 인생을 듣기만 끓는 하였으며, 사막이다. 않는 무엇을 그들은 보이는 따뜻한 이상은 뿐이다. 찾아 심장은 지혜는 내는 있는 심장의 인간의 보라.
+                </div>
+                <div class="modal-footer">
+                  <div class="card-text" style="float:left;">1회 멘토링 : 1시간 / {salary}원 / 1명</div>
+                  <button class="btn btn-outline-success" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">멘토링 신청하기</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">신청하기</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">이름</label>
+                        <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="예)홍길동">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">연락 가능한 연락처</label>
+                        <input type="text" class="form-control form-control-sm" id="phone" name="phone" placeholder="010-1111-2222">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">연락 가능한 이메일</label>
+                        <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="mztalk@xxx.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="content">멘토에게 남길 메시지</label>
+                        <textarea class="form-control" placeholder="멘토에게 자신을 소개해주세요." id="content" style="height: 300px; padding-top: 10px;"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-success">결제하기</button>
+                </div>
+              </div>
+            </div>
+           </div>
+        <!--멘토링 글 상세보기 모달 끝-->
+
+    </main>
+    
+
+
+
+
+
+
+    <!--여기서 부터는 절대 건들지 말것-->
+    <div class="floating">
+        <div class="remocon"> 
+            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
+            <figure> <img src="img/qjd.png" style="width: 70px;"/></figure>
+            <figure>  <img src="img/book.png" style="width: 70px; margin-top:30px;"/></figure>
+            <!-- <figure><i class="fa-solid fa-comments" style="width: 85px;"></i></figure> -->
+        </div>
+
+
+        <div class="side side1"></div>
+        <div class="side side2"></div>
+        <div class="side side3"></div>
+        <div class="side side4"></div>
+    </div>
+
+    <!-- <div id="upBtn">
+        <a href="#"><figure id="up-figure"><img src="img/top.png" style="width: 40px;"/></figure></a>
+    
+    </div>  -->
+
+    <div id="upBtn">
+          <a href="#"><figure><img src="img/top.png" style="width: 50px;"/></figure></a>
+    </div>
+    <footer>
+        <div class="container">
+            <ul>
+               <li><a href="#a">소개</a></li>
+               <li><a href="#a">블로그</a></li>
+               <li><a href="#a">채용 정보</a></li>
+               <li><a href="#a">도움말</a></li>
+               <li><a href="#a">API</a></li>
+               <li><a href="#a">개인정보처리방침</a></li>
+               <li><a href="#a">약관</a></li>
+               <li><a href="#a">인기 계정</a></li>
+               <li><a href="#a">해시태그</a></li>
+               <li><a href="#a">위치</a></li>
+            </ul>
+            <div class="copy">
+               <p>© 2022 MZTALK from Spring</p>
+            </div>
+         </div>
+      
+    
+       </footer>
+   
+    <!-- <div id="upBtn">
+    <ul class="menu align-center expanded text-center SMN_effect-74">
+        <li><a href="#" data-hover="Home" id="homeRef">UP</a></li>
+        </ul>
+        </div> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+<script src="JS/main.js"></script>
+</html>
