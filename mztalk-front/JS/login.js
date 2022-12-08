@@ -232,9 +232,48 @@ const idBlurText = () => {
 
 // }
 
-document.getElementById('sign-up-btn').addEventListener('click',function(){
+document.getElementById('sign-up-btn').addEventListener('click',function(e){
 
-  fetch("http://localhost:8000/login/register/user",{
+  if(document.getElementById('checkIdResult').value=="fail"){
+		
+    alert("아이디 확인 바랍니다.");
+    showSign(e, 'signup');
+    document.getElementById('username').focus();
+   
+	} else if(document.getElementById('checkPasswordResult').value=="fail"){
+		
+    alert("비밀번호를 형식에 맞게 작성해주세요.");
+    showSign(e, 'signup');
+    document.getElementById('password').focus();
+    
+	} else if(document.getElementById('checkRePasswordResult').value=="fail"){
+		
+    alert("비밀번호가 일치하지 않습니다.");
+    showSign(e, 'signup');
+    document.getElementById('re_password').focus();
+   
+	
+  } else if(document.getElementById('checkNicknameResult').value=="fail"){
+		
+    alert("닉네임 확인 바랍니다.");
+    showSign(e, 'signup');
+    document.getElementById('nickname').focus();
+	
+  } else if(document.getElementById('checkEmailResult').value=="fail"){
+		
+    alert("이메일 확인 바랍니다.");
+    showSign(e, 'signup');
+    document.getElementById('email-box').focus();
+	
+  } else if(document.getElementById('checkAuthResult').value=="fail"){
+		
+    alert("인증코드 확인 바랍니다.");
+    showSign(e, 'signup');
+    document.getElementById('auth-box').focus();
+	
+  } else {
+
+    fetch("http://localhost:8000/login/register/user",{
         method: "POST",
         headers:{
             "Content-Type":"application/json",            
@@ -243,13 +282,22 @@ document.getElementById('sign-up-btn').addEventListener('click',function(){
             userId : document.getElementById('username').value,
             password : document.getElementById('password').value,
             nickname : document.getElementById('nickname').value,
-            email : document.getElementById('email').value
+            email : document.getElementById('email-box').value
         }),
     })
    
     .then((res) => res.json())
     .then(res => {  
     });
+
+  }
+
+
+
+
+
+
+  
 
 });
 
@@ -277,6 +325,9 @@ document.getElementById('username').addEventListener('keyup',function(){
 
   })
 
+});
+document.getElementById('username').addEventListener('blur',function(){
+  idBlurText(); 
 });
 
 
@@ -385,6 +436,10 @@ document.getElementById('nickname').addEventListener('keyup',function(){
 
 });
 
+document.getElementById('nickname').addEventListener('blur',function(){
+  nicknameBlurText();
+});
+
 
 const isNicknameVaildText = () =>{
   let checkNicknameDiv = document.getElementById('checkNickname');
@@ -448,7 +503,7 @@ const emailBlurText = () =>{
 	document.getElementById('checkEmail').innerHTML = '';
 }
 
-let authCode = '';
+let emailAuthCode = '';
 
 document.getElementById('email_check').addEventListener('click', function(){
   if(document.getElementById('checkEmailResult').value == "fail" || document.getElementById('checkEmailResult').value =='none'){
@@ -469,14 +524,42 @@ document.getElementById('email_check').addEventListener('click', function(){
 
       } else {
 
-        authCode = res.authCode;
+        emailAuthCode = res.authCode;
         alert('작성하신 이메일로 인증코드를 전송했습니다.');
         document.getElementById('auth_div').style.display="flex";
-        
+
       }
     })
   }
 });
+
+document.getElementById('auth-box').addEventListener('keyup', function(){
+  isValidAuthCode();
+});
+
+document.getElementById('auth-box').addEventListener('blur', function(){
+  authBlurText();
+});
+
+
+
+const isValidAuthCode = () => {
+	let authCode = document.getElementById('auth-box').value;
+	let checkAuth = document.getElementById('checkAuth');
+	if(emailAuthCode != authCode){
+		checkAuth.innerHTML = '코드가 일치하지 않습니다.';
+		checkAuth.style.color = 'red';
+		document.getElementById('checkAuthResult').value = "fail";
+	} else {
+		checkAuth.innerHTML = '코드가 일치 합니다.';
+		checkAuth.style.color = 'green';
+		document.getElementById('checkAuthResult').value = "success";
+	}
+}
+
+const authBlurText = () =>{
+	document.getElementById('checkAuth').innerHTML = '';
+}
 
 
 

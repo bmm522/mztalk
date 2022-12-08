@@ -57,40 +57,40 @@
         <!-- Form area Sign Up -->
         <div class="organize-form form-area-signup">
           <h2>SIGN UP</h2>
-          <form class="form">
+      <form class="form"> 
             <div class="form-field">
               <label for="username">Id</label>
               <input type="text" id="username"/>
               <div id="checkId" class="vaild-div"></div>
-              <input type="hidden" id="checkIdResult" value="none"/>
+              <input type="hidden" id="checkIdResult" value="fail"/>
             </div>
 
             <div class="form-field">
               <label for="password">Password</label>
               <input type="password" id="password" />
               <div id="checkPw"  class="vaild-div"></div>
-              <input type="hidden" id="checkPasswordResult" value="none"/>
+              <input type="hidden" id="checkPasswordResult" value="fail"/>
             </div>
 
             <div class="form-field">
               <label for="re_password">Re Password</label>
               <input type="password" id="re_password" />
               <div id="checkRePw"  class="vaild-div"></div>
-              <input type="hidden" id="checkRePasswordResult" value="none"/>
+              <input type="hidden" id="checkRePasswordResult" value="fail"/>
             </div>
 
             <div class="form-field">
               <label for="nickname">Nickname</label>
               <input type="text" id="nickname"/>
               <div id="checkNickname" class="vaild-div"></div>
-              <input type="hidden" id="checkNicknameResult" value="none"/>
+              <input type="hidden" id="checkNicknameResult" value="fail"/>
             </div>
 
             <div class="form-field">
               <label for="email-box">Email</label>
               <input type="text" id="email-box" />
               <div id="checkEmail"  class="vaild-div"></div>
-              <input type="hidden" id="checkEmailResult" value="none"/>
+              <input type="hidden" id="checkEmailResult" value="fail"/>
               <!-- <br> -->
 
               <button type="button" id="email_check">인증번호 전송</button>
@@ -101,10 +101,11 @@
               <label for="auth-box">Auth Number</label>
               <input type="text" id="auth-box" />
               <div id="checkAuth"  class="vaild-div"></div>
+              <input type="hidden" id="checkAuthResult" value="fail"/>
             </div>
 
-            <button class="btn-sign btn-up" id="sign-up-btn"  >Sign Up</button>
-          </form>
+            <button class="btn-sign btn-up" id="sign-up-btn" type="button" >Sign Up</button>
+       </form> 
 
 
           <p>Have an account? <a href="#" class="link-in link-font">Sign In</a></p>

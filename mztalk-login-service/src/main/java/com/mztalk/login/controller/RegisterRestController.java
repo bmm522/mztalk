@@ -26,6 +26,7 @@ public class RegisterRestController {
 
     @PostMapping("/user")
     public void registerUser(@RequestBody RegisterDto registerDto ){
+        System.out.println("요청들어옴");
         registerService.registerUser(registerDto);
     }
 
