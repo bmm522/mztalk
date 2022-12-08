@@ -32,7 +32,7 @@ public class Board extends BaseTimeEntity{
     private List<Payment> payments = new ArrayList<>();
 
     @OneToMany
-    private List<RequestMentee> requestMentees = new ArrayList<>();
+    private List<Participant> participants = new ArrayList<>();
 
     private String title;
 

@@ -25,7 +25,7 @@ public class Mentee extends BaseTimeEntity{
     private List<Payment> payments = new ArrayList<>();
 
     @OneToMany
-    private List<RequestMentee> requestMentees = new ArrayList<>();
+    private List<Participant> participants = new ArrayList<>();
 
     @ManyToMany(mappedBy = "mentees")
     private List<Mentor> mentors = new ArrayList<>();

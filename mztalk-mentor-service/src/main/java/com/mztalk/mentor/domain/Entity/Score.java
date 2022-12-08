@@ -17,7 +17,7 @@ public class Score extends BaseTimeEntity{
     @Column(name="score_id")
     private Long id;
 
-    private int count;
+    private Double count;
 
     @Column(nullable = true)
     private String content;

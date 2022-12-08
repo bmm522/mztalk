@@ -11,11 +11,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="REQUEST_MENTEE")
-public class RequestMentee extends BaseTimeEntity{
+@Table(name="PARTICIPANT")
+public class Participant extends BaseTimeEntity{
 
     @Id @GeneratedValue
-    @Column(name="request_mentee_id")
+    @Column(name="participant_id")
     private Long id;
 
     private String name; //멘티 신청시 이름
