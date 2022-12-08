@@ -605,3 +605,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
   
   
 });
+
+document.getElementById('googleBtn').addEventListener('click',function(){
+  location.href="http://localhost:8080/login/oauth2/authorization/google";
+});

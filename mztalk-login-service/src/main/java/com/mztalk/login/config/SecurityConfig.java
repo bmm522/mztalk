@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +21,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Autowired
    private PrincipalSocialOAuth2UserService principalSocialOAuth2UserService;
 
+    private final CorsFilter corsFilter;
     @Bean
     public BCryptPasswordEncoder encodePwd() {
         return new BCryptPasswordEncoder();
@@ -30,6 +32,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .addFilter(corsFilter)
                 .formLogin().disable()
                 .httpBasic().disable()
                 .addFilter(new LoginAuthenticationService(authenticationManager()))
@@ -37,9 +40,10 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .oauth2Login()
+                .loginPage("http://127.0.0.1:5501/loginpage.html")
                 .userInfoEndpoint()
                 .userService(principalSocialOAuth2UserService);
-                
+
 
 
     }
