@@ -162,30 +162,30 @@
                 </div>
                 <div class="modal-body">
                     <label class="form-label">카테고리</label>
-                    <select name="mentorCategory" class="form-select form-select-sm">
+                    <select name="category" class="form-select form-select-sm">
                         <option value=""></option>
-                        <option value="korean">국어</option>
-                        <option value="english">영어</option>
-                        <option value="math">수학</option>
-                        <option value="science">과학</option>
-                        <option value="society">사회</option>
+                        <option value="1">국어</option>
+                        <option value="2">영어</option>
+                        <option value="3">수학</option>
+                        <option value="4">과학</option>
+                        <option value="5">사회</option>
                     </select>
                     <div class="mb-3">
-                        <label for="mentorTitle" class="form-label">제목</label>
-                        <input type="text" class="form-control form-control-sm" id="mentorTitle" name="mentorTitle" placeholder="예)수학 멘토링 해드립니다.">
+                        <label for="title" class="form-label">제목</label>
+                        <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="{title}예)수학 멘토링 해드립니다.">
                     </div>
                     <div class="mb-3">
                         <label for="introduction" class="form-label">자기소개</label>
-                        <input type="text" class="form-control form-control-sm" id="introduction" name="introduction" placeholder="멘티에게 자신을 소개해주세요.">
+                        <input type="text" class="form-control form-control-sm" id="introduction" name="introduction" placeholder="{introduction}멘티에게 자신을 소개해주세요.">
                     </div>
                     <div class="mb-3">
                         <label for="career" class="form-label">경력</label>
-                        <input type="text" class="form-control form-control-sm" id="career" name="career" placeholder="예)~직업 ~년차">
+                        <input type="text" class="form-control form-control-sm" id="career" name="career" placeholder="예)~직업 ~년차 {career}">
                     </div>
                     <div class="mb-3">
-                        <label for="mentorContent">글 내용</label>
-                        <textarea class="form-control" id="mentorContent" name="mentorContent" style="height: 300px"
-                        placeholder="예)소개 : 내용: 종류: 진행방식 : 사전 준비물: "></textarea>
+                        <label for="content">글 내용</label>
+                        <textarea class="form-control" id="content" name="content" style="height: 300px"
+                        placeholder="예)소개 : 내용: 종류: 진행방식 : 사전 준비물:  {content}"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -52,4 +52,8 @@ public class Board extends BaseTimeEntity{
         mentor.addBoard(this);
     }
 
+    public Board(String title, int salary) {
+        this.title = title;
+        this.salary = salary;
+    }
 }
