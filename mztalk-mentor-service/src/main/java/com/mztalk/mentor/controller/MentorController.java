@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/mentors")
 public class MentorController {
 
-    @GetMapping("")
+    @GetMapping
     public String test(){
         return"hello mentor";
     }
