@@ -1,135 +1,160 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"> 
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/login.css">
-    <title>MZTALK</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/login.css">
+  <title>MZTALK</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-    <nav>
+  <nav>
 
-    </nav>
-   <!-- 여기서 놀아주세요. -->
+  </nav>
+  <!-- 여기서 놀아주세요. -->
 
-        <main class="main">
-            <section class="home">
-              <h1>Welcome to the <span>MZTALK</span></h1>
-              <button id="sign-up" class="btn">Sign Up</button>
-              <button id="sign-in" class="btn">Sign In</button>
-              <p><a class="link-copy" href="http://collectui.com/designers/dnes/sign-up" target="_blank">©SPRING 2022</a></p>
-            </section>
-          
-            <section class="sign-up">
-              <article class="signup-left">
-                <h1>MZTALK</h1>
-                <div class="wc_message">
-                  <h3>MZTALK</h3>
-                  <p>당신이 원하는 모든것이 있는 곳 MZTALK</p>
-                </div>
-                <div>
-                  <div class="find"><a style="cursor:pointer;" class="find-link" id="find-id-link" onclick="findId();">아이디를 잊어버리셨나요?</a></div>
-                  <br>
-                  <div class="find"><a style="cursor:pointer;" class="find-link" id="find-pwd-link" onclick="findPwd();">비밀번호를 잊어버리셨나요?</a></div>
-                </div>
-                
-                <div class="btn-back">
-                  <i class="fas fa-2x fa-angle-left angle-left-color"></i>
-                  HOME
-                </div>
-              
-              </article>
-          
-              <article class="form-area">
-                <!-- Form area Sign Up -->
-                <div class="organize-form form-area-signup">
-                  <h2>SIGN UP</h2>
-                  <form class="form">
-                    <div class="form-field">
-                      <label for="name">Id</label>
-                      <input type="text" id="name" />
-                    </div>
-          
-                    <div class="form-field">
-                      <label for="password">Password</label>
-                      <input type="password" id="password" />
-                    </div>
-          
-                    <div class="form-field">
-                      <label for="re_password">Re Password</label>
-                      <input type="password" id="re_password" />
-                    </div>
+  <main class="main">
+    <section class="home">
+      <h1>Welcome to the <span>MZTALK</span></h1>
+      <button id="sign-up" class="btn">Sign Up</button>
+      <button id="sign-in" class="btn">Sign In</button>
+      <p><a class="link-copy" href="http://collectui.com/designers/dnes/sign-up" target="_blank">©SPRING 2022</a></p>
+    </section>
 
-                    <div class="form-field">
-                      <label for="email">Email</label>
-                      <input type="text" id="email" />
-                      <br>
+    <section class="sign-up">
+      <article class="signup-left">
+        <h1>MZTALK</h1>
+        <div class="wc_message">
+          <h3>MZTALK</h3>
+          <p>당신이 원하는 모든것이 있는 곳 MZTALK</p>
+        </div>
+        <div>
+          <div class="find"><a style="cursor:pointer;" class="find-link" id="find-id-link" onclick="findId();">아이디를
+              잊어버리셨나요?</a></div>
+          <br>
+          <div class="find"><a style="cursor:pointer;" class="find-link" id="find-pwd-link" onclick="findPwd();">비밀번호를
+              잊어버리셨나요?</a></div>
+        </div>
 
-                      <button type="button" id="email_check">인증번호 전송</button>
-                    </div>
-          
+        <div class="btn-back">
+          <i class="fas fa-2x fa-angle-left angle-left-color"></i>
+          HOME
+        </div>
 
-                    <div class="form-field" id="auth_div">
-                      <label for="email_auth">Auth Number</label>
-                      <input type="text" id="email_auth" />
-                    </div>
-                  
-                    <button class="btn-sign btn-up">Sign Up</button>
-                  </form>
+      </article>
 
-                 
-                  <p>Have an account? <a href="#" class="link-in link-font">Sign In</a></p>
-                       
-                </div>
+      <article class="form-area">
+        <!-- Form area Sign Up -->
+        <div class="organize-form form-area-signup">
+          <h2>SIGN UP</h2>
+      <form class="form"> 
+            <div class="form-field">
+              <label for="username">Id</label>
+              <input type="text" id="username"/>
+              <div id="checkId" class="vaild-div"></div>
+              <input type="hidden" id="checkIdResult" value="fail"/>
+            </div>
 
-          
-                <!-- Form area Sign In -->
-                <div class="organize-form form-area-signin">
-                  <h2>SIGN IN</h2>
-                  <form class="form">
-                    <div class="form-field">
-                      <label for="username">Your Id</label>
-                      <input type="text" name="email_in" id="username" />
-                    </div>
-          
-                    <div class="form-field">
-                      <label for="password-in">Your Password</label>
-                      <input type="text" name="password_in" id="password-in" />
-                    </div>
-                    <br>
-                    <br>
-                    <div id="socialBtnDiv">
-                    <button class="socialBtn" style="cursor:pointer;" type="button" id="googleBtn">Google</button>
-                    <button class="socialBtn" style="cursor:pointer;" type="button" id="facebookBtn">FaceBook</button>
-                    <button class="socialBtn" style="cursor:pointer;" type="button" id="kakaoBtn">Kakao</button>
-                    <button class="socialBtn" style="cursor:pointer;" type="button" id="naverBtn">Naver</button>
-                    </div>
-                    <button class="btn-sign btn-in">Sign In</button>
-                  </form>
-                  <p>Haven't an account? <a href="#" class="link-up">Sign Up</a></p>
-                </div>
-              </article>
-          
-              <article class="signup-right">
-                <i class="fas fa-2x fa-bars bars-style"></i>
-                <p><a class="link-copy" href="http://collectui.com/designers/dnes/sign-up" target="_blank">©Copyright 2020</a></p>
-                
+            <div class="form-field">
+              <label for="password">Password</label>
+              <input type="password" id="password" />
+              <div id="checkPw"  class="vaild-div"></div>
+              <input type="hidden" id="checkPasswordResult" value="fail"/>
+            </div>
+
+            <div class="form-field">
+              <label for="re_password">Re Password</label>
+              <input type="password" id="re_password" />
+              <div id="checkRePw"  class="vaild-div"></div>
+              <input type="hidden" id="checkRePasswordResult" value="fail"/>
+            </div>
+
+            <div class="form-field">
+              <label for="nickname">Nickname</label>
+              <input type="text" id="nickname"/>
+              <div id="checkNickname" class="vaild-div"></div>
+              <input type="hidden" id="checkNicknameResult" value="fail"/>
+            </div>
+
+            <div class="form-field">
+              <label for="email-box">Email</label>
+              <input type="text" id="email-box" />
+              <div id="checkEmail"  class="vaild-div"></div>
+              <input type="hidden" id="checkEmailResult" value="fail"/>
+              <!-- <br> -->
+
+              <button type="button" id="email_check">인증번호 전송</button>
+            </div>
 
 
-              </article>
-            </section>
-          </main>
-         
-   
+            <div class="form-field" id="auth_div">
+              <label for="auth-box">Auth Number</label>
+              <input type="text" id="auth-box" />
+              <div id="checkAuth"  class="vaild-div"></div>
+              <input type="hidden" id="checkAuthResult" value="fail"/>
+            </div>
+
+            <button class="btn-sign btn-up" id="sign-up-btn" type="button" >Sign Up</button>
+       </form> 
+
+
+          <p>Have an account? <a href="#" class="link-in link-font">Sign In</a></p>
+
+        </div>
+
+
+        <!-- Form area Sign In -->
+        <div class="organize-form form-area-signin">
+          <h2>SIGN IN</h2>
+          <form class="form">
+            <div class="form-field">
+              <label for="userId">Your Id</label>
+              <input type="text" name="email_in" id="userId" />
+            </div>
+
+            <div class="form-field">
+              <label for="password-in">Your Password</label>
+              <input type="text" name="password_in" id="password-in" />
+            </div>
+            <br>
+            <br>
+            <div id="socialBtnDiv">
+              <button class="socialBtn" style="cursor:pointer;" type="button" id="googleBtn">Google</button>
+              <button class="socialBtn" style="cursor:pointer;" type="button" id="facebookBtn">FaceBook</button>
+              <button class="socialBtn" style="cursor:pointer;" type="button" id="kakaoBtn">Kakao</button>
+              <button class="socialBtn" style="cursor:pointer;" type="button" id="naverBtn">Naver</button>
+            </div>
+            <button class="btn-sign btn-in">Sign In</button>
+          </form>
+          <p>Haven't an account? <a href="#" class="link-up">Sign Up</a></p>
+        </div>
+      </article>
+
+      <article class="signup-right">
+        <i class="fas fa-2x fa-bars bars-style"></i>
+        <p><a class="link-copy" href="http://collectui.com/designers/dnes/sign-up" target="_blank">©Copyright 2020</a>
+        </p>
+
+
+
+      </article>
+    </section>
+  </main>
+
+
 </body>
 
-<script src="JS/main.js"></script>
+<!-- <script src="JS/main.js"></script> -->
 <script src="JS/login.js"></script>
+
 </html>

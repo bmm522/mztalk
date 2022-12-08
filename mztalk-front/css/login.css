@@ -308,6 +308,7 @@ a.link-copy {
   font-family: "paybooc-Light";
   margin:auto;
   cursor: pointer;
+  margin-top: 10px;
  
 }
 
@@ -320,7 +321,9 @@ a.link-copy {
 }
 
 #auth_div{
-  display: none;
+  margin-top: 10px;
+  display: none; 
+
 }
 
 .find-link:link{
@@ -338,7 +341,7 @@ a.link-copy {
   height: 40px;
   border-radius: 10px;
   border: 1px solid rgb(235, 235, 208);
-margin-left: 15px;
+margin-left: 1px;
   text-align: center;
   display: inline-block;
 }
@@ -406,4 +409,9 @@ margin-left: 15px;
   transition: 0.7s;
   width:73px;
   height: 50px;;
+}
+
+.vaild-div{
+  height: 10px;
+  margin-left: 5px;
 }
