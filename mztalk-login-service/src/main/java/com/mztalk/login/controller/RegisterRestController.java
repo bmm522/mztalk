@@ -2,9 +2,11 @@ package com.mztalk.login.controller;
 
 import com.mztalk.login.domain.dto.RegisterDto;
 import com.mztalk.login.service.CheckService;
+import com.mztalk.login.service.MailService;
 import com.mztalk.login.service.RegisterService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,6 +18,8 @@ public class RegisterRestController {
     @Autowired
     private RegisterService registerService;
 
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private CheckService checkService;
@@ -33,5 +37,10 @@ public class RegisterRestController {
     @GetMapping("/nickname/{nickname}")
     public ConcurrentHashMap<String, Object> checkNickname(@PathVariable("nickname")String nickname){
         return  checkService.checkNickname(nickname);
+    }
+
+    @GetMapping("/auth-code/{email}")
+    public ConcurrentHashMap<String, Object> getAuthCodeOfEmail(@PathVariable("email")String email){
+        return mailService.getAuthCodeOfEmail(email);
     }
 }

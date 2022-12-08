@@ -87,19 +87,20 @@
             </div>
 
             <div class="form-field">
-              <label for="email">Email</label>
-              <input type="text" id="email" />
-              <div id="is-valid-email"  class="vaild-div"></div>
-              <br>
+              <label for="email-box">Email</label>
+              <input type="text" id="email-box" />
+              <div id="checkEmail"  class="vaild-div"></div>
+              <input type="hidden" id="checkEmailResult" value="none"/>
+              <!-- <br> -->
 
               <button type="button" id="email_check">인증번호 전송</button>
             </div>
 
 
             <div class="form-field" id="auth_div">
-              <label for="email_auth">Auth Number</label>
-              <input type="text" id="email_auth" />
-              <div id="is-valid-auth"  class="vaild-div"></div>
+              <label for="auth-box">Auth Number</label>
+              <input type="text" id="auth-box" />
+              <div id="checkAuth"  class="vaild-div"></div>
             </div>
 
             <button class="btn-sign btn-up" id="sign-up-btn"  >Sign Up</button>
