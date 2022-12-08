@@ -1,7 +1,9 @@
 package com.mztalk.login.config;
 
+import com.mztalk.login.oauth.PrincipalSocialOAuth2UserService;
 import com.mztalk.login.service.LoginAuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,8 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private PrincipalSocialOAuth2UserService principalSocialOAuth2UserService;
+    @Autowired
+   private PrincipalSocialOAuth2UserService principalSocialOAuth2UserService;
 
     @Bean
     public BCryptPasswordEncoder encodePwd() {
@@ -32,7 +34,12 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .addFilter(new LoginAuthenticationService(authenticationManager()))
                 .authorizeRequests()
-                .anyRequest().permitAll();
+                .anyRequest().permitAll()
+                .and()
+                .oauth2Login()
+                .userInfoEndpoint()
+                .userService(principalSocialOAuth2UserService);
+                
 
 
     }
