@@ -31,6 +31,7 @@ public class JwtTokenFactory {
                         .withClaim("provider",user.getProvider())
                         .withClaim("providerId",user.getProviderId())
                         .withClaim("createDate",getCreateDate(user.getCreateDate()))
+                        .withClaim("mentorStatus",user.getMentorStatus())
                         .withClaim("nicknameCheck",user.getNicknameCheck())
                         .sign(Algorithm.HMAC512(JwtProperties.SECRET+refreshToken)));
         map.put("refreshToken", refreshToken);
