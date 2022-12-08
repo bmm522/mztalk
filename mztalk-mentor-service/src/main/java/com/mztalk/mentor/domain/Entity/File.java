@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="FILE")
 public class File extends BaseTimeEntity{
 
     @Id @GeneratedValue

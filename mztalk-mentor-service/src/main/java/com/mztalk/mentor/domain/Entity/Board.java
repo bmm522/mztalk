@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="BOARD")
 public class Board extends BaseTimeEntity{
 
     @Id @GeneratedValue
@@ -29,6 +30,9 @@ public class Board extends BaseTimeEntity{
 
     @OneToMany
     private List<Payment> payments = new ArrayList<>();
+
+    @OneToMany
+    private List<RequestMentee> requestMentees = new ArrayList<>();
 
     private String title;
 

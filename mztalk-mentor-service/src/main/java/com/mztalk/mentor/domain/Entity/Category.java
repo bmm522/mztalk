@@ -5,15 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="CATEGORY")
 public class Category {
 
     @Id @GeneratedValue
@@ -24,7 +25,5 @@ public class Category {
 
     @OneToMany
     private List<Board> boards = new ArrayList<>();
-
-
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="MENTOR")
 public class Mentor extends BaseTimeEntity{
 
     @Id

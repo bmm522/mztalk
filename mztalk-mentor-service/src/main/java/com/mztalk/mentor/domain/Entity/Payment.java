@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="PAYMENT")
 public class Payment extends BaseTimeEntity{
 
     @Id @GeneratedValue

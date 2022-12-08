@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="MENTEE")
 public class Mentee extends BaseTimeEntity{
 
     @Id @GeneratedValue
@@ -22,6 +23,9 @@ public class Mentee extends BaseTimeEntity{
 
     @OneToMany
     private List<Payment> payments = new ArrayList<>();
+
+    @OneToMany
+    private List<RequestMentee> requestMentees = new ArrayList<>();
 
     @ManyToMany(mappedBy = "mentees")
     private List<Mentor> mentors = new ArrayList<>();

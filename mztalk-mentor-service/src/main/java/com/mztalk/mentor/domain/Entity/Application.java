@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="APPLICATION")
 public class Application extends BaseTimeEntity{
 
     @Id @GeneratedValue
