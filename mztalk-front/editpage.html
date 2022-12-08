@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/editpage.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    
+    <title>MZTALK</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav>
+        <div class="navContainer">
+            <article class="logoWrap">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" alt="로고">
+                <div class="columnLine"></div>
+                <h1 class="logo">MZTALK</h1>
+            </article>
+            <!-- <article class="search">
+                <input type="text" placeholder="검색" >
+            </article> -->
+            <article class="pictogramWrap">
+                
+                <i class="fa-solid fa-comments" style=""></i>
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필">
+            </article>
+        </div>
+    </nav>
+   <!-- 여기서 놀아주세요. -->
+    <main class="mainContainer">
+        <div class="_ab81 _ab82">
+            <div class="d-flex align-items-start">
+                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                  <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">프로필 설정</button>
+                  <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">비밀번호 변경</button>
+                  <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">개인 정보 조회</button>
+                  <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">알림 설정</button>
+                </div>
+                <div class="tab-content" id="v-pills-tabContent">
+                  <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
+                    
+                    <section class="setting-container">
+                        <!--프로필셋팅 아티클-->
+                        <article class="setting__content">
+                
+                            <!--프로필셋팅 아이디영역-->
+                            <div class="content-item__01">
+                                <div class="item__img">
+                                    <img src="img/recommend_02.jpeg"/>
+                                </div>
+                                <div class="item__username">
+                                    <h2>MZTALK</h2>
+                                </div>
+                            </div>
+                            <!--프로필셋팅 아이디영역end-->
+                            <!--프로필 사진 수정시에 바로 DB에 저장되게끔-->
+                            <!--프로필 수정-->
+                            <form id="profileUpdate">
+                                <div class="content-item__02">
+                                    <div class="item__title">닉네임</div>
+                                    <div class="item__input">
+                                        <input type="text" name="name" placeholder="닉네임"
+                                            value="조현재" />
+                                    </div>
+                                </div>
+
+                                <div class="content-item__05">
+                                    <div class="item__title">웹사이트</div>
+                                    <div class="item__input">
+                                        <input type="text" name="website" placeholder="웹 사이트"
+                                            value="" />
+                                    </div>
+                                </div>
+                                <div class="content-item__06">
+                                    <div class="item__title">소개</div>
+                                    <div class="item__input">
+                                        <textarea name="bio" id="" rows="3">개발자</textarea>
+                                    </div>
+                                </div>
+                                <div class="content-item__07">
+                                    <div class="item__title"></div>
+                                    <div class="item__input">
+                                        <span><b>개인정보</b></span> 
+                                        <span>
+                                            비즈니스나 반려동물 등에 사용된 계정인 경우에도
+                                            회원님의 개인 정보를 입력하세요. 공개 프로필에는 포함되지 않습니다.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="content-item__08">
+                                    <div class="item__title">이메일</div>
+                                    <div class="item__input">
+                                        <input type="text" name="email" placeholder="이메일"
+                                            value=""/>
+                                        <br>    
+                                        <input type="text" name="email" placeholder="인증번호"
+                                        style="width:280px" value=""/>    
+                                    </div>
+                                </div>
+                                
+                                <!--제출버튼-->
+                                <div class="content-item__11">
+                                    <div class="item__title"></div>
+                                    <div class="item__input">
+                                        <button>제출</button>
+                                    </div>
+                                </div>
+                                <!--제출버튼end-->
+                            </form>
+                            <!--프로필수정 form end-->
+                        </article>
+                    </section>
+                  </div>
+
+
+
+                  <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
+                   
+                    <section class="setting-password">
+                        <!--프로필셋팅 아티클-->
+                        <article class="setting__password">
+                            <!--프로필셋팅 아이디영역-->
+                            <div class="content-item__01">
+                                <div class="item__img">
+                                    <img src="img/recommend_02.jpeg"/>
+                                </div>
+                                <div class="item__username">
+                                    <h2>MZTALK</h2>
+                                </div>
+                            </div>
+                        
+
+
+
+
+
+                        </article>
+                    </section>        
+                </div>
+                  <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">
+                    ...
+                </div>
+                  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">
+                    ...
+                </div>
+                  <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">
+                    ...
+                </div>
+
+                </div>
+              </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           
+    </main>
+
+    <div class="floating">
+        <div class="remocon"> 
+            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
+           
+            <figure> <img src="img/qjd.png" style="width: 70px;"/></figure>
+            
+            <figure>  <img src="img/book.png" style="width: 70px; margin-top:30px;"/></figure>
+            
+
+            <!-- <figure><i class="fa-solid fa-comments" style="width: 85px;"></i></figure> -->
+        </div>
+
+
+        <div class="side side1"></div>
+        <div class="side side2"></div>
+        <div class="side side3"></div>
+        <div class="side side4"></div>
+    </div>
+
+    <!-- <div id="upBtn">
+        <a href="#"><figure id="up-figure"><img src="img/top.png" style="width: 40px;"/></figure></a>
+    
+    </div>  -->
+
+    <div id="upBtn">
+          <a href="#"><figure><img src="img/top.png" style="width: 50px;"/></figure></a>
+    </div>
+    <footer>
+        <div class="container">
+            <ul>
+               <li><a href="#a">소개</a></li>
+               <li><a href="#a">블로그</a></li>
+               <li><a href="#a">채용 정보</a></li>
+               <li><a href="#a">도움말</a></li>
+               <li><a href="#a">API</a></li>
+               <li><a href="#a">개인정보처리방침</a></li>
+               <li><a href="#a">약관</a></li>
+               <li><a href="#a">인기 계정</a></li>
+               <li><a href="#a">해시태그</a></li>
+               <li><a href="#a">위치</a></li>
+            </ul>
+            <div class="copy">
+               <p>© 2022 MZTALK from Spring</p>
+            </div>
+         </div>
+      
+    
+       </footer>
+   
+    <!-- <div id="upBtn">
+    <ul class="menu align-center expanded text-center SMN_effect-74">
+        <li><a href="#" data-hover="Home" id="homeRef">UP</a></li>
+        </ul>
+        </div> -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+</body>
+<script src="JS/main.js"></script>
+</html>
