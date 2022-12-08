@@ -183,33 +183,33 @@ function findPwd(){
 }
 
 
-// const isIdVaildText = () =>{
-//   let checkIdDiv = document.getElementById('checkId');
-//   checkIdDiv.innerHTML = '아이디는 최소 4글자 이상이어야 합니다.';
-//   checkIdDiv.style.color = 'red';
-//   document.getElementById('checkIdResult').value = "fail";
-// }
+ const isIdVaildText = () =>{
+   let checkIdDiv = document.getElementById('checkId');
+   checkIdDiv.innerHTML = '아이디는 최소 4글자 이상이어야 합니다.';
+   checkIdDiv.style.color = 'red';
+   document.getElementById('checkIdResult').value = "fail";
+ }
 
 
-// const idSuccessText = () => {
-//   let checkIdDiv = document.getElementById('checkId');
-//   checkIdDiv.innerHTML = '사용가능합니다.';
-//   checkIdDiv.style.color = 'green';
-//   document.getElementById('checkIdResult').value = "success";
-// }
+const idSuccessText = () => {
+  let checkIdDiv = document.getElementById('checkId');
+  checkIdDiv.innerHTML = '사용가능합니다.';
+  checkIdDiv.style.color = 'green';
+  document.getElementById('checkIdResult').value = "success";
+}
 
-// const idFailText = () => {
-//   let checkIdDiv = document.getElementById('checkId');
-//   checkIdDiv.innerHTML = '중복된 아이디 입니다.';
-//   checkIdDiv.style.color = 'red';
-//   document.getElementById('checkIdResult').value = "fail";
-// }
+const idFailText = () => {
+  let checkIdDiv = document.getElementById('checkId');
+  checkIdDiv.innerHTML = '중복된 아이디 입니다.';
+  checkIdDiv.style.color = 'red';
+  document.getElementById('checkIdResult').value = "fail";
+}
 
-// const idBlurText = () => {
-//   let checkIdDiv = document.getElementById('checkId');
-//   checkIdDiv.innerHTML = '';
+const idBlurText = () => {
+  let checkIdDiv = document.getElementById('checkId');
+  checkIdDiv.innerHTML = '';
   
-// }
+}
 
 
 // const register = () =>{
@@ -254,7 +254,164 @@ document.getElementById('sign-up-btn').addEventListener('click',function(){
 });
 
 
+document.getElementById('username').addEventListener('keyup',function(){
+  let userId = document.getElementById('username').value;
+
+  fetch("http://localhost:8000/login/register/username/"+userId, {
+    method:"GET",
+  })
+  .then((res)=> res.json())
+  .then(res=>{
+
+    if(userId.length >3){
+     
+      if(res.checkResult == 'available'){
+        idSuccessText();
+      } else if(res.checkResult == 'unavailable'){
+        idFailText();
+      }
+
+    } else {
+        isIdVaildText();
+    }
+
+  })
+
+});
 
 
+document.getElementById('password').addEventListener('keyup',function(){
+  isValidPassword();
+});
+
+document.getElementById('password').addEventListener('blur',function(){
+  passwordBlurText();
+});
+
+const isValidPassword = () =>{
+	let inputPassword = document.getElementById('password').value;
+	console.log(inputPassword);
+	let checkPasswordResult = document.getElementById('checkPw');
+	 var pw = inputPassword;
+	 console.log("pw : " + pw);
+	 var num = pw.search(/[0-9]/g);
+	 var eng = pw.search(/[a-z]/ig);
+	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+	 if(pw.length < 8 || pw.length > 20){
+		 console.log(1);
+		 checkPasswordResult.innerHTML= '8자리~20자리 이내로 입력하세요';
+		 checkPasswordResult.style.color='red';
+		 document.getElementById('checkPasswordResult').value = "fail";
+	 }
+	 else if(pw.search(/\s/) != -1){
+		 checkPasswordResult.innerHTML= '공백은 허용되지 않습니다.';
+		 checkPasswordResult.style.color='red';
+		 document.getElementById('checkPasswordResult').value = "fail";
+	 }
+	 else if(num < 0 || eng < 0 || spe < 0 ){
+		 checkPasswordResult.innerHTML= '영문,숫자,특수문자를 혼합하여 입력해주세요.';
+		 checkPasswordResult.style.color='red';
+		 document.getElementById('checkPasswordResult').value = "fail";
+	 }
+	 else{
+	 checkPasswordResult.innerHTML= '올바른 비밀번호 형식입니다.';
+		 checkPasswordResult.style.color='green';
+		 document.getElementById('checkPasswordResult').value = "success";
+	 }
+	
+}
+
+const passwordBlurText = () => {
+	 let checkPasswordResult = document.getElementById('checkPw');
+	 checkPasswordResult.innerHTML = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+	 
+}
+
+
+document.getElementById('re_password').addEventListener('keyup',function(){
+  isValidCheckPassword();
+});
+
+document.getElementById('re_password').addEventListener('blur',function(){
+  rePasswordBlurText();
+});
+
+
+
+const isValidCheckPassword = () =>{
+	let checkRePassword = document.getElementById('re_password').value;
+	let checkPassword = document.getElementById('password').value;
+	let checkRePw = document.getElementById('checkRePw');
+
+	if(checkRePassword == checkPassword){
+		checkRePw.innerHTML="일치합니다.";
+		checkRePw.style.color = "green";
+		document.getElementById('checkRePasswordResult').value = "success";
+	} else {
+		checkRePw.innerHTML="일치하지 않습니다.";
+		checkRePw.style.color = "red";
+		document.getElementById('checkRePasswordResult').value = "fail";
+	}
+}
+
+const rePasswordBlurText = () => {
+	let checkRePw = document.getElementById('checkRePw');
+	checkRePw.innerHTML = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+}
+
+
+document.getElementById('nickname').addEventListener('keyup',function(){
+  let nickname = document.getElementById('nickname').value;
+
+  fetch("http://localhost:8000/login/register/nickname/"+nickname, {
+    method:"GET",
+  })
+  .then((res)=> res.json())
+  .then(res=>{
+
+    if(nickname.length >1){
+     
+      if(res.checkResult == 'available'){
+        nicknameSuccessText();
+      } else if(res.checkResult == 'unavailable'){
+        nicknameFailText();
+      }
+
+    } else {
+       isNicknameVaildText();
+    }
+
+  })
+
+});
+
+
+const isNicknameVaildText = () =>{
+  let checkNicknameDiv = document.getElementById('checkNickname');
+  checkNicknameDiv.innerHTML = '닉네임은 최소 2글자 이상이어야 합니다.';
+  checkNicknameDiv.style.color = 'red';
+  document.getElementById('checkNicknameResult').value = "fail";
+}
+
+
+const nicknameSuccessText = () => {
+  let checkNicknameDiv = document.getElementById('checkNickname');
+  checkNicknameDiv.innerHTML = '사용가능합니다.';
+  checkNicknameDiv.style.color = 'green';
+  document.getElementById('checkNicknameResult').value = "success";
+}
+
+const nicknameFailText = () => {
+  let checkNicknameDiv = document.getElementById('checkNickname');
+  checkNicknameDiv.innerHTML = '중복된 닉네임 입니다.';
+  checkNicknameDiv.style.color = 'red';
+  document.getElementById('checkNicknameResult').value = "fail";
+}
+
+const nicknameBlurText = () => {
+  let checkNicknameDiv = document.getElementById('checkNickname');
+  checkNicknameDiv.innerHTML = '';
+  
+}
 
 
