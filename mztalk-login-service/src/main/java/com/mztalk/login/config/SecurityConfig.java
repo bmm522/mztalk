@@ -1,5 +1,6 @@
 package com.mztalk.login.config;
 
+import com.mztalk.login.service.LoginAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +30,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-         //      .addFilter(new LoginAuthenticationFilter(authenticationManager()))
+                .addFilter(new LoginAuthenticationService(authenticationManager()))
                 .authorizeRequests()
                 .anyRequest().permitAll();
 

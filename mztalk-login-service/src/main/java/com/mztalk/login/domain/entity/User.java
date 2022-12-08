@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -30,8 +31,9 @@ public class User {
     private String provider;
     private String providerId;
     @CreationTimestamp
-    private Date createDate;
+    private Timestamp createDate;
     private String mentorStatus;
     private String status;
+    private String nicknameCheck;
 
 }

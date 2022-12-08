@@ -35,6 +35,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .providerId("NULL")
                 .mentorStatus("N")
                 .status("N")
+                .nicknameCheck("Y")
                 .build();
     }
 }
