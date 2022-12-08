@@ -57,10 +57,10 @@
         <!-- Form area Sign Up -->
         <div class="organize-form form-area-signup">
           <h2>SIGN UP</h2>
-          <form class="form" action="http://localhost:8000/login/user" method="POST">
+          <form class="form">
             <div class="form-field">
               <label for="username">Id</label>
-              <input type="text" id="username" onblur="idBlurText();"/>
+              <input type="text" id="username"/>
               <div id="checkId" class="vaild-div"></div>
               <input type="hidden" id="checkIdResult" value="none"/>
             </div>
@@ -100,7 +100,7 @@
               <div id="is-valid-auth"  class="vaild-div"></div>
             </div>
 
-            <button class="btn-sign btn-up">Sign Up</button>
+            <button class="btn-sign btn-up" id="sign-up-btn"  >Sign Up</button>
           </form>
 
 
@@ -114,8 +114,8 @@
           <h2>SIGN IN</h2>
           <form class="form">
             <div class="form-field">
-              <label for="username">Your Id</label>
-              <input type="text" name="email_in" id="username" />
+              <label for="userId">Your Id</label>
+              <input type="text" name="email_in" id="userId" />
             </div>
 
             <div class="form-field">
@@ -150,7 +150,7 @@
 
 </body>
 
-<script src="JS/main.js"></script>
+<!-- <script src="JS/main.js"></script> -->
 <script src="JS/login.js"></script>
 
 </html>

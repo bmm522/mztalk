@@ -26,11 +26,12 @@ public class User {
     private String password;
     private String nickname;
     private String email;
-    private String roles;
+    private String role;
     private String provider;
     private String providerId;
     @CreationTimestamp
     private Date createDate;
     private String mentorStatus;
     private String status;
+
 }

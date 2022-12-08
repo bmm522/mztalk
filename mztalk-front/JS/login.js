@@ -139,29 +139,29 @@ function goToMain(){
     location.href = "main.html"
 }
 
-nameBtn.addEventListener('keyup', function(){
-    let nameLength = nameBtn.value.length;
-    let passwordLength = passwordBtn.value.length;
+// nameBtn.addEventListener('keyup', function(){
+//     let nameLength = nameBtn.value.length;
+//     let passwordLength = passwordBtn.value.length;
 
-    if(nameLength >= 1 && passwordLength >= 5 && nameBtn.value.indexOf('@') !== -1 ){
-        loginBtn.style.backgroundColor = "#0095f6"; 
-        loginBtn.addEventListener('click', goToMain)       
-    } else {
-        loginBtn.style.backgroundColor = "#b2dffc";
-    }
-});
+//     if(nameLength >= 1 && passwordLength >= 5 && nameBtn.value.indexOf('@') !== -1 ){
+//         loginBtn.style.backgroundColor = "#0095f6"; 
+//         loginBtn.addEventListener('click', goToMain)       
+//     } else {
+//         loginBtn.style.backgroundColor = "#b2dffc";
+//     }
+// });
 
-passwordBtn.addEventListener('keyup', function(){
-    let nameLength = nameBtn.value.length;
-    let passwordLength = passwordBtn.value.length;
+// passwordBtn.addEventListener('keyup', function(){
+//     let nameLength = nameBtn.value.length;
+//     let passwordLength = passwordBtn.value.length;
 
-    if(nameLength >= 1 && passwordLength >= 5 && nameBtn.value.indexOf('@') !== -1){
-        loginBtn.style.backgroundColor = "#0095f6"; 
-        loginBtn.addEventListener('click', goToMain)       
-    } else {
-        loginBtn.style.backgroundColor = "#b2dffc";
-    }
-});
+//     if(nameLength >= 1 && passwordLength >= 5 && nameBtn.value.indexOf('@') !== -1){
+//         loginBtn.style.backgroundColor = "#0095f6"; 
+//         loginBtn.addEventListener('click', goToMain)       
+//     } else {
+//         loginBtn.style.backgroundColor = "#b2dffc";
+//     }
+// });
 
 
 const checkEmail = () =>{
@@ -183,34 +183,75 @@ function findPwd(){
 }
 
 
-const isIdVaildText = () =>{
-  let checkIdDiv = document.getElementById('checkId');
-  checkIdDiv.innerHTML = '아이디는 최소 4글자 이상이어야 합니다.';
-  checkIdDiv.style.color = 'red';
-  document.getElementById('checkIdResult').value = "fail";
-}
+// const isIdVaildText = () =>{
+//   let checkIdDiv = document.getElementById('checkId');
+//   checkIdDiv.innerHTML = '아이디는 최소 4글자 이상이어야 합니다.';
+//   checkIdDiv.style.color = 'red';
+//   document.getElementById('checkIdResult').value = "fail";
+// }
 
 
-const idSuccessText = () => {
-  let checkIdDiv = document.getElementById('checkId');
-  checkIdDiv.innerHTML = '사용가능합니다.';
-  checkIdDiv.style.color = 'green';
-  document.getElementById('checkIdResult').value = "success";
-}
+// const idSuccessText = () => {
+//   let checkIdDiv = document.getElementById('checkId');
+//   checkIdDiv.innerHTML = '사용가능합니다.';
+//   checkIdDiv.style.color = 'green';
+//   document.getElementById('checkIdResult').value = "success";
+// }
 
-const idFailText = () => {
-  let checkIdDiv = document.getElementById('checkId');
-  checkIdDiv.innerHTML = '중복된 아이디 입니다.';
-  checkIdDiv.style.color = 'red';
-  document.getElementById('checkIdResult').value = "fail";
-}
+// const idFailText = () => {
+//   let checkIdDiv = document.getElementById('checkId');
+//   checkIdDiv.innerHTML = '중복된 아이디 입니다.';
+//   checkIdDiv.style.color = 'red';
+//   document.getElementById('checkIdResult').value = "fail";
+// }
 
-const idBlurText = () => {
-  let checkIdDiv = document.getElementById('checkId');
-  checkIdDiv.innerHTML = '';
+// const idBlurText = () => {
+//   let checkIdDiv = document.getElementById('checkId');
+//   checkIdDiv.innerHTML = '';
   
-}
+// }
 
+
+// const register = () =>{
+//   fetch("http://localhost:8000/login/user",{
+//     method: "POST",
+//     headers:{
+//         "Content-Type":"application/json",            
+//     },
+//     body:JSON.stringify({
+//         userId : document.getElementById('username').value,
+//         password : document.getElementById('password').value,
+//         nickname : document.getElementById('nickname').value,
+//         email : document.getElementById('email').value
+//     }),
+// })
+
+// .then((res) => res.json())
+// .then(res => {  
+// });
+
+// }
+
+document.getElementById('sign-up-btn').addEventListener('click',function(){
+
+  fetch("http://localhost:8000/login/register/user",{
+        method: "POST",
+        headers:{
+            "Content-Type":"application/json",            
+        },
+        body:JSON.stringify({
+            userId : document.getElementById('username').value,
+            password : document.getElementById('password').value,
+            nickname : document.getElementById('nickname').value,
+            email : document.getElementById('email').value
+        }),
+    })
+   
+    .then((res) => res.json())
+    .then(res => {  
+    });
+
+});
 
 
 
