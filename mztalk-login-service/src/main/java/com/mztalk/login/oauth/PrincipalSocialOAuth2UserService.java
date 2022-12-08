@@ -21,12 +21,14 @@ public class PrincipalSocialOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        System.out.println("여기는?");
         OAuth2User oauth2User = super.loadUser(userRequest);
         System.out.println("실행");
         System.out.println(userRequest);
 
         OAuth2UserInfo oAuth2UserInfo = null;
         System.out.println(2);
+        System.out.println("getAttributes : "+oauth2User.getAttributes());
         switch(userRequest.getClientRegistration().getRegistrationId()) {
             case "google": oAuth2UserInfo = new GoogleUserInfo((ConcurrentHashMap<String, Object>) oauth2User.getAttributes()); break;
 //            case "facebook": socialProviderUserInfo = new FacebookUserInfo(oauth2User.getAttributes()); break;

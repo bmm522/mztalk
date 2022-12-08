@@ -40,10 +40,10 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .oauth2Login()
-                .loginPage("http://127.0.0.1:5501/loginpage.html")
                 .userInfoEndpoint()
                 .userService(principalSocialOAuth2UserService);
 
+        System.out.println("필터를 다 도나요?");
 
 
     }
