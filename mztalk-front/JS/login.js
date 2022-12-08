@@ -173,7 +173,14 @@ const test=()=>{
 }
 
 
+function findId(){
+  window.open('findId.html', '아이디 찾기', 'width=600px,height=480px,scrollbars=no').opener.close();
+ 
+}
 
+function findPwd(){
+  window.open('findPwd.html', '비밀번호 변경', 'width=600px,height=480px,scrollbars=no').opener.close();
+}
 
 
 
