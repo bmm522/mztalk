@@ -16,6 +16,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class JwtTokenFactory {
 
+    private static JwtTokenFactory jwtTokenFactory = new JwtTokenFactory();
+
+    public static JwtTokenFactory getJwtTokenFactory(){
+        return jwtTokenFactory;
+    }
+
+    private JwtTokenFactory(){}
+
     public ConcurrentHashMap<String, String> getJwtToken(User user) {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
         String refreshToken = getRefreshToken();
