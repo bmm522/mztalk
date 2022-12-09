@@ -1,7 +1,6 @@
 package com.mztalk.login.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mztalk.login.auth.PrincipalDetails;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.properties.JwtProperties;
 import com.mztalk.login.properties.LoginStatusProperties;
@@ -20,8 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
+
+import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstance;
+
 @RequiredArgsConstructor
-public class LoginAuthenticationService extends UsernamePasswordAuthenticationFilter {
+public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
@@ -63,8 +65,8 @@ public class LoginAuthenticationService extends UsernamePasswordAuthenticationFi
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
-
-        ConcurrentHashMap<String,String> jwtTokenAndRefreshToken = new JwtTokenFactory().getJwtToken(principalDetails.getUser());
+        System.out.println("일반로그인 success핸들러 실행");
+        ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
 
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtTokenAndRefreshToken.get("jwtToken"));
         response.addHeader("RefreshToken", "RefreshToken "+jwtTokenAndRefreshToken.get("refreshToken"));

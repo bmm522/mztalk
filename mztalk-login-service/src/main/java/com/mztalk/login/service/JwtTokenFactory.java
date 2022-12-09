@@ -18,7 +18,7 @@ public class JwtTokenFactory {
 
     private static JwtTokenFactory jwtTokenFactory = new JwtTokenFactory();
 
-    public static JwtTokenFactory getJwtTokenFactory(){
+    public static JwtTokenFactory getJwtTokenFactoryInstance(){
         return jwtTokenFactory;
     }
 

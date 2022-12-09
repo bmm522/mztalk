@@ -117,50 +117,51 @@
                 <button type="button" style="cursor:pointer;" id="write-btn">글 등록</button>
 
             </div>
-            <div id="post-div">
+            <div>
+                <div id="post-div">
 
-                <table id="post-table">
-                    <tr>
-                        <td>
-                            <div id="category-div">개인</div>
-                        </td>
-                        <td>
-                            <div id="post-title-div"><br>&nbsp&nbsp{제목}</div>
-                        </td>
-                        <td>
-                            <div id="post-date-div"><br>{날짜}</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"><br><br>
-                            <div id="edit-delete-div">
-                                <button style="cursor:pointer;" type="button">수정</button>
-                                <button style="cursor:pointer;" type="button">삭제</button>
-                            </div>
-                            <div id=post-hr>
-                                <hr>
-                            </div>
-                        </td>
-                    </tr>
-                   
-                    <tr>
-                        <td colspan="3">
-                            <div id="post-content">
-                                <div id="post-content-input">{내용}</div>
-                            </div>
-                        </td>
-                    </tr>
-                
-                   
-                    <!-- <tr id="reply-tr">
+                    <table id="post-table">
+                        <tr>
+                            <td>
+                                <div id="category-div">개인</div>
+                            </td>
+                            <td>
+                                <div id="post-title-div"><br>&nbsp&nbsp{제목}</div>
+                            </td>
+                            <td>
+                                <div id="post-date-div"><br>{날짜}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><br><br>
+                                <div id="edit-delete-div">
+                                    <button style="cursor:pointer;" type="button">수정</button>
+                                    <button style="cursor:pointer;" type="button">삭제</button>
+                                </div>
+                                <div id=post-hr>
+                                    <hr>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="3">
+                                <div id="post-content">
+                                    <div id="post-content-input">{내용}</div>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                        <!-- <tr id="reply-tr">
                         <td colspan="3">
                            
                         </td>
                     </tr>                          -->
-  
-                </table>
-                <div id="reply-div">
-                    <!-- <div>
+
+                    </table>
+                    <div id="reply-div">
+                        <!-- <div>
                         <div id="reply-nickname">{작성자 닉네임}</div>
                         <div id="reply-content">{댓글 내용}</div>
                         <div id="reply-date">{date}</div>
@@ -197,23 +198,30 @@
                         <div id="reply-edit-btn"><button style="cursor:pointer;" type="button">X</button></div>
                     </div> -->
 
-                </div>
-    
-                <div id="reply-write-div">
-                    <table>
-                        <tr>
-                            <td> <div id="reply-write-box"><input type="text" id="reply-write-input"></div></div></td>
-                            <td> <div id="reply-write-btn"><button style="cursor:pointer;" type="button">등록</button></div></td>
-                        </tr>
-                    </table>
-                   
-                   
-                    
-                </div>
-                
+                    </div>
 
-                <button type="button" onclick="replyList();">댓글출력</button>
+                    <div id="reply-write-div">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div id="reply-write-box"><input type="text" id="reply-write-input"></div>
+                    </div>
+                    </td>
+                    <td>
+                        <div id="reply-write-btn"><button style="cursor:pointer;" type="button">등록</button></div>
+                    </td>
+                    </tr>
+                    </table>
+
+
+
+                </div>
             </div>
+
+
+            <button type="button" onclick="replyList();">댓글출력</button>
+        </div>
+        </div>
         </div>
 
     </main>

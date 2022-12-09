@@ -1,12 +1,13 @@
 package com.mztalk.login.oauth.info;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GoogleUserInfo implements OAuth2UserInfo{
 
-   private ConcurrentHashMap<String, Object> userInfoMap;
+   private Map<String, Object> userInfoMap;
 
-   public GoogleUserInfo(ConcurrentHashMap<String,Object> userInfoMap){
+   public GoogleUserInfo(Map<String,Object> userInfoMap){
        this.userInfoMap = userInfoMap;
    }
 

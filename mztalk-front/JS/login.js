@@ -607,5 +607,14 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
 });
 
 document.getElementById('googleBtn').addEventListener('click',function(){
-  window.location.href="http://localhost:8000/login/social/google";
-});
+    location.href="http://localhost:8000/login/social/google";
+    
+//   fetch("http://localhost:8000/login/social/google",{
+//     mode: 'cors',
+//     method:"GET",
+//   })
+//   .then(res=>{
+//     console.log('통신성공');
+//   });
+ });
+

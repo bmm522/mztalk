@@ -17,12 +17,18 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;
 
-    private ConcurrentHashMap<String, Object> userInfoMap;
+
+
+    private Map<String, Object> userInfoMap;
 
     public PrincipalDetails(User user){
         this.user = user;
     }
 
+    public PrincipalDetails(User user, Map<String, Object> userInfoMap){
+        this.user = user;
+        this.userInfoMap = userInfoMap;
+    }
     @Override
     public Map<String, Object> getAttributes() {
         return userInfoMap;
