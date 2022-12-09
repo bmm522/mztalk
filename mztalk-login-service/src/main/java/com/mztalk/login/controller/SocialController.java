@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/login/social")
 @Controller
-public class SocialRestController {
+public class SocialController {
 
     @GetMapping("/google")
     public String moveGoogleLoginForm(){

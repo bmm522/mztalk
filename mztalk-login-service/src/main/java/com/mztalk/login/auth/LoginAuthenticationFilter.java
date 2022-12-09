@@ -1,10 +1,11 @@
-package com.mztalk.login.service;
+package com.mztalk.login.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mztalk.login.auth.PrincipalDetails;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.properties.JwtProperties;
 import com.mztalk.login.properties.LoginStatusProperties;
+import com.mztalk.login.service.JwtTokenFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,9 +30,6 @@ public class LoginAuthenticationService extends UsernamePasswordAuthenticationFi
         try {
             ObjectMapper om = new ObjectMapper();
             User user = om.readValue(request.getInputStream(), User.class);
-            System.out.println(user);
-            System.out.println("user : "+user.getProvider());
-            System.out.println("username : "+user.getUsername());
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 

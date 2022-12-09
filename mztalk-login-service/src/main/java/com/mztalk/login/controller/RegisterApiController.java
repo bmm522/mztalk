@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/login/register")
-public class RegisterRestController {
+public class RegisterApiController {
 
     @Autowired
     private RegisterService registerService;
