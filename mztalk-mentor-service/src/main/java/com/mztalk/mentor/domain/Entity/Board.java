@@ -27,6 +27,7 @@ public class Board extends BaseTimeEntity{
 
     private String title;
 
+    @Lob
     private String content; // 글내용
 
     private String introduction; //자기소개

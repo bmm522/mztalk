@@ -28,6 +28,7 @@ public class Participant extends BaseTimeEntity{
     private String phone; //멘티 신청시 핸드폰 번호
 
     @Column(nullable = true)
+    @Lob
     private String message; // 멘티 신청시 남길 메시지(자유양식)
 
     @Enumerated(EnumType.STRING)

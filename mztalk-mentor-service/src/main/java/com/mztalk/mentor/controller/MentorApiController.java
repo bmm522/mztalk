@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/mentors")
-public class MentorController {
+public class MentorApiController {
 
     @GetMapping
     public String test(){

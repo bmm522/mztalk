@@ -5,8 +5,6 @@ import com.mztalk.mentor.domain.Status;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -21,8 +19,9 @@ public class Application extends BaseTimeEntity{
     @OneToOne(fetch = FetchType.LAZY)
     private Mentor mentor;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<File> files = new ArrayList<>();
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name="file_id")
+    private File file;
 
     private String name;
 
@@ -43,11 +42,11 @@ public class Application extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Application(Mentor mentor, List<File> files, String name, String phone,
+    public Application(Mentor mentor, File file, String name, String phone,
                        String email, String job, String bank, String account,
                        AuthStatus authStatus, Status status) {
         this.mentor = mentor;
-        this.files = files;
+        this.file = file;
         this.name = name;
         this.phone = phone;
         this.email = email;

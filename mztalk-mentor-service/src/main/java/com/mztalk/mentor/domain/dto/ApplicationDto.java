@@ -16,7 +16,7 @@ public class ApplicationDto {
 
     private Long id;
     private Mentor mentor;
-    private List<File> files = new ArrayList<>();
+    private File file;
     private String name;
     private String phone;
     private String email;

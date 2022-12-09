@@ -36,6 +36,7 @@ public class Mentor extends BaseTimeEntity{
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
     @Builder
     public Mentor(Application application, Board board, List<Score> scores, List<Mentee> mentees, Status status) {
         this.application = application;

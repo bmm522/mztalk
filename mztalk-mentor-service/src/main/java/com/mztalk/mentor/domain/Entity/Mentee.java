@@ -29,6 +29,7 @@ public class Mentee extends BaseTimeEntity{
 
     @ManyToMany(mappedBy = "mentees")
     private List<Mentor> mentors = new ArrayList<>();
+
     @Builder
     public Mentee(String nickname, List<Participant> participants,
                   List<Payment> payments, List<Score> scores, List<Mentor> mentors) {

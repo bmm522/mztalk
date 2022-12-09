@@ -14,13 +14,13 @@ public class File extends BaseTimeEntity{
     @Column(name="file_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="application_id")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "file")
     private Application application;
 
     private String uploadFileName;
     private String storeFileName;
     private String extension;
+
     @Builder
     public File(Application application, String uploadFileName, String storeFileName, String extension) {
         this.application = application;

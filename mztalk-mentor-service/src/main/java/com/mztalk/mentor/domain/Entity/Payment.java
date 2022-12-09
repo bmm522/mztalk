@@ -30,6 +30,7 @@ public class Payment extends BaseTimeEntity{
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
     @Builder
     public Payment(Board board, Mentee mentee, int price, Status status) {
         this.board = board;

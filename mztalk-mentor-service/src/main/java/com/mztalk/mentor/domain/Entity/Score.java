@@ -33,6 +33,7 @@ public class Score extends BaseTimeEntity{
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
     @Builder
     public Score(Mentor mentor, Mentee mentee, Double count, String content, Status status) {
         this.mentor = mentor;
