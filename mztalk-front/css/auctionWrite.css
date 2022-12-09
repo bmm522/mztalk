@@ -1,0 +1,40 @@
+.container {
+    padding: 50px;
+}
+
+.writeInput {
+    width: 800px;
+    height: 40px;
+    outline: solid 3px burlywood;
+}
+
+.short {
+    width: 380px;
+    height: 40px;
+    outline: solid 3px burlywood;
+}
+
+.boardBtn {
+    background-color: burlywood;
+    border: none;
+    color: white;
+    padding: 7px 30px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+input, textarea {
+    margin-top: 20px;
+    outline: solid 3px burlywood;
+}
+
+label {
+    font-size: 18px; font-weight: bold; 
+    text-decoration-line: underline;
+    text-decoration: underline burlywood dotted 3px; 
+}
+
+#inputPrice {
+    width: 310px;
+}
