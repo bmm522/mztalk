@@ -100,6 +100,20 @@ function commentHeartChangeBlack(){
     commentHeartColor.style.display = "none";
 }
 
+function toggleLike() {
+	let likeIcon = $("#storyLikeIcon-1");
+	if (likeIcon.hasClass("far")) {
+		likeIcon.addClass("fas");
+		likeIcon.addClass("active");
+		likeIcon.removeClass("far");
+	} else {
+		likeIcon.removeClass("fas");
+		likeIcon.removeClass("active");
+		likeIcon.addClass("far");
+	}
+}
+
+
 
 
 commetBtn.addEventListener('click',addCommentListBtn);

@@ -87,6 +87,9 @@
     font-size: 12px;
     padding-top: 10px;
   }
+  .btn-primary {
+    width: 150px;
+  }
   
   /*제출버튼*/
   .setting-container .setting__content .content-item__11 .item__input {
