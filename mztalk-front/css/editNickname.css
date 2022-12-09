@@ -1,0 +1,41 @@
+
+    body{
+        background-color: rgb(231, 231, 127);
+    }
+    #edit-form{
+        display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+    }
+
+    .editBox{
+        border:2px solid black;
+        border-radius: 10px;
+        width: 200px;
+        height: 40px;
+     }
+
+     #editBtn{
+        border:2px solid black;
+        border-radius: 10px;
+        background-color: aliceblue;
+        height: 50px;
+        width: 50px;
+     }
+
+     #editBtn:hover{
+        background-color: black;
+        color: white;
+     }
+     
+         .checkbox{
+        float: left;
+        font-size: 12px;
+        color : red;
+      }
+
+
+      #editDiv{
+        text-align: center;
+      }
