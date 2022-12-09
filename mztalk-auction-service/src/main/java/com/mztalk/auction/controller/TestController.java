@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/auction")
+@RequestMapping("/test")
 @RestController
 public class TestController {
-    @GetMapping("/test")
+    @GetMapping("/testtest")
     public String test() {
         return "test출력";
     }
