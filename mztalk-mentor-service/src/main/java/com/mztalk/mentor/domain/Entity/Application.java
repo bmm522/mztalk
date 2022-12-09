@@ -2,6 +2,7 @@ package com.mztalk.mentor.domain.entity;
 
 import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
+import com.mztalk.mentor.domain.dto.ApplicationDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -56,4 +57,15 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
         this.authStatus = authStatus;
         this.status = status;
     }
+
+    public void change(ApplicationDto applicationDto){
+        this.file = applicationDto.getFile();
+        this.name = applicationDto.getName();
+        this.phone = applicationDto.getPhone();
+        this.email = applicationDto.getEmail();
+        this.job = applicationDto.getJob();
+        this.bank = applicationDto.getBank();
+        this.account = applicationDto.getAccount();
+    }
+
 }

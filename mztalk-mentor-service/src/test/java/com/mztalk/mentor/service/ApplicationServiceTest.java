@@ -2,10 +2,8 @@ package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.dto.ApplicationDto;
 import com.mztalk.mentor.domain.entity.Application;
-import com.mztalk.mentor.domain.entity.ResponseEntity;
 import com.mztalk.mentor.exception.ApplicationNotFoundException;
 import com.mztalk.mentor.repository.ApplicationRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,15 +52,14 @@ class ApplicationServiceTest {
         ApplicationDto applicationDto = new ApplicationDto();
         applicationDto.setName("mentorA");
 
-        Long savedId = applicationService.save(applicationDto);
+        applicationService.save(applicationDto);
         //when
-        Optional<Application> savedApplication = applicationRepository.findById(savedId);
+        Optional<Application> savedApplication = applicationRepository.findById(1L);
         Application application = savedApplication.orElseThrow(ApplicationNotFoundException::new);
         //then
-        assertThat(savedId).isEqualTo(application.getId());
+        assertThat(1L).isEqualTo(application.getId());
         assertThat(applicationDto.getName()).isEqualTo(application.getName());
     }
-
 
 
 

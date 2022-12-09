@@ -12,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ import java.util.Optional;
 public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
+    private final EntityManager entityManager;
 
     @Override
     @Transactional
@@ -47,5 +51,27 @@ public class ApplicationServiceImpl implements ApplicationService {
         return new ResponseEntity(application);
     }
 
+    @Override
+    public ResponseEntity findAll() {
+        List<Application> applications = applicationRepository.findAll();
+        List<ApplicationDto> result = applications.stream().map(ApplicationDto::new).collect(Collectors.toList());
+        return new ResponseEntity(result);
+    }
 
+    @Override
+    @Transactional
+    public Long delete(Long id) {
+        Optional<Application> storedApplication = applicationRepository.findById(id);
+        Application application = storedApplication.orElseThrow(ApplicationNotFoundException::new);
+        applicationRepository.delete(application);
+        return application.getId();
+    }
+
+    @Override
+    @Transactional
+    public Long updateApplication(Long id,ApplicationDto applicationDto) {
+        Application savedApplication = applicationRepository.findById(id).orElseThrow(ApplicationNotFoundException::new);
+        savedApplication.change(applicationDto);
+        return id;
+    }
 }
