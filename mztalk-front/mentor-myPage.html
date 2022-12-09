@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/mentor.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>멘토 마이 페이지</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav>
+        <div class="navContainer">
+            <article class="logoWrap">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" alt="로고">
+                <div class="columnLine"></div>
+                <h1 class="logo">MZTALK</h1>
+            </article>
+            <!-- <article class="search">
+                <input type="text" placeholder="검색" >
+            </article> -->
+            <article class="pictogramWrap">
+                
+                <i class="fa-solid fa-comments" style=""></i>
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필">
+            </article>
+        </div>
+    </nav>
+    
+   <!-- 여기서 놀아주세요. -->
+   <main class="mainContainer" style="font-family: 'MICEGothic Bold' !important;">
+
+    <div class="container text-center">
+        <div class="row" style="padding-top: 20px;">
+            <form class="d-flex" role="search" action="#" method="post">
+                <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#mentorModal">
+                    <span>작성한 멘토링 현황</span>
+                </div>
+
+                <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#endMentorModal">
+                    <span>완료된 멘토링</span>
+                </div>
+
+                <div class="mentors-myPage col-2">
+                    <span data-bs-toggle="modal" href="#writeModal">
+                        멘토링 글 작성하기
+                    </span>
+                </div>
+
+                <div class="mentors-myPage col-3">
+
+                <img src="https://cdn-icons-png.flaticon.com/128/8763/8763321.png" 
+                style="width: 38px; height: 28px; padding-left:10px;"
+                onclick="location.href='mentee-myPage.html'">
+
+                </div>      
+            </form>  
+        </div>  
+    </div>
+
+
+    <!--내가 작성한 글 보기 모달-->
+    <div class="modal fade" id="mentorModal" aria-hidden="true" aria-labelledby="mentorModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="mentorModal">멘토링 상세 페이지</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">멘토링 신청자 명단</label>
+                    <table class="table table-hover mentors-table">
+                        <thead>
+                          <tr>
+                            <th scope="col">글번호</th>
+                            <th scope="col">멘티 닉네임</th>
+                            <th scope="col">연락처</th>
+                            <th scope="col">이메일</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>배배한한성성</td>
+                            <td>010-1111-2222</td>
+                            <td>bhs@naver.com</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">{id}</th>
+                            <td>{nickname}</td>
+                            <td>{phone}</td>
+                            <td>{email}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">{id}</th>
+                            <td>{name}</td>
+                            <td>{phone}</td>
+                            <td>{email}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--내가 작성한 글 보기 모달 끝-->
+
+    <!--완료된 멘토링 보기 모달 시작-->
+    <div class="modal fade" id="endMentorModal" aria-hidden="true" aria-labelledby="endMentorModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="endMentorModal">종료된 멘토링</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">완료된 신청자 목록/완료페이지에서 볼건 없을듯?</label>
+                    <table class="table table-hover mentors-table">
+                        <thead>
+                          <tr>
+                            <th scope="col">글번호</th>
+                            <th scope="col">멘티 닉네임</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>배한성</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">{id}</th>
+                            <td>{nickname}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">{id}</th>
+                            <td>{nickname}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--완료된 멘토링 보기 모달 끝-->
+
+    
+    <!--멘토링 글 작성 모달 시작-->
+    <form method="post" action="/mentors/boards">
+        <div class="modal fade" id="writeModal" aria-hidden="true" aria-labelledby="writeModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="writeModal">멘토링 작성 페이지</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">카테고리</label>
+                    <select name="category" class="form-select form-select-sm">
+                        <option value=""></option>
+                        <option value="1">국어</option>
+                        <option value="2">영어</option>
+                        <option value="3">수학</option>
+                        <option value="4">과학</option>
+                        <option value="5">사회</option>
+                    </select>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">제목</label>
+                        <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="{title}예)수학 멘토링 해드립니다.">
+                    </div>
+                    <div class="mb-3">
+                        <label for="introduction" class="form-label">자기소개</label>
+                        <input type="text" class="form-control form-control-sm" id="introduction" name="introduction" placeholder="{introduction}멘티에게 자신을 소개해주세요.">
+                    </div>
+                    <div class="mb-3">
+                        <label for="career" class="form-label">경력</label>
+                        <input type="text" class="form-control form-control-sm" id="career" name="career" placeholder="예)~직업 ~년차 {career}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="content">글 내용</label>
+                        <textarea class="form-control" id="content" name="content" style="height: 300px"
+                        placeholder="예)소개 : 내용: 종류: 진행방식 : 사전 준비물:  {content}"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="submit" class="btn btn-outline-success">글 작성 하기</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </form>
+    <!--멘토링 글 작성 모달 끝-->
+
+    </main>
+
+    <div class="floating">
+        <div class="remocon"> 
+            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
+
+            <figure> <img src="img/qjd.png" style="width: 70px;"/></figure>
+            
+            <figure>  <img src="img/book.png" style="width: 70px; margin-top:30px;"/></figure>
+            
+
+            <!-- <figure><i class="fa-solid fa-comments" style="width: 85px;"></i></figure> -->
+        </div>
+
+
+        <div class="side side1"></div>
+        <div class="side side2"></div>
+        <div class="side side3"></div>
+        <div class="side side4"></div>
+    </div>
+
+    <!-- <div id="upBtn">
+        <a href="#"><figure id="up-figure"><img src="img/top.png" style="width: 40px;"/></figure></a>
+    
+    </div>  -->
+
+    <div id="upBtn">
+          <a href="#"><figure><img src="img/top.png" style="width: 50px;"/></figure></a>
+    </div>
+    <footer>
+        <div class="container">
+            <ul>
+               <li><a href="#a">소개</a></li>
+               <li><a href="#a">블로그</a></li>
+               <li><a href="#a">채용 정보</a></li>
+               <li><a href="#a">도움말</a></li>
+               <li><a href="#a">API</a></li>
+               <li><a href="#a">개인정보처리방침</a></li>
+               <li><a href="#a">약관</a></li>
+               <li><a href="#a">인기 계정</a></li>
+               <li><a href="#a">해시태그</a></li>
+               <li><a href="#a">위치</a></li>
+            </ul>
+            <div class="copy">
+               <p>© 2022 MZTALK from Spring</p>
+            </div>
+         </div>
+      
+    
+       </footer>
+   
+    <!-- <div id="upBtn">
+    <ul class="menu align-center expanded text-center SMN_effect-74">
+        <li><a href="#" data-hover="Home" id="homeRef">UP</a></li>
+        </ul>
+        </div> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+<script src="JS/main.js"></script>
+</html>
