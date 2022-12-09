@@ -7,5 +7,5 @@ public interface ApplicationService {
 
     Long save(ApplicationDto applicationDto);
 
-    ResponseEntity find
+    ResponseEntity findById(Long id);
 }

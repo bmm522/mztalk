@@ -2,6 +2,7 @@ package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.dto.ApplicationDto;
 import com.mztalk.mentor.domain.entity.Application;
+import com.mztalk.mentor.domain.entity.ResponseEntity;
 import com.mztalk.mentor.repository.ApplicationRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -43,5 +44,6 @@ class ApplicationServiceTest {
         assertThat(savedApplication.getBank()).isEqualTo(applicationDto.getBank());
         assertThat(savedApplication.getAccount()).isEqualTo(applicationDto.getAccount());
     }
+
 
 }
