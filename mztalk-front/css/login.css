@@ -164,7 +164,7 @@ a.link-copy {
   margin: 0 auto;
 }
 .organize-form p a {
-  color: rgb(236, 224, 152);
+  color: rgb(22, 22, 21);
   text-decoration: none;
   font-weight: bold;
 }
@@ -298,4 +298,120 @@ a.link-copy {
 .w-btn-yellow-outline:hover {
   background-color: #fce205;
   color: #6e6e6e;
+}
+
+#email_check{
+  border-radius: 20px;
+  width: 200px;
+  height: 30px;
+  box-shadow: 3px 3px 3px black;
+  font-family: "paybooc-Light";
+  margin:auto;
+  cursor: pointer;
+  margin-top: 10px;
+ 
+}
+
+#email_check:hover{
+  background-color:  rgb(236, 224, 152);
+  transition: 0.7s;
+  width: 250px;
+  height: 40px;
+  
+}
+
+#auth_div{
+  margin-top: 10px;
+  display: none; 
+
+}
+
+.find-link:link{
+
+  text-decoration: none;
+}
+
+.find-link:link:hover{
+  transition: 0.7s;
+  text-size-adjust: 100px;
+}
+
+.socialBtn{
+  width: 70px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgb(235, 235, 208);
+margin-left: 1px;
+  text-align: center;
+  display: inline-block;
+}
+
+
+#socialBtnDiv{
+  text-align: center;
+}
+
+#googleBtn{
+  color : black;
+  background-color: white;
+  border: 1px solid rgb(238, 157, 157);
+}
+
+#googleBtn:hover{
+  color : white;
+  background-color: red;
+  border: 1px solid rgb(238, 157, 157);
+  transition: 0.7s;
+  width:73px;
+  height: 50px;;
+}
+
+#facebookBtn{
+  color : black;
+  background-color: white;
+  border: 1px solid rgb(69, 57, 231);
+}
+
+#facebookBtn:hover{
+  color : white;
+  background-color: rgb(15, 11, 228);
+  border: 1px solid rgb(135, 97, 241);
+  transition: 0.7s;
+  width:73px;
+  height: 50px;;
+}
+
+#kakaoBtn{
+  color : black;
+  background-color: white;
+  border: 1px solid rgb(229, 233, 11);
+}
+
+#kakaoBtn:hover{
+  color : white;
+  background-color: rgb(245, 229, 14);
+  border: 1px solid rgb(229, 233, 17);
+  transition: 0.7s;
+  width:73px;
+  height: 50px;;
+}
+
+#naverBtn{
+  color : black;
+  background-color: white;
+  border: 1px solid rgb(11, 233, 29);
+}
+
+#naverBtn:hover{
+  color : white;
+  background-color: rgb(14, 245, 45);
+  border: 1px solid rgb(12, 236, 23);
+  transition: 0.7s;
+  width:73px;
+  height: 50px;;
+}
+
+.vaild-div{
+  height: 10px;
+  margin-left: 5px;
 }
