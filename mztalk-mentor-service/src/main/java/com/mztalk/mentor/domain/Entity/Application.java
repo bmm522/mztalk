@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="APPLICATION")
-public class Application extends BaseTimeEntity{
+public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name ="application_id")

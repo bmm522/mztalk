@@ -6,9 +6,6 @@ import com.mztalk.mentor.domain.entity.File;
 import com.mztalk.mentor.domain.entity.Mentor;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="FILE")
-public class File extends BaseTimeEntity{
+public class File extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name="file_id")
