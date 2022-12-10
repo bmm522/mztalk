@@ -52,8 +52,6 @@ public class PrincipalSocialOAuth2UserService extends DefaultOAuth2UserService {
         String providerId = oAuth2UserInfo.getProviderId();
         String username = provider+"_"+providerId;
 
-        System.out.println("getUser : " + oAuth2UserInfo.getProviderId());
-        System.out.println("getUser : " + oAuth2UserInfo.getEmail());
         User user = userRepository.findByUsername(username);
 
         if(user == null) {

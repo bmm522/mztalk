@@ -28,25 +28,12 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
 
-
-//    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
-
     private final CorsFilter corsFilter;
     @Bean
     public BCryptPasswordEncoder encodePwd() {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public SimpleUrlAuthenticationSuccessHandler getoAuth2LoginSuccessHandler(){
-//        return new OAuth2LoginSuccessHandler();
-//    }
-//    @Bean
-//    SimpleUrlAuthenticationSuccessHandler successHandler(){
-//
-//        return new SimpleUrlAuthenticationSuccessHandler(successUrl);
-//
-//   }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -65,8 +52,6 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .userService(principalSocialOAuth2UserService)
                 .and()
                 .successHandler(loginSuccessHandler);
-
-
 
     }
 
