@@ -32,7 +32,8 @@ public class Payment extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Payment(Board board, Mentee mentee, int price, Status status) {
+    public Payment(Long id, Board board, Mentee mentee, int price, Status status) {
+        this.id = id;
         this.board = board;
         this.mentee = mentee;
         this.price = price;

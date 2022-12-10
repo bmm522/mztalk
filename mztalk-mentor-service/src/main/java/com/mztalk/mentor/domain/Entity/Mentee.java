@@ -31,8 +31,9 @@ public class Mentee extends BaseTimeEntity{
     private List<Mentor> mentors = new ArrayList<>();
 
     @Builder
-    public Mentee(String nickname, List<Participant> participants,
+    public Mentee(Long id, String nickname, List<Participant> participants,
                   List<Payment> payments, List<Score> scores, List<Mentor> mentors) {
+        this.id = id;
         this.nickname = nickname;
         this.participants = participants;
         this.payments = payments;

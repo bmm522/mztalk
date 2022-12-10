@@ -35,7 +35,7 @@ public class Score extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Score(Mentor mentor, Mentee mentee, Double count, String content, Status status) {
+    public Score(Long id, Mentor mentor, Mentee mentee, Double count, String content, Status status) {
         this.mentor = mentor;
         this.mentee = mentee;
         this.count = count;

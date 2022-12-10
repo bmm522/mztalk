@@ -34,7 +34,7 @@ public class Participant extends BaseTimeEntity{
     @Enumerated(EnumType.STRING)
     private Status status;
     @Builder
-    public Participant(Board board, Mentee mentee, String name, String phone,
+    public Participant(Long id, Board board, Mentee mentee, String name, String phone,
                        String message, Status status) {
         this.board = board;
         this.mentee = mentee;

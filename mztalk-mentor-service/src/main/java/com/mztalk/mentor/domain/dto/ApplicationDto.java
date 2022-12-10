@@ -9,7 +9,6 @@ import lombok.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ApplicationDto {
 
     private Long id;
@@ -23,6 +22,23 @@ public class ApplicationDto {
     private String account;
     private AuthStatus authStatus;
     private Status status;
+
+    public Application toEntity(){
+        Application application = Application.builder()
+                .id(id)
+                .mentor(mentor)
+                .image(image)
+                .name(name)
+                .phone(phone)
+                .email(email)
+                .job(job)
+                .bank(bank)
+                .account(account)
+                .authStatus(AuthStatus.NO)
+                .status(Status.YES)
+                .build();
+        return application;
+    }
 
     public ApplicationDto(Application application){
         this.id = application.getId();

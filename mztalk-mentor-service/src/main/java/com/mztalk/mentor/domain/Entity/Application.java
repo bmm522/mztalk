@@ -4,6 +4,7 @@ import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ApplicationDto;
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="APPLICATION")
+@EntityListeners(AuditingEntityListener.class)
 public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
 
     @Id @GeneratedValue
@@ -20,8 +22,7 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     @OneToOne(fetch = FetchType.LAZY)
     private Mentor mentor;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name="file_id")
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "application")
     private Image image;
 
     private String name;
@@ -48,9 +49,10 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     }
 
     @Builder
-    public Application(Mentor mentor, Image image, String name, String phone,
+    public Application(Long id, Mentor mentor, Image image, String name, String phone,
                        String email, String job, String bank, String account,
                        AuthStatus authStatus, Status status) {
+        this.id = id;
         this.mentor = mentor;
         this.image = image;
         this.name = name;

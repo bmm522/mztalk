@@ -1,9 +1,6 @@
 package com.mztalk.mentor.domain.dto;
 
-import com.mztalk.mentor.domain.entity.Mentor;
-import com.mztalk.mentor.domain.entity.Participant;
-import com.mztalk.mentor.domain.entity.Payment;
-import com.mztalk.mentor.domain.entity.Score;
+import com.mztalk.mentor.domain.entity.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -20,5 +17,18 @@ public class MenteeDto {
     private List<Payment> payments = new ArrayList<>();
     private List<Score> scores;
     private List<Mentor> mentors = new ArrayList<>();
+
+    public Mentee toEntity(){
+        Mentee mentee = Mentee.builder()
+                .id(id)
+                .nickname(nickname)
+                .participants(participants)
+                .payments(payments)
+                .scores(scores)
+                .mentors(mentors)
+                .build();
+        return mentee;
+    }
+
 
 }

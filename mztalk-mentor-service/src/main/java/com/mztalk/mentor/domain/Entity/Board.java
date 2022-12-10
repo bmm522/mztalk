@@ -46,9 +46,10 @@ public class Board extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Board(Mentor mentor, Category category, String title, String content, String introduction,
+    public Board(Long id, Mentor mentor, Category category, String title, String content, String introduction,
                  String career, int salary, List<Participant> participants,
                  List<Payment> payments, Status status) {
+        this.id = id;
         this.mentor = mentor;
         this.category = category;
         this.title = title;
