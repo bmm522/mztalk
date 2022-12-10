@@ -70,7 +70,7 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
         this.status = status;
     }
 
-    public void change(ApplicationDto applicationDto){
+    public void updateApplication(ApplicationDto applicationDto){
         this.image = applicationDto.getImage();
         this.name = applicationDto.getName();
         this.phone = applicationDto.getPhone();

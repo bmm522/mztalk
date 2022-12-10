@@ -41,4 +41,18 @@ public class BoardDto {
         return board;
     }
 
+    public BoardDto(Board board){
+        this.id = board.getId();
+        this.mentor = board.getMentor();
+        this.category = board.getCategory();
+        this.title = board.getTitle();
+        this.content = board.getContent();
+        this.introduction = board.getIntroduction();
+        this.career = board.getCareer();
+        this.salary = board.getSalary();
+        this.participants = board.getParticipants();
+        this.payments = board.getPayments();
+        this.status = board.getStatus();
+    }
+
 }
