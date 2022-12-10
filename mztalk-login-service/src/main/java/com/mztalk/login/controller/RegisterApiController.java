@@ -44,4 +44,9 @@ public class RegisterApiController {
     public ConcurrentHashMap<String, Object> getAuthCodeOfEmail(@PathVariable("email")String email){
         return mailService.getAuthCodeOfEmail(email);
     }
+
+    @GetMapping("/test")
+    public String test(){
+        return "테스트페이지";
+    }
 }

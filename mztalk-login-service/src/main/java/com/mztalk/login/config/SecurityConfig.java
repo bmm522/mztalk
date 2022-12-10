@@ -36,7 +36,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
 //    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
-//    private final CorsFilter corsFilter;
+    private final CorsFilter corsFilter;
     @Bean
     public BCryptPasswordEncoder encodePwd() {
         return new BCryptPasswordEncoder();
@@ -58,7 +58,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//               .addFilter(corsFilter)
+               .addFilter(corsFilter)
                 .formLogin().disable()
                 .httpBasic().disable()
                 .addFilter(new LoginAuthenticationFilter(authenticationManager()))
