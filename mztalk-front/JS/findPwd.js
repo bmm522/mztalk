@@ -162,5 +162,22 @@ const changeInputPwd=()=>{
 // 		return true;
 // 	});
 
-
+let emailAuthCode = '';
+document.getElementById('checkEmailButton').addEventListener('click', function(){
+	fetch("http://localhost:8000/login/auth-code/"+document.getElementById('userEmail').value+"/"+document.getElementById('userId').value, {
+    method:"GET",
+     })
+    .then((res)=> res.json())
+    .then(res=>{
+		if(res.authCode == 'It`s not an appropriate email format'){
+			alert('올바른 이메일 형식을 입력해주세요');
+		} else if(res.authCode == 'Not Exists Username'){
+			alert('해당 아이디로 등록된 아이디가 없습니다.');
+		} else {
+			alert('해당 이메일로 코드를 전송하였습니다.');
+			emailAuthCode = res.authCode;
+			em();
+		}
+    })
+});
 

@@ -163,19 +163,8 @@ function goToMain(){
 //     }
 // });
 
-
-const checkEmail = () =>{
-  
-}
-
-const test=()=>{
-  console.log("실행되긴함");
-}
-
-
 function findId(){
   window.open('findId.html', '아이디 찾기', 'width=600px,height=480px,scrollbars=no').opener.close();
- 
 }
 
 function findPwd(){
@@ -419,7 +408,6 @@ document.getElementById('nickname').addEventListener('keyup',function(){
   })
   .then((res)=> res.json())
   .then(res=>{
-    console.log(res.checkResult);
     if(nickname.length >1){
      
       if(res.checkResult == 'available'){
