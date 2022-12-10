@@ -43,9 +43,14 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public void addFile(Image image){
+    public void addImage(Image image){
         this.image = image;
         image.addApplication(this);
+    }
+
+    public void addMentor(Mentor mentor){
+        this.mentor = mentor;
+        mentor.addApplication(this);
     }
 
     @Builder

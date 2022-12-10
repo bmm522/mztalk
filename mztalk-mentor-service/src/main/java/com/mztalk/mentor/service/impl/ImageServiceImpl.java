@@ -24,7 +24,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public ImageDto findById(Long id) {
-        Image image = imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
+        Image image = imageRepository.findById(id).orElseThrow(()->new ImageNotFoundException("해당 서류가 존재하지 않습니다."));
         ImageDto imageDto = ImageDto.builder()
                 .id(id)
                 .uploadFileName(image.getUploadFileName())
@@ -33,7 +33,6 @@ public class ImageServiceImpl implements ImageService {
                 .build();
         return imageDto;
     }
-
 
 
 

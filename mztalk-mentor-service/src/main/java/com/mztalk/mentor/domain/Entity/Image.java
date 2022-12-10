@@ -35,9 +35,9 @@ public class Image extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
         this.url = url;
     }
 
-    public static void addApplication(Application application) {
-        Image image = new Image();
-        image.application = application;
+    public void addApplication(Application application) {
+        this.application = application;
+        application.addImage(this);
     }
 
     public ImageDto saveFile(MultipartFile file, HttpServletRequest request){

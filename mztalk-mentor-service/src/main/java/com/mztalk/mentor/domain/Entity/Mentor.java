@@ -47,10 +47,18 @@ public class Mentor extends BaseTimeEntity{
         this.status = status;
     }
 
+    //==연관관계 편의메서드==//
+    public void addApplication(Application application){
+        this.application = application;
+        application.addMentor(this);
+    }
+
     public void addBoard(Board board){
         Mentor mentor = new Mentor();
         mentor.board = board;
     }
 
-
+    public void changeStatus() {
+        this.status = Status.NO;
+    }
 }

@@ -1,6 +1,8 @@
 package com.mztalk.mentor.domain.entity;
 
+import lombok.Data;
 
+@Data
 public class Result<T> {
     private T data;
 

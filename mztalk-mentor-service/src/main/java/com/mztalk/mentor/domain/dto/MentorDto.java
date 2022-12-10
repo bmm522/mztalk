@@ -30,4 +30,14 @@ public class MentorDto {
                 .build();
         return mentor;
     }
+
+    public MentorDto(Mentor mentor) {
+        this.id = mentor.getId();
+        this.application = mentor.getApplication();
+        this.board = mentor.getBoard();
+        this.scores = mentor.getScores();
+        this.mentees = mentor.getMentees();
+        this.status = mentor.getStatus();
+    }
+
 }
