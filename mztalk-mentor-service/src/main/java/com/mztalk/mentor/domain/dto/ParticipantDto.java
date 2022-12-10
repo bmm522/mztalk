@@ -34,4 +34,14 @@ public class ParticipantDto {
         return participant;
     }
 
+    public ParticipantDto(Participant participant){
+        this.id = participant.getId();
+        this.board = participant.getBoard();
+        this.mentee = participant.getMentee();
+        this.name = participant.getName();
+        this.phone = participant.getPhone();
+        this.message = participant.getMessage();
+        this.status = participant.getStatus();
+    }
+
 }

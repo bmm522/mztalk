@@ -35,8 +35,7 @@ public class BoardApiController {
 
     @PatchMapping("/board/edit/{id}")
     public Long updateBoard(@PathVariable("id")Long id,BoardDto boardDto){
-        Long updatedBoardId = boardService.updateBoard(id, boardDto);
-        return updatedBoardId;
+        return boardService.updateBoard(id, boardDto);
     }
 
 

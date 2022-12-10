@@ -57,6 +57,6 @@ public class ApplicationServiceImpl implements ApplicationService {
     public Long updateApplication(Long id,ApplicationDto applicationDto) {
         Application savedApplication = applicationRepository.findById(id).orElseThrow(ApplicationNotFoundException::new);
         savedApplication.updateApplication(applicationDto);
-        return id;
+        return savedApplication.getId();
     }
 }

@@ -14,6 +14,14 @@ public class ImageDto {
     private String storeFileName;
     private String url;
 
+    public ImageDto(Image image) {
+        this.id = image.getId();
+        this.application = image.getApplication();
+        this.uploadFileName = image.getUploadFileName();
+        this.storeFileName = image.getStoreFileName();
+        this.url = image.getUrl();
+    }
+
     public Image toEntity(){
         Image build = Image.builder()
                 .id(id)
