@@ -4,6 +4,7 @@ import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ApplicationDto;
 import com.mztalk.mentor.domain.entity.Application;
+import com.mztalk.mentor.domain.entity.Image;
 import com.mztalk.mentor.domain.entity.ResponseEntity;
 import com.mztalk.mentor.exception.ApplicationNotFoundException;
 import com.mztalk.mentor.repository.ApplicationRepository;
@@ -33,12 +34,13 @@ public class ApplicationServiceImpl implements ApplicationService {
                 phone(applicationDto.getPhone()).
                 email(applicationDto.getEmail()).
                 job(applicationDto.getJob()).
-                file(applicationDto.getFile()).
+                file(applicationDto.getImage()).
                 bank(applicationDto.getBank()).
                 account(applicationDto.getAccount()).
                 status(Status.YES).
                 authStatus(AuthStatus.NO).
                 build();
+        Image.addApplication(application);
 
         Application savedApplication = applicationRepository.save(application);
         return savedApplication.getId();
