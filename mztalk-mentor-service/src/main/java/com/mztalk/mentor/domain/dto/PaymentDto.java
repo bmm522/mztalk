@@ -30,4 +30,12 @@ public class PaymentDto {
         return payment;
     }
 
+    public PaymentDto(Payment payment){
+        this.id = payment.getId();
+        this.board = payment.getBoard();
+        this.mentee = payment.getMentee();
+        this.price = payment.getPrice();
+        this.status = payment.getStatus();
+    }
+
 }
