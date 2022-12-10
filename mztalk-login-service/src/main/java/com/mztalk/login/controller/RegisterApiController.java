@@ -5,6 +5,7 @@ import com.mztalk.login.service.CheckService;
 import com.mztalk.login.service.MailService;
 import com.mztalk.login.service.RegisterService;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +14,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/login/register")
+@RequiredArgsConstructor
 public class RegisterApiController {
 
-    @Autowired
-    private RegisterService registerService;
+    private final RegisterService registerService;
+    private final CheckService checkService;
+    private final MailService mailService;
 
-    @Autowired
-    private MailService mailService;
-
-    @Autowired
-    private CheckService checkService;
 
     // 회원가입
     @PostMapping("/user")

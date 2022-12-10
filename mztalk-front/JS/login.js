@@ -139,29 +139,6 @@ function goToMain(){
     location.href = "main.html"
 }
 
-// nameBtn.addEventListener('keyup', function(){
-//     let nameLength = nameBtn.value.length;
-//     let passwordLength = passwordBtn.value.length;
-
-//     if(nameLength >= 1 && passwordLength >= 5 && nameBtn.value.indexOf('@') !== -1 ){
-//         loginBtn.style.backgroundColor = "#0095f6"; 
-//         loginBtn.addEventListener('click', goToMain)       
-//     } else {
-//         loginBtn.style.backgroundColor = "#b2dffc";
-//     }
-// });
-
-// passwordBtn.addEventListener('keyup', function(){
-//     let nameLength = nameBtn.value.length;
-//     let passwordLength = passwordBtn.value.length;
-
-//     if(nameLength >= 1 && passwordLength >= 5 && nameBtn.value.indexOf('@') !== -1){
-//         loginBtn.style.backgroundColor = "#0095f6"; 
-//         loginBtn.addEventListener('click', goToMain)       
-//     } else {
-//         loginBtn.style.backgroundColor = "#b2dffc";
-//     }
-// });
 
 function findId(){
   window.open('findId.html', '아이디 찾기', 'width=600px,height=480px,scrollbars=no').opener.close();
@@ -200,27 +177,7 @@ const idBlurText = () => {
   
 }
 
-
-// const register = () =>{
-//   fetch("http://localhost:8000/login/user",{
-//     method: "POST",
-//     headers:{
-//         "Content-Type":"application/json",            
-//     },
-//     body:JSON.stringify({
-//         userId : document.getElementById('username').value,
-//         password : document.getElementById('password').value,
-//         nickname : document.getElementById('nickname').value,
-//         email : document.getElementById('email').value
-//     }),
-// })
-
-// .then((res) => res.json())
-// .then(res => {  
-// });
-
-// }
-
+// 회원가입
 document.getElementById('sign-up-btn').addEventListener('click',function(e){
 
   if(document.getElementById('checkIdResult').value=="fail"){

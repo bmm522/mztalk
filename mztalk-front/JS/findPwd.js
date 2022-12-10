@@ -3,62 +3,18 @@ const moveMain = ()=>{
     window.open('loginpage.html', 'MZTALK').opener.close();
 }
 
-const moveInputAuth = () =>{
-    em();
-}
-
-const changeInputPwd=()=>{
-    dm();
-}
-
-
-
-
-	let authCode = '';   
-/*    let userIdd = document.getElementById('username'); */
-   
-//    $('#checkEmailButton').click(function(){
-// 	   let params={
-// 				username : $("#userId").val(),
-// 				email : $("#userEmail").val()
-// 		}
-// 		$.ajax({
-// 			type:"POST",
-// 			url:"/check-email.lo",
-// 			data:params,
-// 			success:function(res){
-//  				console.log('실행됨');
-// 				let result = res.result;
-// 				if(result == 'Not User'){
-//  					alert('등록되지 않은 아이디입니다.');
-//  					console.log(result);
-//  				} else if(result == 'Not Matching Email'){
-//  					alert('등록된 이메일과 일치하지 않습니다.');
-//  					console.log(result);
-//  				}  else if(result == 'success'){
-//  					alert('이메일에 인증코드를 전송했습니다.');
-//  					authCode = res.authCode;
-//  					em();
-//  				}
-				
-// 			}
-// 		})
-// 	});
-   
    const checkCertificationEmailCode = () =>{
-	   let inputAuthCode = document.getElementById('certificationEmailCode').value;
-	   if(inputAuthCode == authCode){
-		   dm();
-	   } else {
-		   alert('코드가 일치하지 않습니다.');
-	   }
+	if(emailAuthCode == document.getElementById('certificationEmailCode').value){
+		dm();
+	} else {
+		alert('코드가 일치하지 않습니다.');
+	}
    }
    
    
    
 	
    const em=()=>{
-      console.log('em 실행됨');
       var e = document.getElementById('email-form');
        var c = document.getElementById('email-check');
        e.style.transform="translateY(-1000px)";
@@ -163,7 +119,9 @@ const changeInputPwd=()=>{
 // 	});
 
 let emailAuthCode = '';
+let userId = '';
 document.getElementById('checkEmailButton').addEventListener('click', function(){
+	userId = document.getElementById('userId').value;
 	fetch("http://localhost:8000/login/auth-code/"+document.getElementById('userEmail').value+"/"+document.getElementById('userId').value, {
     method:"GET",
      })
@@ -172,7 +130,7 @@ document.getElementById('checkEmailButton').addEventListener('click', function()
 		if(res.authCode == 'It`s not an appropriate email format'){
 			alert('올바른 이메일 형식을 입력해주세요');
 		} else if(res.authCode == 'Not Exists Username'){
-			alert('해당 아이디로 등록된 아이디가 없습니다.');
+			alert('계정정보를 다시 확인해주세요.');
 		} else {
 			alert('해당 이메일로 코드를 전송하였습니다.');
 			emailAuthCode = res.authCode;
@@ -180,4 +138,70 @@ document.getElementById('checkEmailButton').addEventListener('click', function()
 		}
     })
 });
+
+const updatePwd = () =>{
+
+	if(document.getElementById('checkPasswordResult').value == 'fail'){
+		alert('비밀번호 형식이 올바르지 않습니다.');
+	} else if(document.getElementById('checkRePasswordResult').value == 'fail'){
+		alert('비밀번호가 일치하지 않습니다.');
+	} else {
+		fetch("http://localhost:8000/login/password", {
+			method:"PATCH",
+			headers:{
+				"Content-Type":"application/json"
+			},
+			body:JSON.stringify({
+				username : userId,
+				password : document.getElementById('password-box').value
+			}),
+		})
+		.then(res =>{
+			moveMain();
+		})
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.getElementById('password').addEventListener('keyup',function(){
+// 	isValidPassword();
+// });
+
+// document.getElementById('password').addEventListener('blur', function(){
+// 	passwordBlurText();
+// });
+
+// document.getElementById('check-password-box').addEventListener('keyup',function(){
+// 	isValidCheckPassword();
+// });
+
+// document.getElementById('check-password-box').addEventListener('blur',function(){
+// 	rePasswordBlurText();
+// })
+
+
+
+// document.getElementById('checkCode').addEventListener('click',function(){
+// 	console.log('너 실행되니?');
+
+// 	if(emailAuthCode == document.getElementById('certificationEmailCode').value){
+// 		dm();
+// 	} else {
+// 		alert('코드가 일치하지 않습니다.');
+// 	}
+// });
+
 
