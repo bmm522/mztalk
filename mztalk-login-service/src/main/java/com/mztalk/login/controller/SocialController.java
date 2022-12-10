@@ -29,20 +29,18 @@ public class SocialController {
 
 
     @GetMapping("/google")
-    public String moveGoogleLoginForm(HttpServletRequest request, HttpServletResponse response) throws IOException {
-            System.out.println("google로그인 요청들어옴");
-//        System.out.println(request);
- //       System.out.println(response);
-  //      response.sendRedirect("https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&access_type=offline&include_granted_scopes=true&response_type=code&state=STATE_STRING&redirect_uri=http://localhost:8085/login/oauth2/code/google&client_id=768348317974-dc7t1s5kcgjonuqbiou2gt8jes16hfes.apps.googleusercontent.com");
-//        String urlLink = "https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&access_type=offline&include_granted_scopes=true&response_type=code&state=STATE_STRING&redirect_uri=http://localhost:8085/login/oauth2/code/google&client_id=768348317974-dc7t1s5kcgjonuqbiou2gt8jes16hfes.apps.googleusercontent.com";
-//        try {
-//            Desktop.getDesktop().browse(new URI(urlLink));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        } catch (URISyntaxException e) {
-//            throw new RuntimeException(e);
-//        }
+    public String moveGoogleLoginForm() throws IOException {
               return "redirect:/oauth2/authorization/google";
+    }
+
+    @GetMapping("/facebook")
+    public String moveFacebookLoginForm(){
+        return "redirect:/oauth2/authorization/facebook";
+    }
+
+    @GetMapping("/naver")
+    public String moveNaverLoginFrom(){
+        return "redirect:/oauth2/authorization/naver";
     }
 
 

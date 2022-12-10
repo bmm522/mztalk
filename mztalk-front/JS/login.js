@@ -610,6 +610,14 @@ document.getElementById('googleBtn').addEventListener('click',function(){
        location.href="http://localhost:8000/login/social/google";
    });
 
+document.getElementById('facebookBtn').addEventListener('click',function(){
+    location.href="http://localhost:8000/login/social/facebook";
+});
+
+document.getElementById('naverBtn').addEventListener('click',function(){
+  location.href="http://localhost:8000/login/social/naver";
+});
+
 
    
    window.onload = function(){

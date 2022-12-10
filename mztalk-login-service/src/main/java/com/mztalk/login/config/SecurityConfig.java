@@ -1,10 +1,8 @@
 package com.mztalk.login.config;
 
 import com.mztalk.login.oauth.LoginSuccessHandler;
-import com.mztalk.login.oauth.OAuth2LoginSuccessHandler;
 import com.mztalk.login.oauth.PrincipalSocialOAuth2UserService;
 import com.mztalk.login.auth.LoginAuthenticationFilter;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.web.filter.CorsFilter;
-
-import java.net.http.HttpHeaders;
 
 @Configuration
 @EnableWebSecurity
