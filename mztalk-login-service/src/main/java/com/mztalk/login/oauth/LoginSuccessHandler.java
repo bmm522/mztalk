@@ -31,6 +31,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String RefreshTokenCookieValue =URLEncoder.encode("RefreshToken "+jwtTokenAndRefreshToken.get("refreshToken"), "UTF-8");
         String LoginResultCookieValue = URLEncoder.encode("Social LoginUser", "UTF-8");
 
+
         Cookie jwtTokencookie = new Cookie("Authorization",  jwtTokenCookieValue);
         jwtTokencookie.setPath("/");
         Cookie RefreshTokenCookie = new Cookie("RefreshToken", RefreshTokenCookieValue);
@@ -42,6 +43,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.addCookie(RefreshTokenCookie);
         response.addCookie(LoginResultCookie);
 
-        response.sendRedirect("http://localhost:5501/main.html");
+        response.sendRedirect("http://localhost:5501/loginpage.html");
     }
 }

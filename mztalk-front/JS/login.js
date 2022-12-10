@@ -607,52 +607,44 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
 });
 
 document.getElementById('googleBtn').addEventListener('click',function(){
-  // axios.defaults.withCredentials = true;
-  
-  // axios.get('https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&access_type=offline&include_granted_scopes=true&response_type=code&state=STATE_STRING&redirect_uri=http://localhost:8085/login/oauth2/code/google&client_id=768348317974-dc7t1s5kcgjonuqbiou2gt8jes16hfes.apps.googleusercontent.com')
-  // .then(response =>{
-  //     console.log(response.data)
-  // })
-
-
-
-
-
-
-
-
-
        location.href="http://localhost:8000/login/social/google";
-  //    console.log('실행됨?');
-  //    console.log('여기는 로그인js');
-  //    let httpRequest = new XMLHttpRequest();
-  //    console.log(httpRequest)
-    
-  // console.log(httpRequest.getAllResponseHeaders());
-  // console.log(httpRequest.responseXML)
-
-  // console.log(localStorage.getItem("Authorization"));
-  // console.log(localStorage.getItem("RefreshToken"));
-//   location.href="https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&access_type=offline&include_granted_scopes=true&response_type=code&state=STATE_STRING&redirect_uri=http://localhost:8085/login/oauth2/code/google&client_id=768348317974-dc7t1s5kcgjonuqbiou2gt8jes16hfes.apps.googleusercontent.com";
-  // fetch("http://localhost:8000/login/social/google",{
-  //    mode: 'no-cors',
-  //   method:"GET",
-  //   redirect:'follow',
-  // })
-  // .then(res=>{
-  //   console.log('통신성공');
-  //    location.href="http://localhost:8085/oauth2/authorization/google";
-  //    console.log('실행됨?');
-  //    console.log('여기는 로그인js');
-  //    let httpRequest = new XMLHttpRequest();
-  //    console.log(httpRequest)
-    
-  // console.log(httpRequest.getAllResponseHeaders());
-  // console.log(httpRequest.responseXML)
-
-  // console.log(localStorage.getItem("Authorization"));
-  // console.log(localStorage.getItem("RefreshToken"));
- // });
    });
 
-// http://localhost:8080/oauth2/authorization/google ㅡ> http://localhost:8080/login/oauth2/code/google
+
+   
+   window.onload = function(){
+
+  console.log(getCookieValue('Authorization'));
+  console.log(getCookieValue('RefreshToken'));
+  console.log(getCookieValue('LoginResult'));
+  
+      if(!getCookieValue('Authorization') == ''){
+          console.log('쿠키있음');
+          localStorage.setItem("Authorization", getCookieValue('Authorization').replace("+"," "));
+          localStorage.setItem("RefreshToken", getCookieValue('RefreshToken').replace("+"," "));
+          location.href="http://127.0.0.1:5501/main.html";
+      }
+  
+  console.log(localStorage.getItem('Authorization'));
+  console.log(localStorage.getItem('RefreshToken'));
+  };
+  
+  
+  
+  const getCookieValue = (key) => {
+      let cookieKey = key + "="; 
+      let result = "";
+      const cookieArr = document.cookie.split(";");
+      
+      for(let i = 0; i < cookieArr.length; i++) {
+        if(cookieArr[i][0] === " ") {
+          cookieArr[i] = cookieArr[i].substring(1);
+        }
+        
+        if(cookieArr[i].indexOf(cookieKey) === 0) {
+          result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+          return result;
+        }
+      }
+      return result;
+    }
