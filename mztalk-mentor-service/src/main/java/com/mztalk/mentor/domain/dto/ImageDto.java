@@ -6,12 +6,11 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileDto {
+public class ImageDto {
 
     private Long id;
     private Application application;
     private String uploadFileName;
     private String storeFileName;
-    private String extension;
 
 }
