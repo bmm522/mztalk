@@ -3,6 +3,7 @@ package com.mztalk.login.oauth;
 import com.mztalk.login.auth.PrincipalDetails;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.oauth.info.GoogleUserInfo;
+import com.mztalk.login.oauth.info.KakaoUserInfo;
 import com.mztalk.login.oauth.info.NaverUserInfo;
 import com.mztalk.login.oauth.info.OAuth2UserInfo;
 import com.mztalk.login.properties.JwtProperties;
@@ -31,44 +32,26 @@ public class PrincipalSocialOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        System.out.println("여기는?");
-        OAuth2User oauth2User = super.loadUser(userRequest);
-        System.out.println("실행");
-        System.out.println(userRequest);
 
+        OAuth2User oauth2User = super.loadUser(userRequest);
         OAuth2UserInfo oAuth2UserInfo = null;
-        System.out.println(2);
-        System.out.println("getAttributes : "+oauth2User.getAttributes());
-        System.out.println("userRquest : " + userRequest.getClientRegistration().getRegistrationId());
         switch(userRequest.getClientRegistration().getRegistrationId()) {
             case "google": oAuth2UserInfo = new GoogleUserInfo(oauth2User.getAttributes()); break;
-//            case "facebook": socialProviderUserInfo = new FacebookUserInfo(oauth2User.getAttributes()); break;
+            case "kakao": oAuth2UserInfo = new KakaoUserInfo(oauth2User.getAttributes()); break;
             case "naver": oAuth2UserInfo = new NaverUserInfo((Map)oauth2User.getAttributes().get("response")); break;
         }
 
 
-        User user = getUser(oAuth2UserInfo);
-//        ConcurrentHashMap<String, String> jwtToken = getJwtTokenFactoryInstance().getJwtToken(user);
-//		postToFront(jwtToken);
+        User user = getUser(oAuth2UserInfo, oauth2User);
 
         return new PrincipalDetails(user, oauth2User.getAttributes());
     }
 
-
-	private void postToFront(ConcurrentHashMap<String, String> jwtToken) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken.get("jwtToken"));
-		headers.add("RefreshToken", "RefreshToken "+jwtToken.get("refreshToken"));
-//		headers.setLocation(URI.create("http://127.0.0.1:5501/main.html"));
-//		new ResponseEntity<String>();
-	}
-
-
-
-    private User getUser(OAuth2UserInfo oAuth2UserInfo) {
+    private User getUser(OAuth2UserInfo oAuth2UserInfo, OAuth2User oauth2User) {
         String provider = oAuth2UserInfo.getProvider();
         String providerId = oAuth2UserInfo.getProviderId();
         String username = provider+"_"+providerId;
+
         System.out.println("getUser : " + oAuth2UserInfo.getProviderId());
         System.out.println("getUser : " + oAuth2UserInfo.getEmail());
         User user = userRepository.findByUsername(username);

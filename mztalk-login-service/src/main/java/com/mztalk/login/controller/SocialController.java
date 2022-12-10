@@ -43,5 +43,10 @@ public class SocialController {
         return "redirect:/oauth2/authorization/naver";
     }
 
+    @GetMapping("/kakao")
+    public String moveKakaoLoginFrom(){
+        return "redirect:/oauth2/authorization/kakao";
+    }
+
 
 }

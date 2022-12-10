@@ -618,6 +618,10 @@ document.getElementById('naverBtn').addEventListener('click',function(){
   location.href="http://localhost:8000/login/social/naver";
 });
 
+document.getElementById('kakaoBtn').addEventListener('click',function(){
+  location.href="http://localhost:8000/login/social/kakao";
+});
+
 
    
    window.onload = function(){
