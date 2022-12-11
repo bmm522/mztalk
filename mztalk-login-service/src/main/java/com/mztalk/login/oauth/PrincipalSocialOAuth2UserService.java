@@ -6,24 +6,15 @@ import com.mztalk.login.oauth.info.GoogleUserInfo;
 import com.mztalk.login.oauth.info.KakaoUserInfo;
 import com.mztalk.login.oauth.info.NaverUserInfo;
 import com.mztalk.login.oauth.info.OAuth2UserInfo;
-import com.mztalk.login.properties.JwtProperties;
 import com.mztalk.login.repository.UserRepository;
-import com.mztalk.login.service.JwtTokenFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstance;
 
 @Service
 public class PrincipalSocialOAuth2UserService extends DefaultOAuth2UserService {
