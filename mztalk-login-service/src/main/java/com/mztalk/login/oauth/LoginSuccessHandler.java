@@ -25,6 +25,15 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
+
+        if(principalDetails.getUser().getNickname().equals("null")){
+            Cookie usernameCookie = new Cookie("username", URLEncoder.encode(principalDetails.getUsername(),"UTF-8"));
+            response.addCookie(usernameCookie);
+            response.sendRedirect("http://localhost:5501/editNickname");
+        }
+
+
+
         ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
 
         String jwtTokenCookieValue = URLEncoder.encode(JwtProperties.TOKEN_PREFIX+jwtTokenAndRefreshToken.get("jwtToken"), "UTF-8");

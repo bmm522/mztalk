@@ -23,5 +23,10 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
         return userRepository.updateMentorStatus(nickname);
     }
 
+    @Override
+    public int updateStatus(String nickname) {
+        return userRepository.updateStatus(nickname);
+    }
+
 
 }
