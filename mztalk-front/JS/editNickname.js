@@ -68,11 +68,11 @@ document.getElementById('nickname-box').addEventListener('keyup',function(){
 	})
 	.then((res)=>res.json())
 	.then(res=>{
-		localStorage.removeItem("Authorization");
-		localStorage.removeItem("RefreshToken");
+		// localStorage.removeItem("Authorization");
+		// localStorage.removeItem("RefreshToken");
 		localStorage.setItem("Authorization", res.jwtToken);
 		localStorage.setItem("RefreshToken", res.refreshToken);
-		location.href="main.html";
+		window.open('main.html', '_self');
 	})
   });
 
