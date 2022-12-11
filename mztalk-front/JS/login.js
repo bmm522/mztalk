@@ -139,43 +139,9 @@ function goToMain(){
     location.href = "main.html"
 }
 
-// nameBtn.addEventListener('keyup', function(){
-//     let nameLength = nameBtn.value.length;
-//     let passwordLength = passwordBtn.value.length;
-
-//     if(nameLength >= 1 && passwordLength >= 5 && nameBtn.value.indexOf('@') !== -1 ){
-//         loginBtn.style.backgroundColor = "#0095f6"; 
-//         loginBtn.addEventListener('click', goToMain)       
-//     } else {
-//         loginBtn.style.backgroundColor = "#b2dffc";
-//     }
-// });
-
-// passwordBtn.addEventListener('keyup', function(){
-//     let nameLength = nameBtn.value.length;
-//     let passwordLength = passwordBtn.value.length;
-
-//     if(nameLength >= 1 && passwordLength >= 5 && nameBtn.value.indexOf('@') !== -1){
-//         loginBtn.style.backgroundColor = "#0095f6"; 
-//         loginBtn.addEventListener('click', goToMain)       
-//     } else {
-//         loginBtn.style.backgroundColor = "#b2dffc";
-//     }
-// });
-
-
-const checkEmail = () =>{
-  
-}
-
-const test=()=>{
-  console.log("실행되긴함");
-}
-
 
 function findId(){
   window.open('findId.html', '아이디 찾기', 'width=600px,height=480px,scrollbars=no').opener.close();
- 
 }
 
 function findPwd(){
@@ -211,27 +177,7 @@ const idBlurText = () => {
   
 }
 
-
-// const register = () =>{
-//   fetch("http://localhost:8000/login/user",{
-//     method: "POST",
-//     headers:{
-//         "Content-Type":"application/json",            
-//     },
-//     body:JSON.stringify({
-//         userId : document.getElementById('username').value,
-//         password : document.getElementById('password').value,
-//         nickname : document.getElementById('nickname').value,
-//         email : document.getElementById('email').value
-//     }),
-// })
-
-// .then((res) => res.json())
-// .then(res => {  
-// });
-
-// }
-
+// 회원가입
 document.getElementById('sign-up-btn').addEventListener('click',function(e){
 
   if(document.getElementById('checkIdResult').value=="fail"){
@@ -419,7 +365,6 @@ document.getElementById('nickname').addEventListener('keyup',function(){
   })
   .then((res)=> res.json())
   .then(res=>{
-    console.log(res.checkResult);
     if(nickname.length >1){
      
       if(res.checkResult == 'available'){
@@ -563,4 +508,102 @@ const authBlurText = () =>{
 
 
 
+document.getElementById('sign-in-btn').addEventListener('click', function(){
+  
 
+  let userId = document.getElementById('userId').value;
+  let password = document.getElementById('password-in').value;
+
+  if(userId == "" || password == ""){
+    alert('아이디 또는 비밀번호를 입력해주세요');
+  } else {
+    fetch("http://localhost:8000/login",{
+        method: "POST",
+        headers:{
+            "Content-Type":"application/json",            
+        },
+        body:JSON.stringify({
+            username : userId,
+            password : password
+        }),
+    })
+   
+    .then(res => {
+      localStorage.removeItem("Authorization");
+      localStorage.removeItem("RefreshToken");
+      let result =   res.headers.get('LoginResult');
+      console.log('통신성공');
+      if(result =='Not found userId or userPassword'){
+        alert('아이디 또는 비밀번호가 틀렸습니다.');
+        document.getElementById('userId').value = "";
+        document.getElementById('password-in').value ="";
+      } else if(result =='Fail Login'){
+        alert('로그인을 실패하였습니다.');
+        document.getElementById('userId').value = "";
+        document.getElementById('password-in').value ="";
+      } else {
+
+        localStorage.setItem("Authorization", res.headers.get('Authorization'));
+        localStorage.setItem("RefreshToken", res.headers.get('RefreshToken'));
+        window.open('main.html', '_self');
+      }
+
+    });
+  }
+  
+  
+});
+
+document.getElementById('googleBtn').addEventListener('click',function(){
+       location.href="http://localhost:8000/login/social/google";
+   });
+
+document.getElementById('naverBtn').addEventListener('click',function(){
+  location.href="http://localhost:8000/login/social/naver";
+});
+
+document.getElementById('kakaoBtn').addEventListener('click',function(){
+  location.href="http://localhost:8000/login/social/kakao";
+});
+
+
+   
+   window.onload = function(){
+
+  console.log(getCookieValue('Authorization'));
+  console.log(getCookieValue('RefreshToken'));
+  console.log(getCookieValue('LoginResult'));
+  
+      if(!getCookieValue('Authorization') == ''){
+          console.log('쿠키있음');
+          localStorage.removeItem("Authorization");
+          localStorage.removeItem("RefreshToken");
+
+          localStorage.setItem("Authorization", getCookieValue('Authorization').replace("+"," "));
+          localStorage.setItem("RefreshToken", getCookieValue('RefreshToken').replace("+"," "));
+          location.href="http://127.0.0.1:5501/main.html";
+      }
+  
+  console.log(localStorage.getItem('Authorization'));
+  console.log(localStorage.getItem('RefreshToken'));
+  };
+  
+  
+  
+  const getCookieValue = (key) => {
+      let cookieKey = key + "="; 
+      let result = "";
+      const cookieArr = document.cookie.split(";");
+      
+      for(let i = 0; i < cookieArr.length; i++) {
+        if(cookieArr[i][0] === " ") {
+          cookieArr[i] = cookieArr[i].substring(1);
+        }
+        
+        if(cookieArr[i].indexOf(cookieKey) === 0) {
+          result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+          return result;
+        }
+      }
+      return result;
+    }

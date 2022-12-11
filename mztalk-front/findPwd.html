@@ -16,7 +16,7 @@
         <input type="text" id="userId" class="textBox" placeholder="Your Id" required/><br><br><br> 
         <input type="text" id="userEmail" class="textBox" placeholder="Your Email Address" required/><br><br><br>
        
-        <button class="custom-btn btn-14" id="checkEmailButton" onclick="moveInputAuth();" >입력</button>
+        <button class="custom-btn btn-14" id="checkEmailButton" >입력</button>
         <br>
     <br>
     <br>
@@ -26,10 +26,8 @@
     </div>
     <div id="email-check">
       <h2>인증코드 확인</h2>
-      <input type="hidden" id="randomNumber"/>
       <input type="text" id="certificationEmailCode" class="textBox" placeholder="인증코드" required/><br><br><br>
-      <input type="hidden" id="checkCertificationEmailCode"/>
-      <button class="custom-btn btn-14" id="checkCode" onclick="changeInputPwd();">입력</button>
+      <button class="custom-btn btn-14" id="checkCode" onclick="checkCertificationEmailCode();">입력</button>
     </div>
     
 
@@ -38,7 +36,7 @@
         <br>
         <br>
         <h2>새로운 비밀번호</h2>
-      <form action="${contextPath}/new-password.lo" method="POST" id="passwordForm">
+      <form  id="passwordForm">
           <div>
           <input type="password" name="password" class="textBox" id="password-box" placeholder="Enter your new Password"  onblur=" passwordBlurText();" onkeyup="isValidPassword();" required/><br><br><br>
           <div id="checkPw" class="checkbox"></div>
@@ -54,7 +52,7 @@
           <input type="hidden" id="username"/>
           <div>
           <div>
-          <button class="custom-btn btn-14" id="changeNewPwd" onclick="moveMain();">변경</button>
+          <button type="button" class="custom-btn btn-14" id="changeNewPwd" onclick="updatePwd();">변경</button>
           </div>
           </div>
         </form>
