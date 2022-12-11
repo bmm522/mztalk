@@ -1,14 +1,13 @@
 package com.mztalk.mentor.domain.dto;
 
 import com.mztalk.mentor.domain.entity.Board;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDto {
