@@ -21,7 +21,7 @@ public class Category {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "category")
     private List<Board> boards = new ArrayList<>();
 
     public Category(Long id, String name) {

@@ -38,10 +38,10 @@ public class Board extends BaseTimeEntity{
 
     private int salary; //시급
 
-    @OneToMany
+    @OneToMany(mappedBy = "board")
     private List<Participant> participants = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "board")
     private List<Payment> payments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

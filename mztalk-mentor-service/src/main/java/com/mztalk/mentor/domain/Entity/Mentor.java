@@ -25,7 +25,7 @@ public class Mentor extends BaseTimeEntity{
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "mentor")
     private Board board;
 
-    @OneToMany
+    @OneToMany(mappedBy = "mentor")
     private List<Score> scores = new ArrayList<>();
 
     @ManyToMany

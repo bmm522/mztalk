@@ -18,13 +18,13 @@ public class Mentee extends BaseTimeEntity{
 
     private String nickname;
 
-    @OneToMany
+    @OneToMany(mappedBy = "mentee")
     private List<Participant> participants = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "mentee")
     private List<Payment> payments = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "mentee")
     private List<Score> scores;
 
     @ManyToMany(mappedBy = "mentees")

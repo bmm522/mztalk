@@ -19,7 +19,7 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     @Column(name ="application_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "application")
     private Mentor mentor;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "application")
