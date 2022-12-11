@@ -3,7 +3,6 @@ package com.mztalk.login.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.mztalk.login.domain.entity.User;
-import com.mztalk.login.properties.JwtProperties;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

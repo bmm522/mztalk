@@ -1,7 +1,6 @@
 package com.mztalk.login.service;
 
 import com.mztalk.login.domain.entity.User;
-import com.mztalk.login.properties.JwtProperties;
 
 import javax.servlet.http.Cookie;
 import java.io.UnsupportedEncodingException;
