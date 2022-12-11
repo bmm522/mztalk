@@ -40,8 +40,8 @@
             <div class="d-flex align-items-start">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                   <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">프로필 설정</button>
-                  <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">비밀번호 변경</button>
-                  <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">개인 정보 조회</button>
+                  <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">구독권</button>
+                  <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">신고 조회</button>
                   <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">알림 설정</button>
                 </div>
                 <div class="tab-content" id="v-pills-tabContent">
@@ -53,8 +53,17 @@
                 
                             <!--프로필셋팅 아이디영역-->
                             <div class="content-item__01">
-                                <div class="item__img">
-                                    <img src="img/recommend_02.jpeg"/>
+                                <div class="profile-left">
+                                    <div class="profile-img-wrap story-border"
+                                        onclick="popup('.modal-image')">
+                                        <form id="userProfileImageForm">
+                                            <input type="file" name="profileImageFile" style="display: none;"
+                                                id="userProfileImageInput" />
+                                        </form>
+                        
+                                        <img class="profile-image" src="img/instagram_feed.jpg"
+                                             id="userProfileImage" />
+                                    </div>
                                 </div>
                                 <div class="item__username">
                                     <h2>MZTALK</h2>
@@ -124,27 +133,35 @@
                     </section>
                   </div>
 
+                  <!--프로필사진 바꾸기 모달-->
+                    <div class="modal-image" onclick="modalImage()">
+                        <div class="modal">
+                            <p>프로필 사진 바꾸기</p>
+                            <button onclick="profileImageUpload()">사진 업로드</button>
+                            <button onclick="closePopup('.modal-image')">취소</button>
+                        </div>
+                    </div>
+
+                    <!--프로필사진 바꾸기 모달end-->
 
 
                   <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
                    
-                    <section class="setting-password">
+                    <section class="setting-subsribe">
+
                         <!--프로필셋팅 아티클-->
-                        <article class="setting__password">
+                        <article class="setting__subsribe">
                             <!--프로필셋팅 아이디영역-->
                             <div class="content-item__01">
-                                <div class="item__img">
-                                    <img src="img/recommend_02.jpeg"/>
-                                </div>
-                                <div class="item__username">
-                                    <h2>MZTALK</h2>
-                                </div>
+                                <form>    
+                                    <button type="button" class="btn btn-outline-primary">
+                                        <p>
+                                            <h1>정기 구독하기</h1>
+                                            <h4>월 9,900원</h4>
+                                        </p>
+                                    </button>
+                                </form>    
                             </div>
-                        
-
-
-
-
 
                         </article>
                     </section>        
@@ -156,7 +173,8 @@
                     ...
                 </div>
                   <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">
-                    ...
+                    <!--알림-->
+                    
                 </div>
 
                 </div>

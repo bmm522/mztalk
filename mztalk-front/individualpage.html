@@ -46,8 +46,11 @@
                     <tr>
                         <td rowspan="2">
                             <div id="profile-image-div">
-
+                                <input type="file" name="profileImageFile" style="display: none;"
+						        id="userProfileImageInput" />
                                 <img src="img/instagram_feed.jpg" id="profile-image">
+                                
+
                                 <div id="nickname-div">
                                     {nickname}
                                 </div>
@@ -94,18 +97,20 @@
 
                 </table>
 
-
             </div>
             <div id="hr-div">
                 <hr>
             </div>
+            <button type="button" style="cursor:pointer;" id="write_board" class="write_board">글쓰기</button>
 
 
-            <div id="write-div">
+
+            <div id="modal" class="modal hidden">
+                
                 <div id="write-input-div">
                     <div id="write-title-div">
-                        <br><br>
-                        <div id=title-div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp제목&nbsp&nbsp:<input type="text"
+                        
+                        <div id=title-div>{제목}<input type="text"
                                 id="title-input-text"><br> </div>
                         <hr>
                     </div>
@@ -114,9 +119,13 @@
                     <input type="text" id="content-input-text">
 
                 </div>
-                <button type="button" style="cursor:pointer;" id="write-btn">글 등록</button>
+                <button type="button" style="cursor:pointer;" class="write-btn">글 등록</button>
+                <button type="button" class="btn-close" aria-label="Close">닫기</button>
 
             </div>
+
+
+
             <div id="post-div">
 
                 <table id="post-table">
@@ -275,7 +284,7 @@
         </div> -->
 
 </body>
-<script src="JS/main.js"></script>
-<script src="JS/inditest.js"></script>
+
+<script src="JS/individualpage.js"></script>
 
 </html>
