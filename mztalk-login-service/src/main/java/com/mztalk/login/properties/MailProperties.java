@@ -5,4 +5,5 @@ public interface MailProperties {
     String PORT = "465";
     String MAIL_ID = "rlawldls11@naver.com";
     String MAIL_PW = "dlwngns";
+
 }
