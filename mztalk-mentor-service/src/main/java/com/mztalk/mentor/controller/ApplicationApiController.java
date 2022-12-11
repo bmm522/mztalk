@@ -24,10 +24,19 @@ public class ApplicationApiController {
     }
 
     @PostMapping("/application")
-    public Long saveApplication(@RequestBody ApplicationDto applicationDto, @ModelAttribute MultipartFile file,HttpServletRequest request){
+    public Long saveApplication(@RequestBody ApplicationDto applicationDto){
+//        @ModelAttribute MultipartFile file,
+//        HttpServletRequest request
 //        ImageDto imageDto = new Image().saveFile(file, request);
 //        imageService.saveImage(imageDto);
+        System.out.println(applicationDto);
         return applicationService.save(applicationDto);
+    }
+    
+    @PostMapping("/application/file")
+    public void haosiad(MultipartFile file){
+        System.out.println("테스트");
+        System.out.println(file);
     }
 
     @GetMapping("/application/{id}")
