@@ -2,9 +2,6 @@ package com.mztalk.login.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mztalk.login.domain.entity.User;
-import com.mztalk.login.properties.JwtProperties;
-import com.mztalk.login.properties.LoginStatusProperties;
-import com.mztalk.login.service.JwtTokenFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

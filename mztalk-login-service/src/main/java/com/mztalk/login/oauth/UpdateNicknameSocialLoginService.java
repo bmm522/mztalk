@@ -1,20 +1,15 @@
 package com.mztalk.login.oauth;
 
 import com.mztalk.login.domain.entity.User;
-import com.mztalk.login.properties.JwtProperties;
 import com.mztalk.login.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.mztalk.login.service.CookieFactory.getCookieFactoryInstance;
 import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstance;
 
 @Service
