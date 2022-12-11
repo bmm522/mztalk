@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.mztalk.login.service.CookieFactory.getCookieFactoryInstance;
 import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstance;
 
 
@@ -28,29 +29,15 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         if(principalDetails.getUser().getNickname().equals("null")){
             Cookie usernameCookie = new Cookie("username", URLEncoder.encode(principalDetails.getUsername(),"UTF-8"));
+            usernameCookie.setPath("/");
             response.addCookie(usernameCookie);
             response.sendRedirect("http://localhost:5501/editNickname");
         }
 
+        ConcurrentHashMap<String, Cookie> cookieMap = getCookieFactoryInstance().getCookie(principalDetails.getUser());
 
-
-        ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
-
-        String jwtTokenCookieValue = URLEncoder.encode(JwtProperties.TOKEN_PREFIX+jwtTokenAndRefreshToken.get("jwtToken"), "UTF-8");
-        String RefreshTokenCookieValue =URLEncoder.encode("RefreshToken "+jwtTokenAndRefreshToken.get("refreshToken"), "UTF-8");
-        String LoginResultCookieValue = URLEncoder.encode("Social LoginUser", "UTF-8");
-
-
-        Cookie jwtTokencookie = new Cookie("Authorization",  jwtTokenCookieValue);
-        jwtTokencookie.setPath("/");
-        Cookie RefreshTokenCookie = new Cookie("RefreshToken", RefreshTokenCookieValue);
-        RefreshTokenCookie.setPath("/");
-        Cookie LoginResultCookie = new Cookie("LoginResult", LoginResultCookieValue);
-        LoginResultCookie.setPath("/");
-
-        response.addCookie(jwtTokencookie);
-        response.addCookie(RefreshTokenCookie);
-        response.addCookie(LoginResultCookie);
+        response.addCookie(cookieMap.get("jwtToken"));
+        response.addCookie(cookieMap.get("refreshToken"));
 
         response.sendRedirect("http://localhost:5501/loginpage.html");
     }
