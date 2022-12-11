@@ -3,6 +3,7 @@ package com.mztalk.login.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mztalk.login.domain.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,11 @@ import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstanc
 @RequiredArgsConstructor
 public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    @Value("${loginstatus.status}")
+    private String loginStatus;
+    @Value("${jwt.headerString}")
+    private String headerString;
+
     private final AuthenticationManager authenticationManager;
 
     @Override
@@ -36,7 +42,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
             try {
                 authentication = authenticationManager.authenticate(authenticationToken);
             } catch(Exception e) {
-                response.addHeader(LoginStatusProperties.STATUS, "Not found userId or userPassword");
+                response.addHeader(loginStatus, "Not found userId or userPassword");
                 logger.error("Not found userId or userPassword");
                 return authentication;
             }
@@ -46,11 +52,11 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
             try {
                 principalDetails = (PrincipalDetails) authentication.getPrincipal();
             } catch(Exception e) {
-                response.addHeader(LoginStatusProperties.STATUS, "Fail Login");
+                response.addHeader(loginStatus, "Fail Login");
                 logger.error("Fail Login");
                 return authentication;
             }
-            response.addHeader(LoginStatusProperties.STATUS, "Login Success");
+            response.addHeader(loginStatus, "Login Success");
             return authentication;
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,7 +71,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
         System.out.println("일반로그인 success핸들러 실행");
         ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
 
-        response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
+        response.addHeader(headerString, jwtTokenAndRefreshToken.get("jwtToken"));
         response.addHeader("RefreshToken", jwtTokenAndRefreshToken.get("refreshToken"));
     }
 

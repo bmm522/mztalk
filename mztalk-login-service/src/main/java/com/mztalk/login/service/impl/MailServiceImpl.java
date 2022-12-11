@@ -2,6 +2,7 @@ package com.mztalk.login.service.impl;
 
 import com.mztalk.login.service.MailService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.util.Properties;
 import java.util.Random;
@@ -17,6 +18,15 @@ import javax.mail.internet.MimeMessage;
 @Service
 @Slf4j
 public class MailServiceImpl implements MailService {
+
+    @Value("${mail.host}")
+    private String host;
+    @Value("${mail.port}")
+    private String port;
+    @Value("${mail.mailId}")
+    private String mailId;
+    @Value("${mail.mailPw}")
+    private String mailPw;
     @Override
     public ConcurrentHashMap<String, Object> getAuthCodeOfEmail(String email) {
         ConcurrentHashMap<String, Object> map =new ConcurrentHashMap<String, Object>();
@@ -45,13 +55,13 @@ public class MailServiceImpl implements MailService {
             Session mailSession = Session.getInstance(props, new javax.mail.Authenticator(){
 
                 protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-                    return new javax.mail.PasswordAuthentication(MailProperties.MAIL_ID, MailProperties.MAIL_PW);
+                    return new javax.mail.PasswordAuthentication(mailId, mailPw);
                 }
 
             });
             // Mail 조립
             Message mimeMessage = new MimeMessage(mailSession);
-            mimeMessage.setFrom(new InternetAddress(MailProperties.MAIL_ID));
+            mimeMessage.setFrom(new InternetAddress(mailId));
             mimeMessage.setRecipients(Message.RecipientType.TO, receiverList);
             // 메일 제목
             mimeMessage.setSubject(subejct);
@@ -71,11 +81,11 @@ public class MailServiceImpl implements MailService {
     private Properties getProperties() {
         Properties props = new Properties();
         props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.host", MailProperties.HOST);
-        props.put("mail.smtp.port", MailProperties.PORT);
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", port);
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.ssl.enable","true");
-        props.put("mail.smtp.ssl.trust", MailProperties.HOST);
+        props.put("mail.smtp.ssl.trust", host);
         props.put("mail.smtp.auth", "true");
         return props;
     }

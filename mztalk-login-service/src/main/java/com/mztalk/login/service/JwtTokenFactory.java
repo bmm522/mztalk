@@ -3,6 +3,9 @@ package com.mztalk.login.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.mztalk.login.domain.entity.User;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -13,7 +16,20 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
+
+@PropertySource("classpath:application.yml")
+@Component
 public class JwtTokenFactory {
+
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @Value("${jwt.expriationTime}")
+    private int expriationTime;
+    @Value("${jwt.tokenPrefix}")
+    private String tokenPrefix;
+    @Value("${jwt.headerString}")
+    private String headerString;
 
     private static JwtTokenFactory jwtTokenFactory = new JwtTokenFactory();
 
@@ -21,15 +37,21 @@ public class JwtTokenFactory {
         return jwtTokenFactory;
     }
 
-    private JwtTokenFactory(){}
+
+    private JwtTokenFactory(){
+    }
 
     public ConcurrentHashMap<String, String> getJwtToken(User user) {
+        System.out.println(secret);
+        System.out.println(headerString);
+        System.out.println(expriationTime);
+        System.out.println("사이에 공백이 있는가?"+tokenPrefix+"바로찍히는가");
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
         String refreshToken = getRefreshToken();
-        map.put("jwtToken", JwtProperties.TOKEN_PREFIX+
+        map.put("jwtToken",tokenPrefix+
                 JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME))
+                        .withExpiresAt(new Date(System.currentTimeMillis()+expriationTime))
                         .withClaim("id", user.getId())
                         .withClaim("username",user.getUsername())
                         .withClaim("nickname",user.getNickname())
@@ -40,7 +62,7 @@ public class JwtTokenFactory {
                         .withClaim("createDate",getCreateDate(user.getCreateDate()))
                         .withClaim("mentorStatus",user.getMentorStatus())
                         .withClaim("nicknameCheck",user.getNicknameCheck())
-                        .sign(Algorithm.HMAC512(JwtProperties.SECRET+refreshToken)));
+                        .sign(Algorithm.HMAC512(secret+refreshToken)));
         map.put("refreshToken", "RefreshToken "+refreshToken);
 
         return map;
