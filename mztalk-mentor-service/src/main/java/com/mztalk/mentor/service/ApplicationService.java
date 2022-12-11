@@ -8,4 +8,11 @@ public interface ApplicationService {
     Long save(ApplicationDto applicationDto);
 
     ResponseEntity findById(Long id);
+
+    ResponseEntity findAll();
+
+    Long delete(Long id);
+
+    Long updateApplication(Long id,ApplicationDto applicationDto);
+
 }
