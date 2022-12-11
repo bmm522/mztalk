@@ -18,7 +18,7 @@ public class ParticipantApiController {
     }
 
     @GetMapping("/participant/{id}")
-    public ParticipantDto findParticipant(@PathVariable Long id){
+    public ParticipantDto findParticipant(@PathVariable("id") Long id){
         return participantService.findById(id);
     }
 
@@ -28,7 +28,7 @@ public class ParticipantApiController {
     }
 
     @PatchMapping("/participant/{id}")
-    public Long cancel(@PathVariable Long id){
+    public Long cancel(@PathVariable("id") Long id){
         return participantService.cancelParticipate(id);
     }
 }

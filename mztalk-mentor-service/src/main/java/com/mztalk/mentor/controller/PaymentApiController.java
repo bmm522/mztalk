@@ -6,8 +6,6 @@ import com.mztalk.mentor.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.Path;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentors")

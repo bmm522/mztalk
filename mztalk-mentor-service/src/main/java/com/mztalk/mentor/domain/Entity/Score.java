@@ -1,6 +1,7 @@
 package com.mztalk.mentor.domain.entity;
 
 import com.mztalk.mentor.domain.Status;
+import com.mztalk.mentor.domain.dto.ScoreDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,5 +42,10 @@ public class Score extends BaseTimeEntity{
         this.count = count;
         this.content = content;
         this.status = status;
+    }
+
+    public void updateScore(ScoreDto scoreDto) {
+        this.count = scoreDto.getCount();
+        this.content = scoreDto.getContent();
     }
 }
