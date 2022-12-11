@@ -30,5 +30,14 @@ public class MenteeDto {
         return mentee;
     }
 
+    public MenteeDto(Mentee mentee){
+        this.id = mentee.getId();
+        this.nickname = mentee.getNickname();
+        this.participants = mentee.getParticipants();
+        this.payments = mentee.getPayments();
+        this.scores = mentee.getScores();
+        this.mentors = mentee.getMentors();
+    }
+
 
 }
