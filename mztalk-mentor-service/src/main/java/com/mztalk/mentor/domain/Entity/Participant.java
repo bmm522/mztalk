@@ -33,8 +33,9 @@ public class Participant extends BaseTimeEntity{
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
     @Builder
-    public Participant(Board board, Mentee mentee, String name, String phone,
+    public Participant(Long id, Board board, Mentee mentee, String name, String phone,
                        String message, Status status) {
         this.board = board;
         this.mentee = mentee;
@@ -42,5 +43,10 @@ public class Participant extends BaseTimeEntity{
         this.phone = phone;
         this.message = message;
         this.status = status;
+    }
+
+    public void cancel(){
+        this.status = Status.NO;
+        //this.getPayment.setStatus(Status.NO) //ERD 구성 후 수정하기.
     }
 }

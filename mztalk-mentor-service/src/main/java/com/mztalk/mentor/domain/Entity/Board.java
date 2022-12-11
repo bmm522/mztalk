@@ -1,6 +1,8 @@
 package com.mztalk.mentor.domain.entity;
 
 import com.mztalk.mentor.domain.Status;
+import com.mztalk.mentor.domain.dto.ApplicationDto;
+import com.mztalk.mentor.domain.dto.BoardDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -46,9 +48,10 @@ public class Board extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Board(Mentor mentor, Category category, String title, String content, String introduction,
+    public Board(Long id, Mentor mentor, Category category, String title, String content, String introduction,
                  String career, int salary, List<Participant> participants,
                  List<Payment> payments, Status status) {
+        this.id = id;
         this.mentor = mentor;
         this.category = category;
         this.title = title;
@@ -60,4 +63,17 @@ public class Board extends BaseTimeEntity{
         this.payments = payments;
         this.status = status;
     }
+
+    public void changeStatus(){
+        this.status = Status.NO;
+    }
+
+    public void updateBoard(BoardDto boardDto){
+        this.title = boardDto.getTitle();
+        this.content = boardDto.getContent();
+        this.introduction = boardDto.getIntroduction();
+        this.career = boardDto.getCareer();
+        this.salary = boardDto.getSalary();
+    }
+
 }

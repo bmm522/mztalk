@@ -38,7 +38,8 @@ public class Mentor extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Mentor(Application application, Board board, List<Score> scores, List<Mentee> mentees, Status status) {
+    public Mentor(Long id, Application application, Board board, List<Score> scores, List<Mentee> mentees, Status status) {
+        this.id = id;
         this.application = application;
         this.board = board;
         this.scores = scores;
@@ -46,10 +47,18 @@ public class Mentor extends BaseTimeEntity{
         this.status = status;
     }
 
+    //==연관관계 편의메서드==//
+    public void addApplication(Application application){
+        this.application = application;
+        application.addMentor(this);
+    }
+
     public void addBoard(Board board){
         Mentor mentor = new Mentor();
         mentor.board = board;
     }
 
-
+    public void changeStatus() {
+        this.status = Status.NO;
+    }
 }
