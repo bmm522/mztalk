@@ -64,7 +64,7 @@ public class PrincipalSocialOAuth2UserService extends DefaultOAuth2UserService {
                     .provider(provider)
                     .providerId(providerId)
                     .mentorStatus("N")
-                    .status("N")
+                    .status("Y")
                     .nicknameCheck("N")
                     .build();
             userRepository.save(user);

@@ -27,8 +27,13 @@ public class LoginApiController {
     }
 
     @PatchMapping("/password")
-    public void updatePassword(@RequestBody Map<String, String> body){
-        updateUserInfoService.updatePassword(body.get("username"), body.get("password"));
+    public int updatePassword(@RequestBody Map<String, String> body){
+        return updateUserInfoService.updatePassword(body.get("username"), body.get("password"));
+    }
+
+    @PatchMapping("/mentor-status/{nickname}")
+    public int updateMentorStatus(@PathVariable("nickname")String nickname){
+        return updateUserInfoService.updateMentorStatus(nickname);
     }
 
     @GetMapping("/username/{email}")
@@ -36,5 +41,7 @@ public class LoginApiController {
         System.out.println("실행됨?");
         return searchUsernameService.searchUsername(email);
     }
+
+
 
 }

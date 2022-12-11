@@ -1,5 +1,7 @@
 package com.mztalk.login.service;
 
 public interface UpdateUserInfoService {
-    void updatePassword(String username, String password);
+    int updatePassword(String username, String password);
+
+    int updateMentorStatus(String nickname);
 }

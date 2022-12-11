@@ -14,7 +14,14 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void updatePassword(String username, String password) {
-       userRepository.updatePassword(username, bCryptPasswordEncoder.encode(password));
+    public int updatePassword(String username, String password) {
+       return userRepository.updatePassword(username, bCryptPasswordEncoder.encode(password));
     }
+
+    @Override
+    public int updateMentorStatus(String nickname) {
+        return userRepository.updateMentorStatus(nickname);
+    }
+
+
 }
