@@ -49,7 +49,6 @@ public class LoginApiController {
 
     @GetMapping("/username/{email}")
     public ConcurrentHashMap<String, Object> searchUsername(@PathVariable("email") String email){
-        System.out.println("실행됨?");
         return selectUserInfoService.searchUsername(email);
     }
 

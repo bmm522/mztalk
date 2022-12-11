@@ -33,7 +33,7 @@ document.getElementById('nickname-box').addEventListener('keyup',function(){
 	let nickname = document.getElementById('nickname-box').value;
   
 	fetch("http://localhost:8000/login/register/nickname/"+nickname, {
-	  method:"GET",
+		method:"GET",
 	})
 	.then((res)=> res.json())
 	.then(res=>{
@@ -56,4 +56,42 @@ document.getElementById('nickname-box').addEventListener('keyup',function(){
 
   document.getElementById('editBtn').addEventListener('click',function(){
 
-  })
+	fetch("http://localhost:8000/login/social/nickname",{
+		method:"PATCH",
+		headers:{
+			"Content-Type":"application/json"
+		},
+		body:JSON.stringify({
+			newNickname : document.getElementById('nickname-box').value,
+			username : getCookieValue('username')
+		}),
+	})
+	.then((res)=>res.json())
+	.then(res=>{
+		localStorage.removeItem("Authorization");
+		localStorage.removeItem("RefreshToken");
+		localStorage.setItem("Authorization", res.jwtToken);
+		localStorage.setItem("RefreshToken", res.refreshToken);
+		location.href="main.html";
+	})
+  });
+
+ 
+
+  const getCookieValue = (key) => {
+	let cookieKey = key + "="; 
+	let result = "";
+	const cookieArr = document.cookie.split(";");
+	
+	for(let i = 0; i < cookieArr.length; i++) {
+	  if(cookieArr[i][0] === " ") {
+		cookieArr[i] = cookieArr[i].substring(1);
+	  }
+	  
+	  if(cookieArr[i].indexOf(cookieKey) === 0) {
+		result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+		return result;
+	  }
+	}
+	return result;
+  }

@@ -20,8 +20,8 @@ public class CookieFactory {
 
     public ConcurrentHashMap<String, Cookie> getCookie(User user) throws UnsupportedEncodingException {
 
-        String jwtTokenCookieValue = URLEncoder.encode(JwtProperties.TOKEN_PREFIX+getJwtTokenFactoryInstance().getJwtToken(user).get("jwtToken"), "UTF-8");
-        String RefreshTokenCookieValue =URLEncoder.encode("RefreshToken "+getJwtTokenFactoryInstance().getJwtToken(user).get("refreshToken"), "UTF-8");
+        String jwtTokenCookieValue = URLEncoder.encode(getJwtTokenFactoryInstance().getJwtToken(user).get("jwtToken"), "UTF-8");
+        String RefreshTokenCookieValue =URLEncoder.encode(getJwtTokenFactoryInstance().getJwtToken(user).get("refreshToken"), "UTF-8");
 
         Cookie jwtTokencookie = new Cookie("Authorization",  jwtTokenCookieValue);
         jwtTokencookie.setPath("/");

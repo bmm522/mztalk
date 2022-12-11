@@ -1,6 +1,6 @@
 package com.mztalk.login.config;
 
-import com.mztalk.login.oauth.LoginSuccessHandler;
+import com.mztalk.login.oauth.SocialLoginSuccessHandler;
 import com.mztalk.login.oauth.PrincipalSocialOAuth2UserService;
 import com.mztalk.login.auth.LoginAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
+    private SocialLoginSuccessHandler socialLoginSuccessHandler;
 
     private final CorsFilter corsFilter;
     @Bean
@@ -51,7 +51,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .userInfoEndpoint()
                 .userService(principalSocialOAuth2UserService)
                 .and()
-                .successHandler(loginSuccessHandler);
+                .successHandler(socialLoginSuccessHandler);
 
     }
 

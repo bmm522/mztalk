@@ -68,8 +68,8 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
         System.out.println("일반로그인 success핸들러 실행");
         ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
 
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtTokenAndRefreshToken.get("jwtToken"));
-        response.addHeader("RefreshToken", "RefreshToken "+jwtTokenAndRefreshToken.get("refreshToken"));
+        response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
+        response.addHeader("RefreshToken", jwtTokenAndRefreshToken.get("refreshToken"));
     }
 
 }

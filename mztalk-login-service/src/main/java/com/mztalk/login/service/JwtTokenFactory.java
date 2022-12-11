@@ -27,7 +27,7 @@ public class JwtTokenFactory {
     public ConcurrentHashMap<String, String> getJwtToken(User user) {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
         String refreshToken = getRefreshToken();
-        map.put("jwtToken",
+        map.put("jwtToken", JwtProperties.TOKEN_PREFIX+
                 JWT.create()
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME))
@@ -42,7 +42,7 @@ public class JwtTokenFactory {
                         .withClaim("mentorStatus",user.getMentorStatus())
                         .withClaim("nicknameCheck",user.getNicknameCheck())
                         .sign(Algorithm.HMAC512(JwtProperties.SECRET+refreshToken)));
-        map.put("refreshToken", refreshToken);
+        map.put("refreshToken", "RefreshToken "+refreshToken);
 
         return map;
     }

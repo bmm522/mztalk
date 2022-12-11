@@ -36,4 +36,8 @@ public class User {
     private String status;
     private String nicknameCheck;
 
+    public void changeNickname(String nickname){
+        this.nickname = nickname;
+    }
+
 }

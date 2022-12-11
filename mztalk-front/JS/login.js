@@ -529,6 +529,8 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
     })
    
     .then(res => {
+      localStorage.removeItem("Authorization");
+      localStorage.removeItem("RefreshToken");
       let result =   res.headers.get('LoginResult');
       console.log('통신성공');
       if(result =='Not found userId or userPassword'){
@@ -540,6 +542,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         document.getElementById('userId').value = "";
         document.getElementById('password-in').value ="";
       } else {
+
         localStorage.setItem("Authorization", res.headers.get('Authorization'));
         localStorage.setItem("RefreshToken", res.headers.get('RefreshToken'));
         window.open('main.html', '_self');
@@ -573,6 +576,9 @@ document.getElementById('kakaoBtn').addEventListener('click',function(){
   
       if(!getCookieValue('Authorization') == ''){
           console.log('쿠키있음');
+          localStorage.removeItem("Authorization");
+          localStorage.removeItem("RefreshToken");
+
           localStorage.setItem("Authorization", getCookieValue('Authorization').replace("+"," "));
           localStorage.setItem("RefreshToken", getCookieValue('RefreshToken').replace("+"," "));
           location.href="http://127.0.0.1:5501/main.html";
