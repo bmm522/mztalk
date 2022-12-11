@@ -59,7 +59,7 @@ public class PrincipalSocialOAuth2UserService extends DefaultOAuth2UserService {
                     .username(username)
                     .password("null")
                     .nickname("null")
-                    .email(oAuth2UserInfo.getEmail())
+                    .email("null")
                     .role("ROLE_USER")
                     .provider(provider)
                     .providerId(providerId)

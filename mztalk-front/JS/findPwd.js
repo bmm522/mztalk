@@ -122,7 +122,7 @@ let emailAuthCode = '';
 let userId = '';
 document.getElementById('checkEmailButton').addEventListener('click', function(){
 	userId = document.getElementById('userId').value;
-	fetch("http://localhost:8000/login/auth-code/"+document.getElementById('userEmail').value+"/"+document.getElementById('userId').value, {
+	fetch("http://localhost:8000/login/auth-code/?email="+document.getElementById('userEmail').value+"&username="+document.getElementById('userId').value, {
     method:"GET",
      })
     .then((res)=> res.json())

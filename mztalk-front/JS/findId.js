@@ -4,12 +4,20 @@ const moveMain = ()=>{
 }
 
 const move =() =>{
-    search();
+    fetch("http://localhost:8000/login/username/"+document.getElementById('searchEmail').value,{
+      method:"GET",
+    })
+    .then((res) => res.json())
+    .then(res => {  
+      document.getElementById('searchIdResult').value = res.result
+      resultOfSearchId();
+      search();
+    });
 }
 
 
 const resultOfSearchId = () =>{
-	let searchIdResult = document.getElementById('searchIdResult').value;
+  let searchIdResult = document.getElementById('searchIdResult').value;
 	if(document.getElementById('searchIdResult').value == 'notExist'){
 		document.getElementById('re').innerHTML = "검색 결과가 없습니다.";
 	} else {
