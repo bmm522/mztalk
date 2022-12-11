@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class ParticipantApiController {
     private final ParticipantService participantService;
 
+    @GetMapping("/participant")
+    public String saveForm(){
+        return null;
+    }
+
     @PostMapping("/participant")
     public Long save(@RequestBody ParticipantDto participantDto){
         return participantService.save(participantDto);

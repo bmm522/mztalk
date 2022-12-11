@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class ScoreApiController {
     private final ScoreService scoreService;
 
+    @GetMapping("/score")
+    public String saveForm(){
+        return null;
+    }
+
     @PostMapping("/score")
     public Long saveScore(@RequestBody ScoreDto scoreDto){
         return scoreService.save(scoreDto);

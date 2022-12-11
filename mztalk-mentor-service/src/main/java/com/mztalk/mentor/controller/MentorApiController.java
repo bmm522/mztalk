@@ -13,6 +13,11 @@ public class MentorApiController {
 
     private final MentorService mentorService;
 
+    @GetMapping("/member")
+    public String saveForm(){
+        return null;
+    }
+
     @PostMapping("/member")
     public Long save(@RequestBody MentorDto mentorDto){
         return mentorService.save(mentorDto);

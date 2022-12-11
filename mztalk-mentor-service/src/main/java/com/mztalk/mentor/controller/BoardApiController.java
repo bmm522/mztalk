@@ -13,6 +13,11 @@ public class BoardApiController {
 
     private final BoardService boardService;
 
+    @GetMapping("/board")
+    public String saveForm(){
+        return null;
+    }
+
     @PostMapping("/board")
     public Long saveBoard(@RequestBody BoardDto boardDto){
         return boardService.saveBoard(boardDto);

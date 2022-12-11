@@ -18,6 +18,11 @@ public class ApplicationApiController {
     private final ApplicationService applicationService;
     private final ImageService imageService;
 
+    @GetMapping("/application")
+    public String saveForm(){
+        return null;
+    }
+
     @PostMapping("/application")
     public Long saveApplication(@RequestBody ApplicationDto applicationDto, @ModelAttribute MultipartFile file,HttpServletRequest request){
 //        ImageDto imageDto = new Image().saveFile(file, request);
