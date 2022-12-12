@@ -582,6 +582,7 @@ document.getElementById('kakaoBtn').addEventListener('click',function(){
 
           localStorage.setItem('Authorization', getCookieValue('Authorization').replace("+"," "));
           localStorage.setItem('RefreshToken', getCookieValue('RefreshToken').replace("+"," "));
+          localStorage.setItem('UserNo', getCookieValue('UserNo').replace("+"," "));
           console.log("소셜로그인 : " + localStorage.getItem('Authorization'));
           console.log("소셜로그인 : " + localStorage.getItem('RefreshToken'));
           window.open('main.html', '_self');

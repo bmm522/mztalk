@@ -72,6 +72,7 @@ document.getElementById('nickname-box').addEventListener('keyup',function(){
 		// localStorage.removeItem("RefreshToken");
 		localStorage.setItem("Authorization", res.jwtToken);
 		localStorage.setItem("RefreshToken", res.refreshToken);
+		localStorage.setItem("UserNo", res.userNo);
 		window.open('main.html', '_self');
 	})
   });

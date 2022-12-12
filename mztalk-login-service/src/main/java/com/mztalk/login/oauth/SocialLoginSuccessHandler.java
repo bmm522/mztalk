@@ -24,6 +24,7 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
 
         if(principalDetails.getUser().getNickname().equals("null")){
             Cookie usernameCookie = new Cookie("username", URLEncoder.encode(principalDetails.getUsername(),"UTF-8"));
+            Cookie testCookie = new Cookie("test", "asdf");
             usernameCookie.setPath("/");
             response.addCookie(usernameCookie);
             response.sendRedirect("http://localhost:5501/editNickname.html");
@@ -32,6 +33,7 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
             ConcurrentHashMap<String, Cookie> cookieMap = getCookieFactoryInstance().getCookie(principalDetails.getUser());
             response.addCookie(cookieMap.get("jwtToken"));
             response.addCookie(cookieMap.get("refreshToken"));
+            response.addCookie(cookieMap.get("userNo"));
             response.sendRedirect("http://localhost:5501/loginpage.html");
         }
     }

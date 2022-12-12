@@ -73,7 +73,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
         nicknameCookie.setPath("/");
         response.addCookie(nicknameCookie);
         response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
-        response.addHeader("RefreshToken", "RefreshToken " +jwtTokenAndRefreshToken.get("refreshToken"));
+        response.addHeader("RefreshToken", jwtTokenAndRefreshToken.get("refreshToken"));
         response.addHeader("UserNo", String.valueOf(principalDetails.getUser().getId()));
 //        response.addHeader("Content-Type", "application/json; charset=UTF-8");
     }

@@ -21,8 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class JwtTokenFactory {
 
-
-
     private static JwtTokenFactory jwtTokenFactory = new JwtTokenFactory();
 
     public static JwtTokenFactory getJwtTokenFactoryInstance(){
@@ -51,7 +49,10 @@ public class JwtTokenFactory {
                         .withClaim("mentorStatus",user.getMentorStatus())
                         .withClaim("nicknameCheck",user.getNicknameCheck())
                         .sign(Algorithm.HMAC512(JwtProperties.SECRET+refreshToken)));
-        map.put("refreshToken",refreshToken);
+        map.put("refreshToken","RefreshToken "+refreshToken);
+
+        System.out.println("jwtToken팩토리 : " + map.get("jwtToken"));
+        System.out.println("refreshToken 팩토리 : " + map.get("refreshToken"));
 
         return map;
     }

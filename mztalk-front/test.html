@@ -17,7 +17,9 @@ let mentoStatus ="";
 
 
     window.onload = function(){
-        console.log(localStorage.getItem('UserNo'));
+        console.log("test : " + localStorage.getItem('Authorization'));
+        console.log("test : " + localStorage.getItem('RefreshToken'));
+        console.log("test : " + localStorage.getItem('UserNo'));
         fetch("http://localhost:8000/login/user-info/"+localStorage.getItem('UserNo'),{
             method:"GET",
             headers:{
