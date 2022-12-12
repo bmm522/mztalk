@@ -4,11 +4,11 @@ function modalImage() {
     
     console.log(modalImage);
     image.classList
-	image.css("display", "none");
+	image.style.display = "none";
 }
 
 function popup(image) {
     console.log(image);
 
-    image.css("display", "flex");
+    image.style.display = "flex";
 }
