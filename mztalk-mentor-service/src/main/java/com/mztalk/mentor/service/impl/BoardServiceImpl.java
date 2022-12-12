@@ -1,5 +1,6 @@
 package com.mztalk.mentor.service.impl;
 
+import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Result;
@@ -55,5 +56,13 @@ public class BoardServiceImpl implements BoardService {
         Board savedBoard = boardRepository.findById(id).orElseThrow(() -> new BoardNotFoundException("해당 번호의 글이 존재하지 않습니다."));
         savedBoard.updateBoard(boardDto);
         return savedBoard.getId();
+    }
+
+    @Override
+    public Result searchWithCondition(SearchCondition searchCondition) {
+        List<Board> boardList = boardRepository.searchWithCondition(searchCondition);
+        System.out.println("boardList = " + boardList.toString());
+        List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
     }
 }

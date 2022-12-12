@@ -1,4 +1,4 @@
-﻿package com.mztalk.mentor.controller;
+package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.ApplicationDto;
 import com.mztalk.mentor.domain.dto.ImageDto;
@@ -54,15 +54,5 @@ public class ApplicationApiController {
     public Long updateApplication(@PathVariable("id") Long id,@RequestBody ApplicationDto applicationDto){
         return applicationService.updateApplication(id,applicationDto);
     }
-
-
-
-
-
-
-
-
-
-
 
 }

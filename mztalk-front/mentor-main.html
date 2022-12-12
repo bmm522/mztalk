@@ -41,9 +41,9 @@
 
             <!--검색창 시작-->
             <div class="row" style="padding-top: 20px;">
-                <form class="d-flex" role="search" action="#" method="post">
+                <form class="d-flex" role="search" method="get">
                     <div class="col-1.5">
-                        <select name="category" class="form-select">
+                        <select id="category" class="form-select">
                             <option value="">과목</option>
                             <option value="korean">국어</option>
                             <option value="english">영어</option>
@@ -58,7 +58,8 @@
                     </div>
 
                     <div class="col-1.5">
-                        <select name="sort" class="form-select">
+                        <select id="sort" name="sort" class="form-select">
+                            <option value="">정렬</option>
                             <option value="latest">최신순</option>
                             <option value="highScore">평점순↑</option>
                             <option value="lowScore">평점순↓</option>
@@ -70,15 +71,13 @@
                     </div>
 
                     <div class="col-1.5">
-                        <select name="day" class="form-select">
-                            <option value="">요일</option>
-                            <option value="mon">월요일</option>
-                            <option value="tue">화요일</option>
-                            <option value="wed">수요일</option>
-                            <option value="thur">목요일</option>
-                            <option value="fri">금요일</option>
-                            <option value="sat">토요일</option>
-                            <option value="sun">일요일</option>
+                        <select id="salary" class="form-select">
+                            <option value="">금액</option>
+                            <option value="10000">10000</option>
+                            <option value="20000">20000</option>
+                            <option value="30000">30000</option>
+                            <option value="40000">40000</option>
+                            <option value="50000">50000</option>
                         </select>
                     </div>
 
@@ -87,7 +86,8 @@
                     </div>
 
                     <div class="col-1.5">
-                        <select name="group" class="form-select">
+                        <select id="type" class="form-select">
+                            <option value="">검색</option>
                             <option value="title">제목</option>
                             <option value="content">내용</option>
                             <option value="nickname">닉네임</option>
@@ -99,7 +99,7 @@
                     </div>
 
                     <div class="col-5">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" width="150" height="25" name="search">
+                        <input id="searchValue"class="form-control me-2" placeholder="Search" width="150" height="25">
                     </div>
 
                     <div class="col-0.5">
@@ -107,14 +107,13 @@
                     </div>
 
                     <div class="col-1.5">
-                        <button type="button" class="btn btn-outline-success" >Search</button>
+                        <button type="button" id="sendSearch" class="btn btn-outline-success">Search</button>
                     </div>
-
+                    
                     <img src="https://cdn-icons-png.flaticon.com/128/8763/8763321.png" 
                     style="width: 38px; height: 32px; padding-top:5px; padding-left: 10px;"
                     onclick="location.href='mentee-myPage.html'"
                     class="mentors-myPage">
-
                 </form>
             </div>
             <!--검색창 끝-->
@@ -321,4 +320,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 <script src="JS/main.js"></script>
+<script src="JS/mentor-main.js"></script>
 </html>

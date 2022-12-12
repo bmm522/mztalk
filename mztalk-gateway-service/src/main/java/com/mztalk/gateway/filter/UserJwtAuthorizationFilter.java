@@ -3,6 +3,8 @@ package com.mztalk.gateway.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.mztalk.gateway.domain.entity.User;
+import com.mztalk.gateway.properties.HttpStatusProperties;
+import com.mztalk.gateway.properties.JwtProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;

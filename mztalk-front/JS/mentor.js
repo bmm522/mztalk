@@ -22,7 +22,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
             account : document.getElementById("account").value
         })
     })
-     .then((res)=>res.json())
+    .then((res)=>res.json())
     .then(res =>{
         console.log("res : " + res);
         if(res > 0){

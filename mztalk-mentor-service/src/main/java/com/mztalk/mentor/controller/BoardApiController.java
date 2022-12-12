@@ -1,5 +1,6 @@
 package com.mztalk.mentor.controller;
 
+import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.BoardService;
@@ -42,6 +43,13 @@ public class BoardApiController {
     public Long updateBoard(@PathVariable("id")Long id,@RequestBody BoardDto boardDto){
         return boardService.updateBoard(id, boardDto);
     }
+
+    @GetMapping("/board/search")
+    public Result searchWithCondition(@ModelAttribute("SearchCondition")SearchCondition searchCondition){
+        System.out.println("searchCondition = " + searchCondition.toString());
+        return boardService.searchWithCondition(searchCondition);
+    }
+
 
 
 }
