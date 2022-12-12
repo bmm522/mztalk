@@ -9,5 +9,5 @@ public interface SelectUserInfoService {
     ConcurrentHashMap<String, Object> searchUsername(String email);
     UserDto getUserInfoByNickname(String nickname);
 
-    UserDto getUserInfoByUserNo(int userNo);
+    UserDto getUserInfoByUserNo(String userNo);
 }

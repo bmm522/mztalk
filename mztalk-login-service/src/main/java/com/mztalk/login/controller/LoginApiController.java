@@ -42,8 +42,8 @@ public class LoginApiController {
         return updateUserInfoService.updateStatus(nickname);
     }
 
-    @GetMapping("user/{userNo}")
-    public UserDto getUserInfoByUserNo(@PathVariable("userNo")int userNo){
+    @GetMapping("user-info/{userNo}")
+    public UserDto getUserInfoByUserNo(@PathVariable("userNo")String userNo){
         return selectUserInfoService.getUserInfoByUserNo(userNo);
     }
     @GetMapping("user/{nickname}")

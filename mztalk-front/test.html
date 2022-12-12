@@ -12,9 +12,24 @@
 </body>
 
 <script>
+let nickname = "";
+let mentoStatus ="";
+
 
     window.onload = function(){
-        console.log(localStorage.getItem('nickname'));
+        console.log(localStorage.getItem('UserNo'));
+        fetch("http://localhost:8000/login/user-info/"+localStorage.getItem('UserNo'),{
+            method:"GET",
+            headers:{
+                Authorization:localStorage.getItem('Authorization'),
+                RefreshToken:localStorage.getItem('RefreshToken'),
+            }
+        })
+        .then((res)=>res.json())
+        .then(res =>{
+        nickname=res.nickname;
+        mentoStatus = res.mentoStatus;
+    })
     }
 
 
@@ -27,11 +42,10 @@
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('Authorization'),
             RefreshToken:localStorage.getItem('RefreshToken'),
-            UserNo:localStorage.getItem('UserNo'),
             },
         body:JSON.stringify({
             test :document.getElementById("test-box").value,
-            
+            userNickname : nickname,
         })
         })
         .then(res=>{
