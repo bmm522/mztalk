@@ -60,7 +60,8 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
                 return notiStatus(exchange, "Token Error", HttpStatus.UNAUTHORIZED);
             }
             // 서명이 정상적으로 됨
-
+            HttpHeaders headers = request.getHeaders();
+            headers.add("nickname", user.getNickname());
             return chain.filter(exchange);
         });
     }

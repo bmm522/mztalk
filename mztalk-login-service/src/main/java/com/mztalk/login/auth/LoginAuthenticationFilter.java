@@ -2,7 +2,10 @@ package com.mztalk.login.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mztalk.login.domain.entity.User;
+import com.mztalk.login.properties.JwtProperties;
+import com.mztalk.login.properties.LoginStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,7 +39,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
             try {
                 authentication = authenticationManager.authenticate(authenticationToken);
             } catch(Exception e) {
-                response.addHeader(LoginStatusProperties.STATUS, "Not found userId or userPassword");
+                response.addHeader(LoginStatus.STATUS, "Not found userId or userPassword");
                 logger.error("Not found userId or userPassword");
                 return authentication;
             }
@@ -46,11 +49,11 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
             try {
                 principalDetails = (PrincipalDetails) authentication.getPrincipal();
             } catch(Exception e) {
-                response.addHeader(LoginStatusProperties.STATUS, "Fail Login");
+                response.addHeader(LoginStatus.STATUS, "Fail Login");
                 logger.error("Fail Login");
                 return authentication;
             }
-            response.addHeader(LoginStatusProperties.STATUS, "Login Success");
+            response.addHeader(LoginStatus.STATUS, "Login Success");
             return authentication;
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,7 +69,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
         ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
 
         response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
-        response.addHeader("RefreshToken", jwtTokenAndRefreshToken.get("refreshToken"));
+        response.addHeader("RefreshToken", ": RefreshToken "+jwtTokenAndRefreshToken.get("refreshToken"));
     }
 
 }
