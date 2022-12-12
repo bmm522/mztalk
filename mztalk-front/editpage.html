@@ -36,13 +36,15 @@
     </nav>
    <!-- 여기서 놀아주세요. -->
     <main class="mainContainer">
+
         <div class="_ab81 _ab82">
             <div class="d-flex align-items-start">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                   <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">프로필 설정</button>
-                  <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">구독권</button>
+                  <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">비밀번호 변경</button>
                   <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">신고 조회</button>
-                  <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">알림 설정</button>
+                  <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">구독권</button>
+                  
                 </div>
                 <div class="tab-content" id="v-pills-tabContent">
                   <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
@@ -80,8 +82,7 @@
                                             value="조현재" />
                                     </div>
                                 </div>
-
-                            
+                                
                                 <div class="content-item__07">
                                     <div class="item__title"></div>
                                     <div class="item__input">
@@ -118,7 +119,41 @@
                             </form>
                             <!--프로필수정 form end-->
                         </article>
-                    </section>
+                    </section>    
+
+                    <div class="col-0.5">
+                        &nbsp;<!--공백-->
+                    </div> 
+
+                    <form id="alarmsEdit">
+                        <div class="alarms">
+                        <div class="content-item_01">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" checked>
+                                <div class="item__title">멘토/멘티</div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-item_02">
+                            
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch"checked>
+                                <div class="item__title">벙</div>
+                            </div>
+                        </div>
+
+                        <div class="content-item_03">
+                            
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch"checked>
+                                <div class="item__title">경매</div>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        
+                        <!--제출버튼end-->
+                    </form>
                   </div>
 
                  
@@ -126,10 +161,154 @@
 
                   <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
                    
+                    <section class="setting-container">
+                        <!--프로필셋팅 아티클-->
+                        <article class="setting__content">
+                            
+                            <!--비밀번호 수정-->
+                            <form id="passwordEdit">
+                                <div class="content-item__04">
+                                    <div class="item__title">이전 비밀번호</div>
+                                    <div class="item__input">
+                                        <input type="password" name="current-password" autocomplete="off" placeholder="이전 비밀번호"
+                                            />
+                                    </div>
+                                </div>
+                                
+                                <div class="content-item__05">
+                                    <div class="item__title">새 비밀번호</div>
+                                    <div class="item__input">
+                                        <input type="password" name="new-password" autocomplete="off"  placeholder="새 비밀번호"  />
+                                    </div>
+                                </div>
+
+                                <div class="content-item__06">
+                                    <div class="item__title">새 비밀번호 확인</div>
+                                    <div class="item__input">
+                                        <input type="password" name="new-password_check" autocomplete="off" placeholder="새 비밀번호 확인"  />
+                                    </div>
+                                </div>
+                                
+                                <!--제출버튼-->
+                                <div class="content-item__11">
+                                    <div class="item__title"></div>
+                                    <div class="item__input">
+                                        <button type="button" class="btn btn-primary" disabled>제출</button>
+                                    </div>
+                                </div>
+                                
+                                <!--제출버튼end-->
+                            </form>
+                            <!--프로필수정 form end-->
+                        </article>
+                    </section>
+
+
+                     
+                </div>
+                  <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">
+                    
+                </div>
+                  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">
+                   
+                    <div class="setting-declarations">
+                        <!--프로필셋팅 아티클-->
+                        
+                        <div>내가 신고 한 글</div>
+                        <div class="col-0.5">
+                            &nbsp;<!--공백-->
+                        </div>    
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row g-0">
+                                  <div class="col-md-4">
+                                    <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+                                  </div>
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                      <h5 class="card-title">글제목</h5>
+                                      <p class="card-text">글내용</p>
+                                      <p class="card-text"><small class="text-muted">신고시간</small></p>
+                                    </div>
+                                    
+                                  </div>
+                                </div>
+                              </div>
+
+
+                              <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row g-0">
+                                  <div class="col-md-4">
+                                    <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+                                  </div>
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <h5 class="card-title">신고글제목</h5>
+                                            <button type="button" class="btn btn-danger">X</button>
+                                          </div>
+                                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>               
+                    </div>    
+
+                    
+
+
+
+                    <div class="setting-declarations">
+                        <!--프로필셋팅 아티클-->
+                        
+                            <div>내가 신고 당한 글</div>
+                            <div class="col-0.5">
+                                &nbsp;<!--공백-->
+                            </div>
+                                  <div class="card mb-3" style="max-width: 540px;">
+                                    <div class="row g-0">
+                                      <div class="col-md-4">
+                                        <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+                                      </div>
+                                      <div class="col-md-8">
+                                        <div class="card-body">
+                                          <h5 class="card-title">신고글제목</h5>
+                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+                                  <div class="card mb-3" style="max-width: 540px;">
+                                    <div class="row g-0">
+                                      <div class="col-md-4">
+                                        <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+                                      </div>
+                                      <div class="col-md-8">
+                                        <div class="card-body">
+                                          <h5 class="card-title">Card title</h5>
+                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                           
+                        </div>  
+
+
+                        
+                </div>
+                  <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">
+                    
                     <section class="setting-subsribe">
 
                         <!--프로필셋팅 아티클-->
                         <article class="setting__subsribe">
+
                             <!--프로필셋팅 아이디영역-->
                             <div class="content-item__01">
                                 <form>    
@@ -143,18 +322,9 @@
                             </div>
 
                         </article>
-                    </section>        
-                </div>
-                  <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">
-                    ...
-                </div>
-                  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">
-                    ...
-                </div>
-                  <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">
-                    <!--알림-->
+                    </section>       
                     
-                </div>
+                    </div>
 
                 </div>
               </div>
@@ -238,7 +408,7 @@
             </div>
          </div>
       
-    
+         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
        </footer>
    
      <!--프로필사진 바꾸기 모달-->
@@ -251,7 +421,17 @@
     </div>
 
     <!--프로필사진 바꾸기 모달end-->
+    
 
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        ...
+    </div>
+    </div>
 
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
