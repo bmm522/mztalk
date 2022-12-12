@@ -1,39 +1,49 @@
 package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.ApplicationDto;
-import com.mztalk.mentor.domain.entity.ResponseEntity;
+import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.ApplicationService;
+import com.mztalk.mentor.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/mentors/applications")
+@RequestMapping("/mentors")
 public class ApplicationApiController {
 
     private final ApplicationService applicationService;
+    private final ImageService imageService;
 
-    @PostMapping
+    @GetMapping("/application")
+    public String saveForm(){
+        return null;
+    }
+
+    @PostMapping("/application")
     public Long saveApplication(@RequestBody ApplicationDto applicationDto){
         return applicationService.save(applicationDto);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity findById(@PathVariable("id")Long id){
+    @GetMapping("/application/{id}")
+    public ApplicationDto findById(@PathVariable("id")Long id){
         return applicationService.findById(id);
     }
 
-    @GetMapping
-    public ResponseEntity findAll(){
+    @GetMapping("/applications")
+    public Result findAll(){
         return applicationService.findAll();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/application/{id}")
     public Long delete(@PathVariable("id") Long id){
         return applicationService.delete(id);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/application/{id}")
     public Long updateApplication(@PathVariable("id") Long id,@RequestBody ApplicationDto applicationDto){
         return applicationService.updateApplication(id,applicationDto);
     }

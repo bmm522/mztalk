@@ -25,7 +25,7 @@ public class Mentor extends BaseTimeEntity{
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "mentor")
     private Board board;
 
-    @OneToMany
+    @OneToMany(mappedBy = "mentor")
     private List<Score> scores = new ArrayList<>();
 
     @ManyToMany
@@ -38,7 +38,8 @@ public class Mentor extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Mentor(Application application, Board board, List<Score> scores, List<Mentee> mentees, Status status) {
+    public Mentor(Long id, Application application, Board board, List<Score> scores, List<Mentee> mentees, Status status) {
+        this.id = id;
         this.application = application;
         this.board = board;
         this.scores = scores;
@@ -46,10 +47,25 @@ public class Mentor extends BaseTimeEntity{
         this.status = status;
     }
 
-    public void addBoard(Board board){
-        Mentor mentor = new Mentor();
-        mentor.board = board;
+    //==연관관계 편의메서드==//
+    public void addApplication(Application application){
+        this.application = application;
+        application.addMentor(this);
     }
 
+    public void addBoard(Board board){
+        this.board = board;
+        board.addMentor(this);
+    }
 
+    public void addScore(Score score){
+        this.scores.add(score);
+        if(score.getMentor() != this){
+            score.addMentor(this);
+        }
+    }
+
+    public void changeStatus() {
+        this.status = Status.NO;
+    }
 }

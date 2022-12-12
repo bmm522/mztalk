@@ -4,14 +4,13 @@ window.onload=function(){
 }
 
 document.getElementById('logoutBtn').addEventListener('click',function(){
-    localStorage.removeItem("Authorization");
-	localStorage.removeItem("RefreshToken");
-    deleteCookie('Authorization');
-    deleteCookie('RefreshToken');
-    location.href="loginpage.html";
+    // localStorage.removeItem("Authorization");
+	// localStorage.removeItem("RefreshToken");
+    // deleteCookie('Authorization');
+    // deleteCookie('RefreshToken');
+    location.href="mentee-myPage.html";
 })
 
 function deleteCookie(name) {
 	document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
-

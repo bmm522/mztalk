@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class CheckUsernameServiceImpl  implements CheckService {
+public class CheckServiceImpl implements CheckService {
 
     @Autowired
     private UserRepository userRepository;
