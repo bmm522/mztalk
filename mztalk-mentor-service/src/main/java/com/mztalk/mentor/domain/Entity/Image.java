@@ -35,11 +35,6 @@ public class Image extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
         this.url = url;
     }
 
-    public void addApplication(Application application) {
-        this.application = application;
-        application.addImage(this);
-    }
-
     public ImageDto saveFile(MultipartFile file, HttpServletRequest request){
         String root = request.getSession().getServletContext().getRealPath("resources");
         String savePath = root + "\\uploadFiles";
@@ -65,6 +60,12 @@ public class Image extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
                 .url(savePath)
                 .build();
         return imageDto;
+    }
+
+    //== 연관관계 편의 메소드==//
+    public void addApplication(Application application) {
+        this.application = application;
+        application.addImage(this);
     }
 
 

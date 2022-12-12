@@ -54,8 +54,15 @@ public class Mentor extends BaseTimeEntity{
     }
 
     public void addBoard(Board board){
-        Mentor mentor = new Mentor();
-        mentor.board = board;
+        this.board = board;
+        board.addMentor(this);
+    }
+
+    public void addScore(Score score){
+        this.scores.add(score);
+        if(score.getMentor() != this){
+            score.addMentor(this);
+        }
     }
 
     public void changeStatus() {

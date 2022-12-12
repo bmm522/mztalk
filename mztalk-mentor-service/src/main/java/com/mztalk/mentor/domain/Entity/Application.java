@@ -43,16 +43,6 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public void addImage(Image image){
-        this.image = image;
-        image.addApplication(this);
-    }
-
-    public void addMentor(Mentor mentor){
-        this.mentor = mentor;
-        mentor.addApplication(this);
-    }
-
     @Builder
     public Application(Long id, Mentor mentor, Image image, String name, String phone,
                        String email, String job, String bank, String account,
@@ -78,6 +68,17 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
         this.job = applicationDto.getJob();
         this.bank = applicationDto.getBank();
         this.account = applicationDto.getAccount();
+    }
+
+    //== 연관관계 편의 메소드 ==//
+    public void addImage(Image image){
+        this.image = image;
+        image.addApplication(this);
+    }
+
+    public void addMentor(Mentor mentor){
+        this.mentor = mentor;
+        mentor.addApplication(this);
     }
 
 }

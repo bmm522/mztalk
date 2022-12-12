@@ -48,4 +48,23 @@ public class Score extends BaseTimeEntity{
         this.count = scoreDto.getCount();
         this.content = scoreDto.getContent();
     }
+
+    //== 연관관계 편의 메소드==//
+    public void addMentor(Mentor mentor){
+        if(this.mentor != null){
+            this.mentor.getScores().remove(this);
+        }
+        this.mentor = mentor;
+        mentor.getScores().add(this);
+    }
+
+    public void addMentee(Mentee mentee){
+        if(this.mentee != null){
+            this.mentee.getScores().remove(this);
+        }
+        this.mentee = mentee;
+        mentee.getScores().add(this);
+    }
+
+
 }

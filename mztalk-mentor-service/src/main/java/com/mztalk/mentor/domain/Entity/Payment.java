@@ -43,4 +43,21 @@ public class Payment extends BaseTimeEntity{
     public void cancelPayment(){
         this.status = Status.NO;
     }
+
+    //== 연관관계 편의 메소드==//
+    public void addMentee(Mentee mentee){
+        if(this.mentee != null){
+            this.mentee.getPayments().remove(this);
+        }
+        this.mentee = mentee;
+        mentee.getPayments().add(this);
+    }
+
+    public void addBoard(Board board){
+        if(this.board != null){
+            this.board.getPayments().remove(this);
+        }
+        this.board = board;
+        board.getPayments().add(this);
+    }
 }

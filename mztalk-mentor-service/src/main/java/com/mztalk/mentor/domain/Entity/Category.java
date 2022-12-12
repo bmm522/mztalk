@@ -28,4 +28,12 @@ public class Category {
         this.id = id;
         this.name = name;
     }
+
+    //== 연관관계 편의 메소드==//
+    public void addBoard(Board board){
+        this.boards.add(board);
+        if(board.getCategory() != this){
+            board.addCategory(this);
+        }
+    }
 }
