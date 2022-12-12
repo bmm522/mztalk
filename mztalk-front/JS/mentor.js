@@ -9,7 +9,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
     fetch("http://localhost:8000/mentors/application",{
         method:"POST",
         headers:{
-            "Content-Type":"application/json",
+            "Content-Type":"application/json;",
             Authorization:localStorage.getItem('Authorization'),
             RefreshToken:localStorage.getItem('RefreshToken')
         },

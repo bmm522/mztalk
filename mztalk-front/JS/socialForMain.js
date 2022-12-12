@@ -8,7 +8,7 @@ document.getElementById('logoutBtn').addEventListener('click',function(){
 	// localStorage.removeItem("RefreshToken");
     // deleteCookie('Authorization');
     // deleteCookie('RefreshToken');
-    location.href="mentee-myPage.html";
+    location.href="test.html";
 })
 
 function deleteCookie(name) {

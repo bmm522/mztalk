@@ -545,6 +545,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
 
         localStorage.setItem("Authorization", res.headers.get('Authorization'));
         localStorage.setItem("RefreshToken", res.headers.get('RefreshToken'));
+        localStorage.setItem("UserNo", res.headers.get("UserNo"));
         window.open('main.html', '_self');
       }
 

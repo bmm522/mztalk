@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="test-box"/>
+    <button type="button" id="test-btn">클릭</button>
+</body>
+
+<script>
+
+    window.onload = function(){
+        console.log(localStorage.getItem('nickname'));
+    }
+
+
+
+    document.getElementById('test-btn').addEventListener('click', function(){
+        fetch("http://localhost:8000/test/test",{
+            method:"POST",
+            credentials:"include",
+            headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('Authorization'),
+            RefreshToken:localStorage.getItem('RefreshToken'),
+            UserNo:localStorage.getItem('UserNo'),
+            },
+        body:JSON.stringify({
+            test :document.getElementById("test-box").value,
+            
+        })
+        })
+        .then(res=>{
+            console.log('통신성공');
+        })
+    });
+
+</script>
+</html>

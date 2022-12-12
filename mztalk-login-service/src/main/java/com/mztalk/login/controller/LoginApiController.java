@@ -42,9 +42,13 @@ public class LoginApiController {
         return updateUserInfoService.updateStatus(nickname);
     }
 
+    @GetMapping("user/{userNo}")
+    public UserDto getUserInfoByUserNo(@PathVariable("userNo")int userNo){
+        return selectUserInfoService.getUserInfoByUserNo(userNo);
+    }
     @GetMapping("user/{nickname}")
-    public UserDto getUserInfo(@PathVariable("nickname")String nickname){
-        return selectUserInfoService.getUserInfo(nickname);
+    public UserDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
+        return selectUserInfoService.getUserInfoByNickname(nickname);
     }
 
     @GetMapping("/username/{email}")

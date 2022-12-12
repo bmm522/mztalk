@@ -3,16 +3,24 @@ package com.mztalk.gateway.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.mztalk.gateway.domain.entity.User;
+import com.mztalk.gateway.properties.HttpStatusProperties;
+import com.mztalk.gateway.properties.JwtProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import javax.ws.rs.core.Cookie;
+import java.net.URLEncoder;
 
 @Component
 @Slf4j
@@ -66,7 +74,17 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
             // 서명이 정상적으로 됨
             System.out.println("55555555555555555555555");
             System.out.println(user.getNickname());
-//            exchange.getResponse().getHeaders().set("nickname", user.getNickname());
+            response.getHeaders().set("nickname", user.getNickname());
+            System.out.println("response : " + response.getHeaders());
+            System.out.println("request : " + request.getHeaders());
+//            MultiValueMap<String, HttpCookie> nicknameCookie = request.getCookies();
+//            request.getHeaders().set("Authorization", user.getNickname());
+//            response.addCookie(nicknameCookie);
+//            request.getHeaders().add("nickname", user.getNickname());
+            System.out.println("추가 후 request : " + request.getHeaders());
+//            System.out.println("request Header : " + request.getHeaders().get());
+//            response.getHeaders().add("nickname", user.getNickname());
+
 //                exchange.getRequest().getHeaders().set("nickname", user.getNickname());
 //            response.getHeaders().add("nickname", user.getNickname());
 

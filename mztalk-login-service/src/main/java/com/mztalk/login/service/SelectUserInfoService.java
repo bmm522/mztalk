@@ -7,5 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public interface SelectUserInfoService {
     ConcurrentHashMap<String, Object> searchUsername(String email);
-    UserDto getUserInfo(String nickname);
+    UserDto getUserInfoByNickname(String nickname);
+
+    UserDto getUserInfoByUserNo(int userNo);
 }

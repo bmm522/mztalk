@@ -28,7 +28,7 @@ public class SelectUserInfoServiceImpl implements SelectUserInfoService {
     }
 
     @Override
-    public UserDto getUserInfo(String nickname) {
+    public UserDto getUserInfoByNickname(String nickname) {
         User user = userRepository.findByNickname(nickname);
 
         return UserDto.builder()

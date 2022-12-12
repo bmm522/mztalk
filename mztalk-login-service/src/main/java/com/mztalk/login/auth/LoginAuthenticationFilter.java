@@ -14,9 +14,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -65,11 +67,15 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
-        System.out.println("일반로그인 success핸들러 실행");
+        System.out.println("일반로그인 success핸들러 실행 : " + principalDetails.getUser().getNickname());
         ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
-
+        Cookie nicknameCookie = new Cookie("nickname",  URLEncoder.encode(principalDetails.getUser().getNickname(),"UTF-8"));
+        nicknameCookie.setPath("/");
+        response.addCookie(nicknameCookie);
         response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
         response.addHeader("RefreshToken", "RefreshToken " +jwtTokenAndRefreshToken.get("refreshToken"));
+        response.addHeader("UserNo", String.valueOf(principalDetails.getUser().getId()));
+//        response.addHeader("Content-Type", "application/json; charset=UTF-8");
     }
 
 }
