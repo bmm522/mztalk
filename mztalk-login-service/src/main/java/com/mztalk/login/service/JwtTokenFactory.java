@@ -3,6 +3,10 @@ package com.mztalk.login.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.mztalk.login.domain.entity.User;
+import com.mztalk.login.properties.JwtProperties;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -13,7 +17,11 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
+
+
 public class JwtTokenFactory {
+
+
 
     private static JwtTokenFactory jwtTokenFactory = new JwtTokenFactory();
 
@@ -21,15 +29,17 @@ public class JwtTokenFactory {
         return jwtTokenFactory;
     }
 
-    private JwtTokenFactory(){}
+
+    private JwtTokenFactory(){
+    }
 
     public ConcurrentHashMap<String, String> getJwtToken(User user) {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
         String refreshToken = getRefreshToken();
-        map.put("jwtToken", JwtProperties.TOKEN_PREFIX+
+        map.put("jwtToken", JwtProperties.TOKEN_PREFIX +
                 JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME))
+                        .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
                         .withClaim("id", user.getId())
                         .withClaim("username",user.getUsername())
                         .withClaim("nickname",user.getNickname())
@@ -41,7 +51,7 @@ public class JwtTokenFactory {
                         .withClaim("mentorStatus",user.getMentorStatus())
                         .withClaim("nicknameCheck",user.getNicknameCheck())
                         .sign(Algorithm.HMAC512(JwtProperties.SECRET+refreshToken)));
-        map.put("refreshToken", "RefreshToken "+refreshToken);
+        map.put("refreshToken",refreshToken);
 
         return map;
     }
