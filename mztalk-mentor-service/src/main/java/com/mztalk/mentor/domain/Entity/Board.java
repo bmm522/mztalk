@@ -38,10 +38,10 @@ public class Board extends BaseTimeEntity{
 
     private int salary; //시급
 
-    @OneToMany
+    @OneToMany(mappedBy = "board")
     private List<Participant> participants = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "board")
     private List<Payment> payments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -76,4 +76,31 @@ public class Board extends BaseTimeEntity{
         this.salary = boardDto.getSalary();
     }
 
+    //== 연관관계 편의 메소드==//
+    public void addMentor(Mentor mentor) {
+        this.mentor = mentor;
+        mentor.addBoard(this);
+    }
+
+    public void addCategory(Category category){
+        if(this.category != null){
+            this.category.getBoards().remove(this);
+        }
+        this.category = category;
+        category.getBoards().add(this);
+    }
+
+    public void addParticipants(Participant participant){
+        this.participants.add(participant);
+        if(participant.getBoard() != this){
+            participant.addBoard(this);
+        }
+    }
+
+    public void addPayment(Payment payment){
+        this.payments.add(payment);
+        if(payment.getBoard() != this){
+            payment.addBoard(this);
+        }
+    }
 }

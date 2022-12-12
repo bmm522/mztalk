@@ -49,4 +49,21 @@ public class Participant extends BaseTimeEntity{
         this.status = Status.NO;
         //this.getPayment.setStatus(Status.NO) //ERD 구성 후 수정하기.
     }
+
+    //== 연관관계 편의 메소드==//
+    public void addBoard(Board board){
+        if(this.board != null){
+            this.board.getParticipants().remove(this);
+        }
+        this.board = board;
+        board.getParticipants().add(this);
+    }
+
+    public void addMentee(Mentee mentee){
+        if(this.mentee != null){
+            this.mentee.getParticipants().remove(this);
+        }
+        this.mentee = mentee;
+        mentee.getParticipants().add(this);
+    }
 }

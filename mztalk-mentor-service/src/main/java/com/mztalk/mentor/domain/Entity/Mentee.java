@@ -18,13 +18,13 @@ public class Mentee extends BaseTimeEntity{
 
     private String nickname;
 
-    @OneToMany
+    @OneToMany(mappedBy = "mentee")
     private List<Participant> participants = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "mentee")
     private List<Payment> payments = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "mentee")
     private List<Score> scores;
 
     @ManyToMany(mappedBy = "mentees")
@@ -40,4 +40,27 @@ public class Mentee extends BaseTimeEntity{
         this.scores = scores;
         this.mentors = mentors;
     }
+
+    //==연관관계 편의 메소드==//
+    public void addScore(Score score){
+        this.scores.add(score);
+        if(score.getMentee() != this){
+            score.addMentee(this);
+        }
+    }
+
+    public void addParticipant(Participant participant){
+        this.participants.add(participant);
+        if(participant.getMentee() != this){
+            participant.addMentee(this);
+        }
+    }
+
+    public void addPayment(Payment payment){
+        this.payments.add(payment);
+        if(payment.getMentee() != this){
+            payment.addMentee(this);
+        }
+    }
+
 }

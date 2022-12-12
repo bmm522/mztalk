@@ -7,7 +7,8 @@ import com.mztalk.mentor.domain.entity.Image;
 import com.mztalk.mentor.domain.entity.Mentor;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class ApplicationDto {
 

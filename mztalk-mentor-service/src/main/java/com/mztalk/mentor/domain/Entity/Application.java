@@ -19,7 +19,7 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     @Column(name ="application_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "application")
     private Mentor mentor;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "application")
@@ -42,16 +42,6 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
 
     @Enumerated(EnumType.STRING)
     private Status status;
-
-    public void addImage(Image image){
-        this.image = image;
-        image.addApplication(this);
-    }
-
-    public void addMentor(Mentor mentor){
-        this.mentor = mentor;
-        mentor.addApplication(this);
-    }
 
     @Builder
     public Application(Long id, Mentor mentor, Image image, String name, String phone,
@@ -78,6 +68,17 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
         this.job = applicationDto.getJob();
         this.bank = applicationDto.getBank();
         this.account = applicationDto.getAccount();
+    }
+
+    //== 연관관계 편의 메소드 ==//
+    public void addImage(Image image){
+        this.image = image;
+        image.addApplication(this);
+    }
+
+    public void addMentor(Mentor mentor){
+        this.mentor = mentor;
+        mentor.addApplication(this);
     }
 
 }
