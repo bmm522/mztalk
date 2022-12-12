@@ -1,6 +1,8 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.PaymentDto;
+import com.mztalk.mentor.domain.entity.Board;
+import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Payment;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.PaymentNotFoundException;
@@ -22,8 +24,14 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     @Transactional
     public Long save(PaymentDto paymentDto) {
-        Payment savedPayment = paymentRepository.save(paymentDto.toEntity());
-        return savedPayment.getId();
+        Board board = paymentDto.getBoard();
+        Mentee mentee = paymentDto.getMentee();
+        Payment payment = paymentDto.toEntity();
+
+        payment.addBoard(board);
+        payment.addMentee(mentee);
+
+        return paymentRepository.save(payment).getId();
     }
 
     @Override

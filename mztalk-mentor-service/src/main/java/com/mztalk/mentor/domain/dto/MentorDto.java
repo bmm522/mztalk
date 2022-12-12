@@ -14,7 +14,6 @@ import java.util.List;
 public class MentorDto {
 
     private Long id;
-    private String nickname;
     private Application application;
     private Board board;
     private List<Score> scores = new ArrayList<>();
@@ -24,7 +23,6 @@ public class MentorDto {
     public Mentor toEntity(){
         Mentor mentor = Mentor.builder()
                 .id(id)
-                .nickname(nickname)
                 .application(application)
                 .board(board)
                 .scores(scores)
@@ -36,7 +34,6 @@ public class MentorDto {
 
     public MentorDto(Mentor mentor) {
         this.id = mentor.getId();
-        this.nickname = mentor.getNickname();
         this.application = mentor.getApplication();
         this.board = mentor.getBoard();
         this.scores = mentor.getScores();

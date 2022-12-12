@@ -1,6 +1,7 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.MentorDto;
+import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.MentorNotFoundException;
@@ -24,8 +25,10 @@ public class MentorServiceImpl implements MentorService {
     @Override
     @Transactional
     public Long save(MentorDto mentorDto) {
-        Mentor savedMentor = mentorRepository.save(mentorDto.toEntity());
-        return savedMentor.getId();
+        Application application = mentorDto.getApplication();
+        Mentor mentor = mentorDto.toEntity();
+        mentor.addApplication(application);
+        return mentorRepository.save(mentor).getId();
     }
 
     @Override

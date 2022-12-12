@@ -1,6 +1,7 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.ImageDto;
+import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Image;
 import com.mztalk.mentor.exception.ImageNotFoundException;
 import com.mztalk.mentor.repository.ImageRepository;
@@ -18,7 +19,10 @@ public class ImageServiceImpl implements ImageService {
     @Override
     @Transactional
     public Long saveImage(ImageDto imageDto) {
-        return imageRepository.save(imageDto.toEntity()).getId();
+        Application application = imageDto.getApplication();
+        Image image = imageDto.toEntity();
+        image.addApplication(application);
+        return imageRepository.save(image).getId();
     }
 
     @Override

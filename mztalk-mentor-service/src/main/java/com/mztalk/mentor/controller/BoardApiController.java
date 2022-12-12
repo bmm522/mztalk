@@ -46,7 +46,6 @@ public class BoardApiController {
 
     @GetMapping("/board/search")
     public Result searchWithCondition(@ModelAttribute("SearchCondition")SearchCondition searchCondition){
-        System.out.println("searchCondition = " + searchCondition.toString());
         return boardService.searchWithCondition(searchCondition);
     }
 
