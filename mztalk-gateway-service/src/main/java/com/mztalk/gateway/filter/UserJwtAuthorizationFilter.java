@@ -67,7 +67,7 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
             System.out.println("55555555555555555555555");
             System.out.println(user.getNickname());
 //            exchange.getResponse().getHeaders().set("nickname", user.getNickname());
-                exchange.getRequest().getHeaders().set("nickname", user.getNickname());
+//                exchange.getRequest().getHeaders().set("nickname", user.getNickname());
 //            response.getHeaders().add("nickname", user.getNickname());
 
 //            headers.add("nickname", user.getNickname());
