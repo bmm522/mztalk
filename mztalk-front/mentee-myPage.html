@@ -208,7 +208,7 @@
 
     
     <!--멘토 신청 페이지 모달 시작-->
-    <form enctype="multipart/form-data" method="post" action="/mentors/application">
+   
         <div class="modal fade" id="enrollModal" aria-hidden="true" aria-labelledby="enrollModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -242,17 +242,19 @@
                             <input type="text" class="form-control form-control-sm" id="account" name="account">
                         </div>
                         <div class="mb-3">
-                            <label for="file" class="form-label">인증서류</label>
-                            <input type="file" class="form-control form-control-md" id="file" name="file" multiple/>
+                             <form enctype="multipart/form-data" method="post" action="/mentors/application">
+                                <label for="file" class="form-label">인증서류</label>
+                                <input type="file" class="form-control form-control-md" id="file" name="file" multiple/>
+                            </form>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-success">멘토 신청 하기</button>
+                        <button type="button" id="sendResume" class="btn btn-outline-success">멘토 신청 하기</button>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    
     <!--멘토 신청 작성 모달 끝-->
 
 
@@ -331,4 +333,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 <script src="JS/main.js"></script>
+<script src="JS/mentor.js"></script>
 </html>

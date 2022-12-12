@@ -24,9 +24,7 @@ public class ApplicationApiController {
     }
 
     @PostMapping("/application")
-    public Long saveApplication(@RequestBody ApplicationDto applicationDto, @ModelAttribute MultipartFile file,HttpServletRequest request){
-//        ImageDto imageDto = new Image().saveFile(file, request);
-//        imageService.saveImage(imageDto);
+    public Long saveApplication(@RequestBody ApplicationDto applicationDto){
         return applicationService.save(applicationDto);
     }
 

@@ -51,7 +51,7 @@ public class JwtTokenFactory {
                         .withClaim("mentorStatus",user.getMentorStatus())
                         .withClaim("nicknameCheck",user.getNicknameCheck())
                         .sign(Algorithm.HMAC512(JwtProperties.SECRET+refreshToken)));
-        map.put("refreshToken",JwtProperties.REFRESH_PREFIX+refreshToken);
+        map.put("refreshToken",refreshToken);
 
         return map;
     }
