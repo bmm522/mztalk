@@ -8,7 +8,7 @@ document.getElementById('logoutBtn').addEventListener('click',function(){
 	// localStorage.removeItem("RefreshToken");
     // deleteCookie('Authorization');
     // deleteCookie('RefreshToken');
-    location.href="test.html";
+    location.href="test?userNo="+1+".html";
 })
 
 function deleteCookie(name) {

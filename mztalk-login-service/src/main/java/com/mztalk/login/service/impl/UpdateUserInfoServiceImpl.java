@@ -30,5 +30,15 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
         return userRepository.updateStatus(nickname);
     }
 
+    @Override
+    public int updateRoleChangeToVip(Long id) {
+        return userRepository.updateRoleChangeToVip(id);
+    }
+
+    @Override
+    public int updateRoleChangeToUser(Long id) {
+        return userRepository.updateRoleChangeToUser(id);
+    }
+
 
 }

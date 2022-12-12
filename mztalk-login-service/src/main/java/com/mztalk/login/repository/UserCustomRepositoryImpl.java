@@ -21,9 +21,24 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
 //                .setParameter("username",username)
 //                .getSingleResult();
 //    }
+    public int updateRoleChangeToVip(Long id) {
+        return entityManager.createQuery("UPDATE User u SET u.role = 'ROLE_VIP' WHERE u.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Override
+    public int updateRoleChangeToUser(Long id) {
+        return entityManager.createQuery("UPDATE User u SET u.role = 'ROLE_USER' WHERE u.id =: id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
 
     public  void commit(){
         entityManager.flush();
         entityManager.clear();
     }
+
+
 }

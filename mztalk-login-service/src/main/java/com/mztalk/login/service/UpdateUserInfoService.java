@@ -6,4 +6,8 @@ public interface UpdateUserInfoService {
     int updateMentorStatus(String nickname);
 
     int updateStatus(String nickname);
+
+    int updateRoleChangeToVip(Long id);
+
+    int updateRoleChangeToUser(Long id);
 }

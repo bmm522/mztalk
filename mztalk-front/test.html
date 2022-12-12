@@ -20,6 +20,8 @@ let mentoStatus ="";
         console.log("test : " + localStorage.getItem('Authorization'));
         console.log("test : " + localStorage.getItem('RefreshToken'));
         console.log("test : " + localStorage.getItem('UserNo'));
+
+        
         fetch("http://localhost:8000/login/user-info/"+localStorage.getItem('UserNo'),{
             method:"GET",
             headers:{
@@ -29,8 +31,9 @@ let mentoStatus ="";
         })
         .then((res)=>res.json())
         .then(res =>{
-        nickname=res.nickname;
+        userNickname=res.nickname;
         mentoStatus = res.mentoStatus;
+
     })
     }
 
@@ -47,7 +50,7 @@ let mentoStatus ="";
             },
         body:JSON.stringify({
             test :document.getElementById("test-box").value,
-            userNickname : nickname,
+            userNickname : userNickname,
         })
         })
         .then(res=>{

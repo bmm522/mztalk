@@ -42,6 +42,16 @@ public class LoginApiController {
         return updateUserInfoService.updateStatus(nickname);
     }
 
+    @PatchMapping("/role/vip/{userNo}")
+    public int updateRoleChangeToVip(@PathVariable("userNo")Long id){
+        return updateUserInfoService.updateRoleChangeToVip(id);
+    }
+
+    @PatchMapping("/role/user/{userNo}")
+    public int updateRoleChangeToUser(@PathVariable("userNo")Long id){
+        return updateUserInfoService.updateRoleChangeToUser(id);
+    }
+
     @GetMapping("user-info/{userNo}")
     public UserDto getUserInfoByUserNo(@PathVariable("userNo")String userNo){
         return selectUserInfoService.getUserInfoByUserNo(userNo);
@@ -50,6 +60,8 @@ public class LoginApiController {
     public UserDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
         return selectUserInfoService.getUserInfoByNickname(nickname);
     }
+
+
 
     @GetMapping("/username/{email}")
     public ConcurrentHashMap<String, Object> searchUsername(@PathVariable("email") String email){
