@@ -33,3 +33,4 @@ document.getElementById('sendResume').addEventListener('click', function(){
         }
     })
 });
+

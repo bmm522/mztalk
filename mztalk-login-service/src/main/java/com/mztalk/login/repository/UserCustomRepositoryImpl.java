@@ -15,12 +15,6 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
     @Autowired
     EntityManager entityManager;
 
-//    public int updateSocialLoginUserNickname(String nickname, String username){
-//       return entityManager.createQuery("UPDATE User u SET u.nickname = :nickname WHERE u.username = :username", Integer.class)
-//                .setParameter("nickname", nickname)
-//                .setParameter("username",username)
-//                .getSingleResult();
-//    }
     public int updateRoleChangeToVip(Long id) {
         return entityManager.createQuery("UPDATE User u SET u.role = 'ROLE_VIP' WHERE u.id = :id")
                 .setParameter("id", id)

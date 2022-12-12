@@ -2,6 +2,7 @@ package com.mztalk.gateway.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.mztalk.gateway.domain.entity.User;
 import com.mztalk.gateway.properties.HttpStatusProperties;
 import com.mztalk.gateway.properties.JwtProperties;
@@ -47,18 +48,18 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
                 jwtHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
                 serverHeader = request.getHeaders().get("RefreshToken").get(0);
             } catch(NullPointerException e) {
-                return notiStatus(exchange, "Not Found your token", HttpStatus.UNAUTHORIZED);
+                return notiStatus(exchange, "Not Found your token", HttpStatus.BAD_REQUEST);
             }
             System.out.println("22222222222222222222222");
             //JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
             if(jwtHeader == null || !jwtHeader.startsWith(JwtProperties.JWT_PREFIX)) {
-                return notiStatus(exchange, "Not found authorization header", HttpStatus.UNAUTHORIZED);
+                return notiStatus(exchange, "Not found authorization header", HttpStatus.BAD_REQUEST);
             }
             System.out.println("33333333333333333");
             System.out.println(serverHeader);
             //정상적인 로그인서버에서 접근한 사용자인지 확인
             if(serverHeader == null || !serverHeader.startsWith(JwtProperties.REFRESHTOKEN_PREFIX)) {
-                return notiStatus(exchange, "Not found refreshToken header", HttpStatus.UNAUTHORIZED);
+                return notiStatus(exchange, "Not found refreshToken header", HttpStatus.BAD_REQUEST);
             }
 
             //JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
@@ -66,30 +67,22 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
             String refreshToken = serverHeader.replace(JwtProperties.REFRESHTOKEN_PREFIX, "");
             User user = null;
             System.out.println("44444444444444444444444");
+
+
+
             try {
                 user = getUser(jwtToken, refreshToken);
-            } catch(Exception e) {
+            } catch (TokenExpiredException e){
+                return notiStatus(exchange, "Token has expired", HttpStatus.UNAUTHORIZED);
+            }
+            catch(Exception e) {
                 return notiStatus(exchange, "Token Error", HttpStatus.UNAUTHORIZED);
             }
             // 서명이 정상적으로 됨
             System.out.println("55555555555555555555555");
-            System.out.println(user.getNickname());
-            response.getHeaders().set("nickname", user.getNickname());
-            System.out.println("response : " + response.getHeaders());
-            System.out.println("request : " + request.getHeaders());
-//            MultiValueMap<String, HttpCookie> nicknameCookie = request.getCookies();
-//            request.getHeaders().set("Authorization", user.getNickname());
-//            response.addCookie(nicknameCookie);
-//            request.getHeaders().add("nickname", user.getNickname());
-            System.out.println("추가 후 request : " + request.getHeaders());
-//            System.out.println("request Header : " + request.getHeaders().get());
-//            response.getHeaders().add("nickname", user.getNickname());
 
-//                exchange.getRequest().getHeaders().set("nickname", user.getNickname());
-//            response.getHeaders().add("nickname", user.getNickname());
 
-//            headers.add("nickname", user.getNickname());
-//            header2.add("nickname", user.getNickname());
+
             return chain.filter(exchange);
         });
     }
@@ -121,7 +114,7 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
     }
 
     private String getUserInfoFromJwt(String refreshToken, String jwtToken, String userInfo) {
-        return JWT.require(Algorithm.HMAC512(JwtProperties.SECRET + refreshToken)).build().verify(jwtToken).getClaim(userInfo).asString();
+        return JWT.require(Algorithm.HMAC256(JwtProperties.SECRET + refreshToken)).build().verify(jwtToken).getClaim(userInfo).asString();
     }
 
     public static class UserJwtAuthorizationConfig {
