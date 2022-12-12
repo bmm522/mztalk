@@ -21,6 +21,7 @@ let mentoStatus ="";
         console.log("test : " + localStorage.getItem('RefreshToken'));
         console.log("test : " + localStorage.getItem('UserNo'));
 
+
         
         fetch("http://localhost:8000/login/user-info/"+localStorage.getItem('UserNo'),{
             method:"GET",
@@ -31,7 +32,7 @@ let mentoStatus ="";
         })
         .then((res)=>res.json())
         .then(res =>{
-        userNickname=res.nickname;
+        nickname=res.nickname;
         mentoStatus = res.mentoStatus;
 
     })
@@ -50,13 +51,34 @@ let mentoStatus ="";
             },
         body:JSON.stringify({
             test :document.getElementById("test-box").value,
-            userNickname : userNickname,
+            userNickname : nickname,
         })
         })
         .then(res=>{
-            console.log('통신성공');
+            if(res.status == 401){
+                    getAccessToken();   
+                    alert('다시 시도해주세요.');   
+            } else {
+                console.log('성공');
+            }
         })
     });
+
+
+
+    const getAccessToken = () =>{
+        localStorage.removeItem('Authorization');
+        let refreshToken = localStorage.getItem('RefreshToken');
+        fetch("http://localhost:8000/login/access-token?refreshToken="+refreshToken,{
+            method:"GET",            
+        })
+        .then((res)=>res.json())
+        .then(res =>{
+            localStorage.removeItem('Refreshtoken');
+            localStorage.setItem("Authorization",res.authorization);
+            localStorage.setItem("RefreshToken", res.refreshToken);
+         })
+    }
 
 </script>
 </html>

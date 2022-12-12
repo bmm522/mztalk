@@ -31,7 +31,8 @@ public class SelectUserInfoServiceImpl implements SelectUserInfoService {
 
     @Override
     public UserDto getUserInfoByUserNo(String id) {
-        User user = userRepository.findById(Long.parseLong(id)).orElseThrow(()->new UserNoNotFoundException("Not Found User No"));
+        User user = userRepository.findById(Long.parseLong(id))
+                .orElseThrow(()->new UserNoNotFoundException("Not Found User No"));
         return getUserDto(user);
     }
     @Override

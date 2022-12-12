@@ -65,13 +65,15 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
             //JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
             String jwtToken = jwtHeader.replace(JwtProperties.JWT_PREFIX, "");
             String refreshToken = serverHeader.replace(JwtProperties.REFRESHTOKEN_PREFIX, "");
+            System.out.println("refreshToken으로부터 : " + getUserInfoFromJwt(refreshToken,"id"));
             User user = null;
-            System.out.println("44444444444444444444444");
-
-
+//            System.out.println("44444444444444444444444");
+//            User user2 = getUser(jwtToken, refreshToken);
+//            System.out.println(user2);
 
             try {
                 user = getUser(jwtToken, refreshToken);
+
             } catch (TokenExpiredException e){
                 return notiStatus(exchange, "Token has expired", HttpStatus.UNAUTHORIZED);
             }
@@ -80,6 +82,7 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
             }
             // 서명이 정상적으로 됨
             System.out.println("55555555555555555555555");
+
 
 
 
@@ -97,24 +100,24 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
 
     private User getUser(String jwtToken, String refreshToken) {
         return User.UserBuilder()
-                .id(getUserInfoFromJwt(refreshToken, jwtToken, "id"))
-                .username(getUserInfoFromJwt(refreshToken, jwtToken, "username"))
-                .nickname(getUserInfoFromJwt(refreshToken, jwtToken, "nickname"))
-                .email(getUserInfoFromJwt(refreshToken, jwtToken, "email"))
-                .role(getUserInfoFromJwt(refreshToken, jwtToken, "role"))
-                .provider(getUserInfoFromJwt(refreshToken, jwtToken, "provider"))
-                .providerId(getUserInfoFromJwt(refreshToken, jwtToken, "providerId"))
-                .createDate(getUserInfoFromJwt(refreshToken, jwtToken, "createDate"))
-                .mentorStatus(getUserInfoFromJwt(refreshToken, jwtToken, "mentorStatus"))
-                .nicknameCheck(getUserInfoFromJwt(refreshToken,jwtToken,"nicknameCheck"))
+                .id(getUserInfoFromJwt(jwtToken, "id"))
+                .username(getUserInfoFromJwt(jwtToken, "username"))
+                .nickname(getUserInfoFromJwt(jwtToken, "nickname"))
+                .email(getUserInfoFromJwt(jwtToken, "email"))
+                .role(getUserInfoFromJwt(jwtToken, "role"))
+                .provider(getUserInfoFromJwt(jwtToken, "provider"))
+                .providerId(getUserInfoFromJwt(jwtToken, "providerId"))
+                .createDate(getUserInfoFromJwt(jwtToken, "createDate"))
+                .mentorStatus(getUserInfoFromJwt(jwtToken, "mentorStatus"))
+                .nicknameCheck(getUserInfoFromJwt(jwtToken,"nicknameCheck"))
                 .build();
 
 
 
     }
 
-    private String getUserInfoFromJwt(String refreshToken, String jwtToken, String userInfo) {
-        return JWT.require(Algorithm.HMAC256(JwtProperties.SECRET + refreshToken)).build().verify(jwtToken).getClaim(userInfo).asString();
+    private String getUserInfoFromJwt(String jwtToken, String userInfo) {
+        return JWT.require(Algorithm.HMAC256(JwtProperties.SECRET)).build().verify(jwtToken).getClaim(userInfo).asString();
     }
 
     public static class UserJwtAuthorizationConfig {

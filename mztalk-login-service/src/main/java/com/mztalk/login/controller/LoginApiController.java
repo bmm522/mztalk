@@ -2,6 +2,7 @@ package com.mztalk.login.controller;
 
 import com.mztalk.login.domain.dto.UserDto;
 import com.mztalk.login.domain.entity.User;
+import com.mztalk.login.service.NewAccessTokenService;
 import com.mztalk.login.service.SelectUserInfoService;
 import com.mztalk.login.service.UpdateUserInfoService;
 import com.mztalk.login.service.impl.MailServiceByFindPwdService;
@@ -21,6 +22,8 @@ public class LoginApiController {
     private final MailServiceByFindPwdService mailServiceByFindPwdService;
 
     private final SelectUserInfoService selectUserInfoService;
+
+    private final NewAccessTokenService newAccessTokenService;
 
     @GetMapping("/auth-code")
     public ConcurrentHashMap<String, Object> getEmailAuthCodeByFindPwd(@RequestParam("email")String email, @RequestParam("username")String username){
@@ -52,9 +55,9 @@ public class LoginApiController {
         return updateUserInfoService.updateRoleChangeToUser(id);
     }
 
-    @GetMapping("user-info/{userNo}")
-    public UserDto getUserInfoByUserNo(@PathVariable("userNo")String userNo){
-        return selectUserInfoService.getUserInfoByUserNo(userNo);
+    @GetMapping("user-info/{id}")
+    public UserDto getUserInfoByUserNo(@PathVariable("id")String id){
+        return selectUserInfoService.getUserInfoByUserNo(id);
     }
     @GetMapping("user/{nickname}")
     public UserDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
@@ -66,6 +69,12 @@ public class LoginApiController {
     @GetMapping("/username/{email}")
     public ConcurrentHashMap<String, Object> searchUsername(@PathVariable("email") String email){
         return selectUserInfoService.searchUsername(email);
+    }
+
+    @GetMapping("/access-token")
+    public ConcurrentHashMap<String, String> getNewAccessToken(@RequestParam("refreshToken")String refreshToken){
+        System.out.println("newAccess : " + refreshToken);
+        return newAccessTokenService.getNewAccessToken(refreshToken);
     }
 
 
