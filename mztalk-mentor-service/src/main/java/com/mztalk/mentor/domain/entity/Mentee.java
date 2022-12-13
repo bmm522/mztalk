@@ -21,7 +21,7 @@ public class Mentee extends BaseTimeEntity{
 
     private String nickname;
 
-    private Long userId; //홈페이지 내 고유 ID
+    private Long userNo; //홈페이지 내 고유 ID
 
     @OneToMany(mappedBy = "mentee")
     private List<Participant> participants = new ArrayList<>();
@@ -36,12 +36,12 @@ public class Mentee extends BaseTimeEntity{
     private List<Mentor> mentors = new ArrayList<>();
 
     @Builder
-    public Mentee(Long id, Application application, String nickname, Long userId, List<Participant> participants,
+    public Mentee(Long id, Application application, String nickname, Long userNo, List<Participant> participants,
                   List<Payment> payments, List<Score> scores, List<Mentor> mentors) {
         this.id = id;
         this.application = application;
         this.nickname = nickname;
-        this.userId = userId;
+        this.userNo = userNo;
         this.participants = participants;
         this.payments = payments;
         this.scores = scores;

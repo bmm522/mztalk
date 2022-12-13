@@ -91,4 +91,13 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
         mentor.addApplication(this);
     }
 
+    //== Application 생성 메소드 ==//
+    public static Application createApplication(Mentee mentee){
+        Application application = new Application();
+        application.addMentee(mentee);
+        return application;
+    }
+
+
+
 }
