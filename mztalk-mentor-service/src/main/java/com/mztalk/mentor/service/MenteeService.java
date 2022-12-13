@@ -1,7 +1,6 @@
 package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.dto.MenteeDto;
-import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Result;
 
 public interface MenteeService {
@@ -11,5 +10,4 @@ public interface MenteeService {
     MenteeDto findClient(Long id);
 
     Result findAll();
-
 }

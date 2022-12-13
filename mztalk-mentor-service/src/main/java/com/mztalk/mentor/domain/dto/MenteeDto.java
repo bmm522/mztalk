@@ -15,7 +15,7 @@ public class MenteeDto {
     private Long id;
     private Application application;
     private String nickname;
-    private Long userNo;
+    private Long userId;
     private List<Participant> participants = new ArrayList<>();
     private List<Payment> payments = new ArrayList<>();
     private List<Score> scores;
@@ -26,7 +26,7 @@ public class MenteeDto {
                 .id(id)
                 .application(application)
                 .nickname(nickname)
-                .userNo(userNo)
+                .userId(userId)
                 .participants(participants)
                 .payments(payments)
                 .scores(scores)
@@ -39,7 +39,7 @@ public class MenteeDto {
         this.id = mentee.getId();
         this.application = mentee.getApplication();
         this.nickname = mentee.getNickname();
-        this.userNo = mentee.getUserNo();
+        this.userId = mentee.getUserId();
         this.participants = mentee.getParticipants();
         this.payments = mentee.getPayments();
         this.scores = mentee.getScores();

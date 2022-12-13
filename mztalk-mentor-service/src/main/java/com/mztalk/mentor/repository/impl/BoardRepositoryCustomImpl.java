@@ -26,7 +26,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         return queryFactory
                 .selectFrom(board)
                 .where(eqCategory(searchCondition.getCategory()),
-                        lePrice(searchCondition.getSalary()+1),
+                        lePrice(searchCondition.getSalary()),
                         containsContent(searchCondition.getContent()),
                         containsTitle(searchCondition.getTitle()))
                 .fetch();

@@ -42,13 +42,14 @@
             <!--검색창 시작-->
             <div class="row" style="padding-top: 20px;">
                 <form class="d-flex" role="search" method="get">
-
                     <div class="col-1.5">
-                        <select id="sort" class="form-select">
-                            <option value="">정렬</option>
-                            <option value="latest">최신순</option>
-                            <option value="highScore">평점순↑</option>
-                            <option value="lowScore">평점순↓</option>
+                        <select id="category" class="form-select">
+                            <option value="">과목</option>
+                            <option value="korean">국어</option>
+                            <option value="english">영어</option>
+                            <option value="math">수학</option>
+                            <option value="science">과학</option>
+                            <option value="social">사회</option>
                         </select>
                     </div>
 
@@ -57,13 +58,11 @@
                     </div>
 
                     <div class="col-1.5">
-                        <select id="category" class="form-select">
-                            <option value="">과목</option>
-                            <option value="korean">국어</option>
-                            <option value="english">영어</option>
-                            <option value="math">수학</option>
-                            <option value="science">과학</option>
-                            <option value="society">사회</option>
+                        <select id="sort" name="sort" class="form-select">
+                            <option value="">정렬</option>
+                            <option value="latest">최신순</option>
+                            <option value="highScore">평점순↑</option>
+                            <option value="lowScore">평점순↓</option>
                         </select>
                     </div>
 
@@ -122,7 +121,6 @@
             
             <!--멘토글 리스트 시작 4개당 1줄-->
             <div class="row" style="padding:20px;">
-                
                 <div class="col-3">
                     <div class="card" style="width: 13rem; height:14rem;">
                         <div class="card-body" data-bs-toggle="modal" href="#exampleModalToggle" onclick="location.href='/mentors/boards/'+id">

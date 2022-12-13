@@ -26,7 +26,7 @@ public class BaseTimeEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModifiedDate;
 
-    @PrePersist
+    @PrePersist //Persist하기 전 이벤트 발생
     public void prePersist(){
         LocalDateTime now = LocalDateTime.now();
         createdDate = now;

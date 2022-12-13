@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class MenteeApiController {
     private final MenteeService menteeService;
 
-    @PostMapping
+    @PostMapping("/mentee")
     public Long saveClient(@RequestBody MenteeDto menteeDto){
         return menteeService.saveClient(menteeDto);
     }
