@@ -598,6 +598,7 @@ document.getElementById('kakaoBtn').addEventListener('click',function(){
           console.log("소셜로그인 : " + localStorage.getItem('refreshToken'));
           console.log("소셜로그인 : " + localStorage.getItem('userNo'));
           console.log("소셜로그인 : " + localStorage.getItem('userNickname'));
+          console.log('소셜로그인쪽 실행됨');
           window.open('main.html', '_self');
       }
   console.log("여기가 실행되면 안돼");
