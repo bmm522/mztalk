@@ -1,6 +1,8 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.ParticipantDto;
+import com.mztalk.mentor.domain.entity.Board;
+import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Participant;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.ParticipantNotFoundException;
@@ -24,8 +26,14 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     @Transactional
     public Long save(ParticipantDto participantDto) {
-        Participant savedParticipant = participantRepository.save(participantDto.toEntity());
-        return savedParticipant.getId();
+        Board board = participantDto.getBoard();
+        Mentee mentee = participantDto.getMentee();
+        Participant participant = participantDto.toEntity();
+
+        participant.addBoard(board);
+        participant.addMentee(mentee);
+
+        return participantRepository.save(participant).getId();
     }
 
     @Override

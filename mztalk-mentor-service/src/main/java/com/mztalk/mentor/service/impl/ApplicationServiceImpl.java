@@ -2,6 +2,7 @@ package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.ApplicationDto;
 import com.mztalk.mentor.domain.entity.Application;
+import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.ApplicationNotFoundException;
 import com.mztalk.mentor.repository.ApplicationRepository;
@@ -24,8 +25,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     @Transactional
     public Long save(ApplicationDto applicationDto) {
-        Long savedId = applicationRepository.save(applicationDto.toEntity()).getId();
-        return savedId;
+        Mentee mentee = applicationDto.getMentee();
+        Application application = applicationDto.toEntity();
+        application.addMentee(mentee);
+        return applicationRepository.save(application).getId();
     }
 
     @Override
@@ -59,4 +62,6 @@ public class ApplicationServiceImpl implements ApplicationService {
         savedApplication.updateApplication(applicationDto);
         return savedApplication.getId();
     }
+
+
 }

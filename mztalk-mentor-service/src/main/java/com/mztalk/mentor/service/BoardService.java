@@ -1,6 +1,8 @@
 package com.mztalk.mentor.service;
 
+import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardDto;
+import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Result;
 
 public interface BoardService {
@@ -13,4 +15,6 @@ public interface BoardService {
     Long delete(Long id);
 
     Long updateBoard(Long id, BoardDto boardDto);
+
+    Result searchWithCondition(SearchCondition searchCondition);
 }

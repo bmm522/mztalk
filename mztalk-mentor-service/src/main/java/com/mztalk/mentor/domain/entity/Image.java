@@ -35,33 +35,6 @@ public class Image extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
         this.url = url;
     }
 
-    public ImageDto saveFile(MultipartFile file, HttpServletRequest request){
-        String root = request.getSession().getServletContext().getRealPath("resources");
-        String savePath = root + "\\uploadFiles";
-
-        File folder = new File(savePath);
-        if(!folder.exists()) {
-            folder.mkdirs();
-        }
-
-        uploadFileName = file.getOriginalFilename();
-        storeFileName = UUID.randomUUID().toString()+file.getOriginalFilename();
-        String renamePath = folder + "\\" + storeFileName;
-
-        try {
-            file.transferTo(new File(renamePath));
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-
-        ImageDto imageDto = ImageDto.builder()
-                .uploadFileName(uploadFileName)
-                .storeFileName(storeFileName)
-                .url(savePath)
-                .build();
-        return imageDto;
-    }
-
     //== 연관관계 편의 메소드==//
     public void addApplication(Application application) {
         this.application = application;

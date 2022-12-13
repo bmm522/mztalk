@@ -3,6 +3,11 @@ package com.mztalk.mentor.domain.dto;
 import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Image;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -40,5 +45,33 @@ public class ImageDto {
         this.uploadFileName = uploadFileName;
         this.storeFileName = storeFileName;
         this.url = url;
+    }
+
+    //이미지 저장 메소드
+    public ImageDto saveFile(MultipartFile file, HttpServletRequest request){
+        String root = request.getSession().getServletContext().getRealPath("resources");
+        String savePath = root + "\\uploadFiles";
+
+        File folder = new File(savePath);
+        if(!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        uploadFileName = file.getOriginalFilename();
+        storeFileName = UUID.randomUUID().toString()+file.getOriginalFilename();
+        String renamePath = folder + "\\" + storeFileName;
+
+        try {
+            file.transferTo(new File(renamePath));
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+
+        ImageDto imageDto = ImageDto.builder()
+                .uploadFileName(uploadFileName)
+                .storeFileName(storeFileName)
+                .url(savePath)
+                .build();
+        return imageDto;
     }
 }

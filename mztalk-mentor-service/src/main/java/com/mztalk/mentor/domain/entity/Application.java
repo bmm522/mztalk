@@ -19,6 +19,10 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     @Column(name ="application_id")
     private Long id;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="mentee_id")
+    private Mentee mentee;
+
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "application")
     private Mentor mentor;
 
@@ -44,10 +48,11 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     private Status status;
 
     @Builder
-    public Application(Long id, Mentor mentor, Image image, String name, String phone,
+    public Application(Long id, Mentee mentee, Mentor mentor, Image image, String name, String phone,
                        String email, String job, String bank, String account,
                        AuthStatus authStatus, Status status) {
         this.id = id;
+        this.mentee = mentee;
         this.mentor = mentor;
         this.image = image;
         this.name = name;
@@ -74,6 +79,11 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     public void addImage(Image image){
         this.image = image;
         image.addApplication(this);
+    }
+
+    public void addMentee(Mentee mentee){
+        this.mentee = mentee;
+        mentee.addApplication(this);
     }
 
     public void addMentor(Mentor mentor){
