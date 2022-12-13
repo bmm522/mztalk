@@ -9,4 +9,5 @@ public interface MenteeRepository extends JpaRepository<Mentee,Long>,MenteeRepos
 
     @Query("select m from Mentee m where m.nickname=:nickname")
     Mentee findMenteeByNickname(@Param("nickname") String nickname);
+
 }

@@ -22,8 +22,13 @@ public class MenteeServiceImpl implements MenteeService {
     @Override
     @Transactional
     public Long saveClient(MenteeDto menteeDto) {
-        Mentee savedClient = menteeRepository.saveClient(menteeDto.toEntity());
-        return savedClient.getId();
+        Mentee mentee = menteeRepository.findMenteeByNickname(menteeDto.getNickname());
+        if(mentee == null){
+            Mentee savedClient = menteeRepository.save(menteeDto.toEntity());
+            return savedClient.getId();
+        } else{
+            return 1L;
+        }
     }
 
     @Override
@@ -39,5 +44,6 @@ public class MenteeServiceImpl implements MenteeService {
         List<MenteeDto> collect = menteeList.stream().map(MenteeDto::new).collect(Collectors.toList());
         return new Result(collect);
     }
+
 
 }

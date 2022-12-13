@@ -10,4 +10,5 @@ public interface MenteeService {
     MenteeDto findClient(Long id);
 
     Result findAll();
+
 }
