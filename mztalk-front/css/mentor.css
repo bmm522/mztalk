@@ -25,6 +25,15 @@
     animation: flash 1.5s;
     cursor: pointer;
   }
+
+  #board-list-div{
+    overflow: hidden;
+  }
+
+
+  #row-div{
+    padding: 20px;
+  }
   @-webkit-keyframes flash {
     0% {
       opacity: .4;
@@ -41,3 +50,4 @@
       opacity: 1;
     }
   }
+

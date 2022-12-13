@@ -48,9 +48,9 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         return title != null ? board.title.contains(title) : null;
     }
 
-    private BooleanExpression eqWriter(String nickname){
-        return nickname != null ? board.mentor.nickname.like(nickname) : null;
-    }
+//    private BooleanExpression eqWriter(String nickname){
+//        return nickname != null ? board.mentor.nickname.like(nickname) : null;
+//    }
 
 
 

@@ -50,8 +50,8 @@ let mentoStatus ="";
             credentials:"include",
             headers:{
             "Content-Type":"application/json",
-            Authorization:localStorage.getItem('Authorization'),
-            RefreshToken:localStorage.getItem('RefreshToken'),
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
             },
         body:JSON.stringify({
             test :document.getElementById("test-box").value,

@@ -13,7 +13,7 @@ document.getElementById('logoutBtn').addEventListener('click',function(){
     // deleteCookie('Authorization');
     // deleteCookie('RefreshToken');
 
-    location.href="test.html";
+    location.href="mentor-main.html";
 })
 
 function deleteCookie(name) {

@@ -17,6 +17,7 @@ public class BoardDto {
     private Mentor mentor;
     private String category;
     private String title;
+    private String mentorNickname;
     private String content;
     private String introduction;
     private String career;
