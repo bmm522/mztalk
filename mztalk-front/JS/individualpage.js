@@ -23,8 +23,9 @@ writeboard();
 
 
 
-
-
+console.log(localStorage.getItem('userNickname'));
+console.log(localStorage.getItem('userNo'));
+console.log(localStorage.getItem('own'));
 
 
 

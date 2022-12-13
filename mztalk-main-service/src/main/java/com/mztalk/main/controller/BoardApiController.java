@@ -14,9 +14,14 @@ public class BoardApiController {
     private final BoardService boardService;
 
     //개인페이지
+//    @GetMapping("/story/{own}")
+//    public Result findAll(@PathVariable("own")Long own){
+//        return boardService.findAll();
+//    }
+
     @GetMapping("/story/{own}")
-    public Result findAll(@PathVariable("own")Long own){
-        return boardService.findAll();
+    public Result findAllByOwn(@PathVariable("own")Long own){
+        return boardService.findAllByOwn(own);
     }
 
     //글쓰기
