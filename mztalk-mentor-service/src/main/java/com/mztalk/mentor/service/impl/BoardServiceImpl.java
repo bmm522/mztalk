@@ -7,6 +7,7 @@ import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.BoardNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
+import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,17 +22,15 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+    private final MentorRepository mentorRepository;
 
     @Override
     @Transactional
     public Long saveBoard(BoardDto boardDto) {
-//        Mentor mentor = boardDto.getMentor();
-
         Board board = boardDto.toEntity();
-//        board.addMentor(mentor);
-
+        Mentor mentor = mentorRepository.findByMentorNickname(board.getMentorNickname());
+        board.addMentor(mentor);
         return boardRepository.save(board).getId();
-
     }
 
     @Override

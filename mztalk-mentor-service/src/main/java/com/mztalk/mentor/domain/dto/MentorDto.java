@@ -15,6 +15,7 @@ public class MentorDto {
 
     private Long id;
     private Application application;
+    private String mentorNickname;
     private Board board;
     private List<Score> scores = new ArrayList<>();
     private List<Mentee> mentees = new ArrayList<>();
@@ -24,6 +25,7 @@ public class MentorDto {
         Mentor mentor = Mentor.builder()
                 .id(id)
                 .application(application)
+                .mentorNickname(mentorNickname)
                 .board(board)
                 .scores(scores)
                 .mentees(mentees)
@@ -35,6 +37,7 @@ public class MentorDto {
     public MentorDto(Mentor mentor) {
         this.id = mentor.getId();
         this.application = mentor.getApplication();
+        this.mentorNickname = mentor.getMentorNickname();
         this.board = mentor.getBoard();
         this.scores = mentor.getScores();
         this.mentees = mentor.getMentees();

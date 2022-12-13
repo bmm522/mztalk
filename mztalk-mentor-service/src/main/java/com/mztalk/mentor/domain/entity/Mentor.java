@@ -22,6 +22,8 @@ public class Mentor extends BaseTimeEntity{
     @JoinColumn(name="application_id")
     private Application application;
 
+    private String mentorNickname;
+
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "mentor")
     private Board board;
 
@@ -38,9 +40,10 @@ public class Mentor extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Mentor(Long id, Application application, Board board, List<Score> scores, List<Mentee> mentees, Status status) {
+    public Mentor(Long id, Application application, String mentorNickname,Board board, List<Score> scores, List<Mentee> mentees, Status status) {
         this.id = id;
         this.application = application;
+        this.mentorNickname = mentorNickname;
         this.board = board;
         this.scores = scores;
         this.mentees = mentees;
