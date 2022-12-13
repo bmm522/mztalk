@@ -70,8 +70,10 @@ document.getElementById('nickname-box').addEventListener('keyup',function(){
 	.then(res=>{
 		// localStorage.removeItem("Authorization");
 		// localStorage.removeItem("RefreshToken");
-		localStorage.setItem("Authorization", res.jwtToken);
-		localStorage.setItem("RefreshToken", res.refreshToken);
+		localStorage.setItem("authorization", res.jwtToken);
+		localStorage.setItem("refreshToken", res.refreshToken);
+		localStorage.setItem("userNo", res.userNo);
+		localStorage.setItem("userNickname", res.userNickname);
 		window.open('main.html', '_self');
 	})
   });

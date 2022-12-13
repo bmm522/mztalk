@@ -1,7 +1,9 @@
 package com.mztalk.mentor.service.impl;
 
+import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardDto;
 import com.mztalk.mentor.domain.entity.Board;
+import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.BoardNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
@@ -23,8 +25,13 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long saveBoard(BoardDto boardDto) {
-        Board savedBoard = boardRepository.save(boardDto.toEntity());
-        return savedBoard.getId();
+//        Mentor mentor = boardDto.getMentor();
+
+        Board board = boardDto.toEntity();
+//        board.addMentor(mentor);
+
+        return boardRepository.save(board).getId();
+
     }
 
     @Override
@@ -55,5 +62,13 @@ public class BoardServiceImpl implements BoardService {
         Board savedBoard = boardRepository.findById(id).orElseThrow(() -> new BoardNotFoundException("해당 번호의 글이 존재하지 않습니다."));
         savedBoard.updateBoard(boardDto);
         return savedBoard.getId();
+    }
+
+    @Override
+    public Result searchWithCondition(SearchCondition searchCondition) {
+        List<Board> boardList = boardRepository.searchWithCondition(searchCondition);
+        System.out.println("boardList = " + boardList.toString());
+        List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
     }
 }

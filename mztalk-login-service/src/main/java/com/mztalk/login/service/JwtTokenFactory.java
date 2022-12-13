@@ -4,6 +4,10 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.properties.JwtProperties;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -18,10 +22,9 @@ import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 
+@Slf4j
 
 public class JwtTokenFactory {
-
-
 
     private static JwtTokenFactory jwtTokenFactory = new JwtTokenFactory();
 
@@ -38,24 +41,27 @@ public class JwtTokenFactory {
         String refreshToken = getRefreshToken();
         map.put("jwtToken", JwtProperties.TOKEN_PREFIX +
                 JWT.create()
-                        .withSubject(user.getUsername())
+                        .withSubject(JwtProperties.SUB)
+                        .withIssuer(JwtProperties.ISS)
                         .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
                         .withClaim("id", user.getId())
-                        .withClaim("username",user.getUsername())
-                        .withClaim("nickname",user.getNickname())
-                        .withClaim("email",user.getEmail())
-                        .withClaim("role",user.getRole())
-                        .withClaim("provider",user.getProvider())
-                        .withClaim("providerId",user.getProviderId())
-                        .withClaim("createDate",getCreateDate(user.getCreateDate()))
-                        .withClaim("mentorStatus",user.getMentorStatus())
-                        .withClaim("nicknameCheck",user.getNicknameCheck())
-                        .sign(Algorithm.HMAC512(JwtProperties.SECRET+refreshToken)));
-        map.put("refreshToken",refreshToken);
+                        .withClaim("username", user.getUsername())
+                        .withClaim("nickname", user.getNickname())
+                        .sign(Algorithm.HMAC256(JwtProperties.SECRET)));
+
+        map.put("refreshToken",JwtProperties.REFRESH_PREFIX+
+                JWT.create()
+                        .withSubject(JwtProperties.SUB)
+                        .withIssuer(JwtProperties.ISS)
+                        .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESHTOKEN_EXPIRATION_TIME))
+                        .withClaim("id",user.getId())
+                        .sign(Algorithm.HMAC256(JwtProperties.SECRET)));
 
         return map;
     }
 
+
+//    }
 
 
     private String getCreateDate(Timestamp createDate) {
@@ -88,4 +94,6 @@ public class JwtTokenFactory {
         }
         return new String(Base64.getEncoder().encode(randomByte));
     }
+
+
 }

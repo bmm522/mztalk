@@ -2,6 +2,7 @@ package com.mztalk.login.service.impl;
 
 import com.mztalk.login.domain.dto.UserDto;
 import com.mztalk.login.domain.entity.User;
+import com.mztalk.login.exception.UserNoNotFoundException;
 import com.mztalk.login.repository.UserRepository;
 import com.mztalk.login.service.SelectUserInfoService;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +28,19 @@ public class SelectUserInfoServiceImpl implements SelectUserInfoService {
         return map;
     }
 
-    @Override
-    public UserDto getUserInfo(String nickname) {
-        User user = userRepository.findByNickname(nickname);
 
+    @Override
+    public UserDto getUserInfoByUserNo(String id) {
+        User user = userRepository.findById(Long.parseLong(id))
+                .orElseThrow(()->new UserNoNotFoundException("Not Found User No"));
+        return getUserDto(user);
+    }
+    @Override
+    public UserDto getUserInfoByNickname(String nickname) {
+        User user = userRepository.findByNickname(nickname);
+        return getUserDto(user);
+    }
+    private UserDto getUserDto(User user) {
         return UserDto.builder()
                 .username(user.getUsername())
                 .nickname(user.getNickname())
@@ -44,4 +54,8 @@ public class SelectUserInfoServiceImpl implements SelectUserInfoService {
                 .nicknameCheck(user.getNicknameCheck())
                 .build();
     }
+
+
+
+
 }

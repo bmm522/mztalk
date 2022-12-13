@@ -527,11 +527,12 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
             password : password
         }),
     })
-   
-    .then(res => {
+    // .then((res)=>res.json())
+    .then(response => {
       // localStorage.removeItem("Authorization");
       // localStorage.removeItem("RefreshToken");
-      let result =   res.headers.get('LoginResult');
+      console.log("헤더값 : " + response.headers);
+       let result =   response.headers.get('LoginResult');
       console.log('통신성공');
       if(result =='Not found userId or userPassword'){
         alert('아이디 또는 비밀번호가 틀렸습니다.');
@@ -543,13 +544,17 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         document.getElementById('password-in').value ="";
       } else {
 
-        localStorage.setItem("Authorization", res.headers.get('Authorization'));
-        localStorage.setItem("RefreshToken", res.headers.get('RefreshToken'));
+        localStorage.setItem("authorization", response.headers.get('Authorization'));
+        localStorage.setItem("refreshToken", response.headers.get('RefreshToken'));
+        localStorage.setItem("userNo", response.headers.get("UserNo"));
+        localStorage.setItem("userNickname", decodeURIComponent(response.headers.get('UserNickname')));
         window.open('main.html', '_self');
       }
-
+     
     });
+
   }
+
   
   
 });
@@ -574,20 +579,31 @@ document.getElementById('kakaoBtn').addEventListener('click',function(){
   console.log(getCookieValue('RefreshToken'));
   console.log(getCookieValue('LoginResult'));
   
+
+
+
+
+
+
       if(!getCookieValue('Authorization') == ''){
           console.log('쿠키있음');
-          // localStorage.removeItem("Authorization");
+          // localStorage.removeItem("authorization");
           // localStorage.removeItem("RefreshToken");
 
-          localStorage.setItem('Authorization', getCookieValue('Authorization').replace("+"," "));
-          localStorage.setItem('RefreshToken', getCookieValue('RefreshToken').replace("+"," "));
-          console.log("소셜로그인 : " + localStorage.getItem('Authorization'));
-          console.log("소셜로그인 : " + localStorage.getItem('RefreshToken'));
+          localStorage.setItem('authorization', getCookieValue('Authorization').replace("+"," "));
+          localStorage.setItem('refreshToken', getCookieValue('RefreshToken').replace("+"," "));
+          localStorage.setItem('userNo', getCookieValue('UserNo').replace("+"," "));
+          localStorage.setItem('userNickname',getCookieValue('UserNickname'));
+          console.log("소셜로그인 : " + localStorage.getItem('authorization'));
+          console.log("소셜로그인 : " + localStorage.getItem('refreshToken'));
+          console.log("소셜로그인 : " + localStorage.getItem('userNo'));
+          console.log("소셜로그인 : " + localStorage.getItem('userNickname'));
+          console.log('소셜로그인쪽 실행됨');
           window.open('main.html', '_self');
       }
   console.log("여기가 실행되면 안돼");
-  console.log(localStorage.getItem('Authorization'));
-  console.log(localStorage.getItem('RefreshToken'));
+  console.log(localStorage.getItem('authorization'));
+  console.log(localStorage.getItem('refreshToken'));
   };
   
   

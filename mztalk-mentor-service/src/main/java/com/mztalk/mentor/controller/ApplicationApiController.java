@@ -1,6 +1,7 @@
 package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.ApplicationDto;
+import com.mztalk.mentor.domain.dto.ImageDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.ApplicationService;
 import com.mztalk.mentor.service.ImageService;
@@ -24,6 +25,12 @@ public class ApplicationApiController {
     }
 
     @PostMapping("/application")
+    public Long saveApplication(@RequestBody ApplicationDto applicationDto, @ModelAttribute MultipartFile file,HttpServletRequest request) {
+        ImageDto imageDto = new ImageDto().saveFile(file, request);
+        imageService.saveImage(imageDto);
+        return applicationService.save(applicationDto);
+    }
+
     public Long saveApplication(@RequestBody ApplicationDto applicationDto){
         return applicationService.save(applicationDto);
     }
@@ -47,15 +54,5 @@ public class ApplicationApiController {
     public Long updateApplication(@PathVariable("id") Long id,@RequestBody ApplicationDto applicationDto){
         return applicationService.updateApplication(id,applicationDto);
     }
-
-
-
-
-
-
-
-
-
-
 
 }

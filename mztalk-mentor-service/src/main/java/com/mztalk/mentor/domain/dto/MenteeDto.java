@@ -13,7 +13,9 @@ import java.util.List;
 public class MenteeDto {
 
     private Long id;
+    private Application application;
     private String nickname;
+    private Long userId;
     private List<Participant> participants = new ArrayList<>();
     private List<Payment> payments = new ArrayList<>();
     private List<Score> scores;
@@ -22,7 +24,9 @@ public class MenteeDto {
     public Mentee toEntity(){
         Mentee mentee = Mentee.builder()
                 .id(id)
+                .application(application)
                 .nickname(nickname)
+                .userId(userId)
                 .participants(participants)
                 .payments(payments)
                 .scores(scores)
@@ -33,7 +37,9 @@ public class MenteeDto {
 
     public MenteeDto(Mentee mentee){
         this.id = mentee.getId();
+        this.application = mentee.getApplication();
         this.nickname = mentee.getNickname();
+        this.userId = mentee.getUserId();
         this.participants = mentee.getParticipants();
         this.payments = mentee.getPayments();
         this.scores = mentee.getScores();

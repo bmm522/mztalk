@@ -6,17 +6,27 @@ import com.mztalk.login.properties.JwtProperties;
 import com.mztalk.login.properties.LoginStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -61,15 +71,19 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
         return null;
     }
 
+    @ResponseBody
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
-        System.out.println("일반로그인 success핸들러 실행");
         ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
 
         response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
-        response.addHeader("RefreshToken", "RefreshToken " +jwtTokenAndRefreshToken.get("refreshToken"));
+        response.addHeader("RefreshToken", jwtTokenAndRefreshToken.get("refreshToken"));
+        response.addHeader("UserNo", String.valueOf(principalDetails.getUser().getId()));
+        response.addHeader("UserNickname", URLEncoder.encode(principalDetails.getUser().getNickname(),"UTF-8"));
+
     }
+
 
 }

@@ -1,6 +1,8 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.ScoreDto;
+import com.mztalk.mentor.domain.entity.Mentee;
+import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.domain.entity.Score;
 import com.mztalk.mentor.exception.ScoreNotFoundException;
@@ -23,8 +25,14 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     @Transactional
     public Long save(ScoreDto scoreDto) {
-        Score savedScore = scoreRepository.save(scoreDto.toEntity());
-        return savedScore.getId();
+        Mentor mentor = scoreDto.getMentor();
+        Mentee mentee = scoreDto.getMentee();
+        Score score = scoreDto.toEntity();
+
+        score.addMentor(mentor);
+        score.addMentee(mentee);
+
+        return scoreRepository.save(score).getId();
     }
 
     @Override

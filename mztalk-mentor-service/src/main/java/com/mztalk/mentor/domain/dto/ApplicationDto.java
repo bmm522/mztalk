@@ -4,6 +4,7 @@ import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Image;
+import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Mentor;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import lombok.*;
 public class ApplicationDto {
 
     private Long id;
+    private Mentee mentee;
     private Mentor mentor;
     private Image image;
     private String name;
@@ -27,6 +29,7 @@ public class ApplicationDto {
     public Application toEntity(){
         Application application = Application.builder()
                 .id(id)
+                .mentee(mentee)
                 .mentor(mentor)
                 .image(image)
                 .name(name)
@@ -43,6 +46,7 @@ public class ApplicationDto {
 
     public ApplicationDto(Application application){
         this.id = application.getId();
+        this.mentee = application.getMentee();
         this.mentor = application.getMentor();
         this.image = application.getImage();
         this.name = application.getName();

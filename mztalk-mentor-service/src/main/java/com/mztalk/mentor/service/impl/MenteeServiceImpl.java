@@ -22,7 +22,7 @@ public class MenteeServiceImpl implements MenteeService {
     @Override
     @Transactional
     public Long saveClient(MenteeDto menteeDto) {
-        Mentee savedClient = menteeRepository.save(menteeDto.toEntity());
+        Mentee savedClient = menteeRepository.saveClient(menteeDto.toEntity());
         return savedClient.getId();
     }
 

@@ -15,8 +15,9 @@ public class BoardDto {
 
     private Long id;
     private Mentor mentor;
-    private Category category;
+    private String category;
     private String title;
+    private String mentorNickname;
     private String content;
     private String introduction;
     private String career;

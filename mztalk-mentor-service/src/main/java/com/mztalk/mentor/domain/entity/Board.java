@@ -23,9 +23,7 @@ public class Board extends BaseTimeEntity{
     @JoinColumn(name="mentor_id")
     private Mentor mentor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="category_id")
-    private Category category;
+    private String category;
 
     private String title;
 
@@ -48,7 +46,7 @@ public class Board extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Board(Long id, Mentor mentor, Category category, String title, String content, String introduction,
+    public Board(Long id, Mentor mentor, String category, String title, String content, String introduction,
                  String career, int salary, List<Participant> participants,
                  List<Payment> payments, Status status) {
         this.id = id;
@@ -80,14 +78,6 @@ public class Board extends BaseTimeEntity{
     public void addMentor(Mentor mentor) {
         this.mentor = mentor;
         mentor.addBoard(this);
-    }
-
-    public void addCategory(Category category){
-        if(this.category != null){
-            this.category.getBoards().remove(this);
-        }
-        this.category = category;
-        category.getBoards().add(this);
     }
 
     public void addParticipants(Participant participant){

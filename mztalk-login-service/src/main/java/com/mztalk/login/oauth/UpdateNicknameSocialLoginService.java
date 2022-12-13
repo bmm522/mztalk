@@ -25,12 +25,11 @@ public class UpdateNicknameSocialLoginService {
         userRepository.commit();
 
         User newUser = userRepository.findByUsername(body.get("username"));
-        return getJwtTokenFactoryInstance().getJwtToken(newUser);
+        ConcurrentHashMap<String, String> map =  getJwtTokenFactoryInstance().getJwtToken(newUser);
+        map.put("userNo", String.valueOf(newUser.getId()));
+        map.put("userNickname", newUser.getNickname());
+        return map;
 
-//        ConcurrentHashMap<String, String> jwtTokenMap = new ConcurrentHashMap<>();
-//        jwtTokenMap.put("jwtToken", JwtProperties.TOKEN_PREFIX+jwtToken.get("jwtToken"));
-//        jwtTokenMap.put("refreshToken", "RefreshToken "+jwtToken.get("refreshToken"));
-//        return jwtTokenMap;
 
 
     }
