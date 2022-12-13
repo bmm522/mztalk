@@ -34,7 +34,7 @@ public class Board extends BaseTimeEntity{
     @Column(columnDefinition ="TEXT", nullable = false)
     private String content; // 글 내용
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Long own; //글에 주인
 
     @OrderBy("id desc ")

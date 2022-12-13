@@ -43,4 +43,10 @@ public class BoardService {
 
         return new Result(collect);
     }
+
+    public Result findAllByOwn(Long own) {
+        List<Board> boards = boardRepository.findAllByOwn(own);
+        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
 }

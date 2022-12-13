@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface BoardRepository extends JpaRepository<Board, Long>, BoardCustomRepository {
 //    Iterable<Board> findByUserId(Long own);
 
     @Query(value ="SELECT * FROM Board b WHERE own = :own ORDER BY b.id DESC ", nativeQuery = true)
