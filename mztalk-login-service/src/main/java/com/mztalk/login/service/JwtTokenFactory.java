@@ -54,30 +54,18 @@ public class JwtTokenFactory {
                         .withClaim("mentorStatus",user.getMentorStatus())
                         .withClaim("nicknameCheck",user.getNicknameCheck())
                         .sign(Algorithm.HMAC256(JwtProperties.SECRET)));
-        System.out.println("팩토리 : " + user.getId());
-        System.out.println("팩토리 : " + user.getUsername());
+
         map.put("refreshToken","RefreshToken "+
                 JWT.create()
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESHTOKEN_EXPIRATION_TIME))
                         .withClaim("id",user.getId())
-                        .sign(Algorithm.HMAC256(Base64.getEncoder().encodeToString(JwtProperties.SECRET.getBytes()))));
-
-//        System.out.println("jwtToken팩토리 : " + map.get("jwtToken"));
-//        System.out.println("refreshToken 팩토리 : " + map.get("refreshToken"));
-//        System.out.println("팩토리 : " + getUserInfoFromJwt(map.get("jwtToken").substring(7),"id"));
-//        System.out.println("팩토리 : " + getUserInfoFromJwt(map.get("jwtToken").substring(7),"id"));
-//        System.out.println("팩토리 : " + getUserInfoFromJwt(map.get("refreshToken").substring(13),"id"));
-//        System.out.println("팩토리 : " + getUserInfoFromJwt(map.get("refreshToken").substring(13),"username"));
-        System.out.println("팩토리 디코딩 : " + getAllClaims(map.get("jwtToken").substring(7)));
-
+                        .sign(Algorithm.HMAC256(JwtProperties.SECRET)));
 
         return map;
     }
 
 
-//    private String getUserInfoFromJwt(String jwtToken, String userInfo) {
-//        return JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken).getClaim(userInfo).asString();
 //    }
 
 
@@ -112,12 +100,5 @@ public class JwtTokenFactory {
         return new String(Base64.getEncoder().encode(randomByte));
     }
 
-    private Claims getAllClaims(String token) {
-        log.info("getAllClaims token = {}", token);
-        return Jwts.parser()
-                .setSigningKey(Base64.getEncoder().encodeToString(JwtProperties.SECRET.getBytes()))
-                .parseClaimsJws(token)
-                .getBody();
-    }
 
 }

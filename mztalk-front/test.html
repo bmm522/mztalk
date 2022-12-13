@@ -21,6 +21,7 @@ let mentoStatus ="";
         console.log("test : " + localStorage.getItem('RefreshToken'));
         console.log("test : " + localStorage.getItem('UserNo'));
 
+        localStorage.getItem('Nickname');
 
         
         fetch("http://localhost:8000/login/user-info/"+localStorage.getItem('UserNo'),{
@@ -41,6 +42,9 @@ let mentoStatus ="";
 
 
     document.getElementById('test-btn').addEventListener('click', function(){
+        console.log('요청들어옴');
+        console.log('요청 들어옴 : ' + localStorage.getItem('Authorization'));
+        console.log('요청 들어옴 : ' + localStorage.getItem('RefreshToken'));
         fetch("http://localhost:8000/test/test",{
             method:"POST",
             credentials:"include",
@@ -75,8 +79,8 @@ let mentoStatus ="";
         .then((res)=>res.json())
         .then(res =>{
             localStorage.removeItem('Refreshtoken');
-            localStorage.setItem("Authorization",res.authorization);
-            localStorage.setItem("RefreshToken", res.refreshToken);
+            localStorage.setItem('Authorization',res.jwtToken);
+            localStorage.setItem('RefreshToken', res.refreshToken);
          })
     }
 

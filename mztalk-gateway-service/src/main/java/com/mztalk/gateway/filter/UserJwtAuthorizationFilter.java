@@ -65,14 +65,16 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
             //JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
             String jwtToken = jwtHeader.replace(JwtProperties.JWT_PREFIX, "");
             String refreshToken = serverHeader.replace(JwtProperties.REFRESHTOKEN_PREFIX, "");
-            System.out.println("refreshToken으로부터 : " + getUserInfoFromJwt(refreshToken,"id"));
+//            System.out.println("refreshToken으로부터 : " + getUserInfoFromJwt(refreshToken,"id"));
             User user = null;
-//            System.out.println("44444444444444444444444");
+            System.out.println("44444444444444444444444");
 //            User user2 = getUser(jwtToken, refreshToken);
 //            System.out.println(user2);
+            System.out.println("444 : " + jwtToken);
+            System.out.println("444 : " + refreshToken);
 
             try {
-                user = getUser(jwtToken, refreshToken);
+                user = getUser(jwtToken);
 
             } catch (TokenExpiredException e){
                 return notiStatus(exchange, "Token has expired", HttpStatus.UNAUTHORIZED);
@@ -82,8 +84,6 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
             }
             // 서명이 정상적으로 됨
             System.out.println("55555555555555555555555");
-
-
 
 
             return chain.filter(exchange);
@@ -98,7 +98,7 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
         return response.setComplete();
     }
 
-    private User getUser(String jwtToken, String refreshToken) {
+    private User getUser(String jwtToken) {
         return User.UserBuilder()
                 .id(getUserInfoFromJwt(jwtToken, "id"))
                 .username(getUserInfoFromJwt(jwtToken, "username"))
