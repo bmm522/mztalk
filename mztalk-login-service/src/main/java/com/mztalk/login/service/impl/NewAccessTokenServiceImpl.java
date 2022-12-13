@@ -12,10 +12,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.stereotype.Service;
 
-import java.io.Reader;
 import java.util.Base64;
 import java.util.concurrent.ConcurrentHashMap;
 

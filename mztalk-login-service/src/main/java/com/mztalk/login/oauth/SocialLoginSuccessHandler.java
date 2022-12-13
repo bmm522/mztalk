@@ -24,8 +24,8 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
 
         if(principalDetails.getUser().getNickname().equals("null")){
             Cookie usernameCookie = new Cookie("username", URLEncoder.encode(principalDetails.getUsername(),"UTF-8"));
-            Cookie testCookie = new Cookie("test", "asdf");
             usernameCookie.setPath("/");
+            usernameCookie.setMaxAge(60*3);
             response.addCookie(usernameCookie);
             response.sendRedirect("http://localhost:5501/editNickname.html");
         } else {
@@ -34,6 +34,7 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
             response.addCookie(cookieMap.get("jwtToken"));
             response.addCookie(cookieMap.get("refreshToken"));
             response.addCookie(cookieMap.get("userNo"));
+            response.addCookie(cookieMap.get("userNickname"));
             response.sendRedirect("http://localhost:5501/loginpage.html");
         }
     }

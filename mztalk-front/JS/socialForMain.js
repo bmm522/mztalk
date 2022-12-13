@@ -1,6 +1,10 @@
 window.onload=function(){
-    console.log("main : " + localStorage.getItem('Authorization'));
-    console.log("main : " + localStorage.getItem('RefreshToken'));
+    console.log("main : " + localStorage.getItem('authorization'));
+    console.log("main : " + localStorage.getItem('refreshToken'));
+    console.log("main : " + localStorage.getItem('userNo'));
+    console.log("main : " + localStorage.getItem('userNickname'));
+    
+
 }
 
 document.getElementById('logoutBtn').addEventListener('click',function(){
@@ -8,6 +12,7 @@ document.getElementById('logoutBtn').addEventListener('click',function(){
 	// localStorage.removeItem("RefreshToken");
     // deleteCookie('Authorization');
     // deleteCookie('RefreshToken');
+
     location.href="test.html";
 })
 

@@ -27,6 +27,7 @@ public class UpdateNicknameSocialLoginService {
         User newUser = userRepository.findByUsername(body.get("username"));
         ConcurrentHashMap<String, String> map =  getJwtTokenFactoryInstance().getJwtToken(newUser);
         map.put("userNo", String.valueOf(newUser.getId()));
+        map.put("userNickname", newUser.getNickname());
         return map;
 
 //        ConcurrentHashMap<String, String> jwtTokenMap = new ConcurrentHashMap<>();
