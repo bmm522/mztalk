@@ -148,7 +148,7 @@ document.getElementById('move-mentor-service').addEventListener('click',function
         },
         body:JSON.stringify({
             nickname : localStorage.getItem('userNickname'),
-            userNo : localStorage.getItem('userNo')
+            id : localStorage.getItem('userNo')
         })
     })
     .then(res =>{

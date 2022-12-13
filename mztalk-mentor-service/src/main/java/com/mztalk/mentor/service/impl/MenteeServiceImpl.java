@@ -22,13 +22,8 @@ public class MenteeServiceImpl implements MenteeService {
     @Override
     @Transactional
     public Long saveClient(MenteeDto menteeDto) {
-        Mentee mentee = menteeRepository.findMenteeByNickname(menteeDto.getNickname());
-        if(mentee == null){
-            Mentee savedClient = menteeRepository.save(menteeDto.toEntity());
-            return savedClient.getId();
-        } else{
-            return 1L;
-        }
+        Mentee savedClient = menteeRepository.save(menteeDto.toEntity());
+        return savedClient.getId();
     }
 
     @Override
