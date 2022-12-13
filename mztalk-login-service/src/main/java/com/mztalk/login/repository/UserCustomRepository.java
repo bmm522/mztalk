@@ -11,4 +11,8 @@ public interface UserCustomRepository {
     int updateRoleChangeToVip(Long id);
 
     int updateRoleChangeToUser(Long id);
+
+    int changedPassword(String newPassword, long id);
+
+    String findByPasswordWithId(long id);
 }

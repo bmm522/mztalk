@@ -78,5 +78,11 @@ public class LoginApiController {
     }
 
 
+    // 비밀번호 변경, body : prePassword, newPassword, id
+    @PatchMapping("/new-password")
+    public int changeNewPassword(@RequestBody Map<String, String> body){
+        return updateUserInfoService.changeNewPassword(body);
+    }
+
 
 }

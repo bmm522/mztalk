@@ -28,6 +28,21 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
                 .executeUpdate();
     }
 
+    @Override
+    public int changedPassword(String newPassword, long id) {
+        return entityManager.createQuery("UPDATE User u SET u.password = :newPassword WHERE u.id = :id")
+                .setParameter("newPassword", newPassword)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Override
+    public String findByPasswordWithId(long id) {
+        return entityManager.createQuery("SELECT u.password FROM User u WHERE u.id = :id",String.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
 
     public  void commit(){
         entityManager.flush();

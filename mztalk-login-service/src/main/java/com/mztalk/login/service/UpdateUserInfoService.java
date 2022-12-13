@@ -1,5 +1,7 @@
 package com.mztalk.login.service;
 
+import java.util.Map;
+
 public interface UpdateUserInfoService {
     int updatePassword(String username, String password);
 
@@ -10,4 +12,6 @@ public interface UpdateUserInfoService {
     int updateRoleChangeToVip(Long id);
 
     int updateRoleChangeToUser(Long id);
+
+    int changeNewPassword(Map<String, String> body);
 }

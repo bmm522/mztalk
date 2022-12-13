@@ -77,34 +77,11 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
                                             Authentication authResult) throws IOException, ServletException {
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
-//        String nickname = URLEncoder.encode(principalDetails.getUser().getNickname(), "UTF-8");
-        Cookie nicknameCookie = new Cookie("UserNickname", principalDetails.getUser().getNickname());
-//        nicknameCookie.setPath("/");
-//        nicknameCookie.setMaxAge(60*3);
-//        System.out.println("일반로그인 : " + principalDetails.getUser().getNickname());
-//        System.out.println("일반로그인 : " + nicknameCookie.getValue());
-         setNicknameEncoding(principalDetails.getUser().getNickname(),request,response);
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("userNickname", principalDetails.getUser().getNickname());
-        response.addCookie(nicknameCookie);
         response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
         response.addHeader("RefreshToken", jwtTokenAndRefreshToken.get("refreshToken"));
         response.addHeader("UserNo", String.valueOf(principalDetails.getUser().getId()));
         response.addHeader("UserNickname", URLEncoder.encode(principalDetails.getUser().getNickname(),"UTF-8"));
-//        response.addHeader("Content-Type", "application/json; charset=UTF-8");
-
-        new ObjectMapper().writeValue(response.getOutputStream(), body);
-    }
-
-    private void setNicknameEncoding(String nickname, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-        String header = request.getHeader("User-Agent");
-
-        if(header.contains("Edge")){
-            nickname = URLEncoder.encode(nickname,"UTF-8").replaceAll("\\+","%20");
-            response.setHeader("Content-Diposition", "attamchment;nickname=\"" + nickname);
-        }
-
 
     }
 
