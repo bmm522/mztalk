@@ -11,26 +11,17 @@ public class SearchCondition {
     private String title; // 글 제목
     private String content; // 글 내용
     private Integer salary; // 시급
+    private String sort; // 정렬 조건
 
     public SearchCondition() {
     }
 
-    public SearchCondition(String category, String nickname, String title, String content, int salary) {
+    public SearchCondition(String category, String nickname, String title, String content, int salary,String sort) {
         this.category = category;
         this.nickname = nickname;
         this.title = title;
         this.content = content;
         this.salary = salary;
-    }
-
-    @Override
-    public String toString() {
-        return "SearchCondition{" +
-                "category='" + category + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", salary=" + salary +
-                '}';
+        this.sort = sort;
     }
 }

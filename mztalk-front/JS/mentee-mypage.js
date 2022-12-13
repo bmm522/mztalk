@@ -1,8 +1,16 @@
-window.onload =function(){
-    console.log(localStorage.getItem('Authorization'));
-    console.log(localStorage.getItem('RefreshToken'));
+const getAccessToken = () =>{
+    localStorage.removeItem('Authorization');
+    let refreshToken = localStorage.getItem('RefreshToken');
+    fetch("http://localhost:8000/login/access-token?refreshToken="+refreshToken,{
+        method:"GET",            
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        localStorage.removeItem('Refreshtoken');
+        localStorage.setItem('Authorization',res.jwtToken);
+        localStorage.setItem('RefreshToken', res.refreshToken);
+     })
 }
-
 
 document.getElementById('sendResume').addEventListener('click', function(){
 

@@ -6,6 +6,7 @@ import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.ApplicationNotFoundException;
 import com.mztalk.mentor.repository.ApplicationRepository;
+import com.mztalk.mentor.repository.MenteeRepository;
 import com.mztalk.mentor.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
+    private final MenteeRepository menteeRepository;
 
     @Override
     @Transactional

@@ -20,7 +20,5 @@ document.getElementById('mentor-write-btn').addEventListener('click',function(){
         .then(res =>{
             location.href="mentor-main.html";
         })
-    
-        
-            
+             
 });
