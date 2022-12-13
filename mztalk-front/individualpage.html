@@ -109,15 +109,27 @@
 
                 <div id="write-input-div">
                     <div id="write-title-div">
+                        
 
-                        <div id=title-div>{제목}<input type="text" id="title-input-text"><br> </div>
+                        <div id=title-div>                
+                            <input type="text" id="title-input-text" value="{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}">     
+                        </div>
                         <hr>
                     </div>
                     <br>
+                    <div class="selectBox">
+                        <select id="privacyBounds" name="privacyBounds" class="select">
+                          <option disabled selected value="no">공개범위</option>
+                          <option value="public">전체공개</option>
+                          <option value="onlyFriends">친구에게만</option>
+                          <option value="privacy">비공개</option>
+                        </select>
+                    </div>
                     <br>
                     <input type="text" id="content-input-text">
-
+                        
                 </div>
+                
                 <button type="button" style="cursor:pointer;" class="write-btn">글 등록</button>
                 <button type="button" class="btn-close" aria-label="Close">닫기</button>
 

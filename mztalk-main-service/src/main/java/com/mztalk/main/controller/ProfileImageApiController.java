@@ -19,6 +19,8 @@ public class ProfileImageApiController {
         if (profileImageDto.getFile().isEmpty()) {
             throw new CustomValidationException("이미지가 첨부되지않았습니다.", null);
         }
+
+        profileImageService.ChangeProfileImage(profileImageDto, nickname);
     }
 
 }

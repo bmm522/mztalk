@@ -17,7 +17,7 @@ public class ProfileImageDto {
     private MultipartFile file;
 
     public ProfileImage toEntity(String postImageUrl, String nickname){
-        return com.mztalk.main.domain.entity.ProfileImage.builder()
+        return ProfileImage.builder()
                 .postImageUrl(postImageUrl)
                 .nickname(nickname)
                 .build();

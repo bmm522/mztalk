@@ -1,30 +1,31 @@
-
-
-
 function writeboard() {
     
-    const open = document.querySelector("#write_board");
+    const open = document.querySelector(".write_board");
     const modal = document.querySelector(".modal");
     const close = document.querySelector(".btn-close");
 
-    console.log(open);
+    //console.log(open);
 
     open.addEventListener("click", function(){
-        console.log(open);
+        //console.log(open);
+        
         modal.classList.remove("hidden");
+        open.classList.add("hidden");
+
     });
     close.addEventListener("click", function(){
         modal.classList.add("hidden");
+        open.classList.remove("hidden");
     });
 }
-
 writeboard();
 
 
 
 
-
-
+console.log(localStorage.getItem('userNickname'));
+console.log(localStorage.getItem('userNo'));
+console.log(localStorage.getItem('own'));
 
 
 
