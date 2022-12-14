@@ -1,15 +1,14 @@
 package com.mztalk.resource.domain.entity;
 
+import com.mztalk.resource.domain.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Getter
@@ -30,6 +29,9 @@ public class Images {
     private Timestamp createDate;
 
     private long imageLevel;
+
+
+    private String status;
 
 
 

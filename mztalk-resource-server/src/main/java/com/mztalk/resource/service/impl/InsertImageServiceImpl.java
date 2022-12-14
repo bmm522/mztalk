@@ -1,10 +1,11 @@
-package com.mztalk.resource.service;
+package com.mztalk.resource.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.mztalk.resource.domain.dto.ImagesDto;
 import com.mztalk.resource.domain.entity.Images;
 import com.mztalk.resource.repository.ImageRepository;
+import com.mztalk.resource.service.InsertImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class S3Service {
-
-
-
+public class InsertImageServiceImpl implements InsertImageService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
@@ -26,7 +24,8 @@ public class S3Service {
 
     private final AmazonS3 amazonS3;
 
-    public void upload(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
+    @Override
+    public void uploadImage(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
         String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
 
         ObjectMetadata objMeta = new ObjectMetadata();
@@ -39,6 +38,7 @@ public class S3Service {
                 .serviceName(imagesDto.getServiceName())
                 .bNo(Long.parseLong(imagesDto.getBNo()))
                 .imageLevel(Long.parseLong(imagesDto.getImageLevel()))
+                .status("Y")
                 .build();
 
         imageRepository.save(images);
