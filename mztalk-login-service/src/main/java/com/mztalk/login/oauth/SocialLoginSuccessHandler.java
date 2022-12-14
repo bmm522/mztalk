@@ -15,6 +15,7 @@ import java.net.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.mztalk.login.service.CookieFactory.getCookieFactoryInstance;
+import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstance;
 
 
 @Component
@@ -24,26 +25,32 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
         PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
 
         if(principalDetails.getUser().getNickname().equals("null")){
-            Cookie usernameCookie = new Cookie("username", URLEncoder.encode(principalDetails.getUsername(),"UTF-8"));
-            usernameCookie.setPath("/");
-            usernameCookie.setMaxAge(60*3);
+      //      Cookie usernameCookie = new Cookie("username", URLEncoder.encode(principalDetails.getUsername(),"UTF-8"));
+            Cookie usernameCookie = principalDetails.getUser().
+                    getUsernameCookieFromMztalk().
+                    getUsernameCookie();
+
             response.addCookie(usernameCookie);
             response.sendRedirect("http://localhost:5501/editNickname.html");
         } else {
 
-//            ConcurrentHashMap<String, Cookie> cookieMap = getCookieFactoryInstance().getCookie(principalDetails.getUser());
-//            ConcurrentHashMap<String, Cookie> cookieMap =
-            setResponse(response,  new MztalkCookie(principalDetails.getUser()).getCookieMap()).sendRedirect("http://localhost:5501/loginpage.html");
+            setResponse(response,
+                    principalDetails
+                            .getUser()
+                            .toMztalkCookieWithExistsUser
+                                    (getJwtTokenFactoryInstance()
+                                            .getJwtToken(principalDetails.getUser())))
+                    .sendRedirect("http://localhost:5501/loginpage.html");
 
         }
 
     }
 
-    private HttpServletResponse setResponse(HttpServletResponse response,  ConcurrentHashMap<String, Cookie> cookieMap){
-        response.addCookie(cookieMap.get("jwtToken"));
-        response.addCookie(cookieMap.get("refreshToken"));
-        response.addCookie(cookieMap.get("userNo"));
-        response.addCookie(cookieMap.get("userNickname"));
+    private HttpServletResponse setResponse(HttpServletResponse response,  MztalkCookie mztalkCookie){
+        response.addCookie(mztalkCookie.getAuthorizationCookie());
+        response.addCookie(mztalkCookie.getRefreshTokenCookie());
+        response.addCookie(mztalkCookie.getUserNoCookie());
+        response.addCookie(mztalkCookie.getUserNicknameCookie());
         return  response;
     }
 

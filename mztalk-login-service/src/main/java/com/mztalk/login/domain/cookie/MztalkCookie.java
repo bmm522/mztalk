@@ -13,6 +13,7 @@ import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstanc
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class MztalkCookie {
 
     private Cookie authorizationCookie;
@@ -20,23 +21,19 @@ public class MztalkCookie {
     private Cookie userNoCookie;
     private Cookie userNicknameCookie;
 
-    public ConcurrentHashMap<String, Cookie> getCookieMap() {
-        ConcurrentHashMap<String, Cookie> cookieMap = new ConcurrentHashMap<>();
-        cookieMap.put("jwtToken", authorizationCookie);
-        cookieMap.put("refreshToken",refreshTokenCookie);
-        cookieMap.put("userNo", userNoCookie);
-        cookieMap.put("userNickname", userNicknameCookie);
+    private Cookie usernameCookie;
 
-        return cookieMap;
+    public MztalkCookie(String username) throws UnsupportedEncodingException {
+        this.usernameCookie =  getCookie("username", URLEncoder.encode(username, "UTF-8"));
     }
 
-    public MztalkCookie(User user) throws UnsupportedEncodingException {
-        ConcurrentHashMap<String, String> map = getJwtTokenFactoryInstance().getJwtToken(user);
-        this.authorizationCookie = getCookie("Authorization", URLEncoder.encode(map.get("jwtToken"), "UTF-8"));
-        this.refreshTokenCookie =getCookie("RefreshToken", URLEncoder.encode(map.get("refreshToken"), "UTF-8"));
-        this.userNoCookie = getCookie("UserNo", String.valueOf(user.getId()));
-        this.userNicknameCookie = getCookie("UserNickname", user.getNickname());
+    public MztalkCookie(ConcurrentHashMap<String, String>jwtMap, long userNo, String nickname) throws UnsupportedEncodingException {
+        this.authorizationCookie = getCookie("Authorization", URLEncoder.encode(jwtMap.get("jwtToken"), "UTF-8"));
+        this.refreshTokenCookie =getCookie("RefreshToken", URLEncoder.encode(jwtMap.get("refreshToken"), "UTF-8"));
+        this.userNoCookie = getCookie("UserNo", String.valueOf(userNo));
+        this.userNicknameCookie = getCookie("UserNickname", nickname);
     }
+
 
     private Cookie getCookie(String cookieName, String cookieValue){
         Cookie cookie = new Cookie(cookieName, cookieValue);

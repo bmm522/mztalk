@@ -1,5 +1,6 @@
 package com.mztalk.login.domain.entity;
 
+import com.mztalk.login.domain.cookie.MztalkCookie;
 import com.mztalk.login.domain.dto.UserInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +12,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstance;
 
 @Entity
 @Getter
@@ -55,4 +61,13 @@ public class User {
                 .nicknameCheck(nicknameCheck)
                 .build();
     }
+
+    public MztalkCookie getUsernameCookieFromMztalk() throws UnsupportedEncodingException {
+        return new MztalkCookie(username);
+    }
+
+    public MztalkCookie toMztalkCookieWithExistsUser(ConcurrentHashMap<String, String> jwtMap) throws UnsupportedEncodingException {
+        return new MztalkCookie(jwtMap, id, nickname);
+    }
+
 }
