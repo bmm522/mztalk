@@ -31,9 +31,8 @@ public class InsertImageServiceImpl implements InsertImageService {
     @Override
     public int insertImage(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
         Images images = null;
-
         try {
-            images = getImages(multipartFile, imagesDto);
+            images =  imagesDto.toImages(uploadImage(multipartFile));
         } catch (Exception e){
             log.error("Fail Save Image");
             return 0;
@@ -47,20 +46,7 @@ public class InsertImageServiceImpl implements InsertImageService {
 
     }
 
-
-
-
-    private Images getImages(MultipartFile multipartFile,  ImagesDto imagesDto) throws IOException {
-        return Images.builder()
-                .imageUrl(uploadImage(multipartFile, imagesDto))
-                .serviceName(imagesDto.getServiceName())
-                .bNo(Long.parseLong(imagesDto.getBNo()))
-                .imageLevel(Long.parseLong(imagesDto.getImageLevel()))
-                .status("Y")
-                .build();
-    }
-
-    private String uploadImage(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
+    private String uploadImage(MultipartFile multipartFile) throws IOException {
         String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
 
         ObjectMetadata objMeta = new ObjectMetadata();

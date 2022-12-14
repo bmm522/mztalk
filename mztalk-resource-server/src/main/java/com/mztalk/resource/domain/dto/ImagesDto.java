@@ -22,6 +22,16 @@ public class ImagesDto {
 
     private String imageLevel;
 
+    public Images toImages(String imagePath){
+        return Images.builder()
+                .imageUrl(imagePath)
+                .serviceName(serviceName)
+                .bNo(Long.parseLong(bNo))
+                .imageLevel(Long.parseLong(imageLevel))
+                .status("Y")
+                .build();
+    }
+
     public ImagesDto(Images i){
         this.imageNo = String.valueOf(i.getImageId());
         this.imageUrl=i.getImageUrl();

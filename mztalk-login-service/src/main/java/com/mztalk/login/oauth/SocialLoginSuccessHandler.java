@@ -1,6 +1,7 @@
 package com.mztalk.login.oauth;
 
 import com.mztalk.login.auth.PrincipalDetails;
+import com.mztalk.login.domain.cookie.MztalkCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -30,8 +31,9 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
             response.sendRedirect("http://localhost:5501/editNickname.html");
         } else {
 
-            ConcurrentHashMap<String, Cookie> cookieMap = getCookieFactoryInstance().getCookie(principalDetails.getUser());
-            setResponse(response, cookieMap).sendRedirect("http://localhost:5501/loginpage.html");
+//            ConcurrentHashMap<String, Cookie> cookieMap = getCookieFactoryInstance().getCookie(principalDetails.getUser());
+//            ConcurrentHashMap<String, Cookie> cookieMap =
+            setResponse(response,  new MztalkCookie(principalDetails.getUser()).getCookieMap()).sendRedirect("http://localhost:5501/loginpage.html");
 
         }
 
