@@ -100,6 +100,44 @@ sort.addEventListener('change', function(){
     })
 });
 
+//참가 신청
+document.getElementById('participant-btn').addEventListener('click', function(){
+
+    fetch("http://localhost:8000/mentors/participant",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json;",
+            Authorization:localStorage.getItem('Authorization'),
+            RefreshToken:localStorage.getItem('RefreshToken')
+        },
+        body:JSON.stringify({
+            userId : localStorage.getItem('userNo'),
+            boardId : document.getElementById('boardId').value,
+            name :document.getElementById("name").value,
+            phone : document.getElementById("phone").value,
+            email : document.getElementById("email").value,
+            message : document.getElementById("message").value
+        })
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        console.log("res : " + res);
+        if(res > 0){
+            console.log('통신성공');
+            location.href="mentor-main.html";
+        } else {
+            console.log('실패');
+        }
+    })
+});
+
+
+
+
+
+
+
+
 // document.getElementById('myBoard').addEventListener('click',function(){
 //     const userId = document.getElementById('userId').value;
 //     console.log(userId);

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
 @Getter
@@ -64,6 +65,15 @@ public class Score extends BaseTimeEntity{
         }
         this.mentee = mentee;
         mentee.getScores().add(this);
+    }
+
+    // == 평점 생성 메소드 ==//
+    public static Score createScore(ConcurrentHashMap<String,String> scoreDto,Mentee mentee, Mentor mentor){
+        Score score = new Score();
+        score.count = Double.parseDouble(scoreDto.get("count"));
+        score.content = scoreDto.get("content");
+        score.status = Status.YES;
+        return score;
     }
 
 

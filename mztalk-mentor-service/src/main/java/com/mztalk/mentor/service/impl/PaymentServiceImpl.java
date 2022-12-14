@@ -1,11 +1,10 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.PaymentDto;
-import com.mztalk.mentor.domain.entity.Board;
-import com.mztalk.mentor.domain.entity.Mentee;
-import com.mztalk.mentor.domain.entity.Payment;
-import com.mztalk.mentor.domain.entity.Result;
+import com.mztalk.mentor.domain.entity.*;
 import com.mztalk.mentor.exception.PaymentNotFoundException;
+import com.mztalk.mentor.repository.BoardRepository;
+import com.mztalk.mentor.repository.MenteeRepository;
 import com.mztalk.mentor.repository.PaymentRepository;
 import com.mztalk.mentor.service.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,18 +20,21 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
+    private final MenteeRepository menteeRepository;
+    private final BoardRepository boardRepository;
 
     @Override
     @Transactional
-    public Long save(PaymentDto paymentDto) {
-        Board board = paymentDto.getBoard();
-        Mentee mentee = paymentDto.getMentee();
-        Payment payment = paymentDto.toEntity();
+    public Long save(ConcurrentHashMap<String,String> paymentDto) {
+        Long boardId = Long.parseLong(paymentDto.get("boardId"));
+        Long userId = Long.parseLong(paymentDto.get("userId"));
 
-        payment.addBoard(board);
-        payment.addMentee(mentee);
+        Board board = boardRepository.findBoardByBoardId(boardId);
+        Mentee mentee = menteeRepository.findMenteeByUserId(userId);
 
-        return paymentRepository.save(payment).getId();
+        Payment payment = Payment.createPayment(paymentDto, mentee, board);
+        Payment savedPayment = paymentRepository.save(payment);
+        return savedPayment.getId();
     }
 
     @Override

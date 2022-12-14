@@ -6,6 +6,8 @@ import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.domain.entity.Score;
 import com.mztalk.mentor.exception.ScoreNotFoundException;
+import com.mztalk.mentor.repository.MenteeRepository;
+import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.repository.ScoreRepository;
 import com.mztalk.mentor.service.ScoreService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,17 +24,19 @@ import java.util.stream.Collectors;
 public class ScoreServiceImpl implements ScoreService {
 
     private final ScoreRepository scoreRepository;
+    private final MenteeRepository menteeRepository;
+    private final MentorRepository mentorRepository;
 
     @Override
     @Transactional
-    public Long save(ScoreDto scoreDto) {
-        Mentor mentor = scoreDto.getMentor();
-        Mentee mentee = scoreDto.getMentee();
-        Score score = scoreDto.toEntity();
+    public Long save(ConcurrentHashMap<String,String> scoreDto) {
+        Long userId = Long.parseLong(scoreDto.get("userId"));
+        Long mentorId = Long.parseLong(scoreDto.get("mentorId"));
 
-        score.addMentor(mentor);
-        score.addMentee(mentee);
+        Mentee mentee = menteeRepository.findMenteeByUserId(userId);
+        Mentor mentor = mentorRepository.findMentorByUserId(mentorId);
 
+        Score score = Score.createScore(scoreDto, mentee, mentor);
         return scoreRepository.save(score).getId();
     }
 

@@ -6,19 +6,16 @@ import com.mztalk.mentor.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentors")
 public class ScoreApiController {
     private final ScoreService scoreService;
 
-    @GetMapping("/score")
-    public String saveForm(){
-        return null;
-    }
-
     @PostMapping("/score")
-    public Long saveScore(@RequestBody ScoreDto scoreDto){
+    public Long saveScore(@RequestBody ConcurrentHashMap<String,String> scoreDto){
         return scoreService.save(scoreDto);
     }
 

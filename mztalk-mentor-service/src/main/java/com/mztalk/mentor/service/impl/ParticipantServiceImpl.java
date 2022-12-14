@@ -6,6 +6,9 @@ import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Participant;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.ParticipantNotFoundException;
+import com.mztalk.mentor.repository.BoardRepository;
+import com.mztalk.mentor.repository.MenteeRepository;
+import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.repository.ParticipantRepository;
 import com.mztalk.mentor.service.ParticipantService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,17 +26,17 @@ import java.util.stream.Collectors;
 public class ParticipantServiceImpl implements ParticipantService {
 
     private final ParticipantRepository participantRepository;
+    private final MenteeRepository menteeRepository;
+    private final BoardRepository boardRepository;
 
     @Override
     @Transactional
-    public Long save(ParticipantDto participantDto) {
-        Board board = participantDto.getBoard();
-        Mentee mentee = participantDto.getMentee();
-        Participant participant = participantDto.toEntity();
-
-        participant.addBoard(board);
-        participant.addMentee(mentee);
-
+    public Long save(ConcurrentHashMap<String,String> participantDto) {
+        Long boardId = Long.parseLong(participantDto.get("boardId"));
+        Long userId = Long.parseLong(participantDto.get("userId"));
+        Board board = boardRepository.findBoardByBoardId(boardId);
+        Mentee mentee = menteeRepository.findMenteeByUserId(userId);
+        Participant participant = Participant.createParticipant(participantDto, mentee, board);
         return participantRepository.save(participant).getId();
     }
 

@@ -6,6 +6,8 @@ import com.mztalk.mentor.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentors")
@@ -13,7 +15,7 @@ public class PaymentApiController {
     private final PaymentService paymentService;
 
     @PostMapping("/payment")
-    public Long savePayment(@RequestBody PaymentDto paymentDto){
+    public Long savePayment(@RequestBody ConcurrentHashMap<String,String> paymentDto){
         return paymentService.save(paymentDto);
     }
 

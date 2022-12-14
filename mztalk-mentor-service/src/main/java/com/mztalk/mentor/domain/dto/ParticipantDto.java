@@ -20,6 +20,7 @@ public class ParticipantDto {
     private String name;
     private String phone;
     private String message;
+    private String userId;
     private Status status;
 
     public Participant toEntity(){

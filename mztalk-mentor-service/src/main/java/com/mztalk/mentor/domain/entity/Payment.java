@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
 @Getter
@@ -59,5 +60,15 @@ public class Payment extends BaseTimeEntity{
         }
         this.board = board;
         board.getPayments().add(this);
+    }
+
+    //== 결제 생성 메소드 ==//
+    public static Payment createPayment(ConcurrentHashMap<String,String> paymentDto, Mentee mentee, Board board){
+        Payment payment = new Payment();
+        payment.addMentee(mentee);
+        payment.addBoard(board);
+        payment.price = Integer.parseInt(paymentDto.get("price"));
+        payment.status = Status.YES;
+        return payment;
     }
 }

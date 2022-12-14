@@ -6,19 +6,16 @@ import com.mztalk.mentor.service.ParticipantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentors")
 public class ParticipantApiController {
     private final ParticipantService participantService;
 
-    @GetMapping("/participant")
-    public String saveForm(){
-        return null;
-    }
-
     @PostMapping("/participant")
-    public Long save(@RequestBody ParticipantDto participantDto){
+    public Long save(@RequestBody ConcurrentHashMap<String,String> participantDto){
         return participantService.save(participantDto);
     }
 
