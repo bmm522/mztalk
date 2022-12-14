@@ -34,17 +34,20 @@ public class Participant extends BaseTimeEntity{
     @Lob
     private String message; // 멘티 신청시 남길 메시지(자유양식)
 
+    private String email;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @Builder
     public Participant(Long id, Board board, Mentee mentee, String name, String phone,
-                       String message, Status status) {
+                       String message, String email, Status status) {
         this.board = board;
         this.mentee = mentee;
         this.name = name;
         this.phone = phone;
         this.message = message;
+        this.email = email;
         this.status = status;
     }
 
@@ -76,6 +79,7 @@ public class Participant extends BaseTimeEntity{
         participant.name = participantDto.get("name");
         participant.phone = participantDto.get("phone");
         participant.message = participantDto.get("message");
+        participant.email = participantDto.get("email");
         participant.status = Status.YES;
         participant.addMentee(mentee);
         participant.addBoard(board);

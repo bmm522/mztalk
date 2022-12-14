@@ -21,14 +21,8 @@ public class ApplicationApiController {
     private final ApplicationService applicationService;
     private final ImageService imageService;
 
-    @GetMapping("/application")
-    public String saveForm(){
-        return null;
-    }
-
     @PostMapping("/application")
     public Long saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationDto) {
-        System.out.println(applicationDto);
         return applicationService.save(applicationDto);
     }
 

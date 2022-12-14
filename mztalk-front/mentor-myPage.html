@@ -37,32 +37,40 @@
    <!-- 여기서 놀아주세요. -->
    <main class="mainContainer" style="font-family: 'MICEGothic Bold' !important;">
 
-    <div class="container text-center">
-        <div class="row" style="padding-top: 20px;">
-            <form class="d-flex" role="search">
-                <input type="hidden" value=userId/>
-                <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#mentorModal">
-                    <span id="myBoard">작성한 멘토링 현황</span>
-                </div>
+        <div class="container text-center">
+            <div class="row" style="padding-top: 20px;">
+                <form class="d-flex" role="search">
+                    <input type="hidden" value=userId/>
+                    <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#mentorModal">
+                        <span id="myBoard">작성한 멘토링 현황</span>
+                    </div>
 
-                <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#endMentorModal">
-                    <span>완료된 멘토링</span>
-                </div>
+                    <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#endMentorModal">
+                        <span>완료된 멘토링</span>
+                    </div>
 
-                <div class="mentors-myPage col-2">
-                    <span data-bs-toggle="modal" href="#writeModal">
-                        멘토링 글 작성하기
-                    </span>
-                </div>
+                    <div class="mentors-myPage col-2">
+                        <span data-bs-toggle="modal" href="#writeModal">
+                            멘토링 글 작성하기
+                        </span>
+                    </div>
 
-                <div class="mentors-myPage col-3">
-                    <img src="https://cdn-icons-png.flaticon.com/128/8763/8763321.png" 
-                    style="width: 38px; height: 28px; padding-left:10px;"
-                    onclick="location.href='mentee-myPage.html'">
-                </div>      
-            </form>  
-        </div>  
+                    <div class="mentors-myPage col-3">
+                        <img src="https://cdn-icons-png.flaticon.com/128/8763/8763321.png"
+                        style="width: 38px; height: 28px; padding-left:10px;"
+                        onclick="location.href='mentee-myPage.html'">
+                    </div>      
+                </form>  
+            </div>  
+        </div>
+
+    <!-- boardList 뿌려주는 div 시작 -->
+    <div id="board-list-div">
+                   
+        
+
     </div>
+    <!-- boardList 뿌려주는 div 끝 -->
 
 
     <!--내가 작성한 글 보기 모달-->
@@ -85,7 +93,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
+                          <tr id="tr-row">
                             <th scope="row">1</th>
                             <td>배한성</td>
                             <td>010-1111-2222</td>
@@ -147,10 +155,10 @@
             </div>
         </div>
     </div>
-    <!--완료된 멘토링 보기 모달 끝-->
+    <!-- 완료된 멘토링 보기 모달 끝 -->
 
     
-    <!--멘토링 글 작성 모달 시작-->
+    <!-- 멘토링 글 작성 모달 시작 -->
     <form method="post">
         <div class="modal fade" id="writeModal" aria-hidden="true" aria-labelledby="writeModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">

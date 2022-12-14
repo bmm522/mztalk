@@ -2,10 +2,12 @@ package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.ScoreDto;
 import com.mztalk.mentor.domain.entity.Result;
+import com.mztalk.mentor.domain.entity.Score;
 import com.mztalk.mentor.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -20,7 +22,7 @@ public class ScoreApiController {
     }
 
     @GetMapping("/score/{id}")
-    public ScoreDto findById(@PathVariable("id")Long id){
+    public Double findById(@PathVariable("id")Long id){
         return scoreService.findById(id);
     }
 

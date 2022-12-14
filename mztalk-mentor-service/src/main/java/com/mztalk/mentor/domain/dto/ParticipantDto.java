@@ -20,6 +20,7 @@ public class ParticipantDto {
     private String name;
     private String phone;
     private String message;
+    private String email;
     private String userId;
     private Status status;
 
@@ -31,6 +32,7 @@ public class ParticipantDto {
                 .name(name)
                 .phone(phone)
                 .message(message)
+                .email(email)
                 .status(Status.YES)
                 .build();
         return participant;
@@ -43,6 +45,7 @@ public class ParticipantDto {
         this.name = participant.getName();
         this.phone = participant.getPhone();
         this.message = participant.getMessage();
+        this.email = participant.getEmail();
         this.status = participant.getStatus();
     }
 

@@ -6,6 +6,7 @@ import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.domain.entity.Score;
 import com.mztalk.mentor.exception.ScoreNotFoundException;
+import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
 import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.repository.ScoreRepository;
@@ -25,26 +26,25 @@ public class ScoreServiceImpl implements ScoreService {
 
     private final ScoreRepository scoreRepository;
     private final MenteeRepository menteeRepository;
-    private final MentorRepository mentorRepository;
+    private final BoardRepository boardRepository;
 
     @Override
     @Transactional
     public Long save(ConcurrentHashMap<String,String> scoreDto) {
         Long userId = Long.parseLong(scoreDto.get("userId"));
-        Long mentorId = Long.parseLong(scoreDto.get("mentorId"));
+        Long boardId = Long.parseLong(scoreDto.get("boardId"));
 
         Mentee mentee = menteeRepository.findMenteeByUserId(userId);
-        Mentor mentor = mentorRepository.findMentorByUserId(mentorId);
+        Mentor mentor = boardRepository.findMentorByBoardId(boardId);
 
         Score score = Score.createScore(scoreDto, mentee, mentor);
         return scoreRepository.save(score).getId();
     }
 
     @Override
-    public ScoreDto findById(Long id) {
-        Score score = scoreRepository.findById(id).orElseThrow(() -> new ScoreNotFoundException("해당하는 평점이 존재하지 않습니다."));
-        ScoreDto scoreDto = new ScoreDto(score);
-        return scoreDto;
+    public Double findById(Long id) {
+        Double avgScore = scoreRepository.findScoreByBoardId(id);
+        return avgScore;
     }
 
     @Override
