@@ -31,11 +31,19 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
         } else {
 
             ConcurrentHashMap<String, Cookie> cookieMap = getCookieFactoryInstance().getCookie(principalDetails.getUser());
-            response.addCookie(cookieMap.get("jwtToken"));
-            response.addCookie(cookieMap.get("refreshToken"));
-            response.addCookie(cookieMap.get("userNo"));
-            response.addCookie(cookieMap.get("userNickname"));
-            response.sendRedirect("http://localhost:5501/loginpage.html");
+            setResponse(response, cookieMap).sendRedirect("http://localhost:5501/loginpage.html");
+
         }
+
     }
+
+    private HttpServletResponse setResponse(HttpServletResponse response,  ConcurrentHashMap<String, Cookie> cookieMap){
+        response.addCookie(cookieMap.get("jwtToken"));
+        response.addCookie(cookieMap.get("refreshToken"));
+        response.addCookie(cookieMap.get("userNo"));
+        response.addCookie(cookieMap.get("userNickname"));
+        return  response;
+    }
+
+
 }

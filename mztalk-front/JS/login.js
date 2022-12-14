@@ -555,8 +555,10 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
 
   }
 
-  
-  
+// 일반로그인은 헤더 ㅡ> 서버
+// 소셜로그인은 쿠키 ㅡ> 서버
+// 소셜 첫로그인은 바디  ㅡ> 서버
+// 최종적으로 localstorage에 담아준다 ㅡ> 클라이언트
 });
 
 document.getElementById('googleBtn').addEventListener('click',function(){

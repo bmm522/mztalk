@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.properties.JwtProperties;
 import com.mztalk.login.properties.LoginStatus;
+import com.mztalk.login.service.JwtTokenFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -77,6 +78,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
                                             Authentication authResult) throws IOException, ServletException {
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
+        JwtTokenFactory jwtTokenFactory = getJwtTokenFactoryInstance();
 
         response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
         response.addHeader("RefreshToken", jwtTokenAndRefreshToken.get("refreshToken"));
