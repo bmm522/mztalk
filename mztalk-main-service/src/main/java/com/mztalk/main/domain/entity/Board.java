@@ -1,7 +1,8 @@
 package com.mztalk.main.domain.entity;
 
 
-import com.mztalk.main.domain.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mztalk.main.domain.entity.status.BoardStatus;
 import com.mztalk.main.domain.dto.BoardDto;
 import lombok.*;
 
@@ -39,10 +40,11 @@ public class Board extends BaseTimeEntity{
 
     @OrderBy("id desc ")
     @OneToMany(mappedBy = "board", fetch= FetchType.EAGER) //mappedBy 연관관계의 주인 아님을 표시하기 위해(컬럼만들지않기위해)
+    @JsonIgnoreProperties({"board"})
     private List<Reply> reply;  // 글에 대한 댓글리스트
 
     @Enumerated(EnumType.STRING)
-    private Status status; // 글 status
+    private BoardStatus status; // 글 status
 
     @Column(nullable = false)
     private String privacy;
@@ -50,7 +52,7 @@ public class Board extends BaseTimeEntity{
     //글쓰기
     @Builder
     public Board(Long id, String nickname, String title, String content, Long own, List<Reply> reply,
-                 Status status, String privacy){
+                 BoardStatus status, String privacy){
         this.id = id;
         this.nickname = nickname;
         this.title = title;
@@ -73,14 +75,9 @@ public class Board extends BaseTimeEntity{
         this.privacy = privacy;
     }
 
-
-
-
-
-
-    //글 status
+    //글삭제(status = N)
     public void changeStatus(){
-        this.status = Status.NO;
+        this.status = BoardStatus.NO;
     }
 
 }

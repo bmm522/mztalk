@@ -1,6 +1,6 @@
 package com.mztalk.main.domain.entity;
 
-import com.mztalk.main.domain.Status;
+import com.mztalk.main.domain.entity.status.FriendStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class Friends {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Status status; // 친구관계 status
+    private FriendStatus status; // 친구관계 status
 
 
 

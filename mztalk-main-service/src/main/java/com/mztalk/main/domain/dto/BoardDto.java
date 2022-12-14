@@ -1,7 +1,7 @@
 package com.mztalk.main.domain.dto;
 
 
-import com.mztalk.main.domain.Status;
+import com.mztalk.main.domain.entity.status.BoardStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class BoardDto {
     private String nickname; //작성자
     private String title; //글제목
     private String content; //글내용
-    private Status status; //글상태
+    private BoardStatus status; //글상태
     private Long own; //페이지주인
     private String privacy; //글공개범위
     private List<Reply> reply = new ArrayList<>();
@@ -33,7 +33,7 @@ public class BoardDto {
                 .nickname(nickname)
                 .title(title)
                 .content(content)
-                .status(Status.YES)
+                .status(BoardStatus.YES)
                 .own(own)
                 .privacy(privacy)
                 .reply(reply)

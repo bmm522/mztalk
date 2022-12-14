@@ -1,7 +1,8 @@
 package com.mztalk.main.domain.entity;
 
 
-import com.mztalk.main.domain.Status;
+import com.mztalk.main.domain.entity.status.FriendStatus;
+import com.mztalk.main.domain.entity.status.ReplyStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,10 +11,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Getter
 @Builder
+@Table(name="Reply")
 @Entity
 public class Reply extends BaseTimeEntity{
 
@@ -21,21 +23,31 @@ public class Reply extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //댓글번호
 
+    @Lob
+    @Column(nullable = false)
+    private String replyContent; //댓글내용
+
     @ManyToOne
     @JoinColumn(name="board_id")
     private Board board;
 
-    @Lob
-    @Column(nullable = false)
-    private String reply_content; //댓글내용
-
-
-    private String reply_nickname;
-
+    private String replyNickname; //작성자
 
     @Enumerated(EnumType.STRING)
-    private Status status; // 댓글 status
+    private ReplyStatus status; // 댓글 status
 
+    @Builder
+    public Reply(Long id, String replyContent, Board board, String replyNickname, ReplyStatus status ){
+        this.id = id;
+        this.replyContent = replyContent;
+        this.board = board;
+        this.replyNickname = replyNickname;
+        this.status = status;
+    }
 
+    //댓글삭제(status = N)
+    public void changeReplyStatus(){
+        this.status = ReplyStatus.NO;
+    }
 
 }
