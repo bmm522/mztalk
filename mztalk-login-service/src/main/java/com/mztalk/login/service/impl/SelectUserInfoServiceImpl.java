@@ -1,6 +1,6 @@
 package com.mztalk.login.service.impl;
 
-import com.mztalk.login.domain.dto.UserDto;
+import com.mztalk.login.domain.dto.UserInfoDto;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.exception.UserNoNotFoundException;
 import com.mztalk.login.repository.UserRepository;
@@ -30,30 +30,18 @@ public class SelectUserInfoServiceImpl implements SelectUserInfoService {
 
 
     @Override
-    public UserDto getUserInfoByUserNo(String id) {
+    public UserInfoDto getUserInfoByUserNo(String id) {
         User user = userRepository.findById(Long.parseLong(id))
                 .orElseThrow(()->new UserNoNotFoundException("Not Found User No"));
-        return getUserDto(user);
+        return user.toUserInfoDto();
     }
     @Override
-    public UserDto getUserInfoByNickname(String nickname) {
+    public UserInfoDto getUserInfoByNickname(String nickname) {
         User user = userRepository.findByNickname(nickname);
-        return getUserDto(user);
+        return user.toUserInfoDto();
     }
-    private UserDto getUserDto(User user) {
-        return UserDto.builder()
-                .username(user.getUsername())
-                .nickname(user.getNickname())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .provider(user.getProvider())
-                .providerId(user.getProviderId())
-                .createDate(user.getCreateDate())
-                .mentorStatus(user.getMentorStatus())
-                .status(user.getStatus())
-                .nicknameCheck(user.getNicknameCheck())
-                .build();
-    }
+
+
 
 
 

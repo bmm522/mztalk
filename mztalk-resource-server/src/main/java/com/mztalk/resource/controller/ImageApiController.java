@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/resource")
@@ -19,8 +20,13 @@ public class ImageApiController {
     private final InsertImageService insertImageService;
     private final SelectImageService selectImageService;
     @PostMapping("/image")
-    public void uploadImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
-        insertImageService.insertImage(multipartFile, imagesDto);
+    public int insertImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
+        return insertImageService.insertImage(multipartFile, imagesDto);
+    }
+
+    @PostMapping("/images")
+    public int insertImages(@RequestParam("image") List<MultipartFile> multipartFileList, ImagesDto imagesDto){
+        return insertImageService.insertImages(multipartFileList, imagesDto);
     }
 
 

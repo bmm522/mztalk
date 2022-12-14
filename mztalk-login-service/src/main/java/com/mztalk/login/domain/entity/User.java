@@ -1,5 +1,6 @@
 package com.mztalk.login.domain.entity;
 
+import com.mztalk.login.domain.dto.UserInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,4 +41,18 @@ public class User {
         this.nickname = nickname;
     }
 
+    public UserInfoDto toUserInfoDto() {
+        return UserInfoDto.builder()
+                .username(username)
+                .nickname(nickname)
+                .email(email)
+                .role(role)
+                .provider(provider)
+                .providerId(providerId)
+                .createDate(createDate)
+                .mentorStatus(mentorStatus)
+                .status(status)
+                .nicknameCheck(nicknameCheck)
+                .build();
+    }
 }
