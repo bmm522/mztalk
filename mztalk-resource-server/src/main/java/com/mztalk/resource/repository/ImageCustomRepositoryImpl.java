@@ -29,4 +29,9 @@ public class ImageCustomRepositoryImpl implements ImageCustomRepository{
                 .setParameter("serviceName", serviceName)
                 .getSingleResult();
     }
+
+    public  void commit(){
+        entityManager.flush();
+        entityManager.clear();
+    }
 }

@@ -32,6 +32,26 @@ public class ImagesDto {
                 .build();
     }
 
+    public Images toImagesWhenMain(String imagePath){
+        return Images.builder()
+                .imageUrl(imagePath)
+                .serviceName(serviceName)
+                .bNo(Long.parseLong(bNo))
+                .imageLevel(0)
+                .status("Y")
+                .build();
+    }
+
+    public Images toImagesWhenSub(String imagePath){
+        return Images.builder()
+                .imageUrl(imagePath)
+                .serviceName(serviceName)
+                .bNo(Long.parseLong(bNo))
+                .imageLevel(1)
+                .status("Y")
+                .build();
+    }
+
     public ImagesDto(Images i){
         this.imageNo = String.valueOf(i.getImageId());
         this.imageUrl=i.getImageUrl();
@@ -39,4 +59,6 @@ public class ImagesDto {
         this.bNo = String.valueOf(i.getBNo());
         this.imageLevel=String.valueOf(i.getImageLevel());
     }
+
+
 }

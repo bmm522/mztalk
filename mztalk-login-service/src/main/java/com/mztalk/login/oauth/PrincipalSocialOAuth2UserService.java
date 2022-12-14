@@ -6,10 +6,6 @@ import com.mztalk.login.domain.social.GoogleUserInfo;
 import com.mztalk.login.domain.social.KakaoUserInfo;
 import com.mztalk.login.domain.social.NaverUserInfo;
 import com.mztalk.login.domain.social.SocialUserInfo;
-//import com.mztalk.login.oauth.info.GoogleUserInfo;
-//import com.mztalk.login.oauth.info.KakaoUserInfo;
-//import com.mztalk.login.oauth.info.NaverUserInfo;
-import com.mztalk.login.oauth.info.OAuth2UserInfo;
 import com.mztalk.login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -44,11 +40,8 @@ public class PrincipalSocialOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private User getUser(SocialUserInfo socialUserInfo) {
-        String provider = socialUserInfo.getProvider();
-        String providerId = socialUserInfo.getProviderId();
-        String username = provider+"_"+providerId;
 
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(socialUserInfo.getProvider()+"_"+socialUserInfo.getProviderId());
 
         if(user == null) {
             user = socialUserInfo.toUserEntity();

@@ -9,4 +9,6 @@ public interface ImageCustomRepository {
     List<Images> getImageInfo(long bNo, String serviceName);
 
     Images getMainImage(long bNo, String serviceName);
+
+    void commit();
 }
