@@ -20,14 +20,113 @@ function writeboard() {
 }
 writeboard();
 
+// console.log(localStorage.getItem('userNickname'));
+// console.log(localStorage.getItem('userNo')); // 세션값
+// console.log(localStorage.getItem('own')); //파라미터 
+
+window.onload=function(){
+    console.log("개인 : " + localStorage.getItem('authorization'));
+    console.log("개인 : " + localStorage.getItem('refreshToken'));
+    console.log("개인 : " + localStorage.getItem('userNo'));
+    console.log("개인 : " + localStorage.getItem('userNickname'));
+    console.log("페이지주인: " + localStorage.getItem('own'));
+
+    const own = document.getElementById('#own');
+    
+}
+
+//개인페이지
+document.getElementById('profile-edit-btn').addEventListener('click',function(){
+    
+    location.href="editpage.html";
+
+    // fetch("http://localhost:8000/story/"+own,{
+    //     method:"GET",
+    //     headers:{
+    //         "Content-Type":"application/json",
+    //         Authorization:localStorage.getItem('authorization'),
+    //         RefreshToken:localStorage.getItem('refreshToken'),
+    //     },
+    // })
+    // .then((res)=> res.json())
+    // .then(res=>{
+    //     console.log("자료있니?" +res.data);
+    //     console.log("!!!!!!!!!!");
+    //     console.log(own);
+    //     location.href="individualpage.html";
+    // })
+
+
+});
 
 
 
-console.log(localStorage.getItem('userNickname'));
-console.log(localStorage.getItem('userNo'));
-console.log(localStorage.getItem('own'));
 
 
+const write_board = document.getElementById('write-board');
+const privacyBounds = document.getElementById('privacyBounds');
+//글쓰기
+write_board.addEventListener('click', function(){
+    console.log("클릭됨??");
+    
+    if(privacyBounds.options[privacyBounds.selectedIndex].value === 'no'){
+        alert("공개범위를 설정하세요");
+    }else{
+
+        fetch("http://localhost:8000/story/saveForm",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken'),
+            },
+            body:JSON.stringify({
+                nickname: localStorage.getItem('userNickname'),
+                title: document.getElementById('title-input-text').value,
+                content: document.getElementById("content-input-text").value,
+                own: localStorage.getItem('own'),
+                privacy: privacyBounds.options[privacyBounds.selectedIndex].value
+            })
+        })
+            .then((res)=>res.json())
+            .then(res =>{
+                console.log("res : " + res);
+                if(res > 0){
+                    console.log('통신성공');
+                   
+                } else {
+                    console.log('실패');
+                }
+            })
+        
+    }        
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//결국엔 페이지 주인은 own
+//접속자도 userNo
+
+//접속자의 own으로 가는거니까
 
 
 

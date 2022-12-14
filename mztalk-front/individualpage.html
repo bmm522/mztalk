@@ -32,7 +32,7 @@
             <article class="pictogramWrap">
 
                 <i class="fa-solid fa-comments" style=""></i>
-                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필">
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필" id="move-story">
             </article>
         </div>
     </nav>
@@ -52,7 +52,7 @@
 
 
                                 <div id="nickname-div">
-                                    {nickname}
+                                    <a id="own">
                                 </div>
                             </div>
 
@@ -130,7 +130,7 @@
                         
                 </div>
                 
-                <button type="button" style="cursor:pointer;" class="write-btn">글 등록</button>
+                <button type="button" style="cursor:pointer;" class="write-btn" id="write-board">글 등록</button>
                 <button type="button" class="btn-close" aria-label="Close">닫기</button>
 
             </div>
@@ -185,7 +185,7 @@
                             <div id="reply-date">{date}</div>
                             <div id="reply-edit-btn"><button style="cursor:pointer;" type="button">X</button></div>
                         </div>
-                        <div>
+                        <!-- <div>
                             <div id="reply-nickname">{작성자 닉네임}</div>
                             <div id="reply-content">{댓글 내용}</div>
                             <div id="reply-date">{date}</div>
@@ -214,7 +214,7 @@
                             <div id="reply-content">{댓글 내용}</div>
                             <div id="reply-date">{date}</div>
                             <div id="reply-edit-btn"><button style="cursor:pointer;" type="button">X</button></div>
-                        </div>
+                        </div> -->
 
                     </div>
 
@@ -237,7 +237,7 @@
             </div>
 
 
-            <button type="button" onclick="replyList();">댓글출력</button>
+            <!-- <button type="button" onclick="replyList();">댓글출력</button> -->
         </div>
         </div>
         </div>
@@ -249,7 +249,7 @@
 
     <div class="floating">
         <div class="remocon">
-            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;" /></figure>
+            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;" id="move-mentor-service"/></figure>
 
             <figure> <img src="img/qjd.png" style="width: 70px;" /></figure>
 
@@ -307,5 +307,6 @@
 </body>
 
 <script src="JS/individualpage.js"></script>
+<script src="JS/main.js"></script>
 
 </html>

@@ -18,22 +18,32 @@ public class BoardApiController {
 //    public Result findAll(@PathVariable("own")Long own){
 //        return boardService.findAll();
 //    }
-
-    @GetMapping("/story/{own}")
+    //글목록
+    @GetMapping("/{own}")
     public Result findAllByOwn(@PathVariable("own")Long own){
         return boardService.findAllByOwn(own);
     }
 
+
     //글쓰기
-    @PostMapping ("/story/saveForm")
+    @ResponseBody
+    @PostMapping ("/saveForm")
     public Long saveForm(@RequestBody BoardDto boardDto){
         return boardService.save(boardDto);
     }
 
     //글수정
-    @PatchMapping("/story/update{id}")
+    @PatchMapping("/update{id}")
     public Long updateForm(@PathVariable("id") Long id, @RequestBody BoardDto boardDto) {
 
         return boardService.updateBoard(id, boardDto);
     }
+
+    //글삭제
+    @PatchMapping("/delete{id}")
+    public Long deleteForm(@PathVariable("id") Long id, @RequestBody BoardDto boardDto){
+
+        return boardService.deleteBoard(id, boardDto);
+    }
+
 }
