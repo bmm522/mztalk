@@ -14,7 +14,8 @@
     outline: solid 3px burlywood;
 }
 
-.boardBtn {
+
+Button {
     background-color: burlywood;
     border: none;
     color: white;
