@@ -1,11 +1,11 @@
 package com.mztalk.resource.controller;
 
 
+import com.mztalk.resource.domain.dto.ImagesDto;
+import com.mztalk.resource.service.ImageService;
+import com.mztalk.resource.service.S3Service;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,8 +15,15 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ImageApiController {
 
-    @PostMapping("/upload")
-    public void uploadImage(@RequestParam("image")MultipartFile multipartFile) throws IOException {
+    private final S3Service s3Service;
+    private final ImageService imageService;
+    @PostMapping("/image")
+    public void uploadImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
+        s3Service.upload(multipartFile, imagesDto);
+    }
 
+    @GetMapping("/image/{bNo}")
+    public ImagesDto getImage(@PathVariable("bNo")long bNo){
+        return imageService.getImageInfo(bNo);
     }
 }

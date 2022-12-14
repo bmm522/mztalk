@@ -2,6 +2,9 @@ package com.mztalk.resource.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.mztalk.resource.domain.dto.ImagesDto;
+import com.mztalk.resource.domain.entity.Images;
+import com.mztalk.resource.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,12 +17,16 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class S3Service {
 
+
+
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-      private final AmazonS3 amazonS3;
+    private final ImageRepository imageRepository;
 
-    public void upload(MultipartFile multipartFile) throws IOException {
+    private final AmazonS3 amazonS3;
+
+    public void upload(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
         String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
 
         ObjectMetadata objMeta = new ObjectMetadata();
@@ -27,6 +34,13 @@ public class S3Service {
 
         amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objMeta);
 
-        System.out.println(amazonS3.getUrl(bucket, s3FileName).toString());
+        Images images = Images.builder()
+                .imageUrl(amazonS3.getUrl(bucket, s3FileName).toString())
+                .serviceName(imagesDto.getServiceName())
+                .bNo(Long.parseLong(imagesDto.getBNo()))
+                .imageLevel(Long.parseLong(imagesDto.getImageLevel()))
+                .build();
+
+        imageRepository.save(images);
     }
 }

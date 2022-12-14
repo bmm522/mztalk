@@ -22,11 +22,12 @@ public class Images {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long imageId;
     private String imageUrl;
-    private String service;
+    private String serviceName;
     private long bNo;
 
     private Timestamp createDate;
 
+    private long imageLevel;
 
 
 
