@@ -2,9 +2,13 @@ package com.mztalk.login.oauth;
 
 import com.mztalk.login.auth.PrincipalDetails;
 import com.mztalk.login.domain.entity.User;
-import com.mztalk.login.oauth.info.GoogleUserInfo;
-import com.mztalk.login.oauth.info.KakaoUserInfo;
-import com.mztalk.login.oauth.info.NaverUserInfo;
+import com.mztalk.login.domain.social.GoogleUserInfo;
+import com.mztalk.login.domain.social.KakaoUserInfo;
+import com.mztalk.login.domain.social.NaverUserInfo;
+import com.mztalk.login.domain.social.SocialUserInfo;
+//import com.mztalk.login.oauth.info.GoogleUserInfo;
+//import com.mztalk.login.oauth.info.KakaoUserInfo;
+//import com.mztalk.login.oauth.info.NaverUserInfo;
 import com.mztalk.login.oauth.info.OAuth2UserInfo;
 import com.mztalk.login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,39 +29,29 @@ public class PrincipalSocialOAuth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
         OAuth2User oauth2User = super.loadUser(userRequest);
-        OAuth2UserInfo oAuth2UserInfo = null;
+        SocialUserInfo socialUserInfo = null;
+
         switch(userRequest.getClientRegistration().getRegistrationId()) {
-            case "google": oAuth2UserInfo = new GoogleUserInfo(oauth2User.getAttributes()); break;
-            case "kakao": oAuth2UserInfo = new KakaoUserInfo(oauth2User.getAttributes()); break;
-            case "naver": oAuth2UserInfo = new NaverUserInfo((Map)oauth2User.getAttributes().get("response")); break;
+            case "google": socialUserInfo = new GoogleUserInfo(oauth2User.getAttributes()); break;
+            case "kakao": socialUserInfo = new KakaoUserInfo(oauth2User.getAttributes()); break;
+            case "naver": socialUserInfo = new NaverUserInfo((Map)oauth2User.getAttributes().get("response")); break;
         }
 
 
-        User user = getUser(oAuth2UserInfo, oauth2User);
+        User user = getUser(socialUserInfo);
 
         return new PrincipalDetails(user, oauth2User.getAttributes());
     }
 
-    private User getUser(OAuth2UserInfo oAuth2UserInfo, OAuth2User oauth2User) {
-        String provider = oAuth2UserInfo.getProvider();
-        String providerId = oAuth2UserInfo.getProviderId();
+    private User getUser(SocialUserInfo socialUserInfo) {
+        String provider = socialUserInfo.getProvider();
+        String providerId = socialUserInfo.getProviderId();
         String username = provider+"_"+providerId;
 
         User user = userRepository.findByUsername(username);
 
         if(user == null) {
-            user = User.builder()
-                    .username(username)
-                    .password("null")
-                    .nickname("null")
-                    .email("null")
-                    .role("ROLE_USER")
-                    .provider(provider)
-                    .providerId(providerId)
-                    .mentorStatus("N")
-                    .status("Y")
-                    .nicknameCheck("N")
-                    .build();
+            user = socialUserInfo.toUserEntity();
             userRepository.save(user);
         }
         return user;

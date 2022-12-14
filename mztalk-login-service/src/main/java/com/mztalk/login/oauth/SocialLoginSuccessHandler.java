@@ -11,10 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.*;
-import java.util.concurrent.ConcurrentHashMap;
 
-import static com.mztalk.login.service.CookieFactory.getCookieFactoryInstance;
 import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstance;
 
 
@@ -25,7 +22,7 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
         PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
 
         if(principalDetails.getUser().getNickname().equals("null")){
-      //      Cookie usernameCookie = new Cookie("username", URLEncoder.encode(principalDetails.getUsername(),"UTF-8"));
+
             Cookie usernameCookie = principalDetails.getUser().
                     getUsernameCookieFromMztalk().
                     getUsernameCookie();
