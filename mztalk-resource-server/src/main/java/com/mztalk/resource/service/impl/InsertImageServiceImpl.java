@@ -24,17 +24,12 @@ public class InsertImageServiceImpl implements InsertImageService {
 
     private final AmazonS3 amazonS3;
 
+
     @Override
-    public void uploadImage(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
-        String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
-
-        ObjectMetadata objMeta = new ObjectMetadata();
-        objMeta.setContentLength(multipartFile.getInputStream().available());
-
-        amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objMeta);
-
+    public void insertImage(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
+        
         Images images = Images.builder()
-                .imageUrl(amazonS3.getUrl(bucket, s3FileName).toString())
+                .imageUrl(uploadImage(multipartFile, imagesDto))
                 .serviceName(imagesDto.getServiceName())
                 .bNo(Long.parseLong(imagesDto.getBNo()))
                 .imageLevel(Long.parseLong(imagesDto.getImageLevel()))
@@ -42,5 +37,16 @@ public class InsertImageServiceImpl implements InsertImageService {
                 .build();
 
         imageRepository.save(images);
+    }
+
+    @Override
+    public String uploadImage(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
+        String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
+
+        ObjectMetadata objMeta = new ObjectMetadata();
+        objMeta.setContentLength(multipartFile.getInputStream().available());
+
+        amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objMeta);
+        return amazonS3.getUrl(bucket, s3FileName).toString();
     }
 }

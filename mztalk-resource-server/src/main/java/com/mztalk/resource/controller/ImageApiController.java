@@ -20,8 +20,10 @@ public class ImageApiController {
     private final SelectImageService selectImageService;
     @PostMapping("/image")
     public void uploadImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
-        insertImageService.uploadImage(multipartFile, imagesDto);
+        insertImageService.insertImage(multipartFile, imagesDto);
     }
+
+
 
     @GetMapping("/image")
     public Result getImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
