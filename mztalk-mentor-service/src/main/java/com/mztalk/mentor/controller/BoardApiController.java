@@ -7,6 +7,8 @@ import com.mztalk.mentor.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentors")
@@ -14,13 +16,8 @@ public class BoardApiController {
 
     private final BoardService boardService;
 
-    @GetMapping("/board")
-    public String saveForm(){
-        return null;
-    }
-
     @PostMapping("/board")
-    public Long saveBoard(@RequestBody BoardDto boardDto){
+    public Long saveBoard(@RequestBody ConcurrentHashMap<String,String> boardDto){
         return boardService.saveBoard(boardDto);
     }
 

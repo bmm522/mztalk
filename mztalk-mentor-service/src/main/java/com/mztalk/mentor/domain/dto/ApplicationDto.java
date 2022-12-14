@@ -23,6 +23,7 @@ public class ApplicationDto {
     private String job;
     private String bank;
     private String account;
+    private Long userId; // 홈페이지 내 유저 고유 정보
     private AuthStatus authStatus;
     private Status status;
 

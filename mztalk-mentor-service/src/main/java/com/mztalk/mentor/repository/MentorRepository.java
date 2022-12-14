@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface MentorRepository extends JpaRepository<Mentor,Long> {
 
-    @Query("select m from Mentor m where m.mentorNickname =:mentorNickname")
-    Mentor findByMentorNickname(@Param("mentorNickname") String mentorNickname);
+    @Query("select m from Mentor m where m.userId =:userId")
+    Mentor findMentorByUserId(@Param("userId") Long userId);
 }

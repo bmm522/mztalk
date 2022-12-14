@@ -5,8 +5,10 @@ import com.mztalk.mentor.domain.dto.BoardDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Result;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 public interface BoardService {
-    Long saveBoard(BoardDto boardDto);
+    Long saveBoard(ConcurrentHashMap<String,String> boardDto);
 
     BoardDto findById(Long id);
 

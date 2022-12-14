@@ -14,15 +14,12 @@ import java.util.List;
 public class Mentor extends BaseTimeEntity{
 
     @Id
-    @GeneratedValue
     @Column(name="mentor_id")
-    private Long id;
+    private Long userId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="application_id")
     private Application application;
-
-    private String mentorNickname;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "mentor")
     private Board board;
@@ -40,10 +37,9 @@ public class Mentor extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Mentor(Long id, Application application, String mentorNickname,Board board, List<Score> scores, List<Mentee> mentees, Status status) {
-        this.id = id;
+    public Mentor(Long userId, Application application, Board board, List<Score> scores, List<Mentee> mentees, Status status) {
+        this.userId = userId;
         this.application = application;
-        this.mentorNickname = mentorNickname;
         this.board = board;
         this.scores = scores;
         this.mentees = mentees;
@@ -58,7 +54,6 @@ public class Mentor extends BaseTimeEntity{
 
     public void addBoard(Board board){
         this.board = board;
-        board.addMentor(this);
     }
 
     public void addScore(Score score){

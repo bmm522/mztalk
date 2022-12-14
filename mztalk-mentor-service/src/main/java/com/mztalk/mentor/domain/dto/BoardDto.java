@@ -17,7 +17,8 @@ public class BoardDto {
     private Mentor mentor;
     private String category;
     private String title;
-    private String mentorNickname;
+    private String nickname;
+    private Long userId;
     private String content;
     private String introduction;
     private String career;
@@ -32,7 +33,7 @@ public class BoardDto {
                 .mentor(mentor)
                 .category(category)
                 .title(title)
-                .mentorNickname(mentorNickname)
+                .nickname(nickname)
                 .content(content)
                 .introduction(introduction)
                 .career(career)
@@ -49,7 +50,7 @@ public class BoardDto {
         this.mentor = board.getMentor();
         this.category = board.getCategory();
         this.title = board.getTitle();
-        this.mentorNickname = board.getMentorNickname();
+        this.nickname = board.getNickname();
         this.content = board.getContent();
         this.introduction = board.getIntroduction();
         this.career = board.getCareer();

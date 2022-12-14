@@ -1,5 +1,6 @@
 package com.mztalk.mentor.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ApplicationDto;
@@ -30,17 +31,11 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     private Image image;
 
     private String name;
-
     private String phone;
-
     private String email;
-
     private String job; //현재 소속: 강사, 대학생, 대학원생
-
     private String bank;
-
     private String account;
-
     @Enumerated(EnumType.STRING)
     private AuthStatus authStatus;
 
@@ -88,14 +83,11 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
 
     public void addMentor(Mentor mentor){
         this.mentor = mentor;
-        mentor.addApplication(this);
     }
 
-    //== 멘토 지원 신청서 생성 메소드==//
-    public static Application createApplication(Mentee mentee){
-        Application application = new Application();
-        application.addMentee(mentee);
-        return application;
+    //== 멘토 지원 신청서 승인 메소드==//
+    public void changeAuthStatus(){
+        this.authStatus = AuthStatus.YES;
     }
 
 }

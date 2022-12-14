@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +27,8 @@ public class ApplicationApiController {
     }
 
     @PostMapping("/application")
-    public Long saveApplication(@RequestBody ApplicationDto applicationDto) {
+    public Long saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationDto) {
+        System.out.println(applicationDto);
         return applicationService.save(applicationDto);
     }
 

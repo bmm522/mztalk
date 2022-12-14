@@ -100,7 +100,21 @@ sort.addEventListener('change', function(){
     })
 });
 
-
+// document.getElementById('myBoard').addEventListener('click',function(){
+//     const userId = document.getElementById('userId').value;
+//     console.log(userId);
+//     fetch("http://localhost:8000/mentors/board?userId="+value,{
+//         method:"GET",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//     })
+//     .then(res =>{
+//         location.href="mentor-main.html";
+//     })            
+// });
 
 
 

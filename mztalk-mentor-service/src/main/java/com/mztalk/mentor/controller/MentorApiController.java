@@ -1,10 +1,14 @@
 package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.MentorDto;
+import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,12 +17,7 @@ public class MentorApiController {
 
     private final MentorService mentorService;
 
-    @GetMapping("/member")
-    public String saveForm(){
-        return null;
-    }
-
-    @PostMapping("/member")
+    @PostMapping("/member") //멘토 신청 후 허락 버튼
     public Long save(@RequestBody MentorDto mentorDto){
         return mentorService.save(mentorDto);
     }

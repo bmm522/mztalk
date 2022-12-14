@@ -23,43 +23,43 @@ class ApplicationServiceTest {
     @Autowired
     private ApplicationRepository applicationRepository;
 
-    @Test
-    @Transactional
-    public void saveTest() throws Exception {
-        //given
-        ApplicationDto applicationDto = new ApplicationDto();
-        applicationDto.setBank("국민은행");
-        applicationDto.setAccount("1111");
-
-        Application application = Application.builder().
-                bank(applicationDto.getBank()).
-                account(applicationDto.getAccount()).
-                build();
-
-        //when
-        Application savedApplication = applicationRepository.save(application);
-        Long savedId = savedApplication.getId();
-
-        //then
-        assertThat(savedId).isEqualTo(application.getId());
-        assertThat(savedApplication.getBank()).isEqualTo(applicationDto.getBank());
-        assertThat(savedApplication.getAccount()).isEqualTo(applicationDto.getAccount());
-    }
-
-    @Test
-    public void findTest() throws Exception {
-        //given
-        ApplicationDto applicationDto = new ApplicationDto();
-        applicationDto.setName("mentorA");
-
-        applicationService.save(applicationDto);
-        //when
-        Optional<Application> savedApplication = applicationRepository.findById(1L);
-        Application application = savedApplication.orElseThrow(ApplicationNotFoundException::new);
-        //then
-        assertThat(1L).isEqualTo(application.getId());
-        assertThat(applicationDto.getName()).isEqualTo(application.getName());
-    }
+//    @Test
+//    @Transactional
+//    public void saveTest() throws Exception {
+//        //given
+//        ApplicationDto applicationDto = new ApplicationDto();
+//        applicationDto.setBank("국민은행");
+//        applicationDto.setAccount("1111");
+//
+//        Application application = Application.builder().
+//                bank(applicationDto.getBank()).
+//                account(applicationDto.getAccount()).
+//                build();
+//
+//        //when
+//        Application savedApplication = applicationRepository.save(application);
+//        Long savedId = savedApplication.getId();
+//
+//        //then
+//        assertThat(savedId).isEqualTo(application.getId());
+//        assertThat(savedApplication.getBank()).isEqualTo(applicationDto.getBank());
+//        assertThat(savedApplication.getAccount()).isEqualTo(applicationDto.getAccount());
+//    }
+//
+//    @Test
+//    public void findTest() throws Exception {
+//        //given
+//        ApplicationDto applicationDto = new ApplicationDto();
+//        applicationDto.setName("mentorA");
+//
+//        applicationService.save(applicationDto);
+//        //when
+//        Optional<Application> savedApplication = applicationRepository.findById(1L);
+//        Application application = savedApplication.orElseThrow(ApplicationNotFoundException::new);
+//        //then
+//        assertThat(1L).isEqualTo(application.getId());
+//        assertThat(applicationDto.getName()).isEqualTo(application.getName());
+//    }
 
 
 

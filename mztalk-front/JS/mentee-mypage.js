@@ -22,6 +22,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
             RefreshToken:localStorage.getItem('RefreshToken')
         },
         body:JSON.stringify({
+            userId : localStorage.getItem('userNo'),
             name :document.getElementById("name").value,
             phone : document.getElementById("phone").value,
             email : document.getElementById("email").value,
@@ -30,12 +31,12 @@ document.getElementById('sendResume').addEventListener('click', function(){
             account : document.getElementById("account").value
         })
     })
-     .then((res)=>res.json())
+    .then((res)=>res.json())
     .then(res =>{
         console.log("res : " + res);
         if(res > 0){
             console.log('통신성공');
-            document.getElementById('mentorForm').submit();
+            location.href="mentor-mypage.html";
         } else {
             console.log('실패');
         }

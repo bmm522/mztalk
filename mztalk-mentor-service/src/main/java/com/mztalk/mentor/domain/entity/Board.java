@@ -1,7 +1,6 @@
 package com.mztalk.mentor.domain.entity;
 
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.ApplicationDto;
 import com.mztalk.mentor.domain.dto.BoardDto;
 import lombok.*;
 
@@ -27,7 +26,7 @@ public class Board extends BaseTimeEntity{
 
     private String title;
 
-    private String mentorNickname;
+    private String nickname;
 
     @Lob
     private String content; // 글내용
@@ -48,14 +47,14 @@ public class Board extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Board(Long id, Mentor mentor, String category, String title, String mentorNickname, String content, String introduction,
+    public Board(Long id, Mentor mentor, String category, String title, String nickname, String content, String introduction,
                  String career, int salary, List<Participant> participants,
                  List<Payment> payments, Status status) {
         this.id = id;
         this.mentor = mentor;
         this.category = category;
         this.title = title;
-        this.mentorNickname = mentorNickname;
+        this.nickname = nickname;
         this.content = content;
         this.introduction = introduction;
         this.career = career;

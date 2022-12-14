@@ -1,6 +1,7 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.SearchCondition;
+import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.BoardDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,9 +28,19 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public Long saveBoard(BoardDto boardDto) {
-        Board board = boardDto.toEntity();
-        Mentor mentor = mentorRepository.findByMentorNickname(board.getMentorNickname());
+    public Long saveBoard(ConcurrentHashMap<String,String> boardDto) {
+        Long userId = Long.parseLong(boardDto.get("userId"));
+        Mentor mentor = mentorRepository.findMentorByUserId(userId);
+        Board board = Board.builder().
+                category(boardDto.get("category")).
+                title(boardDto.get("title")).
+                nickname(boardDto.get("nickname")).
+                content(boardDto.get("content")).
+                introduction(boardDto.get("introduction")).
+                career(boardDto.get("career")).
+                salary(Integer.parseInt(boardDto.get("salary"))).
+                status(Status.YES).
+                build();
         board.addMentor(mentor);
         return boardRepository.save(board).getId();
     }

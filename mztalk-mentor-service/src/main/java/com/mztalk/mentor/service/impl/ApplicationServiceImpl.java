@@ -1,10 +1,13 @@
 package com.mztalk.mentor.service.impl;
 
+import com.mztalk.mentor.domain.AuthStatus;
+import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ApplicationDto;
 import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.ApplicationNotFoundException;
+import com.mztalk.mentor.exception.MentorNotFoundException;
 import com.mztalk.mentor.repository.ApplicationRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
 import com.mztalk.mentor.service.ApplicationService;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,9 +30,19 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     @Transactional
-    public Long save(ApplicationDto applicationDto) {
-        Mentee mentee = applicationDto.getMentee();
-        Application application = applicationDto.toEntity();
+    public Long save(ConcurrentHashMap<String, String> applicationDto) {
+        Long userId = Long.parseLong(applicationDto.get("userId"));
+        Mentee mentee = menteeRepository.findById(userId).orElseThrow(() -> new MentorNotFoundException("해당 번호의 유저가 존재하지 않습니다."));
+        Application application = Application.builder().
+                name(applicationDto.get("name")).
+                phone(applicationDto.get("phone")).
+                email(applicationDto.get("email")).
+                job(applicationDto.get("job")).
+                bank(applicationDto.get("bank")).
+                account(applicationDto.get("account")).
+                authStatus(AuthStatus.NO).
+                status(Status.YES).
+                build();
         application.addMentee(mentee);
         return applicationRepository.save(application).getId();
     }

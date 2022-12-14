@@ -13,9 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class MentorDto {
 
-    private Long id;
+    private Long userId;
     private Application application;
-    private String mentorNickname;
     private Board board;
     private List<Score> scores = new ArrayList<>();
     private List<Mentee> mentees = new ArrayList<>();
@@ -23,9 +22,8 @@ public class MentorDto {
 
     public Mentor toEntity(){
         Mentor mentor = Mentor.builder()
-                .id(id)
+                .userId(userId)
                 .application(application)
-                .mentorNickname(mentorNickname)
                 .board(board)
                 .scores(scores)
                 .mentees(mentees)
@@ -35,9 +33,8 @@ public class MentorDto {
     }
 
     public MentorDto(Mentor mentor) {
-        this.id = mentor.getId();
+        this.userId = mentor.getUserId();
         this.application = mentor.getApplication();
-        this.mentorNickname = mentor.getMentorNickname();
         this.board = mentor.getBoard();
         this.scores = mentor.getScores();
         this.mentees = mentor.getMentees();

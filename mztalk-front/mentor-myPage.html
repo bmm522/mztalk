@@ -39,9 +39,10 @@
 
     <div class="container text-center">
         <div class="row" style="padding-top: 20px;">
-            <form class="d-flex" role="search" action="#" method="post">
+            <form class="d-flex" role="search">
+                <input type="hidden" value=userId/>
                 <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#mentorModal">
-                    <span>작성한 멘토링 현황</span>
+                    <span id="myBoard">작성한 멘토링 현황</span>
                 </div>
 
                 <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#endMentorModal">
@@ -150,7 +151,7 @@
 
     
     <!--멘토링 글 작성 모달 시작-->
-    <form method="post" action="/mentors/board">
+    <form method="post">
         <div class="modal fade" id="writeModal" aria-hidden="true" aria-labelledby="writeModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -179,6 +180,10 @@
                         <div class="mb-3">
                             <label for="career" class="form-label">경력</label>
                             <input type="text" class="form-control form-control-sm" id="career" name="career" placeholder="예)~직업 ~년차">
+                        </div>
+                        <div class="mb-3">
+                            <label for="salary" class="form-label">시급</label>
+                            <input type="text" class="form-control form-control-sm" id="salary" name="salary" placeholder="예)25000">
                         </div>
                         <div class="mb-3">
                             <label for="content">내용</label>

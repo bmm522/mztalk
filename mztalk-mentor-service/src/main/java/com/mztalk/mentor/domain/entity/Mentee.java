@@ -1,5 +1,6 @@
 package com.mztalk.mentor.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @Table(name="MENTEE")
 public class Mentee extends BaseTimeEntity{
 
-    @Id @GeneratedValue
+    @Id
     @Column(name="mentee_id")
     private Long id;
 
@@ -48,7 +49,6 @@ public class Mentee extends BaseTimeEntity{
     //==연관관계 편의 메소드==//
     public void addApplication(Application application){
         this.application = application;
-        application.addMentee(this);
     }
 
     public void addScore(Score score){
