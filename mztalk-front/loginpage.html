@@ -16,21 +16,7 @@
 </head>
 <body>
     <nav>
-        <!-- <div class="navContainer">
-            <article class="logoWrap">
-                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" alt="로고">
-                <div class="columnLine"></div>
-                <h1 class="logo">MZTALK</h1>
-            </article> -->
-            <!-- <article class="search">
-                <input type="text" placeholder="검색" >
-            </article> -->
-            <!-- <article class="pictogramWrap">
-                
-                <i class="fa-solid fa-comments" style=""></i>
-                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필">
-            </article>
-        </div> -->
+
     </nav>
    <!-- 여기서 놀아주세요. -->
 
@@ -49,10 +35,17 @@
                   <h3>MZTALK</h3>
                   <p>당신이 원하는 모든것이 있는 곳 MZTALK</p>
                 </div>
+                <div>
+                  <div class="find"><a href="find-id-modal" class="find-link" data-toggle="modal">아이디를 잊어버리셨나요?</a></div>
+                  <br>
+                  <div class="find"><a href="#" class="find-link">비밀번호를 잊어버리셨나요?</a></div>
+                </div>
+                
                 <div class="btn-back">
                   <i class="fas fa-2x fa-angle-left angle-left-color"></i>
                   HOME
                 </div>
+              
               </article>
           
               <article class="form-area">
@@ -61,37 +54,54 @@
                   <h2>SIGN UP</h2>
                   <form class="form">
                     <div class="form-field">
-                      <label for="name">Name</label>
+                      <label for="name">Id</label>
                       <input type="text" id="name" />
                     </div>
           
                     <div class="form-field">
-                      <label for="email">Email</label>
-                      <input type="text" id="email" />
+                      <label for="password">Password</label>
+                      <input type="password" id="password" />
                     </div>
           
                     <div class="form-field">
-                      <label for="password">Password</label>
-                      <input type="text" id="password" />
+                      <label for="re_password">Re Password</label>
+                      <input type="password" id="re_password" />
+                    </div>
+
+                    <div class="form-field">
+                      <label for="email">Email</label>
+                      <input type="text" id="email" />
+                      <br>
+
+                      <button type="button" id="email_check">인증번호 전송</button>
                     </div>
           
+
+                    <div class="form-field" id="auth_div">
+                      <label for="email_auth">Auth Number</label>
+                      <input type="text" id="email_auth" />
+                    </div>
+                  
                     <button class="btn-sign btn-up">Sign Up</button>
                   </form>
-                  <p>Have an account? <a href="#" class="link-in">Sign In</a></p>
-          
+
+                 
+                  <p>Have an account? <a href="#" class="link-in link-font">Sign In</a></p>
+                       
                 </div>
+
           
                 <!-- Form area Sign In -->
                 <div class="organize-form form-area-signin">
                   <h2>SIGN IN</h2>
                   <form class="form">
                     <div class="form-field">
-                      <label for="email-in">Email</label>
-                      <input type="text" name="email_in" id="email-in" />
+                      <label for="username">Your Id</label>
+                      <input type="text" name="email_in" id="username" />
                     </div>
           
                     <div class="form-field">
-                      <label for="password-in">Password</label>
+                      <label for="password-in">Your Password</label>
                       <input type="text" name="password_in" id="password-in" />
                     </div>
           
@@ -108,66 +118,10 @@
               </article>
             </section>
           </main>
-        
-
-
-
-    <!-- <div class="floating">
-        <div class="remocon"> 
-            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
-           
-            <figure> <img src="img/qjd.png" style="width: 70px;"/></figure>
-            
-            <figure>  <img src="img/book.png" style="width: 70px; margin-top:30px;"/></figure>
-             -->
-
-            <!-- <figure><i class="fa-solid fa-comments" style="width: 85px;"></i></figure> -->
-        <!-- </div>
-
-
-        <div class="side side1"></div>
-        <div class="side side2"></div>
-        <div class="side side3"></div>
-        <div class="side side4"></div>
-    </div> -->
-
-    <!-- <div id="upBtn">
-        <a href="#"><figure id="up-figure"><img src="img/top.png" style="width: 40px;"/></figure></a>
-    
-    </div>  -->
-<!-- 
-    <div id="upBtn">
-          <a href="#"><figure><img src="img/top.png" style="width: 50px;"/></figure></a>
-    </div> -->
-    <!-- <footer>
-        <div class="container">
-            <ul>
-               <li><a href="#a">소개</a></li>
-               <li><a href="#a">블로그</a></li>
-               <li><a href="#a">채용 정보</a></li>
-               <li><a href="#a">도움말</a></li>
-               <li><a href="#a">API</a></li>
-               <li><a href="#a">개인정보처리방침</a></li>
-               <li><a href="#a">약관</a></li>
-               <li><a href="#a">인기 계정</a></li>
-               <li><a href="#a">해시태그</a></li>
-               <li><a href="#a">위치</a></li>
-            </ul>
-            <div class="copy">
-               <p>© 2022 MZTALK from Spring</p>
-            </div>
-         </div>
-      
-    
-       </footer> -->
-   
-    <!-- <div id="upBtn">
-    <ul class="menu align-center expanded text-center SMN_effect-74">
-        <li><a href="#" data-hover="Home" id="homeRef">UP</a></li>
-        </ul>
-        </div> -->
+         
    
 </body>
+
 <script src="JS/main.js"></script>
 <script src="JS/login.js"></script>
 </html>

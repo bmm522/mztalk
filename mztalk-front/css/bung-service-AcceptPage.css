@@ -75,7 +75,7 @@ nav {
 
 .mainContainer {
   font-family: 'CookieRun';
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
   margin: 0 auto;
   width: 935px;
@@ -243,13 +243,42 @@ hr {
   border-top: 1px blue dotted;
 }
 
-.PageBtn {
-  text-align: right;
+.listZone {
+  display: flex;
 }
 
-#PageBtn {
-  text-align: right;
+.pageList {
+  flex: 1;
+  display: flex;
 }
+
+.requestList {
+  position: relative;
+  height: 110px;
+  width: 750px;
+  margin: 0 auto;
+  background-color: #c09a70;
+}
+
+.requestUserBtn {
+  position: absolute;
+  left: 19px;
+  bottom: 40px;
+  width: 450px;
+}
+
+.requestUserId {
+  position: absolute;
+  right: 19px;
+  bottom: 40px;
+  height: 38px;
+  width: 200px;
+  background-color: rgb(255, 193, 7);
+  border-radius: 50%;
+  text-align: center;
+  line-height:38px;
+}
+
 
 
 

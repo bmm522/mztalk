@@ -164,7 +164,7 @@ a.link-copy {
   margin: 0 auto;
 }
 .organize-form p a {
-  color: rgb(236, 224, 152);
+  color: rgb(22, 22, 21);
   text-decoration: none;
   font-weight: bold;
 }
@@ -299,3 +299,32 @@ a.link-copy {
   background-color: #fce205;
   color: #6e6e6e;
 }
+
+#email_check{
+  border-radius: 20px;
+  width: 200px;
+  height: 30px;
+  box-shadow: 3px 3px 3px black;
+  font-family: "paybooc-Light";
+  margin:auto;
+  cursor: pointer;
+ 
+}
+
+#email_check:hover{
+  background-color:  rgb(236, 224, 152);
+  transition: 0.7s;
+  width: 250px;
+  height: 40px;
+  
+}
+
+#auth_div{
+  display: none;
+}
+
+.find-link:link{
+
+  text-decoration: none;
+}
+
