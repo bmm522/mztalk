@@ -2,6 +2,7 @@ package com.mztalk.resource.controller;
 
 
 import com.mztalk.resource.domain.dto.ImagesDto;
+import com.mztalk.resource.domain.entity.Result;
 import com.mztalk.resource.service.ImageService;
 import com.mztalk.resource.service.S3Service;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,15 @@ public class ImageApiController {
     private final ImageService imageService;
     @PostMapping("/image")
     public void uploadImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
+        System.out.println(imagesDto.getServiceName());
         s3Service.upload(multipartFile, imagesDto);
     }
 
-    @GetMapping("/image/{bNo}")
-    public ImagesDto getImage(@PathVariable("bNo")long bNo){
-        return imageService.getImageInfo(bNo);
+    @GetMapping("/image")
+    public Result getImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
+        return imageService.getImageInfo(bNo, serviceName);
     }
+
+    @PatchMapping("/image")
+    public int updateImage(){}
 }

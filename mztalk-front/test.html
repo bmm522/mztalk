@@ -63,13 +63,16 @@
 
   <form action="http://localhost:8000/resource/image" method="POST" enctype="multipart/form-data" id="image-form">
         <input type="file" id="file-box" name="image"/>
-        <input type="hidden" name="serviceName" vlaue="test"/>
+        <input type="hidden" name="serviceName" value="test"/>
         <input type="hidden" name="bNo" value="1"/>
         <input type="hidden" name="imageLevel" value="1"/>
     </form>
     <button type="button" id="file-btn">파일 전송</button>
-<img src="https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/3f665e42-489b-4bfd-94a7-8eeb2919b27c-jdbc.jpg"/> 
 
+    <div id="image-div">
+        
+
+    </div>
 
 </body>
 
@@ -78,7 +81,17 @@ document.getElementById('file-btn').addEventListener('click', function(){
     document.getElementById('image-form').submit();
 });
 
-
+window.onload = function(){
+    fetch('http://localhost:8000/resource/image/1',{
+        method:"GET"
+    })
+    .then((res)=>res.json())
+    .then(res=>{
+        for(let image of res.data){
+            document.getElementById('image-div').innerHTML += ' <div> <img src="'+image.imageUrl+'"/></div>';
+        }
+    })
+};
 
 
 
