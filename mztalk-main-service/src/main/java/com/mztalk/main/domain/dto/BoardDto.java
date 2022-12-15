@@ -24,6 +24,7 @@ public class BoardDto {
     private BoardStatus status; //글상태
     private Long own; //페이지주인
     private String privacy; //글공개범위
+
     private List<Reply> reply = new ArrayList<>();
 
 
