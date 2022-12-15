@@ -26,7 +26,14 @@ public class BoardDto {
     private String privacy; //글공개범위
     private List<Reply> reply = new ArrayList<>();
 
+
+//    public BoardDto(long id){
+//        this.id = id;
+//    }
+
+
     //레포지토리에 넣기위해
+    // dto ㅡ> entity
     public Board toEntity(){
         Board board = Board.builder()
                 .id(id)
@@ -41,6 +48,9 @@ public class BoardDto {
         return board;
     }
 
+
+    // view에 뿌려줄때
+    // entity ㅡ> dto
     public BoardDto(Board board){
         this.id = board.getId();
         this.nickname = board.getNickname();
@@ -52,5 +62,11 @@ public class BoardDto {
         this.reply = board.getReply();
 
     }
+
+//    public Board toEntityOfId(){
+//        return Board.builder()
+//                .id(id)
+//                .build();
+//    }
 
 }

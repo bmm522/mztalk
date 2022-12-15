@@ -16,6 +16,6 @@ public class ReplyResponseDto {
     public ReplyResponseDto(Reply reply){
         this.replyContent = reply.getReplyContent();
         this.replyNickname = reply.getReplyNickname();
-        this.boardId = reply.getBoard().getId();
+        this.boardId = reply.getBoardId();
     }
 }
