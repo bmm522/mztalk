@@ -36,6 +36,11 @@ public class ApplicationApiController {
         return applicationService.findById(id);
     }
 
+    @GetMapping("/application")
+    public boolean isExist(@RequestParam("userId")Long userId){
+        return applicationService.isExist(userId);
+    }
+
     @GetMapping("/applications")
     public Result findAll(){
         return applicationService.findAll();

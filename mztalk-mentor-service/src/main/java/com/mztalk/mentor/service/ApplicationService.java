@@ -18,4 +18,6 @@ public interface ApplicationService {
 
     Long updateApplication(Long id,ApplicationDto applicationDto);
 
+    boolean isExist(Long userId);
+
 }

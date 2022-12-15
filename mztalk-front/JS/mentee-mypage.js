@@ -16,41 +16,58 @@ const getAccessToken = () =>{
      })
 }
 
-// 멘토 등록 신청서 작성
+// 멘토 등록 신청서 작성 이미존재할 경우 return false 강제로 작성하면 서버측에서 Exception발생
 document.getElementById('sendResume').addEventListener('click', function(){
-
-    fetch("http://localhost:8000/mentors/application",{
-        method:"POST",
+    const userId = localStorage.getItem('userNo');
+    fetch("http://localhost:8000/mentors/application?userId="+userId,{
+        method:"GET",
         headers:{
             "Content-Type":"application/json;",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken')
         },
-        body:JSON.stringify({
-            name :document.getElementById("name").value,
-            phone : document.getElementById("phone").value,
-            email : document.getElementById("email").value,
-            job : document.getElementById("job").value,
-            bank : document.getElementById("bank").value,
-            account : document.getElementById("account").value,
-            userId : localStorage.getItem('userNo')
-        })
     })    
     .then((res)=>res.json())
     .then(res =>{
-        console.log(res);
-        if(res > 0){
-            window.alert('멘토 신청 완료');
+        if(res){
+            window.alert('이미 신청한 지원서가 존재합니다.');
             location.href="mentee-mypage.html";
+            return false;
         } else {
-            console.log('실패');
+            fetch("http://localhost:8000/mentors/application",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json;",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken')
+             },
+            body:JSON.stringify({
+                name :document.getElementById("name").value,
+                phone : document.getElementById("phone").value,
+                email : document.getElementById("email").value,
+                job : document.getElementById("job").value,
+                bank : document.getElementById("bank").value,
+                account : document.getElementById("account").value,
+                userId : localStorage.getItem('userNo')
+            })
+        })    
+        .then((res)=>res.json())
+        .then(res =>{
+            if(res > 0){
+                window.alert('멘토 신청 완료');
+                location.href="mentee-mypage.html";
+            } else {
+                window.alert('멘토 신청 실패');
+                return false;
+            }
+    })
         }
     })
 });
 
 
 // 리뷰 제출하기
-document.getElementById('sendResume').addEventListener('click', function(){
+document.getElementById('writeReview').addEventListener('click', function(){
 
     fetch("http://localhost:8000/mentors/score",{
         method:"POST",
@@ -73,7 +90,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
             window.alert('리뷰 작성 완료');
             location.href="mentee-mypage.html";
         } else {
-            console.log('실패');
+            window.alert('리뷰 작성 실패');
         }
     })
 });
