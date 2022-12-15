@@ -27,6 +27,11 @@ public class MentorApiController {
         return mentorService.findById(id);
     }
 
+    @GetMapping("/member")
+    public boolean isExist(@RequestParam("userId")Long userId){
+        return mentorService.isExist(userId);
+    }
+
     @GetMapping("/members")
     public Result findAll(){
         return mentorService.findAll();

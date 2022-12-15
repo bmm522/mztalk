@@ -125,5 +125,27 @@ const getBoardList = () =>{
       }
         }        
     })
-
 }
+
+//마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
+document.getElementById('myPage').addEventListener('click', function(){
+    const userId = localStorage.getItem('userNo');
+    fetch("http://localhost:8000/mentors/member?userId="+userId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json;",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        console.log("res : " + res);
+        if(res){
+            location.href="mentor-mypage.html";
+        } else {
+            location.href="mentee-mypage.html";
+        }
+    })
+});
+

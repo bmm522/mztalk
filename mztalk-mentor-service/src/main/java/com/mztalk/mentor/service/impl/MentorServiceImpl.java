@@ -50,6 +50,12 @@ public class MentorServiceImpl implements MentorService {
     }
 
     @Override
+    public boolean isExist(Long userId) {
+        Mentor mentor = mentorRepository.findMentorByUserId(userId);
+        return mentor == null ? false : true;
+    }
+
+    @Override
     public Result findAll() {
         List<Mentor> mentors = mentorRepository.findAll();
         List<MentorDto> collect = mentors.stream().map(MentorDto::new).collect(Collectors.toList());
