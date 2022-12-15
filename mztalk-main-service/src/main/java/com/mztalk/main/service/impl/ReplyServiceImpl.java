@@ -10,21 +10,39 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class ReplyServiceImpl implements ReplyService {
+public class ReplyServiceImpl implements ReplyService{
 
     private final BoardRepository boardRepository;
     private final ReplyRepository replyRepository;
+
 
     @Override
     @Transactional
     public Long replySave(Long id, ReplyRequestDto replyRequestDto) {
 
-        Board boardEntity = boardRepository.findById(id).orElseThrow(()->
-                new IllegalArgumentException("댓글쓰기 실패"));
-        //replyRepository.save(boardEntity, replyRequestDto);
-        return null;
+        boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
+
+        Reply reply = replyRequestDto.toEntity(id);
+
+        return replyRepository.save(reply).getId();
+
+    }
+
+    @Override
+    @Transactional
+    public Long deleteReply(Long id, Long replyId) {
+
+        boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
+
+        Reply reply = replyRepository.findById(replyId).orElseThrow(()-> new IllegalArgumentException("해당 댓글이 없습니다."));
+
+        replyRepository.delete(reply);
+
+        return reply.getId();
     }
 }

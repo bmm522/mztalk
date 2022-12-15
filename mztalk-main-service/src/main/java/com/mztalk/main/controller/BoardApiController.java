@@ -27,20 +27,20 @@ public class BoardApiController {
 
     //글쓰기
     @ResponseBody
-    @PostMapping ("/saveForm")
+    @PostMapping ("/write")
     public Long saveForm(@RequestBody BoardDto boardDto){
         return boardService.save(boardDto);
     }
 
     //글수정
-    @PatchMapping("/update{id}")
+    @PatchMapping("/update/{id}")
     public Long updateForm(@PathVariable("id") Long id, @RequestBody BoardDto boardDto) {
 
         return boardService.updateBoard(id, boardDto);
     }
 
     //글삭제
-    @PatchMapping("/delete{id}")
+    @PatchMapping("/delete/{id}")
     public Long deleteForm(@PathVariable("id") Long id, @RequestBody BoardDto boardDto){
 
         return boardService.deleteBoard(id, boardDto);

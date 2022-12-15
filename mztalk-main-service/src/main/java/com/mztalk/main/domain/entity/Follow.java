@@ -16,6 +16,7 @@ public class Follow {
     @Column(name="board_id")
     private Long id;  // pk
 
+
     private String following;  //내가 친구 추가한 사람
                                 //내가 등록한 사람
 

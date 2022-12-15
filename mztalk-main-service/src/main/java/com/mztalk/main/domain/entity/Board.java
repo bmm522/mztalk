@@ -39,7 +39,7 @@ public class Board extends BaseTimeEntity{
     private Long own; //글에 주인
 
     @OrderBy("id desc ")
-    @OneToMany(mappedBy = "board", fetch= FetchType.EAGER) //mappedBy 연관관계의 주인 아님을 표시하기 위해(컬럼만들지않기위해)
+    @OneToMany(mappedBy = "boardId", fetch= FetchType.EAGER) //mappedBy 연관관계의 주인 아님을 표시하기 위해(컬럼만들지않기위해)
     @JsonIgnoreProperties({"board"})
     private List<Reply> reply;  // 글에 대한 댓글리스트
 
@@ -65,19 +65,21 @@ public class Board extends BaseTimeEntity{
 
     //글수정
     public void updateBoard(BoardDto boardDto){
-        this.id = id;
-        this.nickname = nickname;
-        this.title = title;
-        this.content = content;
-        this.own = own;
-        this.reply = reply;
-        this.status = status;
-        this.privacy = privacy;
+        this.id = boardDto.getId();
+        this.nickname = boardDto.getNickname();
+        this.title = boardDto.getTitle();
+        this.content = boardDto.getContent();
+        this.own = boardDto.getOwn();
+        this.reply = boardDto.getReply();
+        this.status = boardDto.getStatus();
+        this.privacy = boardDto.getPrivacy();
     }
 
     //글삭제(status = N)
     public void changeStatus(){
         this.status = BoardStatus.NO;
     }
+
+
 
 }

@@ -33,6 +33,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long save(BoardDto boardDto) {
+
         return boardRepository.save(boardDto.toEntity()).getId();
     }
 
@@ -41,13 +42,14 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public Long updateBoard(Long id, BoardDto boardDto) {
 
-        Board board = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
-        board.updateBoard(boardDto);
-        return id;
+        Board savedBoard = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
+        savedBoard.updateBoard(boardDto);
+        return savedBoard.getId();
     }
 
-    //글삭제
+    //글삭제(status만변화)
     @Override
+    @Transactional
     public Long deleteBoard(Long id, BoardDto boardDto) {
 
         Board board = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
@@ -55,5 +57,15 @@ public class BoardServiceImpl implements BoardService {
         return board.getId();
 
     }
+    // 상세보기
+//    public BoardDto getBoardDetails(long id){
+//        BoardDto boardDto = new BoardDto(id);
+//        Board board = boardDto.toEntityOfId();
+//
+////     Board board = new BoardDto(id).toEntityOfId();
+//
+////        return new BoardDto(boardRepository.findById(id).get());
+//
+//    }
 
 }
