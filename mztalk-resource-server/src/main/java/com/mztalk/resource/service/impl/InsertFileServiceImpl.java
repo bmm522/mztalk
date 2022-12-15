@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.mztalk.resource.factory.NotiResponseFactory.*;
 
@@ -50,6 +51,32 @@ public class InsertFileServiceImpl implements InsertFileService {
         return successWhenInsert();
     }
 
+    @Override
+    public ResponseEntity<?> insertFiles(List<MultipartFile> multipartFileList, FileDto fileDto) {
+
+        for (MultipartFile multipartFile : multipartFileList) {
+
+
+            try {
+
+                saveFile(multipartFile, fileDto);
+
+            } catch (IOException e) {
+
+                log.error("Fail Images Save");
+                return badRequestWhenInsert();
+
+            } catch (Exception e) {
+
+                log.error("Server Error");
+                return serverErrorWhenInsert();
+
+            }
+
+        }
+
+        return successWhenInsert();
+    }
 
 
     private void saveFile(MultipartFile multipartFile, FileDto fileDto) throws IOException {
