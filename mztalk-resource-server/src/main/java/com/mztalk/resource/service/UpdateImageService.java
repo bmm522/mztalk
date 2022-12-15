@@ -1,5 +1,7 @@
 package com.mztalk.resource.service;
 
+import org.springframework.http.ResponseEntity;
+
 public interface UpdateImageService {
-    int changeMainImage(long bNo, String serviceName, String imageName);
+    ResponseEntity changeMainImage(long bNo, String serviceName, String imageName);
 }

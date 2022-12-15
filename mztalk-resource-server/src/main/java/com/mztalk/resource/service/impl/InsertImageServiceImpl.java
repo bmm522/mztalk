@@ -5,16 +5,22 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.mztalk.resource.domain.Role;
 import com.mztalk.resource.domain.dto.ImagesDto;
 import com.mztalk.resource.domain.entity.Images;
+import com.mztalk.resource.domain.response.ResponseData;
+import com.mztalk.resource.domain.response.ResponseMessage;
+import com.mztalk.resource.domain.response.StatusCode;
 import com.mztalk.resource.repository.ImageRepository;
 import com.mztalk.resource.service.InsertImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,16 +40,19 @@ public class InsertImageServiceImpl implements InsertImageService {
 
 
     @Override
-    public int insertImage(MultipartFile multipartFile, ImagesDto imagesDto){
+    public ResponseEntity insertImage(MultipartFile multipartFile, ImagesDto imagesDto){
 
        try{
            saveImages(multipartFile,imagesDto, Role.UPLOAD_SUB);
        }
        catch (IOException e){
            log.error("Fail Image Save");
-           return 0;
-       };
-       return 1;
+           return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.UPLOAD_FAIL,0), HttpStatus.BAD_REQUEST);
+       } catch (Exception e){
+           log.error("Server Error");
+           return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+       }
+        return new ResponseEntity(ResponseData.res(StatusCode.OK, ResponseMessage.UPLOAD_SUCCESS,1), HttpStatus.OK);
     }
 
     @Override
@@ -75,17 +84,26 @@ public class InsertImageServiceImpl implements InsertImageService {
     }
 
     @Override
-    public int insertMainImage(MultipartFile multipartFile, ImagesDto imagesDto) {
+    public ResponseEntity insertMainImage(MultipartFile multipartFile, ImagesDto imagesDto) {
         try{
+
             imageRepository.changeMainImageToSubImage(Long.parseLong(imagesDto.getBNo()), imagesDto.getServiceName());
             imageRepository.commit();
             saveImages(multipartFile,imagesDto, Role.UPLOAD_MAIN);
-        }
-        catch (IOException e){
+
+        } catch (IOException e){
+
             log.error("Fail Image Save");
-            return 0;
-        };
-        return 1;
+            return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.UPLOAD_FAIL,0), HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e){
+
+            log.error("Server Error");
+            return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
+        return new ResponseEntity(ResponseData.res(StatusCode.OK, ResponseMessage.UPLOAD_SUCCESS,1), HttpStatus.OK);
     }
 
     private void saveImages(MultipartFile multipartFile, ImagesDto imagesDto, Role role) throws IOException {
