@@ -10,4 +10,6 @@ public interface InsertImageService {
     int insertImage(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException;
 
     int insertImages(List<MultipartFile> multipartFileList, ImagesDto imagesDto);
+
+    int insertMainImage(MultipartFile multipartFile, ImagesDto imagesDto);
 }

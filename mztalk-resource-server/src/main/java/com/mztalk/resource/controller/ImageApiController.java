@@ -29,7 +29,7 @@ public class ImageApiController {
 
 
 
-    // 사진 단일업로드 or 사진 추가
+    // 이미지 단일업로드 or 서브 이미지 업로드
     @PostMapping("/image")
     public int insertImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
         return insertImageService.insertImage(multipartFile, imagesDto);
@@ -41,6 +41,11 @@ public class ImageApiController {
         return insertImageService.insertImages(multipartFileList, imagesDto);
     }
 
+    // 메인 이미지 업로드
+    @PostMapping("/main-image")
+    public int insertMainImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto){
+        return insertImageService.insertMainImage(multipartFile, imagesDto);
+    }
 
     // 해당 글의 모든 사진데이터 불러오기
     @GetMapping(value="/image" , consumes = "text/html")
@@ -66,17 +71,11 @@ public class ImageApiController {
         return updateImageService.changeMainImage(bNo, serviceName, imageName);
     }
 
-//    @PatchMapping("/image")
-//    public int updateImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
-//        return imageService.updateImage(bNo, serviceName);
-//    }
-
     // 해당 글사진 삭제
     @DeleteMapping(value= "/image", consumes = "text/html")
     public int deleteImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
         return deleteImageService.deleteImage(bNo, serviceName);
     }
-
 
     // 단일 파일 삭제
     @DeleteMapping(value = "/image-detail", consumes = "text/html")

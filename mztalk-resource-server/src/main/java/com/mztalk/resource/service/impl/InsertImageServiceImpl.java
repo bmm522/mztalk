@@ -69,6 +69,22 @@ public class InsertImageServiceImpl implements InsertImageService {
             }
         }
 
+
+
+        return 1;
+    }
+
+    @Override
+    public int insertMainImage(MultipartFile multipartFile, ImagesDto imagesDto) {
+        try{
+            imageRepository.changeMainImageToSubImage(Long.parseLong(imagesDto.getBNo()), imagesDto.getServiceName());
+            imageRepository.commit();
+            saveImages(multipartFile,imagesDto, Role.UPLOAD_MAIN);
+        }
+        catch (IOException e){
+            log.error("Fail Image Save");
+            return 0;
+        };
         return 1;
     }
 
