@@ -8,6 +8,7 @@ import com.mztalk.resource.domain.entity.Images;
 import com.mztalk.resource.domain.response.ResponseData;
 import com.mztalk.resource.domain.response.ResponseMessage;
 import com.mztalk.resource.domain.response.StatusCode;
+import com.mztalk.resource.factory.S3Factory;
 import com.mztalk.resource.repository.ImageRepository;
 import com.mztalk.resource.service.InsertImageService;
 import lombok.RequiredArgsConstructor;
@@ -25,18 +26,19 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.mztalk.resource.factory.NotiResponseFactory.*;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
 public class InsertImageServiceImpl implements InsertImageService {
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+
 
     private final ImageRepository imageRepository;
 
-    private final AmazonS3 amazonS3;
 
+    private final S3Factory s3Factory;
 
 
     @Override
@@ -46,21 +48,19 @@ public class InsertImageServiceImpl implements InsertImageService {
 
            saveImages(multipartFile,imagesDto, Role.UPLOAD_SUB);
 
-       }
-
-       catch (IOException e){
+       }  catch (IOException e){
 
            log.error("Fail Image Save");
-           return badRequest();
+           return badRequestWhenInsert();
 
        } catch (Exception e){
 
            log.error("Server Error");
-           return serverError();
+           return serverErrorWhenInsert();
 
        }
 
-       return success();
+       return successWhenInsert();
     }
 
     @Override
@@ -77,12 +77,12 @@ public class InsertImageServiceImpl implements InsertImageService {
                 } catch (IOException e){
 
                     log.error("Fail Images Save");
-                    return badRequest();
+                    return badRequestWhenInsert();
 
                 } catch (Exception e){
 
                     log.error("Server Error");
-                    return serverError();
+                    return serverErrorWhenInsert();
 
                 }
             } else {
@@ -94,18 +94,18 @@ public class InsertImageServiceImpl implements InsertImageService {
                 } catch (IOException e){
 
                     log.error("Fail Images Save");
-                    return badRequest();
+                    return badRequestWhenInsert();
 
                 } catch (Exception e){
 
                     log.error("Server Error");
-                    return serverError();
+                    return serverErrorWhenInsert();
 
                 }
             }
         }
 
-        return success();
+        return successWhenInsert();
     }
 
 
@@ -120,16 +120,16 @@ public class InsertImageServiceImpl implements InsertImageService {
         } catch (IOException e){
 
             log.error("Fail Image Save");
-            return badRequest();
+            return badRequestWhenInsert();
 
         } catch (Exception e){
 
             log.error("Server Error");
-            return serverError();
+            return serverErrorWhenInsert();
 
         }
 
-        return success();
+        return successWhenInsert();
     }
 
     private void saveImages(MultipartFile multipartFile, ImagesDto imagesDto, Role role) throws IOException {
@@ -138,42 +138,15 @@ public class InsertImageServiceImpl implements InsertImageService {
 
             switch (role){
                 case UPLOAD_MAIN:
-                    images = imagesDto.toImagesWhenMain(imageName, uploadImageToAwsS3(multipartFile));
+                    images = imagesDto.toImagesWhenMain(imageName, s3Factory.uploadImageToAwsS3(multipartFile));
                     break;
                 case UPLOAD_SUB:
-                    images = imagesDto.toImagesWhenSub(imageName,uploadImageToAwsS3(multipartFile));
+                    images = imagesDto.toImagesWhenSub(imageName,s3Factory.uploadImageToAwsS3(multipartFile));
                     break;
             }
             imageRepository.save(images);
     }
 
-    private ConcurrentHashMap<String, String> uploadImageToAwsS3(MultipartFile multipartFile) throws IOException {
-
-        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-
-        String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
-
-        ObjectMetadata objMeta = new ObjectMetadata();
-        objMeta.setContentLength(multipartFile.getInputStream().available());
-
-        amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objMeta);
-        map.put("key",amazonS3.getObject(bucket,s3FileName).getKey());
-        map.put("url",amazonS3.getUrl(bucket, s3FileName).toString());
-
-        return map;
-    }
-
-    private ResponseEntity badRequest(){
-        return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.UPLOAD_FAIL,0), HttpStatus.BAD_REQUEST);
-    }
-
-    private ResponseEntity serverError(){
-        return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    private ResponseEntity success(){
-        return new ResponseEntity(ResponseData.res(StatusCode.OK, ResponseMessage.UPLOAD_SUCCESS,1), HttpStatus.OK);
-    }
 
 }
 

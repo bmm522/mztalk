@@ -69,17 +69,24 @@
         <input type="hidden" name="bNo" value="2"/>
         <input type="hidden" name="imageLevel" value="1"/>
     </form>
-    <button type="button" id="file-btn">파일 전송</button> -->
+    <button type="button" id="file-btn">이미지 다중 전송</button> -->
 
-<form action="http://localhost:8000/resource/main-image" method="POST" enctype="multipart/form-data" id="image-form">
+<!-- <form action="http://localhost:8000/resource/main-image" method="POST" enctype="multipart/form-data" id="image-form">
         <input type="file" id="file-box" name="image"/>
         <input type="hidden" name="serviceName" value="test"/>
         <input type="hidden" name="bNo" value="2"/>
         <input type="hidden" name="imageLevel" value="1"/>
     </form>
-    <button type="button" id="file-btn">파일 전송</button>
+    <button type="button" id="file-btn">이미지 단일 전송</button> -->
 
     <div id="image-div">
+
+        <form action="http://localhost:8000/resource/file" method="POST" enctype="multipart/form-data" id="image-form">
+            <input type="file" id="file-box" name="file"/>
+            <input type="hidden" name="id" value="1"/>
+        </form>
+        <button type="button" id="file-btn">파일 단일 전송</button>
+        <div id="image-div">
 
 
     </div>

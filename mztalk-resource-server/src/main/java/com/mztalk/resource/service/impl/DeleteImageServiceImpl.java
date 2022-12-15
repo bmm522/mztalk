@@ -2,14 +2,10 @@ package com.mztalk.resource.service.impl;
 
 
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mztalk.resource.domain.dto.ImagesDto;
 import com.mztalk.resource.domain.response.ResponseData;
 import com.mztalk.resource.domain.response.ResponseMessage;
 import com.mztalk.resource.domain.response.StatusCode;
+import com.mztalk.resource.factory.S3Factory;
 import com.mztalk.resource.repository.ImageRepository;
 import com.mztalk.resource.service.DeleteImageService;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +24,8 @@ import java.util.List;
 @Transactional
 public class DeleteImageServiceImpl implements DeleteImageService {
 
-    @Value("${cloud.aws.region.static}")
-    private String region;
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
-
+    private final S3Factory s3Factory;
 
    private final ImageRepository imageRepository;
 
@@ -43,7 +35,8 @@ public class DeleteImageServiceImpl implements DeleteImageService {
 
         for(String objectKey : objectKeyList ){
             try{
-                deleteImage(objectKey);
+                s3Factory.deleteImage(objectKey);
+                imageRepository.deleteByObjectKey(objectKey);
             }
             catch (AmazonServiceException e){
                 log.error("Fail Image Delete");
@@ -60,7 +53,8 @@ public class DeleteImageServiceImpl implements DeleteImageService {
         String objectKey = imageRepository.getObjectKey(imageName);
 
         try{
-            deleteImage(objectKey);
+            s3Factory.deleteImage(objectKey);
+            imageRepository.deleteByObjectKey(objectKey);
         } catch (AmazonServiceException e){
             log.error("Fail Image Delete");
             return serverError();
@@ -68,14 +62,7 @@ public class DeleteImageServiceImpl implements DeleteImageService {
         return success();
     }
 
-    private void deleteImage(String objectKey){
 
-        final AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard().withRegion(Regions.AP_NORTHEAST_2).build();
-
-        amazonS3.deleteObject(bucket, objectKey);
-        imageRepository.deleteByObjectKey(objectKey);
-
-    }
 
     private ResponseEntity serverError(){
         return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR,0), HttpStatus.INTERNAL_SERVER_ERROR);
