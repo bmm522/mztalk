@@ -98,6 +98,7 @@ public class InsertImageServiceImpl implements InsertImageService {
 
         ObjectMetadata objMeta = new ObjectMetadata();
         objMeta.setContentLength(multipartFile.getInputStream().available());
+
         amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objMeta);
         map.put("key",amazonS3.getObject(bucket,s3FileName).getKey());
         map.put("url",amazonS3.getUrl(bucket, s3FileName).toString());

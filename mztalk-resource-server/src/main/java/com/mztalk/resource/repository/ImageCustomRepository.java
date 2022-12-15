@@ -11,4 +11,6 @@ public interface ImageCustomRepository {
     Images getMainImage(long bNo, String serviceName);
 
     void commit();
+
+    List getObjectKey(long bNo, String serviceName);
 }

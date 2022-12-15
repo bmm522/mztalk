@@ -1,6 +1,5 @@
 package com.mztalk.resource.repository;
 
-import com.mztalk.resource.domain.dto.ImagesDto;
 import com.mztalk.resource.domain.entity.Images;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,5 +32,13 @@ public class ImageCustomRepositoryImpl implements ImageCustomRepository{
     public  void commit(){
         entityManager.flush();
         entityManager.clear();
+    }
+
+    @Override
+    public List getObjectKey(long bNo, String serviceName) {
+        return entityManager.createQuery("SELECT i.objectKey FROM Images i WHERE i.bNo = :bNo AND i.serviceName = :serviceName")
+                .setParameter("bNo", bNo)
+                .setParameter("serviceName", serviceName)
+                .getResultList();
     }
 }

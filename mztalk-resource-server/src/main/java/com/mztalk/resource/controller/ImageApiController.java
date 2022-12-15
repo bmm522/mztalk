@@ -3,6 +3,7 @@ package com.mztalk.resource.controller;
 
 import com.mztalk.resource.domain.dto.ImagesDto;
 import com.mztalk.resource.domain.entity.Result;
+import com.mztalk.resource.service.DeleteImageService;
 import com.mztalk.resource.service.InsertImageService;
 import com.mztalk.resource.service.SelectImageService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ public class ImageApiController {
 
     private final InsertImageService insertImageService;
     private final SelectImageService selectImageService;
+
+    private final DeleteImageService deleteImageService;
     @PostMapping("/image")
     public int insertImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
         return insertImageService.insertImage(multipartFile, imagesDto);
@@ -46,4 +49,9 @@ public class ImageApiController {
 //    public int updateImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
 //        return imageService.updateImage(bNo, serviceName);
 //    }
+
+    @DeleteMapping("/image")
+    public int deleteImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
+        return deleteImageService.deleteImage(bNo, serviceName);
+    }
 }
