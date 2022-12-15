@@ -36,4 +36,12 @@ public class NotiResponseFactory {
         return new ResponseEntity<>(ResponseData.res(StatusCode.OK,ResponseMessage.READ_FILE_SUCCESS,dataList),HttpStatus.OK);
     }
 
+    public static ResponseEntity<?> successWhenUpdateMain(){
+        return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.UPDATE_MAIN_SUCCESS,1), HttpStatus.OK);
+    }
+
+    public static ResponseEntity<?> badRequestWhenUpdateMain(){
+       return new ResponseEntity<>(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.UPDATE_MAIN_FAIL, 0), HttpStatus.BAD_REQUEST);
+    }
+
 }

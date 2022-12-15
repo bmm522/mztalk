@@ -27,7 +27,7 @@ public class FileApiController {
 
     // 파일 다중업로드
     @PostMapping("/files")
-    public ResponseEntity<?> insertFiles(@RequestParam("files")List<MultipartFile> multipartFileList, FileDto fileDto){
+    public ResponseEntity<?> insertFiles(@RequestParam("file")List<MultipartFile> multipartFileList, FileDto fileDto){
         return insertFileService.insertFiles(multipartFileList, fileDto);
     }
 

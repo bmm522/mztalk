@@ -69,6 +69,6 @@ public class DeleteImageServiceImpl implements DeleteImageService {
     }
 
     private ResponseEntity success(){
-        return new ResponseEntity(ResponseData.res(StatusCode.OK,ResponseMessage.READ_IMAGE_SUCCESS,1),HttpStatus.OK);
+        return new ResponseEntity(ResponseData.res(StatusCode.OK,ResponseMessage.READ_FILE_SUCCESS,1),HttpStatus.OK);
     }
 }
