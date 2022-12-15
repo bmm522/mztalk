@@ -56,7 +56,7 @@ public class InsertImageServiceImpl implements InsertImageService {
        } catch (Exception e){
 
            log.error("Server Error");
-           return serverErrorWhenInsert();
+           return serverError();
 
        }
 
@@ -82,7 +82,7 @@ public class InsertImageServiceImpl implements InsertImageService {
                 } catch (Exception e){
 
                     log.error("Server Error");
-                    return serverErrorWhenInsert();
+                    return serverError();
 
                 }
             } else {
@@ -99,7 +99,7 @@ public class InsertImageServiceImpl implements InsertImageService {
                 } catch (Exception e){
 
                     log.error("Server Error");
-                    return serverErrorWhenInsert();
+                    return serverError();
 
                 }
             }
@@ -125,7 +125,7 @@ public class InsertImageServiceImpl implements InsertImageService {
         } catch (Exception e){
 
             log.error("Server Error");
-            return serverErrorWhenInsert();
+            return serverError();
 
         }
 

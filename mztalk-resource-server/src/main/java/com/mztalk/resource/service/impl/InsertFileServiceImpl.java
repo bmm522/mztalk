@@ -44,7 +44,7 @@ public class InsertFileServiceImpl implements InsertFileService {
         }   catch (Exception e) {
 
             log.error("Server Error");
-            return serverErrorWhenInsert();
+            return serverError();
 
         }
 
@@ -55,7 +55,6 @@ public class InsertFileServiceImpl implements InsertFileService {
     public ResponseEntity<?> insertFiles(List<MultipartFile> multipartFileList, FileDto fileDto) {
 
         for (MultipartFile multipartFile : multipartFileList) {
-
 
             try {
 
@@ -69,7 +68,7 @@ public class InsertFileServiceImpl implements InsertFileService {
             } catch (Exception e) {
 
                 log.error("Server Error");
-                return serverErrorWhenInsert();
+                return serverError();
 
             }
 

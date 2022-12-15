@@ -51,8 +51,8 @@ public class ImageApiController {
     }
 
     // 해당 글의 모든 사진데이터 불러오기
-    @GetMapping(value="/image" , consumes = "text/html")
-    public ResponseEntity<?> getImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
+    @GetMapping(value="/images" , consumes = "text/html")
+    public ResponseEntity<?> getImages(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
         return selectImageService.getImageInfo(bNo, serviceName);
     }
 
@@ -76,7 +76,7 @@ public class ImageApiController {
     }
 
     // 해당 글사진 삭제
-    @DeleteMapping(value= "/image", consumes = "text/html")
+    @DeleteMapping(value= "/images", consumes = "text/html")
     public ResponseEntity<?> deleteImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
         return deleteImageService.deleteImage(bNo, serviceName);
     }

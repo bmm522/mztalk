@@ -13,6 +13,11 @@ public class ImageCustomRepositoryImpl implements ImageCustomRepository{
     @Autowired
     EntityManager entityManager;
 
+    public  void commit(){
+        entityManager.flush();
+        entityManager.clear();
+    }
+
     @Override
     public List<Images> getImageInfo(long bNo, String serviceName) {
         return entityManager.createQuery("SELECT i FROM Images i WHERE i.bNo = :bNo AND i.serviceName = :serviceName AND i.status = 'Y'", Images.class)
@@ -39,10 +44,7 @@ public class ImageCustomRepositoryImpl implements ImageCustomRepository{
                 .getSingleResult();
     }
 
-    public  void commit(){
-        entityManager.flush();
-        entityManager.clear();
-    }
+
 
     @Override
     public List getObjectKeyList(long bNo, String serviceName) {
