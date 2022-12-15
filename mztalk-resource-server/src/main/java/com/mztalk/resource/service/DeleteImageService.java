@@ -1,7 +1,9 @@
 package com.mztalk.resource.service;
 
-public interface DeleteImageService {
-    int deleteImage(long bNo, String serviceName);
+import org.springframework.http.ResponseEntity;
 
-    int deleteImageDetail(String imageName);
+public interface DeleteImageService {
+    ResponseEntity deleteImage(long bNo, String serviceName);
+
+    ResponseEntity deleteImageDetail(String imageName);
 }

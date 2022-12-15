@@ -38,13 +38,12 @@ public class SelectImageServiceImpl implements SelectImageService {
             List<Images> imagesList = imageRepository.getImageInfo(bNo, serviceName);
             imagesDtoList = imagesList.stream().map(ImagesDto::new).collect(Collectors.toList());
         } catch (NoResultException e){
-            return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_IMAGE), HttpStatus.BAD_REQUEST);
+            return badRequest();
         } catch (Exception e){
-            return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            return serverError();
         }
-        return new ResponseEntity(ResponseData.res(StatusCode.OK,ResponseMessage.READ_IMAGE_SUCCESS,new Result(imagesDtoList)),HttpStatus.OK);
+        return success(imagesDtoList);
     }
-//     new Result(imagesDtoList);
 
     @Override
     public ResponseEntity getSubImages(long bNo, String serviceName) {
@@ -53,27 +52,43 @@ public class SelectImageServiceImpl implements SelectImageService {
             List<Images> imagesList = imageRepository.getSubImages(bNo, serviceName);
             imagesDtoList = imagesList.stream().map(ImagesDto::new).collect(Collectors.toList());
         } catch (NoResultException e){
-            return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_IMAGE), HttpStatus.BAD_REQUEST);
+            return badRequest();
         } catch (Exception e){
-            return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            return serverError();
         }
-        return new ResponseEntity(ResponseData.res(StatusCode.OK,ResponseMessage.READ_IMAGE_SUCCESS,new Result(imagesDtoList)),HttpStatus.OK);
+        return success(imagesDtoList);
     }
 
     @Override
     public ResponseEntity getMainImage(long bNo, String serviceName) {
-        ImagesDto imageDto = null;
+        ImagesDto imagesDto = null;
         try{
-            imageDto = new ImagesDto(imageRepository.getMainImage(bNo, serviceName));
+            imagesDto = new ImagesDto(imageRepository.getMainImage(bNo, serviceName));
         } catch (NoResultException e){
-            return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_IMAGE), HttpStatus.BAD_REQUEST);
+            return badRequest();
         } catch (Exception e){
-            return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            return serverError();
         }
-        return new ResponseEntity(ResponseData.res(StatusCode.OK,ResponseMessage.READ_IMAGE_SUCCESS,imageDto),HttpStatus.OK);
+        return success(imagesDto);
     }
 
 
+
+    private ResponseEntity badRequest(){
+        return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_IMAGE), HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity serverError(){
+        return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private ResponseEntity success(ImagesDto imagesDto){
+        return new ResponseEntity(ResponseData.res(StatusCode.OK,ResponseMessage.READ_IMAGE_SUCCESS,imagesDto),HttpStatus.OK);
+    }
+
+    private ResponseEntity success(List<ImagesDto> imagesDtoList){
+        return new ResponseEntity(ResponseData.res(StatusCode.OK,ResponseMessage.READ_IMAGE_SUCCESS,imagesDtoList),HttpStatus.OK);
+    }
 
 
 }

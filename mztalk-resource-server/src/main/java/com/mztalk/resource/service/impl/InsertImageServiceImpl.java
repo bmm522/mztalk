@@ -43,45 +43,71 @@ public class InsertImageServiceImpl implements InsertImageService {
     public ResponseEntity insertImage(MultipartFile multipartFile, ImagesDto imagesDto){
 
        try{
+
            saveImages(multipartFile,imagesDto, Role.UPLOAD_SUB);
+
        }
+
        catch (IOException e){
+
            log.error("Fail Image Save");
-           return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.UPLOAD_FAIL,0), HttpStatus.BAD_REQUEST);
+           return badRequest();
+
        } catch (Exception e){
+
            log.error("Server Error");
-           return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+           return serverError();
+
        }
-        return new ResponseEntity(ResponseData.res(StatusCode.OK, ResponseMessage.UPLOAD_SUCCESS,1), HttpStatus.OK);
+
+       return success();
     }
 
     @Override
-    public int insertImages(List<MultipartFile> multipartFileList, ImagesDto imagesDto) {
+    public ResponseEntity insertImages(List<MultipartFile> multipartFileList, ImagesDto imagesDto) {
 
         for(int i = 0 ; i < multipartFileList.size() ; i++){
 
-            if(i == 0){
+            if(i == 0) {
+
                 try {
+
                     saveImages(multipartFileList.get(i), imagesDto, Role.UPLOAD_MAIN);
+
                 } catch (IOException e){
+
                     log.error("Fail Images Save");
-                    return 0;
+                    return badRequest();
+
+                } catch (Exception e){
+
+                    log.error("Server Error");
+                    return serverError();
+
                 }
             } else {
-                try {
-                    saveImages(multipartFileList.get(i),imagesDto,Role.UPLOAD_SUB);
-                } catch (IOException e){
-                    log.error("Fail Images Save");
-                    return 0;
-                }
 
+                try {
+
+                    saveImages(multipartFileList.get(i),imagesDto,Role.UPLOAD_SUB);
+
+                } catch (IOException e){
+
+                    log.error("Fail Images Save");
+                    return badRequest();
+
+                } catch (Exception e){
+
+                    log.error("Server Error");
+                    return serverError();
+
+                }
             }
         }
 
-
-
-        return 1;
+        return success();
     }
+
 
     @Override
     public ResponseEntity insertMainImage(MultipartFile multipartFile, ImagesDto imagesDto) {
@@ -94,16 +120,16 @@ public class InsertImageServiceImpl implements InsertImageService {
         } catch (IOException e){
 
             log.error("Fail Image Save");
-            return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.UPLOAD_FAIL,0), HttpStatus.BAD_REQUEST);
+            return badRequest();
 
         } catch (Exception e){
 
             log.error("Server Error");
-            return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+            return serverError();
 
         }
 
-        return new ResponseEntity(ResponseData.res(StatusCode.OK, ResponseMessage.UPLOAD_SUCCESS,1), HttpStatus.OK);
+        return success();
     }
 
     private void saveImages(MultipartFile multipartFile, ImagesDto imagesDto, Role role) throws IOException {
@@ -137,6 +163,17 @@ public class InsertImageServiceImpl implements InsertImageService {
         return map;
     }
 
+    private ResponseEntity badRequest(){
+        return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.UPLOAD_FAIL,0), HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity serverError(){
+        return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private ResponseEntity success(){
+        return new ResponseEntity(ResponseData.res(StatusCode.OK, ResponseMessage.UPLOAD_SUCCESS,1), HttpStatus.OK);
+    }
 
 }
 
