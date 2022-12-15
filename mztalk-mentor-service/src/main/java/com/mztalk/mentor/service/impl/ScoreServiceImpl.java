@@ -43,8 +43,15 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public Double findById(Long id) {
-        Double avgScore = scoreRepository.findScoreByBoardId(id);
+        Double avgScore = scoreRepository.findScoreByBoardId(id); //평균 구하기 메소드
         return avgScore;
+    }
+
+    @Override
+    public Result findScoresByNickname(String nickname) {
+        List<Score> scores = scoreRepository.findByNickname(nickname);
+        List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
+        return new Result(collect);
     }
 
     @Override
@@ -69,4 +76,5 @@ public class ScoreServiceImpl implements ScoreService {
         score.updateScore(scoreDto);
         return score.getId();
     }
+
 }

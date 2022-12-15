@@ -3,6 +3,7 @@ package com.mztalk.mentor.controller;
 import com.mztalk.mentor.domain.dto.ScoreDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.domain.entity.Score;
+import com.mztalk.mentor.repository.ScoreRepository;
 import com.mztalk.mentor.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,16 @@ public class ScoreApiController {
         return scoreService.save(scoreDto);
     }
 
+    //boardId로 평균구해오기 : board>mentor>score
     @GetMapping("/score/{id}")
     public Double findById(@PathVariable("id")Long id){
         return scoreService.findById(id);
+    }
+
+    //nickname으로 모든 리뷰 가져오기
+    @GetMapping("/score")
+    public Result findByNickname(@RequestParam("nickname")String nickname){
+        return scoreService.findScoresByNickname(nickname);
     }
 
     @GetMapping("/scores")

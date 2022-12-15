@@ -156,7 +156,7 @@ document.getElementById('participant-btn').addEventListener('click', function(){
 });
 
 
-//평점 보기
+// boardId이용해서 리뷰 >> 점수 평균 가져오기.
 // document.getElementById('watchScore').addEventListener('click', function(){
 //     const boardId = document.getElementById('boardId').value
 //     fetch("http://localhost:8000/mentors/score/"+boardId,{
@@ -172,6 +172,31 @@ document.getElementById('participant-btn').addEventListener('click', function(){
 //         console.log("res : " + res);
 //         if(res > 0){
 //             console.log('통신성공');
+//         } else {
+//             console.log('실패');
+//         }
+//     })
+// });
+
+//닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
+// document.getElementById('watchScore').addEventListener('click', function(){
+//     const nickname = document.getElementById('nickname').value;
+//     fetch("http://localhost:8000/mentors/score?nickname="+nickname,{
+//         method:"POST",
+//         headers:{
+//             "Content-Type":"application/json;",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken')
+//         },
+//     })
+//     .then((res)=>res.json())
+//     .then(res =>{
+//         console.log("res : " + res);
+//         if(res > 0){
+//             for(const score of res.data){
+//                 console.log(score.count);
+//                 console.log(score.content);
+//             }
 //         } else {
 //             console.log('실패');
 //         }

@@ -17,4 +17,7 @@ public interface ScoreService {
     Long deleteScore(Long id);
 
     Long updateScore(Long id, ScoreDto scoreDto);
+
+    Result findScoresByNickname(String nickname);
+
 }
