@@ -1,13 +1,12 @@
 package com.mztalk.login.service;
 
-import com.mztalk.login.domain.dto.UserDto;
-import com.mztalk.login.domain.entity.User;
+import com.mztalk.login.domain.dto.UserInfoDto;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface SelectUserInfoService {
     ConcurrentHashMap<String, Object> searchUsername(String email);
-    UserDto getUserInfoByNickname(String nickname);
+    UserInfoDto getUserInfoByNickname(String nickname);
 
-    UserDto getUserInfoByUserNo(String userNo);
+    UserInfoDto getUserInfoByUserNo(String userNo);
 }

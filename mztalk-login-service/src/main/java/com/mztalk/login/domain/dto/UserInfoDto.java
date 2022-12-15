@@ -1,18 +1,13 @@
 package com.mztalk.login.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 
 
 @Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserDto {
+public class UserInfoDto {
 
     private String username;
     private String nickname;
@@ -24,5 +19,6 @@ public class UserDto {
     private String mentorStatus;
     private String status;
     private String nicknameCheck;
+
 
 }
