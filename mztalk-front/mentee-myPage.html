@@ -90,18 +90,6 @@
                         </thead>
                         <tbody>
                           <tr onclick="location.href='/mentors/boards/{id}'">
-                            <th scope="row">1</th>
-                            <td>배한성</td>
-                            <td>수학의정석 A-Z</td>
-                            <td style="text-align: center;">Y</td>
-                          </tr>
-                          <tr onclick="location.href='/mentors/boards/{id}'">
-                            <th scope="row">{id}</th>
-                            <td>{nickname}</td>
-                            <td>{title}</td>
-                            <td style="text-align: center;">{status}</td>
-                          </tr>
-                          <tr onclick="location.href='/mentors/boards/{id}'">
                             <th scope="row">{id}</th>
                             <td>{nickname}</td>
                             <td>{title}</td>
@@ -136,28 +124,10 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <th scope="row">1</th>
-                            <td>배한성</td>
-                            <td>수학의정석 A-Z</td>
-                            <td style="text-align: center;">
-                                <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#reviewModal"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
-                            </td>
-                          </tr>
-                          <tr>
                             <th scope="row">{id}</th>
                             <td>{nickname}</td>
                             <td>{title}</td>
-                            <td style="text-align: center;">
-                                <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#reviewModal"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">{id}</th>
-                            <td>{nickname}</td>
-                            <td>{title}</td>
-                            <td style="text-align: center;">
+                            <td style="text-align: center;"> <!--리뷰쓰러가는 버튼-->
                                 <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#reviewModal"
                                 style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
                             </td>
@@ -202,7 +172,7 @@
                         </div>
                     <div class="modal-footer">
                         <button class="btn btn-outline-success" type="button" id="writeReview"
-                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">제출</button>
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">제출</button> <!--리뷰 제출 버튼-->
                     </div>
                 </div>
             </div>
