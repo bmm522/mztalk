@@ -6,6 +6,7 @@ import com.mztalk.resource.domain.entity.Result;
 import com.mztalk.resource.service.DeleteImageService;
 import com.mztalk.resource.service.InsertImageService;
 import com.mztalk.resource.service.SelectImageService;
+import com.mztalk.resource.service.UpdateImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,9 +20,14 @@ import java.util.List;
 public class ImageApiController {
 
     private final InsertImageService insertImageService;
+
     private final SelectImageService selectImageService;
 
+    private final UpdateImageService updateImageService;
+
     private final DeleteImageService deleteImageService;
+
+
     @PostMapping("/image")
     public int insertImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
         return insertImageService.insertImage(multipartFile, imagesDto);
@@ -40,9 +46,14 @@ public class ImageApiController {
     }
 
     // 메인사진 0 , 서브사진 1
-    @GetMapping("/mainImage")
+    @GetMapping("/main-image")
     public ImagesDto getMainImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
         return selectImageService.getMainImage(bNo, serviceName);
+    }
+
+    @PatchMapping(value="/main-image", consumes = "text/html")
+    public int changeMainImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName, @RequestParam("imageName")String imageName){
+        return updateImageService.changeMainImage(bNo, serviceName, imageName);
     }
 
 //    @PatchMapping("/image")
