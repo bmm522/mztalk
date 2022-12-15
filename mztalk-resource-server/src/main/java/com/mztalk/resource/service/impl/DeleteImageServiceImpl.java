@@ -28,18 +28,16 @@ public class DeleteImageServiceImpl implements DeleteImageService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-   private final AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard().withRegion(Regions.AP_NORTHEAST_2).build();
 
    private final ImageRepository imageRepository;
 
     @Override
     public int deleteImage(long bNo, String serviceName) {
-        List<String> objectKeyList = imageRepository.getObjectKey(bNo, serviceName);
+        List<String> objectKeyList = imageRepository.getObjectKeyList(bNo, serviceName);
 
         for(String objectKey : objectKeyList ){
             try{
-                amazonS3.deleteObject(bucket, objectKey);
-                imageRepository.deleteByObjectKey(objectKey);
+                deleteImage(objectKey);
             }
             catch (AmazonServiceException e){
                 log.error("Fail Image Delete");
@@ -49,5 +47,27 @@ public class DeleteImageServiceImpl implements DeleteImageService {
         }
 
         return 1;
+    }
+
+    @Override
+    public int deleteImageDetail(String imageName) {
+        String objectKey = imageRepository.getObjectKey(imageName);
+
+        try{
+            deleteImage(objectKey);
+        } catch (AmazonServiceException e){
+            log.error("Fail Image Delete");
+            return 0;
+        }
+        return 1;
+    }
+
+    private void deleteImage(String objectKey){
+
+        final AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard().withRegion(Regions.AP_NORTHEAST_2).build();
+
+        amazonS3.deleteObject(bucket, objectKey);
+        imageRepository.deleteByObjectKey(objectKey);
+
     }
 }

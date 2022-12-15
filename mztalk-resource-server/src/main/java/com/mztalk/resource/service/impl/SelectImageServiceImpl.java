@@ -34,6 +34,13 @@ public class SelectImageServiceImpl implements SelectImageService {
     }
 
     @Override
+    public Result getSubImages(long bNo, String serviceName) {
+        List<Images> imagesList = imageRepository.getSubImages(bNo, serviceName);
+        List<ImagesDto> imagesDtoList = imagesList.stream().map(ImagesDto::new).collect(Collectors.toList());
+        return new Result(imagesDtoList);
+    }
+
+    @Override
     public ImagesDto getMainImage(long bNo, String serviceName) {
         Images image = null;
         try{

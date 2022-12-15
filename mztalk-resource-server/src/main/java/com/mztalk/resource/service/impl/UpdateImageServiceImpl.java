@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UpdateImageServiceImpl implements UpdateImageService {
 
+
+
    private final ImageRepository imageRepository;
 
     @Override

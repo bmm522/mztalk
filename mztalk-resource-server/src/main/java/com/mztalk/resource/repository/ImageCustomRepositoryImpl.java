@@ -17,11 +17,25 @@ public class ImageCustomRepositoryImpl implements ImageCustomRepository{
     public List<Images> getImageInfo(long bNo, String serviceName) {
         return entityManager.createQuery("SELECT i " +
                                                                             "FROM Images i " +
-                                                                            "WHERE i.bNo = :bNo AND i.serviceName = :serviceName AND i.status = 'Y'", Images.class)
+                                                                            "WHERE i.bNo = :bNo AND i.serviceName = :serviceName AND i.status = 'Y'"
+                                                                            , Images.class)
                 .setParameter("bNo", bNo)
                 .setParameter("serviceName", serviceName)
                 .getResultList();
     }
+
+    @Override
+    public List<Images> getSubImages(long bNo, String serviceName) {
+        return entityManager.createQuery("SELECT i " +
+                                                                            "FROM Images i " +
+                                                                            "WHERE i.bNo = :bNo AND i.serviceName = :serviceName AND i.imageLevel = 1"
+                                                                            , Images.class)
+                .setParameter("bNo", bNo)
+                .setParameter("serviceName", serviceName)
+                .getResultList();
+    }
+
+
 
     @Override
     public Images getMainImage(long bNo, String serviceName) {
@@ -39,7 +53,7 @@ public class ImageCustomRepositoryImpl implements ImageCustomRepository{
     }
 
     @Override
-    public List getObjectKey(long bNo, String serviceName) {
+    public List getObjectKeyList(long bNo, String serviceName) {
         return entityManager.createQuery("SELECT i.objectKey " +
                                                                             "FROM Images i " +
                                                                             "WHERE i.bNo = :bNo AND i.serviceName = :serviceName")
@@ -48,6 +62,16 @@ public class ImageCustomRepositoryImpl implements ImageCustomRepository{
                 .getResultList();
     }
 
+    @Override
+    public String getObjectKey(String imageName) {
+        return entityManager.createQuery("SELECT i.objectKey " +
+                                                                            "FROM Images i " +
+                                                                            "WHERE i.imageName = :imageName"
+                                                                            , String.class)
+                .setParameter("imageName", imageName)
+                .getSingleResult();
+
+    }
     @Override
     public int changeMainImageToSubImage(long bNo, String serviceName) {
         return entityManager.createQuery("UPDATE Images i " +
@@ -66,4 +90,6 @@ public class ImageCustomRepositoryImpl implements ImageCustomRepository{
                 .setParameter("imageName", imageName)
                 .executeUpdate();
     }
+
+
 }

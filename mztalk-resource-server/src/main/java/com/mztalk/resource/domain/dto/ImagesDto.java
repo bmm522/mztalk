@@ -24,7 +24,19 @@ public class ImagesDto {
     private String bNo;
     private String imageLevel;
 
-    public Images toImagesWhenSingle(String name,  ConcurrentHashMap<String, String> s3Map){
+//    public Images toImagesWhenSingle(String name,  ConcurrentHashMap<String, String> s3Map){
+//        return Images.builder()
+//                .objectKey(s3Map.get("key"))
+//                .imageName(name)
+//                .imageUrl(s3Map.get("url"))
+//                .serviceName(serviceName)
+//                .bNo(Long.parseLong(bNo))
+//                .imageLevel(0)
+//                .status("Y")
+//                .build();
+//    }
+
+    public Images toImagesWhenMain(String name, ConcurrentHashMap<String, String> s3Map){
         return Images.builder()
                 .objectKey(s3Map.get("key"))
                 .imageName(name)
@@ -36,19 +48,7 @@ public class ImagesDto {
                 .build();
     }
 
-    public Images toImagesWhenMultipleFirst(String name, ConcurrentHashMap<String, String> s3Map){
-        return Images.builder()
-                .objectKey(s3Map.get("key"))
-                .imageName(name)
-                .imageUrl(s3Map.get("url"))
-                .serviceName(serviceName)
-                .bNo(Long.parseLong(bNo))
-                .imageLevel(0)
-                .status("Y")
-                .build();
-    }
-
-    public Images toImagesWhenMultipleSub(String name,ConcurrentHashMap<String, String> s3Map){
+    public Images toImagesWhenSub(String name,ConcurrentHashMap<String, String> s3Map){
         return Images.builder()
                 .objectKey(s3Map.get("key"))
                 .imageName(name)

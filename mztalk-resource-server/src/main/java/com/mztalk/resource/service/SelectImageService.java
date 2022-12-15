@@ -7,4 +7,6 @@ public interface SelectImageService {
     Result getImageInfo(long bNo, String serviceName);
 
     ImagesDto getMainImage(long bNo, String serviceName);
+
+    Result getSubImages(long bNo, String serviceName);
 }

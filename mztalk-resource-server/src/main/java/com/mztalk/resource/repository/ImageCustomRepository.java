@@ -12,9 +12,13 @@ public interface ImageCustomRepository {
 
     void commit();
 
-    List getObjectKey(long bNo, String serviceName);
+    List getObjectKeyList(long bNo, String serviceName);
 
     int changeMainImageToSubImage(long bNo, String serviceName);
 
     int changeSubImageToMainImage(String imageName);
+
+    List<Images> getSubImages(long bNo, String serviceName);
+
+    String getObjectKey(String imageName);
 }

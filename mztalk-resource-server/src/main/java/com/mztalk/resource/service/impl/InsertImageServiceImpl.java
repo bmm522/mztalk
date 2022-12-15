@@ -37,7 +37,7 @@ public class InsertImageServiceImpl implements InsertImageService {
     public int insertImage(MultipartFile multipartFile, ImagesDto imagesDto){
 
        try{
-           saveImages(multipartFile,imagesDto, Role.SINGLE_UPLOAD);
+           saveImages(multipartFile,imagesDto, Role.UPLOAD_SUB);
        }
        catch (IOException e){
            log.error("Fail Image Save");
@@ -53,14 +53,14 @@ public class InsertImageServiceImpl implements InsertImageService {
 
             if(i == 0){
                 try {
-                    saveImages(multipartFileList.get(i), imagesDto, Role.MULTIPLE_UPLOAD_FIRST);
+                    saveImages(multipartFileList.get(i), imagesDto, Role.UPLOAD_MAIN);
                 } catch (IOException e){
                     log.error("Fail Images Save");
                     return 0;
                 }
             } else {
                 try {
-                    saveImages(multipartFileList.get(i),imagesDto,Role.MULTIPLE_UPLOAD_SUB);
+                    saveImages(multipartFileList.get(i),imagesDto,Role.UPLOAD_SUB);
                 } catch (IOException e){
                     log.error("Fail Images Save");
                     return 0;
@@ -77,14 +77,11 @@ public class InsertImageServiceImpl implements InsertImageService {
         Images images =null;
 
             switch (role){
-                case SINGLE_UPLOAD:
-                    images = imagesDto.toImagesWhenSingle(imageName, uploadImageToAwsS3(multipartFile));
+                case UPLOAD_MAIN:
+                    images = imagesDto.toImagesWhenMain(imageName, uploadImageToAwsS3(multipartFile));
                     break;
-                case MULTIPLE_UPLOAD_FIRST:
-                    images = imagesDto.toImagesWhenMultipleFirst(imageName, uploadImageToAwsS3(multipartFile));
-                    break;
-                case MULTIPLE_UPLOAD_SUB:
-                    images = imagesDto.toImagesWhenMultipleSub(imageName,uploadImageToAwsS3(multipartFile));
+                case UPLOAD_SUB:
+                    images = imagesDto.toImagesWhenSub(imageName,uploadImageToAwsS3(multipartFile));
                     break;
             }
             imageRepository.save(images);
