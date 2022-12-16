@@ -57,7 +57,7 @@
                     <div class="profile-right">
                         <div class="name-group">
                             <h2>조현재</h2>
-                            <button class="profile_follow_btn">팔로우</button>
+                            <button class="profile_follow_btn" onclick="profilecFollow(this)">팔로우</button>
                             <button class="modi" onclick="popup('.modal-info')"><i class="fas fa-cog"></i></button>
                         </div>
                         <div class="follow">
@@ -86,7 +86,7 @@
                     <div id="write-input-div">
                         <div id="write-title-div">
                             <div id=title-div>                
-                                <input type="text" id="title-input-text" value="{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}">     
+                                <input type="text" id="title-input-text">     
                             </div>
                             <hr>
                         </div>
@@ -94,9 +94,9 @@
                         <div class="selectBox">
                             <select id="privacyBounds" name="privacyBounds" class="select">
                             <option disabled selected value="no">공개범위</option>
-                            <option value="public">전체공개</option>
-                            <option value="onlyFriends">친구에게만</option>
-                            <option value="privacy">비공개</option>
+                            <option value="PUBLIC">전체공개</option>
+                            <option value="FRIENDS">친구에게만</option>
+                            <option value="SECRET">비공개</option>
                             </select>
                         </div>
                         <br>

@@ -67,17 +67,16 @@ document.getElementById('profile-edit-btn').addEventListener('click',function(){
 
 
 
-
+//글쓰기
 const write_board = document.getElementById('write-board');
 const privacyBounds = document.getElementById('privacyBounds');
-//글쓰기
+
 write_board.addEventListener('click', function(){
-    console.log("클릭됨??");
+    //console.log("클릭됨??");
     
     if(privacyBounds.options[privacyBounds.selectedIndex].value === 'no'){
         alert("공개범위를 설정하세요");
     }else{
-
         fetch("http://localhost:8000/story/saveForm",{
             method:"POST",
             headers:{
@@ -164,6 +163,32 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     }
   }
   
+  function profilecFollow(e) {
+    console.log(e);
+    let _btn = e;
+    console.log(_btn.textContent);
+    if (_btn.textContent === "팔로우") {
+      _btn.textContent = "팔로잉";
+      _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
+      _btn.style.color = "#fff";
+      _btn.style.border = "1px solid #ddd";
+    } else {
+      _btn.textContent = "팔로우";
+      _btn.style.backgroundColor = "#0095f6";
+      _btn.style.color = "#fff";
+      _btn.style.border = "0";
+    }
+  }
+
+
+  function follow(check, userno){
+    //true -> follow하기
+    //false -> unfollow하기
+    let url = "/follow"/+userno
+    if(check){
+
+    }
+  }
 
 
 

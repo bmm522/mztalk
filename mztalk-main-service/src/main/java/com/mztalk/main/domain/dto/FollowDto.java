@@ -18,4 +18,5 @@ public class FollowDto {
     private Long followState;   //상태여부
     private Long equalUserState; //동일인여부
 
+
 }

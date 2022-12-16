@@ -2,9 +2,11 @@ package com.mztalk.main.service.impl;
 
 
 import com.mztalk.main.domain.dto.FollowDto;
+import com.mztalk.main.handler.exception.CustomApiException;
 import com.mztalk.main.repository.FollowRepository;
 import com.mztalk.main.service.FollowService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
@@ -32,9 +34,14 @@ public class FollowServiceImpl implements FollowService {
 //    }
 
 
-
+    @Transactional
     @Override
-    public void follow(Long toUserId, Long userno) {
+    public void follow(Long toUserNo, Long fromUserNo) {
+        try {
+            followRepository.mFollow(fromUserNo, toUserNo);
+        } catch(Exception e){
+            throw new CustomApiException("이미 팔로우하셨습니다.");
+        }
 
     }
 }
