@@ -1,7 +1,9 @@
 package com.mztalk.mentor.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="MENTOR")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Mentor extends BaseTimeEntity{
 
     @Id
@@ -19,12 +23,15 @@ public class Mentor extends BaseTimeEntity{
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="application_id")
+    @JsonIgnore
     private Application application;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "mentor")
+    @JsonIgnore
     private Board board;
 
     @OneToMany(mappedBy = "mentor")
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Score> scores = new ArrayList<>();
 
     @ManyToMany

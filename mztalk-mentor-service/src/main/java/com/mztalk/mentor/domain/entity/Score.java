@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "SCORE")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Score extends BaseTimeEntity{
 
     @Id  @GeneratedValue
@@ -73,6 +76,8 @@ public class Score extends BaseTimeEntity{
         score.count = Double.parseDouble(scoreDto.get("count"));
         score.content = scoreDto.get("content");
         score.status = Status.YES;
+        score.addMentee(mentee);
+        score.addMentor(mentor);
         return score;
     }
 

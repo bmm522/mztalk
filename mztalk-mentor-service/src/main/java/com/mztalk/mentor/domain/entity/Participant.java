@@ -3,6 +3,7 @@ package com.mztalk.mentor.domain.entity;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ParticipantDto;
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.servlet.http.Part;
@@ -12,6 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="PARTICIPANT")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Participant extends BaseTimeEntity{
 
     @Id @GeneratedValue

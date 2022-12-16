@@ -15,4 +15,6 @@ public interface ParticipantService {
     //신청 취소
     Long cancelParticipate(Long id);
 
+    Result findParticipantsByMentorId(Long mentorId);
+
 }

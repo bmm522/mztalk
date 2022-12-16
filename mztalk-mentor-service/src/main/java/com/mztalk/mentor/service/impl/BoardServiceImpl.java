@@ -53,6 +53,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public Result findBoardByUserId(Long userId) {
+        List<Board> boardList = boardRepository.findBoardByUserId(userId);
+        List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
+
+    @Override
     public Result findAll() {
         List<Board> boards = boardRepository.findAll();
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
@@ -77,6 +84,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Result searchWithCondition(SearchCondition searchCondition) {
+        System.out.println(searchCondition.toString());
         List<Board> boardList = boardRepository.searchWithCondition(searchCondition);
         System.out.println("boardList = " + boardList.toString());
         List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());

@@ -22,9 +22,11 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mentee_id")
+    @JsonIgnore
     private Mentee mentee;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "application")
+    @JsonIgnore
     private Mentor mentor;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "application")

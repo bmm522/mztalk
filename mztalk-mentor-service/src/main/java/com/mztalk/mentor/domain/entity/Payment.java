@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,6 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="PAYMENT")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Payment extends BaseTimeEntity{
 
     @Id @GeneratedValue
