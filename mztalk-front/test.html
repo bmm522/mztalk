@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="test-box"/>
+    <button type="button" id="test-btn">클릭</button>
+</body>
+
+<script>
+let nickname = "";
+let mentoStatus ="";
+
+
+    window.onload = function(){
+        console.log("test : " + localStorage.getItem('Authorization'));
+        console.log("test : " + localStorage.getItem('RefreshToken'));
+        console.log("test : " + localStorage.getItem('UserNo'));
+
+        localStorage.getItem('Nickname');
+
+        
+        fetch("http://localhost:8000/login/user-info/"+localStorage.getItem('UserNo'),{
+            method:"GET",
+            headers:{
+                Authorization:localStorage.getItem('Authorization'),
+                RefreshToken:localStorage.getItem('RefreshToken'),
+            }
+        })
+        .then((res)=>res.json())
+        .then(res =>{
+        nickname=res.nickname;
+        mentoStatus = res.mentoStatus;
+
+    })
+    }
+
+
+
+    document.getElementById('test-btn').addEventListener('click', function(){
+        console.log('요청들어옴');
+        console.log('요청 들어옴 : ' + localStorage.getItem('Authorization'));
+        console.log('요청 들어옴 : ' + localStorage.getItem('RefreshToken'));
+        fetch("http://localhost:8000/test/test",{
+            method:"POST",
+            credentials:"include",
+            headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+            },
+        body:JSON.stringify({
+            test :document.getElementById("test-box").value,
+            userNickname : nickname,
+        })
+        })
+        .then(res=>{
+            if(res.status == 401){
+                    getAccessToken();   
+                    alert('다시 시도해주세요.');   
+            } else {
+                console.log('성공');
+            }
+        })
+    });
+
+
+
+    const getAccessToken = () =>{
+        localStorage.removeItem('Authorization');
+        let refreshToken = localStorage.getItem('RefreshToken');
+        fetch("http://localhost:8000/login/access-token?refreshToken="+refreshToken,{
+            method:"GET",            
+        })
+        .then((res)=>res.json())
+        .then(res =>{
+            localStorage.removeItem('Refreshtoken');
+            localStorage.setItem('Authorization',res.jwtToken);
+            localStorage.setItem('RefreshToken', res.refreshToken);
+         })
+    }
+
+</script>
+</html>

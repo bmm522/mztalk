@@ -146,9 +146,15 @@ hs_err_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java
 
+*.orig
 *.yml
 *.properties
 .gradle
 .idea
 *.gradle
 *.idea
+
+properties/**
+properties/
+
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="kor">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/findId.css">
+    <title>아이디 찾기</title>
+</head>
+<style>
+
+ 
+</style>
+<body>
+  <div id="total-form">
+   
+    <div id="input-form"> 
+      <h2>아이디 찾기</h2>
+        <input type="hidden" id="searchIdResult"/>
+        <input type="text" id="searchEmail" class="textBox" placeholder="Your Email Address" required/><br><br><br>
+        <button class="custom-btn btn-14" id="searchId" onclick="move();">아이디 찾기</button>
+      </div>
+      <div id="result-form">
+        
+        <div id="result">
+          <h2>아이디 찾기결과</h2>
+          <div id="re"></div>
+          <button class="custom-btn btn-14" id="mainBtn" onclick="moveMain();">메인으로</button>
+        </div>
+
+      </div>
+    
+  </div>
+</body>
+<script src="JS/findId.js"></script>
+</html>

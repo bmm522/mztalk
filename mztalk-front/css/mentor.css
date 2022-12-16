@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'MICEGothic Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.card:hover{
+    cursor: pointer;
+    background-color: rgb(247, 247, 242);
+}
+
+.mentors-myPage:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.mentors-table tr:hover{
+    cursor: pointer;
+}
+
+.card:hover{
+    opacity: 1;
+    -webkit-animation: flash 1.5s;
+    animation: flash 1.5s;
+    cursor: pointer;
+  }
+
+  #board-list-div{
+    overflow: hidden;
+  }
+
+
+  #row-div{
+    padding: 20px;
+  }
+  @-webkit-keyframes flash {
+    0% {
+      opacity: .4;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes flash {
+    0% {
+      opacity: .4;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
