@@ -7,6 +7,7 @@ import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.ApplicationNotFoundException;
+import com.mztalk.mentor.exception.DuplicateException;
 import com.mztalk.mentor.exception.MentorNotFoundException;
 import com.mztalk.mentor.repository.ApplicationRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
@@ -33,6 +34,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     public Long save(ConcurrentHashMap<String, String> applicationDto) {
         Long userId = Long.parseLong(applicationDto.get("userId"));
         Mentee mentee = menteeRepository.findById(userId).orElseThrow(() -> new MentorNotFoundException("해당 번호의 유저가 존재하지 않습니다."));
+        if(isExist(userId)){
+            throw new DuplicateException("이미 지원하신 서류가 존재합니다.");
+        }
         Application application = Application.builder().
                 name(applicationDto.get("name")).
                 phone(applicationDto.get("phone")).
@@ -45,6 +49,12 @@ public class ApplicationServiceImpl implements ApplicationService {
                 build();
         application.addMentee(mentee);
         return applicationRepository.save(application).getId();
+    }
+
+    @Override // 지원서가 이미 존재하면 true반환.
+    public boolean isExist(Long userId) {
+        Application application = applicationRepository.findApplicationByUserId(userId);
+        return application == null ? false : true;
     }
 
     @Override

@@ -21,14 +21,8 @@ public class ApplicationApiController {
     private final ApplicationService applicationService;
     private final ImageService imageService;
 
-    @GetMapping("/application")
-    public String saveForm(){
-        return null;
-    }
-
     @PostMapping("/application")
     public Long saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationDto) {
-        System.out.println(applicationDto);
         return applicationService.save(applicationDto);
     }
 
@@ -40,6 +34,11 @@ public class ApplicationApiController {
     @GetMapping("/application/{id}")
     public ApplicationDto findById(@PathVariable("id")Long id){
         return applicationService.findById(id);
+    }
+
+    @GetMapping("/application")
+    public boolean isExist(@RequestParam("userId")Long userId){
+        return applicationService.isExist(userId);
     }
 
     @GetMapping("/applications")
