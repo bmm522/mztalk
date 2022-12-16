@@ -129,7 +129,7 @@
 
 
 //개인페이지
-document.getElementById('move-story').addEventListener('click',function(){
+document.getElementById('move-story-service').addEventListener('click',function(){
     const own = localStorage.getItem("userNo");
   
     localStorage.setItem("own", own);
@@ -221,8 +221,17 @@ document.getElementById('move-auction-service').addEventListener('click',functio
     })
     .then((res)=> res.json())
     .then(res=>{
-        console.log("자료있니?" +res.data);
-        console.log("!!!!!!!!!!");
+        
+        // console.log("옥션 : " + localStorage.getItem('authorization'));
+        // console.log("옥션 : " + localStorage.getItem('refreshToken'));
+        // console.log("옥션 : " + localStorage.getItem('userNo'));
+        // console.log("옥션 : " + localStorage.getItem('userNickname'));
+        
+        
+        
+
+
+
         location.href="auction.html";
         
         

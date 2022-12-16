@@ -19,7 +19,7 @@ public class Board extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="board_id")
+    @Column(name="boardId")
     private Long id;  // 글 번호
 
 //    @ManyToOne(fetch=FetchType.EAGER) // 1명이 여러개의 글을 올릴 수 있기 때문에
