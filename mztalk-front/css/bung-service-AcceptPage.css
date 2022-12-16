@@ -1,0 +1,286 @@
+@import url('https://webfontworld.github.io/cookierun/CookieRun.css');
+
+body {
+  padding-top: 40px;
+  font-family: 'CookieRun';
+}
+nav {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  background-color: #f2dfb4;
+  width: 100%;
+  height: 54px;
+  border-bottom:1px solid rgb(219, 219, 219) ;
+  z-index: 9999;
+}
+
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 935px;
+}
+
+.navContainer .logoWrap {
+  display: flex;
+  align-items: center;
+  width: 150px;
+}
+
+.navContainer .logoWrap img{
+  width: 25px;
+  cursor: pointer;
+}
+
+.navContainer .logoWrap .columnLine {
+  width: 1px;
+  height: 25px;
+  margin-left: 22px;
+  border-right: 1px solid rgb(14, 14, 14);
+}
+
+.navContainer .logoWrap .logo {
+  margin-left: 25px;
+  font-size: 22px;
+  font-family: 'Lobster', cursive;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+
+.search input {
+  width: 215px;
+  height: 28px;
+  padding: 7px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 3px;
+  background-color: #fafafa;
+  text-align: center;
+}
+
+.pictogramWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70px;
+}
+
+.pictogramWrap img{
+  width: 23px;
+  cursor: pointer;
+}
+
+.mainContainer {
+  font-family: 'CookieRun';
+  /* display: flex; */
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 935px;
+  margin-top: 55px;
+  height: 10000px;
+  background-color: rgb(242, 244, 226);
+} 
+
+.floating {
+  
+  position: fixed; 
+  right: 50%; 
+  top: 180px; 
+  margin-right: 460px;
+  text-align:center;
+  width: 120px;
+ 
+}
+
+.remocon{
+  
+  border : 3px solid black;
+  width: 100px;
+  height: 300px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  -ms-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  -o-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  align-items: stretch;
+}
+
+
+
+.remocon figure:hover img {
+  opacity: 1;
+  -webkit-animation: flash 1.5s;
+  animation: flash 1.5s;
+  cursor: pointer;
+}
+@-webkit-keyframes flash {
+  0% {
+    opacity: .4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes flash {
+  0% {
+    opacity: .4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.side{
+  width: 30px;
+height: 10px;
+background-color: #f5f3f1;
+box-shadow: 0 0 3px rgba(0, 0, 0, 1);
+border-radius: 15px;
+position: absolute;
+z-index: 10;
+border: 3px solid black;
+}
+
+.side1 { top: 40px; left: 92px; }
+.side2 { top: 80px; left: 92px; }
+.side3 { top: 200px; left: 92px; }
+.side4 { top: 240px; left: 92px; }
+
+/* footer{
+  background-color: red;
+  position : fixed;
+bottom : 0;
+width: 100%;
+height: 100px;
+} */
+
+footer{width: 100%; height: 130px; background-color:#fafafa;padding-top: 20px;}
+footer .container{flex-direction: column; justify-content: center; height: 100%;}
+footer .container ul{display: flex; width: 100%; justify-content: center;}
+footer .container ul li{margin: 0 9px 24px;}
+footer .container ul li a{font-size: 15px; color: #8e8e8e; text-decoration: none;}
+footer .container .copy{display: flex;justify-content: center;}
+footer .container .copy {margin-right: 10px;color: #8e8e8e;}
+footer .container .copy select{border:0; background-color: #fafafa;color:#8e8e8e;margin-right: 10px;}
+footer .container .copy p{font-size: 13px;padding-top: 2px;}
+
+/* #upBtn{
+  position: fixed;
+
+  float: right;
+  right: 100px;
+  bottom: 30px;
+} */
+
+#upBtn{
+
+  position: fixed;
+
+  float: right;
+  right: 5px;
+  bottom: 5px;
+}
+
+#qjd{
+  margin-top: -10px; padding: -3px;
+}
+
+.logo{
+  font-weight: bold;
+}
+
+#book{
+  margin-bottom:-10px;
+}
+
+.search{
+  text-align: center;
+  }
+
+#searchButton{
+  display: inline-block;
+}
+
+.searchBar{
+  text-align: center;
+}
+
+table {
+  width: 350px;
+  margin: auto;
+}
+
+#writeBtn{
+  position: fixed;
+  float: right;
+  right: 350px;
+  bottom: 50px;
+  border-radius: 90%;
+  overflow: hidden;
+}
+
+#groupTotal{
+  text-align: right;
+  vertical-align: bottom;
+}
+
+#imageBtn{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#writer{
+  text-align: right;
+  vertical-align: bottom;
+}
+
+hr {
+  border-top: 1px blue dotted;
+}
+
+.listZone {
+  display: flex;
+}
+
+.pageList {
+  flex: 1;
+  display: flex;
+}
+
+.requestList {
+  position: relative;
+  height: 110px;
+  width: 750px;
+  margin: 0 auto;
+  background-color: #c09a70;
+}
+
+.requestUserBtn {
+  position: absolute;
+  left: 19px;
+  bottom: 40px;
+  width: 450px;
+}
+
+.requestUserId {
+  position: absolute;
+  right: 19px;
+  bottom: 40px;
+  height: 38px;
+  width: 200px;
+  background-color: rgb(255, 193, 7);
+  border-radius: 50%;
+  text-align: center;
+  line-height:38px;
+}
+
+
+
+
+
+
