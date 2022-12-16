@@ -3,8 +3,8 @@ package com.mztalk.resource.domain.response;
 public class ResponseMessage {
     public static final String UPLOAD_SUCCESS = "저장 성공";
     public static final String UPLOAD_FAIL = "저장 실패";
-    public static final String READ_IMAGE_SUCCESS = "사진 데이터 조회 성공";
-    public static final String NOT_FOUND_IMAGE = "사진 데이터 조회 실패";
+    public static final String READ_FILE_SUCCESS = "데이터 조회 성공";
+    public static final String NOT_FOUND_FILE = "데이터 조회 실패";
 
     public static final String NOT_FOUND_MAIN_IMAGE = "메인 이미지를 찾을 수 없음";
 

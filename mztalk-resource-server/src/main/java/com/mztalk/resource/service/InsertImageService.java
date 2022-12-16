@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.util.List;
 
 public interface InsertImageService {
-    ResponseEntity insertImage(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException;
+    ResponseEntity<?> insertImage(MultipartFile multipartFile, ImagesDto imagesDto) throws IOException;
 
-    ResponseEntity insertImages(List<MultipartFile> multipartFileList, ImagesDto imagesDto);
+    ResponseEntity<?> insertImages(List<MultipartFile> multipartFileList, ImagesDto imagesDto);
 
-    ResponseEntity insertMainImage(MultipartFile multipartFile, ImagesDto imagesDto);
+    ResponseEntity<?> insertMainImage(MultipartFile multipartFile, ImagesDto imagesDto);
 }
