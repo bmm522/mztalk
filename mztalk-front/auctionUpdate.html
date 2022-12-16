@@ -74,12 +74,9 @@
 				</div>
 				<div class="mb-3">
                     <label for="inputFiles">파일 첨부</label>
-                    
                     <div class = "row" id = "fileArea">
-                        
                         <div class = "col-10" id = "count">
-                            <input type="hidden" name="serviceName" value="auction"/>
-                                <input type="file" class="form-control" id="inputFiles" name = "image" accept="image/*"/>
+                            <input type="file" class="form-control" id="inputFiles" name = "files" accept="image/*" onchange="showPreview(event);">
                         </div>
                         <div class = "col-2">
                             <button type = "button" id = "addFile" style = "margin-top: 20px;margin-left: 10px;">+</button>
@@ -98,11 +95,11 @@
 				<div class="mb-3 row">
                     <div class = "col-6">
 					    <label for="minPrice">시작가</label>
-					    <input type="text" class="form-control" onblur="priceStandard(this)" name="startPrice" id="startPrice" placeholder="5,000">
+					    <input type="text" class="form-control" onblur="priceStandard(this)" name="startsPrice" id="minPrice" placeholder="5,000">
                     </div>
                     <div class = "col-6">
                         <label for="timeLimit">시간</label>
-					    <input type="text" class="form-control" onkeyup="timeStandard(this);" maxlength = "4" placeholder="24(시간)" id="timeLimit">
+					    <input type="text" class="form-control" onkeyup="timeStandard(this);" maxlength = "4" placeholder="24:00" id="timeLimit">
                     </div>
 				</div> 
 			</form>
