@@ -70,9 +70,9 @@ public class ImageCustomRepositoryImpl implements ImageCustomRepository{
     }
 
     @Override
-    public int changeSubImageToMainImage(String imageName) {
-        return entityManager.createQuery("UPDATE Images i SET i.imageLevel = 0 WHERE i.imageName = :imageName")
-                .setParameter("imageName", imageName)
+    public int changeSubImageToMainImage(String objectKey) {
+        return entityManager.createQuery("UPDATE Images i SET i.imageLevel = 0 WHERE i.objectKey = :objectKey")
+                .setParameter("objectKey", objectKey)
                 .executeUpdate();
     }
 

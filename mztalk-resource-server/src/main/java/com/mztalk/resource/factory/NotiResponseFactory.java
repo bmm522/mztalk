@@ -32,6 +32,10 @@ public class NotiResponseFactory {
         return new ResponseEntity<>(ResponseData.res(StatusCode.OK,ResponseMessage.READ_FILE_SUCCESS,data),HttpStatus.OK);
     }
 
+    public static ResponseEntity<?> successWhenDelete(){
+        return new ResponseEntity<>(ResponseData.res(StatusCode.OK,ResponseMessage.DELETE_FILE_SUCCESS,1),HttpStatus.OK);
+    }
+
     public static <T> ResponseEntity<?> successWhenSelect(List<T> dataList){
         return new ResponseEntity<>(ResponseData.res(StatusCode.OK,ResponseMessage.READ_FILE_SUCCESS,dataList),HttpStatus.OK);
     }

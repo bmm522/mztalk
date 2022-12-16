@@ -57,24 +57,24 @@ public class UpdateImageServiceImpl implements UpdateImageService {
 
 
     @Override
-    public ResponseEntity<?> changeMainImage(long bNo, String serviceName, String imageName) {
+    public ResponseEntity<?> changeMainImage(long bNo, String serviceName, String objectKey) {
 
         try {
             if (imageRepository.changeMainImageToSubImage(bNo, serviceName) != 1) {
                 log.error("Update Error changeMainImageToSubImage");
-                return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_MAIN_IMAGE, 0), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_FOUND_MAIN_IMAGE, 0), HttpStatus.BAD_REQUEST);
             }
             imageRepository.commit();
 
-            if (imageRepository.changeSubImageToMainImage(imageName) != 1) {
+            if (imageRepository.changeSubImageToMainImage(objectKey) != 1) {
                 log.error("Update Error changeSubImageToMainImage");
-                return new ResponseEntity(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.UPDATE_MAIN_FAIL, 0), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(ResponseData.res(StatusCode.BAD_REQUEST, ResponseMessage.UPDATE_MAIN_FAIL, 0), HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e){
             log.error("Server Error");
-            return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR,0), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR,0), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity(ResponseData.res(StatusCode.OK, ResponseMessage.UPDATE_MAIN_SUCCESS,1), HttpStatus.OK);
+        return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.UPDATE_MAIN_SUCCESS,1), HttpStatus.OK);
     }
 }

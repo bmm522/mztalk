@@ -18,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.mztalk.resource.factory.NotiResponseFactory.serverError;
+import static com.mztalk.resource.factory.NotiResponseFactory.successWhenDelete;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -45,13 +48,11 @@ public class DeleteImageServiceImpl implements DeleteImageService {
 
         }
 
-        return success();
+        return successWhenDelete();
     }
 
     @Override
-    public ResponseEntity deleteImageDetail(String imageName) {
-        String objectKey = imageRepository.getObjectKey(imageName);
-
+    public ResponseEntity deleteImageDetail(String objectKey) {
         try{
             s3Factory.deleteImage(objectKey);
             imageRepository.deleteByObjectKey(objectKey);
@@ -59,16 +60,10 @@ public class DeleteImageServiceImpl implements DeleteImageService {
             log.error("Fail Image Delete");
             return serverError();
         }
-        return success();
+        return successWhenDelete();
     }
 
 
 
-    private ResponseEntity serverError(){
-        return new ResponseEntity(ResponseData.res(StatusCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR,0), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 
-    private ResponseEntity success(){
-        return new ResponseEntity(ResponseData.res(StatusCode.OK,ResponseMessage.READ_FILE_SUCCESS,1),HttpStatus.OK);
-    }
 }

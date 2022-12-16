@@ -40,7 +40,6 @@ public class ImageApiController {
     // 사진 다중업로드
     @PostMapping("/images")
     public ResponseEntity<?> insertImages(@RequestParam("image") List<MultipartFile> multipartFileList, ImagesDto imagesDto){
-        System.out.println("요청들어옴?");
         return insertImageService.insertImages(multipartFileList, imagesDto);
     }
 
@@ -79,8 +78,8 @@ public class ImageApiController {
      // 수정페이지에서 메인사진 변경하기
      // 여기서 imageName은 메인으로 등록하고자 하는 파일의 이름.
     @PatchMapping(value="/main-image", consumes = "text/html")
-    public ResponseEntity<?> changeMainImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName, @RequestParam("imageName")String imageName){
-        return updateImageService.changeMainImage(bNo, serviceName, imageName);
+    public ResponseEntity<?> changeMainImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName, @RequestParam("imageName")String objectKey){
+        return updateImageService.changeMainImage(bNo, serviceName, objectKey);
     }
 
     // 해당 글사진 삭제
@@ -91,8 +90,8 @@ public class ImageApiController {
 
     // 단일 파일 삭제
     @DeleteMapping(value = "/image-detail", consumes = "text/html")
-    public ResponseEntity<?> deleteImageDetail(@RequestParam("imageName")String imageName){
-        return deleteImageService.deleteImageDetail(imageName);
+    public ResponseEntity<?> deleteImageDetail(@RequestParam("imageName")String objectKey){
+        return deleteImageService.deleteImageDetail(objectKey);
     }
 }
 
