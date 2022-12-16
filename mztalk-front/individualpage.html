@@ -36,66 +36,42 @@
             </article>
         </div>
     </nav>
+
+        
+    
+
+
+
     <!-- 여기서 놀아주세요. -->
     <main class="mainContainer">
 
-
         <div id="individual-big-div">
-            <div id="profile-div">
-                <table>
-                    <tr>
-                        <td rowspan="2">
-                            <div id="profile-image-div">
-                                <input type="file" name="profileImageFile" style="display: none;"
-                                    id="userProfileImageInput" />
-                                <img src="img/instagram_feed.jpg" id="profile-image">
+            <section class="profile">
+                <div class="profileContainer">
+                    <div class="profile-left">
+                        <div class="profile-img-wrap story-border" onclick="popup('.modal-image')">
+                            <img src="duck.jpg" alt="">
+                        </div>
+                    </div>
 
+                    <div class="profile-right">
+                        <div class="name-group">
+                            <h2>조현재</h2>
+                            <button class="profile_follow_btn">팔로우</button>
+                            <button class="modi" onclick="popup('.modal-info')"><i class="fas fa-cog"></i></button>
+                        </div>
+                        <div class="follow">
+                            <ul>
+                                <li><a href="">게시물<span>6</span></a> </li>
+                                <li><a href="" id="subscribeBtn1">팔로워<span>106</span></a> </li> <!--나를 친구한-->
+                                <li><a href="" id="subscribeBtn">팔로잉<span>106</span></a> </li> <!--내가 친구신청한--><!--팔로우: 친구신청걸기-->
+                            </ul>
+                        </div>
+                       
+                    </div>
+                </div>
+            </section>
 
-                                <div id="nickname-div">
-                                    <a id="own">
-                                </div>
-                            </div>
-
-                        </td>
-                        <td>
-                            <div id="follow-div">
-                                <div class="follow-border">
-                                    <div class="count-div">
-                                        <br>{10}
-                                    </div>
-                                    <div class="info-div">
-                                        게시글 수
-                                    </div>
-                                </div>
-                                <div class="follow-border">
-                                    <div class="count-div">
-                                        <br>{10}
-                                    </div>
-                                    <div class="info-div">
-                                        팔로워
-                                    </div>
-                                </div>
-                                <div class="follow-border">
-                                    <div class="count-div">
-                                        <br>{10}
-                                    </div>
-                                    <div class="info-div">
-                                        팔로잉
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-
-                        <td>
-                            <div id="profile-edit-div">
-                                <button type="button" style="cursor:pointer;" id="profile-edit-btn">프로필 편집</button>
-                            </div>
-                        </td>
-                    </tr>
-
-                </table>
 
             </div>
             <div id="hr-div">
@@ -105,35 +81,33 @@
 
 
 
-            <div id="modal" class="modal hidden">
+                <div id="modal" class="textmodal hidden">
 
-                <div id="write-input-div">
-                    <div id="write-title-div">
-                        
-
-                        <div id=title-div>                
-                            <input type="text" id="title-input-text" value="{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}">     
+                    <div id="write-input-div">
+                        <div id="write-title-div">
+                            <div id=title-div>                
+                                <input type="text" id="title-input-text" value="{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}{제목}">     
+                            </div>
+                            <hr>
                         </div>
-                        <hr>
+                        <br>
+                        <div class="selectBox">
+                            <select id="privacyBounds" name="privacyBounds" class="select">
+                            <option disabled selected value="no">공개범위</option>
+                            <option value="public">전체공개</option>
+                            <option value="onlyFriends">친구에게만</option>
+                            <option value="privacy">비공개</option>
+                            </select>
+                        </div>
+                        <br>
+                        <input type="text" id="content-input-text">
+                            
                     </div>
-                    <br>
-                    <div class="selectBox">
-                        <select id="privacyBounds" name="privacyBounds" class="select">
-                          <option disabled selected value="no">공개범위</option>
-                          <option value="public">전체공개</option>
-                          <option value="onlyFriends">친구에게만</option>
-                          <option value="privacy">비공개</option>
-                        </select>
-                    </div>
-                    <br>
-                    <input type="text" id="content-input-text">
-                        
-                </div>
-                
-                <button type="button" style="cursor:pointer;" class="write-btn" id="write-board">글 등록</button>
-                <button type="button" class="btn-close" aria-label="Close">닫기</button>
+                    
+                    <button type="button" style="cursor:pointer;" class="write-btn" id="write-board">글 등록</button>
+                    <button type="button" class="btn-close" aria-label="Close">닫기</button>
 
-            </div>
+                </div>
             <div>
                 <div id="post-div">
 
@@ -298,11 +272,95 @@
 
     </footer>
 
-    <!-- <div id="upBtn">
-    <ul class="menu align-center expanded text-center SMN_effect-74">
-        <li><a href="#" data-hover="Home" id="homeRef">UP</a></li>
-        </ul>
-        </div> -->
+    <div class="modal-info">
+        <div class="modal">
+            <button id="profile-edit-btn">회원정보 변경</button>
+            <button>로그아웃</button>
+            <button onclick="closePopup('.modal-info')">취소</button>
+        </div>
+    </div>
+    <!--로그아웃, 회원정보변경 모달 end-->
+    
+    <!--프로필사진 바꾸기 모달-->
+    <div class="modal-image">
+        <div class="modal">
+            <p>프로필 사진 바꾸기</p>
+            <button>사진 업로드</button>
+            <button onclick="closePopup('.modal-image')">취소</button>
+        </div>
+    </div>
+    
+    <!--팔로우 팔로워 리스트..?-->
+    <div class="modal-follow">
+        <div class="follower">
+            <div class="follower-header">
+                <span>팔로잉정보</span>
+                <button onclick="closeFollow()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="follower-list">
+                <div class="follower__item">
+                    <div class="follower__img"><img src="duck.jpg" alt=""></div>
+                    <div class="follower__text">
+                        <h2>아이디</h2>
+                    </div>
+                    <div class="follower__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
+                </div>
+                
+                <div class="follower__item">
+                    <div class="follower__img"><img src="duck.jpg" alt=""></div>
+                    <div class="follower__text">
+                        <h2>아이디</h2>
+                    </div>
+                    <div class="follower__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--프로필사진 바꾸기 모달end-->
+    
+    <!-- <div class="modal-subscribe" id="modal-subscribe">
+        <div class="subscribe">
+            <div class="subscribe-header">
+                <span>구독정보</span>
+                <button onclick="modalClose()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+    
+            <div class="subscribe-list" id="subscribeModalList">
+    
+                <div class="subscribe__item" id="subscribeModalItem-1">
+                    <div class="subscribe__img">
+                        <img src='duck.jpg'/>
+                    </div>
+                    <div class="subscribe__text">
+                        <h2>love</h2>
+                    </div>
+                    <div class="subscribe__btn">
+                        <button class="cta blue" onclick="toggleSubscribeModal(this)">구독취소</button>
+                    </div>
+                </div>
+    
+    
+                <div class="subscribe__item" id="subscribeModalItem-2">
+                    <div class="subscribe__img">
+                        <img src="#" src='duck.jpg'/>
+                    </div>
+                    <div class="subscribe__text">
+                        <h2>ssar</h2>
+                    </div>
+                    <div class="subscribe__btn">
+                        <button class="cta blue" onclick="toggleSubscribeModal(this)">구독취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div> -->
+
 
 </body>
 
