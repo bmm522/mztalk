@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.beans.Transient;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,12 +23,40 @@ public class AuctionServiceImpl implements AuctionService {
     @Transactional
     @Override
     public Long insertBoard(BoardDto boardDto) {
+
+
         return boardRepository.save(boardDto.toEntity()).getBId();
     }
 
     @Override
     public int updateBoard(Long bId, BoardDto boardDto) {
         return boardRepository.boardUpdate(bId, boardDto);
+    }
+
+    @Override
+    public List<Board> selectBoardList() {
+        return boardRepository.findAll();
+    }
+
+    @Override
+    public int deleteBoard(Long bId) {
+        return boardRepository.deleteBoard(bId);
+    }
+
+    @Override
+    public Board selectBoard(Long bId) {
+
+        return boardRepository.findBybId(bId);
+    }
+
+    @Override
+    public int updatePrice(Long bId, BoardDto boardDto) {
+        return boardRepository.updatePrice(bId, boardDto);
+    }
+
+    @Override
+    public int updateCount(Long bId) {
+        return boardRepository.updateCount(bId);
     }
 
 

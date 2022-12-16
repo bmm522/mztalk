@@ -26,5 +26,34 @@ next.addEventListener('click', function() {
     }
 });
 
-//팝업 관련
+//입찰가 가격 제한
+document.getElementById("priceSubmitBtn").addEventListener('click', function() {
+    console.log(document.getElementById('startPrice').innerHTML);
+    console.log(document.getElementById('inputPrice').value);
+    if(Number(document.getElementById('startPrice').innerHTML) >= Number(document.getElementById('inputPrice').value)) {
+        alert('시작 금액보다 큰 금액을 입력해 주세요');
+    }
+});
+ㅔㅁㅎㄷ=1
+//입찰가 전달
+document.getElementById("priceSubmitBtn").addEventListener('click', function() {
+    const linkArr = document.location.href.split("/");
+    const bId = linkArr[linkArr.length - 1];
+    console.log(Number(document.getElementById('inputPrice').value));
+    // console.log(bId);
 
+    fetch("http://localhost:8000/auction/board/", {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json",
+        },
+        body:JSON.stringify({
+            "currentPrice" : Number(document.getElementById('inputPrice').value)
+        }),
+    })
+    .then(res => {
+        console.log('통신 성공');
+    })
+
+
+});
