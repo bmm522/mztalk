@@ -1,18 +1,18 @@
 package com.mztalk.auction.service.impl;
 
+import com.mztalk.auction.domain.dto.BoardRequestDto;
 import com.mztalk.auction.domain.dto.BoardDto;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.repository.BoardRepository;
-import com.mztalk.auction.repository.impl.CustomAuctionRepositoryImpl;
 import com.mztalk.auction.service.AuctionService;
-import com.netflix.discovery.converters.Auto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
-import java.beans.Transient;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +22,9 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Transactional
     @Override
-    public Long insertBoard(BoardDto boardDto) {
+    public Long insertBoard(BoardRequestDto boardRequestDto) {
 
-
-        return boardRepository.save(boardDto.toEntity()).getBId();
+        return boardRepository.save(boardRequestDto.toEntity()).getBId();
     }
 
     @Override
@@ -57,6 +56,14 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public int updateCount(Long bId) {
         return boardRepository.updateCount(bId);
+    }
+
+    @Override
+    public ConcurrentHashMap<String, String> getRecentBoardNo() {
+        long bNo =  boardRepository.getRecentBoardNo();
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        map.put("bNo", String.valueOf(bNo+1));
+        return map;
     }
 
 

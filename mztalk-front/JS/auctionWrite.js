@@ -103,7 +103,12 @@ function timeStandard(time) {
 // }
 
 //글쓰기
-function boardWrite() {
+
+const writeEvent = () =>{
+
+    document.getElementById('image-form-form').submit();
+    
+    
     const startPrice = document.getElementById('startPrice').value;
     const startPriceSplit = startPrice.split(',');
     const startPriceTrans = Number(startPriceSplit[0].concat(startPriceSplit[1]));
@@ -117,14 +122,26 @@ function boardWrite() {
         body:JSON.stringify({
             "title" : document.getElementById('title').value,
             "content": document.getElementById('content').value,
+            "writer" : localStorage.getItem("userNickname"),
             "startPrice": startPriceTrans,
             "timeLimit": document.getElementById('timeLimit').value
+            "currentId" : loca 
+            
         }),
     })
-    .then(res => {
-        console.log('통신 성공');
+    .then((res)=>res.json())
+    .then(res=>{
+        console.log(res.bId);
+        fetch('http://localhost:8000/auction/images/'+res.bId,{
+            method:"GET"
+        })
+        .then(res =>{
+            location.href="auction.html"
+        })
     })
+
 }
+
 
 //파일추가
 window.onload = () => {
@@ -133,7 +150,7 @@ window.onload = () => {
         if(document.getElementsByName("files").length < 3) {
             const newDiv = document.createElement('div');
             newDiv.classList.add('col-10');
-            newDiv.innerHTML = '<input type = "file" class = "form-control" name = "files" accept="image/*"">';
+            newDiv.innerHTML = '<input type = "file" class = "form-control" name = "image">';
             fileArea.append(newDiv);
         } else {
             alert("파일은 3개까지 첨부 가능합니다.");

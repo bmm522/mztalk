@@ -1,6 +1,6 @@
 package com.mztalk.auction.domain.dto;
 
-import com.mztalk.auction.domain.entity.File;
+import com.mztalk.auction.domain.entity.Images;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,11 +15,11 @@ public class FileDto {
     private String filePath;
     private Integer level;
 
-    public File toEntity() {
-        return File.builder()
-                .fId(fId)
-                .fileName(fileName)
-                .filePath(filePath)
+    public Images toEntity() {
+        return Images.builder()
+                .iId(fId)
+                .imageName(fileName)
+                .imagePath(filePath)
                 .level(level)
                 .build();
     }

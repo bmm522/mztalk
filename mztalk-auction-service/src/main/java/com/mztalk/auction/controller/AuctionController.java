@@ -1,13 +1,15 @@
 package com.mztalk.auction.controller;
 
+import com.mztalk.auction.domain.dto.BoardRequestDto;
 import com.mztalk.auction.domain.dto.BoardDto;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.Path;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RequestMapping("/auction")
 @RestController
@@ -15,10 +17,13 @@ public class AuctionController {
     @Autowired
     private AuctionService auctionService;
 
+    @ResponseBody
     //게시글 작성
     @PostMapping("/board")
-    public Long insertBoard(@RequestBody BoardDto boardDto){
-        return auctionService.insertBoard(boardDto);
+    public ConcurrentHashMap<String, String> insertBoard(@RequestBody BoardRequestDto boardRequestDto){
+        ConcurrentHashMap<String, String> map=new ConcurrentHashMap<>();
+        map.put("bId", String.valueOf(auctionService.insertBoard(boardRequestDto)));
+        return map;
     }
 
     //게시글 수정
@@ -52,6 +57,16 @@ public class AuctionController {
         return auctionService.updatePrice(bId, boardDto);
     }
 
+    // 최신글 번호뽑아오기
+    @GetMapping("/recent-board")
+    public ConcurrentHashMap<String, String> getRecentBoardNo(){
+        return auctionService.getRecentBoardNo();
+    }
+
+    @GetMapping("/images/{bId}")
+    public void setImage(@PathVariable("bId")long bId){
+        System.out.println("bId : " + bId );
+    }
 
 
 

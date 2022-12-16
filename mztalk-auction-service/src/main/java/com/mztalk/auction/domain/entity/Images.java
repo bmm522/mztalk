@@ -12,17 +12,21 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class File {
+public class Images {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long fId;
+    private Long iId;
+
+    @ManyToOne
+    @JoinColumn(name ="bId")
+    private Board board;
 
     @Column(nullable = false)
-    private String fileName;
+    private String imageName;
 
     @Column(nullable = false)
-    private String filePath;
+    private String imagePath;
 
     @Column(nullable = false)
     private Integer level;
