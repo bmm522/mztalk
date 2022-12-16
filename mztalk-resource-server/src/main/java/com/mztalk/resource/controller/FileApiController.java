@@ -1,6 +1,7 @@
 package com.mztalk.resource.controller;
 
 import com.mztalk.resource.domain.dto.FileDto;
+import com.mztalk.resource.service.DeleteFileService;
 import com.mztalk.resource.service.InsertFileService;
 import com.mztalk.resource.service.SelectFileService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ public class FileApiController {
     private final InsertFileService insertFileService;
 
     private final SelectFileService selectFileService;
+
+    private final DeleteFileService deleteFileService;
     // 파일 단일업로드
     @PostMapping("/file")
     public ResponseEntity<?> insertFile(@RequestParam("file")MultipartFile multipartFile, FileDto fileDto){
@@ -38,9 +41,9 @@ public class FileApiController {
     }
 
 
-//    @DeleteMapping(value= "/images", consumes = "text/html")
-//    public ResponseEntity<?> deleteImage(@RequestParam("bNo")long bNo){
-//        return deleteFileService.deleteImage(bNo, serviceName);
-//    }
+    @DeleteMapping(value= "/files", consumes = "text/html")
+    public ResponseEntity<?> deleteFile(@RequestParam("id")long id){
+        return deleteFileService.deleteFile(id);
+    }
 
 }

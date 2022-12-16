@@ -13,8 +13,8 @@ public class ResponseMessage {
     public static final String UPDATE_SUB_SUCCESS = "서브 이미지 수정 성공";
 
     public static final String UPDATE_SUB_FAIL = "서브 이미지 수정 실패";
-    public static final String DELETE_IMAGE_SUCEESS = "이미지 삭제 완료";
-    public static final String DELETE_IMAGE_FAIL = "이미지 삭제 실패";
+    public static final String DELETE_FILE_SUCCESS = "파일 삭제 완료";
+    public static final String DELETE_IMAGE_FAIL = "파일 삭제 실패";
     public static final String INTERNAL_SERVER_ERROR = "서버 내부 에러";
     public static final String DB_ERROR = "데이터베이스 에러";
 }

@@ -24,4 +24,11 @@ public class FileCustomRepositoryImpl implements FileCustomRepository{
                 .setParameter("id", id)
                 .getResultList();
     }
+
+    @Override
+    public List<String> getObjectKeyList(long id) {
+        return entityManager.createQuery("SELECT f.objectKey FROM File f WHERE f.id = :id", String.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
 }
