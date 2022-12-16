@@ -35,9 +35,9 @@ public class ProfileServiceImpl implements ProfileService {
 
 
         ResponseEntity<String> responseImg = new RestTemplate().exchange(
-          "http://localhost:8000/resource/sub-image?bNo="+own+"&serviceName=story",
+          "http://localhost:8000/resource/sub-image?bNo="+own+"&serviceName=story",    //첫번째: url
                 HttpMethod.GET,
-                new HttpEntity<String>(headersImg),
+                new HttpEntity<String>(headersImg),     //바디, 헤더 다 담기 가능/엔티티
                 String.class
         );
 
