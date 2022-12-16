@@ -33,10 +33,25 @@ const getBoardList = () =>{
             location.href = "mentor-main.html";
         } else {
             let cnt = 1;
+   
             document.getElementById('board-list-div').innerHTML += '<div class="row" style="padding:20px;" id="row-div">';
             for(let board of res.data){
             if(cnt%4 !== 0 ){
-                document.getElementById('row-div').innerHTML +=  '<div class="col-3"><div class="card" style="width: 13rem; height:14rem;"><div class="card-body" onclick="testClick('+board.id+');"  data-bs-toggle="modal" href="#exampleModalToggle"><h5 class="card-title">'+board.category+'</h5><h6 class="card-subtitle mb-2 text-muted">'+board.nickname+'</h6><h6 class="card-subtitle mb-2 text-muted">'+board.career+'</h6><p class="card-text">제목:'+board.title+'</p></div><input class="hidden-board-id" id="'+board.id+'" type="hidden" value='+board.id+'><button class="btn btn-outline-success" id="watchScore" onclick="watchReview('+board.nickname+');" type="button">평점보기</button></div></div>';
+                let boardId = board.id;
+                let category = board.category;
+                let nickname = board.nickname;
+                let career = board.career;
+                let title = board.title;
+                document.getElementById('row-div').innerHTML +=  `<div class="col-3">
+                <div class="card" style="width: 13rem; height:14rem;">
+                <div class="card-body" onclick="testClick(${boardId});"  
+                data-bs-toggle="modal" href="#exampleModalToggle">
+                <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
+                ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
+                ${career}</h6><p class="card-text">제목:${title}</p>
+                </div><input class="hidden-board-id" id="board.id" type="hidden" value=board.id><button class="btn btn-outline-success" id="watchScore" onclick="watchReview(board.nickname);" 
+                type="button">평점보기</button></div></div>`;
+       
                 cnt += 1;  
             } else {
                 document.getElementById('row-div').innerHTML +=  '<div class="col-3"><div class="card" style="width: 13rem; height:14rem;"><div class="card-body"  onclick="testClick('+board.id+');" data-bs-toggle="modal" href="#exampleModalToggle"><h5 class="card-title">'+board.category+'</h5><h6 class="card-subtitle mb-2 text-muted">'+board.nickname+'</h6><h6 class="card-subtitle mb-2 text-muted">'+board.career+'</h6><p class="card-text">제목:'+board.title+'</p></div><input class="hidden-board-id" id="'+board.id+'" type="hidden" value='+board.id+'><button class="btn btn-outline-success" id="watchScore" onclick="watchReview('+board.nickname+');" type="button">평점보기</button></div></div></div><div class="row" style="padding:20px;" id="row-div">';
