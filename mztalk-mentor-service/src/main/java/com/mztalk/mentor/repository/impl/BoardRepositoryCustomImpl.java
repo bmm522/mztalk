@@ -2,16 +2,20 @@ package com.mztalk.mentor.repository.impl;
 
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.entity.Board;
+import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.QBoard;
 import com.mztalk.mentor.domain.entity.QMentor;
 import com.mztalk.mentor.repository.BoardRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
+    @Autowired
+    private EntityManager entityManager;
 
     private final JPAQueryFactory queryFactory;
     public BoardRepositoryCustomImpl(EntityManager entityManager){
@@ -30,6 +34,13 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
                         containsContent(searchCondition.getContent()),
                         containsTitle(searchCondition.getTitle()))
                 .fetch();
+    }
+
+    @Override
+    public Mentor findMentorByBoardId(Long id) {
+        Mentor mentor = entityManager.createQuery("select m from Board b join b.mentor where b.id =:id", Mentor.class).
+                setParameter("id", id).getSingleResult();
+        return mentor;
     }
 
     private BooleanExpression eqCategory(String category){

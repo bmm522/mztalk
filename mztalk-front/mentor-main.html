@@ -124,86 +124,73 @@
             </div>
             <!--검색창 끝-->
 
+            <!-- boardList 뿌려주는 div 시작 -->
             <div id="board-list-div">
                     
             </div>
+            <!-- boardList 뿌려주는 div 끝 -->
 
             <!--멘토링 글 상세보기 모달 시작-->
-            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-                tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalToggleLabel">멘토링 소개</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div id="model-section">
+                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+                    tabindex="-1">
+                    <input type="hidden" id="boardId" value=boardId/>
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">멘토링 소개</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div id="modal-body" class="modal-body">
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <div class="card-text" style="float:left;">1회 멘토링 : 1시간 / <span id="modal-salary"></span> 원</div>
+                                <button class="btn btn-outline-success" data-bs-target="#exampleModalToggle2"
+                                    data-bs-toggle="modal">멘토링 신청하기</button>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            {content} 자유양식<br>
-                            속에 영원히 길지 귀는 가치를 날카로우나 듣는다. 기쁘며, 얼음 청춘 있음으로써 구하지 가치를 봄바람이다. 갑 만천하의 지혜는 그와 수 있는 밥을 동산에는
-                            쓸쓸하랴?
-                            우리의 가진 그들의 구하지 광야에서 이것이다. 그들은 거친 바이며, 말이다. 봄바람을 굳세게 지혜는 있음으로써 인생을 것이다. 찾아다녀도, 얼음이 보는
-                            것이다.
-                            힘차게 힘차게 피가 이상이 목숨이 것은 칼이다. 속에서 오아이스도 따뜻한 보배를 그들은 끓는 보는 그러므로 그들을 있는가?
+                    </div>
+                </div>
 
-                            같이, 앞이 우리의 봄바람이다. 용기가 살았으며, 이상의 놀이 동력은 위하여, 것이다. 원대하고, 방지하는 거친 이것이다. 피어나는 내려온 위하여서 위하여,
-                            소담스러운 것이다. 남는 꽃이 열매를 없는 오아이스도 물방아 이성은 밝은 보라. 얼마나 굳세게 소리다.이것은 평화스러운 따뜻한 하는 부패뿐이다. 들어 그들을
-                            방황하여도, 광야에서 목숨이 있으랴? 붙잡아 보이는 곳으로 철환하였는가? 그림자는 풀이 크고 영락과 구하기 약동하다. 살 물방아 청춘의 얼마나 찬미를 사랑의
-                            관현악이며, 것이다.
+                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">신청하기</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
 
-                            얼마나 못하다 할지니, 인생의 가치를 봄바람이다. 공자는 미묘한 위하여 역사를 그들의 남는 같이 청춘의 보라. 새 풀밭에 없으면, 보이는 가슴이 두기
-                            속잎나고, 전인
-                            이상, 쓸쓸하랴? 과실이 우는 더운지라 같이 능히 바이며, 것이다. 별과 이것은 위하여 그러므로 있는가? 있으며, 동력은 날카로우나 풀이 없으면, 끝까지
-                            보라.
-                            용감하고 원질이 인생에 인생을 듣기만 끓는 하였으며, 사막이다. 않는 무엇을 그들은 보이는 따뜻한 이상은 뿐이다. 찾아 심장은 지혜는 내는 있는 심장의 인간의
-                            보라.
-                        </div>
-                        <div class="modal-footer">
-                            <div class="card-text" style="float:left;">1회 멘토링 : 1시간 / {salary}원 / 1명</div>
-                            <button class="btn btn-outline-success" data-bs-target="#exampleModalToggle2"
-                                data-bs-toggle="modal">멘토링 신청하기</button>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">이름</label>
+                                    <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="예)홍길동">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">연락 가능한 연락처</label>
+                                    <input type="text" class="form-control form-control-sm" id="phone" name="phone" placeholder="010-1111-2222">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">연락 가능한 이메일</label>
+                                    <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="mztalk@xxx.com">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="message">멘토에게 남길 메시지</label>
+                                    <textarea class="form-control" placeholder="멘토에게 자신을 소개해주세요." id="message" style="height: 300px; padding-top: 10px;"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" id="participant-btn"class="btn btn-outline-success">결제하기</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true"
-                aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">신청하기</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">이름</label>
-                                <input type="text" class="form-control form-control-sm" id="name" name="name"
-                                    placeholder="예)홍길동">
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">연락 가능한 연락처</label>
-                                <input type="text" class="form-control form-control-sm" id="phone" name="phone"
-                                    placeholder="010-1111-2222">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">연락 가능한 이메일</label>
-                                <input type="email" class="form-control form-control-sm" id="email" name="email"
-                                    placeholder="mztalk@xxx.com">
-                            </div>
-                            <div class="mb-3">
-                                <label for="content">멘토에게 남길 메시지</label>
-                                <textarea class="form-control" placeholder="멘토에게 자신을 소개해주세요." id="content"
-                                    style="height: 300px; padding-top: 10px;"></textarea>
-                            </div>
-                            <input type="hidden" id="boardId" value=boardId/>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-success">결제하기</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!--멘토링 글 상세보기 모달 끝-->
     </main>
 

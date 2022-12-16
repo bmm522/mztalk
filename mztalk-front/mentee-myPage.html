@@ -54,15 +54,20 @@
                 </div>
 
                 <div class="mentors-myPage col-3">
-
                 <img src="https://cdn-icons-png.flaticon.com/128/8763/8763321.png" 
                 style="width: 38px; height: 28px; padding-left:10px;"
-                onclick="location.href='mentee-myPage.html'">
-
+                id="myPage">
                 </div>      
             </form>  
         </div>  
     </div>
+
+    <!-- boardList 뿌려주는 div 시작 -->
+    <div id="board-list-div">
+                        
+    </div>
+    <!-- boardList 뿌려주는 div 끝 -->
+
 
     <!--내가 신청한 글 보기 모달 시작-->
     <div class="modal fade" id="menteeModal" aria-hidden="true" aria-labelledby="menteeModal" tabindex="-1">
@@ -84,18 +89,6 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr onclick="location.href='/mentors/boards/{id}'">
-                            <th scope="row">1</th>
-                            <td>배한성</td>
-                            <td>수학의정석 A-Z</td>
-                            <td style="text-align: center;">Y</td>
-                          </tr>
-                          <tr onclick="location.href='/mentors/boards/{id}'">
-                            <th scope="row">{id}</th>
-                            <td>{nickname}</td>
-                            <td>{title}</td>
-                            <td style="text-align: center;">{status}</td>
-                          </tr>
                           <tr onclick="location.href='/mentors/boards/{id}'">
                             <th scope="row">{id}</th>
                             <td>{nickname}</td>
@@ -131,28 +124,10 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <th scope="row">1</th>
-                            <td>배한성</td>
-                            <td>수학의정석 A-Z</td>
-                            <td style="text-align: center;">
-                                <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#reviewModal"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
-                            </td>
-                          </tr>
-                          <tr>
                             <th scope="row">{id}</th>
                             <td>{nickname}</td>
                             <td>{title}</td>
-                            <td style="text-align: center;">
-                                <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#reviewModal"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">{id}</th>
-                            <td>{nickname}</td>
-                            <td>{title}</td>
-                            <td style="text-align: center;">
+                            <td style="text-align: center;"> <!--리뷰쓰러가는 버튼-->
                                 <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#reviewModal"
                                 style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
                             </td>
@@ -166,7 +141,6 @@
     <!--완료된 멘토링 보기 모달 끝-->
 
     <!-- 리뷰 모달 시작-->
-    <form action="/mentors/members/score/{id}" method="post">
         <div class="modal fade" id="reviewModal" aria-hidden="true" aria-labelledby="reviewModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -177,12 +151,12 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="boardId" class="form-label">글번호</label>
-                                <input type="text" class="form-control form-control-sm" id="boardId" name="boardId" value="{id}" readonly>
+                                <input type="text" class="form-control form-control-sm" id="boardId" name="boardId" readonly>
                             </div>
 
                             <div class="mb-3">
                                 <label for="boardId" class="form-label">별점</label>
-                                <select name="count" class="form-select">
+                                <select id="count" class="form-select">
                                     <option value="5.0">★★★★★</option>
                                     <option value="4.0">★★★★</option>
                                     <option value="3.0">★★★</option>
@@ -197,13 +171,12 @@
                             </div>
                         </div>
                     <div class="modal-footer">
-                        <button class="btn btn-outline-success" type="button"
-                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">제출</button>
+                        <button class="btn btn-outline-success" type="button" id="writeReview"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">제출</button> <!--리뷰 제출 버튼-->
                     </div>
                 </div>
             </div>
         </div>
-    </form>
     <!-- 리뷰 모달 끝-->
 
     
@@ -219,34 +192,34 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="name" class="form-label">이름</label>
-                            <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="예)홍길동">
+                            <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="예)홍길동" required>
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">핸드폰번호</label>
-                            <input type="text" class="form-control form-control-sm" id="phone" name="phone" placeholder="예)010-1111-2222">
+                            <input type="text" class="form-control form-control-sm" id="phone" name="phone" placeholder="예)010-1111-2222" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">이메일</label>
-                            <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="예)mztalk@naver.com">
+                            <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="예)mztalk@naver.com" required>
                         </div>
                         <div class="mb-3">
                             <label for="job" class="form-label">현재소속</label>
-                            <input type="text" class="form-control form-control-sm" id="job" name="job" placeholder="예)학원강사, 대학생, 대학원생">
+                            <input type="text" class="form-control form-control-sm" id="job" name="job" placeholder="예)학원강사, 대학생, 대학원생" required>
                         </div>
                         <div class="mb-3">
                             <label for="bank" class="form-label">은행명</label>
-                            <input type="text" class="form-control form-control-sm" id="bank" name="bank" placeholder="예)국민은행">
+                            <input type="text" class="form-control form-control-sm" id="bank" name="bank" placeholder="예)국민은행" required>
                         </div>
                         <div class="mb-3">
                             <label for="account" class="form-label">계좌번호</label>
-                            <input type="text" class="form-control form-control-sm" id="account" name="account">
+                            <input type="text" class="form-control form-control-sm" id="account" name="account" required>
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                              <form enctype="multipart/form-data" method="post" action="/mentors/application">
                                 <label for="file" class="form-label">인증서류</label>
                                 <input type="file" class="form-control form-control-md" id="file" name="file" multiple/>
                             </form>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="sendResume" class="btn btn-outline-success">멘토 신청 하기</button>
