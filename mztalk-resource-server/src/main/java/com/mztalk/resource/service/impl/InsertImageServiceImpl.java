@@ -42,7 +42,7 @@ public class InsertImageServiceImpl implements InsertImageService {
 
 
     @Override
-    public ResponseEntity insertImage(MultipartFile multipartFile, ImagesDto imagesDto){
+    public ResponseEntity<?> insertImage(MultipartFile multipartFile, ImagesDto imagesDto){
 
        try{
 
@@ -64,7 +64,7 @@ public class InsertImageServiceImpl implements InsertImageService {
     }
 
     @Override
-    public ResponseEntity insertImages(List<MultipartFile> multipartFileList, ImagesDto imagesDto) {
+    public ResponseEntity<?> insertImages(List<MultipartFile> multipartFileList, ImagesDto imagesDto) {
 
         for(int i = 0 ; i < multipartFileList.size() ; i++){
 
@@ -110,7 +110,7 @@ public class InsertImageServiceImpl implements InsertImageService {
 
 
     @Override
-    public ResponseEntity insertMainImage(MultipartFile multipartFile, ImagesDto imagesDto) {
+    public ResponseEntity<?> insertMainImage(MultipartFile multipartFile, ImagesDto imagesDto) {
         try{
 
             imageRepository.changeMainImageToSubImage(Long.parseLong(imagesDto.getBNo()), imagesDto.getServiceName());

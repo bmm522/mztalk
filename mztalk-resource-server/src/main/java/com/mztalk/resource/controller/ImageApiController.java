@@ -31,7 +31,7 @@ public class ImageApiController {
 
 
 
-    // 이미지 단일업로드 or 서브 이미지 업로드
+    // 이미지 단일업로드 or 서브 이미지 업로드 or 기존 사진에 서브 이미지 업로드
     @PostMapping("/image")
     public ResponseEntity<?> insertImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto) throws IOException {
         return insertImageService.insertImage(multipartFile, imagesDto);
@@ -69,18 +69,18 @@ public class ImageApiController {
     }
 
 
-    // 수정페이지에서 메인사진 변경하기
-    @PostMapping(value="/main-image", consumes = "text/html")
-    public ResponseEntity<?> changeMainImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto){
-        return updateImageService.changeMainImage(multipartFile, imagesDto);
-    }
-
-    // 수정페이지에서 메인사진 변경하기
-    // 여기서 imageName은 메인으로 등록하고자 하는 파일의 이름.
-//    @PatchMapping(value="/main-image", consumes = "text/html")
-//    public ResponseEntity<?> changeMainImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName, @RequestParam("imageName")String imageName){
-//        return updateImageService.changeMainImage(bNo, serviceName, imageName);
+//    // 수정페이지에서 메인사진 변경하기
+//    @PostMapping(value="/main-image", consumes = "text/html")
+//    public ResponseEntity<?> changeMainImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto){
+//        return updateImageService.changeMainImage(multipartFile, imagesDto);
 //    }
+
+     // 수정페이지에서 메인사진 변경하기
+     // 여기서 imageName은 메인으로 등록하고자 하는 파일의 이름.
+    @PatchMapping(value="/main-image", consumes = "text/html")
+    public ResponseEntity<?> changeMainImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName, @RequestParam("imageName")String imageName){
+        return updateImageService.changeMainImage(bNo, serviceName, imageName);
+    }
 
     // 해당 글사진 삭제
     @DeleteMapping(value= "/images", consumes = "text/html")
