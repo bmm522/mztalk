@@ -1,25 +1,35 @@
 package com.mztalk.main.domain.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
 
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Entity
+@Table(
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name="Follow_uk",
+            columnNames = {"fromUserId","toUserId"}
+        )
+    }
+)
 public class Follow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="board_id")
     private Long id;  // pk
 
-
-    private String following;  //내가 친구 추가한 사람
+    @JoinColumn(name="fromUserId")
+    private String fromUser;  //내가 친구 추가한 사람
                                 //내가 등록한 사람
-
-    private String follower;    //나를 친구로 추가한 사람
+                                //영어를 못해서...(from)
+    @JoinColumn(name="toUserId")
+    private String toUser;    //나를 친구로 추가한 사람
                                 //나를 등록한 사람
+                                //to
 }

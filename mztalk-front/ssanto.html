@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+                                                <!--프로필-->
+    <form action="http://localhost:8000/resource/image" method="POST" enctype="multipart/form-data" id="image-form">
+        <input type="file" id="file-box" name="image"/>   <!--name 이름은 default-->
+        <!-- <input type="file" id="file-box" name="image"/>   name 이름은 default -->
+        <input type="hidden" name="serviceName" value="story"/> <!--자기서비스 value="story"-->
+        <input type="hidden" name="bNo" value="1"/>   <!--보드 번호(own)-->  
+        
+    </form>
+    <button type="button" id="file-btn">파일 전송</button>
+
+
+
+
+
+
+
+    <script>
+            document.getElementById('file-btn').addEventListener('click', function(){    
+            document.getElementById('image-form').submit();
+            fetch()
+        });
+
+    </script>
+
+</body>
+</html>

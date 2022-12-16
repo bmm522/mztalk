@@ -27,7 +27,7 @@ public class Board extends BaseTimeEntity{
 
     @Column(nullable = false)
     private String nickname; //작성자
-
+                                //쭉 짜다보니 필요없는 느낌
     @Column(nullable=false, length= 100)
     private String title; // 글 제목
 

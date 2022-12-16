@@ -145,6 +145,7 @@ document.getElementById('move-story').addEventListener('click',function(){
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken'),
+
         },
     })
     .then((res)=> res.json())
@@ -153,7 +154,7 @@ document.getElementById('move-story').addEventListener('click',function(){
         console.log("!!!!!!!!!!");
         console.log(own);
         location.href="individualpage.html";
-
+        
         
 
 
@@ -196,5 +197,40 @@ document.getElementById('move-mentor-service').addEventListener('click',function
 // });
 
 
+//벙서비스보내기
+
+
+
+
+//경매서비스 보내기
+document.getElementById('move-auction-service').addEventListener('click',function(){
+
+    //이 구조는 그냥 버튼에 자기페이지 가는 로직
+    //해당유저 게시판엔 userNo이 input hidden 걸려있어야 가게끔
+    //개인페이지에서 다른 페이지 넘어가면 own을 초기화 삭제 해줘야한다
+    //친구페이지 갈때는 set하면 안될듯
+    
+    fetch("http://localhost:8000/auction/",{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+            
+        },
+    })
+    .then((res)=> res.json())
+    .then(res=>{
+        console.log("자료있니?" +res.data);
+        console.log("!!!!!!!!!!");
+        location.href="auction.html";
+        
+        
+
+
+    })
+
+
+});
 
 
