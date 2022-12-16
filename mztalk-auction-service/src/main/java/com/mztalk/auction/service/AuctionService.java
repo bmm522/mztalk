@@ -1,5 +1,6 @@
 package com.mztalk.auction.service;
 
+import com.mztalk.auction.domain.dto.BoardRequestDto;
 import com.mztalk.auction.domain.dto.BoardDto;
 import com.mztalk.auction.domain.entity.Board;
 
@@ -9,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public interface AuctionService {
 
 
-    Long insertBoard(BoardDto board);
+    Long insertBoard(BoardRequestDto boardRequestDto);
 
     int updateBoard(Long bId, BoardDto boardDto);
 
@@ -22,4 +23,6 @@ public interface AuctionService {
     int updatePrice(Long bId, BoardDto boardDto);
 
     int updateCount(Long bId);
+
+    ConcurrentHashMap<String, String> getRecentBoardNo();
 }

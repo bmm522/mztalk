@@ -38,4 +38,9 @@ public class FileApiController {
     }
 
 
+//    @DeleteMapping(value= "/images", consumes = "text/html")
+//    public ResponseEntity<?> deleteImage(@RequestParam("bNo")long bNo){
+//        return deleteFileService.deleteImage(bNo, serviceName);
+//    }
+
 }

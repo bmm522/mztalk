@@ -33,6 +33,19 @@
 
 </style>
 <body>
+    <button type="button" id="node">노드 테스트</button>
+    <script>
+        document.getElementById('node').addEventListener('click', function(){
+            fetch("http://localhost:7999/chat/test", {
+                method:"GET"
+            })
+            .then(res=>{
+                console.log(res);
+                console.log('통신성공');
+            });
+        });
+
+    </script>
  <!-- <input type="text" id="title"/><br>
     <input type="text" id="content"/>
     <input type="hidden" id="hidden-box" value="test"/><br>

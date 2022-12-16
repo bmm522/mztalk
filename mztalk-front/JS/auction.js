@@ -7,3 +7,13 @@ window.onload=function(){
     
     
 }
+
+document.getElementById('writeBoard').addEventListener('click', function(){
+    fetch('http://localhost:8000/auction/recent-board',{
+        method:"GET"
+    })
+    .then(res=>res.json())
+    .then(res => {
+        console.log(res.bNo);
+    })
+});

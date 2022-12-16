@@ -40,6 +40,7 @@ public class ImageApiController {
     // 사진 다중업로드
     @PostMapping("/images")
     public ResponseEntity<?> insertImages(@RequestParam("image") List<MultipartFile> multipartFileList, ImagesDto imagesDto){
+        System.out.println("요청들어옴?");
         return insertImageService.insertImages(multipartFileList, imagesDto);
     }
 

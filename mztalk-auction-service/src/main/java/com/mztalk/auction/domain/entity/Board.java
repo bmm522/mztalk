@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,6 +37,9 @@ public class Board {
     @CreationTimestamp
     private Date modifyDate;
 
+
+    @OneToMany(mappedBy = "board")
+    private List<Images> images;
 
     private String status;
 
