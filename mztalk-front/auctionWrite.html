@@ -76,9 +76,10 @@
                     <label for="inputFiles">파일 첨부</label>
                     
                     <div class = "row" id = "fileArea">
+                        
                         <div class = "col-10" id = "count">
-                            
-                            <input type="file" class="form-control" id="inputFiles" name = "files" accept="image/*" onchange="showPreview(event);">
+                            <input type="hidden" name="serviceName" value="auction"/>
+                                <input type="file" class="form-control" id="inputFiles" name = "image" accept="image/*"/>
                         </div>
                         <div class = "col-2">
                             <button type = "button" id = "addFile" style = "margin-top: 20px;margin-left: 10px;">+</button>
