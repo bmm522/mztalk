@@ -36,6 +36,7 @@ public class AuctionController {
     //특정 게시물 조회
     @GetMapping("/board/{bId}")
     public Board selectBoard(@PathVariable Long bId) {
+        auctionService.updateCount(bId); //조회수 증가
         return auctionService.selectBoard(bId);
     }
 

@@ -34,14 +34,15 @@ document.getElementById("priceSubmitBtn").addEventListener('click', function() {
         alert('시작 금액보다 큰 금액을 입력해 주세요');
     }
 });
-
+ㅔㅁㅎㄷ=1
 //입찰가 전달
 document.getElementById("priceSubmitBtn").addEventListener('click', function() {
     const linkArr = document.location.href.split("/");
     const bId = linkArr[linkArr.length - 1];
-    console.log(bId);
+    console.log(Number(document.getElementById('inputPrice').value));
+    // console.log(bId);
 
-    fetch("http://localhost:8000/auction/board/"+bId, {
+    fetch("http://localhost:8000/auction/board/", {
         method: "POST",
         headers: {
             "Content-Type":"application/json",

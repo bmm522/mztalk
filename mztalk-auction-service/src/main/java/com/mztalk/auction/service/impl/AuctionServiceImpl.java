@@ -54,5 +54,10 @@ public class AuctionServiceImpl implements AuctionService {
         return boardRepository.updatePrice(bId, boardDto);
     }
 
+    @Override
+    public int updateCount(Long bId) {
+        return boardRepository.updateCount(bId);
+    }
+
 
 }

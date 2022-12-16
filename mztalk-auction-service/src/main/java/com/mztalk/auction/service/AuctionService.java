@@ -20,4 +20,6 @@ public interface AuctionService {
     Board selectBoard(Long bId);
 
     int updatePrice(Long bId, BoardDto boardDto);
+
+    int updateCount(Long bId);
 }

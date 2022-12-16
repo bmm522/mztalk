@@ -14,4 +14,6 @@ public interface CustomAuctionRepository {
     int deleteBoard(Long bId);
 
     int updatePrice(Long bId, BoardDto boardDto);
+
+    int updateCount(Long bId);
 }

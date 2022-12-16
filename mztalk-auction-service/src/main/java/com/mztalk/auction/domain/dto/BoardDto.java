@@ -26,6 +26,7 @@ public class BoardDto {
                 .startPrice(startPrice)
                 .timeLimit(timeLimit)
                 .currentPrice(currentPrice)
+                .status("Y")
                 .build();
     }
 }

@@ -133,7 +133,7 @@ window.onload = () => {
         if(document.getElementsByName("files").length < 3) {
             const newDiv = document.createElement('div');
             newDiv.classList.add('col-10');
-            newDiv.innerHTML = '<input type = "file" class = "form-control" name = "files" accept="image/*" onclick="showPreview(event);">';
+            newDiv.innerHTML = '<input type = "file" class = "form-control" name = "files" accept="image/*"">';
             fileArea.append(newDiv);
         } else {
             alert("파일은 3개까지 첨부 가능합니다.");

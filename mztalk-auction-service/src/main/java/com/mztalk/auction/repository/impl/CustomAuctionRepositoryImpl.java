@@ -44,5 +44,12 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
                 .executeUpdate();
     }
 
+    @Override
+    public int updateCount(Long bId) {
+        return entityManager.createQuery("update Board b set b.count = b.count + 1 where b.bId = :bId")
+                .setParameter("bId", bId)
+                .executeUpdate();
+    }
+
 
 }
