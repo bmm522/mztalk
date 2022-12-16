@@ -132,7 +132,6 @@
 
             <!--멘토링 글 상세보기 모달 시작-->
             <div id="model-section">
-
                 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
                     tabindex="-1">
                     <input type="hidden" id="boardId" value=boardId/>
@@ -143,10 +142,10 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div id="modal-body" class="modal-body">
-                                {content}
+                                
                             </div>
                             <div class="modal-footer">
-                                <div class="card-text" style="float:left;">1회 멘토링 : 1시간 / {salary}원 / 1명</div>
+                                <div class="card-text" style="float:left;">1회 멘토링 : 1시간 / <span id="modal-salary"></span> 원</div>
                                 <button class="btn btn-outline-success" data-bs-target="#exampleModalToggle2"
                                     data-bs-toggle="modal">멘토링 신청하기</button>
                             </div>
