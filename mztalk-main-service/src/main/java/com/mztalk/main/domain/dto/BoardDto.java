@@ -1,7 +1,7 @@
 package com.mztalk.main.domain.dto;
 
 
-import com.mztalk.main.domain.Status;
+import com.mztalk.main.domain.entity.status.BoardStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,19 +21,26 @@ public class BoardDto {
     private String nickname; //작성자
     private String title; //글제목
     private String content; //글내용
-    private Status status; //글상태
+    private BoardStatus status; //글상태
     private Long own; //페이지주인
     private String privacy; //글공개범위
     private List<Reply> reply = new ArrayList<>();
 
+
+//    public BoardDto(long id){
+//        this.id = id;
+//    }
+
+
     //레포지토리에 넣기위해
+    // dto ㅡ> entity
     public Board toEntity(){
         Board board = Board.builder()
                 .id(id)
                 .nickname(nickname)
                 .title(title)
                 .content(content)
-                .status(Status.YES)
+                .status(BoardStatus.YES)
                 .own(own)
                 .privacy(privacy)
                 .reply(reply)
@@ -41,6 +48,9 @@ public class BoardDto {
         return board;
     }
 
+
+    // view에 뿌려줄때
+    // entity ㅡ> dto
     public BoardDto(Board board){
         this.id = board.getId();
         this.nickname = board.getNickname();
@@ -52,5 +62,11 @@ public class BoardDto {
         this.reply = board.getReply();
 
     }
+
+//    public Board toEntityOfId(){
+//        return Board.builder()
+//                .id(id)
+//                .build();
+//    }
 
 }

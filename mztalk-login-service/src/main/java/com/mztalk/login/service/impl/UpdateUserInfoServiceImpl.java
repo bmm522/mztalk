@@ -46,14 +46,9 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
 
     @Override
     public int changeNewPassword(Map<String, String> body) {
-//        System.out.println(body);
-//        System.out.println(bCryptPasswordEncoder.encode(body.get("prePassword")));
-//        System.out.println(bCryptPasswordEncoder.encode(body.get("newPassword")));
-//        userRepository.findByPasswordWithId(Long.parseLong(body.get("id")));
-        System.out.println("결과 : " + bCryptPasswordEncoder.matches(userRepository.findByPasswordWithId(Long.parseLong(body.get("id"))), body.get("prePassword")));
+
         if(bCryptPasswordEncoder.matches(body.get("prePassword"),userRepository.findByPasswordWithId(Long.parseLong(body.get("id"))))){
             try {
-
                 return userRepository.changedPassword(bCryptPasswordEncoder.encode(body.get("newPassword")),Long.parseLong(body.get("id")));
             } catch (RuntimeException e){
                 new ChangeFailException("기존 비밀번호 정보가 일치하지 않습니다.");

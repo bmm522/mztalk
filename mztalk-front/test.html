@@ -6,83 +6,379 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+.test-div{
+  margin-top: 40px;
+  text-align: center;  
+}
+.data-div{
+    text-align: center;  
+    
+}
+
+#writer{
+
+}
+
+
+    #output-div{
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+        display: inline-block;
+        margin: 10px;
+    }
+
+
+
+</style>
 <body>
-    <input type="text" id="test-box"/>
-    <button type="button" id="test-btn">클릭</button>
+ <!-- <input type="text" id="title"/><br>
+    <input type="text" id="content"/>
+    <input type="hidden" id="hidden-box" value="test"/><br>
+    <button type="button" id="test-btn">글등록</button>
+  
+
+<button type="button" id="user-info-btn">유저정보테스트</button>  
+<div id="get-div">
+    <div id="output-div">
+        <div class="test-div" id="title-div">제목</div>
+        <div class="data-div" id="writer">{제목}</div>
+        <hr>
+        
+        <div class="test-div" id="writer-div">작성자</div>
+        <div class="data-div" id="writer">{닉네임}</div>
+        <hr>
+        <div class="test-div" id="content-div">내용</div>
+        <hr>
+        <div class="data-div" id="writer">{내용}</div>
+    </div> 
+
+</div>
+<button type="button" id="reset-btn">다시나와라</button>
+<button type="button" id="delete-btn">사라져라</button>
+<input type="hidden" id="delete-hidden" value="N">
+<input type="hidden" id="reset-hidden" value="Y">
+   -->
+
+  <form action="http://localhost:8000/resource/images" method="POST" enctype="multipart/form-data" id="image-form">
+        <input type="file" id="file-box" name="image"/>
+        <input type="file" id="file-box" name="image"/>
+        <input type="file" id="file-box" name="image"/>
+        <input type="hidden" name="serviceName" value="test"/>
+        <input type="hidden" name="bNo" value="1"/>
+    </form>
+    <button type="button" id="file-btn">이미지 다중 전송</button>
+
+<!-- <form action="http://localhost:8000/resource/image" method="POST" enctype="multipart/form-data" id="image-form">
+        <input type="file" id="file-box" name="image"/>
+        <input type="hidden" name="serviceName" value="test"/>
+        <input type="hidden" name="bNo" value="1"/>
+        <input type="hidden" name="imageLevel" value="1"/>
+</form>
+    <button type="button" id="file-btn">이미지 단일 전송</button> -->
+
+
+
+    <!-- <form action="http://localhost:8000/resource/main-image" method="POST" enctype="multipart/form-data" id="image-form">
+
+    </form> -->
+    <!-- <div id="image-div">
+
+        <form action="http://localhost:8000/resource/file" method="POST" enctype="multipart/form-data" id="image-form">
+            <input type="file" id="file-box" name="file"/>
+            <input type="hidden" name="id" value="1"/>
+        </form>
+        <button type="button" id="file-btn">파일 단일 전송</button>
+        <div id="image-div"> -->
+
+            <!-- <div id="image-div">
+
+                <form action="http://localhost:8000/resource/files" method="POST" enctype="multipart/form-data" id="image-form">
+                    <input type="file" id="file-box" name="file"/>
+                    <input type="file" id="file-box" name="file"/>
+                    <input type="file" id="file-box" name="file"/>
+                    <input type="hidden" name="id" value="1"/>
+                </form>
+                <button type="button" id="file-btn">파일 다중 전송</button>
+                <div id="image-div"> -->
+<!-- 
+    <form action="http://localhost:8000/resource/main-image" method="POST" enctype="multipart/form-data" id="image-form">
+        <input type="file" id="file-box" name="image"/>
+        <input type="hidden" name="serviceName" value="test"/>
+        <input type="hidden" name="bNo" value="1"/>
+    </form>
+    <button type="button" id="file-btn">메인 이미지 수정</button> -->
+
+
+    </div>
+
 </body>
 
 <script>
-let nickname = "";
-let mentoStatus ="";
+document.getElementById('file-btn').addEventListener('click', function(){    
+    document.getElementById('image-form').submit();
+
+    
+});
+
+window.onload = function(){
+    fetch('http://localhost:8000/resource/image/1',{
+        method:"GET"
+    })
+    .then((res)=>res.json())
+    .then(res=>{
+        for(let image of res.data){
+            document.getElementById('image-div').innerHTML += ' <div> <img src="'+image.imageUrl+'"/></div>';
+        }
+    })
+};
 
 
-    window.onload = function(){
-        console.log("test : " + localStorage.getItem('Authorization'));
-        console.log("test : " + localStorage.getItem('RefreshToken'));
-        console.log("test : " + localStorage.getItem('UserNo'));
 
-        localStorage.getItem('Nickname');
+// document.getElementById('delete-btn').addEventListener('click',function(){
+
+//     updateBoard('N');
+// });
+
+// document.getElementById('reset-btn').addEventListener('click',function(){
+
+//     updateBoard('Y');
+// });
+
+
+
+// const updateBoard = (value) =>{
+//     fetch("http://localhost:8000/test/boards/"+value,{
+//         method:"PATCH",
+//     })
+//     .then(res=>{
+//         location.href="test.html";
+//     })
+// }
+
+// window.onload = function(){
+//     getBoardList();
+// }
+
+
+
+// const getBoardList = () =>{
+//     fetch('http://localhost:8000/test/boards',{
+//         method:"GET"
+//     })
+//     .then((res)=>res.json())
+//     .then(res=>{
+//         console.log(res.data);
+        
+//         for(let board of res.data){
+//             console.log(res.data);
+//             console.log(board);
+//         document.getElementById('get-div').innerHTML +='<div id="output-div"><div class="test-div" id="title-div">제목</div><div class="data-div" id="writer">'+board.title+'</div><hr><div class="test-div" id="writer-div">작성자</div> <div class="data-div" id="writer">'+board.writer+'</div><hr><div class="test-div" id="content-div">내용</div><hr><div class="data-div" id="writer">'+board.content+'</div></div>';     
+     
+//         }
+        
+//     })
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.getElementById('test-btn').addEventListener('click',function(){
+
+//     fetch("http://localhost:8000/test/post",{
+//         method:"POST",
+//         headers:{
+//             "Content-type" :"application/json",
+//             // Authorization:localStorage.getItem('authorization'),
+//             // RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//         body:JSON.stringify({
+//             title : document.getElementById('title').value,
+//             content: document.getElementById('content').value,
+//             serviceName : document.getElementById('hidden-box').value,
+//             writer : localStorage.getItem('userNickname')
+//         })
+//     })
+//     .then(res=>{
+//         getBoardList();
+//         location.href="test.html";
+        
+//     })
+// });
+// document.getElementById('user-info-btn').addEventListener('click',function(){
+//     fetch('http://localhost:8000/test/user-info/'+localStorage.getItem("userNo"),{
+//         method:"GET",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'), //  유효시간 
+//             RefreshToken:localStorage.getItem('refreshToken'), //
+//             },
+//     })
+//     .then((res)=>{
+//         if(res.status==401){
+//             alert('다시 시도해주세요');
+//             getAccessToken();
+//         } else {
+//             res.json();
+//         }
+//     })        
+//     .then(res=>{
+//         console.log('통신성공')
+//         // res.imagePath
+//     });
+// });
+
+
+
+// const getAccessToken = () =>{
+//         localStorage.removeItem('authorization');
+//         let refreshToken = localStorage.getItem('refreshToken');
+//         fetch("http://localhost:8000/login/access-token?refreshToken="+refreshToken,{
+//             method:"GET",            
+//         })
+//         .then((res)=>res.json())
+//         .then(res =>{
+//             localStorage.removeItem('refreshtoken');
+//             localStorage.setItem('authorization',res.jwtToken);
+//             localStorage.setItem('refreshToken', res.refreshToken);
+//          })
+//     }
+
+
+
+
+
+
+
+
+// let nickname = "";
+// let mentoStatus ="";
+
+// document.getElementById('test-btn').addEventListener('click', function(){
+//         console.log('요청들어옴');
+//         console.log('요청 들어옴 : ' + localStorage.getItem('Authorization'));
+//         console.log('요청 들어옴 : ' + localStorage.getItem('RefreshToken'));
+//         fetch("http://localhost:8000/test/test",{
+//             method:"POST",
+//             credentials:"include",
+//             headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'), //  유효시간 
+//             RefreshToken:localStorage.getItem('refreshToken'), //
+//             },
+//         body:JSON.stringify({
+//             test :document.getElementById("test-box").value,
+//             userNickname : nickname,
+//         })
+//         })
+//         .then(res=>{
+//             if(res.status == 401){
+//                     getAccessToken();   
+//                     alert('다시 시도해주세요.');   
+//             } else {
+//                 console.log('성공');
+//             }
+//         })
+//     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // window.onload = function(){
+    //     console.log("test : " + localStorage.getItem('Authorization'));
+    //     console.log("test : " + localStorage.getItem('RefreshToken'));
+    //     console.log("test : " + localStorage.getItem('UserNo'));
+
+    //     localStorage.getItem('Nickname');
 
         
-        fetch("http://localhost:8000/login/user-info/"+localStorage.getItem('UserNo'),{
-            method:"GET",
-            headers:{
-                Authorization:localStorage.getItem('Authorization'),
-                RefreshToken:localStorage.getItem('RefreshToken'),
-            }
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-        nickname=res.nickname;
-        mentoStatus = res.mentoStatus;
+    //     fetch("http://localhost:8000/login/user-info/"+localStorage.getItem('UserNo'),{
+    //         method:"GET",
+    //         headers:{
+    //             Authorization:localStorage.getItem('Authorization'),
+    //             RefreshToken:localStorage.getItem('RefreshToken'),
+    //         }
+    //     })
+    //     .then((res)=>res.json())
+    //     .then(res =>{
+    //     nickname=res.nickname;
+    //     mentoStatus = res.mentoStatus;
 
-    })
-    }
-
-
-
-    document.getElementById('test-btn').addEventListener('click', function(){
-        console.log('요청들어옴');
-        console.log('요청 들어옴 : ' + localStorage.getItem('Authorization'));
-        console.log('요청 들어옴 : ' + localStorage.getItem('RefreshToken'));
-        fetch("http://localhost:8000/test/test",{
-            method:"POST",
-            credentials:"include",
-            headers:{
-            "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-            },
-        body:JSON.stringify({
-            test :document.getElementById("test-box").value,
-            userNickname : nickname,
-        })
-        })
-        .then(res=>{
-            if(res.status == 401){
-                    getAccessToken();   
-                    alert('다시 시도해주세요.');   
-            } else {
-                console.log('성공');
-            }
-        })
-    });
+    // })
+    // }
 
 
 
-    const getAccessToken = () =>{
-        localStorage.removeItem('Authorization');
-        let refreshToken = localStorage.getItem('RefreshToken');
-        fetch("http://localhost:8000/login/access-token?refreshToken="+refreshToken,{
-            method:"GET",            
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-            localStorage.removeItem('Refreshtoken');
-            localStorage.setItem('Authorization',res.jwtToken);
-            localStorage.setItem('RefreshToken', res.refreshToken);
-         })
-    }
+  
+
+
 
 </script>
 </html>
+
+

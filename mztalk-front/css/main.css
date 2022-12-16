@@ -73,7 +73,7 @@ nav {
 }
 
  .mainContainer {
-    display: flex;
+    /* display: flex; */
     justify-content: space-between;
     margin: 0 auto;
     width: 935px;
@@ -81,6 +81,10 @@ nav {
     height: 10000px;
     background-color: rgb(242, 244, 226);
 } 
+
+.mainContainer.auctionDetail {
+  height: 100%;
+}
 
 .floating {
     

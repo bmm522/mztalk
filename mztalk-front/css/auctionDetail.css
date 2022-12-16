@@ -1,0 +1,112 @@
+#auction_img {
+    width: 800px;
+    height: 600px;
+    padding: 10px;
+    background-image: url("../img/auction/book1.jpeg");
+    background-repeat: space;
+    border-radius: 10px;
+    margin: 50px;
+}
+
+
+
+li {
+    list-style-type: none;
+}
+
+#imgSlide {
+    width: 500px;
+    height: 300px;
+    position: relative;
+    margin: 50px auto;
+    overflow: hidden;
+
+}
+/*슬라이드 관련*/
+.slides {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2500px;
+    transition: left 0.5s ease-out;
+}
+
+.slides li:first-child {
+    margin-left: 100px;
+}
+
+.slides li:not(:last-child) {
+    float: left;
+    margin-right: 100px;
+}
+
+.slides li {
+    float: left;
+}
+
+.controller span {
+    position: absolute;
+    background-color: transparent;
+    color: black;
+    text-align: center;
+    border-radius: 50%;
+    padding: 10px 20px;
+    top: 50%;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+
+.controller span:hover {
+    background-color: rgba(128, 128, 128, 0.11);
+}
+
+.prev {
+    left: 10px;
+}
+
+.prev:hover {
+    transform: translateX(-10px);
+}
+
+.next {
+    right: 10px;
+}
+
+.next:hover {
+    transform: translateX(10px);
+}
+
+/* content 기타 설정 */
+#title {
+    font-size: 30px; font-weight: bold; 
+    text-decoration-line: underline;
+    text-decoration: underline burlywood wavy 3px; 
+}
+
+#priceBtn {
+    background-color: burlywood;
+    border: none;
+    color: white;
+    padding: 7px 30px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#priceInput {
+    width: 400px;
+    height: 40px;
+    outline: solid 3px burlywood;
+}
+
+#priceSubmitBtn {
+    width: 120px;
+    height:50px;
+    background-color: burlywood;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+
+}

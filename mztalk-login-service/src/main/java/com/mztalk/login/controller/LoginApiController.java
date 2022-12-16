@@ -1,7 +1,6 @@
 package com.mztalk.login.controller;
 
-import com.mztalk.login.domain.dto.UserDto;
-import com.mztalk.login.domain.entity.User;
+import com.mztalk.login.domain.dto.UserInfoDto;
 import com.mztalk.login.service.NewAccessTokenService;
 import com.mztalk.login.service.SelectUserInfoService;
 import com.mztalk.login.service.UpdateUserInfoService;
@@ -54,13 +53,13 @@ public class LoginApiController {
     public int updateRoleChangeToUser(@PathVariable("userNo")Long id){
         return updateUserInfoService.updateRoleChangeToUser(id);
     }
-
+// http://localhost:8000/login/user-info/{id}
     @GetMapping("user-info/{id}")
-    public UserDto getUserInfoByUserNo(@PathVariable("id")String id){
+    public UserInfoDto getUserInfoByUserNo(@PathVariable("id")String id){
         return selectUserInfoService.getUserInfoByUserNo(id);
     }
     @GetMapping("user/{nickname}")
-    public UserDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
+    public UserInfoDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
         return selectUserInfoService.getUserInfoByNickname(nickname);
     }
 

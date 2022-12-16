@@ -1,7 +1,6 @@
 package com.mztalk.login.auth;
 
 import com.mztalk.login.domain.entity.User;
-import com.mztalk.login.oauth.info.OAuth2UserInfo;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

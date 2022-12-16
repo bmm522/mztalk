@@ -1,52 +1,17 @@
 package com.mztalk.main.service;
 
 import com.mztalk.main.domain.dto.BoardDto;
-import com.mztalk.main.domain.entity.Board;
 import com.mztalk.main.domain.entity.Result;
-import com.mztalk.main.repository.BoardRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+public interface BoardService {
 
+    //객체 간의 결합도를 낮추기 위해 interface를 만듬
 
-@RequiredArgsConstructor
-@Service
-@Transactional(readOnly  = true)
-public class BoardService {
+    Result findAllByOwn(Long own);
 
-    private final BoardRepository boardRepository;
+    Long save(BoardDto boardDto);
 
-    @Transactional
-    public Long save(BoardDto boardDto) {
+    Long updateBoard(Long id, BoardDto boardDto);
 
-        return boardRepository.save(boardDto.toEntity()).getId();
-    }
-
-    @Transactional
-    public Long updateBoard(Long id, BoardDto boardDto) {
-
-        Board boards = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id =" + id));
-
-        boards.updateBoard(boardDto);
-
-        return id;
-    }
-
-    @Transactional(readOnly  = true)
-    public Result findAll() {
-
-        List<Board> boards = boardRepository.findAll();
-        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-
-        return new Result(collect);
-    }
-
-    public Result findAllByOwn(Long own) {
-        List<Board> boards = boardRepository.findAllByOwn(own);
-        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
-    }
+    Long deleteBoard(Long id, BoardDto boardDto);
 }

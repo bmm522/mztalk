@@ -1,0 +1,10 @@
+.cssBtn {
+    background-color: burlywood;
+    border: none;
+    color: white;
+    padding: 7px 30px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
