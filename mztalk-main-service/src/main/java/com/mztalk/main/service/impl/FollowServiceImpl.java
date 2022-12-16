@@ -17,19 +17,19 @@ public class FollowServiceImpl implements FollowService {
 
     private final FollowRepository followRepository;
 
-    private final EntityManager em;
-
-    //리스트 뽑아주기...
-    @Transactional(readOnly = true)
-    public List<FollowDto> followDtoList(Long own, Long userno ){
-
-        StringBuffer sb = new StringBuffer();
-
-
-
-
-        return null;
-    }
+//    private final EntityManager em;
+//
+//    //리스트 뽑아주기...
+//    @Transactional(readOnly = true)
+//    public List<FollowDto> followDtoList(Long own, Long userno ){
+//
+//        StringBuffer sb = new StringBuffer();
+//
+//
+//
+//
+//        return null;
+//    }
 
 
 
