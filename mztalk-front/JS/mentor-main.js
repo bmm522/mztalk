@@ -1,6 +1,6 @@
 window.onload = function(){
      getBoardList();
-     getBoardDetail();
+     
 }
 
 const getAccessToken = () =>{
@@ -36,21 +36,22 @@ const getBoardList = () =>{
             document.getElementById('board-list-div').innerHTML += '<div class="row" style="padding:20px;" id="row-div">';
             for(let board of res.data){
             if(cnt%4 !== 0 ){
-                document.getElementById('row-div').innerHTML +=  '<div class="col-3"><div class="card" style="width: 13rem; height:14rem;"><div class="card-body" id="modal" data-bs-toggle="modal" href="#exampleModalToggle"><h5 class="card-title">'+board.category+'</h5><h6 class="card-subtitle mb-2 text-muted">'+board.nickname+'</h6><h6 class="card-subtitle mb-2 text-muted">'+board.career+'</h6><p class="card-text">제목:'+board.title+'</p></div><input id="boardId" type="hidden" value='+board.id+'><button class="btn btn-outline-success" id="watchScore" type="button">평점보기</button></div></div>';
+                document.getElementById('row-div').innerHTML +=  '<div class="col-3"><div class="card" style="width: 13rem; height:14rem;"><div class="card-body" onclick="testClick('+board.id+');"  data-bs-toggle="modal" href="#exampleModalToggle"><h5 class="card-title">'+board.category+'</h5><h6 class="card-subtitle mb-2 text-muted">'+board.nickname+'</h6><h6 class="card-subtitle mb-2 text-muted">'+board.career+'</h6><p class="card-text">제목:'+board.title+'</p></div><input class="hidden-board-id" id="'+board.id+'" type="hidden" value='+board.id+'><button class="btn btn-outline-success" id="watchScore" onclick="watchReview('+board.nickname+');" type="button">평점보기</button></div></div>';
                 cnt += 1;  
             } else {
-                document.getElementById('row-div').innerHTML +=  '<div class="col-3"><div class="card" style="width: 13rem; height:14rem;"><div class="card-body" id="modal" data-bs-toggle="modal" href="#exampleModalToggle"><h5 class="card-title">'+board.category+'</h5><h6 class="card-subtitle mb-2 text-muted">'+board.nickname+'</h6><h6 class="card-subtitle mb-2 text-muted">'+board.career+'</h6><p class="card-text">제목:'+board.title+'</p></div><input id="boardId" type="hidden" value='+board.id+'><button class="btn btn-outline-success" id="watchScore" type="button">평점보기</button></div></div></div><div class="row" style="padding:20px;" id="row-div">';
+                document.getElementById('row-div').innerHTML +=  '<div class="col-3"><div class="card" style="width: 13rem; height:14rem;"><div class="card-body"  onclick="testClick('+board.id+');" data-bs-toggle="modal" href="#exampleModalToggle"><h5 class="card-title">'+board.category+'</h5><h6 class="card-subtitle mb-2 text-muted">'+board.nickname+'</h6><h6 class="card-subtitle mb-2 text-muted">'+board.career+'</h6><p class="card-text">제목:'+board.title+'</p></div><input class="hidden-board-id" id="'+board.id+'" type="hidden" value='+board.id+'><button class="btn btn-outline-success" id="watchScore" onclick="watchReview('+board.nickname+');" type="button">평점보기</button></div></div></div><div class="row" style="padding:20px;" id="row-div">';
                 cnt += 1;  
             }
       }
         }        
     })
+
+
+
+    // getBoardDetail();
 }
 
-// 글 상세 조회
-const getBoardDetail = () => {
-    document.getElementById('modal').addEventListener('click', function(){
-        const bId = document.getElementById('boardId').value;
+const testClick = (bId) =>{
         console.log("http://localhost:8000/mentors/board/"+bId);
         fetch("http://localhost:8000/mentors/board/"+bId,{
             method:"GET",
@@ -64,6 +65,8 @@ const getBoardDetail = () => {
         .then(res =>{
             console.log("res : " + res);
             if(res != null){
+                document.getElementById('modal-body').innerHTML = '';
+                document.getElementById('modal-salary').innerHTML = '';
                 console.log('통신성공');
                 document.getElementById('modal-body').innerHTML = res.content;
                 document.getElementById('modal-salary').innerHTML = res.salary;
@@ -71,8 +74,37 @@ const getBoardDetail = () => {
                 console.log('실패');
             }
         })
-    });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // 검색 조건
 document.getElementById('sendSearch').addEventListener('click', function(){
@@ -181,8 +213,7 @@ document.getElementById('participant-btn').addEventListener('click', function(){
 // });
 
 //닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
-document.getElementById('watchScore').addEventListener('click', function(){
-    const nickname = document.getElementById('nickname').value;
+const watchReview = (nickname) =>{
     fetch("http://localhost:8000/mentors/score?nickname="+nickname,{
         method:"POST",
         headers:{
@@ -203,7 +234,12 @@ document.getElementById('watchScore').addEventListener('click', function(){
             console.log('실패');
         }
     })
-});
+}
+
+// document.getElementById('watchScore').addEventListener('click', function(){
+//     const nickname = document.getElementById('nickname').value;
+   
+// });
 
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
