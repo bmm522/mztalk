@@ -93,7 +93,7 @@ li {
     cursor: pointer;
 }
 
-#priceInput {
+#inputPrice {
     width: 400px;
     height: 40px;
     outline: solid 3px burlywood;

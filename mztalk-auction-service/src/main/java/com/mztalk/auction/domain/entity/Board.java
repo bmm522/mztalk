@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -14,6 +16,7 @@ import java.sql.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 public class Board {
 
     @Id
@@ -34,20 +37,20 @@ public class Board {
     @CreationTimestamp
     private Date modifyDate;
 
-    @Column(columnDefinition = "varchar(20) default 'Y'")
+
     private String status;
 
     private String writer;
 
-    private String startPrice;
+    private Integer startPrice;
 
-    private String timeLimit;
+    private Integer timeLimit;
 
-    private String currentPrice;
+    private Integer currentPrice;
 
     private String buyerNickname;
 
-    public Board(long bId, String title, String content, String writer, Integer count, String startPrice, String timeLimit, String CurrentPrice, String buyerNickname) {
+    public Board(long bId, String title, String content, String writer, Integer count, Integer startPrice, Integer timeLimit, Integer CurrentPrice, String buyerNickname) {
         this.bId = bId;
         this.title = title;
         this.content = content;

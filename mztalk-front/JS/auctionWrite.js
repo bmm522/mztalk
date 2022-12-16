@@ -1,36 +1,45 @@
 //시작가 0,000 형식으로
 function priceStandard(text) {
-    const minPrice = document.getElementById("minPrice").value;
-    const under = minPrice.slice(-3);
-    const upper = minPrice.slice(0, minPrice.length-3);
+    const startPrice = document.getElementById("startPrice").value;
+    const under = startPrice.slice(-3);
+    const upper = startPrice.slice(0, startPrice.length-3);
     text.value = upper + "," + under;
 
 }
 
-
-//제한시간 00:00 형식으로
 function timeStandard(time) {
     const timeLimit = document.getElementById("timeLimit").value;
-    if(timeLimit.length >= 4 && timeLimit.length < 5) {
-        const hours = timeLimit.substring(0, 2);
-        const minute = timeLimit.substring(2, 4);
-
-        //제한시간 최대 3일
-        if(hours + minute > 7200) {
-            alert("제한시간은 3일을 넘길 수 없습니다."),
-            time.value = "72:00";
-            return false;
-        }
-
-        if(minute > 60) {
-            alert('60분을 넘길 수 없습니다.');
-            time.value = hours + ":00";
-            return false;
-        }
-
-        time.value = hours + ":" + minute;
+    if(timeLimit > 36) {
+        alert("제한 시간은 3일을 넘길 수 없습니다.");
+        time.value = 3;
+        return false;
     }
 }
+
+
+// //제한시간 00:00 형식으로
+// function timeStandard(time) {
+//     const timeLimit = document.getElementById("timeLimit").value;
+//     if(timeLimit.length >= 4 && timeLimit.length < 5) {
+//         const hours = timeLimit.substring(0, 2);
+//         const minute = timeLimit.substring(2, 4);
+
+//         //제한시간 최대 3일
+//         if(hours + minute > 7200) {
+//             alert("제한시간은 3일을 넘길 수 없습니다."),
+//             time.value = "72:00";
+//             return false;
+//         }
+
+//         if(minute > 60) {
+//             alert('60분을 넘길 수 없습니다.');
+//             time.value = hours + ":00";
+//             return false;
+//         }
+
+//         time.value = hours + ":" + minute;
+//     }
+// }
 
 // window.onload = function() {
 //     document.getElementById("wirteBtn").addEventListener('click', function(e) {
@@ -95,6 +104,11 @@ function timeStandard(time) {
 
 //글쓰기
 function boardWrite() {
+    const startPrice = document.getElementById('startPrice').value;
+    const startPriceSplit = startPrice.split(',');
+    const startPriceTrans = Number(startPriceSplit[0].concat(startPriceSplit[1]));
+
+    
     fetch("http://localhost:8000/auction/board", {
         method: "POST",
         headers: {
@@ -103,7 +117,7 @@ function boardWrite() {
         body:JSON.stringify({
             "title" : document.getElementById('title').value,
             "content": document.getElementById('content').value,
-            "minPrice": document.getElementById('minPrice').value,
+            "startPrice": startPriceTrans,
             "timeLimit": document.getElementById('timeLimit').value
         }),
     })

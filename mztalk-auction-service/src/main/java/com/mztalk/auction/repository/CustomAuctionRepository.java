@@ -10,4 +10,8 @@ import javax.persistence.PersistenceContext;
 
 public interface CustomAuctionRepository {
     int boardUpdate(Long bId, BoardDto boardDto);
+
+    int deleteBoard(Long bId);
+
+    int updatePrice(Long bId, BoardDto boardDto);
 }
