@@ -48,6 +48,13 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
+    public Result findParticipantsByMentorId(Long boardId) {
+        List<Participant> participants = participantRepository.findParticipantsByMentorId(boardId);
+        List<ParticipantDto> collect = participants.stream().map(ParticipantDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
+
+    @Override
     public Result findAll() {
         List<Participant> participantList = participantRepository.findAll();
         List<ParticipantDto> collect = participantList.stream().map(ParticipantDto::new).collect(Collectors.toList());

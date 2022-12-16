@@ -10,4 +10,6 @@ public interface BoardRepositoryCustom {
     List<Board> searchWithCondition(SearchCondition searchCondition);
 
     Mentor findMentorByBoardId(Long id);
+
+    List<Board> findBoardByUserId(Long userId);
 }

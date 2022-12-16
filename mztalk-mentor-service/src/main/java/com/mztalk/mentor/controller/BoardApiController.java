@@ -26,6 +26,11 @@ public class BoardApiController {
         return boardService.findById(id);
     }
 
+    @GetMapping("/board")
+    public Result findBoardByUserId(@RequestParam("userId")Long userId){
+        return boardService.findBoardByUserId(userId);
+    }
+
     @GetMapping("/boards")
     public Result findAll(){
         return boardService.findAll();

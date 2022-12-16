@@ -19,4 +19,6 @@ public interface BoardService {
     Long updateBoard(Long id, BoardDto boardDto);
 
     Result searchWithCondition(SearchCondition searchCondition);
+
+    Result findBoardByUserId(Long userId);
 }

@@ -39,11 +39,11 @@
     <div class="container text-center">
         <div class="row" style="padding-top: 20px;">
             <form class="d-flex" role="search" action="#" method="post">
-                <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#menteeModal">
+                <div class="mentors-myPage col-4" id="showAllMentoring" data-bs-toggle="modal" href="#menteeModal">
                     <span>신청한 멘토링</span>
                 </div>
 
-                <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#endMenteeModal">
+                <div class="mentors-myPage col-4" id="completedMentoring"data-bs-toggle="modal" href="#endMenteeModal">
                     <span>완료된 멘토링</span>
                 </div>
 
@@ -68,13 +68,74 @@
     </div>
     <!-- boardList 뿌려주는 div 끝 -->
 
+    <!--멘토링 글 상세보기 모달 시작-->
+    <div id="model-section">
+        <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+            tabindex="-1">
+
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">멘토링 소개</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div id="modal-body" class="modal-body">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <div class="card-text" style="float:left;">1회 멘토링 : 1시간 / <span id="modal-salary"></span> 원</div>
+                        <button class="btn btn-outline-success" data-bs-target="#exampleModalToggle2"
+                            data-bs-toggle="modal">멘토링 신청하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">신청하기</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">이름</label>
+                            <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="예)홍길동">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">연락 가능한 연락처</label>
+                            <input type="text" class="form-control form-control-sm" id="phone" name="phone" placeholder="010-1111-2222">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">연락 가능한 이메일</label>
+                            <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="mztalk@xxx.com">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="message">멘토에게 남길 메시지</label>
+                            <textarea class="form-control" placeholder="멘토에게 자신을 소개해주세요." id="message" style="height: 300px; padding-top: 10px;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="participant-btn"class="btn btn-outline-success">결제하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--멘토링 글 상세보기 모달 끝-->
 
     <!--내가 신청한 글 보기 모달 시작-->
-    <div class="modal fade" id="menteeModal" aria-hidden="true" aria-labelledby="menteeModal" tabindex="-1">
+    <div class="modal fade" id="allMentoring" aria-hidden="true" aria-labelledby="allMentoring" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="menteeModal">신청 상세 페이지</h1>
+                    <h1 class="modal-title fs-5" id="allMentoring">신청 상세 페이지</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -89,11 +150,10 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr onclick="location.href='/mentors/boards/{id}'">
-                            <th scope="row">{id}</th>
-                            <td>{nickname}</td>
-                            <td>{title}</td>
-                            <td style="text-align: center;">{status}</td>
+                          <tr id="mentoringRow">
+                            
+                            <!-- 신청한 모든 멘토링 보기-->
+
                           </tr>
                         </tbody>
                     </table>
@@ -119,18 +179,14 @@
                             <th scope="col">글번호</th>
                             <th scope="col">멘토 닉네임</th>
                             <th scope="col">글 제목</th>
-                            <th scope="col" style="text-align: center;">리뷰</th>
+                            <th scope="col" style="text-align:center;">리뷰</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">{id}</th>
-                            <td>{nickname}</td>
-                            <td>{title}</td>
-                            <td style="text-align: center;"> <!--리뷰쓰러가는 버튼-->
-                                <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#reviewModal"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
-                            </td>
+                          <tr id="endBoardList">
+                            
+                            <!--완료된 board 리스트 생성 구역-->
+
                           </tr>
                         </tbody>
                     </table>
@@ -141,11 +197,11 @@
     <!--완료된 멘토링 보기 모달 끝-->
 
     <!-- 리뷰 모달 시작-->
-        <div class="modal fade" id="reviewModal" aria-hidden="true" aria-labelledby="reviewModal" tabindex="-1">
+        <div class="modal fade" id="writeReview" aria-hidden="true" aria-labelledby="writeReview" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="reviewModal">리뷰 작성 페이지</h1>
+                        <h1 class="modal-title fs-5" id="writeReview">리뷰 작성 페이지</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                         <div class="modal-body">
@@ -153,7 +209,6 @@
                                 <label for="boardId" class="form-label">글번호</label>
                                 <input type="text" class="form-control form-control-sm" id="boardId" name="boardId" readonly>
                             </div>
-
                             <div class="mb-3">
                                 <label for="boardId" class="form-label">별점</label>
                                 <select id="count" class="form-select">
@@ -164,7 +219,6 @@
                                     <option value="1.0">★</option>
                                 </select>
                             </div>
-
                             <div class="mb-3">
                                 <label for="content" class="form-label">리뷰 내용</label>
                                 <textarea class="form-control" placeholder="멘토에게 리뷰를 남겨주세요." id="content" style="height: 300px; padding-top: 10px;"></textarea>
@@ -172,7 +226,7 @@
                         </div>
                     <div class="modal-footer">
                         <button class="btn btn-outline-success" type="button" id="writeReview"
-                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">제출</button> <!--리뷰 제출 버튼-->
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">제출</button>
                     </div>
                 </div>
             </div>
@@ -181,7 +235,6 @@
 
     
     <!--멘토 신청 페이지 모달 시작-->
-   
         <div class="modal fade" id="enrollModal" aria-hidden="true" aria-labelledby="enrollModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -214,12 +267,10 @@
                             <label for="account" class="form-label">계좌번호</label>
                             <input type="text" class="form-control form-control-sm" id="account" name="account" required>
                         </div>
-                        <!-- <div class="mb-3">
-                             <form enctype="multipart/form-data" method="post" action="/mentors/application">
+                        <!--<div class="mb-3">
                                 <label for="file" class="form-label">인증서류</label>
                                 <input type="file" class="form-control form-control-md" id="file" name="file" multiple/>
-                            </form>
-                        </div> -->
+                            </div> -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="sendResume" class="btn btn-outline-success">멘토 신청 하기</button>
@@ -227,9 +278,26 @@
                 </div>
             </div>
         </div>
-    
     <!--멘토 신청 작성 모달 끝-->
 
+    <!-- 리뷰보기 모달 시작-->
+    <div class="modal fade" id="showReview" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">멘토 리뷰 페이지</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="reviewBody">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- 리뷰보기 모달 끝-->
 
 
 
@@ -237,21 +305,13 @@
 
 
 
-
-
-
-
-
-
-
-        
         
 
     </main>
 
     <div class="floating">
         <div class="remocon"> 
-            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
+            <figure><img src="img/mento.png" id="move-mentor-service" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
            
             <figure> <img src="img/qjd.png" style="width: 70px;"/></figure>
             

@@ -26,6 +26,11 @@ public class ParticipantApiController {
         return participantService.findById(id);
     }
 
+    @GetMapping("/participant")
+    public Result findParticipantsByMentorId(@RequestParam("mentorId")Long mentorId){
+        return participantService.findParticipantsByMentorId(mentorId);
+    }
+
     @GetMapping("/participants")
     public Result findAll(){
         return participantService.findAll();

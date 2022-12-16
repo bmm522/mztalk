@@ -1,8 +1,10 @@
 package com.mztalk.mentor.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.BoardDto;
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="BOARD")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Board extends BaseTimeEntity{
 
     @Id @GeneratedValue
@@ -20,6 +24,7 @@ public class Board extends BaseTimeEntity{
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mentor_id")
+    @JsonIgnore
     private Mentor mentor;
 
     private String category;
@@ -38,9 +43,11 @@ public class Board extends BaseTimeEntity{
     private int salary; //시급
 
     @OneToMany(mappedBy = "board")
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Participant> participants = new ArrayList<>();
 
     @OneToMany(mappedBy = "board")
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Payment> payments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
