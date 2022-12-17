@@ -5,8 +5,10 @@ import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.ApplicationService;
 import com.mztalk.mentor.service.FileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -18,8 +20,10 @@ public class ApplicationApiController {
     private final FileService fileService;
 
     @PostMapping("/application")
-    public Long saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationMap) {
-        return applicationService.save(applicationMap);
+    public Long saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationMap, HttpServletRequest request) {
+        Long applicationId = applicationService.save(applicationMap);
+        fileService.saveFiles(applicationId, request);
+        return applicationId;
     }
 
     @GetMapping("/application/{id}")

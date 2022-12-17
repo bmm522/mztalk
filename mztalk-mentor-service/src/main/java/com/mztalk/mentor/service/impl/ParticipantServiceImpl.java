@@ -8,7 +8,6 @@ import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.ParticipantNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
-import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.repository.ParticipantRepository;
 import com.mztalk.mentor.service.ParticipantService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 

@@ -39,5 +39,4 @@ public class File extends BaseTimeEntity {
         application.getFiles().add(this);
     }
 
-
 }

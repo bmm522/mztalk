@@ -8,7 +8,6 @@ import com.mztalk.mentor.domain.entity.Score;
 import com.mztalk.mentor.exception.ScoreNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
-import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.repository.ScoreRepository;
 import com.mztalk.mentor.service.ScoreService;
 import lombok.RequiredArgsConstructor;
