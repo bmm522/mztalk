@@ -235,8 +235,8 @@
 
     
     <!--멘토 신청 페이지 모달 시작-->
-        <div class="modal fade" id="enrollModal" aria-hidden="true" aria-labelledby="enrollModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
+        <div class="modal fade" id="enrollModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="enrollModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="enrollModal">멘토 등록 페이지</h1>
@@ -288,7 +288,9 @@
             <h1 class="modal-title fs-5" id="staticBackdropLabel">멘토 리뷰 페이지</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="reviewBody">
+            <div class="modal-body" id="reviewBody" style="text-align: left;">
+
+                <!-- 리뷰 출력 레이아웃-->
                 
             </div>
             <div class="modal-footer">

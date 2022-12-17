@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface ScoreService {
-    Long save(ConcurrentHashMap<String,String> scoreDto);
+    Long save(ConcurrentHashMap<String,String> scoreMap);
 
     Double findById(Long id);
 

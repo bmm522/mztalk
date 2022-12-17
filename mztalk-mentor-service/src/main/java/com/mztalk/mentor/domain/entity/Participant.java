@@ -77,12 +77,12 @@ public class Participant extends BaseTimeEntity{
     }
 
     // 참가 신청 생성 메소드
-    public static Participant createParticipant(ConcurrentHashMap<String,String> participantDto, Mentee mentee, Board board){
+    public static Participant createParticipant(ConcurrentHashMap<String,String> participantMap, Mentee mentee, Board board){
         Participant participant = new Participant();
-        participant.name = participantDto.get("name");
-        participant.phone = participantDto.get("phone");
-        participant.message = participantDto.get("message");
-        participant.email = participantDto.get("email");
+        participant.name = participantMap.get("name");
+        participant.phone = participantMap.get("phone");
+        participant.message = participantMap.get("message");
+        participant.email = participantMap.get("email");
         participant.status = Status.YES;
         participant.addMentee(mentee);
         participant.addBoard(board);

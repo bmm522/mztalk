@@ -71,10 +71,10 @@ public class Score extends BaseTimeEntity{
     }
 
     // == 평점 생성 메소드 ==//
-    public static Score createScore(ConcurrentHashMap<String,String> scoreDto,Mentee mentee, Mentor mentor){
+    public static Score createScore(ConcurrentHashMap<String,String> scoreMap,Mentee mentee, Mentor mentor){
         Score score = new Score();
-        score.count = Double.parseDouble(scoreDto.get("count"));
-        score.content = scoreDto.get("content");
+        score.count = Double.parseDouble(scoreMap.get("count"));
+        score.content = scoreMap.get("content");
         score.status = Status.YES;
         score.addMentee(mentee);
         score.addMentor(mentor);

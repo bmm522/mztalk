@@ -38,6 +38,7 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     private String job; //현재 소속: 강사, 대학생, 대학원생
     private String bank;
     private String account;
+
     @Enumerated(EnumType.STRING)
     private AuthStatus authStatus;
 

@@ -22,8 +22,8 @@ public class ApplicationApiController {
     private final ImageService imageService;
 
     @PostMapping("/application")
-    public Long saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationDto) {
-        return applicationService.save(applicationDto);
+    public Long saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationMap) {
+        return applicationService.save(applicationMap);
     }
 
     public void saveImage(@ModelAttribute MultipartFile file,HttpServletRequest request){

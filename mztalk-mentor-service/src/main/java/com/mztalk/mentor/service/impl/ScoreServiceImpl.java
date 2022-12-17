@@ -30,14 +30,14 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     @Transactional
-    public Long save(ConcurrentHashMap<String,String> scoreDto) {
-        Long userId = Long.parseLong(scoreDto.get("userId"));
-        Long boardId = Long.parseLong(scoreDto.get("boardId"));
+    public Long save(ConcurrentHashMap<String,String> scoreMap) {
+        Long userId = Long.parseLong(scoreMap.get("userId"));
+        Long boardId = Long.parseLong(scoreMap.get("boardId"));
 
         Mentee mentee = menteeRepository.findMenteeByUserId(userId);
         Mentor mentor = boardRepository.findMentorByBoardId(boardId);
 
-        Score score = Score.createScore(scoreDto, mentee, mentor);
+        Score score = Score.createScore(scoreMap, mentee, mentor);
         return scoreRepository.save(score).getId();
     }
 

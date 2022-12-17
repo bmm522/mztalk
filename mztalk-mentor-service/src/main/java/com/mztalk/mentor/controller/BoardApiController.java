@@ -17,8 +17,8 @@ public class BoardApiController {
     private final BoardService boardService;
 
     @PostMapping("/board")
-    public Long saveBoard(@RequestBody ConcurrentHashMap<String,String> boardDto){
-        return boardService.saveBoard(boardDto);
+    public Long saveBoard(@RequestBody ConcurrentHashMap<String,String> boardMap){
+        return boardService.saveBoard(boardMap);
     }
 
     @GetMapping("/board/{id}")

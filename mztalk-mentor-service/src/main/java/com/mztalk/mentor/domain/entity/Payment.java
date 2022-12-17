@@ -66,11 +66,11 @@ public class Payment extends BaseTimeEntity{
     }
 
     //== 결제 생성 메소드 ==//
-    public static Payment createPayment(ConcurrentHashMap<String,String> paymentDto, Mentee mentee, Board board){
+    public static Payment createPayment(ConcurrentHashMap<String,String> paymentMap, Mentee mentee, Board board){
         Payment payment = new Payment();
         payment.addMentee(mentee);
         payment.addBoard(board);
-        payment.price = Integer.parseInt(paymentDto.get("price"));
+        payment.price = Integer.parseInt(paymentMap.get("price"));
         payment.status = Status.YES;
         return payment;
     }

@@ -8,7 +8,7 @@ import com.mztalk.mentor.domain.entity.Result;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface BoardService {
-    Long saveBoard(ConcurrentHashMap<String,String> boardDto);
+    Long saveBoard(ConcurrentHashMap<String,String> boardMap);
 
     BoardDto findById(Long id);
 

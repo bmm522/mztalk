@@ -187,11 +187,17 @@ const watchReview = (nickname) =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log("res : " + res);
         if(res != null){
-            console.log('통신성공');
+            let star ='';
             for(const score of res.data){
-                document.getElementById('reviewBody').innerHTML += '점수 : '+score.count + ' 리뷰 : ' + score.content + '<br/>';
+                switch(score.count){
+                    case 5 : star ='★★★★★'; break;
+                    case 4 : star ='★★★★'; break; 
+                    case 3 : star ='★★★'; break; 
+                    case 2 : star ='★★'; break; 
+                    case 1 : star ='★'; break; 
+                }
+                document.getElementById('reviewBody').innerHTML +=  '<br/>' + star + '<br/>' + '<br/>' + score.content + '<br/>';
             }
         } else {
             console.log('실패');

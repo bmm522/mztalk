@@ -28,17 +28,17 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public Long saveBoard(ConcurrentHashMap<String,String> boardDto) {
-        Long userId = Long.parseLong(boardDto.get("userId"));
+    public Long saveBoard(ConcurrentHashMap<String,String> boardMap) {
+        Long userId = Long.parseLong(boardMap.get("userId"));
         Mentor mentor = mentorRepository.findMentorByUserId(userId);
         Board board = Board.builder().
-                category(boardDto.get("category")).
-                title(boardDto.get("title")).
-                nickname(boardDto.get("nickname")).
-                content(boardDto.get("content")).
-                introduction(boardDto.get("introduction")).
-                career(boardDto.get("career")).
-                salary(Integer.parseInt(boardDto.get("salary"))).
+                category(boardMap.get("category")).
+                title(boardMap.get("title")).
+                nickname(boardMap.get("nickname")).
+                content(boardMap.get("content")).
+                introduction(boardMap.get("introduction")).
+                career(boardMap.get("career")).
+                salary(Integer.parseInt(boardMap.get("salary"))).
                 status(Status.YES).
                 build();
         board.addMentor(mentor);
