@@ -25,18 +25,12 @@ import java.util.function.Predicate;
 public class SwaggerConfig{
 
 
-    private ApiInfo apiInfo() {
-
-        return new ApiInfoBuilder()
-                .title("Demo")
-                .description("API EXAMPLE")
-                .build();
-    }
-
     @Bean
     public Docket commonApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("example")
+                .consumes(getConsumeContentTypes())
+                .produces(getProduceContentTypes())
                 .apiInfo(this.apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors
@@ -44,6 +38,30 @@ public class SwaggerConfig{
                 .paths(PathSelectors.ant("/**"))
                 .build();
     }
+
+    private ApiInfo apiInfo() {
+
+        return new ApiInfoBuilder()
+                .title("MZTALK-RESOURCE")
+                .description("Mztalk Resource server api document")
+                .build();
+    }
+
+    private Set<String> getConsumeContentTypes(){
+        Set<String> consumes = new HashSet<>();
+        consumes.add("application/json;charset=UTF-8");
+        consumes.add("text/html");
+        return consumes;
+    }
+
+    private Set<String> getProduceContentTypes(){
+        Set<String> produces = new HashSet<>();
+        produces.add("application/json;charset=UTF-8");
+        produces.add("text/html");
+        return produces;
+    }
+
+
 
 
 }
