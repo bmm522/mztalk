@@ -130,9 +130,9 @@
 
 //개인페이지
 document.getElementById('move-story-service').addEventListener('click',function(){
-    const own = localStorage.getItem("userNo");
+     const own = localStorage.getItem("userNo");
   
-    localStorage.setItem("own", own);
+     localStorage.setItem("own", own);
     
     //이 구조는 그냥 버튼에 자기페이지 가는 로직
     //해당유저 게시판엔 userNo이 input hidden 걸려있어야 가게끔
@@ -145,13 +145,11 @@ document.getElementById('move-story-service').addEventListener('click',function(
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken'),
-
         },
+        
     })
     .then((res)=> res.json())
     .then(res=>{
-        console.log("자료있니?" +res.data);
-        console.log("!!!!!!!!!!");
         console.log(own);
         location.href="individualpage.html";
     })

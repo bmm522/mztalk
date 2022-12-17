@@ -1,7 +1,7 @@
 package com.mztalk.main.handler;
 
 
-import com.mztalk.main.domain.dto.CMRespDto;
+import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.handler.exception.CustomApiException;
 import com.mztalk.main.handler.exception.CustomException;
 import com.mztalk.main.handler.exception.CustomValidationApiException;
