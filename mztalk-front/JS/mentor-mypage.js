@@ -6,7 +6,7 @@ window.onload = () =>{
 // 멘토 글 작성하기 // 중복 검사 후 중복이 존재하면 글 작성 실패
 document.getElementById('mentor-write-btn').addEventListener('click',function(){
     const mentorId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board/mentor"+mentorId,{
+    fetch("http://localhost:8000/mentors/board/mentor/"+mentorId,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",

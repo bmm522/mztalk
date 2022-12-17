@@ -267,10 +267,12 @@
                             <label for="account" class="form-label">계좌번호</label>
                             <input type="text" class="form-control form-control-sm" id="account" name="account" required>
                         </div>
-                        <!--<div class="mb-3">
-                                <label for="file" class="form-label">인증서류</label>
-                                <input type="file" class="form-control form-control-md" id="file" name="file" multiple/>
-                            </div> -->
+                        <div class="mb-3">
+                            <form action="http:localhost:8000/resource/files" method="POST" enctype="multipart/form-data" id="file-form">
+                                <label for="file-box" class="form-label">인증서류</label>
+                                <input type="file" id="file-box" name="file"/>
+                            </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="sendResume" class="btn btn-outline-success">멘토 신청 하기</button>

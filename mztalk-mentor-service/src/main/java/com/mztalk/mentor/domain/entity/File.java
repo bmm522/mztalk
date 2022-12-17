@@ -1,25 +1,20 @@
 package com.mztalk.mentor.domain.entity;
 
-import com.mztalk.mentor.domain.dto.ImageDto;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.util.UUID;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="IMAGE")
-public class Image extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
+@Table(name="FILE")
+public class File extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
 
     @Id @GeneratedValue
-    @Column(name="image_id")
+    @Column(name="file_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id")
     private Application application;
     private String uploadFileName;
@@ -27,7 +22,7 @@ public class Image extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
     private String url;
 
     @Builder
-    public Image(Long id, Application application, String uploadFileName, String storeFileName, String url) {
+    public File(Long id, Application application, String uploadFileName, String storeFileName, String url) {
         this.id = id;
         this.application = application;
         this.uploadFileName = uploadFileName;
@@ -38,7 +33,7 @@ public class Image extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
     //== 연관관계 편의 메소드==//
     public void addApplication(Application application) {
         this.application = application;
-        application.addImage(this);
+        application.addFile(this);
     }
 
 

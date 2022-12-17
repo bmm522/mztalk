@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class ImageDto {
+public class FileDto {
 
     private Long id;
     private Application application;
@@ -19,16 +19,16 @@ public class ImageDto {
     private String storeFileName;
     private String url;
 
-    public ImageDto(Image image) {
-        this.id = image.getId();
-        this.application = image.getApplication();
-        this.uploadFileName = image.getUploadFileName();
-        this.storeFileName = image.getStoreFileName();
-        this.url = image.getUrl();
+    public FileDto(File file) {
+        this.id = file.getId();
+        this.application = file.getApplication();
+        this.uploadFileName = file.getUploadFileName();
+        this.storeFileName = file.getStoreFileName();
+        this.url = file.getUrl();
     }
 
-    public Image toEntity(){
-        Image build = Image.builder()
+    public File toEntity(){
+        File build = File.builder()
                 .id(id)
                 .application(application)
                 .uploadFileName(uploadFileName)
@@ -39,7 +39,7 @@ public class ImageDto {
     }
 
     @Builder
-    public ImageDto(Long id, Application application, String uploadFileName, String storeFileName, String url) {
+    public FileDto(Long id, Application application, String uploadFileName, String storeFileName, String url) {
         this.id = id;
         this.application = application;
         this.uploadFileName = uploadFileName;
@@ -48,7 +48,7 @@ public class ImageDto {
     }
 
     //이미지 저장 메소드
-    public ImageDto saveFile(MultipartFile file, HttpServletRequest request){
+    public FileDto saveFile(MultipartFile file, HttpServletRequest request){
         String root = request.getSession().getServletContext().getRealPath("resources");
         String savePath = root + "\\uploadFiles";
 
@@ -67,11 +67,11 @@ public class ImageDto {
             e.getStackTrace();
         }
 
-        ImageDto imageDto = ImageDto.builder()
+        FileDto fileDto = FileDto.builder()
                 .uploadFileName(uploadFileName)
                 .storeFileName(storeFileName)
                 .url(savePath)
                 .build();
-        return imageDto;
+        return fileDto;
     }
 }

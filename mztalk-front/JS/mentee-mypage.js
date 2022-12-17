@@ -34,6 +34,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
             location.href="mentee-mypage.html";
             return false;
         } else {
+            document.getElementById('file-form').submit();
             fetch("http://localhost:8000/mentors/application",{
             method:"POST",
             headers:{

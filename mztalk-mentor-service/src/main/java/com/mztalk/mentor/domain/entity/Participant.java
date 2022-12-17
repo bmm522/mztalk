@@ -2,6 +2,7 @@ package com.mztalk.mentor.domain.entity;
 
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ParticipantDto;
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -29,14 +30,17 @@ public class Participant extends BaseTimeEntity{
     @JoinColumn(name = "mentee_id")
     private Mentee mentee;
 
+    @NotNull
     private String name; //멘티 신청시 이름
 
+    @NotNull
     private String phone; //멘티 신청시 핸드폰 번호
 
     @Column(nullable = true)
     @Lob
     private String message; // 멘티 신청시 남길 메시지(자유양식)
 
+    @NotNull
     private String email;
 
     @Enumerated(EnumType.STRING)

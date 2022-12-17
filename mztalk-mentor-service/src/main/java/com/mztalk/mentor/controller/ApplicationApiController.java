@@ -1,7 +1,7 @@
 package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.ApplicationDto;
-import com.mztalk.mentor.domain.dto.ImageDto;
+import com.mztalk.mentor.domain.dto.FileDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.ApplicationService;
 import com.mztalk.mentor.service.ImageService;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -27,8 +26,8 @@ public class ApplicationApiController {
     }
 
     public void saveImage(@ModelAttribute MultipartFile file,HttpServletRequest request){
-        ImageDto imageDto = new ImageDto().saveFile(file, request);
-        imageService.saveImage(imageDto);
+        FileDto fileDto = new FileDto().saveFile(file, request);
+        imageService.saveImage(fileDto);
     }
 
     @GetMapping("/application/{id}")
