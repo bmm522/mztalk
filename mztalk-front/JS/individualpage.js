@@ -33,7 +33,7 @@ window.onload=function(){
     console.log("개인 : " + localStorage.getItem('userNickname'));
     console.log("페이지주인: " + localStorage.getItem('own'));
 
-    const own = document.getElementById('#own');
+    //const own = document.getElementById('own');
     
     //fetch쓰기
 
