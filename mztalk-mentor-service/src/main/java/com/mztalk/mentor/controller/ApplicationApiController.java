@@ -1,15 +1,12 @@
 package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.ApplicationDto;
-import com.mztalk.mentor.domain.dto.FileDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.ApplicationService;
-import com.mztalk.mentor.service.ImageService;
+import com.mztalk.mentor.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -18,16 +15,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ApplicationApiController {
 
     private final ApplicationService applicationService;
-    private final ImageService imageService;
+    private final FileService fileService;
 
     @PostMapping("/application")
     public Long saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationMap) {
         return applicationService.save(applicationMap);
-    }
-
-    public void saveImage(@ModelAttribute MultipartFile file,HttpServletRequest request){
-        FileDto fileDto = new FileDto().saveFile(file, request);
-        imageService.saveImage(fileDto);
     }
 
     @GetMapping("/application/{id}")

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="FILE")
-public class File extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
+public class File extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name="file_id")
@@ -31,9 +31,12 @@ public class File extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
     }
 
     //== 연관관계 편의 메소드==//
-    public void addApplication(Application application) {
+    public void addApplication(Application application){
+        if(this.application != null){
+            this.application.getFiles().remove(this);
+        }
         this.application = application;
-        application.addFile(this);
+        application.getFiles().add(this);
     }
 
 

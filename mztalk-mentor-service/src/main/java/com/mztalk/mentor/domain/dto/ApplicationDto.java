@@ -4,7 +4,6 @@ import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.File;
-import com.mztalk.mentor.domain.entity.Image;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Mentor;
 import lombok.*;

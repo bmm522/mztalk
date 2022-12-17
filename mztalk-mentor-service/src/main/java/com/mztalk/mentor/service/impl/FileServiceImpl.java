@@ -2,6 +2,7 @@ package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.FileDto;
 import com.mztalk.mentor.domain.entity.Application;
+import com.mztalk.mentor.domain.entity.File;
 import com.mztalk.mentor.exception.ImageNotFoundException;
 import com.mztalk.mentor.repository.FileRepository;
 import com.mztalk.mentor.service.FileService;
