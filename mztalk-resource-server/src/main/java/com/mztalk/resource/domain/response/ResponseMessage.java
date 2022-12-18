@@ -1,8 +1,12 @@
 package com.mztalk.resource.domain.response;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class ResponseMessage {
     public static final String UPLOAD_SUCCESS = "저장 성공";
     public static final String UPLOAD_FAIL = "저장 실패";
+
+    @ApiModelProperty(notes = "responseMessage", example = "데이터 조회 성공")
     public static final String READ_FILE_SUCCESS = "데이터 조회 성공";
     public static final String NOT_FOUND_FILE = "데이터 조회 실패";
 

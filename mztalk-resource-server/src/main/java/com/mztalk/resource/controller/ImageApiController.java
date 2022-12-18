@@ -2,8 +2,10 @@ package com.mztalk.resource.controller;
 
 
 import com.mztalk.resource.domain.dto.ImagesDto;
+import com.mztalk.resource.domain.dto.ImagesResponseDto;
 import com.mztalk.resource.domain.entity.Result;
 import com.mztalk.resource.domain.response.ResponseData;
+import com.mztalk.resource.factory.NotiResponseFactory;
 import com.mztalk.resource.service.DeleteImageService;
 import com.mztalk.resource.service.InsertImageService;
 import com.mztalk.resource.service.SelectImageService;
@@ -57,7 +59,7 @@ public class ImageApiController {
 
 
     // 해당 글의 모든 사진데이터 불러오기
-    @ApiOperation(value="해당 글 이미지 정보 조회", notes = "해당 서비스의 글번호에 해당하는 모든 이미지를 리스트로 가져옵니다.")
+    @ApiOperation(value="해당 글 이미지 정보 조회", notes = "해당 서비스의 글번호에 해당하는 모든 이미지를 리스트로 가져옵니다.", response = ResponseData.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name="bNo", value="해당 글 번호",dataType="long", paramType = "param"),
             @ApiImplicitParam(name="serviceName", value="해당 서비스 이름",dataType="String",  paramType = "param")
