@@ -19,8 +19,7 @@ const getAccessToken = () =>{
 // 멘토 등록 신청서 작성 이미존재할 경우 return false 강제로 작성하면 서버측에서 Exception발생
 document.getElementById('sendResume').addEventListener('click', function(){
     const userId = localStorage.getItem('userNo');
-    document.getElementById('id-hidden').value=userId;
-    
+    console.log('userId : ' + document.getElementById('id-hidden').value);
     fetch("http://localhost:8000/mentors/application?userId="+userId,{
         method:"GET",
         headers:{
@@ -36,6 +35,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
             location.href="mentee-mypage.html";
             return false;
         } else {
+            document.getElementById('id-hidden').value = userId;
             document.getElementById('file-form').submit();
             fetch("http://localhost:8000/mentors/application",{
             method:"POST",

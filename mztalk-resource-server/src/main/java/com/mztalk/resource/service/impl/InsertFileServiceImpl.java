@@ -78,8 +78,14 @@ public class InsertFileServiceImpl implements InsertFileService {
 
     private void saveFile(MultipartFile multipartFile, FileRequestDto fileRequestDto) throws IOException {
         String fileName = multipartFile.getOriginalFilename();
+//        System.out.println("savefile : " + file.getFileName());
+//        System.out.println("savefile : " + file.getFileId());
+//        System.out.println("savefile : " + file.getFileUrl());
+//        System.out.println("savefile : " + file.getObjectKey());
 
         File file = fileRequestDto.toEntity(fileName,s3Factory.uploadImageToAwsS3(multipartFile));
+
+//        System.out.println("savefile : " + file.getFileName());
 
         fileRepository.save(file);
     }
