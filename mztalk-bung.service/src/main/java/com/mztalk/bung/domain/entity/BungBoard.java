@@ -1,14 +1,16 @@
 package com.mztalk.bung.domain.entity;
 
 import com.mztalk.bung.domain.BoardStatus;
+import com.mztalk.bung.domain.dto.BungBoardDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
-
+import java.text.SimpleDateFormat;
 
 
 @NoArgsConstructor
@@ -45,6 +47,19 @@ public class BungBoard {
     @Column(nullable = false, length = 10)
     private String category;
 
+    public void mainBoardUpdate(BungBoardDto bungBoardDto) {
+        this.boardTitle = bungBoardDto.getBoardTitle();
+        this.boardContent = bungBoardDto.getBoardContent();
+        this.deadlineDate = bungBoardDto.getDeadlineDate();
+        this.fullGroup = bungBoardDto.getFullGroup();
+        this.category = bungBoardDto.getCategory();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        this.modifyDate = timestamp;
+    }
+
+    public void changeStatus() {
+        this.boardStatus = BoardStatus.NO;
+    }
 
 //    public BungBoard(Long boardId, String boardWriter, String boardTitle, String boardContent, Date deadlineDate, Long fullGroup, Long nowGroup, Timestamp createDate, Timestamp modifyDate, Long boardCount, String boardStatus, String category) {
 //        this.boardId = boardId;
