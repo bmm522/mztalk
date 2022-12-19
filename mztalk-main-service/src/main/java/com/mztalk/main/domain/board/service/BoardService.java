@@ -1,5 +1,6 @@
 package com.mztalk.main.domain.board.service;
 
+import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
 
@@ -9,7 +10,7 @@ public interface BoardService {
 
     Result findAllByOwn(Long own);
 
-    Long save(BoardDto boardDto);
+    Board save(BoardDto boardDto);
 
     Long updateBoard(Long id, BoardDto boardDto);
 
