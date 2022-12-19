@@ -21,7 +21,7 @@ public class BungBoardDto {
     private String boardWriter;
     private String boardTitle;
     private String boardContent;
-    private Date deadlineDate;
+    private String deadlineDate;
     private Long fullGroup;
     private Long nowGroup;
     private Timestamp createDate;
@@ -36,7 +36,7 @@ public class BungBoardDto {
                 .boardWriter(boardWriter)
                 .boardTitle(boardTitle)
                 .boardContent(boardContent)
-                .deadlineDate(deadlineDate)
+                .deadlineDate(Date.valueOf(deadlineDate))
                 .fullGroup(fullGroup)
                 .nowGroup(nowGroup)
                 .createDate(createDate)
@@ -53,7 +53,7 @@ public class BungBoardDto {
         this.boardWriter = BungBoardEntity.getBoardWriter();
         this.boardTitle = BungBoardEntity.getBoardTitle();
         this.boardContent = BungBoardEntity.getBoardContent();
-        this.deadlineDate = BungBoardEntity.getDeadlineDate();
+        this.deadlineDate = String.valueOf(BungBoardEntity.getDeadlineDate());
         this.fullGroup = BungBoardEntity.getFullGroup();
         this.nowGroup = BungBoardEntity.getNowGroup();
         this.createDate = BungBoardEntity.getCreateDate();
