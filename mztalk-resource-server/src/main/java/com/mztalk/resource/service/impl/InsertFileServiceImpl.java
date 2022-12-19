@@ -1,10 +1,8 @@
 package com.mztalk.resource.service.impl;
 
-import com.mztalk.resource.domain.Role;
-import com.mztalk.resource.domain.dto.FileDto;
-import com.mztalk.resource.domain.dto.ImagesDto;
+
 import com.mztalk.resource.domain.entity.File;
-import com.mztalk.resource.domain.entity.Images;
+import com.mztalk.resource.domain.request.dto.FileRequestDto;
 import com.mztalk.resource.factory.S3Factory;
 import com.mztalk.resource.repository.FileRepository;
 import com.mztalk.resource.service.InsertFileService;
@@ -30,11 +28,11 @@ public class InsertFileServiceImpl implements InsertFileService {
 
     private final S3Factory s3Factory;
     @Override
-    public ResponseEntity<?> insertFile(MultipartFile multipartFile, FileDto fileDto) {
+    public ResponseEntity<?> insertFile(MultipartFile multipartFile, FileRequestDto fileRequestDto) {
 
         try{
 
-            saveFile(multipartFile, fileDto);
+            saveFile(multipartFile, fileRequestDto);
 
         } catch (IOException e) {
 
@@ -52,13 +50,13 @@ public class InsertFileServiceImpl implements InsertFileService {
     }
 
     @Override
-    public ResponseEntity<?> insertFiles(List<MultipartFile> multipartFileList, FileDto fileDto) {
+    public ResponseEntity<?> insertFiles(List<MultipartFile> multipartFileList, FileRequestDto fileRequestDto) {
 
         for (MultipartFile multipartFile : multipartFileList) {
 
             try {
 
-                saveFile(multipartFile, fileDto);
+                saveFile(multipartFile, fileRequestDto);
 
             } catch (IOException e) {
 
@@ -78,10 +76,10 @@ public class InsertFileServiceImpl implements InsertFileService {
     }
 
 
-    private void saveFile(MultipartFile multipartFile, FileDto fileDto) throws IOException {
+    private void saveFile(MultipartFile multipartFile, FileRequestDto fileRequestDto) throws IOException {
         String fileName = multipartFile.getOriginalFilename();
 
-        File file = fileDto.toEntity(fileName,s3Factory.uploadImageToAwsS3(multipartFile));
+        File file = fileRequestDto.toEntity(fileName,s3Factory.uploadImageToAwsS3(multipartFile));
 
         fileRepository.save(file);
     }

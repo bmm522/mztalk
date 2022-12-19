@@ -1,6 +1,5 @@
 package com.mztalk.resource.repository;
 
-import com.mztalk.resource.domain.dto.ImagesDto;
 import com.mztalk.resource.domain.entity.Images;
 
 import java.util.List;
