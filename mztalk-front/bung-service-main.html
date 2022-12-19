@@ -81,7 +81,30 @@
                 </form>
             </div>
         <div class="container">
-            <div class="row row-cols-1 row-cols-md-3 g-4" >
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="output-div">
+             <!-- <div class="col">
+                   <div class="card h-100">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header">
+                                {제목}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp조회수 : &nbsp123
+                            </div>
+                            
+                            <img src="duck.jpg" style="height: 250px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{카테고리}</h5>
+                                <p class="card-text">{내용}</p>
+                            </div>
+                            <hr>
+                            <div id="writer">마감일 : {2022/10/11}</div>
+                            <div id="writer">
+                                {작성자}
+                            </div>
+                            <div id="groupTotal">
+                                {현재 인원} / {총 인원}
+                            </div>
+                        </div>
+                    </div> 
+                </div>
                 <div class="col">
                     <div class="card h-100">
                         <div class="card shadow-sm h-100">
@@ -94,6 +117,7 @@
                                 <p class="card-text">{내용}</p>
                             </div>
                             <hr>
+                            
                             <div id="writer">
                                 {작성자}
                             </div>
@@ -186,34 +210,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-header">
-                                {제목}
-                            </div>
-                            <img src="duck.jpg" style="height: 250px;">
-                            <div class="card-body">
-                                <h5 class="card-title">{카테고리}</h5>
-                                <p class="card-text">{내용}</p>
-                            </div>
-                            <hr>
-                            <div id="writer">
-                                {작성자}
-                            </div>
-                            <div id="groupTotal">
-                                {현재 인원} / {총 인원}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div>  -->
             </div>
         </div>
     </div>
 
     <div id="writeBtn">
-        <button type="button" class="btm_image"><img src="write.jpg" style="height: 75px;" id="imageBtn"></button>
+        <button type="button" id="write-btn" class="btm_image"><img src="write.jpg" style="height: 75px;" id="imageBtn"></button>
     </div>
 
     </main>
@@ -275,4 +278,5 @@
    
 </body>
 <script src="JS/main.js"></script>
+<script src="JS/bung-main.js"></script>
 </html>
