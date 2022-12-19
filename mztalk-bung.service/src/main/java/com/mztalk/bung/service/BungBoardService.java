@@ -9,5 +9,12 @@ public interface BungBoardService {
 
     Result mainSelectList();
 
+
     Long mainBoardUpdate(Long bId, BungBoardDto bungBoardDto);
+
+    Long mainBoardDelete(Long bId);
+
+    BungBoardDto mainBoardSelect(Long bId);
+
+    int increaseCount(Long bId);
 }

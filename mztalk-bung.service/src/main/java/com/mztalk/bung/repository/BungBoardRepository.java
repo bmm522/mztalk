@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BungBoardRepository extends JpaRepository<BungBoard, Long> {
 
+    String findByboardWriter(String boardWriter);
 }
