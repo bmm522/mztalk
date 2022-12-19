@@ -65,7 +65,7 @@ function storyLoad() {
           let date = board.createDate;
           
         document.querySelector("#contentList").innerHTML += 
-                `<div id="post-div-${boardId}">
+                `<div id="post-div-${boardId}" class="post-div">
                     <table id="post-table">
                         <tr>
                             <td>
@@ -114,7 +114,7 @@ function storyLoad() {
                     </div>
                     </td>
                     <td>
-                        <div id="reply-write-btn"><button style="cursor:pointer;" type="button">등록</button></div>
+                        <div id="reply-write-btn"><button onClick="addReply(${boardId})" id="replyButton-${boardId}" style="cursor:pointer;" type="button">등록</button></div>
                     </td>
                     </tr>
                     </table>
@@ -143,7 +143,7 @@ const privacyBounds = document.getElementById('privacyBounds');
 
 write_board.addEventListener('click', function(){
     //console.log("클릭됨??");
-    
+   
     if(privacyBounds.options[privacyBounds.selectedIndex].value === 'no'){
         alert("공개범위를 설정하세요");
     }else{
@@ -178,7 +178,7 @@ write_board.addEventListener('click', function(){
                     let content = board.content;
                     let date = board.createDate;
                   document.querySelector("#contentList").innerHTML += 
-                          `<div id="post-div-${boardId}">
+                          `<div id="post-div-${boardId}" class="post-div">
                               <table id="post-table">
                                   <tr>
                                       <td>
@@ -212,12 +212,7 @@ write_board.addEventListener('click', function(){
                                   </tr>
                               </table>
                               <div id="reply-div">
-                                  <div>
-                                      <div id="reply-nickname">{작성자 닉네임}</div>
-                                      <div id="reply-content">{댓글 내용}</div>
-                                      <div id="reply-date">{date}</div>
-                                      <div id="reply-edit-btn"><button style="cursor:pointer;" type="button">X</button></div>
-                                  </div>
+                                  
                               </div>
                               <div id="reply-write-div">
                                   <table>
@@ -227,7 +222,7 @@ write_board.addEventListener('click', function(){
                               </div>
                               </td>
                               <td>
-                                  <div id="reply-write-btn"><button style="cursor:pointer;" type="button">등록</button></div>
+                                  <div id="reply-write-btn"><button id="replyButton" onClick="addReply(${boardId})" style="cursor:pointer;" type="button">등록</button></div>
                               </td>
                               </tr>
                               </table>
@@ -237,12 +232,115 @@ write_board.addEventListener('click', function(){
           }   
                
       });
-      console.log(document.getElementById('title-input-text'));
-      console.log(document.getElementById("content-input-text"));
+     
+
       document.getElementById('title-input-text').value("");
       document.getElementById("content-input-text").value("");
       privacyBounds.options[privacyBounds.selectedIndex].value("");
 }
+
+
+//댓글쓰기
+function addReply(boardId){
+  let replyContent = document.getElementById('reply-write-input');
+  let replyButton = document.getElementById('replyButton');
+  let replyList = document.getElementById('reply-div');
+  //let id = localStorage.getItem('userNo');
+
+      console.log(replyContent);
+        if(replyContent.value === ''){
+          alert("댓글을 작성해주세요!");
+        }else{
+          fetch("http://localhost:8000/story/board/"+boardId+"/reply",{
+              method:"POST",
+              headers:{
+                  "Content-Type":"application/json",
+                  Authorization:localStorage.getItem('authorization'),
+                  RefreshToken:localStorage.getItem('refreshToken'),
+              },
+              body:JSON.stringify({
+                  replyNickname: localStorage.getItem('userNickname'),
+                  replyContent: replyContent.value,
+                })
+            })
+          .then((res)=>res.json())
+          .then(res =>{
+
+            console.log("통신성공?");
+            
+            console.log("res.data: "+ res.data);
+
+            let reply = res.data;
+
+            document.getElementById('reply-div').innerHTML +=
+            `<div>
+              <div id="reply-nickname">${reply.replyNickname}</div>
+              <div id="reply-content">${reply.content}</div>
+              <div id="reply-date">${reply.date}</div>
+              <div id="reply-edit-btn"><button style="cursor:pointer;" type="button">X</button></div>
+            </div>`;
+
+            
+
+
+
+          })
+        }
+    }
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //구독
 document.querySelector("#subscribeBtn").onclick = (e) => {

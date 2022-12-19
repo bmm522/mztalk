@@ -1,9 +1,13 @@
 package com.mztalk.main.domain.reply.controller;
 
 
+import com.mztalk.main.common.CMRespDto;
+import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.domain.reply.service.ReplyService;
 import com.mztalk.main.domain.reply.dto.ReplyRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -26,11 +30,13 @@ public class ReplyApiController {
 
 
     //댓글쓰기
+    @ResponseBody
     @PostMapping("/board/{id}/reply")
-    public Long replySave(@PathVariable("id") Long id, @RequestBody ReplyRequestDto replyRequestDto){
+    public ResponseEntity<?> replySave(@PathVariable("id") Long id, @RequestBody ReplyRequestDto replyRequestDto){
 
-       return replyService.replySave(id, replyRequestDto);
+       Reply reply = replyService.replySave(id, replyRequestDto);
 
+        return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기성공", reply), HttpStatus.CREATED);
 //        return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기성공", result), HttpStatus.CREATED);
     }
 

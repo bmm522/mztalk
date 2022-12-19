@@ -19,13 +19,11 @@ public class ReplyServiceImpl implements ReplyService{
 
     @Override
     @Transactional
-    public Long replySave(Long id, ReplyRequestDto replyRequestDto) {
+    public Reply replySave(Long id, ReplyRequestDto replyRequestDto) {
 
         boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        Reply reply = replyRequestDto.toEntity(id);
-
-        return replyRepository.save(reply).getId();
+        return replyRepository.save(replyRequestDto.toEntity(id));
 
     }
 
