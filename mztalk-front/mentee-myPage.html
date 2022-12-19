@@ -245,15 +245,15 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="name" class="form-label">이름</label>
-                            <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="예)홍길동" required>
+                            <input type="text" class="form-control form-control-sm" id="mentor-name" name="name" placeholder="예)홍길동" required>
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">핸드폰번호</label>
-                            <input type="text" class="form-control form-control-sm" id="phone" name="phone" placeholder="예)010-1111-2222" required>
+                            <input type="text" class="form-control form-control-sm" id="mentor-phone" name="phone" placeholder="예)010-1111-2222" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">이메일</label>
-                            <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="예)mztalk@naver.com" required>
+                            <input type="email" class="form-control form-control-sm" id="mentor-email" name="email" placeholder="예)mztalk@naver.com" required>
                         </div>
                         <div class="mb-3">
                             <label for="job" class="form-label">현재소속</label>
@@ -268,9 +268,10 @@
                             <input type="text" class="form-control form-control-sm" id="account" name="account" required>
                         </div>
                         <div class="mb-3">
-                            <form action="http:localhost:8000/resource/files" method="POST" enctype="multipart/form-data" id="file-form">
+                            <form action="http://localhost:8000/resource/files" method="POST" enctype="multipart/form-data" id="file-form">
                                 <label for="file-box" class="form-label">인증서류</label>
                                 <input type="file" id="file-box" name="file"/>
+                                <input type="hidden" name="id" id="id-hidden"/>
                             </form>
                         </div>
                     </div>

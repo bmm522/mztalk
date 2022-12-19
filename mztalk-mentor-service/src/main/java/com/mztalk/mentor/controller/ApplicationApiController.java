@@ -17,12 +17,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ApplicationApiController {
 
     private final ApplicationService applicationService;
-    private final FileService fileService;
+//    private final FileService fileService;
 
     @PostMapping("/application")
     public Long saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationMap, HttpServletRequest request) {
         Long applicationId = applicationService.save(applicationMap);
-        fileService.saveFiles(applicationId, request);
+//        fileService.saveFiles(applicationId, request);
         return applicationId;
     }
 

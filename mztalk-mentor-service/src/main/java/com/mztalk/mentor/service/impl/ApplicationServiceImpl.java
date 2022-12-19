@@ -32,6 +32,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     @Transactional
     public Long save(ConcurrentHashMap<String, String> applicationMap) {
+        System.out.println("save : " + applicationMap.get("email"));
+        System.out.println("save : " + applicationMap.get("name"));
+        System.out.println("save : " + applicationMap.get("phone"));
+
         Long userId = Long.parseLong(applicationMap.get("userId"));
         Mentee mentee = menteeRepository.findById(userId).orElseThrow(() -> new MentorNotFoundException("해당 번호의 유저가 존재하지 않습니다."));
         if(isExist(userId)){
