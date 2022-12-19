@@ -118,7 +118,7 @@
     height: 20px;
 } 
 
-#post-div{
+.post-div{
     width: 890px;
     height: 700px;
     background-color: rgb(238, 243, 198);
