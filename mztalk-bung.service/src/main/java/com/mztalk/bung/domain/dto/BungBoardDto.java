@@ -2,7 +2,6 @@ package com.mztalk.bung.domain.dto;
 
 
 import com.mztalk.bung.domain.BoardStatus;
-import com.mztalk.bung.domain.entity.BungBoard;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

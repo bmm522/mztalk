@@ -2,7 +2,6 @@ package com.mztalk.bung.domain.dto;
 
 import com.mztalk.bung.domain.BoardStatus;
 import com.mztalk.bung.domain.entity.BungAddBoard;
-import com.mztalk.bung.domain.entity.BungBoard;
 
 public class BungAddBoardDto {
 
