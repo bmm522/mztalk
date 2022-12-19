@@ -15,6 +15,5 @@ public class ImagesResponseDto {
     private String responseMessage;
 
 
-
     private List<ImagesDto> data;
 }

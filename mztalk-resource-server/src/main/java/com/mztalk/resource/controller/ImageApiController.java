@@ -43,26 +43,39 @@ public class ImageApiController {
     }
 
     // 사진 다중업로드
-    @ApiOperation(value="이미지를 다중으로 보낼 수 있게 합니다.")
+    @ApiOperation(value="이미지 다중 업로드", notes = "이미지를 여러장 보냅니다. 맨 첫번째 사진은 자동으로 레벨이 0으로 지정됩니다.")
     @PostMapping("/images")
     public ResponseEntity<?> insertImages(@RequestParam("image") List<MultipartFile> multipartFileList, ImagesDto imagesDto){
         return insertImageService.insertImages(multipartFileList, imagesDto);
     }
 
     // 메인 이미지 업로드
-    @ApiOperation(value="메인사진 업로드", notes = "메인이미지로 설정하고자 하는 곳에 요청을 보내면 자동으로 메인사진으로 등록됩니다. 후에 정보 요청을 통해서 동기화를 진행해주세요.")
+    @ApiOperation(value="메인사진 업로드", notes = "메인이미지로 설정하고자 하는 곳에 요청을 보내면 자동으로 메인사진으로 등록됩니다.", consumes = "text/html")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="image", value="이미지", dataType="MultipartFile", paramType = "param"),
+            @ApiImplicitParam(name="ImagesDto", value="해당 서비스, 글 번호", paramType = "param")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "bad request"),
+            @ApiResponse(code = 500, message = "server error")
+    })
     @PostMapping("/main-image")
     public ResponseEntity<?> insertMainImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto){
-
         return insertImageService.insertMainImage(multipartFile, imagesDto);
     }
 
 
     // 해당 글의 모든 사진데이터 불러오기
-    @ApiOperation(value="해당 글 이미지 정보 조회", notes = "해당 서비스의 글번호에 해당하는 모든 이미지를 리스트로 가져옵니다.", response = ResponseData.class)
+    @ApiOperation(value="해당 글 이미지 정보 조회", notes = "해당 서비스의 글번호에 해당하는 모든 이미지를 리스트로 가져옵니다.", consumes = "text/html", response = ResponseData.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name="bNo", value="해당 글 번호",dataType="long", paramType = "param"),
             @ApiImplicitParam(name="serviceName", value="해당 서비스 이름",dataType="String",  paramType = "param")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "bad request"),
+            @ApiResponse(code = 500, message = "server error")
     })
     @GetMapping(value="/images" , consumes = "text/html")
     public ResponseEntity<?> getImages(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName){
@@ -81,12 +94,6 @@ public class ImageApiController {
         return selectImageService.getSubImages(bNo, serviceName);
     }
 
-
-//    // 수정페이지에서 메인사진 변경하기
-//    @PostMapping(value="/main-image", consumes = "text/html")
-//    public ResponseEntity<?> changeMainImage(@RequestParam("image")MultipartFile multipartFile, ImagesDto imagesDto){
-//        return updateImageService.changeMainImage(multipartFile, imagesDto);
-//    }
 
      // 수정페이지에서 메인사진 변경하기
      // 여기서 imageName은 메인으로 등록하고자 하는 파일의 이름.
