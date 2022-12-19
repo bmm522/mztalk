@@ -1,5 +1,6 @@
 window.onload = function(){
     localStorage.removeItem('bId');
+    fetch('http://localhost:8000/bung/')
 }
 
 document.getElementById('write-btn').addEventListener('click',function(){
