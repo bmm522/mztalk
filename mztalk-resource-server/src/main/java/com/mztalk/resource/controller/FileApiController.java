@@ -42,6 +42,7 @@ public class FileApiController {
     @ApiOperation(value="파일 다중 업로드", notes = "파일을 다중으로 보냅니다.", response = ResponseData.class)
     @PostMapping(value = "/files",  consumes = "multipart/form-data",  produces = "application/json")
     public ResponseEntity<?> insertFiles(@RequestParam("file")List<MultipartFile> multipartFileList, FileRequestDto fileRequestDto){
+        System.out.println(fileRequestDto.getId());
         return insertFileService.insertFiles(multipartFileList, fileRequestDto);
     }
 
