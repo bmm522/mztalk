@@ -3,6 +3,7 @@ package com.mztalk.mentor.service.impl;
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.BoardDto;
+import com.mztalk.mentor.domain.dto.BoardDto2;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
@@ -56,12 +57,21 @@ public class BoardServiceImpl implements BoardService {
         return boardDto;
     }
 
-    //멘티가 본인이 신청한 멘토링 글을 보는 메소드
+    //멘티가 본인이 신청한 멘토링 글에 대한 참가자를 보는 메소드.
     @Override
     public Result findBoardByUserId(Long userId) {
         List<Board> boardList = boardRepository.findBoardByUserId(userId);
         List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
+    }
+
+
+    // 순수하게 본인이 작성한 글만 불러오기
+    @Override
+    public BoardDto2 getBoardByMentorId(Long mentorId) {
+        Board findBoard = boardRepository.getBoardByMentorId(mentorId);
+        BoardDto2 boardDto = new BoardDto2(findBoard);
+        return boardDto;
     }
 
     @Override
@@ -79,17 +89,17 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    @Transactional
-    public Long delete(Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new BoardNotFoundException("해당 번호의 글이 존재하지 않습니다."));
-        board.changeStatus();
-        return board.getId();
+    @Transactional //상태만 수정한다. // 수정 후 Status = No여서보이면 안된다.
+    public Long delete(Long mentorId) {
+        Board findBoard = boardRepository.getBoardByMentorId(mentorId);
+        boardRepository.delete(findBoard);
+        return findBoard.getId();
     }
 
     @Override
     @Transactional
     public Long updateBoard(Long id, BoardDto boardDto) {
-        Board savedBoard = boardRepository.findById(id).orElseThrow(() -> new BoardNotFoundException("해당 번호의 글이 존재하지 않습니다."));
+        Board savedBoard = boardRepository.getBoardByMentorId(id);
         savedBoard.updateBoard(boardDto);
         return savedBoard.getId();
     }

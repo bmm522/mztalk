@@ -2,6 +2,7 @@ package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardDto;
+import com.mztalk.mentor.domain.dto.BoardDto2;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -38,18 +39,24 @@ public class BoardApiController {
         return boardService.findBoardByMentorId(mentorId);
     }
 
+    //멘토가 작성한 글만 가져오는 메소드
+    @GetMapping("/board/mentor")
+    public BoardDto2 getBoardByMentorId(@RequestParam("mentorId")Long mentorId){
+        BoardDto2 findBoardDto = boardService.getBoardByMentorId(mentorId);
+        return findBoardDto;
+    }
 
     @GetMapping("/boards")
     public Result findAll(){
         return boardService.findAll();
     }
 
-    @PatchMapping("/board/{id}")
-    public Long deleteBoard(@PathVariable("id")Long id){
-        return boardService.delete(id);
+    @DeleteMapping("/board/delete/{id}") // 진짜로 삭제한다.
+    public Long deleteBoard(@PathVariable("id")Long mentorId){
+        return boardService.delete(mentorId);
     }
 
-    @PatchMapping("/board/edit/{id}")
+    @PatchMapping("/board/edit/{id}") //멘토 아이디로 글찾고 정보 수정
     public Long updateBoard(@PathVariable("id")Long id,@RequestBody BoardDto boardDto){
         return boardService.updateBoard(id, boardDto);
     }

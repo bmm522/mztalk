@@ -58,7 +58,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
         .then(res =>{
             if(res > 0){
                 window.alert('멘토 신청 완료');
-                location.href="mentee-mypage.html";
+                location.href="mentor-main.html";
             } else {
                 window.alert('멘토 신청 실패');
                 return false;
@@ -137,7 +137,7 @@ const getBoardList = () =>{
                 cnt += 1;
                 participate(boardId);  
             } else {
-                document.getElementById('row-div').innerHTML +=  
+                document.getElementById('row-div').innerHTML += 
                 `<div class="col-3">
                 <div class="card" style="width: 13rem; height:14rem;">
                 <div class="card-body" onclick="getBoardDetail(${boardId});"

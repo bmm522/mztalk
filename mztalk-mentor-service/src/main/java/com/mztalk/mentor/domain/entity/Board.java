@@ -85,10 +85,10 @@ public class Board extends BaseTimeEntity{
 
     public void updateBoard(BoardDto boardDto){
         this.title = boardDto.getTitle();
-        this.content = boardDto.getContent();
         this.introduction = boardDto.getIntroduction();
         this.career = boardDto.getCareer();
         this.salary = boardDto.getSalary();
+        this.content = boardDto.getContent();
     }
 
     //== 연관관계 편의 메소드==//
