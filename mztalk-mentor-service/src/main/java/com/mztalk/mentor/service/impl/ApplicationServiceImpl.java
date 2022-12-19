@@ -10,7 +10,6 @@ import com.mztalk.mentor.exception.ApplicationNotFoundException;
 import com.mztalk.mentor.exception.DuplicateException;
 import com.mztalk.mentor.exception.MentorNotFoundException;
 import com.mztalk.mentor.repository.ApplicationRepository;
-import com.mztalk.mentor.repository.FileRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
 import com.mztalk.mentor.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
     private final MenteeRepository menteeRepository;
-    private final FileRepository fileRepository;
 
     @Override
     @Transactional

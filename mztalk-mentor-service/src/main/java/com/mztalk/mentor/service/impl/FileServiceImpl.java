@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
     private final FileRepository fileRepository;
-    private final Application application;
     private final ApplicationRepository applicationRepository;
 
     @Override
