@@ -235,8 +235,8 @@
 
     
     <!--멘토 신청 페이지 모달 시작-->
-        <div class="modal fade" id="enrollModal" aria-hidden="true" aria-labelledby="enrollModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
+        <div class="modal fade" id="enrollModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="enrollModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="enrollModal">멘토 등록 페이지</h1>
@@ -245,15 +245,15 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="name" class="form-label">이름</label>
-                            <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="예)홍길동" required>
+                            <input type="text" class="form-control form-control-sm" id="mentor-name" name="name" placeholder="예)홍길동" required>
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">핸드폰번호</label>
-                            <input type="text" class="form-control form-control-sm" id="phone" name="phone" placeholder="예)010-1111-2222" required>
+                            <input type="text" class="form-control form-control-sm" id="mentor-phone" name="phone" placeholder="예)010-1111-2222" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">이메일</label>
-                            <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="예)mztalk@naver.com" required>
+                            <input type="email" class="form-control form-control-sm" id="mentor-email" name="email" placeholder="예)mztalk@naver.com" required>
                         </div>
                         <div class="mb-3">
                             <label for="job" class="form-label">현재소속</label>
@@ -267,10 +267,13 @@
                             <label for="account" class="form-label">계좌번호</label>
                             <input type="text" class="form-control form-control-sm" id="account" name="account" required>
                         </div>
-                        <!--<div class="mb-3">
-                                <label for="file" class="form-label">인증서류</label>
-                                <input type="file" class="form-control form-control-md" id="file" name="file" multiple/>
-                            </div> -->
+                        <div class="mb-3">
+                            <form action="http://localhost:8000/resource/files" method="POST" enctype="multipart/form-data" id="file-form">
+                                <label for="file-box" class="form-label">인증서류</label>
+                                <input type="file" id="file-box" name="file"/>
+                                <input type="hidden" name="id" id="id-hidden"/>
+                            </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="sendResume" class="btn btn-outline-success">멘토 신청 하기</button>
@@ -288,7 +291,9 @@
             <h1 class="modal-title fs-5" id="staticBackdropLabel">멘토 리뷰 페이지</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="reviewBody">
+            <div class="modal-body" id="reviewBody" style="text-align: left;">
+
+                <!-- 리뷰 출력 레이아웃-->
                 
             </div>
             <div class="modal-footer">

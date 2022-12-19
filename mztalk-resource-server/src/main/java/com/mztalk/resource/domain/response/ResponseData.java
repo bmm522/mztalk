@@ -1,5 +1,7 @@
 package com.mztalk.resource.domain.response;
 
+import com.mztalk.resource.domain.response.dto.ImagesResponseDto;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,8 +10,16 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class ResponseData<T> {
+
+
+    @ApiModelProperty(notes = "statusCode", example = "200")
     private int statusCode;
+
+
+    @ApiModelProperty(notes = "responseMessage", example = "데이터 조회 성공")
     private String responseMessage;
+
+    @ApiModelProperty(notes = "data")
     private T data;
 
     public ResponseData(final int statusCode, final String responseMessage) {

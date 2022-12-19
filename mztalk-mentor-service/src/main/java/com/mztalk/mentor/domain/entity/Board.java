@@ -3,6 +3,7 @@ package com.mztalk.mentor.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.BoardDto;
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,19 +28,26 @@ public class Board extends BaseTimeEntity{
     @JsonIgnore
     private Mentor mentor;
 
+    @NotNull
     private String category;
 
+    @NotNull
     private String title;
 
+    @NotNull
     private String nickname;
 
     @Lob
+    @NotNull
     private String content; // 글내용
 
+    @NotNull
     private String introduction; //자기소개
 
+    @NotNull
     private String career; // 경력
 
+    @NotNull
     private int salary; //시급
 
     @OneToMany(mappedBy = "board")

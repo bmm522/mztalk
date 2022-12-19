@@ -3,30 +3,54 @@ window.onload = () =>{
     endMyBoard();
 }
 
-// 멘토 신청하기
+// 멘토 글 작성하기 // 중복 검사 후 중복이 존재하면 글 작성 실패
 document.getElementById('mentor-write-btn').addEventListener('click',function(){
-
-    fetch("http://localhost:8000/mentors/board",{
-        method:"POST",
+    const mentorId = localStorage.getItem('userNo');
+    fetch("http://localhost:8000/mentors/board/mentor/"+mentorId,{
+        method:"GET",
         headers:{
-            "Content-Type":"application/json",
+            "Content-Type":"application/json;",
             Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
+            RefreshToken:localStorage.getItem('refreshToken')
         },
-        body:JSON.stringify({
-            category:document.getElementById('write-category').value,
-            title : document.getElementById('title').value,
-            nickname : localStorage.getItem('userNickname'),
-            userId : localStorage.getItem('userNo'),
-            content : document.getElementById('content').value,
-            introduction : document.getElementById('introduction').value,
-            career : document.getElementById('career').value,
-            salary : document.getElementById('salary').value
-        })
-    })
+    })  
+    .then((res)=>res.json())
     .then(res =>{
-        window.location.replace("mentor-main.html");
-    })         
+        if(res){
+            window.alert('이미 작성하신 게시글이 존재합니다.');
+            location.href="mentor-mypage.html";
+            return false;
+        } else {
+            fetch("http://localhost:8000/mentors/board",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json;",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken')
+             },
+            body:JSON.stringify({
+                category:document.getElementById('write-category').value,
+                title : document.getElementById('title').value,
+                nickname : localStorage.getItem('userNickname'),
+                userId : localStorage.getItem('userNo'),
+                content : document.getElementById('content').value,
+                introduction : document.getElementById('introduction').value,
+                career : document.getElementById('career').value,
+                salary : document.getElementById('salary').value
+            })
+        })    
+        .then((res)=>res.json())
+        .then(res =>{
+            if(res > 0){
+                window.alert('게시글이 작성 되었습니다.');
+                location.href="mentor-mypage.html";
+            } else {
+                window.alert('멘토 신청 실패');
+                return false;
+            }
+    })
+        }
+    })
 });
 
 // 작성한 글에 대한 멘토 신청 현황

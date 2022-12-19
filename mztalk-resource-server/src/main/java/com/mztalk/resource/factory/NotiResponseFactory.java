@@ -1,6 +1,5 @@
 package com.mztalk.resource.factory;
 
-import com.mztalk.resource.domain.dto.ImagesDto;
 import com.mztalk.resource.domain.response.ResponseData;
 import com.mztalk.resource.domain.response.ResponseMessage;
 import com.mztalk.resource.domain.response.StatusCode;
@@ -9,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+
 public class NotiResponseFactory {
+
 
 
     public static ResponseEntity<?> badRequestWhenInsert(){

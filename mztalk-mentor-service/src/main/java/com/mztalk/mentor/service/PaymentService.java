@@ -6,7 +6,7 @@ import com.mztalk.mentor.domain.entity.Result;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface PaymentService {
-    Long save(ConcurrentHashMap<String,String> paymentDto);
+    Long save(ConcurrentHashMap<String,String> paymentMap);
 
     PaymentDto findById(Long id);
 

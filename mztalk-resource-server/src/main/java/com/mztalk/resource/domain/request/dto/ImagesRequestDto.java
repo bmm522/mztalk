@@ -1,11 +1,12 @@
-package com.mztalk.resource.domain.dto;
+package com.mztalk.resource.domain.request.dto;
 
 import com.mztalk.resource.domain.entity.Images;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,17 +14,15 @@ import java.util.concurrent.ConcurrentHashMap;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImagesDto {
+public class ImagesRequestDto {
 
+    @ApiParam(value = "해당 글 번호", required = true, example = "1", type = "String")
+    @ApiModelProperty(notes = "해당 글 번호", example = "1")
+    private long bNo;
 
-
-    private String imageNo;
-    private String imageName;
-    private String imageUrl;
+    @ApiParam(value = "서비스 이름", required = true, example = "testService", type = "String")
+    @ApiModelProperty(notes = "서비스 이름", example = "testServer")
     private String serviceName;
-    private String bNo;
-    private String imageLevel;
-
 
     public Images toImagesWhenMain(String name, ConcurrentHashMap<String, String> s3Map){
         return Images.builder()
@@ -31,7 +30,7 @@ public class ImagesDto {
                 .imageName(name)
                 .imageUrl(s3Map.get("url"))
                 .serviceName(serviceName)
-                .bNo(Long.parseLong(bNo))
+                .bNo(bNo)
                 .imageLevel(0)
                 .status("Y")
                 .build();
@@ -43,23 +42,9 @@ public class ImagesDto {
                 .imageName(name)
                 .imageUrl(s3Map.get("url"))
                 .serviceName(serviceName)
-                .bNo(Long.parseLong(bNo))
+                .bNo(bNo)
                 .imageLevel(1)
                 .status("Y")
                 .build();
     }
-
-    public ImagesDto(Images i){
-        this.imageNo = String.valueOf(i.getImageId());
-        this.imageName=i.getImageName();
-        this.imageUrl=i.getImageUrl();
-        this.serviceName = i.getServiceName();
-        this.bNo = String.valueOf(i.getBNo());
-        this.imageLevel=String.valueOf(i.getImageLevel());
-    }
-
-
-
-
-
 }

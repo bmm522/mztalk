@@ -8,6 +8,7 @@ import com.mztalk.login.service.SelectUserInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -37,7 +38,12 @@ public class SelectUserInfoServiceImpl implements SelectUserInfoService {
     }
     @Override
     public UserInfoDto getUserInfoByNickname(String nickname) {
-        User user = userRepository.findByNickname(nickname);
+        User user = null;
+        try {
+            user = userRepository.findByNickname(nickname);
+        } catch (NoResultException e){
+            throw new UserNoNotFoundException("Not Found User Nickname");
+        }
         return user.toUserInfoDto();
     }
 

@@ -31,19 +31,23 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     @Transactional
-    public Long save(ConcurrentHashMap<String, String> applicationDto) {
-        Long userId = Long.parseLong(applicationDto.get("userId"));
+    public Long save(ConcurrentHashMap<String, String> applicationMap) {
+        System.out.println("save : " + applicationMap.get("email"));
+        System.out.println("save : " + applicationMap.get("name"));
+        System.out.println("save : " + applicationMap.get("phone"));
+
+        Long userId = Long.parseLong(applicationMap.get("userId"));
         Mentee mentee = menteeRepository.findById(userId).orElseThrow(() -> new MentorNotFoundException("해당 번호의 유저가 존재하지 않습니다."));
         if(isExist(userId)){
             throw new DuplicateException("이미 지원하신 서류가 존재합니다.");
         }
         Application application = Application.builder().
-                name(applicationDto.get("name")).
-                phone(applicationDto.get("phone")).
-                email(applicationDto.get("email")).
-                job(applicationDto.get("job")).
-                bank(applicationDto.get("bank")).
-                account(applicationDto.get("account")).
+                name(applicationMap.get("name")).
+                phone(applicationMap.get("phone")).
+                email(applicationMap.get("email")).
+                job(applicationMap.get("job")).
+                bank(applicationMap.get("bank")).
+                account(applicationMap.get("account")).
                 authStatus(AuthStatus.NO).
                 status(Status.YES).
                 build();
@@ -88,6 +92,4 @@ public class ApplicationServiceImpl implements ApplicationService {
         savedApplication.updateApplication(applicationDto);
         return savedApplication.getId();
     }
-
-
 }

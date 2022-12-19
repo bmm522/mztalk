@@ -7,6 +7,7 @@ import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.BoardNotFoundException;
+import com.mztalk.mentor.exception.DuplicateException;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.service.BoardService;
@@ -28,17 +29,20 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public Long saveBoard(ConcurrentHashMap<String,String> boardDto) {
-        Long userId = Long.parseLong(boardDto.get("userId"));
+    public Long saveBoard(ConcurrentHashMap<String,String> boardMap) {
+        Long userId = Long.parseLong(boardMap.get("userId"));
+        if(findBoardByMentorId(userId)){
+            throw new DuplicateException("이미 작성한 게시글이 존재합니다.");
+        }
         Mentor mentor = mentorRepository.findMentorByUserId(userId);
         Board board = Board.builder().
-                category(boardDto.get("category")).
-                title(boardDto.get("title")).
-                nickname(boardDto.get("nickname")).
-                content(boardDto.get("content")).
-                introduction(boardDto.get("introduction")).
-                career(boardDto.get("career")).
-                salary(Integer.parseInt(boardDto.get("salary"))).
+                category(boardMap.get("category")).
+                title(boardMap.get("title")).
+                nickname(boardMap.get("nickname")).
+                content(boardMap.get("content")).
+                introduction(boardMap.get("introduction")).
+                career(boardMap.get("career")).
+                salary(Integer.parseInt(boardMap.get("salary"))).
                 status(Status.YES).
                 build();
         board.addMentor(mentor);
@@ -52,11 +56,19 @@ public class BoardServiceImpl implements BoardService {
         return boardDto;
     }
 
+    //멘티가 본인이 신청한 멘토링 글을 보는 메소드
     @Override
     public Result findBoardByUserId(Long userId) {
         List<Board> boardList = boardRepository.findBoardByUserId(userId);
         List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
+    }
+
+    @Override
+    public boolean findBoardByMentorId(Long mentorId) {
+        Board board = boardRepository.findBoardByMentorId(mentorId);
+        boolean isTrue = board == null ? false : true; //이미 작성한 글이 존재하면 true반환.
+        return isTrue;
     }
 
     @Override

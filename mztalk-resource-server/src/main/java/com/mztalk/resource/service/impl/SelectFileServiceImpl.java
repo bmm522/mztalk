@@ -1,9 +1,8 @@
 package com.mztalk.resource.service.impl;
 
-import com.mztalk.resource.domain.dto.FileDto;
-import com.mztalk.resource.domain.dto.ImagesDto;
+
 import com.mztalk.resource.domain.entity.File;
-import com.mztalk.resource.domain.entity.Images;
+import com.mztalk.resource.domain.response.dto.FileResponseDto;
 import com.mztalk.resource.repository.FileRepository;
 import com.mztalk.resource.service.SelectFileService;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +26,12 @@ public class SelectFileServiceImpl implements SelectFileService {
     private final FileRepository fileRepository;
     @Override
     public ResponseEntity<?> getFiles(long id) {
-        List<FileDto> fileDtoList = null;
+        List<FileResponseDto> fileResponseDtoList = null;
 
         try {
 
             List<File> fileList = fileRepository.getFileInfo(id);
-            fileDtoList = fileList.stream().map(FileDto::new).collect(Collectors.toList());
+            fileResponseDtoList = fileList.stream().map(FileResponseDto::new).collect(Collectors.toList());
 
         } catch (NoResultException e){
 
@@ -44,6 +43,6 @@ public class SelectFileServiceImpl implements SelectFileService {
 
         }
 
-        return successWhenSelect(fileDtoList);
+        return successWhenSelect(fileResponseDtoList);
     }
 }

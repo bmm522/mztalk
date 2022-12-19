@@ -53,7 +53,6 @@ public class LoginApiController {
     public int updateRoleChangeToUser(@PathVariable("userNo")Long id){
         return updateUserInfoService.updateRoleChangeToUser(id);
     }
-// http://localhost:8000/login/user-info/{id}
     @GetMapping("user-info/{id}")
     public UserInfoDto getUserInfoByUserNo(@PathVariable("id")String id){
         return selectUserInfoService.getUserInfoByUserNo(id);

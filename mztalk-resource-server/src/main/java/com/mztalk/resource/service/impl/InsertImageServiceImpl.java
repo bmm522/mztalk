@@ -1,30 +1,20 @@
 package com.mztalk.resource.service.impl;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.mztalk.resource.domain.Role;
-import com.mztalk.resource.domain.dto.ImagesDto;
 import com.mztalk.resource.domain.entity.Images;
-import com.mztalk.resource.domain.response.ResponseData;
-import com.mztalk.resource.domain.response.ResponseMessage;
-import com.mztalk.resource.domain.response.StatusCode;
+import com.mztalk.resource.domain.request.dto.ImagesRequestDto;
 import com.mztalk.resource.factory.S3Factory;
 import com.mztalk.resource.repository.ImageRepository;
 import com.mztalk.resource.service.InsertImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static com.mztalk.resource.factory.NotiResponseFactory.*;
 
@@ -42,11 +32,11 @@ public class InsertImageServiceImpl implements InsertImageService {
 
 
     @Override
-    public ResponseEntity<?> insertImage(MultipartFile multipartFile, ImagesDto imagesDto){
+    public ResponseEntity<?> insertImage(MultipartFile multipartFile, ImagesRequestDto imagesRequestDto){
 
        try{
 
-           saveImages(multipartFile,imagesDto, Role.UPLOAD_SUB);
+           saveImages(multipartFile,imagesRequestDto, Role.UPLOAD_SUB);
 
        }  catch (IOException e){
 
@@ -64,7 +54,7 @@ public class InsertImageServiceImpl implements InsertImageService {
     }
 
     @Override
-    public ResponseEntity<?> insertImages(List<MultipartFile> multipartFileList, ImagesDto imagesDto) {
+    public ResponseEntity<?> insertImages(List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto) {
 
         for(int i = 0 ; i < multipartFileList.size() ; i++){
 
@@ -72,7 +62,7 @@ public class InsertImageServiceImpl implements InsertImageService {
 
                 try {
 
-                    saveImages(multipartFileList.get(i), imagesDto, Role.UPLOAD_MAIN);
+                    saveImages(multipartFileList.get(i), imagesRequestDto, Role.UPLOAD_MAIN);
 
                 } catch (IOException e){
 
@@ -89,7 +79,7 @@ public class InsertImageServiceImpl implements InsertImageService {
 
                 try {
 
-                    saveImages(multipartFileList.get(i),imagesDto,Role.UPLOAD_SUB);
+                    saveImages(multipartFileList.get(i),imagesRequestDto,Role.UPLOAD_SUB);
 
                 } catch (IOException e){
 
@@ -110,12 +100,12 @@ public class InsertImageServiceImpl implements InsertImageService {
 
 
     @Override
-    public ResponseEntity<?> insertMainImage(MultipartFile multipartFile, ImagesDto imagesDto) {
+    public ResponseEntity<?> insertMainImage(MultipartFile multipartFile, ImagesRequestDto imagesRequestDto) {
         try{
 
-            imageRepository.changeMainImageToSubImage(Long.parseLong(imagesDto.getBNo()), imagesDto.getServiceName());
+            imageRepository.changeMainImageToSubImage(imagesRequestDto.getBNo(), imagesRequestDto.getServiceName());
             imageRepository.commit();
-            saveImages(multipartFile,imagesDto, Role.UPLOAD_MAIN);
+            saveImages(multipartFile,imagesRequestDto, Role.UPLOAD_MAIN);
 
         } catch (IOException e){
 
@@ -132,16 +122,16 @@ public class InsertImageServiceImpl implements InsertImageService {
         return successWhenInsert();
     }
 
-    private void saveImages(MultipartFile multipartFile, ImagesDto imagesDto, Role role) throws IOException {
+    private void saveImages(MultipartFile multipartFile, ImagesRequestDto imagesRequestDto, Role role) throws IOException {
         String imageName = multipartFile.getOriginalFilename();
         Images images =null;
 
             switch (role){
                 case UPLOAD_MAIN:
-                    images = imagesDto.toImagesWhenMain(imageName, s3Factory.uploadImageToAwsS3(multipartFile));
+                    images = imagesRequestDto.toImagesWhenMain(imageName, s3Factory.uploadImageToAwsS3(multipartFile));
                     break;
                 case UPLOAD_SUB:
-                    images = imagesDto.toImagesWhenSub(imageName,s3Factory.uploadImageToAwsS3(multipartFile));
+                    images = imagesRequestDto.toImagesWhenSub(imageName,s3Factory.uploadImageToAwsS3(multipartFile));
                     break;
             }
             imageRepository.save(images);

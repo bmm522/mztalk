@@ -19,6 +19,8 @@ const getAccessToken = () =>{
 // 멘토 등록 신청서 작성 이미존재할 경우 return false 강제로 작성하면 서버측에서 Exception발생
 document.getElementById('sendResume').addEventListener('click', function(){
     const userId = localStorage.getItem('userNo');
+    document.getElementById('id-hidden').value=userId;
+    
     fetch("http://localhost:8000/mentors/application?userId="+userId,{
         method:"GET",
         headers:{
@@ -34,6 +36,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
             location.href="mentee-mypage.html";
             return false;
         } else {
+            document.getElementById('file-form').submit();
             fetch("http://localhost:8000/mentors/application",{
             method:"POST",
             headers:{
@@ -42,9 +45,9 @@ document.getElementById('sendResume').addEventListener('click', function(){
                 RefreshToken:localStorage.getItem('refreshToken')
              },
             body:JSON.stringify({
-                name :document.getElementById("name").value,
-                phone : document.getElementById("phone").value,
-                email : document.getElementById("email").value,
+                name :document.getElementById("mentor-name").value,
+                phone : document.getElementById("mentor-phone").value,
+                email : document.getElementById("mentor-email").value,
                 job : document.getElementById("job").value,
                 bank : document.getElementById("bank").value,
                 account : document.getElementById("account").value,
@@ -63,6 +66,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
     })
         }
     })
+    document.getElementById('id-hidden').value='';
 });
 
 
@@ -187,11 +191,17 @@ const watchReview = (nickname) =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log("res : " + res);
         if(res != null){
-            console.log('통신성공');
+            let star ='';
             for(const score of res.data){
-                document.getElementById('reviewBody').innerHTML += '점수 : '+score.count + ' 리뷰 : ' + score.content + '<br/>';
+                switch(score.count){
+                    case 5 : star ='★★★★★'; break;
+                    case 4 : star ='★★★★'; break; 
+                    case 3 : star ='★★★'; break; 
+                    case 2 : star ='★★'; break; 
+                    case 1 : star ='★'; break; 
+                }
+                document.getElementById('reviewBody').innerHTML +=  '<br/>' + star + '<br/>' + '<br/>' + score.content + '<br/>';
             }
         } else {
             console.log('실패');

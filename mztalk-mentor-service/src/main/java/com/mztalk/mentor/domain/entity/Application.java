@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ApplicationDto;
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,15 +31,22 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     @JsonIgnore
     private Mentor mentor;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "application")
-    private Image image;
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "application")
+    private List<File> files;
 
+    @NotNull
     private String name;
+    @NotNull
     private String phone;
+    @NotNull
     private String email;
+    @NotNull
     private String job; //현재 소속: 강사, 대학생, 대학원생
+    @NotNull
     private String bank;
+    @NotNull
     private String account;
+
     @Enumerated(EnumType.STRING)
     private AuthStatus authStatus;
 
@@ -45,13 +54,13 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     private Status status;
 
     @Builder
-    public Application(Long id, Mentee mentee, Mentor mentor, Image image, String name, String phone,
+    public Application(Long id, Mentee mentee, Mentor mentor, List<File> files, String name, String phone,
                        String email, String job, String bank, String account,
                        AuthStatus authStatus, Status status) {
         this.id = id;
         this.mentee = mentee;
         this.mentor = mentor;
-        this.image = image;
+        this.files = files;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -63,7 +72,7 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     }
 
     public void updateApplication(ApplicationDto applicationDto){
-        this.image = applicationDto.getImage();
+        this.files = applicationDto.getFiles();
         this.name = applicationDto.getName();
         this.phone = applicationDto.getPhone();
         this.email = applicationDto.getEmail();
@@ -73,9 +82,11 @@ public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity 
     }
 
     //== 연관관계 편의 메소드 ==//
-    public void addImage(Image image){
-        this.image = image;
-        image.addApplication(this);
+    public void addFile(File file){
+        this.files.add(file);
+        if(file.getApplication() != this){
+            file.addApplication(this);
+        }
     }
 
     public void addMentee(Mentee mentee){

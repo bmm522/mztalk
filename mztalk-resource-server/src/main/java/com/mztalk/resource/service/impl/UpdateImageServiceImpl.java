@@ -1,7 +1,5 @@
 package com.mztalk.resource.service.impl;
 
-import com.mztalk.resource.domain.dto.ImagesDto;
-import com.mztalk.resource.domain.entity.Images;
 import com.mztalk.resource.domain.response.ResponseData;
 import com.mztalk.resource.domain.response.ResponseMessage;
 import com.mztalk.resource.domain.response.StatusCode;
@@ -14,11 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-
-import static com.mztalk.resource.factory.NotiResponseFactory.*;
 
 @Service
 @RequiredArgsConstructor

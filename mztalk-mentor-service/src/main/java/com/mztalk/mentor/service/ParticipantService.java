@@ -6,7 +6,7 @@ import com.mztalk.mentor.domain.entity.Result;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface ParticipantService {
-    Long save(ConcurrentHashMap<String,String> participantDto);
+    Long save(ConcurrentHashMap<String,String> participantMap);
 
     ParticipantDto findById(Long id);
 
