@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.mztalk.bung.domain.entity.Result;
 
 import javax.ws.rs.Path;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,5 +55,11 @@ public class BungBoardApiController {
 //    @ResponseBody
 //    @PostMapping("/addBungBoard")
 //    public Long addBungBoard(@RequestBody bung)
+
+    @GetMapping("/recent-board")
+    public ConcurrentHashMap<String, String> getRecentBoardNo(){
+        System.out.println("요청들어옴?");
+        return bungBoardService.getRecentBoardNo();
+    }
 
 }

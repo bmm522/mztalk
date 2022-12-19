@@ -50,7 +50,7 @@ public class BungBoard {
     public void mainBoardUpdate(BungBoardDto bungBoardDto) {
         this.boardTitle = bungBoardDto.getBoardTitle();
         this.boardContent = bungBoardDto.getBoardContent();
-        this.deadlineDate = bungBoardDto.getDeadlineDate();
+        this.deadlineDate = Date.valueOf(bungBoardDto.getDeadlineDate());
         this.fullGroup = bungBoardDto.getFullGroup();
         this.category = bungBoardDto.getCategory();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());

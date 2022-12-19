@@ -13,18 +13,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 
 @Service
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class BungServiceImpl implements BungBoardService {
 
     private final BungBoardRepository bungRepository;
 
-    private final BungBoardRepositoryCustom bungRepositoryCustom;
 
     // 메인 서비스 게시글 작성
     @Override
@@ -36,7 +38,7 @@ public class BungServiceImpl implements BungBoardService {
                 boardWriter(bungBoardDto.getBoardWriter()).
                 boardTitle(bungBoardDto.getBoardTitle()).
                 boardContent(bungBoardDto.getBoardContent()).
-                deadlineDate(bungBoardDto.getDeadlineDate()).
+                deadlineDate(Date.valueOf(bungBoardDto.getDeadlineDate())).
                 fullGroup(bungBoardDto.getFullGroup()).
                 nowGroup(1L).
                 createDate(bungBoardDto.getCreateDate()).
@@ -85,6 +87,13 @@ public class BungServiceImpl implements BungBoardService {
 
     @Override
     public int increaseCount(Long bId) {
-        return bungRepositoryCustom.increaseCount(bId);
+        return bungRepository.increaseCount(bId);
+    }
+
+    @Override
+    public ConcurrentHashMap<String, String> getRecentBoardNo() {
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        map.put("bId", String.valueOf(bungRepository.findFirstByOrderByBoardIdDesc().getBoardId()+1));
+        return map;
     }
 }
