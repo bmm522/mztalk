@@ -6,13 +6,14 @@ import com.mztalk.bung.repository.BungBoardRepositoryCustom;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-@Component
+@Repository
 public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom {
     @Autowired
     private EntityManager entityManager;
@@ -32,6 +33,12 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
                 .setParameter("bId", bId)
                 .executeUpdate();
     }
+
+//    @Override
+//    public long getRecentBoardNo() {
+//        return (long) entityManager.createQuery("SELECT b.boardId FROM BungBoard b order by b.boardId DESC limit 1")
+//                .getFirstResult();
+//    }
 
 //    @Override
 //    @Transactional

@@ -20,13 +20,17 @@
     </div>
 
     
-
+    <form action="http://localhost:8000/resource/images" enctype="multipart/form-data" method="POST" id="image-form">
     <div id="fileArea">
+        
+        <input type="hidden" name="serviceName" value="bung"/>
+        <input type="hidden" name="bNo" id="bId-hidden"/>
         <div class="mb-3">
-            <input type="file" style="float: left;" id="fileUpload">  <button type="button" class="btn btn-outline-warning" style="float: right;" id="addFile" name="file">파일 추가</button>
+            <input type="file" style="float: left;" name="image"id="fileUpload">  <button type="button" class="btn btn-outline-warning" style="float: right;" id="addFile" name="file" onclick="addBtn();">파일 추가</button>
         </div>
+  
     </div>
-
+</form>
     
     <br>
     <hr>
@@ -66,8 +70,7 @@
     <div class="writerBtn" style="height: 200px; float: left; width: 50%;">
         <br><br><br><br>
         <div id="group" style="height: 100px;">
-            <select>
-                <option value="1">1명</option>
+            <select id="full-group">
                 <option value="2">2명</option>
                 <option value="3">3명</option>
                 <option value="4">4명</option>
@@ -79,48 +82,54 @@
                 <table>
                     <tr>
                         <th>
-                            <input class="form-check-input" type="checkbox" id="study">
-                            <label class="form-check-label" for="study">공부</label>
+                            <input class="form-check-input" type="checkbox" id="study" value="study">
+                            <label class="form-check-label" for="study" value="study">공부</label>
                         </th>
                         <th>
-                            <input class="form-check-input" type="checkbox" id="hobby">
-                            <label class="form-check-label" for="hobby">취미</label>
+                            <input class="form-check-input" type="checkbox" id="hobby" value="hobby">
+                            <label class="form-check-label" for="hobby" value="hobby">취미</label>
                         </th>
                         <th>
-                            <input class="form-check-input" type="checkbox" id="enjoy">
-                            <label class="form-check-label" for="enjoy">놀기</label>
+                            <input class="form-check-input" type="checkbox" id="enjoy"  value="enjoy">
+                            <label class="form-check-label" for="enjoy" value="enjoy">놀기</label>
                         </th>
                         <th>
-                            <input class="form-check-input" type="checkbox" id="food">
-                            <label class="form-check-label" for="food">음식</label>
+                            <input class="form-check-input" type="checkbox" id="food"  value="food">
+                            <label class="form-check-label" for="food"  value="food">음식</label>
                         </th>
                     </tr>
                 </table>
             </div>
         </div>
         <div id="group" style="height: 66.66px;">
-            <button type="button" class="btn btn-outline-warning">작성하기</button>
+            <button type="button" id="bung-write-btn" class="btn btn-outline-warning" >작성하기</button>
         </div>
     </div>
 </div>
 
 <script>
-    window.onload = () =>{
-		const fileArea = document.querySelector('#fileArea');
-        var count = 0;
+var count = 0;
+const addBtn = () =>{
+        const fileArea = document.querySelector('#fileArea');   
         document.getElementById('addFile').addEventListener('click', function(){
+            
+            console.log('클릭');
             for(let i = 0; i < 1; i++) {
                 if(count < 2) {
                     count++;
                     const newDiv = document.createElement('div');
                     newDiv.classList.add('mb-3');
-                    newDiv.innerHTML = '<input type="file" id="fileUpload" style="float: left;" name="file">';
+                    newDiv.innerHTML = '<input type="file" id="fileUpload" style="float: left;" name="image">';
 			        fileArea.append(newDiv);
                 } else {
                     return false;
                 }         
             }
         });
+    
+}
+    window.onload = () =>{
+		
 	}
     
     document.addEventListener("DOMContentLoaded", function() {
@@ -314,4 +323,5 @@
 </script>
 
 </body>
+<script src="JS/bung-writer.js"></script>
 </html> 
