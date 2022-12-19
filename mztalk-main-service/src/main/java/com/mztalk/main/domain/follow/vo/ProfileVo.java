@@ -1,4 +1,4 @@
-package com.mztalk.main.domain.vo;
+package com.mztalk.main.domain.follow.vo;
 
 
 import lombok.*;

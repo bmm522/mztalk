@@ -3,6 +3,7 @@ package com.mztalk.main.domain.follow.service.impl;
 
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.board.repository.BoardRepository;
+import com.mztalk.main.domain.follow.dto.FollowDto;
 import com.mztalk.main.domain.follow.entity.Follow;
 import com.mztalk.main.domain.follow.repository.FollowRepository;
 import com.mztalk.main.domain.follow.service.FollowService;
@@ -11,9 +12,11 @@ import com.mztalk.main.handler.exception.ExceptionCode;
 import com.mztalk.main.handler.exception.FollowException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.*;
 
 
@@ -24,21 +27,9 @@ import java.util.*;
 public class FollowServiceImpl implements FollowService {
 
     private final FollowRepository followRepository;
-   // private final BoardRepository boardRepository;
 
-//    private final EntityManager em;
-//
-//    //리스트 뽑아주기...
-//    @Transactional(readOnly = true)
-//    public List<FollowDto> followDtoList(Long own, Long userno ){
-//
-//        StringBuffer sb = new StringBuffer();
-//
-//
-//
-//
-//        return null;
-//    }
+    private final EntityManager em;
+
 
     @Override
     @Transactional
@@ -57,6 +48,26 @@ public class FollowServiceImpl implements FollowService {
 
         followRepository.mUnFollow(fromUserId, toUserId);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<FollowDto> followList(Long id, Long own) {
+
+        StringBuffer sb = new StringBuffer();
+
+
+
+
+        JpaResultMapper result = new JpaResultMapper();
+       // List<FollowDto> followDtos =  result.list(query, FollowDto.class);
+
+        return null;
+        //return followDtos;
+    }
+
+
+
+
 
 //    @Override
 //    public Boolean addFollow(Long toUserId, Long fromUserId) {

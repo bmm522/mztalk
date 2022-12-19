@@ -1,27 +1,34 @@
 package com.mztalk.main.domain.friend.dto;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class FriendInfoDto {
 
     private boolean isFollowing;
+
     private String requestingUsername;
 
-    @NotBlank
+    private Long userId;
+
     private String nickname;
 
-    @NotBlank
     private String profileImageUrl;
 
-    @NotBlank
     private Long boardCount;
-    @NotBlank
+
     private Long followerCount;
-    @NotBlank
+
     private Long followingCount;
+
+
+
+
 
 }

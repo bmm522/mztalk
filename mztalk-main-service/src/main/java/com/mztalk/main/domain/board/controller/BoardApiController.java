@@ -1,9 +1,13 @@
 package com.mztalk.main.domain.board.controller;
 
+import com.mztalk.main.common.CMRespDto;
+import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
 import com.mztalk.main.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,12 +28,11 @@ public class BoardApiController {
     //글쓰기
     @ResponseBody
     @PostMapping ("/saveForm")
-    public Long saveForm(@RequestBody BoardDto boardDto){
+    public ResponseEntity<?> saveForm(@RequestBody BoardDto boardDto){
 
-        System.out.println("!!!!!!!!");
-        System.out.println(boardDto);
+        Board board = boardService.save(boardDto);
 
-        return boardService.save(boardDto);
+        return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기성공", board), HttpStatus.CREATED);
     }
 
     //글수정

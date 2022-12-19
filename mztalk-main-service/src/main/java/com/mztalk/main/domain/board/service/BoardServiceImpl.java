@@ -31,12 +31,12 @@ public class BoardServiceImpl implements BoardService {
     //글쓰기
     @Override
     @Transactional
-    public Long save(BoardDto boardDto) {
-        System.out.println("@@@@");
+    public Board save(BoardDto boardDto) {
+       // System.out.println("@@@@");
         //System.out.println(boardDto.getNickname());
-        System.out.println(boardDto.getOwn());
+        //System.out.println(boardDto.getOwn());
 
-        return boardRepository.save(boardDto.toEntity()).getId();
+        return boardRepository.save(boardDto.toEntity());
     }
 
     //글수정

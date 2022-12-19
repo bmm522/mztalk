@@ -2,7 +2,7 @@ package com.mztalk.main.domain.follow.service.impl;
 
 
 import com.mztalk.main.domain.follow.service.ProfileService;
-import com.mztalk.main.domain.vo.ProfileVo;
+import com.mztalk.main.domain.follow.vo.ProfileVo;
 import com.mztalk.main.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

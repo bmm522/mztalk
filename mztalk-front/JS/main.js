@@ -150,7 +150,6 @@ document.getElementById('move-story-service').addEventListener('click',function(
     })
     .then((res)=> res.json())
     .then(res=>{
-        console.log(own);
         location.href="individualpage.html";
     })
 });
