@@ -2,110 +2,6 @@
     font-family: 'CookieRunOTF';
 }
 
-
-
-#individual-big-div{
-    overflow: hidden;
-    /* background-color: red; */
-    margin-left: 16px;
-    width: 900px;
-}
-
-#profile-div{
-    /* background-color: blue; */
-    height: 500px;
-    overflow: hidden;  
-}
-
-#profile-div > div{ 
-    display: inline-block;
-}
-#profile-image-div{
-    /* background-color: rgb(184, 184, 240); */
-    margin-top: 21px;
-    margin-left: 20px;
-    width: 430px;
-    height: 450px;
-    /* position: relative; */
-    overflow: hidden;
-
-}
-
-#nickname-div{
-    /* background-color: white; */
-    margin-top: 20px;
-    margin-left: 155px;
-    width: 120px;
-    height: 100px;
-    text-align: center;
-    font-size: 20px;
-}
-
-/* #profile-border{
-     margin-top: 140px;
-     margin-left: 140px;
-      width: 150px;
-      height: 150px;
-      background-color: chartreuse;
-      border-radius: 100px;
-} */
-
-#profile-image{
-    margin-top: 140px;
-     margin-left: 140px;
-    width: 150px;
-    height: 150px;
-    border-radius: 100px;
-}
-
-
-#follow-div{
-    margin-top: 20px;
-    width: 430px;
-    height: 225px;
-    /* background-color: aqua; */
-
-}
-
-#profile-edit-div{
-    /* background-color: bisque; */
-    width: 430px;
-    height: 225px;
-}
-
-
-/* #profile-image{
-    width: ;
-} */
-
-.follow-border{
-    background-color: aliceblue;
-    width: 100px;
-    height: 100px;
-    border:1px solid black;
-    display: inline-block;
-    border-radius: 100px;
-    margin-top: 120px;
-    margin-left: 30px;
-    overflow: hidden;
-    box-shadow: 2px 2px 2px 2px gray;
-    
-}
-
-#profile-edit-btn{
-    width: 400px;
-    height: 50px;
-    border-radius: 10px;
-    margin-top:50px;
-    margin-left: 15px;
-    font-weight: 900;
-}
-
- #profile-edit-btn:hover{
-   background-color: black;
-   color:white;   
-} 
-
 .count-div{
     /* background-color: brown; */
     margin-left: 23px;
@@ -121,9 +17,6 @@
     font-family: "고딕체";
 }
 
-
-
-
 .hidden {
     background-color: rgb(242, 244, 226);
     height: 350px;
@@ -131,9 +24,7 @@
     overflow: hidden;
     box-shadow: 1px 1px 1px 1px gray;
     display: none;
-    
 }
-
 
 #write-input-div{
     background-color: aliceblue;
@@ -146,12 +37,6 @@
 
 }
 
-/* #write-input-text{
-    border: 1px solid black;
-    width: 600px;
-    margin-left: ;
-
-} */
 .write_board{
     width: 750px;
     height: 50px;
@@ -201,9 +86,8 @@
 }
 
 
-
 #write-title-div{
-    /* background-color: black; */
+   
     width: 700px;
     height: 60px;
     margin-left: 70px;
@@ -239,7 +123,7 @@
     height: 700px;
     background-color: rgb(238, 243, 198);
     margin-top: 20px;
-    margin-left: 5px;
+    margin-left: 2.5%;
     overflow: hidden;
     border-radius: 30px;
     box-shadow: 1px 1px 1px 1px gray;
@@ -472,3 +356,391 @@
     border: 0px;
     background-color: aliceblue;
 }
+
+
+.profileContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 935px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+button {
+    cursor: pointer;
+  }
+* {
+    text-decoration: none; 
+}  
+
+/* Profile */
+.profile {
+    height: 170px;
+    display: flex;
+    margin: 54px 0 44px;
+  }
+  .profile > .profileContainer {
+    padding: 30px 20px 0;
+  }
+  .profile .profile-left,
+  .profile .profile-right {
+    height: 100%;
+  }
+  .profile .profile-left {
+    flex-basis: 40%;
+    display: flex;
+    justify-content: center;
+  }
+  .profile .profile-right {
+    flex-basis: 60%;
+  }
+  .profile .profile-left .profile-img-wrap {
+    width: 162px;
+    height: 162px;
+    padding: 6px;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+  }
+  .profile .profile-left .profile-img-wrap img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  .profile .profile-right .name-group {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  .profile .profile-right .name-group h2 {
+    font-weight: normal;
+    font-family: "Montserrat", sans-serif;
+    margin-right: 30px;
+  }
+  .profile .profile-right .name-group .cta {
+    margin-right: 10px;
+    padding: 5px 9px;
+    border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
+    border-radius: 4px;
+    color: #262626;
+    font-weight: bold;
+    background: transparent;
+  }
+  .profile .profile-right .name-group .modi {
+    border: none;
+    background: none;
+  }
+  .profile .profile-right .name-group .modi i {
+    font-size: 20px;
+    padding: 8px;
+  }
+  .profile .profile-right .subscribe {
+    height: 28px;
+    margin-bottom: 5px;
+  }
+  .profile .profile-right .subscribe ul {
+    display: flex;
+  }
+  .profile .profile-right .subscribe ul li {
+    margin-right: 18px;
+  }
+  .profile .profile-right .subscribe ul li a {
+    font-size: 16px;
+    color: #262626;
+  }
+  .profile .profile-right .subscribe ul li a span {
+    font-weight: bold;
+    margin-left: 4px;
+  }
+
+  .profile .profile-right .name-group .modi {
+    border: none;
+    background: none;
+  }
+  .profile .profile-right .name-group .modi i {
+    font-size: 20px;
+    padding: 8px;
+  }
+  .profile .profile-right .follow {
+    height: 28px;
+  }
+  .profile .profile-right .follow ul {
+    display: flex;
+  }
+  .profile .profile-right .follow ul li {
+    margin-right: 18px;
+  }
+  .profile .profile-right .follow ul li a {
+    font-size: 16px;
+    color: #262626;
+  }
+  .profile .profile-right .follow ul li a span {
+    font-weight: bold;
+    margin-left: 4px;
+  }
+
+
+  .profile-image {
+    border: 2px solid #8a3ab8;
+  }
+  
+  .modal-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-image .modal {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-image .modal button {
+    border: 0;
+    background-color: transparent;
+    height: 48px;
+    cursor: pointer;
+  }
+  .modal-image .modal p {
+    line-height: 50px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+    color: #222;
+    font-size: 18px;
+  }
+  .modal-image .modal button:nth-child(2) {
+    font-weight: 600;
+    color: #0095f6;
+  }
+  .modal-image .modal button:not(:last-child) {
+    border-bottom: 1px solid #dbdbdb;
+  }
+  
+  .modal-subscribe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-subscribe .subscribe {
+    width: 600px;
+    height: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-subscribe .subscribe .subscribe-header {
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+  }
+  .modal-subscribe .subscribe .subscribe-header button {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background-color: transparent;
+    border: 0;
+  }
+  .modal-subscribe .subscribe .subscribe-header button i {
+    font-size: 20px;
+  }
+  .modal-subscribe .subscribe .subscribe-list {
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  .modal-subscribe .subscribe .subscribe-list .subscribe__item {
+    display: flex;
+    height: 70px;
+    padding: 10px;
+  }
+  .modal-subscribe .subscribe .subscribe-list .subscribe__item .subscribe__img {
+    width: 80px;
+    text-align: center;
+  }
+  .modal-subscribe .subscribe .subscribe-list .subscribe__item .subscribe__img {
+    width: 80px;
+    text-align: center;
+  }
+  .modal-subscribe .subscribe .subscribe-list .subscribe__item .subscribe__img img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  .modal-subscribe .subscribe .subscribe-list .subscribe__item .subscribe__text {
+    padding-top: 5px;
+  }
+  .modal-subscribe .subscribe .subscribe-list .subscribe__item .subscribe__text h2 {
+    font-size: 16px;
+    line-height: 50px;
+  }
+  .modal-subscribe .subscribe .subscribe-list .subscribe__item .subscribe__btn {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .cta {
+    margin-right: 10px;
+    padding: 10px 10px;
+    border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
+    border-radius: 4px;
+    color: #262626;
+    font-weight: bold;
+    background: transparent;
+    cursor: pointer;
+  }
+  .cta.blue {
+    background: #0095f6 !important;
+    color: #fff !important;
+  }
+  
+  .modal-info {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  .modal-info .modal {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-info .modal button {
+    border: 0;
+    background-color: transparent;
+    height: 48px;
+    cursor: pointer;
+  }
+  
+  .modal-info .modal button:not(:last-child) {
+    border-bottom: 1px solid #dbdbdb;
+  }
+
+  .modal-follow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-follow .follower {
+    width: 600px;
+    height: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-follow .follower .follower-header {
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+  }
+  .modal-follow .follower .follower-header button {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background-color: transparent;
+    border: 0;
+  }
+  .modal-follow .follower .follower-header button i {
+    font-size: 20px;
+  }
+  .modal-follow .follower .follower-list {
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  .modal-follow .follower .follower-list .follower__item {
+    display: flex;
+    height: 70px;
+    padding: 10px;
+  }
+  .modal-follow .follower .follower-list .follower__item .follower__img {
+    width: 80px;
+    text-align: center;
+  }
+  .modal-follow .follower .follower-list .follower__item .follower__img {
+    width: 80px;
+    text-align: center;
+  }
+  .modal-follow .follower .follower-list .follower__item .follower__img img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  .modal-follow .follower .follower-list .follower__item .follower__text {
+    padding-top: 5px;
+  }
+  .modal-follow .follower .follower-list .follower__item .follower__text h2 {
+    font-size: 16px;
+    line-height: 50px;
+  }
+  .modal-follow .follower .follower-list .follower__item .follower__btn {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  .modal-follow .follower .follower-list .follower__item .follower__btn button {
+    border: 0;
+    background-color: rgba(128, 128, 128, 0.973);
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+
+.profile_follow_btn {
+    height: 30px;
+    width: 80px;
+    background-color: #3c88de;
+    color: white;
+    border-radius: 5px;
+    border:0px;
+    font-weight: 600;
+}
+
+
+
+
+
+
+  /* Animation */
+@keyframes loading {
+    100% {
+      stroke: #cd476b;
+  
+      transform: rotate(200deg);
+    }
+  }

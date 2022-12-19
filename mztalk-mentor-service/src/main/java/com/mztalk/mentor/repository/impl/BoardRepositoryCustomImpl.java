@@ -23,24 +23,32 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     }
 
     QBoard board = QBoard.board;
-    QMentor mentor = QMentor.mentor;
 
     @Override
     public List<Board> searchWithCondition(SearchCondition searchCondition) {
         return queryFactory
                 .selectFrom(board)
-                .where(eqCategory(searchCondition.getCategory()),
-                        lePrice(searchCondition.getSalary()+1),
-                        containsContent(searchCondition.getContent()),
-                        containsTitle(searchCondition.getTitle()))
+                .where(eqCategory(searchCondition.getCategory()).
+                        or(lePrice(searchCondition.getSalary())).
+                        or(containsContent(searchCondition.getContent())).
+                        or(containsTitle(searchCondition.getTitle())).
+                        or(containsWriter(searchCondition.getNickname())))
                 .fetch();
     }
 
     @Override
     public Mentor findMentorByBoardId(Long id) {
-        Mentor mentor = entityManager.createQuery("select m from Board b join b.mentor where b.id =:id", Mentor.class).
+        Mentor mentor = entityManager.createQuery("select m from Board b join b.mentor m where b.id =:id", Mentor.class).
                 setParameter("id", id).getSingleResult();
         return mentor;
+    }
+
+    //멘티가 본인이 신청한 멘토링 글을 보는 메소드
+    @Override
+    public List<Board> findBoardByUserId(Long userId) {
+        return entityManager.createQuery("select b from Board b join b.participants p where p.mentee =:userId", Board.class)
+                .setParameter("userId", userId)
+                .getResultList();
     }
 
     private BooleanExpression eqCategory(String category){
@@ -48,7 +56,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     }
 
     private BooleanExpression lePrice(Integer salary){
-        return salary != null ? board.salary.lt(salary) : null;
+        return salary != null ? board.salary.lt(salary+1) : null;
     }
 
     private BooleanExpression containsContent(String content){
@@ -59,9 +67,9 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         return title != null ? board.title.contains(title) : null;
     }
 
-//    private BooleanExpression eqWriter(String nickname){
-//        return nickname != null ? board.mentor.nickname.like(nickname) : null;
-//    }
+    private BooleanExpression containsWriter(String nickname){
+        return nickname != null ? board.nickname.contains(nickname) : null;
+    }
 
 
 

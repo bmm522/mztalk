@@ -2,7 +2,9 @@ package com.mztalk.mentor.domain.entity;
 
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ParticipantDto;
+import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.servlet.http.Part;
@@ -12,6 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="PARTICIPANT")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Participant extends BaseTimeEntity{
 
     @Id @GeneratedValue
@@ -26,14 +30,17 @@ public class Participant extends BaseTimeEntity{
     @JoinColumn(name = "mentee_id")
     private Mentee mentee;
 
+    @NotNull
     private String name; //멘티 신청시 이름
 
+    @NotNull
     private String phone; //멘티 신청시 핸드폰 번호
 
     @Column(nullable = true)
     @Lob
     private String message; // 멘티 신청시 남길 메시지(자유양식)
 
+    @NotNull
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -74,12 +81,12 @@ public class Participant extends BaseTimeEntity{
     }
 
     // 참가 신청 생성 메소드
-    public static Participant createParticipant(ConcurrentHashMap<String,String> participantDto, Mentee mentee, Board board){
+    public static Participant createParticipant(ConcurrentHashMap<String,String> participantMap, Mentee mentee, Board board){
         Participant participant = new Participant();
-        participant.name = participantDto.get("name");
-        participant.phone = participantDto.get("phone");
-        participant.message = participantDto.get("message");
-        participant.email = participantDto.get("email");
+        participant.name = participantMap.get("name");
+        participant.phone = participantMap.get("phone");
+        participant.message = participantMap.get("message");
+        participant.email = participantMap.get("email");
         participant.status = Status.YES;
         participant.addMentee(mentee);
         participant.addBoard(board);

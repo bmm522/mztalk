@@ -40,13 +40,12 @@
         <div class="container text-center">
             <div class="row" style="padding-top: 20px;">
                 <form class="d-flex" role="search">
-                    <input type="hidden" value=userId/>
                     <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#mentorModal">
-                        <span id="myBoard">작성한 멘토링 현황</span>
+                        <span id="getMyBoard">작성한 멘토링 현황</span>
                     </div>
 
                     <div class="mentors-myPage col-4" data-bs-toggle="modal" href="#endMentorModal">
-                        <span>완료된 멘토링</span>
+                        <span id="endMyMentoring">완료된 멘토링</span>
                     </div>
 
                     <div class="mentors-myPage col-2">
@@ -93,11 +92,10 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">{id}</th>
-                            <td>{name}</td>
-                            <td>{phone}</td>
-                            <td>{email}</td>
+                          <tr id="myBoardList">
+                            
+                            <!--내가 작성한 신청자 리스트 보는곳-->
+
                           </tr>
                         </tbody>
                     </table>
@@ -116,7 +114,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <label class="form-label">완료된 신청자 목록/완료페이지에서 볼건 없을듯?</label>
+                    <label class="form-label">완료된 신청자 목록</label>
                     <table class="table table-hover mentors-table">
                         <thead>
                           <tr>
@@ -125,9 +123,8 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">{id}</th>
-                            <td>{nickname}</td>
+                          <tr id="myMentees">
+                            <!-- 종료된 멘티들 출력화면-->
                           </tr>
                         </tbody>
                     </table>
@@ -192,7 +189,7 @@
 
     <div class="floating">
         <div class="remocon"> 
-            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
+            <figure><img src="img/mento.png" id="move-mentor-service" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
 
             <figure> <img src="img/qjd.png" style="width: 70px;"/></figure>
             

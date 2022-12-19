@@ -15,8 +15,8 @@ public class PaymentApiController {
     private final PaymentService paymentService;
 
     @PostMapping("/payment")
-    public Long savePayment(@RequestBody ConcurrentHashMap<String,String> paymentDto){
-        return paymentService.save(paymentDto);
+    public Long savePayment(@RequestBody ConcurrentHashMap<String,String> paymentMap){
+        return paymentService.save(paymentMap);
     }
 
     @GetMapping("/payment/{id}")

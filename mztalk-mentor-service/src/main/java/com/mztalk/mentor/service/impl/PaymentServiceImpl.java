@@ -25,14 +25,14 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional
-    public Long save(ConcurrentHashMap<String,String> paymentDto) {
-        Long boardId = Long.parseLong(paymentDto.get("boardId"));
-        Long userId = Long.parseLong(paymentDto.get("userId"));
+    public Long save(ConcurrentHashMap<String,String> paymentMap) {
+        Long boardId = Long.parseLong(paymentMap.get("boardId"));
+        Long userId = Long.parseLong(paymentMap.get("userId"));
 
         Board board = boardRepository.findBoardByBoardId(boardId);
         Mentee mentee = menteeRepository.findMenteeByUserId(userId);
 
-        Payment payment = Payment.createPayment(paymentDto, mentee, board);
+        Payment payment = Payment.createPayment(paymentMap, mentee, board);
         Payment savedPayment = paymentRepository.save(payment);
         return savedPayment.getId();
     }

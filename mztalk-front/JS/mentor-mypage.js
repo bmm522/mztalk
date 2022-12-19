@@ -1,62 +1,113 @@
-window.onload = function(){
-    getBoardList();
+window.onload = () =>{
+    myBoard();
+    endMyBoard();
 }
 
+// 멘토 글 작성하기 // 중복 검사 후 중복이 존재하면 글 작성 실패
 document.getElementById('mentor-write-btn').addEventListener('click',function(){
-
-    fetch("http://localhost:8000/mentors/board",{
-        method:"POST",
+    const mentorId = localStorage.getItem('userNo');
+    fetch("http://localhost:8000/mentors/board/mentor/"+mentorId,{
+        method:"GET",
         headers:{
-            "Content-Type":"application/json",
+            "Content-Type":"application/json;",
             Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
+            RefreshToken:localStorage.getItem('refreshToken')
         },
-        body:JSON.stringify({
-            category:document.getElementById('write-category').value,
-            title : document.getElementById('title').value,
-            nickname : localStorage.getItem('userNickname'),
-            userId : localStorage.getItem('userNo'),
-            content : document.getElementById('content').value,
-            introduction : document.getElementById('introduction').value,
-            career : document.getElementById('career').value,
-            salary : document.getElementById('salary').value
-        })
-    })
+    })  
+    .then((res)=>res.json())
+    .then(res =>{
+        if(res){
+            window.alert('이미 작성하신 게시글이 존재합니다.');
+            location.href="mentor-mypage.html";
+            return false;
+        } else {
+            fetch("http://localhost:8000/mentors/board",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json;",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken')
+             },
+            body:JSON.stringify({
+                category:document.getElementById('write-category').value,
+                title : document.getElementById('title').value,
+                nickname : localStorage.getItem('userNickname'),
+                userId : localStorage.getItem('userNo'),
+                content : document.getElementById('content').value,
+                introduction : document.getElementById('introduction').value,
+                career : document.getElementById('career').value,
+                salary : document.getElementById('salary').value
+            })
+        })    
+        .then((res)=>res.json())
         .then(res =>{
-            window.location.replace("mentor-main.html");
-        })
-             
+            if(res > 0){
+                window.alert('게시글이 작성 되었습니다.');
+                location.href="mentor-mypage.html";
+            } else {
+                window.alert('멘토 신청 실패');
+                return false;
+            }
+    })
+        }
+    })
 });
 
-const getBoardList = () =>{
-    fetch("http://localhost:8000/mentors/boards",{
+// 작성한 글에 대한 멘토 신청 현황
+const myBoard = () =>{
+    document.getElementById('getMyBoard').addEventListener('click',function(){
+    const mentorId = localStorage.getItem('userNo');
+    fetch("http://localhost:8000/mentors/participant?mentorId="+mentorId,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken'),
-        },  
+        },
     })
     .then((res)=>res.json())
     .then(res =>{
-        if(res.status==401){
-            getAccessToken(); 
-            location.href = "mentor-main.html";
-        } else {
-            let cnt = 1;
-            document.getElementById('board-list-div').innerHTML += '<div class="row" style="padding:20px;" id="row-div">';
-            for(let board of res.data){
-            if(cnt%4 !== 0 ){
-                document.getElementById('row-div').innerHTML +=  '<div class="col-3"><div class="card" style="width: 13rem; height:14rem;"><div class="card-body" id="modal" data-bs-toggle="modal" href="#exampleModalToggle"><h5 class="card-title">'+board.category+'</h5><h6 class="card-subtitle mb-2 text-muted">'+board.nickname+'</h6><h6 class="card-subtitle mb-2 text-muted">'+board.career+'</h6><p class="card-text">제목:'+board.title+'</p></div><input type="hidden" value='+board.id+'/><button class="btn btn-outline-success" type="button">평점보기</button></div></div>';
-                cnt += 1;  
-            } else {
-                document.getElementById('row-div').innerHTML +=  '<div class="col-3"><div class="card" style="width: 13rem; height:14rem;"><div class="card-body" id="modal" data-bs-toggle="modal" href="#exampleModalToggle"><h5 class="card-title">'+board.category+'</h5><h6 class="card-subtitle mb-2 text-muted">'+board.nickname+'</h6><h6 class="card-subtitle mb-2 text-muted">'+board.career+'</h6><p class="card-text">제목:'+board.title+'</p></div><input type="hidden" value='+board.id+'/><button class="btn btn-outline-success" type="button">평점보기</button></div></div></div><div class="row" style="padding:20px;" id="row-div">';
-                cnt += 1;  
-            }
-    }
-        }        
-    })
+        if(res!=null){
+            for(const data of res.data){
+            document.getElementById('myBoardList').innerHTML =
+                `<td>${data.board.id}</td>
+                <td>${data.mentee.nickname}</td>
+                <td>${data.phone}</td>
+                <td>${data.email}</td>`
+             }
+        } else{
+            console.log('값없음');
+        }
+    })  
+    });
+}
 
+// 멘토링이 종료된 멘티들
+const endMyBoard = () =>{
+    document.getElementById('endMyMentoring').addEventListener('click',function(){
+    const mentorId = localStorage.getItem('userNo');
+    console.log(mentorId);
+    fetch("http://localhost:8000/mentors/participant?mentorId="+mentorId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        if(res!=null){
+            for(const data of res.data){
+            document.getElementById('myMentees').innerHTML =
+                `<td>${data.board.id}</td>
+                <td>${data.mentee.nickname}</td>`
+             }
+        } else{
+            console.log('값없음');
+        }
+    })  
+    });
 }
 
 
@@ -81,3 +132,9 @@ document.getElementById('myPage').addEventListener('click', function(){
         }
     })
 });
+
+//멘토 메인페이지로 이동
+document.getElementById('move-mentor-service').addEventListener('click',function(){
+    location.href="mentor-main.html";   
+});
+

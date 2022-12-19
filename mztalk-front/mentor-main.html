@@ -128,8 +128,10 @@
             <div id="board-list-div">
                     
             </div>
+
             <!-- boardList 뿌려주는 div 끝 -->
             <input type="hidden" id="boardId-modal"/>
+
             <!--멘토링 글 상세보기 모달 시작-->
             <div id="model-section">
                 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
@@ -190,8 +192,30 @@
                     </div>
                 </div>
             </div>
-
         <!--멘토링 글 상세보기 모달 끝-->
+
+
+        <!-- 리뷰보기 모달 시작-->
+        <div class="modal fade" id="showReview" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">멘토 리뷰 페이지</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="reviewBody" style="text-align: left;">
+                    
+                    <!-- 리뷰 나오는 레이아웃-->
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- 리뷰보기 모달 끝-->
+
     </main>
 
 

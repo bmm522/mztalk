@@ -3,6 +3,7 @@ package com.mztalk.main.domain.dto;
 
 import com.mztalk.main.domain.entity.status.BoardStatus;
 
+import com.mztalk.main.domain.entity.status.PrivacyStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,14 +19,14 @@ import java.util.List;
 public class BoardDto {
 
     private Long id; //글번호
-    private String nickname; //작성자
+    private Friend nickname; //작성자
     private String title; //글제목
     private String content; //글내용
     private BoardStatus status; //글상태
     private Long own; //페이지주인
-    private String privacy; //글공개범위
+    private PrivacyStatus privacy; //글공개범위
 
-    private List<Reply> reply = new ArrayList<>();
+    private List<Reply> replyList = new ArrayList<>();
 
 
 //    public BoardDto(long id){
@@ -43,8 +44,8 @@ public class BoardDto {
                 .content(content)
                 .status(BoardStatus.YES)
                 .own(own)
-                .privacy(privacy)
-                .reply(reply)
+                .privacy(privacy.PUBLIC)
+                .reply(replyList)
                 .build();
         return board;
     }
@@ -60,7 +61,7 @@ public class BoardDto {
         this.status = board.getStatus();
         this.own = board.getOwn();
         this.privacy = board.getPrivacy();
-        this.reply = board.getReply();
+        this.replyList = board.getReplyList();
 
     }
 

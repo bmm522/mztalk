@@ -18,8 +18,8 @@ public class ScoreApiController {
     private final ScoreService scoreService;
 
     @PostMapping("/score")
-    public Long saveScore(@RequestBody ConcurrentHashMap<String,String> scoreDto){
-        return scoreService.save(scoreDto);
+    public Long saveScore(@RequestBody ConcurrentHashMap<String,String> scoreMap){
+        return scoreService.save(scoreMap);
     }
 
     //boardId로 평균구해오기 : board>mentor>score

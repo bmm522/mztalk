@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,6 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="PAYMENT")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Payment extends BaseTimeEntity{
 
     @Id @GeneratedValue
@@ -63,11 +66,11 @@ public class Payment extends BaseTimeEntity{
     }
 
     //== 결제 생성 메소드 ==//
-    public static Payment createPayment(ConcurrentHashMap<String,String> paymentDto, Mentee mentee, Board board){
+    public static Payment createPayment(ConcurrentHashMap<String,String> paymentMap, Mentee mentee, Board board){
         Payment payment = new Payment();
         payment.addMentee(mentee);
         payment.addBoard(board);
-        payment.price = Integer.parseInt(paymentDto.get("price"));
+        payment.price = Integer.parseInt(paymentMap.get("price"));
         payment.status = Status.YES;
         return payment;
     }

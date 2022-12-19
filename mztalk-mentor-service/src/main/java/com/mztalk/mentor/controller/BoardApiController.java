@@ -17,14 +17,27 @@ public class BoardApiController {
     private final BoardService boardService;
 
     @PostMapping("/board")
-    public Long saveBoard(@RequestBody ConcurrentHashMap<String,String> boardDto){
-        return boardService.saveBoard(boardDto);
+    public Long saveBoard(@RequestBody ConcurrentHashMap<String,String> boardMap){
+        return boardService.saveBoard(boardMap);
     }
 
     @GetMapping("/board/{id}")
     public BoardDto findById(@PathVariable("id")Long id){
         return boardService.findById(id);
     }
+
+    //멘티가 본인이 신청한 멘토링 글을 보는 메소드
+    @GetMapping("/board")
+    public Result findBoardByUserId(@RequestParam("userId")Long userId){
+        return boardService.findBoardByUserId(userId);
+    }
+
+    //멘토가 작성한 글이 있는지 확인하는 메소드
+    @GetMapping("/board/mentor/{mentorId}")
+    public boolean findBoardByMentorId(@PathVariable("mentorId")Long mentorId){
+        return boardService.findBoardByMentorId(mentorId);
+    }
+
 
     @GetMapping("/boards")
     public Result findAll(){

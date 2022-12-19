@@ -4,10 +4,14 @@ package com.mztalk.main.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mztalk.main.domain.entity.status.BoardStatus;
 import com.mztalk.main.domain.dto.BoardDto;
+import com.mztalk.main.domain.entity.status.PrivacyStatus;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.CascadeType.ALL;
 
 
 
@@ -17,6 +21,7 @@ import java.util.List;
 @Table(name="board")
 public class Board extends BaseTimeEntity{
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="boardId")
@@ -25,8 +30,10 @@ public class Board extends BaseTimeEntity{
 //    @ManyToOne(fetch=FetchType.EAGER) // 1명이 여러개의 글을 올릴 수 있기 때문에
 //    private Member member //누가 업로드 하는지
 
-    @Column(nullable = false)
-    private String nickname; //작성자
+    @JsonIgnoreProperties({"boards"})
+    @JoinColumn(name="nickname")
+    @ManyToOne(fetch= FetchType.EAGER)
+    private Friend nickname; //작성자
                                 //쭉 짜다보니 필요없는 느낌
     @Column(nullable=false, length= 100)
     private String title; // 글 제목
@@ -39,38 +46,60 @@ public class Board extends BaseTimeEntity{
     private Long own; //글에 주인
 
     @OrderBy("id desc ")
-    @OneToMany(mappedBy = "boardId", fetch= FetchType.EAGER) //mappedBy 연관관계의 주인 아님을 표시하기 위해(컬럼만들지않기위해)
+    @OneToMany(mappedBy = "boardId", fetch= FetchType.EAGER, cascade = ALL, orphanRemoval = true) //mappedBy 연관관계의 주인 아님을 표시하기 위해(컬럼만들지않기위해)
     @JsonIgnoreProperties({"board"})
-    private List<Reply> reply;  // 글에 대한 댓글리스트
+    private List<Reply> replyList = new ArrayList<>(); // 글에 대한 댓글리스트
 
     @Enumerated(EnumType.STRING)
     private BoardStatus status; // 글 status
 
-    @Column(nullable = false)
-    private String privacy;
+    @Enumerated(EnumType.STRING)
+    private PrivacyStatus privacy;
 
     //글쓰기
     @Builder
-    public Board(Long id, String nickname, String title, String content, Long own, List<Reply> reply,
-                 BoardStatus status, String privacy){
+    public Board(Long id, Friend nickname, String title, String content, Long own, List<Reply> reply,
+                 BoardStatus status, PrivacyStatus privacy){
         this.id = id;
         this.nickname = nickname;
         this.title = title;
         this.content = content;
         this.own = own;
-        this.reply = reply;
+        this.replyList = reply;
         this.status = status;
         this.privacy = privacy;
     }
 
+    //연관관계 편의 메서드
+    public void confirmNickname(Friend nickname){
+        this.nickname = nickname;
+        nickname.addBoard(this);
+    }
+
+    public void addReply(Reply reply){
+        replyList.add(reply);
+    }
+
     //글수정
+    public void updateTitle(String title){
+        this.title = title;
+    }
+
+    public void updateContent(String content){
+        this.content = content;
+    }
+
+    public void updatePrivacy(PrivacyStatus privacy){
+        this.privacy = privacy;
+    }
+
     public void updateBoard(BoardDto boardDto){
         this.id = boardDto.getId();
         this.nickname = boardDto.getNickname();
         this.title = boardDto.getTitle();
         this.content = boardDto.getContent();
         this.own = boardDto.getOwn();
-        this.reply = boardDto.getReply();
+        this.replyList = boardDto.getReplyList();
         this.status = boardDto.getStatus();
         this.privacy = boardDto.getPrivacy();
     }
@@ -79,7 +108,6 @@ public class Board extends BaseTimeEntity{
     public void changeStatus(){
         this.status = BoardStatus.NO;
     }
-
 
 
 }

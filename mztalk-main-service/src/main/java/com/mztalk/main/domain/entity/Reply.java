@@ -3,10 +3,7 @@ package com.mztalk.main.domain.entity;
 
 import com.mztalk.main.domain.entity.status.FriendStatus;
 import com.mztalk.main.domain.entity.status.ReplyStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,7 +11,7 @@ import javax.persistence.*;
 
 
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 @Builder

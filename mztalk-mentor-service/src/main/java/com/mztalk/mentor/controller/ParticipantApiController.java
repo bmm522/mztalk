@@ -15,15 +15,19 @@ public class ParticipantApiController {
     private final ParticipantService participantService;
 
     @PostMapping("/participant")
-    public Long save(@RequestBody ConcurrentHashMap<String,String> participantDto){
-        String boardId = participantDto.get("boardId");
-        System.out.println("boardId = " + boardId);
-        return participantService.save(participantDto);
+    public Long save(@RequestBody ConcurrentHashMap<String,String> participantMap){
+        String boardId = participantMap.get("boardId");
+        return participantService.save(participantMap);
     }
 
     @GetMapping("/participant/{id}")
     public ParticipantDto findParticipant(@PathVariable("id") Long id){
         return participantService.findById(id);
+    }
+
+    @GetMapping("/participant")
+    public Result findParticipantsByMentorId(@RequestParam("mentorId")Long mentorId){
+        return participantService.findParticipantsByMentorId(mentorId);
     }
 
     @GetMapping("/participants")
