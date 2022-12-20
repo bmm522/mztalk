@@ -40,24 +40,26 @@
     <div class="container text-center">
         <div class="row" style="padding-top: 20px;">
             <form class="d-flex" role="search" action="#" method="post">
-                <div class="mentors-myPage col-4" onclick="allMentoring();" data-bs-toggle="modal" href="#menteeModal">
+                <div class="mentors-myPage col-3" onclick="allMentoring();" data-bs-toggle="modal" href="#menteeModal">
                     <span>신청한 멘토링</span>
                 </div>
 
-                <div class="mentors-myPage col-4" onclick="endMentoring();" data-bs-toggle="modal" href="#endMenteeModal">
+                <div class="mentors-myPage col-3" onclick="endMentoring();" data-bs-toggle="modal" href="#endMenteeModal">
                     <span>완료된 멘토링</span>
                 </div>
 
-                <div class="mentors-myPage col-2">
-                 <span data-bs-toggle="modal" href="#enrollModal">
-                    멘토 신청하기
-                 </span>
+                <div class="mentors-myPage col-3">
+                    <span data-bs-toggle="modal" href="#enrollModal">
+                        멘토 신청하기
+                    </span>
                 </div>
 
-                <div class="mentors-myPage col-3">
-                <img src="https://cdn-icons-png.flaticon.com/128/8763/8763321.png" 
-                style="width: 38px; height: 28px; padding-left:10px;"
-                id="myPage">
+                <div class="mentors-myPage col-2">
+                    <span id="moveReviewPage">리뷰 관리 페이지</span>
+                </div>
+
+                <div class="mentors-myPage">
+                    <img src="https://cdn-icons-png.flaticon.com/128/8763/8763321.png" style="width: 28px; height: 28px;"id="myPage">
                 </div>      
             </form>  
         </div>  
@@ -294,7 +296,9 @@
             </div>
             <div class="modal-body" id="reviewBody" style="text-align: left;">
 
-                <!-- 리뷰 출력 레이아웃-->
+
+                <!-- 리뷰 상세 보기 출력 레이아웃-->
+
                 
             </div>
             <div class="modal-footer">

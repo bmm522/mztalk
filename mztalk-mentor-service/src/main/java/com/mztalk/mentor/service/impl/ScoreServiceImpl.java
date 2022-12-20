@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -65,6 +64,13 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public Result findByUserId(Long userId) {
         List<Score> scores = scoreRepository.findByUserId(userId);
+        List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
+
+    @Override
+    public Result findByMentorId(Long mentorId) {
+        List<Score> scores = scoreRepository.findByMentorId(mentorId);
         List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
         return new Result(collect);
     }

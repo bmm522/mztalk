@@ -39,6 +39,12 @@ public class ScoreApiController {
         return scoreService.findByUserId(userId);
     }
 
+    //mentor의 userId로 작성된 리뷰 가져오기
+    @GetMapping("/score/mentor/{mentorId}")
+    public Result findByMentorId(@PathVariable("mentorId")Long mentorId){
+        return scoreService.findByMentorId(mentorId);
+    }
+
     @GetMapping("/scores")
     public Result findScores(){
         return scoreService.findAll();

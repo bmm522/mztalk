@@ -345,7 +345,13 @@ document.getElementById('myPage').addEventListener('click', function(){
     })
 });
 
-//멘토서비스보내기
+
+// 리뷰 관리 페이지로 이동하기
+document.getElementById('moveReviewPage').addEventListener('click',function(){
+    location.href="mentee-review-page.html";
+});
+
+// 멘토서비스보내기
 document.getElementById('move-mentor-service').addEventListener('click',function(){
     location.href="mentor-main.html";   
 });

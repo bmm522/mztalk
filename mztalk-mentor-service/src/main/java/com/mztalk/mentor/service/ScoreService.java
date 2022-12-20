@@ -21,4 +21,6 @@ public interface ScoreService {
     boolean isExist(Long userId, Long boardId);
 
     Result findByUserId(Long userId);
+
+    Result findByMentorId(Long mentorId);
 }

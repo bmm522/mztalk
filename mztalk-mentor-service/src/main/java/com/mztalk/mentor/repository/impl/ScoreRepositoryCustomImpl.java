@@ -35,5 +35,13 @@ public class ScoreRepositoryCustomImpl implements ScoreRepositoryCustom {
         return scores;
     }
 
+    @Override
+    public List<Score> findByMentorId(Long mentorId) {
+        List<Score> scores = entityManager.createQuery("select s from Score s join fetch s.mentee mentee join fetch s.mentor mentor where mentor.id =: mentorId", Score.class)
+                .setParameter("mentorId", mentorId)
+                .getResultList();
+        return scores;
+    }
+
 
 }

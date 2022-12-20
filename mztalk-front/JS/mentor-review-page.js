@@ -19,7 +19,7 @@ const getAccessToken = () =>{
 
 const getMyReview = () =>{
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/score/mentee/"+userId,{
+    fetch("http://localhost:8000/mentors/score/mentor/"+userId,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -39,12 +39,8 @@ const getMyReview = () =>{
                 <tr>
                     <td>${score.id}</td>
                     <td>${score.count}</td>
-                    <td>${score.content}</td>
                     <td>
                         <button type="button" class="btn btn-outline-success" onclick="myReview(${score.id});" data-bs-toggle="modal" data-bs-target="#myReview">보기</button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-outline-danger" onclick="deleteReview(${score.id});">삭제</button>
                     </td>
                 </tr> 
                 
@@ -58,29 +54,20 @@ const getMyReview = () =>{
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="scoreId" class="form-label">리뷰 고유 번호</label>
-                                <input type="text" class="form-control form-control-sm" id="scoreId" readonly>
+                                <input type="text" class="form-control form-control-sm" id="scoreId" value="${score.id}" readonly>
                             </div>
                             <div class="mb-3">
-                                <label for="count" class="form-label">별점</label>
-                                <select id="count" class="form-select">
-                                    <option value="5.0">★★★★★</option>
-                                    <option value="4.0">★★★★</option>
-                                    <option value="3.0">★★★</option>
-                                    <option value="2.0">★★</option>
-                                    <option value="1.0">★</option>
-                                </select>
+                                <label for="count" class="form-label">점수</label>
+                                <input type="text" class="form-control form-control-sm" id="count" value="${score.count}" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="content" class="form-label">리뷰 내용</label>
-                                <textarea class="form-control" id="content" style="height: 300px; padding-top: 10px;"></textarea>
+                                <textarea class="form-control" id="content" style="height: 300px; padding-top: 10px;">${score.content}</textarea>
                             </div>
                         </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-outline-success" type="button" onclick="modifyReview(${score.id});" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정하기</button>
                     </div>
                 </div>
-            </div>
-        </div>`;
+            </div>`;
             }        
         }
     });
@@ -105,60 +92,6 @@ const myReview = (scoreId) =>{
             alert('리뷰가 존재하지 않습니다');
         }
     })
-}
-
-// 리뷰 제출하기
-const modifyReview = (scoreId) => {
-    console.log(scoreId);
-    fetch("http://localhost:8000/mentors/score/"+scoreId,{
-         method:"PATCH",
-         headers:{
-             "Content-Type":"application/json;",
-             Authorization:localStorage.getItem('authorization'),
-             RefreshToken:localStorage.getItem('refreshToken')
-         },
-         body:JSON.stringify({
-             count : document.getElementById("count").value,
-             content : document.getElementById("content").value,
-         })
-     })    
-     .then((res)=>res.json())
-     .then(res =>{
-         if(res > 0){
-             window.alert('리뷰 수정 완료');
-             location.href="mentee-review-page.html";
-         } else{
-             window.alert('리뷰 수정에 실패하셨습니다.');
-             location.href="mentee-review-page.html";
-         }
-     })
- }
-
-// 리뷰 삭제 메소드
-const deleteReview = (scoreId) => {
-    fetch("http://localhost:8000/mentors/score/"+scoreId,{
-        method:"DELETE",
-        headers:{
-            "Content-Type":"application/json;",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken')
-        },
-    })
-    .then((res)=>res.json())
-    .then(res =>{
-        if(res>0){
-            window.alert('리뷰가 삭제 되었습니다.');
-            location.href="mentee-review-page.html";
-        } else {
-            window.alert('리뷰가 삭제에 실패했습니다.');
-            location.href="mentee-review-page.html";
-        }
-    })
-}
-
-// 리뷰 작성 페이지 글번호 보여주기
-const showBoardId = (boardId)=>{
-    document.getElementById('boardId').value = boardId;
 }
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
