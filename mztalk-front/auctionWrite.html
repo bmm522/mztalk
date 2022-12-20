@@ -67,7 +67,7 @@
     <article>
 
 		<div class="container" role="main">
-			<!-- <form name="form" id="form" role="form" method="post"> -->
+			
 				<div class="mb-3">
 					<label for="title">제목</label>
 					<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
@@ -76,14 +76,14 @@
                     <label for="inputFiles">파일 첨부</label>
                     
                     <div class = "row" id = "fileArea">
-                        <form action ="http://localhost:8000/resource/images" method="POST" enctype="multipart/form-data" id="image-form-form">
-                        <input type="hidden" name="serviceName" value="auction"/>
-                         <input type="hidden" name="bNo" value="1"/> 
-                        <div class = "col-10" id = "count">
+                        <form action ="http://localhost:8000/resource/images" method="POST" enctype="multipart/form-data" id="image-form-form" style = "display: inline-block;">
+                            <input type="hidden" name="serviceName" value="auction"/>
+                            <input type="hidden" name="bId" value="1"/> 
+                            <div class = "col-10" id = "count">
                                 <input type="file" class="form-control" id="inputFiles" name = "image"/>
-                        </div>
-                    </form>
-                        <div class = "col-2">
+                            </div>
+                        </form>
+                        <div class = "col-2" >
                             <button type = "button" id = "addFile" style = "margin-top: 20px;margin-left: 10px;">+</button>
                         </div>
                     </div>
@@ -107,9 +107,9 @@
 					    <input type="text" class="form-control" onkeyup="timeStandard(this);" maxlength = "4" placeholder="24(시간)" id="timeLimit">
                     </div>
 				</div> 
-			<!-- </form> -->
+			
 			<div style = "margin-left: 260px;margin-top:50px;">
-				<button type="button" class="boardBtn" id="writeBtn" onclick="writeEvent();" >글쓰기</button>
+				<button type="button" class="boardBtn" id="writeBtn" onclick="boardWrite();" >글쓰기</button>
 				<button type="button" class="boardBtn" id="listBtn">목록</button>
 			</div>
 		</div>

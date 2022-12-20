@@ -1,3 +1,5 @@
+
+//슬라이드 관련
 const slides = document.querySelector('.slides');
 const slideImg = document.querySelectorAll('.slides li');
 let currentIdx = 0;
@@ -7,8 +9,6 @@ const next = document.querySelector('.next');
 const slideWidth = 300;
 const slideMargin = 100;
 
-//슬라이드 관련
-//전체 슬라이드 컨테이너 넓이 설정
 slides.style.width = (slideWidth + slideMargin) * slideCount + 'px';
 
 function moveSlide(num) {
@@ -34,14 +34,8 @@ document.getElementById("priceSubmitBtn").addEventListener('click', function() {
         alert('시작 금액보다 큰 금액을 입력해 주세요');
     }
 });
-ㅔㅁㅎㄷ=1
 //입찰가 전달
 document.getElementById("priceSubmitBtn").addEventListener('click', function() {
-    const linkArr = document.location.href.split("/");
-    const bId = linkArr[linkArr.length - 1];
-    console.log(Number(document.getElementById('inputPrice').value));
-    // console.log(bId);
-
     fetch("http://localhost:8000/auction/board/", {
         method: "POST",
         headers: {
@@ -54,6 +48,76 @@ document.getElementById("priceSubmitBtn").addEventListener('click', function() {
     .then(res => {
         console.log('통신 성공');
     })
-
-
 });
+
+//댓글 작성
+function writeComment() {
+    fetch("http://localhost:8000/auction/comment/" + document.getElementById("hidden-bId"), {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json",
+        },
+        body:JSON.stringify({
+            "bId" : document.getElementById("hidden-bId").value,
+            "commInput" : document.getElementById("commInput").value
+        }),
+    })
+    .then(res => {
+        console.log('통신 성공');
+    })
+}
+
+//댓글 수정
+function updateComment() {
+    //input 폼으로
+    document.getElementById('commContent').innerHTML = "<input type = 'text' id = 'commUpdate' style = 'width: 450px'/>"
+    fetch("http://localhost:8000/auction/comment/" + cId, {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json",
+        },
+        body:JSON.stringify({
+            "cId" : document.getElementById("hidden-cId").value(),
+            "content" : document.getElementById("commUpdate").value()
+        }),
+    })
+    .then(res => {
+        console.log('통신 성공');
+    })
+}
+
+//댓글 삭제
+function deleteComment() {
+    if(window.confirm("정말 삭제하시겠습니까?")) {
+        fetch("http://localhost:8000/auction/deleteComment/" + cId, {
+        method: "PUT",
+        headers: {
+            "Content-Type":"application/json",
+        },
+        body:JSON.stringify({
+            "cId" : document.getElementById("hidden-cId").value()
+        }),
+    })
+    .then(res => {
+        console.log('통신 성공');
+    })
+    }
+}
+
+//bId
+window.onload = () => {
+    fetch("http://localhost:8000/auction/board", {
+        method: "GET",
+        headers: {
+            "Content-Type":"application/json",
+        }
+    })
+    .then(res => res.json())
+    .then(res => {
+        console.log(res);
+        for(var bId in res) {
+            console.log(res[bId]);
+        }
+    })
+}
+

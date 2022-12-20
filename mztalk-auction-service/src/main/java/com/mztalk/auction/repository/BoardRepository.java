@@ -7,4 +7,6 @@ public interface BoardRepository extends JpaRepository<Board, Long>, CustomAucti
 
 
     Board findBybId(Long bId);
+
+
 }

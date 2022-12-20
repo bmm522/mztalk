@@ -2,7 +2,9 @@ package com.mztalk.auction.controller;
 
 import com.mztalk.auction.domain.dto.BoardRequestDto;
 import com.mztalk.auction.domain.dto.BoardDto;
+import com.mztalk.auction.domain.dto.CommentDto;
 import com.mztalk.auction.domain.entity.Board;
+import com.mztalk.auction.domain.entity.Comment;
 import com.mztalk.auction.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ public class AuctionController {
     public ConcurrentHashMap<String, String> insertBoard(@RequestBody BoardRequestDto boardRequestDto){
         ConcurrentHashMap<String, String> map=new ConcurrentHashMap<>();
         map.put("bId", String.valueOf(auctionService.insertBoard(boardRequestDto)));
+        System.out.println(map.get("bId"));
         return map;
     }
 
@@ -57,16 +60,41 @@ public class AuctionController {
         return auctionService.updatePrice(bId, boardDto);
     }
 
-    // 최신글 번호뽑아오기
+    //최신글 번호뽑아오기
     @GetMapping("/recent-board")
     public ConcurrentHashMap<String, String> getRecentBoardNo(){
+        System.out.println("bId: " + getRecentBoardNo().get("bId"));
         return auctionService.getRecentBoardNo();
+
     }
 
+    //이미지
     @GetMapping("/images/{bId}")
     public void setImage(@PathVariable("bId")long bId){
         System.out.println("bId : " + bId );
     }
+
+    //댓글 작성
+    @PostMapping("/comment/{bId}")
+    public Comment insertComment(@RequestBody CommentDto commentDto, @PathVariable Long bId) {
+        return auctionService.insertComment(commentDto, bId);
+    }
+
+    //댓글 수정
+    @PatchMapping("/comment/{cId}")
+    public int updateComment(@PathVariable Long cId, @RequestBody CommentDto commentDto) {
+        return auctionService.updateComment(cId, commentDto);
+    }
+
+    //댓글 삭제
+    @PatchMapping("/deleteComment/{cId}")
+    public int deleteComment(@PathVariable Long cId, @RequestBody CommentDto commentDto) {
+        return auctionService.deleteComment(cId, commentDto);
+    }
+
+
+
+
 
 
 
