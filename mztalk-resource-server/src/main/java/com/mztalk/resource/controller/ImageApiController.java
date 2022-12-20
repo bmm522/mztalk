@@ -37,6 +37,7 @@ public class ImageApiController {
 
 
 
+
     // 이미지 단일업로드 or 서브 이미지 업로드 or 기존 사진에 서브 이미지 업로드
     @ApiOperation(value="이미지 단일 업로드", notes = "이미지를 단일로 보냅니다. 사진레벨은 1로 지정됩니다.", response = ResponseData.class)
     @PostMapping(value= "/image", consumes = "multipart/form-data",  produces = "application/json")
@@ -130,6 +131,7 @@ public class ImageApiController {
     public ResponseEntity<?> deleteImageDetail(@RequestParam("imageName")String objectKey){
         return deleteImageService.deleteImageDetail(objectKey);
     }
+
 }
 
 // 각 DB에 필요한
