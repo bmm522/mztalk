@@ -1,5 +1,6 @@
 package com.mztalk.auction.controller;
 
+import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.BoardRequestDto;
 import com.mztalk.auction.domain.dto.BoardDto;
 import com.mztalk.auction.domain.dto.CommentDto;
@@ -23,6 +24,7 @@ public class AuctionController {
     //게시글 작성
     @PostMapping("/board")
     public ConcurrentHashMap<String, String> insertBoard(@RequestBody BoardRequestDto boardRequestDto){
+        System.out.println("controller : " + boardRequestDto.getTimeLimit());
         ConcurrentHashMap<String, String> map=new ConcurrentHashMap<>();
         map.put("bId", String.valueOf(auctionService.insertBoard(boardRequestDto)));
         System.out.println(map.get("bId"));
@@ -37,7 +39,7 @@ public class AuctionController {
 
     //전체 게시글 목록
     @GetMapping("/board")
-    public List<Board> selectBoardList() {
+    public Result<?> selectBoardList() {
         return auctionService.selectBoardList();
     }
 
@@ -63,7 +65,7 @@ public class AuctionController {
     //최신글 번호뽑아오기
     @GetMapping("/recent-board")
     public ConcurrentHashMap<String, String> getRecentBoardNo(){
-        System.out.println("bId: " + getRecentBoardNo().get("bId"));
+//        System.out.println("bId: " + getRecentBoardNo().get("bId"));
         return auctionService.getRecentBoardNo();
 
     }

@@ -1,5 +1,7 @@
 package com.mztalk.auction.service.impl;
 
+import com.mztalk.auction.domain.Result;
+import com.mztalk.auction.domain.dto.BoardListResponseDto;
 import com.mztalk.auction.domain.dto.BoardRequestDto;
 import com.mztalk.auction.domain.dto.BoardDto;
 import com.mztalk.auction.domain.dto.CommentDto;
@@ -9,11 +11,16 @@ import com.mztalk.auction.repository.BoardRepository;
 import com.mztalk.auction.repository.CommentRepository;
 import com.mztalk.auction.service.AuctionService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,8 +35,9 @@ public class AuctionServiceImpl implements AuctionService {
     @Transactional
     @Override
     public Long insertBoard(BoardRequestDto boardRequestDto) {
-
-        return boardRepository.save(boardRequestDto.toEntity()).getBId();
+       long bId = boardRepository.save(boardRequestDto.toEntity()).getBoardId();
+        System.out.println("post : " + bId);
+        return bId;
     }
 
     //게시글 수정
@@ -40,8 +48,32 @@ public class AuctionServiceImpl implements AuctionService {
 
     //전체 게시글 조회
     @Override
-    public List<Board> selectBoardList() {
-        return boardRepository.findAll();
+    public Result<?> selectBoardList() {
+        List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
+        List<Board> boardList =  boardRepository.findAll();
+
+        for(Board board : boardList){
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "text/html");
+            System.out.println("list 가져오기 : " + board.getBoardId());
+            ResponseEntity<String> response = new RestTemplate().exchange(
+              "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
+              HttpMethod.GET,
+              new HttpEntity<String>(headers),
+              String.class
+            );
+            JSONObject jsonObject = new JSONObject(response.getBody());
+            JSONObject jsonData = jsonObject.getJSONObject("data");
+            String imageUrl = jsonData.getString("imageUrl");
+            String imageName = jsonData.getString("objectKey");
+
+            boardListResponseDtoList.add(new BoardListResponseDto(board, imageUrl, imageName));
+
+        }
+
+
+        return new Result<>(boardListResponseDtoList);
+
     }
 
     //게시물 삭제
@@ -54,7 +86,7 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public Board selectBoard(Long bId) {
 
-        return boardRepository.findBybId(bId);
+        return boardRepository.findByBoardId(bId);
     }
 
     //입찰가
@@ -72,9 +104,15 @@ public class AuctionServiceImpl implements AuctionService {
     //최신 글 번호 받아오기
     @Override
     public ConcurrentHashMap<String, String> getRecentBoardNo() {
-        long bId =  boardRepository.getRecentBoardNo();
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-//        map.put("bId", String.valueOf(bId+1));
+        long bId = 0L;
+        try{
+            bId = boardRepository.findFirstByOrderByBoardIdDesc().getBoardId()+1;
+        } catch (NullPointerException e){
+             map.put("bId", "1");
+             return map;
+        }
+        map.put("bId", String.valueOf(bId));
         return map;
     }
 

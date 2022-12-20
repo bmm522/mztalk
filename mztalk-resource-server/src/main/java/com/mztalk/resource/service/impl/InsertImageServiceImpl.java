@@ -56,6 +56,9 @@ public class InsertImageServiceImpl implements InsertImageService {
     @Override
     public ResponseEntity<?> insertImages(List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto) {
 
+        System.out.println("insert : " + imagesRequestDto.getBNo());
+        System.out.println("insert : " + imagesRequestDto.getServiceName());
+
         for(int i = 0 ; i < multipartFileList.size() ; i++){
 
             if(i == 0) {
@@ -63,14 +66,15 @@ public class InsertImageServiceImpl implements InsertImageService {
                 try {
 
                     saveImages(multipartFileList.get(i), imagesRequestDto, Role.UPLOAD_MAIN);
-
+                    imageRepository.commit();
+                    System.out.println("커밋됨");
                 } catch (IOException e){
 
                     log.error("Fail Images Save");
                     return badRequestWhenInsert();
 
                 } catch (Exception e){
-
+                    System.out.println(e.getMessage());
                     log.error("Server Error");
                     return serverError();
 

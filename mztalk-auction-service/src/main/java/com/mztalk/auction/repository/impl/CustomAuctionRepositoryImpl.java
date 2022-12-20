@@ -54,11 +54,6 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
                 .executeUpdate();
     }
 
-    @Override
-    public long getRecentBoardNo() {
-        return entityManager.createQuery("SELECT b.bId from Board b order by b.bId DESC limit 1")
-                .getFirstResult();
-    }
 
     @Transactional
     @Override

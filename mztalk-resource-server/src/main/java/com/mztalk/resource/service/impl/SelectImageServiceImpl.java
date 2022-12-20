@@ -59,12 +59,15 @@ public class SelectImageServiceImpl implements SelectImageService {
 
     @Override
     public ResponseEntity<?> getMainImage(long bNo, String serviceName) {
+        System.out.println("main : " + bNo);
+        System.out.println("main : " + serviceName);
         ImagesResponseDto imagesResponseDto = null;
         try{
             imagesResponseDto = new ImagesResponseDto(imageRepository.getMainImage(bNo, serviceName));
         } catch (NoResultException e){
             return badRequestWhenSelect();
         } catch (Exception e){
+            System.out.println(e.getMessage());
             return serverError();
         }
         return successWhenSelect(imagesResponseDto);

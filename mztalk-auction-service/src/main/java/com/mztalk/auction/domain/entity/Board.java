@@ -19,7 +19,7 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bId;
+    private long boardId;
 
     @Column(nullable = false, length = 100)
     private String title;
@@ -45,7 +45,8 @@ public class Board {
 
     private Integer startPrice;
 
-    private Integer timeLimit;
+    private String timeLimit;
+
 
     private Integer currentPrice;
 
@@ -56,14 +57,13 @@ public class Board {
     private List<Comment> comments;
 
     public Board(Long bId, String title, String content, String writer, Integer count, Integer startPrice, Integer timeLimit, Integer CurrentPrice, String buyerNickname) {
-        this.bId = bId;
+        this.boardId = bId;
         this.title = title;
         this.content = content;
         this.writer = writer;
         this.count = count;
         this.startPrice = startPrice;
-        this.timeLimit = timeLimit;
-        this.currentPrice = currentPrice;
+        this.timeLimit = String.valueOf(timeLimit);
         this.buyerNickname = buyerNickname;
     }
 }

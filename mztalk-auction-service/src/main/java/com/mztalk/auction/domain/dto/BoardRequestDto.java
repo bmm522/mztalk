@@ -3,6 +3,9 @@ package com.mztalk.auction.domain.dto;
 import com.mztalk.auction.domain.entity.Board;
 import lombok.*;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,6 +23,8 @@ public class BoardRequestDto {
 
     private String timeLimit;
 
+    private String currentTime;
+
     public Board toEntity() {
         return Board.builder()
                 .title(title)
@@ -28,6 +33,8 @@ public class BoardRequestDto {
                 .status("Y")
                 .writer(writer)
                 .startPrice(startPrice)
+                .currentPrice(startPrice)
+                .timeLimit(timeLimit)
                 .build();
 
 

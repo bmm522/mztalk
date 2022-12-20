@@ -24,7 +24,7 @@ public class BoardDto {
                 .writer(writer)
                 .count(count)
                 .startPrice(startPrice)
-                .timeLimit(timeLimit)
+                .timeLimit(String.valueOf(timeLimit))
                 .currentPrice(currentPrice)
                 .status("Y")
                 .build();
