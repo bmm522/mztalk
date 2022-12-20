@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -41,14 +42,29 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public Double findById(Long id) {
-        Double avgScore = scoreRepository.findScoreByBoardId(id); //평균 구하기 메소드
-        return avgScore;
+    public ScoreDto findById(Long id) {
+        Score score = scoreRepository.findById(id).orElseThrow(() -> new ScoreNotFoundException("해당 번호의 리뷰가 존재하지 않습니다."));
+        ScoreDto scoreDto = new ScoreDto(score);
+        return scoreDto;
     }
 
     @Override
     public Result findScoresByNickname(String nickname) {
         List<Score> scores = scoreRepository.findByNickname(nickname);
+        List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
+
+    @Override
+    public boolean isExist(Long userId, Long boardId) {
+        Score score = scoreRepository.isExist(userId, boardId);
+        boolean isExist = score == null ? false : true;
+        return isExist;
+    }
+
+    @Override
+    public Result findByUserId(Long userId) {
+        List<Score> scores = scoreRepository.findByUserId(userId);
         List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
         return new Result(collect);
     }

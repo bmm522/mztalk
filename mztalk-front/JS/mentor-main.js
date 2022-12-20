@@ -86,7 +86,8 @@ const getBoardDetail = (bId) =>{
         .then((res)=>res.json())
         .then(res =>{
             if(res != null){
-                document.getElementById('modal-body').innerHTML = res.content;
+                document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "</br>";
+                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
                 document.getElementById('modal-salary').innerHTML = res.salary;
             } else {
                 console.log('실패');

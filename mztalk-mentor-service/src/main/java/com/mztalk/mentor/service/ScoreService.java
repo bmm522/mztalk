@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public interface ScoreService {
     Long save(ConcurrentHashMap<String,String> scoreMap);
 
-    Double findById(Long id);
+    ScoreDto findById(Long id);
 
     Result findAll();
 
@@ -18,4 +18,7 @@ public interface ScoreService {
 
     Result findScoresByNickname(String nickname);
 
+    boolean isExist(Long userId, Long boardId);
+
+    Result findByUserId(Long userId);
 }

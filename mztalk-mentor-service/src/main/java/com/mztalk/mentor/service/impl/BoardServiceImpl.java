@@ -65,7 +65,6 @@ public class BoardServiceImpl implements BoardService {
         return new Result(collect);
     }
 
-
     // 순수하게 본인이 작성한 글만 불러오기
     @Override
     public BoardDto2 getBoardByMentorId(Long mentorId) {

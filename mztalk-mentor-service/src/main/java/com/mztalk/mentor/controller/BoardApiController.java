@@ -51,7 +51,7 @@ public class BoardApiController {
         return boardService.findAll();
     }
 
-    @DeleteMapping("/board/delete/{id}") // 진짜로 삭제한다.
+    @DeleteMapping("/board/{id}") // 진짜로 삭제한다.
     public Long deleteBoard(@PathVariable("id")Long mentorId){
         return boardService.delete(mentorId);
     }

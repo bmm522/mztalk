@@ -29,21 +29,22 @@
             <article class="pictogramWrap">
                 
                 <i class="fa-solid fa-comments" style=""></i>
-                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필">
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필" id="move-story-service">
             </article>
         </div>
     </nav>
    <!-- 여기서 놀아주세요. -->
+
    <main class="mainContainer" style="font-family: 'MICEGothic Bold' !important;">
 
     <div class="container text-center">
         <div class="row" style="padding-top: 20px;">
             <form class="d-flex" role="search" action="#" method="post">
-                <div class="mentors-myPage col-4" id="showAllMentoring" data-bs-toggle="modal" href="#menteeModal">
+                <div class="mentors-myPage col-4" onclick="allMentoring();" data-bs-toggle="modal" href="#menteeModal">
                     <span>신청한 멘토링</span>
                 </div>
 
-                <div class="mentors-myPage col-4" id="completedMentoring"data-bs-toggle="modal" href="#endMenteeModal">
+                <div class="mentors-myPage col-4" onclick="endMentoring();" data-bs-toggle="modal" href="#endMenteeModal">
                     <span>완료된 멘토링</span>
                 </div>
 
@@ -68,11 +69,11 @@
     </div>
     <!-- boardList 뿌려주는 div 끝 -->
 
+
     <!--멘토링 글 상세보기 모달 시작-->
     <div id="model-section">
         <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
             tabindex="-1">
-
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -131,11 +132,11 @@
     <!--멘토링 글 상세보기 모달 끝-->
 
     <!--내가 신청한 글 보기 모달 시작-->
-    <div class="modal fade" id="allMentoring" aria-hidden="true" aria-labelledby="allMentoring" tabindex="-1">
+    <div class="modal fade" id="menteeModal" aria-hidden="true" aria-labelledby="menteeModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="allMentoring">신청 상세 페이지</h1>
+                    <h1 class="modal-title fs-5" id="menteeModal">신청 상세 페이지</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -196,7 +197,7 @@
     </div>
     <!--완료된 멘토링 보기 모달 끝-->
 
-    <!-- 리뷰 모달 시작-->
+    <!-- 리뷰 작성 모달 시작-->
         <div class="modal fade" id="writeReview" aria-hidden="true" aria-labelledby="writeReview" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -225,13 +226,13 @@
                             </div>
                         </div>
                     <div class="modal-footer">
-                        <button class="btn btn-outline-success" type="button" id="writeReview"
+                        <button class="btn btn-outline-success" type="button" onclick="writeReview();"
                         style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">제출</button>
                     </div>
                 </div>
             </div>
         </div>
-    <!-- 리뷰 모달 끝-->
+    <!-- 리뷰 작성모달 끝-->
 
     
     <!--멘토 신청 페이지 모달 시작-->
@@ -316,11 +317,11 @@
 
     <div class="floating">
         <div class="remocon"> 
-            <figure><img src="img/mento.png" id="move-mentor-service" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
+            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;" id="move-mentor-service"/></figure>
            
-            <figure> <img src="img/qjd.png" style="width: 70px;"/></figure>
+            <figure> <img src="img/qjd.png" style="width: 70px;" id="move-bung-service"/></figure>
             
-            <figure>  <img src="img/book.png" style="width: 70px; margin-top:30px;"/></figure>
+            <figure>  <img src="img/book.png" style="width: 70px; margin-top:30px;" id="move-auction-service"/></figure>
             
 
             <!-- <figure><i class="fa-solid fa-comments" style="width: 85px;"></i></figure> -->

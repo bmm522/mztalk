@@ -22,9 +22,8 @@ public class ScoreApiController {
         return scoreService.save(scoreMap);
     }
 
-    //boardId로 평균구해오기 : board>mentor>score
     @GetMapping("/score/{id}")
-    public Double findById(@PathVariable("id")Long id){
+    public ScoreDto findById(@PathVariable("id")Long id){
         return scoreService.findById(id);
     }
 
@@ -32,6 +31,12 @@ public class ScoreApiController {
     @GetMapping("/score")
     public Result findByNickname(@RequestParam("nickname")String nickname){
         return scoreService.findScoresByNickname(nickname);
+    }
+
+    //mentee의 userId로 작성한 리뷰 가져오기
+    @GetMapping("/score/mentee/{userId}")
+    public Result findByUserId(@PathVariable("userId")Long userId){
+        return scoreService.findByUserId(userId);
     }
 
     @GetMapping("/scores")
@@ -47,5 +52,10 @@ public class ScoreApiController {
     @PatchMapping("/score/{id}")
     public Long updateScore(@PathVariable("id")Long id, @RequestBody ScoreDto scoreDto){
         return scoreService.updateScore(id, scoreDto);
+    }
+
+    @GetMapping("/score/mentee") // 멘티가 해당 글에 대해 멘토에 대해
+    public boolean isExist(@RequestParam("userId")Long userId, @RequestParam("boardId")Long boardId){
+        return scoreService.isExist(userId, boardId);
     }
 }

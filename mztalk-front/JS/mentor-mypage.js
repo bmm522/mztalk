@@ -1,5 +1,5 @@
 window.onload = () =>{
-    myBoard();
+    myMentees();
     endMyBoard();
     getMyBoard();
 }
@@ -85,35 +85,37 @@ const getMyBoard = () =>{
             .then((res)=>res.json())
             .then(res =>{
                 document.getElementById('board-list-div').innerHTML =
-                `<div style="width:500px; float:center; text-align:center; padding:50px; border:1px solid black;">
-                    <div class="modal-body">
-                        <label class="form-label">카테고리</label>
-                        <select name="category" class="form-select form-select-sm" readonly>
-                            <option>${res.category}</option>
-                        </select>
-                        <div class="mb-3">
-                            <label for="modify-title" class="form-label">제목</label>
-                            <input type="text" class="form-control form-control-sm" id="modify-title" value="${res.title}">
+                `<div style="width:500px; text-align:center; margin-left:25%; padding:50px; border:1px solid black;">
+                    <div> <label>내가 작성한 멘토링 수정페이지</label>
+                        <div class="modal-body" style="padding-top:30px;">
+                            <label class="form-label">카테고리</label>
+                            <select name="category" class="form-select form-select-sm" readonly>
+                                <option>${res.category}</option>
+                            </select>
+                            <div class="mb-3">
+                                <label for="modify-title" class="form-label">제목</label>
+                                <input type="text" class="form-control form-control-sm" id="modify-title" value="${res.title}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="modify-introduction" class="form-label">자기소개</label>
+                                <input type="text" class="form-control form-control-sm" id="modify-introduction" value="${res.introduction}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="modify-career" class="form-label">경력</label>
+                                <input type="text" class="form-control form-control-sm" id="modify-career" value="${res.career}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="modify-salary" class="form-label">시급</label>
+                                <input type="text" class="form-control form-control-sm" id="modify-salary" value="${res.salary}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="modify-content">내용</label>
+                                <textarea class="form-control" id="modify-content" style="height: 300px">${res.content}</textarea>
+                            </div>
+                            <button type="button" class="btn btn-outline-success" onclick="modify();">수정 하기</button>
+                            <button type="button" class="btn btn-outline-danger" onclick="deleteBoard();">삭제하기</button>
                         </div>
-                        <div class="mb-3">
-                            <label for="modify-introduction" class="form-label">자기소개</label>
-                            <input type="text" class="form-control form-control-sm" id="modify-introduction" value="${res.introduction}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="modify-career" class="form-label">경력</label>
-                            <input type="text" class="form-control form-control-sm" id="modify-career" value="${res.career}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="modify-salary" class="form-label">시급</label>
-                            <input type="text" class="form-control form-control-sm" id="modify-salary" value="${res.salary}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="modify-content">내용</label>
-                            <textarea class="form-control" id="modify-content" style="height: 300px">${res.content}</textarea>
-                        </div>
-                        <button type="button" class="btn btn-outline-success" onclick="modify();">수정 하기</button>
-                        <button type="button" class="btn btn-outline-danger" onclick="deleteBoard();">삭제하기</button>
-                    </div>  
+                    </div>      
                 </div>`
             })  
         }   
@@ -149,7 +151,7 @@ const modify = () =>{
 
 const deleteBoard = () =>{
     const mentorId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board/delete/"+mentorId,{
+    fetch("http://localhost:8000/mentors/board/"+mentorId,{
         method:"DELETE",
         headers:{
             "Content-Type":"application/json",
@@ -171,8 +173,7 @@ const deleteBoard = () =>{
 
 
 // 작성한 글에 대한 멘토 신청 현황
-const myBoard = () =>{
-    document.getElementById('getMyBoard').addEventListener('click',function(){
+const myMentees = () =>{
     const mentorId = localStorage.getItem('userNo');
     fetch("http://localhost:8000/mentors/participant?mentorId="+mentorId,{
         method:"GET",
@@ -195,8 +196,7 @@ const myBoard = () =>{
         } else{
             console.log('값없음');
         }
-    })  
-    });
+    }) 
 }
 
 // 멘토링이 종료된 멘티들

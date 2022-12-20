@@ -46,7 +46,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     //멘티가 본인이 신청한 멘토링 글을 보는 메소드
     @Override
     public List<Board> findBoardByUserId(Long userId) {
-        return entityManager.createQuery("select b from Board b join b.participants p where p.mentee =:userId", Board.class)
+        return entityManager.createQuery("select b from Board b join b.participants p where p.mentee.id =:userId", Board.class)
                 .setParameter("userId", userId)
                 .getResultList();
     }
