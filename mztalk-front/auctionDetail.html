@@ -62,6 +62,8 @@
         <div class="row">
             <div class="col-12 m-1">
                 <div id="content" class="m-4">
+                    <!-- bId -->
+                    <input type = "hidden" id = "hidden-bId"/>
                     <span id="title">BoardTitle</span>
                     <span id="date" style="float: right;padding-right:30px;color: gray;">2022-12-8</span>
                     <span id="textContent" style="display:inline-block; border-style:dotted; border-color: burlywood; padding: 10px;" class="mt-5 mb-5">Lorem ipsum dolor sit amet,
@@ -89,7 +91,7 @@
                             <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
                                 aria-labelledby="mySmallModalLabel" aria-hidden="true" id = "priceModal">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
-                                    <div class="modal-content" style = "width:1200px;height:300px;">
+                                    <div class="modal-content" style = "width:500px;height:300px;">
                                         <div class = "modal-header">
                                             <h6>입찰 금액 입력</h6>
                                             <butto type = "button" class = "btn-close" data-bs-dismiss="modal"></butto>
@@ -103,6 +105,32 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <!--댓글-->
+                <div class = "col-12 m-3">
+                    <div id = "commentContent" class = "m-3">
+                        <span style="font-weight: bold;">댓글</span>
+                        <input type = "text" id = "commInput"/>
+                        <button type = "button" id="commBtn" onclick="writeComment();">작성</button>
+                        <div id="commentArea" class = "row">
+                            <!-- cId -->
+                            <input type = "hidden" id = "hidden-cId"/>
+                                <div class = "col-1">
+                                    <span id = "commNickName">닉네임</span>
+                                </div>
+                                <div class = "col-7">
+                                    <span id = "commContent" style="margin-right: 10px;">댓글 내용</span>
+                                </div>
+                                <div class = "col-2">
+                                    <span id = "commCreateDate" style="color:gray;font-size: smaller;margin-right:10px;">2022-12-19</span>
+                                </div>
+                                <div class = "col-2">
+                                    <span id = "commUpdate" style="color:gray;font-size: small; margin-right: 20px;" onclick = "updateComment();">수정</span>
+                                    <span id = "commDelete" style="color:gray;font-size: small;" onclick = "deleteComment();">삭제</span>
+                                </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

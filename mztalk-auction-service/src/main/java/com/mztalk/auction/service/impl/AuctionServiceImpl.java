@@ -2,8 +2,11 @@ package com.mztalk.auction.service.impl;
 
 import com.mztalk.auction.domain.dto.BoardRequestDto;
 import com.mztalk.auction.domain.dto.BoardDto;
+import com.mztalk.auction.domain.dto.CommentDto;
 import com.mztalk.auction.domain.entity.Board;
+import com.mztalk.auction.domain.entity.Comment;
 import com.mztalk.auction.repository.BoardRepository;
+import com.mztalk.auction.repository.CommentRepository;
 import com.mztalk.auction.service.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +22,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AuctionServiceImpl implements AuctionService {
 
     private final BoardRepository boardRepository;
+    private final CommentRepository commentRepository;
 
+    //게시글 작성
     @Transactional
     @Override
     public Long insertBoard(BoardRequestDto boardRequestDto) {
@@ -27,43 +32,68 @@ public class AuctionServiceImpl implements AuctionService {
         return boardRepository.save(boardRequestDto.toEntity()).getBId();
     }
 
+    //게시글 수정
     @Override
     public int updateBoard(Long bId, BoardDto boardDto) {
         return boardRepository.boardUpdate(bId, boardDto);
     }
 
+    //전체 게시글 조회
     @Override
     public List<Board> selectBoardList() {
         return boardRepository.findAll();
     }
 
+    //게시물 삭제
     @Override
     public int deleteBoard(Long bId) {
         return boardRepository.deleteBoard(bId);
     }
 
+    //특정 게시물 조회
     @Override
     public Board selectBoard(Long bId) {
 
         return boardRepository.findBybId(bId);
     }
 
+    //입찰가
     @Override
     public int updatePrice(Long bId, BoardDto boardDto) {
         return boardRepository.updatePrice(bId, boardDto);
     }
 
+    //조회수
     @Override
     public int updateCount(Long bId) {
         return boardRepository.updateCount(bId);
     }
 
+    //최신 글 번호 받아오기
     @Override
     public ConcurrentHashMap<String, String> getRecentBoardNo() {
-        long bNo =  boardRepository.getRecentBoardNo();
+        long bId =  boardRepository.getRecentBoardNo();
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        map.put("bNo", String.valueOf(bNo+1));
+//        map.put("bId", String.valueOf(bId+1));
         return map;
+    }
+
+    //댓글 작성
+    @Override
+    public Comment insertComment(CommentDto commentDto, Long bId) {
+        return commentRepository.save(commentDto.toEntity());
+    }
+
+    //댓글 수정
+    @Override
+    public int updateComment(Long cId, CommentDto commentDto) {
+        return commentRepository.updateComment(cId, commentDto);
+    }
+
+    //댓글 삭제
+    @Override
+    public int deleteComment(Long cId, CommentDto commentDto) {
+        return commentRepository.deleteComment(cId, commentDto);
     }
 
 
