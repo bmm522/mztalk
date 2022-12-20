@@ -37,6 +37,8 @@ public class Reply extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private ReplyStatus status; // 댓글 status
 
+    private Long replyUserNo;
+
 //    @Builder
 //    public Reply(Long id, String replyContent, Board board, String replyNickname, ReplyStatus status ){
 //        this.id = id;

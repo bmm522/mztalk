@@ -23,9 +23,10 @@ public class FollowApiController {
 
 
     //팔로우 성공
-    @PostMapping("/follow/{toUserId}")
+    @PostMapping("/follow/{toUserId}/{fromUserId}")
     public ResponseEntity<?> follow(@PathVariable Long toUserId, @PathVariable Long fromUserId){
-
+        System.out.println("toUserId : " + toUserId);
+        System.out.println("fromUserId : " + fromUserId);
         followService.follow(toUserId, fromUserId);
 
         return new ResponseEntity<>(new CMRespDto<>(1,"팔로우성공",null), HttpStatus.OK);
@@ -33,7 +34,7 @@ public class FollowApiController {
 
 
     //팔로우 취소
-    @DeleteMapping("/follow/{toUserId}")
+    @DeleteMapping("/follow/{toUserId}/{fromUserId}")
     public ResponseEntity<?> unfollow(@PathVariable Long toUserId, @PathVariable Long fromUserId){
 
         followService.unFollow(toUserId, fromUserId);

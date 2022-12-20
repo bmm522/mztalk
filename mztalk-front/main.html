@@ -46,52 +46,6 @@
 
                 
                 <!--전체 리스트 아이템-->
-                <div class="card">
-                    <div class="card-header">
-                      <span class="title">{글제목}</span>
-                      <span class="writer">{작성자}</span>
-                      <span class="category">{카테고리}</span>
-                      <button type="button" class="btn btn-outline-danger">신고하기</button>
-                    </div>
-                  
-                    <div class="card-body">
-                      <blockquote class="blockquote mb-0">
-                        
-                            <div>
-                            <img src="img/recommend_02.jpeg" style="width: 100px; height: 100px;" >
-                            </div>
-                            <div>
-                            <p class="content">
-                              메시징 플랫폼.. 1. 메시지 브로커  2. 이벤트브로커
-                                메시지브로커는 이벤트브로커로 역할을 할 수 없지만
-                                이벤트 브로커는 메시지 브로커 역할을 할 수 있다
-                                메시지브로커란 메시지 기반 미들웨어 아키텍처
-                                메시지를 받아서 적절히 처리하고 나면 즉시 또는 짧은 시간 내에 삭제되는 구조..
-                                
-                                데이터를 보내고, 처리하고, 삭제한다
-                                ex) 레디스 큐 ,  레빗엠큐
-                                
-                                이벤트 브로커는 메시지브로커의 특징과 조금 다른 구조..
-                                1. 이벤트 또는 메시지라고 하는 이 레코드를 인덱슬 통해 관리
-                                2. 업무상 필요한 시간동안 이벤ㅌ를 보존할 수 있다
-                                
-                                데이터를 보내고 처리하고 삭제는 안한다
-                                삭제를 안하고 이벤트브로커의큐에 저장하는데
-                                1. 단일 진실 공급원으로 사용
-                                2. 장애가 발생시에 장애가 일어난 지점부터 재처리할 수 있다
-                                3. 많은 양의 실시간 스트림 데이터를 효과적으로 처리할 수 있다는 특징
-                                ex) kafka , aws의 키네시스
-                                
-                                이벤트 브로커로 클러스터를 구축하면 
-                                이벤트 기반 마이크로 서비스 아키텍처로 발전
-                                메시지 브로커로도 사용 가능
-                            </p>
-                          </div>  
-                      </blockquote>
-                    </div>
-                  </div>
-                  <br>
-
 
                   <div class="row mb-2">
                     <div class="col-md-6">
@@ -148,10 +102,63 @@
                       </div>
                     </div>
                   </div>
-                  
 
+                  <!--두번째-->
+                  <div class="row mb-2">
+                    <div class="col-md-6">
+                      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                          <strong class="d-inline-block mb-2 text-primary">World{카테고리}</strong>
+                          <h3 class="mb-0">{글제목}</h3>
+                          <div class="mb-1 text-muted">Nov 12{작성일}</div>
+                          <p class="card-text mb-auto">
+                            메시징 플랫폼..<br> 
+                            1. 메시지 브로커  2. 이벤트브로커
+                            메시지브로커는 이벤트브로커로 역할을 할 수 없지만
+                            이벤트 브로커는 메시지 브로커 역할을 할 수 있다
+                            메시지브로커란 메시지 기반 미들웨어 아키텍처
+                            메시지를 받아서 적절히 처리하고 나면 즉시 또는 짧은 시간 내에 삭제되는 구조..
 
+                            데이터를 보내고, 처리하고, 삭제한다
+                            ex) 레디스 큐 ,  레빗엠큐
 
+                            이벤트 브로커는 메시지브로커의 특징과 조금 다른 구조..
+                            1. 이벤트 또는 메시지라고 하는 이 레코드를 인덱슬 통해 관리
+                            2. 업무상 필요한 시간동안 이벤ㅌ를 보존할 수 있다
+
+                            데이터를 보내고 처리하고 삭제는 안한다
+                            삭제를 안하고 이벤트브로커의큐에 저장하는데
+                            1. 단일 진실 공급원으로 사용
+                            2. 장애가 발생시에 장애가 일어난 지점부터 재처리할 수 있다
+                            3. 많은 양의 실시간 스트림 데이터를 효과적으로 처리할 수 있다는 특징
+                            ex) kafka , aws의 키네시스
+
+                            이벤트 브로커로 클러스터를 구축하면 
+                            이벤트 기반 마이크로 서비스 아키텍처로 발전
+                            메시지 브로커로도 사용 가능  
+                          </p>
+                          <a href="#" class="stretched-link">자세히보기</a>
+                        </div>
+                        <div class="col-auto d-none d-lg-block">
+                          <img src="img/recommend_02.jpeg" style="width: 150px; height: 250px;" >      
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                          <strong class="d-inline-block mb-2 text-success">Design{카테고리}</strong>
+                          <h3 class="mb-0">{글제목}</h3>
+                          <div class="mb-1 text-muted">Nov 11</div>
+                          <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                          <a href="#" class="stretched-link">자세히보기</a>
+                        </div>
+                        <div class="col-auto d-none d-lg-block">
+                          <img src="img/recommend_02.jpeg" style="width: 150px; height: 250px;" > 
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
 
             </article>

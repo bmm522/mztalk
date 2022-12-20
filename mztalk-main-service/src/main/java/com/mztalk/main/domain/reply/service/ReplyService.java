@@ -9,5 +9,5 @@ public interface ReplyService {
 
     Reply replySave(Long id, ReplyRequestDto replyRequestDto);
 
-    Long deleteReply(Long id, Long replyId);
+    Long deleteReply(Long id);
 }

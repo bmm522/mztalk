@@ -41,12 +41,13 @@ public class ReplyApiController {
     }
 
     //댓글삭제
-    @DeleteMapping("/board/{id}/reply/{replyId}")
-    public Long deleteScore(
-            @PathVariable("id") Long id,
-            @PathVariable("replyId") Long ReplyId
+    @DeleteMapping("/board/{id}/reply")
+    public ResponseEntity<?> deleteScore(
+            @PathVariable("id") Long id
     ){
-       return replyService.deleteReply(id, ReplyId);
+        replyService.deleteReply(id);
+
+        return new ResponseEntity<>(new CMRespDto<>(1, "댓글삭제성공", null), HttpStatus.OK);
     }
 
 

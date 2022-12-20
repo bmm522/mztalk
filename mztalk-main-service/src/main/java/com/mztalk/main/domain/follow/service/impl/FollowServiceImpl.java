@@ -6,6 +6,7 @@ import com.mztalk.main.domain.board.repository.BoardRepository;
 import com.mztalk.main.domain.follow.dto.FollowDto;
 import com.mztalk.main.domain.follow.entity.Follow;
 import com.mztalk.main.domain.follow.repository.FollowRepository;
+import com.mztalk.main.domain.follow.repository.FollowTestRepository;
 import com.mztalk.main.domain.follow.service.FollowService;
 import com.mztalk.main.handler.exception.CustomApiException;
 import com.mztalk.main.handler.exception.ExceptionCode;
@@ -28,6 +29,8 @@ public class FollowServiceImpl implements FollowService {
 
     private final FollowRepository followRepository;
 
+    private final FollowTestRepository followTestRepository;
+
     private final EntityManager em;
 
 
@@ -35,7 +38,8 @@ public class FollowServiceImpl implements FollowService {
     @Transactional
     public void follow(Long toUserNo, Long fromUserNo) {
         try {
-            followRepository.mFollow(fromUserNo, toUserNo);
+            followTestRepository.mFollow(fromUserNo, toUserNo);
+//            followRepository.mFollow(fromUserNo, toUserNo);
         } catch(Exception e){
             throw new FollowException(ExceptionCode.ALREADY_EXIST_FOLLOW);
         }

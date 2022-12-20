@@ -29,7 +29,7 @@ public class BoardDto {
 
     private List<Reply> replyList = new ArrayList<>();
 
-    private LocalDateTime createDate;
+    private LocalDateTime lastModifiedDate;
 
     private String nickname;
 
@@ -43,7 +43,6 @@ public class BoardDto {
                 .content(content)
                 .status(BoardStatus.YES)
                 .own(own)
-                .createDate(createDate)
                 .privacy(privacy)
                 .reply(replyList)
                 .build();
@@ -62,7 +61,7 @@ public class BoardDto {
         this.own = board.getOwn();
         this.privacy = board.getPrivacy();
         this.replyList = board.getReplyList();
-        this.createDate = board.getCreateDate();
+
 
     }
 

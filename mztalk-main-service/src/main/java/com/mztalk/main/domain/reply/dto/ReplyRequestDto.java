@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -23,12 +24,17 @@ public class ReplyRequestDto {
     @NotNull
     private ReplyStatus replyStatus;
 
+    private Long replyUserNo;
+
+    private LocalDateTime lastModifiedDate;
+
     //Dto -> Entity
     public Reply toEntity(Long boardId){
         return Reply.builder()
                 .replyNickname(replyNickname)
                 .boardId(boardId)
                 .status(replyStatus.YES)
+                .replyUserNo(replyUserNo)
                 .replyContent(replyContent)
                 .build();
 

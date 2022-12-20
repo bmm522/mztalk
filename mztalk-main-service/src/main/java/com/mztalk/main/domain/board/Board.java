@@ -22,7 +22,7 @@ import static javax.persistence.CascadeType.ALL;
 @Getter
 @Entity
 @Table(name="board")
-public class Board {
+public class Board extends BaseTimeEntity {
 
 
     @Id
@@ -60,17 +60,10 @@ public class Board {
     @Enumerated(EnumType.STRING)
     private PrivacyStatus privacy;
 
-    private LocalDateTime createDate;
-
-    @PrePersist   //DB에 insert 되기 직전에 실행
-    public void createDate() {
-        this.createDate = LocalDateTime.now();
-    }
-
     //글쓰기
     @Builder
     public Board(Long id, String nickname, String title, String content, Long own, List<Reply> reply,
-                 BoardStatus status, PrivacyStatus privacy, LocalDateTime createDate){
+                 BoardStatus status, PrivacyStatus privacy){
         this.id = id;
         this.nickname = nickname;
         this.title = title;
@@ -79,7 +72,7 @@ public class Board {
         this.replyList = reply;
         this.status = status;
         this.privacy = privacy;
-        this.createDate = createDate;
+
     }
 
     //연관관계 편의 메서드
@@ -99,7 +92,7 @@ public class Board {
         this.replyList = boardDto.getReplyList();
         this.status = boardDto.getStatus();
         this.privacy = boardDto.getPrivacy();
-        this.createDate = boardDto.getCreateDate();
+    
     }
 
     //글삭제(status = N)
