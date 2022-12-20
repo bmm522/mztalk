@@ -44,9 +44,9 @@ public class BoardApiController {
 
     //글삭제
     @PatchMapping("/delete/{id}")
-    public Long deleteForm(@PathVariable("id") Long id, @RequestBody BoardDto boardDto){
+    public Long deleteForm(@PathVariable("id") Long id){
 
-        return boardService.deleteBoard(id, boardDto);
+        return boardService.deleteBoard(id);
     }
 
 }

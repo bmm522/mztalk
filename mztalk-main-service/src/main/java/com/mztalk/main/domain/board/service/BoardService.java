@@ -14,5 +14,5 @@ public interface BoardService {
 
     Long updateBoard(Long id, BoardDto boardDto);
 
-    Long deleteBoard(Long id, BoardDto boardDto);
+    Long deleteBoard(Long id);
 }

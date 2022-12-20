@@ -4,7 +4,7 @@ let own = localStorage.getItem("own");
 
 window.onload = function(){
   storyLoad();
-  storyWrite();
+  
 }
 
 
@@ -62,7 +62,7 @@ function storyLoad() {
           let privacy = board.privacy;
           let title = board.title;
           let content = board.content;
-          let date = board.createDate;
+          let date = board.lastModifiedDate;
           
         document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
@@ -83,7 +83,7 @@ function storyLoad() {
                             <td colspan="3"><br><br>
                                 <div id="edit-delete-div">
                                     <button style="cursor:pointer;" type="button">수정</button>
-                                    <button style="cursor:pointer;" type="button">삭제</button>
+                                    <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
                                 </div>
                                 <div id=post-hr>
                                     <hr>
@@ -98,40 +98,49 @@ function storyLoad() {
                             </td>
                         </tr>
                     </table>
-                    <div id="reply-div">
-                        <div>
-                            <div id="reply-nickname">{작성자 닉네임}</div>
-                            <div id="reply-content">{댓글 내용}</div>
-                            <div id="reply-date">{date}</div>
-                            <div id="reply-edit-btn"><button style="cursor:pointer;" type="button">X</button></div>
-                        </div>
-                    </div>
-                    <div id="reply-write-div">
-                        <table>
-                            <tr>
-                                <td>
-                                    <div id="reply-write-box"><input type="text" id="reply-write-input"></div>
-                    </div>
-                    </td>
-                    <td>
-                        <div id="reply-write-btn"><button onClick="addReply(${boardId})" id="replyButton-${boardId}" style="cursor:pointer;" type="button">등록</button></div>
-                    </td>
-                    </tr>
-                    </table>
-                </div>
-            </div>`;
+                    <div id="reply-div" class="reply-div-${boardId}">
+                      <div>
 
-           
-              }   
-              document.querySelector("#contentList").prepend(storyItem); 
+                      </div>
+                      </div>
+                      <div id="reply-write-div">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <div id="reply-write-box"><input type="text" class="reply-write-input-${boardId}" id="reply-write-input"></div>
+                      </div>
+                      </td>
+                      <td>  
+                          <div id="reply-write-btn"><button onClick="addReply(${boardId})" id="replyButton" style="cursor:pointer;" type="button">등록</button></div>
+                      </td>
+                      </tr>
+                      </table>
+                    </div>
+                   </div>
+                    `;
+                    
+                     board.replyList.forEach((reply)=>{
+                     document.querySelector(`.reply-div-${boardId}`).innerHTML +=
+                         `
+                           <div id="reply-nickname">${reply.replyNickname}</div>
+                           <div id="reply-content">${reply.replyContent}</div>
+                           <div id="reply-date">${reply.lastModifiedDate}</div>
+                           <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button></div>
+                         `
+                      }
+                     )
+                      
+              }
+             
+            
            })
-          }
+}
       
 
 
 
 //글쓰기
-function storyWrite() {
+
 const write_board = document.getElementById('write-board');
 const privacyBounds = document.getElementById('privacyBounds');
 
@@ -159,7 +168,7 @@ write_board.addEventListener('click', function(){
                 title: document.getElementById('title-input-text').value,
                 content: document.getElementById("content-input-text").value,
                 own: localStorage.getItem('own'),
-                privacy: privacyBounds.options[privacyBounds.selectedIndex].value
+                privacy: privacyBounds.options[privacyBounds.selectedIndex].value,
             })
         })
             .then((res)=>res.json())
@@ -172,7 +181,7 @@ write_board.addEventListener('click', function(){
                     const modal = document.querySelector(".textmodal");
                     modal.classList.add("hidden");
                     open.classList.remove("hidden");
-
+                    let board = res.data;
                     let boardId = board.id;
                     let title = board.title;
                     let content = board.content;
@@ -196,7 +205,7 @@ write_board.addEventListener('click', function(){
                                       <td colspan="3"><br><br>
                                           <div id="edit-delete-div">
                                               <button style="cursor:pointer;" type="button">수정</button>
-                                              <button style="cursor:pointer;" type="button">삭제</button>
+                                              <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
                                           </div>
                                           <div id=post-hr>
                                               <hr>
@@ -206,19 +215,19 @@ write_board.addEventListener('click', function(){
                                   <tr>
                                       <td colspan="3">
                                           <div id="post-content">
-                                              <div id="post-content-input">${board.content}}</div>
+                                              <div id="post-content-input">${board.content}</div>
                                           </div>
                                       </td>
                                   </tr>
                               </table>
-                              <div id="reply-div">
+                              <div id="reply-div" class="reply-div-${boardId}">
                                   
                               </div>
                               <div id="reply-write-div">
                                   <table>
                                       <tr>
                                           <td>
-                                              <div id="reply-write-box"><input type="text" id="reply-write-input"></div>
+                                              <div id="reply-write-box"><input type="text" class="reply-write-input-${boardId}" id="reply-write-input"></div>
                               </div>
                               </td>
                               <td>
@@ -228,25 +237,95 @@ write_board.addEventListener('click', function(){
                               </table>
                           </div>
                       </div>`;
-               })      
+               })
+               location.href="individualpage.html";      
           }   
-               
+            
       });
      
 
-      document.getElementById('title-input-text').value("");
-      document.getElementById("content-input-text").value("");
-      privacyBounds.options[privacyBounds.selectedIndex].value("");
-}
+      
+
+
+
+
+
+      
+//글삭제
+function deleteBoard(boardId){
+   
+    console.log("찍힘?123123123");
+
+    console.log(boardId);
+  
+      fetch("http://localhost:8000/story/delete/"+boardId,{
+          method:"PATCH",
+          headers:{
+              "Content-Type":"application/json",
+              Authorization:localStorage.getItem('authorization'),
+              RefreshToken:localStorage.getItem('refreshToken'),
+          },
+        })
+      .then((res)=>res.json())
+      .then(res =>{
+        
+        
+         
+      })
+      location.href="individualpage.html";  
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //댓글쓰기
 function addReply(boardId){
-  let replyContent = document.getElementById('reply-write-input');
-  let replyButton = document.getElementById('replyButton');
-  let replyList = document.getElementById('reply-div');
+  //let replyContent = document.querySelector();
+  let replyContent = document.querySelector(`.reply-write-input-${boardId}`);
+  let replyButton = document.querySelector('#replyButton');
+  //let replyButton = document.getElementById('replyButton');
+  // let replyList = document.getquerySelector(`reply-div-${boardId}`);
+  //let replyList = document.getElementById('reply-div');
   //let id = localStorage.getItem('userNo');
-
+  console.log(replyButton);
+  //replyButton.addEventListener('click', function(){
+  console.log("클림됨?");
       console.log(replyContent);
         if(replyContent.value === ''){
           alert("댓글을 작성해주세요!");
@@ -261,6 +340,7 @@ function addReply(boardId){
               body:JSON.stringify({
                   replyNickname: localStorage.getItem('userNickname'),
                   replyContent: replyContent.value,
+                  replyUserNo: localStorage.getItem("userNo"),
                 })
             })
           .then((res)=>res.json())
@@ -271,22 +351,46 @@ function addReply(boardId){
             console.log("res.data: "+ res.data);
 
             let reply = res.data;
-
-            document.getElementById('reply-div').innerHTML +=
+            //document.getElementsByClassName(`reply-div-${boardId}`).innerHTML +=
+            document.querySelector(`.reply-div-${boardId}`).innerHTML +=
             `<div>
               <div id="reply-nickname">${reply.replyNickname}</div>
-              <div id="reply-content">${reply.content}</div>
-              <div id="reply-date">${reply.date}</div>
-              <div id="reply-edit-btn"><button style="cursor:pointer;" type="button">X</button></div>
+              <div id="reply-content">${reply.replyContent}</div>
+              <div id="reply-date">${reply.lastModifiedDate}</div>
+              <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button></div>
             </div>`;
-
-            
-
-
-
           })
-        }
+          location.href="individualpage.html";   
+        }   
     }
+ // )}
+
+
+    
+//댓글삭제    
+function deleteReply(Id){
+  console.log('fgfg   : '+Id);
+  console.log("찍힘?123123123");
+ 
+  console.log('loginUser   :' + loginUser);
+
+    fetch("http://localhost:8000/story/board/"+Id+"/reply",{
+        method:"delete",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+
+      console.log("통신성공?");
+      location.href="individualpage.html";   
+    })
+   
+  }
+
 
 
     

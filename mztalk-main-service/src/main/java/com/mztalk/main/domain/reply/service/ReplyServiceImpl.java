@@ -29,11 +29,9 @@ public class ReplyServiceImpl implements ReplyService{
 
     @Override
     @Transactional
-    public Long deleteReply(Long id, Long replyId) {
+    public Long deleteReply(Long id) {
 
-        boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
-
-        Reply reply = replyRepository.findById(replyId).orElseThrow(()-> new IllegalArgumentException("해당 댓글이 없습니다."));
+        Reply reply = replyRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 댓글이 없습니다."));
 
         replyRepository.delete(reply);
 

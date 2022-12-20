@@ -5,6 +5,7 @@ import com.mztalk.main.domain.friend.Friends;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 //@Table(
@@ -32,6 +33,7 @@ public class Follow extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //번호 증가 전략을 DB를 따라간다.
     private int id;
+
 
 
     @JoinColumn(name="fromUserId") //이렇게 컬럼명 만들어.. 니 맘대로 만들지 말고
