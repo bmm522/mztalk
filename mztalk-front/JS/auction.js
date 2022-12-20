@@ -31,8 +31,7 @@ window.onload = () => {
                 
 
                 document.getElementById('output-div').innerHTML +=
-                    `<div class="col">
-                    <!-- bId-->
+                    `<div class="col" onclick='moveDeatils(${bId});' style='cursor:pointer;'>
                     <input type = "hidden" id = "hidden-bId"/>
                     <div class="card card-cover m-1 h-20 overflow-hidden text-white bg-dark rounded-5 shadow-lg" class = "titleCard"style="background-image: url(${imageUrl});background-position: 10% 20%">
                     <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
@@ -74,6 +73,12 @@ document.getElementById('writeBoard').addEventListener('click', function(){
         location.href="auctionWrite.html";
     })
 });
+
+//상세 페이지 이동
+const moveDetails = (boardId) => {
+    localStorage.setItem("bId", boardId);
+    location.href="auctionDetail.html";
+}
 
 
 
