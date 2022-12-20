@@ -52,7 +52,7 @@ public class BoardServiceImpl implements BoardService {
     //글삭제(status만변화)
     @Override
     @Transactional
-    public Long deleteBoard(Long id, BoardDto boardDto) {
+    public Long deleteBoard(Long id) {
 
         Board board = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
         board.changeStatus();

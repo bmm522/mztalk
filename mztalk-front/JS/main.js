@@ -174,19 +174,6 @@ document.getElementById('move-mentor-service').addEventListener('click',function
     })             
 });
 
-//벙서비스보내기
-// document.getElementById('move-bung-servicce').addEventListener('click', function(){
-    
-//     fetch("http://localhost:8000/",{
-
-//     })
-
-
-
-
-
-// });
-
 
 //벙서비스보내기
 document.getElementById('move-bung-service').addEventListener('click',function(){
@@ -207,20 +194,9 @@ document.getElementById('move-bung-service').addEventListener('click',function()
     })
     .then((res)=> res.json())
     .then(res=>{
-        
-        
-        
-        
-
-
 
         location.href="bung-service-main.html";
-        
-        
-
-
     })
-
 
 });
 
@@ -245,25 +221,29 @@ document.getElementById('move-auction-service').addEventListener('click',functio
     })
     .then((res)=> res.json())
     .then(res=>{
-        
-        // console.log("옥션 : " + localStorage.getItem('authorization'));
-        // console.log("옥션 : " + localStorage.getItem('refreshToken'));
-        // console.log("옥션 : " + localStorage.getItem('userNo'));
-        // console.log("옥션 : " + localStorage.getItem('userNickname'));
-        
-        
-        
-
-
 
         location.href="auction.html";
-        
-        
-
 
     })
-
 
 });
 
 
+
+function newMentorBoard(){
+    fetch("http://localhost:8000/mentors/board/latest",{
+        method:"GET",
+        headers:{
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+      .then((res)=> res.json())
+      .then(res=>{       
+        console.log(res.data);
+            
+      
+        
+            
+           })
+}
