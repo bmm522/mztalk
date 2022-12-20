@@ -1,5 +1,6 @@
 package com.mztalk.bung.domain.response;
 
+import com.mztalk.bung.domain.entity.BungBoard;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
