@@ -52,7 +52,7 @@ const getBoardList = () =>{
                 </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
                 type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
                 cnt += 1;
-                participate(boardId);  
+                // participate(boardId);  
             } else {
                 document.getElementById('row-div').innerHTML +=  
                 `<div class="col-3">
@@ -66,7 +66,7 @@ const getBoardList = () =>{
                  type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
                  </div><div class="row" style="padding:20px;" id="row-div">`;
                 cnt += 1;
-                participate(boardId);  
+                // participate(boardId);  
             }
       }
         }        
@@ -127,34 +127,35 @@ const watchReview = (nickname) =>{
 }
 
 //참가 신청
-const participate = (bId) =>{
-    document.getElementById('participant-btn').addEventListener('click', function(){
-        fetch("http://localhost:8000/mentors/participant",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json;",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
-            },
-            body:JSON.stringify({
-                userId : localStorage.getItem('userNo'),
-                boardId : bId,
-                name :document.getElementById("name").value,
-                phone : document.getElementById("phone").value,
-                email : document.getElementById("email").value,
-                message : document.getElementById("message").value
-            })
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-            if(res > 0){
-                location.href="mentor-main.html";
-            } else {
-                console.log('실패');
-            }
-        })
-    });
-}
+// const participate = (bId) =>{
+//     document.getElementById('participant-btn').addEventListener('click', function(){
+//         requestPay();
+//         fetch("http://localhost:8000/mentors/participant",{
+//             method:"POST",
+//             headers:{
+//                 "Content-Type":"application/json;",
+//                 Authorization:localStorage.getItem('authorization'),
+//                 RefreshToken:localStorage.getItem('refreshToken')
+//             },
+//             body:JSON.stringify({
+//                 userId : localStorage.getItem('userNo'),
+//                 boardId : bId,
+//                 name :document.getElementById("name").value,
+//                 phone : document.getElementById("phone").value,
+//                 email : document.getElementById("email").value,
+//                 message : document.getElementById("message").value
+//             })
+//         })
+//         .then((res)=>res.json())
+//         .then(res =>{
+//             if(res > 0){
+//                 location.href="mentor-main.html";
+//             } else {
+//                 console.log('실패');
+//             }
+//         })
+//     });
+// }
 
 
 

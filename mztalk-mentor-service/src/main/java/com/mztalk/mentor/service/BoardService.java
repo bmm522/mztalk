@@ -2,7 +2,7 @@ package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardDto;
-import com.mztalk.mentor.domain.dto.BoardDto2;
+import com.mztalk.mentor.domain.dto.MyBoardDto;
 import com.mztalk.mentor.domain.entity.Result;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,5 +25,7 @@ public interface BoardService {
 
     boolean findBoardByMentorId(Long mentorId);
 
-    BoardDto2 getBoardByMentorId(Long mentorId);
+    MyBoardDto getBoardByMentorId(Long mentorId);
+
+    Result latestBoard();
 }

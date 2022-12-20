@@ -12,4 +12,6 @@ public interface BoardRepositoryCustom {
     Mentor findMentorByBoardId(Long id);
 
     List<Board> findBoardByUserId(Long userId);
+
+    List<Board> latestBoard();
 }

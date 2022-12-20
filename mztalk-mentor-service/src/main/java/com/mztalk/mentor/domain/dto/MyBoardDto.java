@@ -3,21 +3,16 @@ package com.mztalk.mentor.domain.dto;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
-import com.mztalk.mentor.domain.entity.Participant;
-import com.mztalk.mentor.domain.entity.Payment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardDto2 {
+public class MyBoardDto {
 
     private Long id;
     private Mentor mentor;
@@ -47,7 +42,7 @@ public class BoardDto2 {
         return board;
     }
 
-    public BoardDto2(Board board){
+    public MyBoardDto(Board board){
         this.id = board.getId();
         this.mentor = board.getMentor();
         this.category = board.getCategory();
@@ -60,20 +55,5 @@ public class BoardDto2 {
         this.status = board.getStatus();
     }
 
-    @Override
-    public String toString() {
-        return "BoardDto2{" +
-                "id=" + id +
-                ", mentor=" + mentor +
-                ", category='" + category + '\'' +
-                ", title='" + title + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", userId=" + userId +
-                ", content='" + content + '\'' +
-                ", introduction='" + introduction + '\'' +
-                ", career='" + career + '\'' +
-                ", salary=" + salary +
-                ", status=" + status +
-                '}';
-    }
+
 }

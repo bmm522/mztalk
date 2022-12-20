@@ -2,7 +2,7 @@ package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardDto;
-import com.mztalk.mentor.domain.dto.BoardDto2;
+import com.mztalk.mentor.domain.dto.MyBoardDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +41,8 @@ public class BoardApiController {
 
     //멘토가 작성한 글만 가져오는 메소드
     @GetMapping("/board/mentor")
-    public BoardDto2 getBoardByMentorId(@RequestParam("mentorId")Long mentorId){
-        BoardDto2 findBoardDto = boardService.getBoardByMentorId(mentorId);
+    public MyBoardDto getBoardByMentorId(@RequestParam("mentorId")Long mentorId){
+        MyBoardDto findBoardDto = boardService.getBoardByMentorId(mentorId);
         return findBoardDto;
     }
 
@@ -64,6 +64,11 @@ public class BoardApiController {
     @GetMapping("/board/search")
     public Result searchWithCondition(@ModelAttribute("SearchCondition")SearchCondition searchCondition){
         return boardService.searchWithCondition(searchCondition);
+    }
+
+    @GetMapping("/board/latest")
+    public Result latestBoard(){
+        return boardService.latestBoard();
     }
 
 

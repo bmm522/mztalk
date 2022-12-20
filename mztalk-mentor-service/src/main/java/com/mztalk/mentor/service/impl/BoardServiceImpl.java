@@ -3,7 +3,7 @@ package com.mztalk.mentor.service.impl;
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.BoardDto;
-import com.mztalk.mentor.domain.dto.BoardDto2;
+import com.mztalk.mentor.domain.dto.MyBoardDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
@@ -67,10 +67,17 @@ public class BoardServiceImpl implements BoardService {
 
     // 순수하게 본인이 작성한 글만 불러오기
     @Override
-    public BoardDto2 getBoardByMentorId(Long mentorId) {
+    public MyBoardDto getBoardByMentorId(Long mentorId) {
         Board findBoard = boardRepository.getBoardByMentorId(mentorId);
-        BoardDto2 boardDto = new BoardDto2(findBoard);
+        MyBoardDto boardDto = new MyBoardDto(findBoard);
         return boardDto;
+    }
+
+    @Override
+    public Result latestBoard() {
+        List<Board> boards = boardRepository.latestBoard();
+        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
     }
 
     @Override

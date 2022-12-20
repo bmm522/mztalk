@@ -51,6 +51,15 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
                 .getResultList();
     }
 
+    @Override
+    public List<Board> latestBoard() {
+        List<Board> resultList = entityManager.createQuery("select b from Board b order by b.lastModifiedDate desc", Board.class)
+                .setFirstResult(0)
+                .setMaxResults(3)
+                .getResultList();
+        return resultList;
+    }
+
     private BooleanExpression eqCategory(String category){
         return category != null ? board.category.eq(category) : null;
     }
