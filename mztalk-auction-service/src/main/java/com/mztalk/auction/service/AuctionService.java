@@ -1,6 +1,7 @@
 package com.mztalk.auction.service;
 
 import com.mztalk.auction.domain.Result;
+import com.mztalk.auction.domain.dto.BoardDetailResponseDto;
 import com.mztalk.auction.domain.dto.BoardRequestDto;
 import com.mztalk.auction.domain.dto.BoardDto;
 import com.mztalk.auction.domain.dto.CommentDto;
@@ -21,7 +22,7 @@ public interface AuctionService {
 
     int deleteBoard(Long bId);
 
-    Board selectBoard(Long bId);
+    BoardDetailResponseDto selectBoard(Long bId);
 
     int updatePrice(Long bId, BoardDto boardDto);
 

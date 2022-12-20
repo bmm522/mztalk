@@ -1,6 +1,7 @@
 package com.mztalk.auction.controller;
 
 import com.mztalk.auction.domain.Result;
+import com.mztalk.auction.domain.dto.BoardDetailResponseDto;
 import com.mztalk.auction.domain.dto.BoardRequestDto;
 import com.mztalk.auction.domain.dto.BoardDto;
 import com.mztalk.auction.domain.dto.CommentDto;
@@ -45,7 +46,7 @@ public class AuctionController {
 
     //특정 게시물 조회
     @GetMapping("/board/{bId}")
-    public Board selectBoard(@PathVariable Long bId) {
+    public BoardDetailResponseDto selectBoard(@PathVariable Long bId) {
         auctionService.updateCount(bId); //조회수 증가
         return auctionService.selectBoard(bId);
     }
