@@ -1,7 +1,9 @@
 package com.mztalk.auction.repository;
 
 import com.mztalk.auction.domain.dto.BoardDto;
+import com.mztalk.auction.domain.dto.CommentDto;
 import com.mztalk.auction.domain.entity.Board;
+import com.mztalk.auction.domain.entity.Comment;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -18,4 +20,8 @@ public interface CustomAuctionRepository {
     int updateCount(Long bId);
 
     long getRecentBoardNo();
+
+    int updateComment(Long cId, CommentDto commentDto);
+
+    int deleteComment(Long cId, CommentDto commentDto);
 }

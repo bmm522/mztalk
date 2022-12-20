@@ -79,36 +79,9 @@ function timeStandard(time) {
 //     })
 // });
 
-//글쓰기 test
-// function test(){
-//     console.log('클릭됨');
-//     fetch("http://localhost:8000/auction/boards",{
-//         method:"POST",
-//         headers:{
-//             "Content-Type":"application/json",
-//             "Content-Type":"multipart/form-data"
-//         },
-    
-//         body:JSON.stringify({
-//             "title" : document.getElementById('title').value,
-//             "content" : document.getElementById('content').value,
-//             "file" : document.getElementById('inputFile').value,
-//             "minPrice" : document.getElementById('minPrice').value,
-//             "timeLimit" : document.getElementById('timeLimit').values
-//         }),
-//     })
-//     .then(res => {
-//         console.log('통신성공');
-//     })
-// }
 
-//글쓰기
-
-const writeEvent = () =>{
-
-    document.getElementById('image-form-form').submit();
-    
-    
+//글쓰기 insert
+function boardWrite() {
     const startPrice = document.getElementById('startPrice').value;
     const startPriceSplit = startPrice.split(',');
     const startPriceTrans = Number(startPriceSplit[0].concat(startPriceSplit[1]));
@@ -122,35 +95,28 @@ const writeEvent = () =>{
         body:JSON.stringify({
             "title" : document.getElementById('title').value,
             "content": document.getElementById('content').value,
-            "writer" : localStorage.getItem("userNickname"),
             "startPrice": startPriceTrans,
-            "timeLimit": document.getElementById('timeLimit').value
-            "currentId" : loca 
-            
+            "timeLimit": document.getElementById('timeLimit').value,
         }),
     })
-    .then((res)=>res.json())
-    .then(res=>{
-        console.log(res.bId);
-        fetch('http://localhost:8000/auction/images/'+res.bId,{
-            method:"GET"
-        })
-        .then(res =>{
-            location.href="auction.html"
-        })
-    })
+    .then(res => res.json())
+    .then(res => {
+        console.log(res);
+        for(var bId in res) {
+            console.log(res[bId]);
 
+        }
+    });
 }
-
 
 //파일추가
 window.onload = () => {
     const fileArea = document.getElementById("fileArea");
     document.getElementById("addFile").addEventListener('click', () => {
-        if(document.getElementsByName("files").length < 3) {
+        if(document.getElementsByName("files").length < 2) {
             const newDiv = document.createElement('div');
             newDiv.classList.add('col-10');
-            newDiv.innerHTML = '<input type = "file" class = "form-control" name = "image">';
+            newDiv.innerHTML = '<input type = "file" class = "form-control" name = "files" accept="image/*"">';
             fileArea.append(newDiv);
         } else {
             alert("파일은 3개까지 첨부 가능합니다.");
@@ -168,4 +134,15 @@ function showPreview(event) {
         preview.style.display = "block";
     }
 }
+
+//예비 bId 받아오기
+// window.onload = function() {
+//     document.getElementById('bId').value=localStorage.getItem('bId');
+// }
+
+
+// //뒤로 가기 bId 지우기
+// window.onload = function() {
+//     localStorage.removeItem('bId');
+// }
 

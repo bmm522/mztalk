@@ -19,23 +19,17 @@ public class BungAddBoard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long addId;
-
     @Lob
     private String addContent;
-
     @Column(nullable = false, length = 100)
     private String addPhone;
-
     @Enumerated(EnumType.STRING)
     private BoardStatus boardStatus;
-
     @Column(nullable = false, length = 20)
     private String addNickName;
-
     @ManyToOne
     @JoinColumn(name="boardId")
     private BungBoard boardId;
-
     public void changeStatus() {
         this.boardStatus = BoardStatus.NO;
     }

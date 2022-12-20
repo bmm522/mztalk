@@ -1,10 +1,18 @@
 let page = 0;
+let loginUser = localStorage.getItem('userNo');
+let own = localStorage.getItem("own");
+
+window.onload = function(){
+  storyLoad();
+  storyWrite();
+}
+
 
 function writeboard() {
     
-    const open = document.querySelector(".write_board");
-    const modal = document.querySelector(".textmodal");
-    const close = document.querySelector(".btn-close");
+    const open = document.querySelector(".write_board"); //글쓰기버튼
+    const modal = document.querySelector(".textmodal");  //글쓸수 있는곳
+    const close = document.querySelector(".btn-close");  //닫기버튼
 
     //console.log(open);
 
@@ -26,54 +34,116 @@ writeboard();
 // console.log(localStorage.getItem('userNo')); // 세션값
 // console.log(localStorage.getItem('own')); //파라미터 
 
-window.onload=function(){
-    console.log("개인 : " + localStorage.getItem('authorization'));
-    console.log("개인 : " + localStorage.getItem('refreshToken'));
-    console.log("개인 : " + localStorage.getItem('userNo'));
-    console.log("개인 : " + localStorage.getItem('userNickname'));
-    console.log("페이지주인: " + localStorage.getItem('own'));
 
-    //const own = document.getElementById('own');
-    
-    //fetch쓰기
-
-
-}
 
 //개인페이지
 document.getElementById('profile-edit-btn').addEventListener('click',function(){
     
     location.href="editpage.html";
-
-    // fetch("http://localhost:8000/story/"+own,{
-    //     method:"GET",
-    //     headers:{
-    //         "Content-Type":"application/json",
-    //         Authorization:localStorage.getItem('authorization'),
-    //         RefreshToken:localStorage.getItem('refreshToken'),
-    //     },
-    // })
-    // .then((res)=> res.json())
-    // .then(res=>{
-    //     console.log("자료있니?" +res.data);
-    //     console.log("!!!!!!!!!!");
-    //     console.log(own);
-    //     location.href="individualpage.html";
-    // })
-
-
 });
 
+function storyLoad() {
+  
+  fetch("http://localhost:8000/story/"+own,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+      .then((res)=> res.json())
+      .then(res=>{       
+        console.log(res.data);
+
+        for(let board of res.data){
+          let boardId = board.id;
+          let nickname = board.nickname;
+          let privacy = board.privacy;
+          let title = board.title;
+          let content = board.content;
+          let date = board.createDate;
+          
+        document.querySelector("#contentList").innerHTML += 
+                `<div id="post-div-${boardId}" class="post-div">
+                    <table id="post-table">
+                        <tr>
+                            <td>
+                                <div id="category-div">${board.privacy}
+                                </div>
+                            </td>
+                            <td>
+                                <div id="post-title-div"><br>&nbsp&nbsp${board.title}</div>
+                            </td>
+                            <td>
+                                <div id="post-date-div"><br>${board.date}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><br><br>
+                                <div id="edit-delete-div">
+                                    <button style="cursor:pointer;" type="button">수정</button>
+                                    <button style="cursor:pointer;" type="button">삭제</button>
+                                </div>
+                                <div id=post-hr>
+                                    <hr>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div id="post-content">
+                                    <div id="post-content-input">${board.content}</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="reply-div">
+                        <div>
+                            <div id="reply-nickname">{작성자 닉네임}</div>
+                            <div id="reply-content">{댓글 내용}</div>
+                            <div id="reply-date">{date}</div>
+                            <div id="reply-edit-btn"><button style="cursor:pointer;" type="button">X</button></div>
+                        </div>
+                    </div>
+                    <div id="reply-write-div">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div id="reply-write-box"><input type="text" id="reply-write-input"></div>
+                    </div>
+                    </td>
+                    <td>
+                        <div id="reply-write-btn"><button onClick="addReply(${boardId})" id="replyButton-${boardId}" style="cursor:pointer;" type="button">등록</button></div>
+                    </td>
+                    </tr>
+                    </table>
+                </div>
+            </div>`;
+
+           
+              }   
+              document.querySelector("#contentList").prepend(storyItem); 
+           })
+          }
+      
 
 
 
 //글쓰기
+function storyWrite() {
 const write_board = document.getElementById('write-board');
 const privacyBounds = document.getElementById('privacyBounds');
 
+  //console.log("개인 : " + localStorage.getItem('authorization'));
+  //console.log("개인 : " + localStorage.getItem('refreshToken'));
+  //console.log("개인 : " + localStorage.getItem('userNo'));
+  //console.log("개인 : " + localStorage.getItem('userNickname'));
+  //console.log("페이지주인: " + localStorage.getItem('own'));
+
 write_board.addEventListener('click', function(){
     //console.log("클릭됨??");
-    
+   
     if(privacyBounds.options[privacyBounds.selectedIndex].value === 'no'){
         alert("공개범위를 설정하세요");
     }else{
@@ -94,17 +164,183 @@ write_board.addEventListener('click', function(){
         })
             .then((res)=>res.json())
             .then(res =>{
-                console.log("res : " + res);
-                if(res > 0){
+                //console.log("res : " + res);
+                    console.log("res.data :" +res.data);
                     console.log('통신성공');
-                   
-                } else {
-                    console.log('실패');
-                }
+                    //글썻을떄
+                    const open = document.querySelector(".write_board"); //글쓰기버튼
+                    const modal = document.querySelector(".textmodal");
+                    modal.classList.add("hidden");
+                    open.classList.remove("hidden");
+
+                    let boardId = board.id;
+                    let title = board.title;
+                    let content = board.content;
+                    let date = board.createDate;
+                  document.querySelector("#contentList").innerHTML += 
+                          `<div id="post-div-${boardId}" class="post-div">
+                              <table id="post-table">
+                                  <tr>
+                                      <td>
+                                          <div id="category-div">${board.privacy}
+                                          </div>
+                                      </td>
+                                      <td>
+                                          <div id="post-title-div"><br>&nbsp&nbsp${board.title}</div>
+                                      </td>
+                                      <td>
+                                          <div id="post-date-div"><br>${board.date}</div>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td colspan="3"><br><br>
+                                          <div id="edit-delete-div">
+                                              <button style="cursor:pointer;" type="button">수정</button>
+                                              <button style="cursor:pointer;" type="button">삭제</button>
+                                          </div>
+                                          <div id=post-hr>
+                                              <hr>
+                                          </div>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td colspan="3">
+                                          <div id="post-content">
+                                              <div id="post-content-input">${board.content}}</div>
+                                          </div>
+                                      </td>
+                                  </tr>
+                              </table>
+                              <div id="reply-div">
+                                  
+                              </div>
+                              <div id="reply-write-div">
+                                  <table>
+                                      <tr>
+                                          <td>
+                                              <div id="reply-write-box"><input type="text" id="reply-write-input"></div>
+                              </div>
+                              </td>
+                              <td>
+                                  <div id="reply-write-btn"><button id="replyButton" onClick="addReply(${boardId})" style="cursor:pointer;" type="button">등록</button></div>
+                              </td>
+                              </tr>
+                              </table>
+                          </div>
+                      </div>`;
+               })      
+          }   
+               
+      });
+     
+
+      document.getElementById('title-input-text').value("");
+      document.getElementById("content-input-text").value("");
+      privacyBounds.options[privacyBounds.selectedIndex].value("");
+}
+
+
+//댓글쓰기
+function addReply(boardId){
+  let replyContent = document.getElementById('reply-write-input');
+  let replyButton = document.getElementById('replyButton');
+  let replyList = document.getElementById('reply-div');
+  //let id = localStorage.getItem('userNo');
+
+      console.log(replyContent);
+        if(replyContent.value === ''){
+          alert("댓글을 작성해주세요!");
+        }else{
+          fetch("http://localhost:8000/story/board/"+boardId+"/reply",{
+              method:"POST",
+              headers:{
+                  "Content-Type":"application/json",
+                  Authorization:localStorage.getItem('authorization'),
+                  RefreshToken:localStorage.getItem('refreshToken'),
+              },
+              body:JSON.stringify({
+                  replyNickname: localStorage.getItem('userNickname'),
+                  replyContent: replyContent.value,
+                })
             })
-        
-    }        
-});
+          .then((res)=>res.json())
+          .then(res =>{
+
+            console.log("통신성공?");
+            
+            console.log("res.data: "+ res.data);
+
+            let reply = res.data;
+
+            document.getElementById('reply-div').innerHTML +=
+            `<div>
+              <div id="reply-nickname">${reply.replyNickname}</div>
+              <div id="reply-content">${reply.content}</div>
+              <div id="reply-date">${reply.date}</div>
+              <div id="reply-edit-btn"><button style="cursor:pointer;" type="button">X</button></div>
+            </div>`;
+
+            
+
+
+
+          })
+        }
+    }
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //구독
 document.querySelector("#subscribeBtn").onclick = (e) => {

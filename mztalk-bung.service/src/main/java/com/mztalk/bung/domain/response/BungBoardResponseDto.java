@@ -1,5 +1,6 @@
 package com.mztalk.bung.domain.response;
 
+import com.mztalk.bung.domain.entity.BungBoard;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BungBoardResponseDto {
 
+    private String boardId;
     private String imageUrl;
     private String imageName;
 
@@ -27,6 +29,7 @@ public class BungBoardResponseDto {
 
 
     public BungBoardResponseDto(BungBoard bungBoard, String imageUrl, String imageName) {
+        this.boardId = String.valueOf(bungBoard.getBoardId());
         this.imageUrl = imageUrl;
         this.imageName = imageName;
         this.count = String.valueOf(bungBoard.getBoardCount());

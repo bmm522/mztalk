@@ -1,6 +1,7 @@
 
 
 window.onload = function(){
+    console.log(localStorage.getItem('bId'));
 document.getElementById('bId-hidden').value=localStorage.getItem('bId');
    console.log( document.getElementById('bId-hidden').value);
   
@@ -25,7 +26,7 @@ document.getElementById('bung-write-btn').addEventListener('click', function(){
     let cnt = 0;
     console.log( "클릭 시 : " + document.getElementById('bId-hidden').value);
   
-    document.getElementById('image-form').submit();
+  
     for(let i = 0 ; i < document.getElementsByClassName('form-check-input').length ; i++){
         
         if(document.getElementsByClassName('form-check-input')[i].checked){
@@ -39,6 +40,7 @@ document.getElementById('bung-write-btn').addEventListener('click', function(){
     } else if(cnt ==0){
         alert('카테고리를 선택해주세요');
     } else {
+        document.getElementById('image-form').submit();
         fetch('http://localhost:8000/bung/mainInsertBoard', {
         method:"POST",
         headers:{
@@ -57,7 +59,7 @@ document.getElementById('bung-write-btn').addEventListener('click', function(){
         
     })
     .then(res=>{
-        localStorage.removeItem("bId");
+        
         location.href="bung-service-main.html";
     })
     }

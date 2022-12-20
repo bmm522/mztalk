@@ -2,7 +2,16 @@ package com.mztalk.bung.domain.dto;
 
 import com.mztalk.bung.domain.BoardStatus;
 import com.mztalk.bung.domain.entity.BungAddBoard;
+import com.mztalk.bung.domain.entity.BungBoard;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BungAddBoardDto {
 
     private Long addId;

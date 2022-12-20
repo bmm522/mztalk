@@ -17,7 +17,7 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardCustom
 
     long countByOwn(long own);
 
-    Optional<Board> findByUserId(Long toUserId);
+    //Optional<Board> findByUserId(Long toUserId);
 
 
 

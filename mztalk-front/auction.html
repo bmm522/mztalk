@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/auction.css">
-    <title>Westagram</title>
+    <title>Main::Westagram</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -44,10 +44,13 @@
         </div>
         <!--카드-->
         <div class="row " id = "auctionCard">
+          <div id = "output-div">
             <div class="col">
+              <!-- bId-->
+              <input type = "hidden" id = "hidden-bId"/>
               <div class="card card-cover m-1 h-20 overflow-hidden text-white bg-dark rounded-5 shadow-lg" class = "titleCard"style="background-image: url('img/auction/book1.jpeg');background-position: 10% 20%">
                 <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                  <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">게시글 제목</h2>
+                  <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" id = "title">게시글 제목</h2>
                   <ul class="d-flex list-unstyled mt-auto">
                     <li class="d-flex align-items-center me-3">
                       <small>남은 시간</small>
@@ -60,23 +63,8 @@
                 </div>
               </div>
             </div>
-            <div class="col">
-              <div class="card card-cover h-20 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('img/auction/book1.jpeg');background-position: 10% 20%">
-                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                  <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">게시글 제목</h2>
-                  <ul class="d-flex list-unstyled mt-auto">
-                    <li class="d-flex align-items-center me-3">
-                      <small>남은 시간</small>
-                    </li>
-                    <li class="d-flex align-items-center">
-                      <svg class="bi me-2" width="1em" height="1em"></svg>
-                      <small>가격</small>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            </div>
+          </div>
+        </div>
 
   
 

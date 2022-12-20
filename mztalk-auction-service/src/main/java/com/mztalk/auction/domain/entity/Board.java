@@ -1,9 +1,6 @@
 package com.mztalk.auction.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -11,6 +8,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
+@ToString(exclude = "Images")
 @Entity
 @Getter
 @Builder
@@ -21,7 +19,7 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long bId;
+    private Long bId;
 
     @Column(nullable = false, length = 100)
     private String title;
@@ -53,7 +51,11 @@ public class Board {
 
     private String buyerNickname;
 
-    public Board(long bId, String title, String content, String writer, Integer count, Integer startPrice, Integer timeLimit, Integer CurrentPrice, String buyerNickname) {
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("cId desc")
+    private List<Comment> comments;
+
+    public Board(Long bId, String title, String content, String writer, Integer count, Integer startPrice, Integer timeLimit, Integer CurrentPrice, String buyerNickname) {
         this.bId = bId;
         this.title = title;
         this.content = content;

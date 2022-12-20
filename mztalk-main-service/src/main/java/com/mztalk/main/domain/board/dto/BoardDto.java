@@ -4,13 +4,12 @@ package com.mztalk.main.domain.board.dto;
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.status.BoardStatus;
-
 import com.mztalk.main.status.PrivacyStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +29,8 @@ public class BoardDto {
 
     private List<Reply> replyList = new ArrayList<>();
 
+    private LocalDateTime createDate;
+
     private String nickname;
 
     //레포지토리에 넣기위해
@@ -42,7 +43,8 @@ public class BoardDto {
                 .content(content)
                 .status(BoardStatus.YES)
                 .own(own)
-                .privacy(privacy.PUBLIC)
+                .createDate(createDate)
+                .privacy(privacy)
                 .reply(replyList)
                 .build();
         return board;
@@ -60,6 +62,7 @@ public class BoardDto {
         this.own = board.getOwn();
         this.privacy = board.getPrivacy();
         this.replyList = board.getReplyList();
+        this.createDate = board.getCreateDate();
 
     }
 
