@@ -79,28 +79,6 @@ function timeStandard(time) {
 //     })
 // });
 
-//글쓰기 test
-// function test(){
-//     console.log('클릭됨');
-//     fetch("http://localhost:8000/auction/boards",{
-//         method:"POST",
-//         headers:{
-//             "Content-Type":"application/json",
-//             "Content-Type":"multipart/form-data"
-//         },
-    
-//         body:JSON.stringify({
-//             "title" : document.getElementById('title').value,
-//             "content" : document.getElementById('content').value,
-//             "file" : document.getElementById('inputFile').value,
-//             "minPrice" : document.getElementById('minPrice').value,
-//             "timeLimit" : document.getElementById('timeLimit').values
-//         }),
-//     })
-//     .then(res => {
-//         console.log('통신성공');
-//     })
-// }
 
 //글쓰기 insert
 function boardWrite() {
@@ -135,8 +113,7 @@ function boardWrite() {
 window.onload = () => {
     const fileArea = document.getElementById("fileArea");
     document.getElementById("addFile").addEventListener('click', () => {
-        console.log("addFile버튼 들어옴");
-        if(document.getElementsByName("files").length < 3) {
+        if(document.getElementsByName("files").length < 2) {
             const newDiv = document.createElement('div');
             newDiv.classList.add('col-10');
             newDiv.innerHTML = '<input type = "file" class = "form-control" name = "files" accept="image/*"">';
