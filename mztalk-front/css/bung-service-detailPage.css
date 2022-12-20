@@ -41,7 +41,8 @@ img {vertical-align: middle;}
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
+  max-width: 500px;
+  height: 500px;
   position: relative;
   margin: auto;
 }
@@ -134,3 +135,14 @@ img {vertical-align: middle;}
   height: 200px;
 }
 
+/* #image-div{
+  height: 400px;
+  width: 100px;
+  display: inline;
+  overflow: hidden;
+}
+img{
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+} */

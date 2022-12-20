@@ -3,6 +3,7 @@ package com.mztalk.bung.service;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.entity.Result;
+import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,7 +18,7 @@ public interface BungBoardService {
 
     Long mainBoardDelete(Long bId);
 
-    BungBoardDto mainBoardSelect(Long bId);
+    BungBoardDetailResponseDto mainBoardSelect(Long bId);
 
     int increaseCount(Long bId);
 

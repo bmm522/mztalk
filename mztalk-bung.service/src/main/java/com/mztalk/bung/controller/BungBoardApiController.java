@@ -2,6 +2,7 @@ package com.mztalk.bung.controller;
 
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
+import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
 import com.mztalk.bung.service.BungBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -47,9 +48,9 @@ public class BungBoardApiController {
 
     // 게시글 상세보기
     @GetMapping("/mainBoardSelect/{boardId}")
-    public BungBoardDto mainBoardSelect(@PathVariable("boardId") Long bId) {
-        bungBoardService.increaseCount(bId);
-        return bungBoardService.mainBoardSelect(bId);
+    public BungBoardDetailResponseDto mainBoardSelect(@PathVariable("boardId") String bId) {
+        bungBoardService.increaseCount(Long.parseLong(bId));
+        return bungBoardService.mainBoardSelect(Long.parseLong(bId));
     }
     // 벙 신청 게시글 작성
     @ResponseBody

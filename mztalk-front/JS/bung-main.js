@@ -1,5 +1,6 @@
 window.onload = function(){
-    // localStorage.removeItem('bId');
+     localStorage.removeItem('bId');
+    
     fetch('http://localhost:8000/bung/mainBoards', {
         method:"GET",
         headers:{
@@ -25,10 +26,12 @@ window.onload = function(){
                 let nowGroup = board.nowGroup;
                 let fullGroup = board.fullGroup;
                 let deadlineDate = board.deadlineDate;
+                let boardId = board.boardId;
 
                 document.getElementById('output-div').innerHTML +=
-                ` <div class="col">
+                ` <div class="col" onclick='moveDetails(${boardId});' style="cursor:pointer;">
                 <div class="card h-100">
+             
                      <div class="card shadow-sm h-100">
                          <div class="card-header">
                             ${title}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp조회수 : &nbsp${count}
@@ -66,7 +69,6 @@ window.onload = function(){
         }
     })
 }
-
 document.getElementById('write-btn').addEventListener('click',function(){
 
     fetch('http://localhost:8000/bung/recent-board', {
@@ -83,3 +85,9 @@ document.getElementById('write-btn').addEventListener('click',function(){
         location.href="bung-Service-writerPage.html";
     })
 });
+
+
+const moveDetails = (boardId) =>{
+    localStorage.setItem("bId", boardId);
+    location.href="bung-service-detailPage.html";
+}
