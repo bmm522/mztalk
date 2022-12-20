@@ -6,6 +6,7 @@ import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.entity.BungAddBoard;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.Result;
+import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
 import com.mztalk.bung.domain.response.BungBoardResponseDto;
 import com.mztalk.bung.exception.BoardException;
 import com.mztalk.bung.repository.BungAddBoardRepository;
@@ -13,6 +14,7 @@ import com.mztalk.bung.repository.BungBoardRepository;
 import com.mztalk.bung.repository.BungBoardRepositoryCustom;
 import com.mztalk.bung.service.BungBoardService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +27,9 @@ import org.springframework.web.client.RestTemplate;
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -70,9 +74,9 @@ public class BungServiceImpl implements BungBoardService {
         List<BungBoard> bungBoards = bungRepository.findAll();
         List<BungBoardResponseDto> bungBoardResponseDtoList = new ArrayList<>();
         for(BungBoard bungBoard : bungBoards){
+            System.out.println(bungBoard.getBoardId());
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/html");
-            System.out.println("service : " + bungBoard.getBoardTitle());
             ResponseEntity<String> response = new RestTemplate().exchange(
                     "http://localhost:8000/resource/main-image?bNo="+bungBoard.getBoardId()+"&serviceName=bung",
                     HttpMethod.GET,
@@ -84,16 +88,11 @@ public class BungServiceImpl implements BungBoardService {
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
 
-            //   bungBoardResponseDtoList = bungBoards.stream().map(l -> new BungBoardResponseDto(bungBoard, imageUrl, imageName)).collect(Collectors.toList());
 
-//            System.out.println(bungBoardResponseDtoList.get(1));
             bungBoardResponseDtoList.add(new BungBoardResponseDto(bungBoard, imageUrl, imageName));
 
         }
-//        System.out.println(bungBoardResponseDtoList.get(0).getTitle());
-//        System.out.println(bungBoardResponseDtoList.get(1).getTitle());
-//        List<BungBoardResponseDto> list = bungBoards.stream().map(l ->  bungBoardResponseDtoList).collect(Collectors.toList());
-//        List<BungBoardDto> collect = bungBoards.stream().map(BungBoardDto::new).collect(Collectors.toList());
+
         return new Result(bungBoardResponseDtoList);
     }
 
@@ -117,10 +116,32 @@ public class BungServiceImpl implements BungBoardService {
     }
 
     @Override
-    public BungBoardDto mainBoardSelect(Long bId) {
+    public BungBoardDetailResponseDto mainBoardSelect(Long bId) {
         BungBoard bungBoard = bungRepository.findById(bId).orElseThrow(() -> new BoardException("해당 번호의 글이 존재하지 않습니다."));
-        BungBoardDto bungBoardDto = new BungBoardDto(bungBoard);
-        return bungBoardDto;
+        List<ConcurrentHashMap<String, String>> mapList = new ArrayList<>();
+//        List<List<ConcurrentHashMap<String,String>>> list = new ArrayList<>();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "text/html");
+        ResponseEntity<String> response = new RestTemplate().exchange(
+                "http://localhost:8000/resource/images?bNo="+bId+"&serviceName=bung",
+                HttpMethod.GET,
+                new HttpEntity<String>(headers),
+                String.class
+        );
+
+        JSONObject jsonObject = new JSONObject(response.getBody());
+        JSONArray jsonArray = jsonObject.getJSONArray("data");
+        for(int i = 0; i < jsonArray.length() ; i ++){
+            ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+            map.put("imageUrl", jsonArray.getJSONObject(i).getString("imageUrl"));
+            map.put("objectKey", jsonArray.getJSONObject(i).getString("objectKey"));
+            map.put("imageLevel", jsonArray.getJSONObject(i).getString("imageLevel"));
+            mapList.add(map);
+//            list.add(mapList);
+        }
+//        System.out.println(list);
+        return new BungBoardDetailResponseDto(bungBoard, mapList);
+
     }
 
     @Override
