@@ -19,7 +19,7 @@ public interface CustomAuctionRepository {
 
     int updateCount(Long bId);
 
-    long getRecentBoardNo();
+
 
     int updateComment(Long cId, CommentDto commentDto);
 

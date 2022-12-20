@@ -75,18 +75,21 @@
 				<div class="mb-3">
                     <label for="inputFiles">파일 첨부</label>
                     
+                    <form action ="http://localhost:8000/resource/images" method="POST" enctype="multipart/form-data" id="image-form-form">
                     <div class = "row" id = "fileArea">
-                        <form action ="http://localhost:8000/resource/images" method="POST" enctype="multipart/form-data" id="image-form-form">
+                        
                             <input type="hidden" name="serviceName" value="auction"/>
-                            <input type="hidden" name="bId" value="1"/> 
+                            <input type="hidden" name="bNo" id="hidden-bId"/> 
                             <div class = "col-10" id = "count">
                                 <input type="file" class="form-control" id="inputFiles" name = "image"/>
                             </div>
-                        </form>
+                   
                         <div class = "col-2" >
                             <button type = "button" id = "addFile" style = "margin-top: 20px;margin-left: 10px;">+</button>
                         </div>
                     </div>
+                </form>
+
                 
     
 				</div>
