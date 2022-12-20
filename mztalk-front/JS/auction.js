@@ -28,7 +28,8 @@ window.onload = function(){
                 let imageName = board.imageName;
                 let boardId = board.boardId;
                 if(i%2 !== 0){
-                document.getElementById('auctionCard').innerHTML += `<div class="col-6">
+                document.getElementById('auctionCard').innerHTML += `
+                <div class="col-6" onclick = 'moveDeatils(${boardId});' style="cursor:pointer;">
                     <!-- bId-->
                     <input type="hidden" id="hidden-bId" />
                     <div class="card card-cover m-1 h-20 overflow-hidden text-white bg-dark rounded-5 shadow-lg" class="titleCard"
@@ -53,7 +54,7 @@ window.onload = function(){
                 </div>`
                 i++;
                 } else{
-                    document.getElementById('auctionCard').innerHTML += `<div class="col-6">
+                    document.getElementById('auctionCard').innerHTML += `<div class="col-6" onclick ="moveDeatils(${boardId});" style="pointer:cursor;">
                     <!-- bId-->
                     <input type="hidden" id="hidden-bId" />
                     <div class="card card-cover m-1 h-20 overflow-hidden text-white bg-dark rounded-5 shadow-lg" class="titleCard"
@@ -84,8 +85,13 @@ window.onload = function(){
             }
         })
 
-
 }
+
+const moveDeatils = (boardId) => {
+    localStorage.setItem("bId", boardId);
+    location.href="auctionDetail.html";
+}
+
  
 
 

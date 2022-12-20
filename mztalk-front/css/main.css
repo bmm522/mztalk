@@ -82,10 +82,6 @@ nav {
     background-color: rgb(242, 244, 226);
 } 
 
-.mainContainer.auctionDetail {
-  height: 100%;
-}
-
 .floating {
     
     position: fixed; 

@@ -104,20 +104,19 @@ function deleteComment() {
     }
 }
 
-//bId
+
+//뿌려주기..
 window.onload = () => {
-    fetch("http://localhost:8000/auction/board", {
+    fetch('http://localhost:8000/auction/board/' + localStorage.getItem("bId"), {
         method: "GET",
         headers: {
-            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
         }
     })
-    .then(res => res.json())
+    .then((res) => res.json())
     .then(res => {
-        console.log(res);
-        for(var bId in res) {
-            console.log(res[bId]);
-        }
+        let image
     })
 }
 

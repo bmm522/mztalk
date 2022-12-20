@@ -1,4 +1,4 @@
-//시작가 0,000 형식으로
+ //시작가 0,000 형식으로
 function priceStandard(text) {
     const startPrice = document.getElementById("startPrice").value;
     const under = startPrice.slice(-3);
@@ -153,4 +153,3 @@ function showPreview(event) {
 // window.onload = function() {
 //     localStorage.removeItem('bId');
 // }
-

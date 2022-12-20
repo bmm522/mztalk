@@ -1,16 +1,15 @@
 package com.mztalk.auction.service.impl;
 
 import com.mztalk.auction.domain.Result;
-import com.mztalk.auction.domain.dto.BoardListResponseDto;
-import com.mztalk.auction.domain.dto.BoardRequestDto;
-import com.mztalk.auction.domain.dto.BoardDto;
-import com.mztalk.auction.domain.dto.CommentDto;
+import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 import com.mztalk.auction.repository.BoardRepository;
 import com.mztalk.auction.repository.CommentRepository;
 import com.mztalk.auction.service.AuctionService;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.client.methods.HttpHead;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -84,9 +83,42 @@ public class AuctionServiceImpl implements AuctionService {
 
     //특정 게시물 조회
     @Override
-    public Board selectBoard(Long bId) {
+    public BoardDetailResponseDto selectBoard(Long bId) {
+        Board board = new Board();
+        board = boardRepository.findByBoardId(bId);
 
-        return boardRepository.findByBoardId(bId);
+        List<ConcurrentHashMap<String, String>> imageInfo = new ArrayList<>();
+
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "text/html");
+        ResponseEntity<String> response = new RestTemplate().exchange(
+                "http://localhost:8000/resource/images?bNo="+bId+"&serviceName=auction",
+                HttpMethod.GET,
+                new HttpEntity<String>(headers),
+                String.class
+        );
+
+        JSONObject jsonObject = new JSONObject(response.getBody());
+        JSONArray jsonArray = jsonObject.getJSONArray("data");
+        for(int i = 0; i < jsonArray.length(); i++) {
+            ConcurrentHashMap<String, String> imageMap = new ConcurrentHashMap<>();
+            imageMap.put("imageUrl", jsonArray.getJSONObject(i).getString("imageUrl"));
+            imageMap.put("imageName", jsonArray.getJSONObject(i).getString("objectKey"));
+            imageMap.put("imageLevel", jsonArray.getJSONObject(i).getString("imageLevel"));
+
+            imageInfo.add(imageMap); //그럼 map을 담은 list가 여러개 있겠찌...
+        }
+        //나머지 데이터들을 넣어줘야겠지...
+        BoardDetailResponseDto boardDetailResponseDto = new BoardDetailResponseDto();
+        boardDetailResponseDto.setBoardId(board.getBoardId());
+        boardDetailResponseDto.setTitle(board.getTitle());
+        boardDetailResponseDto.setContent(board.getContent());
+        boardDetailResponseDto.setImageInfo(imageInfo);
+
+        return boardDetailResponseDto;
+
     }
 
     //입찰가
