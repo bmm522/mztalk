@@ -49,7 +49,7 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     @Transactional
     @Override
     public int updateCount(Long bId) {
-        return entityManager.createQuery("update Board b set b.count = b.count + 1 where b.bId = :bId")
+        return entityManager.createQuery("update Board b set b.count = b.count + 1 where b.boardId = :bId")
                 .setParameter("bId", bId)
                 .executeUpdate();
     }

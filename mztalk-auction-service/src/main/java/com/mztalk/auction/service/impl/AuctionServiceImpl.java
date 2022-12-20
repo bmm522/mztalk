@@ -84,12 +84,8 @@ public class AuctionServiceImpl implements AuctionService {
     //특정 게시물 조회
     @Override
     public BoardDetailResponseDto selectBoard(Long bId) {
-        Board board = new Board();
-        board = boardRepository.findByBoardId(bId);
-
+        Board board = boardRepository.findByBoardId(bId);
         List<ConcurrentHashMap<String, String>> imageInfo = new ArrayList<>();
-
-
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "text/html");
@@ -111,13 +107,15 @@ public class AuctionServiceImpl implements AuctionService {
             imageInfo.add(imageMap); //그럼 map을 담은 list가 여러개 있겠찌...
         }
         //나머지 데이터들을 넣어줘야겠지...
-        BoardDetailResponseDto boardDetailResponseDto = new BoardDetailResponseDto();
-        boardDetailResponseDto.setBoardId(board.getBoardId());
-        boardDetailResponseDto.setTitle(board.getTitle());
-        boardDetailResponseDto.setContent(board.getContent());
-        boardDetailResponseDto.setImageInfo(imageInfo);
 
-        return boardDetailResponseDto;
+
+//        BoardDetailResponseDto boardDetailResponseDto = new BoardDetailResponseDto();
+//        boardDetailResponseDto.setBoardId(board.getBoardId());
+//        boardDetailResponseDto.setTitle(board.getTitle());
+//        boardDetailResponseDto.setContent(board.getContent());
+//        boardDetailResponseDto.setImageInfo(imageInfo);
+
+        return new BoardDetailResponseDto(board, imageInfo);
 
     }
 
