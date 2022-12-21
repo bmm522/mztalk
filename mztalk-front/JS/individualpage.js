@@ -54,7 +54,7 @@ function storyLoad() {
       })
       .then((res)=> res.json())
       .then(res=>{       
-        console.log(res.data);
+        //console.log(res.data);
 
         for(let board of res.data){
           let boardId = board.id;
@@ -294,6 +294,91 @@ function deleteBoard(boardId){
 
 
 
+//프로필 이미지 바꾸기
+function profileImageUpload(){
+  let userProfileImage = document.getElementById('userProfileImageInput');
+  document.getElementById('bNo').value = own;
+  if(own != loginUser){
+		alert("프로필 사진을 수정할 수 없는 유저입니다.");
+		return;
+	}
+  userProfileImage.click();
+
+  
+  userProfileImage.addEventListener("change",(e)=>{
+    let f = e.target.files[0];
+
+    if(!f.type.match("image.*")){
+      alert("이미지를 등록해야합니다.");
+      return;
+    }
+
+  const form = document.getElementById('image-form');
+
+  const payload = new FormData(form);
+
+    fetch('http://localhost:8000/resource/main-image',{
+        method: 'POST',
+        body: payload,
+    })
+    .then(res=>{
+
+      fetch("http://localhost:8000/story/profile/"+own,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+        body:JSON.stringify({
+          own: document.getElementById('bNo').value,
+    
+        }) 
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+    
+      console.log("통신 성공");
+       
+      console.log("res :" +res);
+      console.log("resdata: " + res.data);
+      
+      let profile = res.data;
+
+
+      location.href="individualpage.html"; 
+      })
+    })
+
+
+ 
+
+
+  })
+  
+};
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -365,14 +450,10 @@ function addReply(boardId){
     }
  // )}
 
-
     
 //댓글삭제    
 function deleteReply(Id){
-  console.log('fgfg   : '+Id);
-  console.log("찍힘?123123123");
- 
-  console.log('loginUser   :' + loginUser);
+
 
     fetch("http://localhost:8000/story/board/"+Id+"/reply",{
         method:"delete",
@@ -385,7 +466,6 @@ function deleteReply(Id){
     .then((res)=>res.json())
     .then(res =>{
 
-      console.log("통신성공?");
       location.href="individualpage.html";   
     })
    

@@ -50,6 +50,11 @@
                 <div class="profileContainer">
                     <div class="profile-left">
                         <div class="profile-img-wrap story-border" onclick="popup('.modal-image')">
+                            <form id="image-form">
+                                <input type="file" name="image" style="display:none" id="userProfileImageInput" />
+                                <input type="hidden" name="serviceName" value="story"/> 
+                                <input type="hidden" name="bNo" id="bNo" value="${own}"/>
+                            </form>
                             <img src="duck.jpg" alt="">
                         </div>
                     </div>
@@ -193,8 +198,10 @@
     <div class="modal-image">
         <div class="modal">
             <p>프로필 사진 바꾸기</p>
-            <button>사진 업로드</button>
+            <button id="file-btn" onclick="profileImageUpload()">사진 업로드</button> 
+            
             <button onclick="closePopup('.modal-image')">취소</button>
+            
         </div>
     </div>
     
