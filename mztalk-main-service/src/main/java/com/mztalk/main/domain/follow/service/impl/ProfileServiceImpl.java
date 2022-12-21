@@ -2,6 +2,7 @@ package com.mztalk.main.domain.follow.service.impl;
 
 
 import com.mztalk.main.domain.follow.dto.ProfileDto;
+import com.mztalk.main.domain.follow.entity.Profile;
 import com.mztalk.main.domain.follow.repository.ProfileRepository;
 import com.mztalk.main.domain.follow.service.ProfileService;
 import com.mztalk.main.domain.board.repository.BoardRepository;
@@ -87,7 +88,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileDto changeProfile(long own, ProfileDto profileDto) {
+    public Profile changeProfile(long own, ProfileDto profileDto) {
 
         HttpHeaders headerImage = new HttpHeaders();
         headerImage.add("Content-type", "text/html");
@@ -134,15 +135,15 @@ public class ProfileServiceImpl implements ProfileService {
 
 
 
-        profileRepository.save(profileDto.toEntity(profileData, ownName));
+       return profileRepository.save(profileDto.toEntity(profileData, ownName));
 
         //String profileUrl = profileRepository.save(imageUrl);
 
-        return ProfileDto.builder()
-                .profileUrl(imageUrl)
-                .profileImageName(imageName)
-                .nickname(nickname)
-                .build();
+//        return ProfileDto.builder()
+//                .profileUrl(imageUrl)
+//                .profileImageName(imageName)
+//                .nickname(nickname)
+//                .build();
 
     }
 

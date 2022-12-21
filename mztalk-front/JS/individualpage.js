@@ -337,16 +337,19 @@ function profileImageUpload(){
       })
     .then((res)=>res.json())
     .then(res =>{
-    
       console.log("통신 성공");
-       
       console.log("res :" +res);
-      console.log("resdata: " + res.data);
-      
+      //console.log("profileDtos" + profileDtos);
       let profile = res.data;
+      let reader = new FileReader();
+      reader.onload=(e)=>{
+        let userProfileImg = document.getElementById('userProfileImage');
+        userProfileImg.src = reader.result; 
+        //userProfileImg.attributes("src", e.target.result);
+      }
+      reader.readAsDataURL(f); 
 
-
-      location.href="individualpage.html"; 
+      //location.href="individualpage.html"; 
       })
     })
 
@@ -408,10 +411,10 @@ function addReply(boardId){
   // let replyList = document.getquerySelector(`reply-div-${boardId}`);
   //let replyList = document.getElementById('reply-div');
   //let id = localStorage.getItem('userNo');
-  console.log(replyButton);
+  //console.log(replyButton);
   //replyButton.addEventListener('click', function(){
-  console.log("클림됨?");
-      console.log(replyContent);
+ // console.log("클림됨?");
+      //console.log(replyContent);
         if(replyContent.value === ''){
           alert("댓글을 작성해주세요!");
         }else{
@@ -433,7 +436,7 @@ function addReply(boardId){
 
             console.log("통신성공?");
             
-            console.log("res.data: "+ res.data);
+            //console.log("res.data: "+ res.data);
 
             let reply = res.data;
             //document.getElementsByClassName(`reply-div-${boardId}`).innerHTML +=
@@ -549,11 +552,11 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
   //팝업
   function popup(obj) {
-    console.log(obj);
+    //console.log(obj);
     document.querySelector(obj).style.display = "flex";
   }
   function closePopup(obj) {
-    console.log(2);
+   // console.log(2);
     document.querySelector(obj).style.display = "none";
   }
 
