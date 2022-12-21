@@ -15,7 +15,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Getter
 @Entity
-public class ProfileImage extends BaseTimeEntity {
+public class Profile extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;   //사진 번호

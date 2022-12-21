@@ -14,10 +14,11 @@ import java.math.BigInteger;
 @AllArgsConstructor
 public class FollowDto {
 
-    private Long id;
+    private Long userId;
     private String username;
     private BigInteger followState;   //상태여부 boolean
     private BigInteger  equalUserState; //동일인여부
+    private String profileImageUrl;
 
 
 }

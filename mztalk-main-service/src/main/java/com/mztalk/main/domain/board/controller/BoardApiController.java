@@ -6,10 +6,13 @@ import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
 import com.mztalk.main.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/story")
@@ -47,6 +50,15 @@ public class BoardApiController {
     public Long deleteForm(@PathVariable("id") Long id){
 
         return boardService.deleteBoard(id);
+    }
+
+    //메인페이지 뿌리기?
+    @GetMapping("/main/{own}")
+    public ResponseEntity<?> boardStory(@PathVariable("id") Long own,
+                                        @PageableDefault(size=3) Pageable pageable){
+        //Page<Board> board =  boardService.boardStory(own, pageable);
+
+        return new ResponseEntity<>(new CMRespDto<>(1, "성공", null), HttpStatus.OK);
     }
 
 }

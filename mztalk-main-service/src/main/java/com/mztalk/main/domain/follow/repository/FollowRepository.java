@@ -23,7 +23,11 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     void mUnFollow(@Param("fromUserId") Long fromUserId, @Param("toUserId") Long toUserId);
     //1(변경된 행의 개수가 리턴됨) , -1(오류),  0(insert가 안됨)
 
+    @Query(value = "select count(*) from follow where fromUserId = :principalId AND toUserId = :userId", nativeQuery = true)
+    int mFollowState(int principalId, int userId);
 
+    @Query(value = "select count(*) from follow where fromUserId = :userId", nativeQuery = true)
+    int mFollowCount(int userId);
 
 
 //    @Modifying
