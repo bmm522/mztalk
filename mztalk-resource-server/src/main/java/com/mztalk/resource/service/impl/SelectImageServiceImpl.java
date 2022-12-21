@@ -33,6 +33,7 @@ public class SelectImageServiceImpl implements SelectImageService {
     public ResponseEntity<?> getImageInfo(long bNo,String serviceName) {
         List<ImagesResponseDto> imagesResponseDtoList = null;
         try {
+            Thread.sleep(10000);
             List<Images> imagesList = imageRepository.getImageInfo(bNo, serviceName);
             imagesResponseDtoList = imagesList.stream().map(ImagesResponseDto::new).collect(Collectors.toList());
         } catch (NoResultException e){
