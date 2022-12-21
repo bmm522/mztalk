@@ -24,26 +24,26 @@ public class BungAddBoardDto {
 
     private String addNickName;
 
-    private BungBoard boardId;
+    private BungBoard bungBoard;
 
     public BungAddBoard toEntity() {
         BungAddBoard BungAddBoardEntity = BungAddBoard.builder()
                 .addId(addId)
                 .addContent(addContent)
                 .addPhone(addPhone)
-                .boardStatus(BoardStatus.YES)
+                .boardStatus(BoardStatus.NO)
                 .addNickName(addNickName)
-                .boardId(boardId)
+                .bungBoard(bungBoard)
                 .build();
         return BungAddBoardEntity;
     }
 
-    public BungAddBoardDto(BungAddBoard BungAddBoardEntity) {
-        this.addId = BungAddBoardEntity.getAddId();
-        this.addContent = BungAddBoardEntity.getAddContent();
-        this.addPhone = BungAddBoardEntity.getAddPhone();
-        this.boardStatus = BungAddBoardEntity.getBoardStatus();
-        this.addNickName = BungAddBoardEntity.getAddNickName();
-        this.boardId = BungAddBoardEntity.getBoardId();
+    public BungAddBoardDto(BungAddBoard bungAddBoardEntity) {
+        this.addId = bungAddBoardEntity.getAddId();
+        this.addContent = bungAddBoardEntity.getAddContent();
+        this.addPhone = bungAddBoardEntity.getAddPhone();
+        this.boardStatus = bungAddBoardEntity.getBoardStatus();
+        this.addNickName = bungAddBoardEntity.getAddNickName();
+        this.bungBoard = bungAddBoardEntity.getBungBoard();
     }
 }
