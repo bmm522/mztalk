@@ -118,7 +118,7 @@ window.onload = () => {
     document.getElementById('hidden-bId').value = localStorage.getItem('bId');
     const fileArea = document.getElementById("fileArea");
     
-    document.getElementById("addFile").addEventListener('click', () => {
+    document.getElementById("addFile").addEventListener('click', () => { 
         if(document.getElementsByName("files").length < 2) {
             const newDiv = document.createElement('div');
             newDiv.classList.add('col-10');

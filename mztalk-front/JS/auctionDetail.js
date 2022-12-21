@@ -116,7 +116,27 @@ window.onload = () => {
     })
     .then((res) => res.json())
     .then(res => {
-        let image
+        let boardId = res.boardId;
+        let title = res.title;
+        let content = res.content;
+        let currentPrice = res.currentPrice;
+        let writer = res.writer;
+        let createDate = res.createDate;
+        let timeLimit = res.timeLimit;
+        let imageInfo = res.imageInfo;
+
+        document.getElementById('title').innerHTML = '<span id="title">'+title+'</span>';
+        document.getElementById('date').innerHTML = '<span id="date"'+createDate+'</span>';
+        document.getElementById('textContent').innerHTML = '<span id="textContent" style="display:inline-block; border-style:dotted; border-color: burlywood; padding: 10px;" class="mt-5 mb-5">'+content+'</span>';
+        document.getElementById('startPrice').innerHTML = '<span id="startPrice" style="font-size: 25px; font-weight: bold;background-color:burlywood;">'+currentPrice+'</span>';
+        document.getElementById('time').innerHTML = '<span id="time" style="margin-right: 10px;">'+timeLimit+'시간 전</span>';
+
+        //사진 처리
+        for(let i = 0; i < imageInfo.length; i++) {
+            document.getElementsByClassName('boardImage').innerHTML = '<img class = "boardImage" src="'+imageInfo[i].imageUrl+'" width="300px" height="300px"><input type="hidden" class="imageName" value="${imageInfo[i].objectKey}"/> <input type="hidden" class="imageLevel" value="${imageInfo[i].imageLevel}"/>';
+
+        }
+
     })
 }
 
