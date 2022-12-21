@@ -46,6 +46,8 @@ public class BungBoard {
     private BoardStatus boardStatus;
     @Column(nullable = false, length = 10)
     private String category;
+//    @OneToMany
+//    @
 
     public void mainBoardUpdate(BungBoardDto bungBoardDto) {
         this.boardTitle = bungBoardDto.getBoardTitle();
@@ -59,6 +61,10 @@ public class BungBoard {
 
     public void changeStatus() {
         this.boardStatus = BoardStatus.NO;
+    }
+
+    public void addAddBungBoard(BungAddBoard boardId){
+//        this.boardId = boardId;
     }
 
 //    public BungBoard(Long boardId, String boardWriter, String boardTitle, String boardContent, Date deadlineDate, Long fullGroup, Long nowGroup, Timestamp createDate, Timestamp modifyDate, Long boardCount, String boardStatus, String category) {

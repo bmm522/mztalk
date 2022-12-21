@@ -52,11 +52,18 @@ public class BungBoardApiController {
         bungBoardService.increaseCount(Long.parseLong(bId));
         return bungBoardService.mainBoardSelect(Long.parseLong(bId));
     }
+
     // 벙 신청 게시글 작성
     @ResponseBody
     @PostMapping("/addBungBoard")
     public Long addBungBoard(@RequestBody BungAddBoardDto bungAddBoardDto) {
         return bungBoardService.addBungBoard(bungAddBoardDto);
+    }
+
+    // 벙 신청 게시글 리스트 조회
+    @GetMapping("/addBungBoards")
+    public Result addBungBoardsList() {
+        return bungBoardService.addBungBoardsList();
     }
 
     @GetMapping("/recent-board")
