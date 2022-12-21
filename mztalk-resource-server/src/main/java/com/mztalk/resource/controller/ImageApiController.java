@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,6 +44,12 @@ public class ImageApiController {
     @PostMapping(value= "/image", consumes = "multipart/form-data",  produces = "application/json")
     public ResponseEntity<?> insertImage(@RequestParam("image")MultipartFile multipartFile, ImagesRequestDto imagesRequestDto) throws IOException {
         return insertImageService.insertImage(multipartFile, imagesRequestDto);
+    }
+
+    @PostMapping(value="/testimage")
+    public void testImage(MultipartHttpServletRequest request){
+        System.out.println("요청들어옴");
+        System.out.println(request);
     }
 
     // 사진 다중업로드
