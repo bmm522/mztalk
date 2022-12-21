@@ -33,7 +33,7 @@ public class SelectImageServiceImpl implements SelectImageService {
     public ResponseEntity<?> getImageInfo(long bNo,String serviceName) {
         List<ImagesResponseDto> imagesResponseDtoList = null;
         try {
-            Thread.sleep(10000);
+//            Thread.sleep(100000000);
             List<Images> imagesList = imageRepository.getImageInfo(bNo, serviceName);
             imagesResponseDtoList = imagesList.stream().map(ImagesResponseDto::new).collect(Collectors.toList());
         } catch (NoResultException e){
@@ -60,10 +60,12 @@ public class SelectImageServiceImpl implements SelectImageService {
 
     @Override
     public ResponseEntity<?> getMainImage(long bNo, String serviceName) {
+
         System.out.println("main : " + bNo);
         System.out.println("main : " + serviceName);
         ImagesResponseDto imagesResponseDto = null;
         try{
+            Thread.sleep(750);
             imagesResponseDto = new ImagesResponseDto(imageRepository.getMainImage(bNo, serviceName));
         } catch (NoResultException e){
             return badRequestWhenSelect();
