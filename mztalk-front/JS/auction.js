@@ -1,6 +1,8 @@
 
 //뿌려주기
 window.onload = function(){
+    console.log(localStorage.getItem('authorization'));
+    console.log(localStorage.getItem('refreshToken'));
     console.log(new Date().getTime());
     fetch('http://localhost:8000/auction/board', {
         method:"GET",
@@ -23,7 +25,7 @@ window.onload = function(){
                 let boardId = board.boardId;
                 if(i%2 !== 0){
                 document.getElementById('auctionCard').innerHTML += `
-                <div class="col-6" onclick = 'moveDeatils(${boardId});' style="cursor:pointer;">
+                <div class="col-6" onclick = 'moveDeatils(${boardId});' style="pointer:cursor;">
                     <!-- bId-->
                     <input type="hidden" id="hidden-bId" />
                     <div class="card card-cover m-1 h-20 overflow-hidden text-white bg-dark rounded-5 shadow-lg" class="titleCard"

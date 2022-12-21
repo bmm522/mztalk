@@ -121,11 +121,6 @@ public class AuctionServiceImpl implements AuctionService {
             imageInfo.add(imageMap);
         }
 
-//        BoardDetailResponseDto boardDetailResponseDto = new BoardDetailResponseDto();
-//        boardDetailResponseDto.setBoardId(board.getBoardId());
-//        boardDetailResponseDto.setTitle(board.getTitle());
-//        boardDetailResponseDto.setContent(board.getContent());
-//        boardDetailResponseDto.setImageInfo(imageInfo);
 
         return new BoardDetailResponseDto(board, imageInfo);
 

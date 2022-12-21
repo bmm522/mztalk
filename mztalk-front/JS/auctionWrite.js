@@ -82,7 +82,6 @@ function timeStandard(time) {
 
 //글쓰기 insert
 function boardWrite() {
-   
     document.getElementById('image-form-form').submit();
     const startPrice = document.getElementById('startPrice').value;
     const startPriceSplit = startPrice.split(',');
