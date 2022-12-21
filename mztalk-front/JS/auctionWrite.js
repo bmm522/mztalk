@@ -83,13 +83,27 @@ function timeStandard(time) {
 //글쓰기 insert
 function boardWrite() {
     console.log("form : " + document.getElementById('image-form-form'));
-    document.getElementById('image-form-form').submit();
+    const form = document.getElementById('image-form-form');
+
+    const payload = new FormData(form);
+
+    fetch('http://localhost:8000/resource/images',{
+        method: 'POST',
+        body: payload,
+    })
+    .then(res=>{
+        postData();
+    })
     
-    postData();
     
     
 
 }
+
+// document.getElementById('image-form-form').addEventListener("submit", (e) => {
+//     e.preventDefault();
+//     postData();
+// })
 
 const postData = () =>{
 
