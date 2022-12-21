@@ -437,6 +437,7 @@ function deleteReply(Id){
 
 
 
+//팔로우 기능구현
 
 
 
@@ -446,7 +447,12 @@ function deleteReply(Id){
 
 
 
-//구독
+
+
+
+
+
+//팔로우
 document.querySelector("#subscribeBtn").onclick = (e) => {
     e.preventDefault();
     document.querySelector(".modal-follow").style.display = "flex";
