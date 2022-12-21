@@ -3,8 +3,8 @@ package com.mztalk.auction.domain.dto;
 import com.mztalk.auction.domain.entity.Board;
 import lombok.*;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -26,6 +26,21 @@ public class BoardRequestDto {
     private String currentTime;
 
     public Board toEntity() {
+        long timestamp = Long.parseLong(timeLimit);
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        java.util.Date date = new Date();
+        date.setTime(timestamp);
+
+        String Datetime = sdf.format(date);
+
+        long timestamp2 = Long.parseLong(currentTime);
+        SimpleDateFormat sdf2 = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        java.util.Date date2 = new Date();
+        date.setTime(timestamp2);
+
+        String Datetime2 = sdf.format(date2);
+
+        System.out.println("결과값 = " + Datetime2);
         return Board.builder()
                 .title(title)
                 .content(content)
@@ -34,7 +49,8 @@ public class BoardRequestDto {
                 .writer(writer)
                 .startPrice(startPrice)
                 .currentPrice(startPrice)
-                .timeLimit(timeLimit)
+                .timeLimit(Datetime)
+                .currentTime(Datetime2)
                 .build();
 
 

@@ -19,7 +19,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -47,11 +54,18 @@ public class AuctionServiceImpl implements AuctionService {
 
     //전체 게시글 조회
     @Override
-    public Result<?> selectBoardList() {
+    public Result<?> selectBoardList() throws ParseException {
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
         List<Board> boardList =  boardRepository.findAll();
 
         for(Board board : boardList){
+
+            LocalDateTime currentDate = LocalDateTime.parse(board.getCurrentTime(),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            LocalDateTime timeLimitDate = LocalDateTime.parse(board.getTimeLimit(),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            Duration duration = Duration.between(timeLimitDate, currentDate);
+
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/html");
             System.out.println("list 가져오기 : " + board.getBoardId());
@@ -66,7 +80,7 @@ public class AuctionServiceImpl implements AuctionService {
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
 
-            boardListResponseDtoList.add(new BoardListResponseDto(board, imageUrl, imageName));
+            boardListResponseDtoList.add(new BoardListResponseDto(board, String.valueOf(duration),imageUrl, imageName));
 
         }
 

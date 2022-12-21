@@ -1,6 +1,7 @@
 
 //뿌려주기
 window.onload = function(){
+    console.log(new Date().getTime());
     fetch('http://localhost:8000/auction/board', {
         method:"GET",
         headers:{

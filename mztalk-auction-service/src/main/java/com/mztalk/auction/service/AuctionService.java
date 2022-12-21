@@ -8,6 +8,7 @@ import com.mztalk.auction.domain.dto.CommentDto;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,7 +19,7 @@ public interface AuctionService {
 
     int updateBoard(Long bId, BoardDto boardDto);
 
-    Result<?> selectBoardList();
+    Result<?> selectBoardList() throws ParseException;
 
     int deleteBoard(Long bId);
 

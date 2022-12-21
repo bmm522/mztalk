@@ -87,7 +87,7 @@ function boardWrite() {
     const startPrice = document.getElementById('startPrice').value;
     const startPriceSplit = startPrice.split(',');
     const startPriceTrans = Number(startPriceSplit[0].concat(startPriceSplit[1]));
-    
+    let date = new Date();
     
     fetch("http://localhost:8000/auction/board", {
         method: "POST",
@@ -101,7 +101,8 @@ function boardWrite() {
             "writer":localStorage.getItem('userNickname'),
             "content":document.getElementById('content').value,
             "startPrice": startPriceTrans,
-            "timeLimit":  new Date().getHours() + Number(document.getElementById('timeLimit').value),
+            "timeLimit":  date.setHours(date.getHours() +  Number(document.getElementById('timeLimit').value)),
+            "currentTime" : new Date().getTime(),
         }),
     })
     .then(res => {
