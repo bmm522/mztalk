@@ -47,6 +47,8 @@ public class Board {
 
     private String timeLimit;
 
+    private String currentTime;
+
 
     private Integer currentPrice;
 

@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,8 +27,7 @@ public class AuctionController {
     @ResponseBody
     //게시글 작성
     @PostMapping("/board")
-    public ConcurrentHashMap<String, String> insertBoard(@RequestBody BoardRequestDto boardRequestDto){
-        System.out.println("controller : " + boardRequestDto.getTimeLimit());
+    public ConcurrentHashMap<String, String> insertBoard(@RequestBody BoardRequestDto boardRequestDto) throws ParseException {
         ConcurrentHashMap<String, String> map=new ConcurrentHashMap<>();
         map.put("bId", String.valueOf(auctionService.insertBoard(boardRequestDto)));
         System.out.println(map.get("bId"));
@@ -40,7 +42,7 @@ public class AuctionController {
 
     //전체 게시글 목록
     @GetMapping("/board")
-    public Result<?> selectBoardList() {
+    public Result<?> selectBoardList() throws ParseException {
         return auctionService.selectBoardList();
     }
 
