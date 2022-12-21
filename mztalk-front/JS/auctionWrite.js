@@ -82,12 +82,22 @@ function timeStandard(time) {
 
 //글쓰기 insert
 function boardWrite() {
+    console.log("form : " + document.getElementById('image-form-form'));
     document.getElementById('image-form-form').submit();
+    
+    postData();
+    
+    
+
+}
+
+const postData = () =>{
+
     const startPrice = document.getElementById('startPrice').value;
     const startPriceSplit = startPrice.split(',');
     const startPriceTrans = Number(startPriceSplit[0].concat(startPriceSplit[1]));
     let date = new Date();
-    
+
     fetch("http://localhost:8000/auction/board", {
         method: "POST",
         headers: {
@@ -106,16 +116,19 @@ function boardWrite() {
     })
     .then(res => {
         // localStorage.removeItem('bId');
-        location.href="move.html";
+        location.href="auction.html";
     })
-    
-
 }
 
 //파일추가
 window.onload = () => {
+
+    
+
+
     console.log(document.getElementById('image-form-form'));
     document.getElementById('hidden-bId').value = localStorage.getItem('bId');
+    console.log('bId : ' + document.getElementById('hidden-bId').value);
     const fileArea = document.getElementById("fileArea");
     
     document.getElementById("addFile").addEventListener('click', () => { 
