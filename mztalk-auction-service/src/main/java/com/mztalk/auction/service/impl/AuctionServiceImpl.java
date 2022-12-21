@@ -104,10 +104,8 @@ public class AuctionServiceImpl implements AuctionService {
             imageMap.put("imageName", jsonArray.getJSONObject(i).getString("objectKey"));
             imageMap.put("imageLevel", jsonArray.getJSONObject(i).getString("imageLevel"));
 
-            imageInfo.add(imageMap); //그럼 map을 담은 list가 여러개 있겠찌...
+            imageInfo.add(imageMap);
         }
-        //나머지 데이터들을 넣어줘야겠지...
-
 
 //        BoardDetailResponseDto boardDetailResponseDto = new BoardDetailResponseDto();
 //        boardDetailResponseDto.setBoardId(board.getBoardId());
