@@ -1,5 +1,6 @@
 package com.mztalk.bung.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.bung.domain.BoardStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,9 +30,14 @@ public class BungAddBoard {
     private String addNickName;
     @ManyToOne
     @JoinColumn(name="boardId")
-    private BungBoard boardId;
+    @JsonIgnore
+    private BungBoard bungBoard;
     public void changeStatus() {
         this.boardStatus = BoardStatus.NO;
     }
 
+    public void addBungboard(BungBoard bungBoard){
+        this.bungBoard = bungBoard;
+//        bungBoard.addBungBoard(this);
+    }
 }

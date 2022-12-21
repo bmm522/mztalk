@@ -25,4 +25,6 @@ public interface BungBoardService {
     ConcurrentHashMap<String, String> getRecentBoardNo();
 
     Long addBungBoard(BungAddBoardDto bungAddBoardDto);
+
+    Result addBungBoardsList();
 }

@@ -65,6 +65,7 @@ public class BungServiceImpl implements BungBoardService {
                 category(bungBoardDto.getCategory()).
                 build();
 
+
                 return bungRepository.save(bungBoardEntity).getBoardId();
     }
 
@@ -87,7 +88,6 @@ public class BungServiceImpl implements BungBoardService {
             JSONObject jsonData = jsonObject.getJSONObject("data");
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
-
 
             bungBoardResponseDtoList.add(new BungBoardResponseDto(bungBoard, imageUrl, imageName));
 
@@ -166,11 +166,17 @@ public class BungServiceImpl implements BungBoardService {
                 addPhone(bungAddBoardDto.getAddPhone()).
                 boardStatus(BoardStatus.YES).
                 addNickName(bungAddBoardDto.getAddNickName()).
-                boardId(bungAddBoardDto.getBoardId()).
+//                boardId(bungAddBoardDto.getBoardId()).
                 build();
 
         return bungAddRepository.save(bungAddBoardEntity).getAddId();
     }
 
-//    public
+    @Override
+    public Result addBungBoardsList() {
+        List<BungAddBoard> bungAddBoard = bungAddRepository.findAll();
+        List<BungAddBoardDto> collect = bungAddBoard.stream().map(BungAddBoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
+
 }
