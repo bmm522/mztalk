@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -28,6 +29,11 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 
     @Query(value = "select count(*) from follow where fromUserId = :userId", nativeQuery = true)
     int mFollowCount(int userId);
+
+    List<Follow> findByFromUserId(Long own);
+
+    @Query(value = "SELECT * from Follow f  where f.fromUserId = :fromUserId", nativeQuery = true)
+    List<Follow> getListByFromUserId(Long fromUserId);
 
 
 //    @Modifying

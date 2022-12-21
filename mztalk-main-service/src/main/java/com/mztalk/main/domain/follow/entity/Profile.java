@@ -25,6 +25,6 @@ public class Profile extends BaseTimeEntity {
 
     private String nickname;    //유저 이름
 
-
+    private String profileImageName;
 
 }

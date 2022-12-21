@@ -3,6 +3,7 @@ package com.mztalk.main.domain.follow.controller;
 
 import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.follow.dto.FollowDto;
+import com.mztalk.main.domain.follow.dto.FollowListResponseDto;
 import com.mztalk.main.domain.follow.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,8 +45,8 @@ public class FollowApiController {
     //팔로우 리스트
     @GetMapping("/followList/{own}/{userNo}")
     public ResponseEntity<?> followList(@PathVariable Long userNo, @PathVariable Long own){
-         List<FollowDto> followDto = followService.followList(userNo,own);
-        return new ResponseEntity<>(new CMRespDto<>(1, "팔로우리스트", followDto), HttpStatus.OK);
+         List<FollowListResponseDto> followListResponseDtoList = followService.followList(own,userNo);
+        return new ResponseEntity<>(new CMRespDto<>(1, "팔로우리스트", followListResponseDtoList), HttpStatus.OK);
     }
 
 
