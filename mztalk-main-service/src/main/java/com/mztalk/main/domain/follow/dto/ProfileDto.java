@@ -29,5 +29,10 @@ public class ProfileDto {
         return profile;
     }
 
+    public ProfileDto(Profile profile){
+        this.profileUrl = profile.getPostImageUrl();
+        this.profileImageName = profile.getProfileImageName();
+        this.nickname = profile.getNickname();
+    }
 
 }

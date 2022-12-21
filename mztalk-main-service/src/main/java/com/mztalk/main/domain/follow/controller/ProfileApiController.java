@@ -2,6 +2,7 @@ package com.mztalk.main.domain.follow.controller;
 
 import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.follow.dto.ProfileDto;
+import com.mztalk.main.domain.follow.entity.Profile;
 import com.mztalk.main.domain.follow.service.ProfileService;
 import com.mztalk.main.domain.follow.vo.ProfileVo;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +33,10 @@ public class ProfileApiController {
     @PostMapping("/profile/{own}")
     public ResponseEntity<?> changeProfile(@PathVariable long own, @RequestBody ProfileDto profileDto){
 
-        ProfileDto profileDtos = profileService.changeProfile(own, profileDto);
+        Profile profile = profileService.changeProfile(own, profileDto);
 
 
-       return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기성공", profileDtos), HttpStatus.CREATED);
+       return new ResponseEntity<>(new CMRespDto<>(1, "이미지바꾸기성공", profile), HttpStatus.CREATED);
     }
 
 
