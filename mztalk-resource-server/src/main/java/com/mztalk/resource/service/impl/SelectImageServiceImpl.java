@@ -65,7 +65,7 @@ public class SelectImageServiceImpl implements SelectImageService {
         System.out.println("main : " + serviceName);
         ImagesResponseDto imagesResponseDto = null;
         try{
-            Thread.sleep(750);
+
             imagesResponseDto = new ImagesResponseDto(imageRepository.getMainImage(bNo, serviceName));
         } catch (NoResultException e){
             return badRequestWhenSelect();
