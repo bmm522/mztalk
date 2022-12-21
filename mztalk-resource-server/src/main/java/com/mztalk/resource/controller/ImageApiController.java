@@ -47,12 +47,6 @@ public class ImageApiController {
         return insertImageService.insertImage(multipartFile, imagesRequestDto);
     }
 
-    @PostMapping(value="/testimage")
-    public void testImage(MultipartHttpServletRequest request){
-        System.out.println("요청들어옴");
-        System.out.println(request);
-    }
-
     // 사진 다중업로드
     @ApiOperation(value="이미지 다중 업로드", notes = "이미지를 여러장 보냅니다. 맨 첫번째 사진은 자동으로 레벨이 0으로 지정됩니다.", response = ResponseData.class)
     @PostMapping(value = "/images",  consumes = "multipart/form-data",  produces = "application/json")
