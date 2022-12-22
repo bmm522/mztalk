@@ -35,6 +35,8 @@ public class SelectImageServiceImpl implements SelectImageService {
         try {
 //            Thread.sleep(100000000);
             List<Images> imagesList = imageRepository.getImageInfo(bNo, serviceName);
+
+
             imagesResponseDtoList = imagesList.stream().map(ImagesResponseDto::new).collect(Collectors.toList());
         } catch (NoResultException e){
             return badRequestWhenSelect();
@@ -66,7 +68,24 @@ public class SelectImageServiceImpl implements SelectImageService {
         ImagesResponseDto imagesResponseDto = null;
         try{
 
-            imagesResponseDto = new ImagesResponseDto(imageRepository.getMainImage(bNo, serviceName));
+            List<Images> imagesList = imageRepository.getImageInfo(bNo, serviceName);
+            int cnt = 0;
+            for(Images images : imagesList){
+                if(images.getImageLevel() == 0){
+                    cnt++;
+                }
+            }
+
+            if(cnt > 0){
+                imagesResponseDto = new ImagesResponseDto(imageRepository.getMainImage(bNo, serviceName));
+            } else {
+
+                List<Images> subImageList = imageRepository.getSubImages(bNo, serviceName);
+
+                imagesResponseDto = new ImagesResponseDto(subImageList.get(0), 0);
+            }
+         //   imagesResponseDto = new ImagesResponseDto();
+
         } catch (NoResultException e){
             return badRequestWhenSelect();
         } catch (Exception e){

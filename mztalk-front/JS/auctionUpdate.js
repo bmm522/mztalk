@@ -6,10 +6,16 @@ window.onload = () => {
     document.getElementById("title").value = localStorage.getItem("title");
     for(let i = 0; i < imageInfo.length; i++) {
         console.log("hidden-objectKey 넣을 값: " + imageInfo[i].objectKey);
-        document.getElementById("hidden-objectKey").value = imageInfo[i].objectKey;
-        document.getElementById("fileList").innerHTML = `<span class = "imageName">${imageInfo[i].imageName}</span><span id = "fileDelete" style="color: gray;margin-left: 5px; cursor: pointer;" onclick="deleteFile();">X<br></span>`;
+   //     document.getElementById("hidden-objectKey").value = imageInfo[i].objectKey;
+   //  document.getElementById("hidden-objectKey").innerHTML = imageInfo[i].objectKey;
+        let objectData = imageInfo[i].objectKey;
+        console.log("찍히니 ? : " + objectData);
+        document.getElementById("fileList").innerHTML += `<span class = "imageName">${imageInfo[i].imageName}</span><span id = "fileDelete" style="color: gray;margin-left: 5px; cursor: pointer;" onclick="deleteFile('${objectData}');">X<br></span>`;
 
     }
+    console.log(document.getElementsByClassName('imageName')[0].innerHTML);
+    console.log(document.getElementsByClassName('imageName')[1].innerHTML);
+    
     document.getElementById("content").value = localStorage.getItem("content");
     document.getElementById("startPrice").value = localStorage.getItem("startPrice");
     document.getElementById("timeLimit").value = localStorage.getItem("timeLimit");
@@ -27,6 +33,8 @@ window.onload = () => {
     document.getElementById("timeLimit").addEventListener('click', function() {
         alert("남은 시간은 변경할 수 없습니다.");
     });
+
+
 }
 
 //파일 추가 버튼
@@ -43,32 +51,14 @@ document.getElementById("addFile").addEventListener('click', function() {
     }
 });
 
-//수정하기
-function updateBoard() {
-    fetch("http://localhost:8000/auction/" + document.getElementById('hidden-bId'), {
-        method: "PATCH",
-        headers: {
-            "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-        },
-        body:JSON.stringify({
-            "title" : document.getElementById('title').value,
-            "writer": localStorage.getItem('userNickname'),
-            "content":document.getElementById('content').value,
-            "bId": document.getElementById('hidden-bId').value
-        }),
-    })
-    .then(res => {
-        location.href="auctionDetail.html";
-    })
-}
 
 //파일 삭제
-function deleteFile() {
-    console.log("파일삭제 시 hidden-objectKey: " + document.getElementById("hidden-objectKey").value);
+function deleteFile(objectData) {
+    console.log(objectData);
+   // console.log("파일삭제 시 hidden-objectKey: " + document.getElementById("hidden-objectKey").value);
     if(confirm('정말 삭제하시겠습니까?')) {
-        fetch('http://localhost:8000/resource/image-detail?imageName=' + document.getElementById("hidden-objectKey").value, {
+        console.log("삭제시objectKey: " + objectData);
+        fetch('http://localhost:8000/resource/image-detail?imageName=' + objectData, {
             method: 'DELETE',
             headers: {
                 "Content-Type": "text/html",
@@ -85,6 +75,54 @@ function deleteFile() {
     }
 
 }
+
+//*******수정하기
+function updateBoard() {
+
+    if(document.getElementById('inputFiles').value){
+        const form = document.getElementById('update-form');
+        const payload = new FormData(form);
+
+       fetch('http://localhost:8000/resource/update-image',{
+          method: 'POST',
+          body: payload
+         })
+     .then(res=>{
+         updateData();
+     })
+    } else {
+        updateData();
+    }
+
+
+
+
+    
+}
+
+const updateData = () =>{
+    console.log("수정하기 버튼 눌렀을 시 bId: " + document.getElementById("hidden-bId").value);
+    fetch("http://localhost:8000/auction/" + document.getElementById('hidden-bId').value, {
+        method: "PATCH",
+        headers: {
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+        body:JSON.stringify({
+            "title" : document.getElementById('title').value,
+            "writer": localStorage.getItem('userNickname'),
+            "content":document.getElementById('content').value,
+            "bId": document.getElementById('hidden-bId').value
+        }),
+    })
+    .then(res => {
+        location.href="auctionDetail.html";
+    });
+}
+
+
+
 
 //목록으로
 function backToMain() {

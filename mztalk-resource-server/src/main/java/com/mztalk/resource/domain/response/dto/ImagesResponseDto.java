@@ -54,4 +54,13 @@ public class ImagesResponseDto {
         this.imageLevel=String.valueOf(i.getImageLevel());
     }
 
+    public ImagesResponseDto(Images i, int level) {
+        this.imageNo = String.valueOf(i.getImageId());
+        this.imageName=i.getImageName();
+        this.imageUrl=i.getImageUrl();
+        this.serviceName = i.getServiceName();
+        this.objectKey = i.getObjectKey();
+        this.bNo = String.valueOf(i.getBNo());
+        this.imageLevel=String.valueOf(level);
+    }
 }

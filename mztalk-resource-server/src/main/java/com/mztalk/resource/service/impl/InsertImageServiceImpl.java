@@ -103,7 +103,8 @@ public class InsertImageServiceImpl implements InsertImageService {
     public ResponseEntity<?> updateImage(List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto) {
         List<Images> imagesList = imageRepository.findBybNo(imagesRequestDto.getBNo());
         int cnt = 0;
-
+        System.out.println("asdfadsfasdfsadfasdf");
+        System.out.println(multipartFileList.size());
         for(Images images : imagesList){
             if(images.getImageLevel() == 0){
                 cnt++;
