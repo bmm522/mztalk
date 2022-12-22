@@ -3,34 +3,6 @@ window.onload = function(){
      
 }
 
-
-    
-    
-    const requestPay = () => {
-        const IMP = window.IMP;
-        IMP.init("imp43500426");
-        console.log('클릭이벤트는 되는중');
-
-    IMP.request_pay({
-      pg: "kcp.nictest00m",
-      pay_method: "card",
-      merchant_uid: "ORD20180131-0000011",   // 주문번호
-      name: "노르웨이 회전 의자",
-      amount: 64900,                         // 숫자 타입
-      buyer_email: "gildong@gmail.com",
-      buyer_name: "홍길동",
-      buyer_tel: "010-4242-4242",
-      buyer_addr: "서울특별시 강남구 신사동",
-      buyer_postcode: "01181"
-    }, function (rsp) { // callback
-      if (rsp.success) {
-        alert('성공');
-      } else {
-        alert('실패');
-      }
-    });
-  }
-
 const getAccessToken = () =>{
     localStorage.removeItem('authorization');
     let refreshToken = localStorage.getItem('refreshToken');
@@ -315,6 +287,22 @@ document.getElementById('myPage').addEventListener('click', function(){
         } else {
             location.href="mentee-mypage.html";
         }
+    })
+});
+
+// 계좌번호 인증 API받기
+document.getElementById('accountButton').addEventListener('click',function(){
+    console.log('버튼 동작 돼?');
+    fetch("http://localhost:8000/mentors/openapi/token",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then(res =>{
+        console.log('토큰 발급 성공');
     })
 });
 

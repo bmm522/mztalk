@@ -17,10 +17,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>멘토링 메인 페이지</title>
 
-    <!-- jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-<!-- iamport.payment.js -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -128,10 +124,6 @@
             </div>
             <!--검색창 끝-->
             
-            <div>
-                <button type="button" class="btn btn-outline-success" onclick="requestPay();">결제하기</button>
-            </div>
-
             <!-- boardList 뿌려주는 div 시작 -->
             <div id="board-list-div">
                     
@@ -139,6 +131,9 @@
 
             <!-- boardList 뿌려주는 div 끝 -->
             <input type="hidden" id="boardId-modal"/>
+
+            <button type="button" id="accountButton">계좌번호 인증 API사용하기.</button>
+            
 
             <!--멘토링 글 상세보기 모달 시작-->
             <div id="model-section">
@@ -152,6 +147,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div id="modal-body" class="modal-body">
+
+                                <!-- 게시글 상세 보기 모달창-->
                                 
                             </div>
                             <div class="modal-footer">
@@ -291,34 +288,6 @@
 <script src="JS/mentor-main.js"></script>
 
 
-<!-- <script>
-    window.onload = () =>{
-    const IMP = window.IMP;
-    IMP.init("imp43500426");
-    }
-    const requestPay = () => {
-        console.log('asdasd');
-    IMP.request_pay({
-      pg: "kcp.nictest00m",
-      pay_method: "card",
-      merchant_uid: "ORD20180131-0000011",   // 주문번호
-      name: "노르웨이 회전 의자",
-      amount: 64900,                         // 숫자 타입
-      buyer_email: "gildong@gmail.com",
-      buyer_name: "홍길동",
-      buyer_tel: "010-4242-4242",
-      buyer_addr: "서울특별시 강남구 신사동",
-      buyer_postcode: "01181"
-    }, function (rsp) { // callback
-      if (rsp.success) {
-        alert('asdasd');
-      } else {
-        alert('실패');
-      }
-    });
-  }
 
-
-</script>     -->
 
 </html>
