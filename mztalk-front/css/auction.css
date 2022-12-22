@@ -12,3 +12,7 @@ input {
     height: 38px;
 }
 
+#title {
+    text-shadow: -1px 0px #503C22, 0px 1px #503C22, 1px 0px #503C22, 0px -1px #503C22;
+}
+
