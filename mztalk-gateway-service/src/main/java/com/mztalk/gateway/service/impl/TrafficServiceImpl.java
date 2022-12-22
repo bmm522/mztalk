@@ -24,49 +24,37 @@ public class TrafficServiceImpl implements TrafficService {
     public List<ConcurrentHashMap<String, String>> getTotalCount(String sixBefore, String fiveBefore, String fourBefore, String threeBefore, String twoBefore, String oneBefore, String today) {
         List<TrafficCountDto> list = trafficRepository.getTotalCountOfRequestTime();
         List<ConcurrentHashMap<String, String>> mapList = new ArrayList<>();
+
         for(int i = 0 ; i < list.size() ; i++){
 
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
 
             if(list.get(i).getRequestTime().equals(sixBefore)){
-                map.put("count", String.valueOf(list.get(i).getCount()));
-                map.put("requestTime",String.valueOf(list.get(i).getRequestTime()));
-                mapList.add(map);
+                mapList.add(putMap(map,String.valueOf(list.get(i).getCount()), String.valueOf(list.get(i).getRequestTime())));
             }
 
             if(list.get(i).getRequestTime().equals(fiveBefore)){
-                map.put("count", String.valueOf(list.get(i).getCount()));
-                map.put("requestTime",String.valueOf(list.get(i).getRequestTime()));
-                mapList.add(map);
+                mapList.add(putMap(map,String.valueOf(list.get(i).getCount()), String.valueOf(list.get(i).getRequestTime())));
             }
 
             if(list.get(i).getRequestTime().equals(fourBefore)){
-                map.put("count", String.valueOf(list.get(i).getCount()));
-                map.put("requestTime",String.valueOf(list.get(i).getRequestTime()));
-                mapList.add(map);
+                mapList.add(putMap(map,String.valueOf(list.get(i).getCount()), String.valueOf(list.get(i).getRequestTime())));
             }
-
 
             if(list.get(i).getRequestTime().equals(threeBefore)){
-                map.put("count", String.valueOf(list.get(i).getCount()));
-                map.put("requestTime",String.valueOf(list.get(i).getRequestTime()));
-                mapList.add(map);
+                mapList.add(putMap(map,String.valueOf(list.get(i).getCount()), String.valueOf(list.get(i).getRequestTime())));
             }
+
             if(list.get(i).getRequestTime().equals(twoBefore)){
-                map.put("count", String.valueOf(list.get(i).getCount()));
-                map.put("requestTime",String.valueOf(list.get(i).getRequestTime()));
-                mapList.add(map);
+                mapList.add(putMap(map,String.valueOf(list.get(i).getCount()), String.valueOf(list.get(i).getRequestTime())));
             }
+
             if(list.get(i).getRequestTime().equals(oneBefore)){
-                map.put("count", String.valueOf(list.get(i).getCount()));
-                map.put("requestTime",String.valueOf(list.get(i).getRequestTime()));
-                mapList.add(map);
+                mapList.add(putMap(map,String.valueOf(list.get(i).getCount()), String.valueOf(list.get(i).getRequestTime())));
             }
 
             if(list.get(i).getRequestTime().equals(today)){
-                map.put("count", String.valueOf(list.get(i).getCount()));
-                map.put("requestTime",String.valueOf(list.get(i).getRequestTime()));
-                mapList.add(map);
+                mapList.add(putMap(map,String.valueOf(list.get(i).getCount()), String.valueOf(list.get(i).getRequestTime())));
             }
 
 
@@ -89,9 +77,7 @@ public class TrafficServiceImpl implements TrafficService {
         List<ConcurrentHashMap<String, String>> mapList = new ArrayList<>();
         for(TrafficCountDto trafficCountDto : list){
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-            map.put("count", String.valueOf(trafficCountDto.getCount()));
-            map.put("requestTime",String.valueOf(trafficCountDto.getRequestTime()));
-            mapList.add(map);
+            mapList.add(putMap(map, String.valueOf(trafficCountDto.getCount()), trafficCountDto.getRequestTime()));
         }
 
         return mapList;
@@ -116,6 +102,8 @@ public class TrafficServiceImpl implements TrafficService {
 
 
     private ConcurrentHashMap<String, String> putMap(ConcurrentHashMap<String, String> map, String count, String requestTime){
-
+        map.put("count", count);
+        map.put("requestTime",requestTime);
+        return map;
     }
 }
