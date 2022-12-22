@@ -107,6 +107,11 @@ document.getElementById('writeBoard').addEventListener('click', function(){
     })
 });
 
+//검색
+document.getElementById("searchBtn").addEventListener('click', function() {
+    fetch('http://localhost:8000/auction/searchBoard')
+});
+
 
 
 

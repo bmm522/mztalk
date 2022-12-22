@@ -21,10 +21,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequestMapping("/auction")
 @RestController
 public class AuctionController {
+
     @Autowired
     private AuctionService auctionService;
-
     @ResponseBody
+
+
     //게시글 작성
     @PostMapping("/board")
     public ConcurrentHashMap<String, String> insertBoard(@RequestBody BoardRequestDto boardRequestDto) throws ParseException {
@@ -40,13 +42,19 @@ public class AuctionController {
         return auctionService.updateBoard(bId, boardDto);
     }
 
+    //게시글 검색
+    @GetMapping("/searchBoard/{keyword}")
+    public Result<?> searchBoard(@PathVariable String keyword) {
+        return auctionService.searchBoard(keyword);
+    }
+
     //전체 게시글 목록
     @GetMapping("/board")
     public Result<?> selectBoardList() throws ParseException {
         return auctionService.selectBoardList();
     }
 
-    //특정 게시물 조회
+    //게시물 디테일
     @GetMapping("/board/{bId}")
     public BoardDetailResponseDto selectBoard(@PathVariable Long bId) {
         auctionService.updateCount(bId); //조회수 증가
@@ -54,9 +62,10 @@ public class AuctionController {
     }
 
     //게시글 삭제
-    @PatchMapping("/boardDelete/{bId}")
-    public int deleteBoard(@PathVariable Long bId) {
-        return auctionService.deleteBoard(bId);
+    @PatchMapping("/boardDelete/{bId}/{writer}")
+    public int deleteBoard(@PathVariable Long bId, @PathVariable String writer) {
+
+        return auctionService.deleteBoard(bId, writer);
     }
 
     //상세페이지 입찰가

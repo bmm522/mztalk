@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+
 @Service
 @RequiredArgsConstructor
 public class AuctionServiceImpl implements AuctionService {
@@ -56,7 +57,8 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public Result<?> selectBoardList() throws ParseException {
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
-        List<Board> boardList =  boardRepository.findAll();
+        List<Board> boardList =  boardRepository.selectBoardList();
+
 
         for(Board board : boardList){
 
@@ -91,8 +93,15 @@ public class AuctionServiceImpl implements AuctionService {
 
     //게시물 삭제
     @Override
-    public int deleteBoard(Long bId) {
-        return boardRepository.deleteBoard(bId);
+    public int deleteBoard(Long bId, String writer) {
+        System.out.println("service단 bId, writer 확인: " + bId + ", " + writer);
+        return boardRepository.deleteBoard(bId, writer);
+    }
+
+    //게시글 검색
+    @Override
+    public Result<?> searchBoard(String keyword) {
+        return boardRepository.searchBoard();
     }
 
     //특정 게시물 조회
@@ -115,7 +124,8 @@ public class AuctionServiceImpl implements AuctionService {
         for(int i = 0; i < jsonArray.length(); i++) {
             ConcurrentHashMap<String, String> imageMap = new ConcurrentHashMap<>();
             imageMap.put("imageUrl", jsonArray.getJSONObject(i).getString("imageUrl"));
-            imageMap.put("imageName", jsonArray.getJSONObject(i).getString("objectKey"));
+            imageMap.put("objectKey", jsonArray.getJSONObject(i).getString("objectKey"));
+            imageMap.put("imageName", jsonArray.getJSONObject(i).getString("imageName"));
             imageMap.put("imageLevel", jsonArray.getJSONObject(i).getString("imageLevel"));
 
             imageInfo.add(imageMap);
@@ -170,6 +180,7 @@ public class AuctionServiceImpl implements AuctionService {
     public int deleteComment(Long cId, CommentDto commentDto) {
         return commentRepository.deleteComment(cId, commentDto);
     }
+
 
 
 }

@@ -13,12 +13,12 @@
 }
 
 
-
+/* 슬라이드 관련 */
 li {
     list-style-type: none;
 }
 
-#imgSlide {
+#slideShow {
     width: 500px;
     height: 300px;
     position: relative;
@@ -26,8 +26,8 @@ li {
     overflow: hidden;
 
 }
-/* 슬라이드 관련 */
-.slides {
+
+#slides {
     position: absolute;
     left: 0;
     top: 0;
@@ -35,16 +35,16 @@ li {
     transition: left 0.5s ease-out;
 }
 
-.slides li:first-child {
+#slides li:first-child {
     margin-left: 100px;
 }
 
-.slides li:not(:last-child) {
+#slides li:not(:last-child) {
     float: left;
     margin-right: 100px;
 }
 
-.slides li {
+#slides li {
     float: left;
 }
 
@@ -161,4 +161,15 @@ input {
 #commDelete:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+#updateBtn, #deleteBtn {
+    width: 70px;
+    height:30px;
+    background-color: burlywood;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
 }
