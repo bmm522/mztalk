@@ -47,12 +47,6 @@ public class ImageApiController {
         return insertImageService.insertImage(multipartFile, imagesRequestDto);
     }
 
-    @PostMapping(value="/testimage")
-    public void testImage(MultipartHttpServletRequest request){
-        System.out.println("요청들어옴");
-        System.out.println(request);
-    }
-
     // 사진 다중업로드
     @ApiOperation(value="이미지 다중 업로드", notes = "이미지를 여러장 보냅니다. 맨 첫번째 사진은 자동으로 레벨이 0으로 지정됩니다.", response = ResponseData.class)
     @PostMapping(value = "/images",  consumes = "multipart/form-data",  produces = "application/json")
@@ -73,6 +67,11 @@ public class ImageApiController {
     @PostMapping(value = "/main-image",  consumes = "multipart/form-data",  produces = "application/json")
     public ResponseEntity<?> insertMainImage(@RequestParam("image")MultipartFile multipartFile, ImagesRequestDto imagesRequestDto){
         return insertImageService.insertMainImage(multipartFile, imagesRequestDto);
+    }
+
+    @PostMapping(value="/update-image", consumes = "multipart/form-data", produces = "application/json")
+    public ResponseEntity<?> updateImage(@RequestParam("image")List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto){
+        return insertImageService.updateImage(multipartFileList, imagesRequestDto);
     }
 
 
@@ -123,6 +122,9 @@ public class ImageApiController {
     public ResponseEntity<?> changeMainImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName, @RequestParam("imageName")String objectKey){
         return updateImageService.changeMainImage(bNo, serviceName, objectKey);
     }
+
+
+
 
     // 해당 글사진 삭제
     @ApiOperation(value="게시글 사진 삭제", notes = "해당 서비스의 글번호에 해당하는 모든 이미지를 삭제합니다.", consumes = "text/html", response = ResponseData.class)
