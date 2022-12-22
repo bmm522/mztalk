@@ -1,5 +1,6 @@
 package com.mztalk.gateway.service.impl;
 
+import com.mztalk.gateway.domain.Result;
 import com.mztalk.gateway.domain.dto.TrafficCountDto;
 import com.mztalk.gateway.domain.dto.TrafficOfRequestTimeDto;
 import com.mztalk.gateway.repository.TrafficRepository;
@@ -21,7 +22,7 @@ public class TrafficServiceImpl implements TrafficService {
 
 
     @Override
-    public List<ConcurrentHashMap<String, String>> getTotalCount(String sixBefore, String fiveBefore, String fourBefore, String threeBefore, String twoBefore, String oneBefore, String today) {
+    public Result<?> getTotalCount(String sixBefore, String fiveBefore, String fourBefore, String threeBefore, String twoBefore, String oneBefore, String today) {
         List<TrafficCountDto> list = trafficRepository.getTotalCountOfRequestTime();
         List<ConcurrentHashMap<String, String>> mapList = new ArrayList<>();
 
@@ -49,23 +50,27 @@ public class TrafficServiceImpl implements TrafficService {
                 mapList.add(putMap(map,String.valueOf(list.get(i).getCount()), String.valueOf(list.get(i).getRequestTime())));
             }
 
-            if(list.get(i).getRequestTime().equals(oneBefore)){
+            if(list.get(i).getRequestTime().equals(today)){
+                System.out.println(today);
                 mapList.add(putMap(map,String.valueOf(list.get(i).getCount()), String.valueOf(list.get(i).getRequestTime())));
             }
 
-            if(list.get(i).getRequestTime().equals(today)){
+            if(list.get(i).getRequestTime().equals(oneBefore)){
+                System.out.println(oneBefore);
                 mapList.add(putMap(map,String.valueOf(list.get(i).getCount()), String.valueOf(list.get(i).getRequestTime())));
             }
+
+
 
 
         }
 
-        return mapList;
+        return new Result<>(mapList);
     }
 
 
     @Override
-    public List<ConcurrentHashMap<String, String>> getTrafficOfServiceName(String serviceName) {
+    public Result<?> getTrafficOfServiceName(String serviceName) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -80,11 +85,11 @@ public class TrafficServiceImpl implements TrafficService {
             mapList.add(putMap(map, String.valueOf(trafficCountDto.getCount()), trafficCountDto.getRequestTime()));
         }
 
-        return mapList;
+        return new Result<>(mapList);
     }
 
     @Override
-    public List<ConcurrentHashMap<String, String>> getTrafficOfServiceNameAndRequestTime(String requestTime) {
+    public Result<?> getTrafficOfServiceNameAndRequestTime(String requestTime) {
 
         List<TrafficOfRequestTimeDto> list = trafficRepository.getCountOfServiceNameAndRequestTime(requestTime);
         List<ConcurrentHashMap<String, String>> mapList = new ArrayList<>();
@@ -96,7 +101,7 @@ public class TrafficServiceImpl implements TrafficService {
 
             mapList.add(map);
         }
-        return mapList;
+        return new Result<>(mapList);
     }
 
 
