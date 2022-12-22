@@ -29,5 +29,4 @@ public interface CustomAuctionRepository {
 
     List<Board> selectBoardList();
 
-    Result<?> searchBoard();
 }

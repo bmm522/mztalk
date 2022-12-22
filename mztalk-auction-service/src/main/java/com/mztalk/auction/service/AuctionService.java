@@ -37,5 +37,4 @@ public interface AuctionService {
 
     int deleteComment(Long cId, CommentDto commentDto);
 
-    Result<?> searchBoard(String keyword);
 }

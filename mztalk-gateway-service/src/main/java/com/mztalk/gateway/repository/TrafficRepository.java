@@ -3,6 +3,7 @@ package com.mztalk.gateway.repository;
 import com.mztalk.gateway.domain.dto.TrafficCountDto;
 import com.mztalk.gateway.domain.dto.TrafficOfRequestTimeDto;
 import com.mztalk.gateway.domain.entity.Traffic;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RequestParam;
