@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RequestMapping("/auction")
@@ -39,6 +40,7 @@ public class AuctionController {
     //게시글 수정
     @PatchMapping("/board/{bId}")
     public int updateBoard(@PathVariable Long bId, @RequestBody BoardDto boardDto) {
+        System.out.println(boardDto);
         return auctionService.updateBoard(bId, boardDto);
     }
 
@@ -65,8 +67,8 @@ public class AuctionController {
     }
 
     //상세페이지 입찰가
-    @PostMapping("/board/{bId}")
-    public int updatePrice(@PathVariable Long bId, BoardDto boardDto) {
+    @PatchMapping("/board/price/{bId}")
+    public int updatePrice(@PathVariable Long bId, @RequestBody BoardDto boardDto) {
         return auctionService.updatePrice(bId, boardDto);
     }
 

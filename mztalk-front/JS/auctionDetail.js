@@ -8,7 +8,7 @@ document.getElementById("priceSubmitBtn").addEventListener('click', function() {
 });
 //입찰가 전달
 document.getElementById("priceSubmitBtn").addEventListener('click', function() {
-    fetch("http://localhost:8000/auction/board/", {
+    fetch("http://localhost:8000/auction/board/" + document.getElementById("hidden-bId"), {
         method: "POST",
         headers: {
             "Content-Type":"application/json",
@@ -186,9 +186,10 @@ function deleteBoard() {
         }),
     })
     .then(res => {
-        console.log('통신 성공');
-        alert("삭제되었습니다.");
-        location.href="auction.html";
+            deleteFatch();
+
+
+        
     })
     
 
@@ -198,3 +199,16 @@ function deleteBoard() {
 
 }
 
+const deleteFatch = () =>{
+    fetch('http://localhost:8000/resource/images?bNo='+document.getElementById("hidden-bId").value+'&serviceName=auction',{
+        method:"DELETE",
+        headers:{
+            "Content-Type" : "text/html"
+        }
+    })
+    .then(res=>{
+        console.log('통신 성공');
+        alert("삭제되었습니다.");
+        location.href="auction.html";
+    })
+}
