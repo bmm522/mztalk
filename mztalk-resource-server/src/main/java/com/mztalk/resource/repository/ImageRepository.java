@@ -11,5 +11,5 @@ public interface ImageRepository extends JpaRepository<Images, Long>, ImageCusto
 
     Images findByObjectKey(String objectKey);
 
-    List<Images> findByBNo(long bNo);
+    List<Images> findBybNo(long bNo);
 }

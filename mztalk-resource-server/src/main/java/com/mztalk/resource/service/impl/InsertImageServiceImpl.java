@@ -101,7 +101,7 @@ public class InsertImageServiceImpl implements InsertImageService {
 
     @Override
     public ResponseEntity<?> updateImage(List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto) {
-        List<Images> imagesList = imageRepository.findByBNo(imagesRequestDto.getBNo());
+        List<Images> imagesList = imageRepository.findBybNo(imagesRequestDto.getBNo());
         int cnt = 0;
 
         for(Images images : imagesList){
