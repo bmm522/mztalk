@@ -59,7 +59,7 @@ public class FollowServiceImpl implements FollowService {
 
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<FollowListResponseDto> followList(Long own, Long userNo) {
         System.out.println("own : " + own);
         List<Follow> followList = followRepository.getListByFromUserId(own);

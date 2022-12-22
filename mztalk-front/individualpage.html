@@ -47,44 +47,52 @@
 
         <div id="individual-big-div">
             <section class="profile">
-                <div class="profileContainer">
-                    <div class="profile-left">
-                        <div class="profile-img-wrap story-border" onclick="popup('.modal-image')">
-                            <form id="image-form">
-                                <input type="file" name="image" style="display:none" id="userProfileImageInput" />
-                                <input type="hidden" name="serviceName" value="story"/> 
-                                <input type="hidden" name="bNo" id="bNo" value="${own}"/>
-                            </form>
-                            <img class="profile-image" src="duck.jpg" onerror="this.src='duck.jpg'" id="userProfileImage" >
+                <!--프로필 박스-->
+                   <div class="profileContainer">
+                        <div class="profile-left">
+                            <div class="profile-img-wrap story-border" onclick="popup('.modal-image')">
+                                <form id="image-form">
+                                     <input type="file" name="image" style="display:none" id="userProfileImageInput" />
+                                     <input type="hidden" name="serviceName" value="story"/> 
+                                     <input type="hidden" name="bNo" id="bNo" value="${own}"/>
+                                 </form>
+                                
+                                   <img class="profile-image" src='duck.jpg' onerror="this.src='duck.jpg'" id="userProfileImage">
+                                   <input type="hidden" class="imageName" value="objectKey"/>
+                                   <input type="hidden" name="bNo" id="bNo" value="own"/>
+                                
+                             </div>
+                         </div>
+                
+                         <div class="profile-right">
+                             <div class="name-group">
+                                 <h2>${nickname}</h2>
+                                 <button class="profile_follow_btn" onclick="profilecFollow(this)">팔로우</button>
+                                 <button class="modi" onclick="popup('.modal-info')"><i class="fas fa-cog"></i></button>
+                             </div>
+                             <div class="follow">
+                                <ul>
+                                    <li><a href="">게시물<span>6</span></a> </li>
+                                     <li><a href="" id="subscribeBtn1">팔로워<span>106</span></a> </li> <!--나를 친구한-->
+                                     <li><a href="" id="subscribeBtn">팔로잉<span>106</span></a> </li> <!--내가 친구신청한--><!--팔로우: 친구신청걸기-->
+                                 </ul>
+                            </div>
+                            
                         </div>
-                    </div>
+                     </div>    
 
-                    <div class="profile-right">
-                        <div class="name-group">
-                            <h2>조현재</h2>
-                            <button class="profile_follow_btn" onclick="profilecFollow(this)">팔로우</button>
-                            <button class="modi" onclick="popup('.modal-info')"><i class="fas fa-cog"></i></button>
-                        </div>
-                        <div class="follow">
-                            <ul>
-                                <li><a href="">게시물<span>6</span></a> </li>
-                                <li><a href="" id="subscribeBtn1">팔로워<span>106</span></a> </li> <!--나를 친구한-->
-                                <li><a href="" id="subscribeBtn">팔로잉<span>106</span></a> </li> <!--내가 친구신청한--><!--팔로우: 친구신청걸기-->
-                            </ul>
-                        </div>
-                       
-                    </div>
-                </div>
+
+
             </section>
 
-
             </div>
+
             <div id="hr-div">
                 <hr>
             </div>
+
+            <!--글쓰는 곳-->
             <button type="button" style="cursor:pointer;" id="write_board" class="write_board">글쓰기</button>
-
-
 
                 <div id="modal" class="textmodal hidden">
 
@@ -116,7 +124,7 @@
             
             
             <div id="contentList">
-
+                <!--글 남는 곳-->
 
 
            
@@ -125,12 +133,9 @@
         <!--끝-->
 
             <!-- <button type="button" onclick="replyList();">댓글출력</button> -->
+             </div>
+            </div>
         </div>
-        </div>
-        </div>
-
-
-
 
     </main>
 
