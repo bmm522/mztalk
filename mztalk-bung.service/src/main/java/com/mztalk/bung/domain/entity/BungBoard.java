@@ -1,16 +1,19 @@
 package com.mztalk.bung.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mztalk.bung.domain.BoardStatus;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import reactor.core.publisher.Sinks;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -46,8 +49,10 @@ public class BungBoard {
     private BoardStatus boardStatus;
     @Column(nullable = false, length = 10)
     private String category;
-//    @OneToMany
-//    @
+    @OneToMany(mappedBy = "bungBoard")
+    @JsonBackReference // 순환참조 방지(부모->자식)
+    private List<BungAddBoard> bungAddBoards;
+
 
     public void mainBoardUpdate(BungBoardDto bungBoardDto) {
         this.boardTitle = bungBoardDto.getBoardTitle();
@@ -63,8 +68,12 @@ public class BungBoard {
         this.boardStatus = BoardStatus.NO;
     }
 
-    public void addAddBungBoard(BungAddBoard boardId){
-//        this.boardId = boardId;
+    public void addAddBungBoard(BungAddBoard bungAddBoard){
+        this.bungAddBoards.add(bungAddBoard);
+
+        if(bungAddBoard.getBungBoard() != this) {
+            bungAddBoard.addAddBungBoard(this);
+        }
     }
 
 //    public BungBoard(Long boardId, String boardWriter, String boardTitle, String boardContent, Date deadlineDate, Long fullGroup, Long nowGroup, Timestamp createDate, Timestamp modifyDate, Long boardCount, String boardStatus, String category) {

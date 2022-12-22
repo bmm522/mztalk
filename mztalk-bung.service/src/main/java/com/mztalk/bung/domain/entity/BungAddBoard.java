@@ -1,13 +1,16 @@
 package com.mztalk.bung.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mztalk.bung.domain.BoardStatus;
+import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,14 +33,34 @@ public class BungAddBoard {
     private String addNickName;
     @ManyToOne
     @JoinColumn(name="boardId")
-    @JsonIgnore
+    @JsonManagedReference // 순환참조 방지(자식->부모)
     private BungBoard bungBoard;
-    public void changeStatus() {
-        this.boardStatus = BoardStatus.NO;
+
+    public static BungAddBoard createBungAddBoard(ConcurrentHashMap<String, String> bungAddBoardMap, BungBoard bungBoard) {
+        BungAddBoard bungAddBoard = new BungAddBoard();
+        bungAddBoard.addContent = bungAddBoardMap.get("addContent");
+        bungAddBoard.addPhone = bungAddBoardMap.get("addPhone");
+        bungAddBoard.boardStatus = BoardStatus.NO;
+        bungAddBoard.addNickName = bungAddBoardMap.get("addNickName");
+        bungAddBoard.addAddBungBoard(bungBoard);
+        return bungAddBoard;
     }
 
-    public void addBungboard(BungBoard bungBoard){
+    public void changeStatus() {
+        this.boardStatus = BoardStatus.YES;
+    }
+
+    public void updateAddBoard(BungAddBoardDto bungAddBoardDto) {
+        this.addContent = bungAddBoardDto.getAddContent();
+        this.addNickName = bungAddBoardDto.getAddNickName();
+        this.addPhone = bungAddBoardDto.getAddPhone();
+    }
+
+    public void addAddBungBoard(BungBoard bungBoard){
+        if(this.bungBoard != null) {
+            this.bungBoard.getBungAddBoards().remove(this);
+        }
         this.bungBoard = bungBoard;
-//        bungBoard.addBungBoard(this);
+        bungBoard.getBungAddBoards().add(this);
     }
 }

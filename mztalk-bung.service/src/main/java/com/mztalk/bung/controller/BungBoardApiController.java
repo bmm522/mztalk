@@ -4,11 +4,13 @@ import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
 import com.mztalk.bung.service.BungBoardService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import com.mztalk.bung.domain.entity.Result;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -55,16 +57,52 @@ public class BungBoardApiController {
 
     // 벙 신청 게시글 작성
     @ResponseBody
-    @PostMapping("/addBungBoard")
-    public Long addBungBoard(@RequestBody BungAddBoardDto bungAddBoardDto) {
-        return bungBoardService.addBungBoard(bungAddBoardDto);
+    @PostMapping("/bungAddBoard")
+    public Long addBungBoard(@RequestBody ConcurrentHashMap<String, String> bungAddBoardMap) {
+        return bungBoardService.addBungBoard(bungAddBoardMap);
     }
 
     // 벙 신청 게시글 리스트 조회
-    @GetMapping("/addBungBoards")
+    @GetMapping("/bungAddBoards")
     public Result addBungBoardsList() {
         return bungBoardService.addBungBoardsList();
     }
+
+    // 벙 신청 게시글 수정
+    @ResponseBody
+    @PatchMapping("/bungAddBoardUpdate/{addId}")
+    public Long addBungBoardUpdate(@PathVariable("addId") Long addId, @RequestBody BungAddBoardDto bungAddBoardDto) {
+        return bungBoardService.addBungBoardUpdate(addId, bungAddBoardDto);
+    }
+
+    // 벙 신청 게시글 삭제
+    @DeleteMapping("/bungAddBoardDelete/{addId}")
+    public Long addBungBoardDelete(@PathVariable("addId") Long addId) {
+        return bungBoardService.addBungBoardDelete(addId);
+    }
+
+    // 벙 게시글 작성자가 신청 게시글 수락
+    @ResponseBody
+    @PatchMapping("/bungAddBoardAccept/{addId}")
+    public Long addBungBoardAccept(@PathVariable("addId") Long addId) {
+        return bungBoardService.addBungBoardAccept(addId);
+    }
+
+    // 벙 신청 게시글 상세보기
+    @GetMapping("/bungAddBoardSelect/{addId}")
+    public BungAddBoardDto bungAddBoardSelect(@PathVariable("addId") Long addId) {
+        return bungBoardService.bungAddBoardSelect(addId);
+    }
+
+    // 벙 게시글 수락된 신청자목록 보기 // 수정해야됨 Status Y인것들만 뽑아서 보이는 걸로
+    @GetMapping("/bungRequestList/{boardId}")
+    public Result bungRequestList(@PathVariable("boardId") Long bId) {
+        return bungBoardService.bungRequestList(bId);
+    }
+
+    // 벙 등록 게시글 현인원 조회
+//    @GetMapping
+
 
     @GetMapping("/recent-board")
     public ConcurrentHashMap<String, String> getRecentBoardNo(){

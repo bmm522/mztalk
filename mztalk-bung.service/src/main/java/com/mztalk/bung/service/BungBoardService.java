@@ -13,7 +13,6 @@ public interface BungBoardService {
 
     Result mainSelectList();
 
-
     Long mainBoardUpdate(Long bId, BungBoardDto bungBoardDto);
 
     Long mainBoardDelete(Long bId);
@@ -24,7 +23,17 @@ public interface BungBoardService {
 
     ConcurrentHashMap<String, String> getRecentBoardNo();
 
-    Long addBungBoard(BungAddBoardDto bungAddBoardDto);
+    Long addBungBoard(ConcurrentHashMap<String, String> bungAddBoardDto);
 
     Result addBungBoardsList();
+
+    Long addBungBoardUpdate(Long addId, BungAddBoardDto bungAddBoardDto);
+
+    Long addBungBoardAccept(Long addId);
+
+    BungAddBoardDto bungAddBoardSelect(Long aId);
+
+    Result bungRequestList(Long bId);
+
+    Long addBungBoardDelete(Long addId);
 }

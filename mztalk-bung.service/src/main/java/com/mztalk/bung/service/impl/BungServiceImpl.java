@@ -8,6 +8,7 @@ import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.Result;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
 import com.mztalk.bung.domain.response.BungBoardResponseDto;
+import com.mztalk.bung.exception.AddBoardException;
 import com.mztalk.bung.exception.BoardException;
 import com.mztalk.bung.repository.BungAddBoardRepository;
 import com.mztalk.bung.repository.BungBoardRepository;
@@ -25,11 +26,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.awt.geom.RectangularShape;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -64,7 +63,6 @@ public class BungServiceImpl implements BungBoardService {
                 boardStatus(BoardStatus.YES).
                 category(bungBoardDto.getCategory()).
                 build();
-
 
                 return bungRepository.save(bungBoardEntity).getBoardId();
     }
@@ -145,6 +143,7 @@ public class BungServiceImpl implements BungBoardService {
     }
 
     @Override
+    @Transactional
     public int increaseCount(Long bId) {
         return bungRepository.increaseCount(bId);
     }
@@ -158,18 +157,15 @@ public class BungServiceImpl implements BungBoardService {
 
     @Override
     @Transactional
-    public Long addBungBoard(BungAddBoardDto bungAddBoardDto) {
+    public Long addBungBoard(ConcurrentHashMap<String, String> bungAddBoardMap) {
 
-        BungAddBoard bungAddBoardEntity = BungAddBoard.builder().
-                addId(bungAddBoardDto.getAddId()).
-                addContent(bungAddBoardDto.getAddContent()).
-                addPhone(bungAddBoardDto.getAddPhone()).
-                boardStatus(BoardStatus.YES).
-                addNickName(bungAddBoardDto.getAddNickName()).
-//                boardId(bungAddBoardDto.getBoardId()).
-                build();
+        Long boardId = Long.parseLong(bungAddBoardMap.get("boardId"));
 
-        return bungAddRepository.save(bungAddBoardEntity).getAddId();
+        BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
+
+        BungAddBoard bungAddBoard = BungAddBoard.createBungAddBoard(bungAddBoardMap, bungBoard);
+
+        return bungAddRepository.save(bungAddBoard).getAddId();
     }
 
     @Override
@@ -179,4 +175,40 @@ public class BungServiceImpl implements BungBoardService {
         return new Result(collect);
     }
 
+    @Override
+    @Transactional
+    public Long addBungBoardUpdate(Long addId, BungAddBoardDto bungAddBoardDto) {
+        BungAddBoard bungAddBoard = bungAddRepository.findById(addId).orElseThrow(() ->new AddBoardException("해당하는 신청글이 존재하지 않습니다."));
+        bungAddBoard.updateAddBoard(bungAddBoardDto);
+        return bungAddBoard.getAddId();
+    }
+
+    @Override
+    @Transactional
+    public Long addBungBoardAccept(Long addId) {
+        BungAddBoard addBungBoardAccept = bungAddRepository.findById(addId).orElseThrow(() ->new AddBoardException("해당하는 신청글이 존재하지 않습니다."));
+        addBungBoardAccept.changeStatus();
+        return addBungBoardAccept.getAddId();
+    }
+
+    @Override
+    public BungAddBoardDto bungAddBoardSelect(Long addId) {
+        BungAddBoard bungAddBoard = bungAddRepository.findById(addId).orElseThrow(() ->new AddBoardException("해당하는 신청글이 존재하지 않습니다."));
+        BungAddBoardDto bungAddBoardDto = new BungAddBoardDto(bungAddBoard);
+        return bungAddBoardDto;
+    }
+
+    @Override
+    public Result bungRequestList(Long bId) {
+        List<BungAddBoard> bungAddBoard = bungAddRepository.findBoardByBoardId(bId);
+        List<BungAddBoardDto> collect = bungAddBoard.stream().map(BungAddBoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
+
+    @Override
+    public Long addBungBoardDelete(Long addId) {
+        BungAddBoard findBungAddBoard = bungAddRepository.findById(addId).orElseThrow(() ->new AddBoardException("해당하는 신청글이 존재하지 않습니다."));
+        bungAddRepository.delete(findBungAddBoard);
+        return findBungAddBoard.getAddId();
+    }
 }
