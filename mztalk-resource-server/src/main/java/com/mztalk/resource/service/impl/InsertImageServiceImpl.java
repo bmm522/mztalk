@@ -56,9 +56,6 @@ public class InsertImageServiceImpl implements InsertImageService {
     @Override
     public ResponseEntity<?> insertImages(List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto) {
 
-        System.out.println("insert : " + imagesRequestDto.getBNo());
-        System.out.println("insert : " + imagesRequestDto.getServiceName());
-
         for(int i = 0 ; i < multipartFileList.size() ; i++){
 
             if(i == 0) {
@@ -67,7 +64,7 @@ public class InsertImageServiceImpl implements InsertImageService {
 
                     saveImages(multipartFileList.get(i), imagesRequestDto, Role.UPLOAD_MAIN);
                     imageRepository.commit();
-                    System.out.println("커밋됨");
+
                 } catch (IOException e){
 
                     log.error("Fail Images Save");
@@ -102,6 +99,81 @@ public class InsertImageServiceImpl implements InsertImageService {
         return successWhenInsert();
     }
 
+    @Override
+    public ResponseEntity<?> updateImage(List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto) {
+        List<Images> imagesList = imageRepository.findByBNo(imagesRequestDto.getBNo());
+        int cnt = 0;
+
+        for(Images images : imagesList){
+            if(images.getImageLevel() == 0){
+                cnt++;
+            }
+        }
+
+        if(cnt==0) {
+
+            for(int i = 0 ; i < multipartFileList.size() ; i++){
+
+                if(i == 0) {
+
+                    try {
+
+                        saveImages(multipartFileList.get(i), imagesRequestDto, Role.UPLOAD_MAIN);
+                        imageRepository.commit();
+
+                    } catch (IOException e){
+
+                        log.error("Fail Images Save");
+                        return badRequestWhenInsert();
+
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                        log.error("Server Error");
+                        return serverError();
+
+                    }
+                } else {
+
+                    try {
+
+                        saveImages(multipartFileList.get(i),imagesRequestDto,Role.UPLOAD_SUB);
+
+                    } catch (IOException e){
+
+                        log.error("Fail Images Save");
+                        return badRequestWhenInsert();
+
+                    } catch (Exception e){
+
+                        log.error("Server Error");
+                        return serverError();
+
+                    }
+                }
+            }
+        } else {
+            for(int i = 0 ; i < multipartFileList.size() ; i++) {
+
+                try {
+
+                    saveImages(multipartFileList.get(i),imagesRequestDto,Role.UPLOAD_SUB);
+
+                } catch (IOException e){
+
+                    log.error("Fail Images Save");
+                    return badRequestWhenInsert();
+
+                } catch (Exception e){
+
+                    log.error("Server Error");
+                    return serverError();
+
+                }
+            }
+        }
+
+        return successWhenInsert();
+    }
 
     @Override
     public ResponseEntity<?> insertMainImage(MultipartFile multipartFile, ImagesRequestDto imagesRequestDto) {
@@ -125,6 +197,8 @@ public class InsertImageServiceImpl implements InsertImageService {
 
         return successWhenInsert();
     }
+
+
 
     private void saveImages(MultipartFile multipartFile, ImagesRequestDto imagesRequestDto, Role role) throws IOException {
         String imageName = multipartFile.getOriginalFilename();

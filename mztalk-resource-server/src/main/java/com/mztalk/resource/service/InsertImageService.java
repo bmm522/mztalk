@@ -13,4 +13,6 @@ public interface InsertImageService {
     ResponseEntity<?> insertImages(List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto);
 
     ResponseEntity<?> insertMainImage(MultipartFile multipartFile, ImagesRequestDto imagesRequestDto);
+
+    ResponseEntity<?> updateImage(List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto);
 }

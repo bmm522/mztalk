@@ -34,13 +34,24 @@ let fourBeforeData = '';
 let fiveBeforeData = '';
 let sixBeforeData = '';
 
-
+let auctionData = '';
+let bungData = '';
+let storyData = '';
+let mentorData = '';
 
 
 
 console.log(oneBeforeData);
 window.onload = function(){
+  document.getElementById('card-header-div').innerHTML = ' <i class="fas fa-chart-bar me-1"></i>각 서비스 별 트래픽 수&nbsp&nbsp<small style="font-size: 1px;">&nbsp&nbsp오늘날짜 : '+nowDay+'&nbsp&nbsp(10초마다 업데이트 됩니다) </small> <input value = "'+nowDay+'"id="input-date" type="date"  style="width: 250px; margin-left:150px ; border-radius: 10px; border: 0.1px solid gainsboro;"/>';
+  let inputDate = document.getElementById('input-date').value;
+
   getDailyTraffic();
+  getDailyServiceTraffic();
+  
+  document.getElementById('input-date').onchange = function(){
+    getDailyServiceTraffic();
+  }
   setInterval(getDailyTraffic, 10000);
 
 
@@ -49,7 +60,63 @@ window.onload = function(){
 
 }
 
+const getDailyServiceTraffic = () => {
+  console.log('실행됨');
+  console.log(document.getElementById('input-date').value);
 
+  fetch('http://localhost:8000/gateway/daily-traffic?requestTime='+document.getElementById('input-date').value,{
+    method:"GET"
+  })
+  .then((res)=>res.json())
+  .then(res =>{
+      auctionData = res.data[0].count;
+      bungData = res.data[1].count;
+      storyData = res.data[2].count;
+      mentorData = res.data[3].count;
+
+      var ctx = document.getElementById("myBarChart");
+var myLineChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ["Mentor", "Bung", "Auction", "Stroy"],
+    datasets: [{
+      label: "Revenue",
+      backgroundColor: "rgba(2,117,216,1)",
+      borderColor: "rgba(2,117,216,1)",
+      data: [mentorData, bungData, auctionData, storyData],
+    }],
+  },
+  options: {
+    scales: {
+      xAxes: [{
+        time: {
+          unit: 'date'
+        },
+        gridLines: {
+          display: false
+        },
+        ticks: {
+          maxTicksLimit: 6
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          min: 0,
+          max: 100,
+          maxTicksLimit: 5
+        },
+        gridLines: {
+          display: true
+        }
+      }],
+    },
+    legend: {
+      display: false
+    }
+  }
+});
+  })
+}
 
 const getDailyTraffic = () =>{
   fetch('http://localhost:8000/gateway/traffic?sixBefore='+sixBefore+'&fiveBefore='+fiveBefore+'&fourBefore='+fourBefore+'&threeBefore='+threeBefore+'&twoBefore='+twoBefore+'&oneBefore='+oneBefore+'&today='+nowDay,{

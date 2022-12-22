@@ -69,6 +69,11 @@ public class ImageApiController {
         return insertImageService.insertMainImage(multipartFile, imagesRequestDto);
     }
 
+    @PostMapping(value="/update-image", consumes = "multipart/form-data", produces = "application/json")
+    public ResponseEntity<?> updateImage(@RequestParam("image")List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto){
+        return insertImageService.updateImage(multipartFileList, imagesRequestDto);
+    }
+
 
     // 해당 글의 모든 사진데이터 불러오기
     @ApiOperation(value="해당 글 이미지 정보 조회", notes = "해당 서비스의 글번호에 해당하는 모든 이미지를 리스트로 가져옵니다.", consumes = "text/html", produces = "application/json", response = ResponseData.class)
@@ -117,6 +122,9 @@ public class ImageApiController {
     public ResponseEntity<?> changeMainImage(@RequestParam("bNo")long bNo, @RequestParam("serviceName")String serviceName, @RequestParam("imageName")String objectKey){
         return updateImageService.changeMainImage(bNo, serviceName, objectKey);
     }
+
+
+
 
     // 해당 글사진 삭제
     @ApiOperation(value="게시글 사진 삭제", notes = "해당 서비스의 글번호에 해당하는 모든 이미지를 삭제합니다.", consumes = "text/html", response = ResponseData.class)
