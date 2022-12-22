@@ -24,7 +24,7 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
         return entityManager.createQuery("select b from Board b where b.status = 'Y'").getResultList();
     }
 
-    
+
 
     @Transactional
     @Override

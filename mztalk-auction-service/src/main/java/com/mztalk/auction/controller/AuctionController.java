@@ -43,10 +43,6 @@ public class AuctionController {
     }
 
     //게시글 검색
-    @GetMapping("/searchBoard/{keyword}")
-    public Result<?> searchBoard(@PathVariable String keyword) {
-        return auctionService.searchBoard(keyword);
-    }
 
     //전체 게시글 목록
     @GetMapping("/board")

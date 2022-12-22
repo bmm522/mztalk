@@ -99,10 +99,7 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     //게시글 검색
-    @Override
-    public Result<?> searchBoard(String keyword) {
-        return boardRepository.searchBoard();
-    }
+
 
     //특정 게시물 조회
     @Override
