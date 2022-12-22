@@ -2,7 +2,9 @@ package com.mztalk.main.domain.follow.service.impl;
 
 
 import com.mztalk.main.domain.follow.dto.ProfileDto;
+import com.mztalk.main.domain.follow.dto.ProfileResponseDto;
 import com.mztalk.main.domain.follow.entity.Profile;
+import com.mztalk.main.domain.follow.repository.ProfileCustomRepository;
 import com.mztalk.main.domain.follow.repository.ProfileRepository;
 import com.mztalk.main.domain.follow.service.ProfileService;
 import com.mztalk.main.domain.board.repository.BoardRepository;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import static com.mztalk.main.status.ProfileImageStatus.NO;
+
 
 @Service
 @Transactional
@@ -27,68 +31,101 @@ import org.springframework.web.client.RestTemplate;
 public class ProfileServiceImpl implements ProfileService {
     private final ProfileRepository profileRepository;
 
+    private final ProfileCustomRepository profileCustomRepository;
+
     private final BoardRepository boardRepository;
 
     @Override
     public ProfileVo getProfile(long own) {
-        //프로필사진
-        HttpHeaders headersImg = new HttpHeaders();
-        headersImg.add("Content-type", "text/html");
-
-
-        ResponseEntity<String> responseImg = new RestTemplate().exchange(
-                "http://localhost:8000/resource/main-image",    //첫번째: url
-                HttpMethod.GET,
-                new HttpEntity<String>(headersImg),     //바디, 헤더 다 담기 가능/엔티티
-                String.class
-        );
-
-        JSONObject jsonObject = new JSONObject(responseImg.getBody());
-        JSONArray jsonArray = jsonObject.getJSONArray("data");
-        JSONObject obj = jsonArray.getJSONObject(0);
-        String imageUrl = obj.getString("imageUrl");
-
-
-
-
-
-
-
-
-
-
-        //페이지주인이름
-        HttpHeaders headersName = new HttpHeaders();
-        headersName.add("Content-type", "text/html");
-
-        ResponseEntity<String> responseName = new RestTemplate().exchange(
-                "http://localhost:8000/login/user-info/" + own,
-                HttpMethod.GET,
-                new HttpEntity<String>(headersImg),
-                String.class
-        );
-
-//        System.out.println("response2 : " + response2.getBody());
-        JSONObject ownName = new JSONObject(responseName.getBody());
-        String nickname = ownName.getString("nickname");
-
-//        System.out.println("nickname : " + nickname);
-
-
-        //유저 게시물
-        long count = boardRepository.countByOwn(own);
-
-        return ProfileVo.builder()
-                .profileUrl(imageUrl)
-                .nickname(nickname)
-                .boardCount(count)
-                .followerCount(1L)   //임시 더미데이터
-                .followingCount(2L)  //임시 더미데이터
-                .build();
+        return null;
     }
+//
+//        HttpHeaders headersImg = new HttpHeaders();
+//        headersImg.add("Content-type", "text/html");
+//
+//
+//        //사진 한번도 바꾸지 않았던 사람이라면 기본 프로필 이미지를 set해주기 위해
+//        Profile profile = profileCustomRepository.findByUserStatus(own);
+//
+//        System.out.println(profile.getProfileImageStatus());
+//
+//        if(profile.getProfileImageStatus()==NO) {
+//        //프로필 기본 사진
+//             ProfileDto.builder()
+//                .profileUrl("https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png")
+//                .build();
+//
+//        }else{
+//        //바꾼 프로필 사진
+//        ResponseEntity<String> responseImg = new RestTemplate().exchange(
+//                "http://localhost:8000/resource/main-image?bNo="+own+"&serviceName=story",    //첫번째: url
+//                HttpMethod.GET,
+//                new HttpEntity<String>(headersImg),     //바디, 헤더 다 담기 가능/엔티티
+//                String.class
+//        );
+//
+//        JSONObject jsonObject = new JSONObject(responseImg.getBody());
+//        JSONArray jsonArray = jsonObject.getJSONArray("data");
+//        JSONObject obj = jsonArray.getJSONObject(0);
+//        String imageUrl = obj.getString("imageUrl");
+//
+//            ProfileDto.builder()
+//                    .profileUrl(imageUrl)
+//                    .build();
+//        }
+//
+//        //페이지주인이름
+//        HttpHeaders headersName = new HttpHeaders();
+//        headersName.add("Content-type", "text/html");
+//
+//        ResponseEntity<String> responseName = new RestTemplate().exchange(
+//                "http://localhost:8000/login/user-info/" + own,
+//                HttpMethod.GET,
+//                new HttpEntity<String>(headersImg),
+//                String.class
+//        );
+//
+////        System.out.println("response2 : " + response2.getBody());
+//        JSONObject ownName = new JSONObject(responseName.getBody());
+//        String nickname = ownName.getString("nickname");
+//
+////        System.out.println("nickname : " + nickname);
+//
+//
+//        //유저 게시물
+//        long count = boardRepository.countByOwn(own);
+//
+//        return ProfileVo.builder()
+//                .nickname(nickname)
+//                .profileUrl(profile.getPostImageUrl())
+//                .boardCount(count)
+//                .followerCount(1L)   //임시 더미데이터
+//                .followingCount(2L)  //임시 더미데이터
+//                .build();
+//    }
+
 
     @Override
-    public Profile changeProfile(long own, ProfileDto profileDto) {
+    @Transactional(readOnly = true)
+    public ProfileVo ProfileImg(long own) {
+
+        Profile profile = profileCustomRepository.findByUserStatus(own);
+
+        System.out.println(profile.getProfileImageStatus());
+
+
+
+
+        return null;
+    }
+
+
+
+
+    //이미지바꾸기
+    @Override
+    @Transactional
+    public ProfileResponseDto changeProfile(long own, ProfileDto profileDto) {
 
         HttpHeaders headerImage = new HttpHeaders();
         headerImage.add("Content-type", "text/html");
@@ -131,13 +168,16 @@ public class ProfileServiceImpl implements ProfileService {
         JSONObject ownName = new JSONObject(responseName.getBody());
         String nickname = ownName.getString("nickname");
 
+        Profile profile = profileRepository.save(profileDto.toEntity(profileData, ownName));
+
+        return new ProfileResponseDto(profile);
+
+    }
 
 
 
 
-       return profileRepository.save(profileDto.toEntity(profileData, ownName));
-
-        //String profileUrl = profileRepository.save(imageUrl);
+    //String profileUrl = profileRepository.save(imageUrl);
 
 //        return ProfileDto.builder()
 //                .profileUrl(imageUrl)
@@ -145,7 +185,7 @@ public class ProfileServiceImpl implements ProfileService {
 //                .nickname(nickname)
 //                .build();
 
-    }
+
 
 
 //    //프로필 이미지 변경

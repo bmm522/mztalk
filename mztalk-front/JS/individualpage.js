@@ -3,8 +3,9 @@ let loginUser = localStorage.getItem('userNo');
 let own = localStorage.getItem("own");
 
 window.onload = function(){
-  storyLoad();
-  
+    storyLoad();
+  // profile();
+  profileBox();
 }
 
 
@@ -30,18 +31,55 @@ function writeboard() {
 }
 writeboard();
 
-// console.log(localStorage.getItem('userNickname'));
-// console.log(localStorage.getItem('userNo')); // 세션값
-// console.log(localStorage.getItem('own')); //파라미터 
-
-
-
-//개인페이지
+//정보 수정
 document.getElementById('profile-edit-btn').addEventListener('click',function(){
     
-    location.href="editpage.html";
+  location.href="editpage.html";
 });
 
+//개인페이지박스
+function profileBox(){
+
+  // const form = document.getElementById('image-form');
+    let own = localStorage.getItem("own");
+  // const payload = new FormData(form);
+
+    // fetch('http://localhost:8000/resource/main-image',{
+    //     method: 'POST',
+    //     // body: payload,
+    // })
+      fetch("http://localhost:8000/story/profile/"+own,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then(res =>{
+      
+      console.log("통신 성공");
+
+
+
+      
+
+      })
+    }
+       
+
+  
+
+
+
+
+
+
+
+
+
+
+//글쓰는곳DIV
 function storyLoad() {
   
   fetch("http://localhost:8000/story/"+own,{
@@ -337,30 +375,23 @@ function profileImageUpload(){
       })
     .then((res)=>res.json())
     .then(res =>{
-      console.log("통신 성공");
-      console.log("res :" +res);
+      // console.log("통신 성공");
+      // console.log("res :" +res.data);
       //console.log("profileDtos" + profileDtos);
       let profile = res.data;
       let reader = new FileReader();
+      let imageUrl = profile.profileUrl;
+      let objectKey = profile.profileImageName;
       reader.onload=(e)=>{
         let userProfileImg = document.getElementById('userProfileImage');
-        userProfileImg.src = reader.result; 
-        //userProfileImg.attributes("src", e.target.result);
+        userProfileImg.src = e.target.result;        
       }
       reader.readAsDataURL(f); 
 
-      //location.href="individualpage.html"; 
       })
     })
-
-
- 
-
-
   })
-  
 };
-
 
 
 

@@ -2,12 +2,11 @@ package com.mztalk.main.domain.follow.entity;
 
 
 import com.mztalk.main.common.BaseTimeEntity;
+import com.mztalk.main.status.ProfileImageStatus;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.math.BigInteger;
 
 
 @Builder
@@ -26,5 +25,10 @@ public class Profile extends BaseTimeEntity {
     private String nickname;    //유저 이름
 
     private String profileImageName;
+
+    @Enumerated(EnumType.STRING)
+    private ProfileImageStatus profileImageStatus;
+
+    private long own;
 
 }

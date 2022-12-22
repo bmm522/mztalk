@@ -1,6 +1,7 @@
 package com.mztalk.main.domain.follow.vo;
 
 
+import com.mztalk.main.status.ProfileImageStatus;
 import lombok.*;
 
 @Getter
@@ -15,7 +16,8 @@ public class ProfileVo {
     private long boardCount;
     private long followerCount;
     private long followingCount;
-
+    private ProfileImageStatus profileImageStatus;
+    private String profileName;
 
 
 }
