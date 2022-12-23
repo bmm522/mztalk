@@ -1,4 +1,4 @@
-package com.mztalk.main.domain.follow.vo;
+package com.mztalk.main.domain.profile.vo;
 
 
 import com.mztalk.main.status.ProfileImageStatus;

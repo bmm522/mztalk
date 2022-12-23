@@ -5,6 +5,7 @@ let own = localStorage.getItem("own");
 window.onload = function(){
     storyLoad();
   profileBox();
+  profileName();
 }
 
 
@@ -58,11 +59,18 @@ function profileBox(){
     .then((res)=>res.json())
     .then(res =>{
       
-      console.log("통신 성공");
+      //console.log("통신 성공");
       
       let profileImage = res.data;
       console.log(profileImage);
-      
+      if(!res.data){
+        document.querySelector('.profile-img-wrap').innerHTML +=
+        `
+        <img class="profile-image" src='profileUrl' onerror="this.src='duck.jpg'" id="userProfileImage">
+        <input type="hidden" class="imageName" value="profileName"/>
+        <input type="hidden" name="bNo" id="bNo" value="own"/>
+        `  
+     }
       let profileUrl = profileImage.postImageUrl;
       let profileName = profileImage.profileImageName;
       let own = profileImage.own
@@ -95,24 +103,45 @@ function profileName(){
     .then((res)=>res.json())
     .then(res =>{
       
-      console.log("통신 성공");
+      //console.log("통신 성공");
       
-      let profileImage = res.data;
-      console.log(profileImage);
-      
-      let profileUrl = profileImage.postImageUrl;
-      let profileName = profileImage.profileImageName;
-      let own = profileImage.own
-
-      document.querySelector('.profile-img-wrap').innerHTML +=
+      let profileName = res.data;
+      //console.log(profileName);
+      let nickname = profileName.nickname;
+      document.querySelector('.own_name').innerHTML +=
       `
+      ${nickname}
       `
       })
     }
 
 
 
+//게시물 갯수
+function BoardCount(){
 
+  let own = localStorage.getItem("own");
+
+    fetch("http://localhost:8000/story/profile/board/"+own,{
+      method:"GET",
+      headers:{
+          "Content-Type":"application/json",
+          Authorization:localStorage.getItem('authorization'),
+          RefreshToken:localStorage.getItem('refreshToken'),
+      },
+    })
+  .then((res)=>res.json())
+  .then(res =>{
+    
+    console.log("통신 성공");
+    
+    
+    document.querySelector('.own_name').innerHTML +=
+    `
+   
+    `
+    })
+  }
 
 
 

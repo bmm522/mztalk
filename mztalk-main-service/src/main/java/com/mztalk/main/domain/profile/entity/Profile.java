@@ -1,4 +1,4 @@
-package com.mztalk.main.domain.follow.entity;
+package com.mztalk.main.domain.profile.entity;
 
 
 import com.mztalk.main.common.BaseTimeEntity;
@@ -30,5 +30,11 @@ public class Profile extends BaseTimeEntity {
     private ProfileImageStatus profileImageStatus;
 
     private long own;
+
+    private long boardCount;
+
+    private long followerCount;
+
+    private long followingCount;
 
 }
