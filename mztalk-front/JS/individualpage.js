@@ -42,14 +42,8 @@ document.getElementById('profile-edit-btn').addEventListener('click',function(){
 //사진박스
 function profileBox(){
 
-  // const form = document.getElementById('image-form');
     let own = localStorage.getItem("own");
-  // const payload = new FormData(form);
 
-    // fetch('http://localhost:8000/resource/main-image',{
-    //     method: 'POST',
-    //     // body: payload,
-    // })
       fetch("http://localhost:8000/story/profile/"+own,{
         method:"GET",
         headers:{
@@ -64,15 +58,15 @@ function profileBox(){
       //console.log("통신 성공");
       
       let profileImage = res.data;
-      //console.log(profileImage);
+      console.log(profileImage);
       if(!res.data){
         document.querySelector('.profile-img-wrap').innerHTML +=
         `
-        <img class="profile-image" src='profileUrl' onerror="this.src='duck.jpg'" id="userProfileImage">
+        <img class="profile-image" src='https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png' onerror="this.src='duck.jpg'" id="userProfileImage">
         <input type="hidden" class="imageName" value="profileName"/>
         <input type="hidden" name="bNo" id="bNo" value="own"/>
         `  
-     }
+     }else{
       let profileUrl = profileImage.postImageUrl;
       let profileName = profileImage.profileImageName;
       let own = profileImage.own
@@ -83,6 +77,7 @@ function profileBox(){
       <input type="hidden" class="imageName" value="${profileName}"/>
       <input type="hidden" name="bNo" id="bNo" value="${own}"/>
       `
+     }
       })
     }
        

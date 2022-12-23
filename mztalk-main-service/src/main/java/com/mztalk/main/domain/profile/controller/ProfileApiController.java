@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/story")
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class ProfileApiController {
     @GetMapping("/profile/{own}")
     public ResponseEntity<?> ProfileImg(@PathVariable("own") long own){
 
-        Profile profile = profileService.ProfileImg(own);
+        Optional<Profile> profile = profileService.ProfileImg(own);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
 

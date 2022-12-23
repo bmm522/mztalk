@@ -29,7 +29,7 @@ function popup(image) {
 document.getElementById('nickname').value = localStorage.getItem('userNickname');
 
 document.getElementById('nickname').addEventListener('keyup',function(){
-    let userId = document.getElementById('nickname').value;
+    let userId = localStorage.getItem('userNickname');
   
     fetch("http://localhost:8000/login/register/username/"+userId, {
       method:"GET",
@@ -126,11 +126,11 @@ function profileBox(){
       if(!res.data){
         document.querySelector('.profile-img-wrap').innerHTML +=
         `
-        <img class="profile-image" src='profileUrl' onerror="this.src='duck.jpg'" id="userProfileImage">
+        <img class="profile-image" src='https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png' onerror="this.src='duck.jpg'" id="userProfileImage">
         <input type="hidden" class="imageName" value="profileName"/>
         <input type="hidden" name="bNo" id="bNo" value="own"/>
         `  
-     }
+     }else{
       let profileUrl = profileImage.postImageUrl;
       let profileName = profileImage.profileImageName;
       let own = profileImage.own
@@ -141,5 +141,6 @@ function profileBox(){
       <input type="hidden" class="imageName" value="${profileName}"/>
       <input type="hidden" name="bNo" id="bNo" value="${own}"/>
       `
-      })
-    }
+      }
+    })
+  }

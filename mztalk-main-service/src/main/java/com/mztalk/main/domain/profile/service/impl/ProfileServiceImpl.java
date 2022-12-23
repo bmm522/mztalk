@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import static com.mztalk.main.status.ProfileImageStatus.YES;
+import java.util.Optional;
 
 
 @Service
@@ -102,18 +102,20 @@ public class ProfileServiceImpl implements ProfileService {
     //개인 프로필 사진
     @Override
     @Transactional(readOnly = true)
-    public Profile ProfileImg(long own) {
-
-        Profile profile = profileCustomRepository.findByUserStatus(own);
-
-        //System.out.println(profile.getProfileImageStatus());
-
-
+    public Optional<Profile> ProfileImg(long own) {
 
         HttpHeaders headersImg = new HttpHeaders();
         headersImg.add("Content-type", "text/html");
+        Optional<Profile> profile = profileCustomRepository.findByUserStatus(own);
+        //Profile profile = profileRepository.findTop1ByOrderByIdDesc(own);
+        System.out.println(profile);
+        if(profile!=null){
+            System.out.println("여기로오니????");
 
-        if(profile.getProfileImageStatus()==YES){
+
+            //Profile profile = profileRepository.findTop1ByOrderByIdDesc(own);
+
+
             ResponseEntity<String> responseImg = new RestTemplate().exchange(
                     "http://localhost:8000/resource/main-image?bNo=" + own + "&serviceName=story",    //첫번째: url
                     HttpMethod.GET,
@@ -132,21 +134,25 @@ public class ProfileServiceImpl implements ProfileService {
                     .build();
 
              Profile.builder()
-                    .postImageUrl(profile.getPostImageUrl())
+                    .postImageUrl(profile.get().getPostImageUrl())
                     .build();
-
-            //System.out.println(profile);
 
             return profile;
-        }else {
+        }
             String personalUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
-            return Profile.builder()
+            System.out.println("여기 실행?!!!!");
+
+            return Optional.ofNullable(Profile.builder()
                     .postImageUrl(personalUrl)
                     .profileImageName("기본이미지")
-                    .build();
-        }
+                    .build());
+
+
+
+
 
     }
+
 
 
     //개인 프로필 이름
@@ -186,6 +192,13 @@ public class ProfileServiceImpl implements ProfileService {
                 .build();
     }
 
+//    @Override // 사진이 이미 존재하면 true반환.
+//    public boolean isExist(long own) {
+//        Profile profile = profileRepository.findProfile(own);
+//        System.out.println("혹시 여기?"+profile);
+//        return profile == null ? false : true;
+//    }
+
 
     //이미지바꾸기
     @Override
@@ -213,8 +226,8 @@ public class ProfileServiceImpl implements ProfileService {
         String imageUrl = profileData.getString("imageUrl");
         String imageName = profileData.getString("objectKey");
 
-        System.out.println(imageUrl);
-        System.out.println(imageName);
+        //System.out.println(imageUrl);
+        //System.out.println(imageName);
 
 
 
