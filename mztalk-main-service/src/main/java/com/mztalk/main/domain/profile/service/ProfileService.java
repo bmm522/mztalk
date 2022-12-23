@@ -5,15 +5,19 @@ import com.mztalk.main.domain.profile.dto.ProfileDto;
 import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
 import com.mztalk.main.domain.profile.entity.Profile;
 
+import java.util.Optional;
+
 public interface ProfileService {
 
 
     ProfileResponseDto changeProfile(long own, ProfileDto profileDto);
 
-    Profile ProfileImg(long own);
+    Optional<Profile> ProfileImg(long own);
 
 
     Profile ProfileName(long own);
 
     Profile BoardCount(long own);
+
+
 }
