@@ -1,17 +1,15 @@
-package com.mztalk.main.domain.follow.service.impl;
+package com.mztalk.main.domain.profile.service.impl;
 
 
-import com.mztalk.main.domain.follow.dto.ProfileDto;
-import com.mztalk.main.domain.follow.dto.ProfileResponseDto;
-import com.mztalk.main.domain.follow.entity.Profile;
-import com.mztalk.main.domain.follow.repository.ProfileCustomRepository;
-import com.mztalk.main.domain.follow.repository.ProfileRepository;
-import com.mztalk.main.domain.follow.service.ProfileService;
+import com.mztalk.main.domain.profile.dto.ProfileDto;
+import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
+import com.mztalk.main.domain.profile.entity.Profile;
+import com.mztalk.main.domain.profile.repository.ProfileCustomRepository;
+import com.mztalk.main.domain.profile.repository.ProfileRepository;
+import com.mztalk.main.domain.profile.service.ProfileService;
 import com.mztalk.main.domain.board.repository.BoardRepository;
-import com.mztalk.main.domain.follow.vo.ProfileVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import static com.mztalk.main.status.ProfileImageStatus.NO;
 import static com.mztalk.main.status.ProfileImageStatus.YES;
 
 
@@ -109,7 +106,9 @@ public class ProfileServiceImpl implements ProfileService {
 
         Profile profile = profileCustomRepository.findByUserStatus(own);
 
-        System.out.println(profile.getProfileImageStatus());
+        //System.out.println(profile.getProfileImageStatus());
+
+
 
         HttpHeaders headersImg = new HttpHeaders();
         headersImg.add("Content-type", "text/html");
@@ -136,17 +135,57 @@ public class ProfileServiceImpl implements ProfileService {
                     .postImageUrl(profile.getPostImageUrl())
                     .build();
 
-            System.out.println(profile);
+            //System.out.println(profile);
 
             return profile;
         }else {
+            String personalUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
             return Profile.builder()
-                    .postImageUrl("https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png")
+                    .postImageUrl(personalUrl)
                     .profileImageName("기본이미지")
                     .build();
         }
 
     }
+
+
+    //개인 프로필 이름
+    @Override
+    public Profile ProfileName(long own) {
+
+        HttpHeaders headerName = new HttpHeaders();
+        headerName.add("Content-type", "text/html");
+
+        //유저의이름
+        HttpHeaders headersNames = new HttpHeaders();
+        headersNames.add("Content-type", "text/html");
+
+        ResponseEntity<String> responseName = new RestTemplate().exchange(
+                "http://localhost:8000/login/user-info/" + own,
+                HttpMethod.GET,
+                new HttpEntity<String>(headerName),
+                String.class
+        );
+
+        JSONObject ownName = new JSONObject(responseName.getBody());
+        String nickname = ownName.getString("nickname");
+
+        return Profile.builder()
+                .nickname(nickname)
+                .build();
+    }
+
+    //게시물 갯수 보여주기
+    @Override
+    public Profile BoardCount(long own) {
+
+        long count = boardRepository.countByOwn(own);
+
+        return Profile.builder()
+                .boardCount(count)
+                .build();
+    }
+
 
     //이미지바꾸기
     @Override

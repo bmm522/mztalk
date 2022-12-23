@@ -1,7 +1,7 @@
-package com.mztalk.main.domain.follow.dto;
+package com.mztalk.main.domain.profile.dto;
 
 
-import com.mztalk.main.domain.follow.entity.Profile;
+import com.mztalk.main.domain.profile.entity.Profile;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
