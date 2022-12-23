@@ -6,6 +6,8 @@ window.onload = function(){
     storyLoad();
   profileBox();
   profileName();
+  BoardCount();
+  //FollowingButton();
 }
 
 
@@ -62,7 +64,7 @@ function profileBox(){
       //console.log("통신 성공");
       
       let profileImage = res.data;
-      console.log(profileImage);
+      //console.log(profileImage);
       if(!res.data){
         document.querySelector('.profile-img-wrap').innerHTML +=
         `
@@ -133,17 +135,30 @@ function BoardCount(){
   .then((res)=>res.json())
   .then(res =>{
     
-    console.log("통신 성공");
+    //console.log("통신 성공");
     
-    
-    document.querySelector('.own_name').innerHTML +=
+    let board = res.data;
+    console.log(board);
+    document.querySelector('.board_count').innerHTML +=
     `
-   
+    ${board.boardCount}
     `
     })
   }
 
+//페이지주인은 팔로우 버튼 비활성화
+function FollowingButton(){
 
+  if(loginUser!=own){
+    document.querySelector('.profile_follow_btn').innerHTML +=
+    `
+    <button class="profile_follow_btn" onclick="profilecFollow(this)">
+    팔로우
+    </button>
+    `
+  }
+
+}
 
 
 
