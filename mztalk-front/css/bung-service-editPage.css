@@ -147,3 +147,22 @@ a {
 .scriptCalendar > thead > tr:first-child > td { font-weight:bold; }
 .scriptCalendar > thead > tr:last-child > td { background-color:#90EE90; }
 .scriptCalendar > tbody > tr > td { width:50px;height:50px; }
+
+#carouselExampleControls {
+  margin: auto;
+  height: 400px;
+  width: 70%;
+}
+
+.carousel-inner{
+  height: 400px;
+  width: 50%;
+  /* display: inline;
+  overflow: hidden; */
+}
+
+img{
+  width: 50%;
+  height: 400px;
+  
+}
