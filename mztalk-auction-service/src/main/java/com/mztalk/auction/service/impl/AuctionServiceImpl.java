@@ -62,12 +62,6 @@ public class AuctionServiceImpl implements AuctionService {
 
         for(Board board : boardList){
 
-            LocalDateTime currentDate = LocalDateTime.parse(board.getCurrentTime(),
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            LocalDateTime timeLimitDate = LocalDateTime.parse(board.getTimeLimit(),
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            Duration duration = Duration.between(timeLimitDate, currentDate);
-
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/html");
             System.out.println("list 가져오기 : " + board.getBoardId());
@@ -82,13 +76,21 @@ public class AuctionServiceImpl implements AuctionService {
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
 
-            boardListResponseDtoList.add(new BoardListResponseDto(board, String.valueOf(duration),imageUrl, imageName));
+            boardListResponseDtoList.add(new BoardListResponseDto(board, String.valueOf(getTimeDuration(board)),imageUrl, imageName));
 
         }
 
 
         return new Result<>(boardListResponseDtoList);
 
+    }
+
+    private Duration getTimeDuration(Board board) {
+        return Duration.between(getLocalDateTime(board.getTimeLimit()), getLocalDateTime(board.getCurrentTime()));
+    }
+
+    private LocalDateTime getLocalDateTime(String time){
+        return LocalDateTime.parse(time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     //게시물 삭제
