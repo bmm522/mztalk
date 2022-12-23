@@ -37,7 +37,7 @@ public class BungBoardResponseDto {
         this.content = bungBoard.getBoardContent();
         this.category = bungBoard.getCategory();
         this.writer = bungBoard.getBoardWriter();
-        this.nowGroup = bungBoard.getNowGroup();
+//        this.nowGroup = bungBoard.getNowGroup();
         this.fullGroup = bungBoard.getFullGroup();
         this.deadlineDate = String.valueOf(bungBoard.getDeadlineDate());
 

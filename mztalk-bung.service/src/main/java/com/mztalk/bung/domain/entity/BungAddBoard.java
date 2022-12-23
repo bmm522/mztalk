@@ -25,7 +25,7 @@ public class BungAddBoard {
     private Long addId;
     @Lob
     private String addContent;
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String addPhone;
     @Enumerated(EnumType.STRING)
     private BoardStatus boardStatus;
@@ -45,6 +45,17 @@ public class BungAddBoard {
         bungAddBoard.addAddBungBoard(bungBoard);
         return bungAddBoard;
     }
+
+    // 삭제 예정
+//    public static BungAddBoard createWriterBungAddBoard(ConcurrentHashMap<String, String> bungAddBoardMap, BungBoard bungBoard) {
+//        BungAddBoard bungAddBoard = new BungAddBoard();
+////        bungAddBoard.addPhone = bungAddBoardMap.get("addPhone");
+//        bungAddBoard.boardStatus = BoardStatus.YES;
+//        bungAddBoard.addNickName = bungAddBoardMap.get("writer");
+//        System.out.println("이거 뭐나옴?" + bungBoard.getBoardId());
+//        bungAddBoard.addAddBungBoard(bungBoard);
+//        return bungAddBoard;
+//    }
 
     public void changeStatus() {
         this.boardStatus = BoardStatus.YES;

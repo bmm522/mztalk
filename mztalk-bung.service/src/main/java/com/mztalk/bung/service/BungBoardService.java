@@ -36,4 +36,6 @@ public interface BungBoardService {
     Result bungRequestList(Long bId);
 
     Long addBungBoardDelete(Long addId);
+
+    Long bungBoardNowGroup(Long bId);
 }

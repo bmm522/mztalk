@@ -30,7 +30,22 @@ public class BungAddBoardRepositoryCustomImpl implements BungAddBoardRepositoryC
     public List<BungAddBoard> findBoardByBoardId(Long bId) {
         return entityManager.createQuery("select a from BungAddBoard a where a.bungBoard.boardId =:bId and a.boardStatus =:YES")
                 .setParameter("bId", bId)
-                .setParameter("status", YES)
+                .setParameter("YES", YES)
                 .getResultList();
+    }
+
+    @Override
+    public Long bungBoardNowGroup(Long bId) {
+        return (Long) entityManager.createQuery("select count(*) from BungAddBoard a where a.boardStatus =:YES and a.bungBoard.boardId = :bId")
+                .setParameter("bId", bId)
+                .setParameter("YES", YES)
+                .getSingleResult();
+    }
+
+    @Override
+    public int findAddBoardByBoardId(Long addId) {
+        return  entityManager.createQuery("select a.bungBoard.boardId as boardId from BungAddBoard a where a.addId =:addId")
+                .setParameter("addId", addId)
+                .getFirstResult();
     }
 }

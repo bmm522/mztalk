@@ -23,7 +23,6 @@ public class BungBoardDto {
     private String boardContent;
     private String deadlineDate;
     private Long fullGroup;
-    private Long nowGroup;
     private Timestamp createDate;
     private Timestamp modifyDate;
     private Long boardCount;
@@ -38,7 +37,6 @@ public class BungBoardDto {
                 .boardContent(boardContent)
                 .deadlineDate(Date.valueOf(deadlineDate))
                 .fullGroup(fullGroup)
-                .nowGroup(nowGroup)
                 .createDate(createDate)
                 .modifyDate(modifyDate)
                 .boardCount(boardCount)
@@ -55,7 +53,6 @@ public class BungBoardDto {
         this.boardContent = BungBoardEntity.getBoardContent();
         this.deadlineDate = String.valueOf(BungBoardEntity.getDeadlineDate());
         this.fullGroup = BungBoardEntity.getFullGroup();
-        this.nowGroup = BungBoardEntity.getNowGroup();
         this.createDate = BungBoardEntity.getCreateDate();
         this.modifyDate = BungBoardEntity.getModifyDate();
         this.boardCount = BungBoardEntity.getBoardCount();

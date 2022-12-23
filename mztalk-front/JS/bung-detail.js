@@ -24,6 +24,7 @@ window.onload= function(){
         let category = res.category;
         let deadlineDate = res.deadlineDate;
         // console.log(imageInfo);
+        console.log(JSON.stringify(imageInfo));
         document.getElementById('header').innerHTML = '<strong>'+content+'</strong>' 
         document.getElementById('writer').innerHTML = writer;
         document.getElementById('date').innerHTML=createDate;
@@ -35,6 +36,7 @@ window.onload= function(){
 
 
         for(let i = 0 ; i < imageInfo.length ;  i++){
+            console.log(imageInfo[i].objectKey);
             document.getElementsByClassName('slideshow-container')[0].innerHTML +=  '<div class="mySlides fade"><img src="'+imageInfo[i].imageUrl+'" style="height: 150%; width: 100%;" alt="alt text">  <input type="hidden" class="imageName" value="${imageInfo[i].objectKey}"/>  <input type="hidden" class="imageLevel" value="${imageInfo[i].imageLevel}"/>  </div>';
       
         }
