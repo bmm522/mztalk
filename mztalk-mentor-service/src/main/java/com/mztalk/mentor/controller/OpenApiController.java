@@ -2,9 +2,10 @@ package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.BankCode;
 import com.mztalk.mentor.service.OpenApiService;
-import com.mztalk.mentor.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,9 +21,8 @@ public class OpenApiController {
     }
 
     @PostMapping("/realname")
-    public boolean requestMatchAccountRealName(@RequestParam Long id, @RequestParam BankCode bankCode,
-                                               @RequestParam String bankAccount,@RequestParam String realName, @RequestParam String birthday){
-        return openApiService.requestMatchAccountRealName(id,bankCode.getBankCode(),bankAccount,realName,birthday);
+    public boolean requestMatchAccountRealName(@RequestBody ConcurrentHashMap<String,String> accountMap){
+        return openApiService.requestMatchAccountRealName(accountMap);
     }
 
 //    @GetMapping("/account")

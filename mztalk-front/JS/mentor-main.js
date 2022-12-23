@@ -290,21 +290,6 @@ document.getElementById('myPage').addEventListener('click', function(){
     })
 });
 
-// 계좌번호 인증 API받기
-document.getElementById('accountButton').addEventListener('click',function(){
-    console.log('버튼 동작 돼?');
-    fetch("http://localhost:8000/mentors/openapi/token",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken')
-        },
-    })
-    .then(res =>{
-        console.log('토큰 발급 성공');
-    })
-});
 
 
 

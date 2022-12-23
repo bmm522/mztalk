@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -67,22 +68,25 @@ public class OpenApiServiceImpl implements OpenApiService {
 
     @Override
     @Transactional
-    public boolean requestMatchAccountRealName(Long id, String bankCode, String bankAccount, String realName, String birthday) {
+    public boolean requestMatchAccountRealName(ConcurrentHashMap<String,String> accountMap) {
+        String bankCode = accountMap.get("bankCode");
+        String bankAccount = accountMap.get("bankAccount");
+        String birthday = accountMap.get("birthday");
+
         if(birthday.length() != 6){return false;}
-        OpenApiAccessToken token = accessTokenRepository.findById(id).get();
-        String accessToken = token.getAccessToken();
+
         RestTemplate accountRestTemplate = new RestTemplate();
 
         HttpHeaders accountHeaders = new HttpHeaders();
         accountHeaders.add("Content-type","application/json; charset=UTF-8");
-        accountHeaders.add("Authorization","Bearer " + accessToken);
+//        accountHeaders.add("Authorization", tokenType + " " + accessToken);
 
         MultiValueMap<String, String> accountBody = new LinkedMultiValueMap<>();
-        accountBody.add("bank_tran_id","M202202375U" + (++number)); // 은행거래 고유번호
-        accountBody.add("bank_code_std",bankCode); // 개설기관.표준코드 >>프론트
-        accountBody.add("account_num",bankAccount); //계좌번호 >> 프론트
+        accountBody.add("bank_tran_id","M202202375U" + (++number));
+        accountBody.add("bank_code_std",bankCode);
+        accountBody.add("account_num",bankAccount);
         accountBody.add("account_holder_info_type","");
-        accountBody.add("account_holder_info",birthday); // 예금주 생년월일(6자리) >> 프론트
+        accountBody.add("account_holder_info",birthday);
         accountBody.add("tran_dtime", LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
 
         HttpEntity<MultiValueMap<String, String>> accountRequest= new HttpEntity<>(accountBody, accountHeaders);
@@ -95,7 +99,6 @@ public class OpenApiServiceImpl implements OpenApiService {
         );
         ObjectMapper objectMapper = new ObjectMapper();
         AccountInfo accountInfo = null;
-
         try {
             accountInfo = objectMapper.readValue(accountResponse.getBody(), AccountInfo.class);
         } catch (JsonProcessingException e) {
@@ -109,9 +112,10 @@ public class OpenApiServiceImpl implements OpenApiService {
         System.out.println("account_holder_info : " + accountInfo.getAccount_holder_info());
         System.out.println("account_holder_name : " + accountInfo.getAccount_holder_name());
 
-//        accountInfoRepository.findById(id)
-
-        return true;
+        if(accountInfo.getRsp_message().equals("")){
+            return true;
+        }
+        return false;
     }
 
     @Override

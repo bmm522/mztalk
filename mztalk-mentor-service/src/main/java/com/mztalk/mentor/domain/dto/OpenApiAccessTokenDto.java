@@ -2,11 +2,13 @@ package com.mztalk.mentor.domain.dto;
 
 import com.mztalk.mentor.domain.entity.OpenApiAccessToken;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Getter
+@Setter
 public class OpenApiAccessTokenDto {
     private String access_token;
     private String token_type;
