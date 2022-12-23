@@ -7,12 +7,11 @@ import com.mztalk.main.domain.follow.entity.Profile;
 import com.mztalk.main.domain.follow.vo.ProfileVo;
 
 public interface ProfileService {
-    ProfileVo getProfile(long own);
 
 
     ProfileResponseDto changeProfile(long own, ProfileDto profileDto);
 
-    ProfileVo ProfileImg(long own);
+    Profile ProfileImg(long own);
 
 
 }

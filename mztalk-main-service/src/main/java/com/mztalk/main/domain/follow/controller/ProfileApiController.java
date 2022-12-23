@@ -17,20 +17,21 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileApiController {
 
     private final ProfileService profileService;
-
+    //사진불러오기
     @GetMapping("/profile/{own}")
-    public ProfileVo ProfileImg(@PathVariable("own") long own){
+    public ResponseEntity<?> ProfileImg(@PathVariable("own") long own){
 
-        return profileService.ProfileImg(own);
+        Profile profile = profileService.ProfileImg(own);
+
+        return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
+
     }
 
-    //프로필사진 바꾸기
-//    @PostMapping("/profileImg/{own}")
-//    public ProfileVo getProfileImage(@PathVariable long own){
-//
-//         return profileService.getProfileImage(own);
-//
-//    }
+
+
+
+
+
     @PostMapping("/profile/{own}")
     public ResponseEntity<?> changeProfile(@PathVariable long own, @RequestBody ProfileDto profileDto){
 

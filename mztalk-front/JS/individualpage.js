@@ -4,7 +4,6 @@ let own = localStorage.getItem("own");
 
 window.onload = function(){
     storyLoad();
-  // profile();
   profileBox();
 }
 
@@ -37,7 +36,7 @@ document.getElementById('profile-edit-btn').addEventListener('click',function(){
   location.href="editpage.html";
 });
 
-//개인페이지박스
+//사진박스
 function profileBox(){
 
   // const form = document.getElementById('image-form');
@@ -56,19 +55,89 @@ function profileBox(){
             RefreshToken:localStorage.getItem('refreshToken'),
         },
       })
+    .then((res)=>res.json())
     .then(res =>{
       
       console.log("통신 성공");
-
-
-
       
+      let profileImage = res.data;
+      console.log(profileImage);
+      
+      let profileUrl = profileImage.postImageUrl;
+      let profileName = profileImage.profileImageName;
+      let own = profileImage.own
 
+      document.querySelector('.profile-img-wrap').innerHTML +=
+      `
+      <img class="profile-image" src='${profileUrl}' onerror="this.src='duck.jpg'" id="userProfileImage">
+      <input type="hidden" class="imageName" value="${profileName}"/>
+      <input type="hidden" name="bNo" id="bNo" value="${own}"/>
+      `
       })
     }
        
 
-  
+
+    
+//이름박스
+function profileName(){
+
+    let own = localStorage.getItem("own");
+
+      fetch("http://localhost:8000/story/profile/name/"+own,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+      
+      console.log("통신 성공");
+      
+      let profileImage = res.data;
+      console.log(profileImage);
+      
+      let profileUrl = profileImage.postImageUrl;
+      let profileName = profileImage.profileImageName;
+      let own = profileImage.own
+
+      document.querySelector('.profile-img-wrap').innerHTML +=
+      `
+      `
+      })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

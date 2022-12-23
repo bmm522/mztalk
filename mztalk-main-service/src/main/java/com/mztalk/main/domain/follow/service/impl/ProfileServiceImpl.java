@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import static com.mztalk.main.status.ProfileImageStatus.NO;
+import static com.mztalk.main.status.ProfileImageStatus.YES;
 
 
 @Service
@@ -35,10 +36,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     private final BoardRepository boardRepository;
 
-    @Override
-    public ProfileVo getProfile(long own) {
-        return null;
-    }
+
 //
 //        HttpHeaders headersImg = new HttpHeaders();
 //        headersImg.add("Content-type", "text/html");
@@ -104,23 +102,51 @@ public class ProfileServiceImpl implements ProfileService {
 //                .build();
 //    }
 
-
+    //개인 프로필 사진
     @Override
     @Transactional(readOnly = true)
-    public ProfileVo ProfileImg(long own) {
+    public Profile ProfileImg(long own) {
 
         Profile profile = profileCustomRepository.findByUserStatus(own);
 
         System.out.println(profile.getProfileImageStatus());
 
+        HttpHeaders headersImg = new HttpHeaders();
+        headersImg.add("Content-type", "text/html");
 
+        if(profile.getProfileImageStatus()==YES){
+            ResponseEntity<String> responseImg = new RestTemplate().exchange(
+                    "http://localhost:8000/resource/main-image?bNo=" + own + "&serviceName=story",    //첫번째: url
+                    HttpMethod.GET,
+                    new HttpEntity<String>(headersImg),     //바디, 헤더 다 담기 가능/엔티티
+                    String.class
+            );
 
+            JSONObject profileImage = new JSONObject(responseImg.getBody());
+            JSONObject profileData = profileImage.getJSONObject("data");
+            String imageUrl = profileData.getString("imageUrl");
+            String imageName = profileData.getString("objectKey");
 
-        return null;
+            ProfileDto.builder()
+                    .profileUrl(imageUrl)
+                    .profileImageName(imageName)
+                    .build();
+
+             Profile.builder()
+                    .postImageUrl(profile.getPostImageUrl())
+                    .build();
+
+            System.out.println(profile);
+
+            return profile;
+        }else {
+            return Profile.builder()
+                    .postImageUrl("https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png")
+                    .profileImageName("기본이미지")
+                    .build();
+        }
+
     }
-
-
-
 
     //이미지바꾸기
     @Override
