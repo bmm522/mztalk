@@ -16,6 +16,7 @@ public class BungBoardResponseDto {
     private String imageUrl;
     private String imageName;
 
+    private String objectKey;
     private String count;
     private String title;
     private String category;

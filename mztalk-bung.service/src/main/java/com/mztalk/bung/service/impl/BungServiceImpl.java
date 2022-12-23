@@ -105,7 +105,7 @@ public class BungServiceImpl implements BungBoardService {
     // 메인 서비스 게시글 조회
     @Override
     public Result mainSelectList() {
-        List<BungBoard> bungBoards = bungRepository.findAll();
+        List<BungBoard> bungBoards = bungRepository.findByBoardStatus(BoardStatus.YES);
         List<BungBoardResponseDto> bungBoardResponseDtoList = new ArrayList<>();
         for(BungBoard bungBoard : bungBoards){
             System.out.println(bungBoard.getBoardId());
@@ -167,6 +167,8 @@ public class BungServiceImpl implements BungBoardService {
         for(int i = 0; i < jsonArray.length() ; i ++){
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
             map.put("imageUrl", jsonArray.getJSONObject(i).getString("imageUrl"));
+            System.out.println(jsonArray.getJSONObject(i).getString("imageName"));
+            map.put("imageName", jsonArray.getJSONObject(i).getString("imageName"));
             map.put("objectKey", jsonArray.getJSONObject(i).getString("objectKey"));
             map.put("imageLevel", jsonArray.getJSONObject(i).getString("imageLevel"));
             mapList.add(map);
@@ -186,7 +188,14 @@ public class BungServiceImpl implements BungBoardService {
     @Override
     public ConcurrentHashMap<String, String> getRecentBoardNo() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        map.put("bId", String.valueOf(bungRepository.findFirstByOrderByBoardIdDesc().getBoardId()+1));
+        long bId = 0L;
+        try{
+            bId = bungRepository.findFirstByOrderByBoardIdDesc().getBoardId()+1;
+        } catch (NullPointerException e){
+            map.put("bId", "1");
+            return map;
+        }
+        map.put("bId", String.valueOf(bId));
         return map;
     }
 
