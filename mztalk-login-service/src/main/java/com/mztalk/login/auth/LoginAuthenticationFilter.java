@@ -64,7 +64,11 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
                 logger.error("Fail Login");
                 return authentication;
             }
-            response.addHeader(LoginStatus.STATUS, "Login Success");
+            if(principalDetails.getUser().getRole().equals("ROLE_ADMIN")){
+                response.addHeader(LoginStatus.STATUS, "Admin Login");
+            } else {
+                response.addHeader(LoginStatus.STATUS, "Login Success");
+            }
             return authentication;
         } catch (IOException e) {
             e.printStackTrace();

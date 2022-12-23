@@ -172,7 +172,7 @@ const getBarChar = () =>{
         yAxes: [{
           ticks: {
             min: 0,
-            max: 500,
+            max: 1000,
             maxTicksLimit: 24
           },
           gridLines: {
@@ -279,7 +279,7 @@ const getDailyTraffic = () =>{
         yAxes: [{
           ticks: {
             min: 0,
-            max: 500,
+            max: 1000,
             maxTicksLimit: 20
           },
           gridLines: {
