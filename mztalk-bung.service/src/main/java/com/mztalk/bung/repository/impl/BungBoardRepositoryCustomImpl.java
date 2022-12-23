@@ -1,6 +1,7 @@
 package com.mztalk.bung.repository.impl;
 
 import com.mztalk.bung.domain.dto.BungBoardDto;
+import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.QBungBoard;
 import com.mztalk.bung.repository.BungBoardRepositoryCustom;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -33,6 +34,15 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
                 .setParameter("bId", bId)
                 .executeUpdate();
     }
+
+    @Override
+    @Transactional
+    public BungBoard findBungBoardByWriterBoardId(Long boardId) {
+        return (BungBoard) entityManager.createQuery("select b.boardId from BungBoard b where b.boardId = :boardId")
+                .setParameter("boardId", boardId)
+                .getSingleResult();
+    }
+
 
 //    @Override
 //    public long getRecentBoardNo() {
