@@ -127,6 +127,9 @@
     overflow: hidden;
     border-radius: 30px;
     box-shadow: 1px 1px 1px 1px gray;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+
 }
 
 #category-div{
@@ -231,7 +234,7 @@
 #reply-div {
     /* background-color: black; */
     width: 850px;
-    height: 10000px;
+    height: 220px;
     margin-left: 20px;
     margin-top: 10px;
     overflow-y: auto;

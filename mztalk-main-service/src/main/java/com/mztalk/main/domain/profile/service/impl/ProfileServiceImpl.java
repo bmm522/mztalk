@@ -109,7 +109,7 @@ public class ProfileServiceImpl implements ProfileService {
         Optional<Profile> profile = profileCustomRepository.findByUserStatus(own);
         //Profile profile = profileRepository.findTop1ByOrderByIdDesc(own);
         System.out.println(profile);
-        if(profile!=null){
+        if(profile.isPresent()){
             System.out.println("여기로오니????");
 
 
@@ -138,7 +138,7 @@ public class ProfileServiceImpl implements ProfileService {
                     .build();
 
             return profile;
-        }
+        }else {
             String personalUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
             System.out.println("여기 실행?!!!!");
 
@@ -146,7 +146,7 @@ public class ProfileServiceImpl implements ProfileService {
                     .postImageUrl(personalUrl)
                     .profileImageName("기본이미지")
                     .build());
-
+        }
 
 
 
