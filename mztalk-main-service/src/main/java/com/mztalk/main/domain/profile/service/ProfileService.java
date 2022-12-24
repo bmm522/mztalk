@@ -20,4 +20,7 @@ public interface ProfileService {
     Profile BoardCount(long own);
 
 
+    Profile followerCount(long own);
+
+    Profile followingCount(long own);
 }

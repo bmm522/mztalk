@@ -735,6 +735,104 @@ button {
 }
 
 
+/* 팔로잉 */
+.modal-following {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.modal-following .following {
+  width: 600px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.modal-following .following .following-header {
+  text-align: center;
+  line-height: 50px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+.modal-following .following .following-header button {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background-color: transparent;
+  border: 0;
+}
+.modal-following .following .following-header button i {
+  font-size: 20px;
+}
+.modal-following .following .following-list {
+  overflow: hidden;
+  overflow-y: auto;
+}
+.modal-following .following .following-list .following__item {
+  display: flex;
+  height: 70px;
+  padding: 10px;
+}
+.modal-following .following .following-list .following__item .following__img {
+  width: 80px;
+  text-align: center;
+}
+.modal-following .following .following-list .following__item .following__img {
+  width: 80px;
+  text-align: center;
+}
+.modal-following .following .following-list .following__item .following__img img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.modal-following .following .following-list .following__item .following__text {
+  padding-top: 5px;
+}
+.modal-following .following .following-list .following__item .following__text h2 {
+  font-size: 16px;
+  line-height: 50px;
+}
+.modal-following .following .following-list .following__item .following__btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+.modal-following .following .following-list .following__item .following__btn button {
+  border: 0;
+  background-color: rgba(128, 128, 128, 0.973);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

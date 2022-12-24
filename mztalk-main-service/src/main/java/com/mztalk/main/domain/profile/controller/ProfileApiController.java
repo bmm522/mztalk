@@ -40,13 +40,32 @@ public class ProfileApiController {
 
 
     //게시판 갯수 불러오기
-    @GetMapping("profile/board/{own}")
+    @GetMapping("profile/boardCount/{own}")
     public ResponseEntity<?> BoardCount(@PathVariable long own){
 
         Profile profile = profileService.BoardCount(own);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
     }
+
+    //팔로워 명수
+    @GetMapping("profile/followerCount/{own}")
+    public ResponseEntity<?> followerCount(@PathVariable long own){
+
+        Profile profile = profileService.followerCount(own);
+
+        return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
+    }
+
+    //팔로잉 명수
+    @GetMapping("profile/followingCount/{own}")
+    public ResponseEntity<?> followingCount(@PathVariable long own){
+
+        Profile profile = profileService.followingCount(own);
+
+        return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
+    }
+
 
 
 

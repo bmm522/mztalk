@@ -67,14 +67,14 @@
                          <div class="profile-right">
                              <div class="name-group">
                                  <h2 class="own_name"></h2>
-                                 <button class="profile_follow_btn" onclick="profilecFollow(this)">팔로우</button>
+                                 <!--<button class="profile_follow_btn" onclick="profilecFollow(this)">팔로우</button>-->
                                  <button class="modi" onclick="popup('.modal-info')"><i class="fas fa-cog"></i></button>
                              </div>
                              <div class="follow">
                                 <ul>
                                     <li><a>게시물<span class="board_count"></span></a> </li>
-                                     <li><a href="" id="subscribeBtn1">팔로워<span>106</span></a> </li> <!--나를 친구한-->
-                                     <li><a href="" id="subscribeBtn">팔로잉<span>106</span></a> </li> <!--내가 친구신청한--><!--팔로우: 친구신청걸기-->
+                                     <li><a href="" id="subscribeBtn1">팔로워<span class="follower_count"></span></a> </li> <!--나를 친구한-->
+                                     <li><a href="" id="subscribeBtn">팔로잉<span class="following_count"></span></a> </li> <!--내가 친구신청한--><!--팔로우: 친구신청걸기-->
                                  </ul>
                             </div>
                             
@@ -210,11 +210,40 @@
         </div>
     </div>
     
-    <!--팔로우 팔로워 리스트..?-->
+    <!--팔로잉 리스트..?-->
+    <div class="modal-following">
+        <div class="following">
+            <div class="following-header">
+                <span>팔로잉정보</span>
+                <button onclick="closeFollow()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="following-list">
+                <div class="following__item">
+                    <div class="following__img"><img src="duck.jpg" alt=""></div>
+                    <div class="following__text">
+                        <h2>아이디</h2>
+                    </div>
+                    <div class="following__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
+                </div>
+                
+                <div class="following__item">
+                    <div class="following__img"><img src="duck.jpg" alt=""></div>
+                    <div class="following__text">
+                        <h2>아이디</h2>
+                    </div>
+                    <div class="following__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--팔로워 리스트..?-->
     <div class="modal-follow">
         <div class="follower">
             <div class="follower-header">
-                <span>팔로잉정보</span>
+                <span>팔로워정보</span>
                 <button onclick="closeFollow()"><i class="fas fa-times"></i></button>
             </div>
             <div class="follower-list">
@@ -237,49 +266,6 @@
             </div>
         </div>
     </div>
-
-
-    <!--프로필사진 바꾸기 모달end-->
-    
-    <!-- <div class="modal-subscribe" id="modal-subscribe">
-        <div class="subscribe">
-            <div class="subscribe-header">
-                <span>구독정보</span>
-                <button onclick="modalClose()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-    
-            <div class="subscribe-list" id="subscribeModalList">
-    
-                <div class="subscribe__item" id="subscribeModalItem-1">
-                    <div class="subscribe__img">
-                        <img src='duck.jpg'/>
-                    </div>
-                    <div class="subscribe__text">
-                        <h2>love</h2>
-                    </div>
-                    <div class="subscribe__btn">
-                        <button class="cta blue" onclick="toggleSubscribeModal(this)">구독취소</button>
-                    </div>
-                </div>
-    
-    
-                <div class="subscribe__item" id="subscribeModalItem-2">
-                    <div class="subscribe__img">
-                        <img src="#" src='duck.jpg'/>
-                    </div>
-                    <div class="subscribe__text">
-                        <h2>ssar</h2>
-                    </div>
-                    <div class="subscribe__btn">
-                        <button class="cta blue" onclick="toggleSubscribeModal(this)">구독취소</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-    </div> -->
 
 
 </body>

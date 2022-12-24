@@ -30,10 +30,17 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Query(value = "select count(*) from follow where fromUserId = :userId", nativeQuery = true)
     int mFollowCount(int userId);
 
-    List<Follow> findByFromUserId(Long own);
 
     @Query(value = "SELECT * from Follow f  where f.fromUserId = :fromUserId", nativeQuery = true)
     List<Follow> getListByFromUserId(Long fromUserId);
+
+
+    @Query(value = "SELECT * from Follow f  where f.toUserId = :toUserId", nativeQuery = true)
+    List<Follow> getListByToUserId(Long toUserId);
+
+    Long countByToUserId(long own);    // 팔로워 수 (follower)
+    Long countByFromUserId(long own);  // 팔로우 수 (following)
+
 
 
 //    @Modifying

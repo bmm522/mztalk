@@ -1,6 +1,7 @@
 package com.mztalk.main.domain.profile.service.impl;
 
 
+import com.mztalk.main.domain.follow.repository.FollowRepository;
 import com.mztalk.main.domain.profile.dto.ProfileDto;
 import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
 import com.mztalk.main.domain.profile.entity.Profile;
@@ -27,6 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class ProfileServiceImpl implements ProfileService {
+    private final FollowRepository followRepository;
     private final ProfileRepository profileRepository;
 
     private final ProfileCustomRepository profileCustomRepository;
@@ -107,14 +109,10 @@ public class ProfileServiceImpl implements ProfileService {
         HttpHeaders headersImg = new HttpHeaders();
         headersImg.add("Content-type", "text/html");
         Optional<Profile> profile = profileCustomRepository.findByUserStatus(own);
-        //Profile profile = profileRepository.findTop1ByOrderByIdDesc(own);
+
         System.out.println(profile);
         if(profile.isPresent()){
             System.out.println("여기로오니????");
-
-
-            //Profile profile = profileRepository.findTop1ByOrderByIdDesc(own);
-
 
             ResponseEntity<String> responseImg = new RestTemplate().exchange(
                     "http://localhost:8000/resource/main-image?bNo=" + own + "&serviceName=story",    //첫번째: url
@@ -157,6 +155,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     //개인 프로필 이름
     @Override
+    @Transactional(readOnly = true)
     public Profile ProfileName(long own) {
 
         HttpHeaders headerName = new HttpHeaders();
@@ -183,6 +182,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     //게시물 갯수 보여주기
     @Override
+    @Transactional
     public Profile BoardCount(long own) {
 
         long count = boardRepository.countByOwn(own);
@@ -192,13 +192,25 @@ public class ProfileServiceImpl implements ProfileService {
                 .build();
     }
 
-//    @Override // 사진이 이미 존재하면 true반환.
-//    public boolean isExist(long own) {
-//        Profile profile = profileRepository.findProfile(own);
-//        System.out.println("혹시 여기?"+profile);
-//        return profile == null ? false : true;
-//    }
+    @Override
+    public Profile followerCount(long own) {
 
+        long count = followRepository.countByToUserId(own);
+
+        return Profile.builder()
+                    .followerCount(count)
+                    .build();
+    }
+
+    @Override
+    public Profile followingCount(long own) {
+
+        long count = followRepository.countByFromUserId(own);
+
+        return Profile.builder()
+                .followingCount(count)
+                .build();
+    }
 
     //이미지바꾸기
     @Override

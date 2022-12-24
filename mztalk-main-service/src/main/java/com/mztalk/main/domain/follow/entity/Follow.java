@@ -13,12 +13,12 @@ public class Follow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //번호 증가 전략을 DB를 따라간다.
-    private int id;
+    private long id;
 
-    private Long fromUserId;  //구독하는 사람 (
+    private Long fromUserId;  //팔로우하는 사람 (
     //원하는 이름으로 바꿀때
 
-    private Long toUserId;  //구독받는 사람 (페이지주인)
+    private Long toUserId;  //팔로우 받는 사람 (페이지주인)
 
     @CreationTimestamp // 자동으로 현재시간 담김
     private Timestamp createDate;
