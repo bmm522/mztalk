@@ -1,4 +1,6 @@
 package com.mztalk.main.domain.follow.entity;
+import com.mztalk.main.status.BoardStatus;
+import com.mztalk.main.status.FollowStatus;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
@@ -26,7 +28,8 @@ public class Follow {
 
     private String postImageUrl;
 
-
+    @Enumerated(EnumType.STRING)
+    private FollowStatus followStatus; // 글 status
 
 
 

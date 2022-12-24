@@ -61,7 +61,7 @@ function profileBox(){
       //console.log("통신 성공");
       
       let profileImage = res.data;
-      console.log(profileImage);
+      //console.log(profileImage);
       if(!res.data){
         document.querySelector('.profile-img-wrap').innerHTML +=
         `
@@ -136,7 +136,7 @@ function BoardCount(){
     //console.log("통신 성공");
     
     let board = res.data;
-    console.log(board);
+    //console.log(board);
     document.querySelector('.board_count').innerHTML +=
     `
     ${board.boardCount}
@@ -164,7 +164,7 @@ function FollowingCount(){
     //console.log("통신 성공");
     
     let following = res.data;
-    console.log("팔로잉 왜안됨?" +following.followingCount);
+    
 
     if(document.querySelector('.following_count') != null){
       document.querySelector('.following_count').innerHTML +=
@@ -256,7 +256,7 @@ function storyLoad() {
           let title = board.title;
           let content = board.content;
           let date = board.lastModifiedDate;
-          
+          console.log(board);
         document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
                     <table id="post-table">
@@ -447,7 +447,7 @@ write_board.addEventListener('click', function(){
 //글삭제
 function deleteBoard(boardId){
    
-    console.log("찍힘?123123123");
+ 
 
     console.log(boardId);
   
@@ -651,11 +651,53 @@ function deleteReply(Id){
 
 
 
-//팔로워
+//팔로워리스트
 document.querySelector("#subscribeBtn1").onclick = (e) => {
   e.preventDefault();
-  document.querySelector(".modal-follow").style.display = "flex";
+  
+  let toUserId = localStorage.getItem("own");
+ 
+  fetch("http://localhost:8000/story/followList/"+toUserId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+
+      let follower = res.data;
+      document.querySelector(".modal-follow").style.display = "flex";
+
+      document.querySelector(".follower-list").innerHTML  = '';
+
+      for(let i = 0; i < follower.length; i++){
+        // console.log("길이"+follower.length );
+        // console.log("follower" + follower);
+        
+      document.querySelector(".follower-list").innerHTML +=
+      `
+      <div class="follower__item">
+          <div class="follower__img"><img class="profile-image" src='${follower[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"></div>
+          <input type="hidden" class="imageName" value="${follower[i].imageName}"/>
+          <input type="hidden" name="bNo" id="bNo" value="${follower[i].userNo}"/>
+          <div class="follower__text">
+              <h2>${follower[i].userNickname}</h2>
+          </div>
+          <div class="follower__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
+      </div> 
+      `;
+    }
+      
+    })
+
 };
+
+
+
+
 
 function closeFollow() {
   document.querySelector(".modal-follow").style.display = "none";
@@ -668,11 +710,52 @@ document.querySelector(".modal-follow").addEventListener("click", (e) => {
 
 
 
-//팔로우
+//팔로우리스트
 document.querySelector("#subscribeBtn").onclick = (e) => {
     e.preventDefault();
-    document.querySelector(".modal-following").style.display = "flex";
+
+    let fromUserId = localStorage.getItem("own");
+
+    fetch("http://localhost:8000/story/followingList/"+fromUserId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+
+      //console.log("통신?");
+
+      let following = res.data;
+
+      document.querySelector(".modal-following").style.display = "flex";
+
+      document.querySelector(".following-list").innerHTML  = '';
+
+      for(let i = 0; i < following.length; i++){
+        // console.log("길이"+follower.length );
+        // console.log("follower" + follower);
+        
+      document.querySelector(".following-list").innerHTML +=
+      `
+      <div class="following__item">
+          <div class="following__img"><img class="profile-image" src='${following[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"></div>
+          <input type="hidden" class="imageName" value="${following[i].imageName}"/>
+          <input type="hidden" name="bNo" id="bNo" value="${following[i].userNo}"/>
+          <div class="following__text">
+              <h2>${following[i].userNickname}</h2>
+          </div>
+          <div class="following__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
+      </div> 
+      `;
+    }
+    })
+
   };
+
 
   function closeFollow() {
     document.querySelector(".modal-following").style.display = "none";
@@ -708,6 +791,9 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
   });
 
 
+
+
+  
   function clickFollow(e) {
     console.log(e);
     let _btn = e;
@@ -725,6 +811,28 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     }
   }
   
+//팔로우?
+  // function clickFollow(e) {
+  //   console.log(e);
+  //   let _btn = e;
+  //   console.log(_btn.textContent);
+  //   if (_btn.textContent === "팔로잉") {
+  //     _btn.textContent = "팔로우";
+  //     _btn.style.backgroundColor = "#0095f6";
+  //     _btn.style.color = "#fff";
+  //     _btn.style.border = "1px solid #ddd";
+  //   } else {
+  //     _btn.textContent = "팔로잉";
+  //     _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
+  //     _btn.style.color = "#fff";
+  //     _btn.style.border = "0";
+  //   }
+  // }
+
+
+
+
+
 
 //팔로우 기능구현
 function followingList(){

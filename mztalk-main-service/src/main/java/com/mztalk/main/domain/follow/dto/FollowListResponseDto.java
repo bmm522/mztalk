@@ -24,4 +24,6 @@ public class FollowListResponseDto {
         this.imageUrl = imageUrl;
         this.imageName = imageName;
     }
+
+
 }

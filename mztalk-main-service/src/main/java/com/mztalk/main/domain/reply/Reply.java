@@ -39,14 +39,7 @@ public class Reply extends BaseTimeEntity {
 
     private Long replyUserNo;
 
-//    @Builder
-//    public Reply(Long id, String replyContent, Board board, String replyNickname, ReplyStatus status ){
-//        this.id = id;
-//        this.replyContent = replyContent;
-//        this.board = board;
-//        this.replyNickname = replyNickname;
-//        this.status = status;
-//    }
+
 
     //댓글삭제(status = N)
     public void changeReplyStatus(){
