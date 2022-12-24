@@ -1,13 +1,24 @@
 package com.mztalk.main.domain.follow.dto;
 
 import com.mztalk.main.domain.follow.entity.Follow;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class FollowingListResponseDto {
 
     private String userNo;
     private String userNickname;
     private String imageUrl;
     private String imageName;
+
+
 
 
     public FollowingListResponseDto(Follow follow, String nickname, String imageUrl, String imageName) {

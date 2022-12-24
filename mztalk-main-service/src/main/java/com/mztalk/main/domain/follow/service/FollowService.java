@@ -12,9 +12,9 @@ public interface FollowService {
 
     void unFollow(Long toUserId, Long fromUserId);
 
-    List<FollowListResponseDto> followList(Long userNo, Long own);
+    List<FollowListResponseDto> followList(Long toUserId);
 
-    List<FollowingListResponseDto> followingList(Long own);
+    List<FollowingListResponseDto> followingList(Long fromUserId);
 
     // Boolean addFollow(Long toUserId, Long fromUserId);
 }

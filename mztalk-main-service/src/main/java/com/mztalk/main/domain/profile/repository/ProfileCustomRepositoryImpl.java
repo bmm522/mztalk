@@ -30,5 +30,27 @@ public class ProfileCustomRepositoryImpl implements ProfileCustomRepository {
 
         return profile.stream().findAny();
     }
+    //팔로워
+    @Override
+    public Optional<Profile> findByUserImage(Long fromUserId) {
+        List<Profile> profile = entityManager.createQuery("select p from Profile p where p.own =: own order by p.lastModifiedDate desc", Profile.class)
+                .setParameter("own", fromUserId)
+                .setFirstResult(1)
+                .setMaxResults(1)
+                .getResultList();
+
+        return profile.stream().findAny();
+    }
+    //팔로잉
+    @Override
+    public Optional<Profile> findByToUserImage(Long toUserId) {
+        List<Profile> profile = entityManager.createQuery("select p from Profile p where p.own =: own order by p.lastModifiedDate desc", Profile.class)
+                .setParameter("own", toUserId)
+                .setFirstResult(1)
+                .setMaxResults(1)
+                .getResultList();
+
+        return profile.stream().findAny();
+    }
 
 }

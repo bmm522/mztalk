@@ -30,13 +30,6 @@ public class Board extends BaseTimeEntity {
     @Column(name="boardId")
     private Long id;  // 글 번호
 
-//    @ManyToOne(fetch=FetchType.EAGER) // 1명이 여러개의 글을 올릴 수 있기 때문에
-//    private Member member //누가 업로드 하는지
-
-//    @JsonIgnoreProperties({"board"})
-//    @JoinColumn(name="nickname")
-//    private Board nickname; //작성자
-//                                //쭉 짜다보니 필요없는 느낌
     private String nickname;
 
     @Column(nullable=false, length= 100)

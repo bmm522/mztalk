@@ -24,11 +24,11 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     void mUnFollow(@Param("fromUserId") Long fromUserId, @Param("toUserId") Long toUserId);
     //1(변경된 행의 개수가 리턴됨) , -1(오류),  0(insert가 안됨)
 
-    @Query(value = "select count(*) from follow where fromUserId = :principalId AND toUserId = :userId", nativeQuery = true)
-    int mFollowState(int principalId, int userId);
+    //@Query(value = "select count(*) from follow where fromUserId = :principalId AND toUserId = :userId", nativeQuery = true)
+    //int mFollowState(int principalId, int userId);
 
-    @Query(value = "select count(*) from follow where fromUserId = :userId", nativeQuery = true)
-    int mFollowCount(int userId);
+    //@Query(value = "select count(*) from follow where fromUserId = :userId", nativeQuery = true)
+    //int mFollowCount(int userId);
 
 
     @Query(value = "SELECT * from Follow f  where f.fromUserId = :fromUserId", nativeQuery = true)
@@ -42,11 +42,8 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     Long countByFromUserId(long own);  // 팔로우 수 (following)
 
 
-
-//    @Modifying
-//    @Query(value="INSERT INTO follow(fromUserId,toUserId) VALUES(:fromUserId, :toUserId)", nativeQuery=true)
-//    void mFollow(@Param("fromUserId")Long fromUserNo, @Param("toUserId") Long toUserNo);
-
+//    List<Follow> findAllByFromUser(long own); // 사용자가 팔로우한 관계를 가져옴
+//    List<Follow> findAllByToUser(long own);	 // 사용자를 팔로우하는 관계를 가져옴
 
 
 
