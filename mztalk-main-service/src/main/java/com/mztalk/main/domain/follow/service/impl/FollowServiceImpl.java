@@ -2,19 +2,17 @@ package com.mztalk.main.domain.follow.service.impl;
 
 
 
-import com.mztalk.main.domain.follow.dto.FollowDto;
 import com.mztalk.main.domain.follow.dto.FollowListResponseDto;
+import com.mztalk.main.domain.follow.dto.FollowingListResponseDto;
 import com.mztalk.main.domain.follow.entity.Follow;
 import com.mztalk.main.domain.follow.repository.FollowRepository;
 import com.mztalk.main.domain.follow.service.FollowService;
 import com.mztalk.main.handler.exception.ExceptionCode;
 import com.mztalk.main.handler.exception.FollowException;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+
 
 import java.util.*;
 
@@ -68,22 +66,7 @@ public class FollowServiceImpl implements FollowService {
 
         for(Follow follow : followList){
 
-//            HttpHeaders headersImg = new HttpHeaders();
-//            headersImg.add("Content-type", "text/html");
-//
-//            ResponseEntity<String> responseImg = new RestTemplate().exchange(
-//                "http://localhost:8000/resource/main-image?bNo="+follow.getFromUserId()+"&serviceName=story",    //첫번째: url
-//               HttpMethod.GET,
-//                new HttpEntity<String>(headersImg),     //바디, 헤더 다 담기 가능/엔티티
-//                String.class
-//            );
-//
-//            JSONObject jsonObject = new JSONObject(responseImg.getBody());
-//            JSONObject jsonData = jsonObject.getJSONObject("data");
-//            String imageUrl = jsonData.getString("imageUrl");
-//            String imageName = jsonData.getString("objectKey");
-
-            //페이지주인이름
+            //유저 정보
             HttpHeaders headersName = new HttpHeaders();
             headersName.add("Content-type", "text/html");
 
@@ -98,46 +81,46 @@ public class FollowServiceImpl implements FollowService {
             JSONObject ownName = new JSONObject(responseName.getBody());
             String nickname = ownName.getString("nickname");
 
-
-
-
-
-
-
-
             followDtoList.add(new FollowListResponseDto(follow, nickname, "imageUrl", "nam"));
 
         }
 
-
         return followDtoList;
 
+    }
+
+    @Override
+    @Transactional
+    public List<FollowingListResponseDto> followingList(Long own) {
+
+        System.out.println("own : " + own);
+        List<Follow> followingList = followRepository.getListByToUserId(own);
+        System.out.println("길이 : " + followingList.size());
+        List<FollowingListResponseDto> followDtoList = new ArrayList<>();
+
+        for(Follow follow : followingList) {
+            //유저 정보
+            HttpHeaders headersName = new HttpHeaders();
+            headersName.add("Content-type", "text/html");
+
+            ResponseEntity<String> responseName = new RestTemplate().exchange(
+                    "http://localhost:8000/login/user-info/"+follow.getToUserId(),
+                    HttpMethod.GET,
+                    new HttpEntity<String>(headersName),
+                    String.class
+            );
+
+            JSONObject ownName = new JSONObject(responseName.getBody());
+            String nickname = ownName.getString("nickname");
 
 
+        }
+
+        return null;
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //개인별로 사진..?
+    //개인별로 사진..?
 //        HttpHeaders headersImg = new HttpHeaders();
 //        headersImg.add("Content-type", "text/html");
 //
@@ -192,7 +175,6 @@ public class FollowServiceImpl implements FollowService {
 //        List<FollowDto> followDtos =  result.list(query, FollowDto.class);
 //
 //        return followDtos;
-    }
 
 
 
