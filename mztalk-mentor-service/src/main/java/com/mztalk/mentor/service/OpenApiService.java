@@ -1,13 +1,12 @@
 package com.mztalk.mentor.service;
 
-import org.springframework.util.MultiValueMap;
+import com.mztalk.mentor.domain.entity.OpenApiAccessToken;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface OpenApiService {
-    void requestOpenApiAccessToken();
 
+    OpenApiAccessToken requestOpenApiAccessToken();
     boolean requestMatchAccountRealName(ConcurrentHashMap<String,String> accountMap);
 
-    boolean getCrdiAccountInfo(Long crdiSeq);
 }

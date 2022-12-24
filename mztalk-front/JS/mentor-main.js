@@ -290,6 +290,26 @@ document.getElementById('myPage').addEventListener('click', function(){
     })
 });
 
+//아임포트 결제
+document.getElementById('importPay').addEventListener('click', function(){
+    fetch("http://localhost:8000/mentors/member?userId="+userId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json;",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        console.log("res : " + res);
+        if(res){
+            location.href="mentor-mypage.html";
+        } else {
+            location.href="mentee-mypage.html";
+        }
+    })
+});
 
 
 

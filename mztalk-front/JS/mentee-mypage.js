@@ -49,8 +49,8 @@ document.getElementById('sendResume').addEventListener('click', function(){
                 phone : document.getElementById("mentor-phone").value,
                 email : document.getElementById("mentor-email").value,
                 job : document.getElementById("job").value,
-                bank : document.getElementById("bank").value,
-                account : document.getElementById("account").value,
+                bank : document.getElementById("realBankCode").value,
+                account : document.getElementById("realBankAccount").value,
                 userId : localStorage.getItem('userNo')
             })
         })    
@@ -357,20 +357,20 @@ document.getElementById('move-mentor-service').addEventListener('click',function
 });
 
 
-// 계좌번호 인증 API받기
-document.getElementById('tokenButton').addEventListener('click',function(){
-    console.log('토큰 버튼 동작');
-    fetch("http://localhost:8000/mentors/openapi/token",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-        },
-    })
-});
+// 계좌번호 인증 API받기 == 토큰 받기
+// document.getElementById('tokenButton').addEventListener('click',function(){
+//     console.log('토큰 버튼 동작');
+//     fetch("http://localhost:8000/mentors/openapi/token",{
+//         method:"POST",
+//         headers:{
+//             "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//     })
+// });
 
-//참가 신청
+//토큰 발급 후 계좌번호, 생년월일, 은행명 담아서 토큰+정보로 보내기
 document.getElementById('accountButton').addEventListener('click', function(){
     console.log('계좌 실명인증 버튼 동작')
     fetch("http://localhost:8000/mentors/openapi/realname",{
@@ -378,12 +378,9 @@ document.getElementById('accountButton').addEventListener('click', function(){
         headers:{
             "Content-Type":"application/json; charset=UTF-8",
             Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-            
+            RefreshToken:localStorage.getItem('refreshToken'),     
         },
         body:JSON.stringify({
-            userId : localStorage.getItem('userNo'),
-            realName :document.getElementById("realName").value,
             bankCode : document.getElementById("realBankCode").value,
             bankAccount : document.getElementById("realBankAccount").value,
             birthday : document.getElementById("realBirthday").value

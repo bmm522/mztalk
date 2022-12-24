@@ -2,6 +2,7 @@ package com.mztalk.mentor.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mztalk.mentor.domain.dto.AccountInfoDto;
 import com.mztalk.mentor.domain.dto.OpenApiAccessTokenDto;
 import com.mztalk.mentor.domain.entity.AccountInfo;
 import com.mztalk.mentor.domain.entity.OpenApiAccessToken;
@@ -9,6 +10,7 @@ import com.mztalk.mentor.repository.AccessTokenRepository;
 import com.mztalk.mentor.repository.AccountInfoRepository;
 import com.mztalk.mentor.service.OpenApiService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,12 +32,13 @@ public class OpenApiServiceImpl implements OpenApiService {
 
     private final AccessTokenRepository accessTokenRepository;
     private final AccountInfoRepository accountInfoRepository;
+
     private final String CLIENT_ID = "6de69c1e-ef0f-4246-9b44-a50023552eb0";
     private final String CLIENT_SECRET = "9d2be733-f761-4fb0-89d4-4d3c71249463";
-    private Long number = 000000001L;
+    private String uniqueNum = String.valueOf(System.currentTimeMillis()%1000000000);
 
     @Override
-    public void requestOpenApiAccessToken() {
+    public OpenApiAccessToken requestOpenApiAccessToken() {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -63,12 +66,19 @@ public class OpenApiServiceImpl implements OpenApiService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        accessTokenRepository.save(openApiAccessTokenDto.toEntity());
+        OpenApiAccessToken savedToken = accessTokenRepository.save(openApiAccessTokenDto.toEntity());
+
+        return savedToken;
     }
 
     @Override
     @Transactional
     public boolean requestMatchAccountRealName(ConcurrentHashMap<String,String> accountMap) {
+        OpenApiAccessToken token = requestOpenApiAccessToken();
+
+        String tokenType = token.getTokenType();
+        String accessToken = token.getAccessToken();
+
         String bankCode = accountMap.get("bankCode");
         String bankAccount = accountMap.get("bankAccount");
         String birthday = accountMap.get("birthday");
@@ -79,49 +89,32 @@ public class OpenApiServiceImpl implements OpenApiService {
 
         HttpHeaders accountHeaders = new HttpHeaders();
         accountHeaders.add("Content-type","application/json; charset=UTF-8");
-//        accountHeaders.add("Authorization", tokenType + " " + accessToken);
+        accountHeaders.add("Authorization", tokenType + " " + accessToken);
 
-        MultiValueMap<String, String> accountBody = new LinkedMultiValueMap<>();
-        accountBody.add("bank_tran_id","M202202375U" + (++number));
-        accountBody.add("bank_code_std",bankCode);
-        accountBody.add("account_num",bankAccount);
-        accountBody.add("account_holder_info_type","");
-        accountBody.add("account_holder_info",birthday);
-        accountBody.add("tran_dtime", LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
+        JSONObject accountBody = new JSONObject();
+        accountBody.put("bank_tran_id",token.getClientUseCode() + "U" + uniqueNum);
+        accountBody.put("bank_code_std",bankCode);
+        accountBody.put("account_num",bankAccount);
+        accountBody.put("account_holder_info_type","");
+        accountBody.put("account_holder_info",birthday);
+        accountBody.put("tran_dtime", LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
 
-        HttpEntity<MultiValueMap<String, String>> accountRequest= new HttpEntity<>(accountBody, accountHeaders);
+        AccountInfoDto accountInfoDto;
+        accountInfoDto = accountRestTemplate.postForObject("https://testapi.openbanking.or.kr/v2.0/inquiry/real_name",
+                new HttpEntity<>(accountBody.toString(), accountHeaders),
+                AccountInfoDto.class);
 
-        ResponseEntity<String> accountResponse = accountRestTemplate.exchange(
-                "https://testapi.openbanking.or.kr/v2.0/inquiry/real_name",
-                HttpMethod.POST,
-                accountRequest,
-                String.class
-        );
-        ObjectMapper objectMapper = new ObjectMapper();
-        AccountInfo accountInfo = null;
-        try {
-            accountInfo = objectMapper.readValue(accountResponse.getBody(), AccountInfo.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        AccountInfo accountInfo = accountInfoRepository.save(accountInfoDto.toEntity());
 
-        System.out.println("rsp_message : " + accountInfo.getRsp_message());
-        System.out.println("bank_code_std : " + accountInfo.getBank_code_std());
-        System.out.println("bank_name : " + accountInfo.getBank_name());
-        System.out.println("account_num : " + accountInfo.getAccount_num());
-        System.out.println("account_holder_info : " + accountInfo.getAccount_holder_info());
-        System.out.println("account_holder_name : " + accountInfo.getAccount_holder_name());
+        System.out.println("rsp_message : " + accountInfoDto.getRsp_message());
+        System.out.println("bank_code_std : " + accountInfoDto.getBank_code_std());
+        System.out.println("bank_name : " + accountInfoDto.getBank_name());
+        System.out.println("account_num : " + accountInfoDto.getAccount_num());
+        System.out.println("account_holder_info : " + accountInfoDto.getAccount_holder_info());
+        System.out.println("account_holder_name : " + accountInfoDto.getAccount_holder_name());
+        System.out.println("여기까지 되면 다된거임.");
 
-        if(accountInfo.getRsp_message().equals("")){
-            return true;
-        }
         return false;
     }
-
-    @Override
-    public boolean getCrdiAccountInfo(Long crdiSeq) {
-        return false;
-    }
-
 
 }
