@@ -106,14 +106,6 @@ public class OpenApiServiceImpl implements OpenApiService {
 
         AccountInfo accountInfo = accountInfoRepository.save(accountInfoDto.toEntity());
 
-        System.out.println("rsp_message : " + accountInfoDto.getRsp_message());
-        System.out.println("bank_code_std : " + accountInfoDto.getBank_code_std());
-        System.out.println("bank_name : " + accountInfoDto.getBank_name());
-        System.out.println("account_num : " + accountInfoDto.getAccount_num());
-        System.out.println("account_holder_info : " + accountInfoDto.getAccount_holder_info());
-        System.out.println("account_holder_name : " + accountInfoDto.getAccount_holder_name());
-        System.out.println("여기까지 되면 다된거임.");
-
         return false;
     }
 

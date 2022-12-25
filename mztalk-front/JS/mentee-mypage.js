@@ -19,7 +19,6 @@ const getAccessToken = () =>{
 // 멘토 등록 신청서 작성 이미존재할 경우 return false 강제로 작성하면 서버측에서 Exception발생
 document.getElementById('sendResume').addEventListener('click', function(){
     const userId = localStorage.getItem('userNo');
-    console.log('userId : ' + document.getElementById('id-hidden').value);
     fetch("http://localhost:8000/mentors/application?userId="+userId,{
         method:"GET",
         headers:{
@@ -148,7 +147,7 @@ const getBoardList = () =>{
                 </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
                 type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
                 cnt += 1;
-                participate(boardId);  
+                document.getElementById('boardId-modal').value = boardId; 
             } else {
                 document.getElementById('row-div').innerHTML += 
                 `<div class="col-3">
@@ -162,7 +161,7 @@ const getBoardList = () =>{
                  type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
                  </div><div class="row" style="padding:20px;" id="row-div">`;
                 cnt += 1;
-                participate(boardId);  
+                document.getElementById('boardId-modal').value = boardId;
             }
       }
         }        
@@ -182,8 +181,10 @@ const getBoardDetail = (bId) =>{
     .then(res =>{
         console.log("res : " + res);
         if(res != null){
-            document.getElementById('modal-body').innerHTML = res.content;
+            document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
+            document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
             document.getElementById('modal-salary').innerHTML = res.salary;
+            document.getElementById('board-price').value = res.salary;
         } else {
             console.log('실패');
         }
@@ -207,7 +208,7 @@ const watchReview = (nickname) =>{
             let star ='';
             for(const score of res.data){
                 switch(score.count){
-                    case 5 : star ='★★★★★'; break;
+                    case 5 : star ='★★★★★'; break;1
                     case 4 : star ='★★★★'; break; 
                     case 3 : star ='★★★'; break; 
                     case 2 : star ='★★'; break; 
@@ -222,37 +223,37 @@ const watchReview = (nickname) =>{
     document.getElementById('reviewBody').innerHTML ='';
 }
 
-//참가 신청
-const participate = (bId) =>{
-    document.getElementById('participant-btn').addEventListener('click', function(){
-        fetch("http://localhost:8000/mentors/participant",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json;",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
-            },
-            body:JSON.stringify({
-                userId : localStorage.getItem('userNo'),
-                boardId : bId,
-                name :document.getElementById("name").value,
-                phone : document.getElementById("phone").value,
-                email : document.getElementById("email").value,
-                message : document.getElementById("message").value
-            })
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-            console.log("res : " + res);
-            if(res > 0){
-                console.log('통신성공');
-                location.href="mentor-main.html";
-            } else {
-                console.log('실패');
-            }
-        })
-    });
-}
+// 참가 신청
+// const participate = (bId) =>{
+//     document.getElementById('participant-btn').addEventListener('click', function(){
+//         fetch("http://localhost:8000/mentors/participant",{
+//             method:"POST",
+//             headers:{
+//                 "Content-Type":"application/json;",
+//                 Authorization:localStorage.getItem('authorization'),
+//                 RefreshToken:localStorage.getItem('refreshToken')
+//             },
+//             body:JSON.stringify({
+//                 userId : localStorage.getItem('userNo'),
+//                 boardId : bId,
+//                 name :document.getElementById("name").value,
+//                 phone : document.getElementById("phone").value,
+//                 email : document.getElementById("email").value,
+//                 message : document.getElementById("message").value
+//             })
+//         })
+//         .then((res)=>res.json())
+//         .then(res =>{
+//             console.log("res : " + res);
+//             if(res > 0){
+//                 console.log('통신성공');
+//                 location.href="mentor-main.html";
+//             } else {
+//                 console.log('실패');
+//             }
+//         })
+//     });
+// }
 
 // 완료된 멘토링 목록
 const endMentoring = ()=>{
