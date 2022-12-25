@@ -9,6 +9,7 @@
         <title>Dashboard - SB Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/admin.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     
     </head>
@@ -73,34 +74,38 @@
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>닉네임</th>
-                                            <th>현재 소속</th>
                                             <th>이름</th>
-                                            <th>이메일</th>
+                                            <th>현재 소속</th>
+                                            <th>핸드폰 번호</th>
+                                            <th>이메일 </th>
                                             <th>신청 작성일</th>
                                             <th>멘토 인증 여부</th>
+                                            <th>신청 받기</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>Current Job</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Date of application creation date</th>
+                                            <th>Mentor authentication status</th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                        <tr>
+                                    <tbody id="table-body">
+                                    
+                              <!--        <tr>
                                             <td>Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td>61</td>
                                             <td>2011/04/25</td>
-                                            <td>$320,800</td>
+                                            <td></td>
+                                            <td><button style="cursor:pointer;"  type="button" id="reg-btn">신청받기</button></td>
                                         </tr>
-                                        <tr>
+                                           <tr>
                                             <td>Garrett Winters</td>
                                             <td>Accountant</td>
                                             <td>Tokyo</td>
@@ -547,8 +552,20 @@
                                             <td>27</td>
                                             <td>2011/01/25</td>
                                             <td>$112,000</td>
-                                        </tr>
+                                        </tr> -->
+                                
                                     </tbody>
+
+
+
+
+
+
+
+
+
+
+
                                 </table>
                             </div>                   
                         </div>        
@@ -1064,5 +1081,6 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script src="js/admin.js"></script>
     </body>
 </html>

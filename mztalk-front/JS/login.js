@@ -543,6 +543,8 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         alert('로그인을 실패하였습니다.');
         document.getElementById('userId').value = "";
         document.getElementById('password-in').value ="";
+      } else if(result == 'Admin Login'){
+        window.open('admin/index.html', '_self');
       } else {
 
         localStorage.setItem("authorization", response.headers.get('Authorization'));

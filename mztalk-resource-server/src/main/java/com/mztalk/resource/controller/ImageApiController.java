@@ -69,6 +69,9 @@ public class ImageApiController {
         return insertImageService.insertMainImage(multipartFile, imagesRequestDto);
     }
 
+
+    @ApiOperation(value="수정페이지에서의 업로드", notes = "수정페이지에서 업로드 할 때 요청을 보내면 됩니다.", consumes = "text/html", response = ResponseData.class)
+    @ApiImplicitParam(name="image", value="이미지", dataType="MultipartFile", paramType = "param")
     @PostMapping(value="/update-image", consumes = "multipart/form-data", produces = "application/json")
     public ResponseEntity<?> updateImage(@RequestParam("image")List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto){
         return insertImageService.updateImage(multipartFileList, imagesRequestDto);
