@@ -544,6 +544,10 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         document.getElementById('userId').value = "";
         document.getElementById('password-in').value ="";
       } else if(result == 'Admin Login'){
+        localStorage.setItem("authorization", response.headers.get('Authorization'));
+        localStorage.setItem("refreshToken", response.headers.get('RefreshToken'));
+        localStorage.setItem("userNo", response.headers.get("UserNo"));
+        localStorage.setItem("userNickname", decodeURIComponent(response.headers.get('UserNickname')));
         window.open('admin/index.html', '_self');
       } else {
 
