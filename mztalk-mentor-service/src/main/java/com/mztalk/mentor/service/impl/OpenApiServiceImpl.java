@@ -11,6 +11,7 @@ import com.mztalk.mentor.repository.AccountInfoRepository;
 import com.mztalk.mentor.service.OpenApiService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,8 +34,12 @@ public class OpenApiServiceImpl implements OpenApiService {
     private final AccessTokenRepository accessTokenRepository;
     private final AccountInfoRepository accountInfoRepository;
 
-    private final String CLIENT_ID = "6de69c1e-ef0f-4246-9b44-a50023552eb0";
-    private final String CLIENT_SECRET = "9d2be733-f761-4fb0-89d4-4d3c71249463";
+    @Value("${account.clientId}")
+    private String CLIENT_ID;
+
+    @Value("${account.clientSecret}")
+    private String CLIENT_SECRET;
+
     private String uniqueNum = String.valueOf(System.currentTimeMillis()%1000000000);
 
     @Override
