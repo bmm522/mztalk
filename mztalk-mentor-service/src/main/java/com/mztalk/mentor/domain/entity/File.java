@@ -17,17 +17,17 @@ public class File extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id")
     private Application application;
-    private String uploadFileName;
-    private String storeFileName;
-    private String url;
+    private String fileName; // 사용자가 올린 파일 네임
+    private String objectKey; // 서버에 저장되어있는 파일 네임
+    private String fileUrl; // 서버에 저장되어있는 url
 
     @Builder
-    public File(Long id, Application application, String uploadFileName, String storeFileName, String url) {
+    public File(Long id, Application application, String fileName, String objectKey, String fileUrl) {
         this.id = id;
         this.application = application;
-        this.uploadFileName = uploadFileName;
-        this.storeFileName = storeFileName;
-        this.url = url;
+        this.fileName = fileName;
+        this.objectKey = objectKey;
+        this.fileUrl = fileUrl;
     }
 
     //== 연관관계 편의 메소드==//

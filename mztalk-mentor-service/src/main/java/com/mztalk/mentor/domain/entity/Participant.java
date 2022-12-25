@@ -31,7 +31,7 @@ public class Participant extends BaseTimeEntity{
     private Mentee mentee;
 
     @NotNull
-    private String name; //멘티 신청시 이름
+    private String name; //멘티 신청시 본명
 
     @NotNull
     private String phone; //멘티 신청시 핸드폰 번호
