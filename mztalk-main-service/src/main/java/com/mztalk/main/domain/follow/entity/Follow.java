@@ -25,7 +25,6 @@ public class Follow {
     @CreationTimestamp // 자동으로 현재시간 담김
     private Timestamp createDate;
 
-
     private String postImageUrl;
 
     @Enumerated(EnumType.STRING)

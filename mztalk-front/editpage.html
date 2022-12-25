@@ -78,8 +78,8 @@
                                     <div class="item__title">닉네임</div>
                                     <div class="item__input">
                                         <input type="text" name="name" placeholder="닉네임" id="nickname" class="own_name" />
-                                        <div id="checkId" class="vaild-div"></div>
-                                        <input type="hidden" id="checkIdResult" value="fail"/>
+                                        <div id="checkNickname" class="vaild-div"></div>
+                                        <input type="hidden" id="checkNicknameResult" value="fail"/>
                                     </div>
                                 </div>
                                 
@@ -97,12 +97,16 @@
                                     <div class="item__title">이메일</div>
                                     <div class="item__input">
                                         <input type="text" name="email" placeholder="이메일"
-                                            value=""/>
+                                           id="email-box"/>
+                                           <div id="checkEmail"  class="vaild-div"></div>
+                                           <input type="hidden" id="checkEmailResult" value="fail"/>
                                         <br>    
                                         <button class="btn btn-primary" type="button" id="email_check">인증번호 전송</button>    
                                         <br>    
                                         <input type="text" name="email" placeholder="인증번호"
-                                        style="width:280px" value=""/> 
+                                        style="width:280px" id="auth-box"/> 
+                                        <div id="checkAuth"  class="vaild-div"></div>
+                                        <input type="hidden" id="checkAuthResult" value="fail"/>
                                           
                                     </div>
                                 </div>

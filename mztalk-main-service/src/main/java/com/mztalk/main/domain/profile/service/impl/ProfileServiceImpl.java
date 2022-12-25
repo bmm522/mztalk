@@ -3,6 +3,7 @@ package com.mztalk.main.domain.profile.service.impl;
 
 import com.mztalk.main.domain.follow.repository.FollowRepository;
 import com.mztalk.main.domain.profile.dto.ProfileDto;
+import com.mztalk.main.domain.profile.dto.ProfileImageResponseDto;
 import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
 import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.profile.repository.ProfileCustomRepository;
@@ -39,14 +40,14 @@ public class ProfileServiceImpl implements ProfileService {
     //개인 프로필 사진
     @Override
     @Transactional(readOnly = true)
-    public Optional<Profile> ProfileImg(long own) {
+    public Optional<ProfileImageResponseDto> profileImg(long own) {
 
         HttpHeaders headersImg = new HttpHeaders();
         headersImg.add("Content-type", "text/html");
         Optional<Profile> profile = profileCustomRepository.findByUserStatus(own);
 
-        System.out.println("개인페이지 사진" +profile);
-        if(profile.isPresent()){
+        System.out.println("개인페이지 사진" + profile);
+        if (profile.isPresent()) {
 
 
             ResponseEntity<String> responseImg = new RestTemplate().exchange(
@@ -61,37 +62,34 @@ public class ProfileServiceImpl implements ProfileService {
             String imageUrl = profileData.getString("imageUrl");
             String imageName = profileData.getString("objectKey");
 
-            ProfileDto.builder()
-                    .profileUrl(imageUrl)
-                    .profileImageName(imageName)
-                    .build();
+           return Optional.ofNullable(ProfileImageResponseDto.builder()
+                   .postImageUrl(imageUrl)
+                   .profileImageName(imageName)
+                   .build());
 
-             Profile.builder()
-                    .postImageUrl(profile.get().getPostImageUrl())
-                    .build();
+//            Profile.builder()
+//                    .postImageUrl(profile.get().getPostImageUrl())
+//                    .build();
 
-            return profile;
-        }else {
+//            return profile;
+        } else {
             String personalUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
             System.out.println("여기 실행?!!!!");
 
-            return Optional.ofNullable(Profile.builder()
+            return Optional.ofNullable(ProfileImageResponseDto.builder()
                     .postImageUrl(personalUrl)
                     .profileImageName("기본이미지")
                     .build());
         }
 
 
-
-
     }
-
 
 
     //개인 프로필 이름
     @Override
     @Transactional(readOnly = true)
-    public Profile ProfileName(long own) {
+    public Profile profileName(long own) {
 
         HttpHeaders headerName = new HttpHeaders();
         headerName.add("Content-type", "text/html");
@@ -118,7 +116,7 @@ public class ProfileServiceImpl implements ProfileService {
     //게시물 갯수 보여주기
     @Override
     @Transactional
-    public Profile BoardCount(long own) {
+    public Profile boardCount(long own) {
 
         long count = boardRepository.countByOwn(own);
 
@@ -133,8 +131,8 @@ public class ProfileServiceImpl implements ProfileService {
         long count = followRepository.countByToUserId(own);
 
         return Profile.builder()
-                    .followerCount(count)
-                    .build();
+                .followerCount(count)
+                .build();
     }
 
     @Override
@@ -156,16 +154,16 @@ public class ProfileServiceImpl implements ProfileService {
         headerImage.add("Content-type", "text/html");
 
         ResponseEntity<String> responseproImg = new RestTemplate().exchange(
-                "http://localhost:8000/resource/main-image?bNo="+own+"&serviceName=story",    //첫번째: url
+                "http://localhost:8000/resource/main-image?bNo=" + own + "&serviceName=story",    //첫번째: url
                 HttpMethod.GET,
                 new HttpEntity<String>(headerImage),     //바디, 헤더 다 담기 가능/엔티티
                 String.class
         );
 
         JSONObject profileImg = new JSONObject(responseproImg.getBody());
-            //String objectKey = profileImg.getString("objectKey");
-         System.out.println("프로필이미지 관련 : "+ profileImg);
-         // System.out.println(objectKey);
+        //String objectKey = profileImg.getString("objectKey");
+        System.out.println("프로필이미지 관련 : " + profileImg);
+        // System.out.println(objectKey);
         //profileImg.put("imageUrl", profileImg.getString("imageUrl"));
 
         JSONObject profileData = profileImg.getJSONObject("data");
@@ -175,8 +173,6 @@ public class ProfileServiceImpl implements ProfileService {
 
         //System.out.println(imageUrl);
         //System.out.println(imageName);
-
-
 
 
         //유저의이름
@@ -199,93 +195,4 @@ public class ProfileServiceImpl implements ProfileService {
 
     }
 
-
-
-
-    //String profileUrl = profileRepository.save(imageUrl);
-
-//        return ProfileDto.builder()
-//                .profileUrl(imageUrl)
-//                .profileImageName(imageName)
-//                .nickname(nickname)
-//                .build();
-
-
-
-
-//    //프로필 이미지 변경
-//    @Override
-//    public ProfileVo getProfileImage(long own) {
-//        HttpHeaders headersProfileImg = new HttpHeaders();
-//        headersProfileImg.add("Content-type", "text/html");
-//
-//
-//        ResponseEntity<String> responseProfileImg = new RestTemplate().exchange(
-//                "http://localhost:8000/resource/main-image",
-//                HttpMethod.GET,
-//                new HttpEntity<String>(headersProfileImg),
-//                String.class
-//        );
-//
-//        JSONObject jsonObject = new JSONObject(responseProfileImg.getBody());
-//        JSONArray jsonArray = jsonObject.getJSONArray("data");
-//        JSONObject obj = jsonArray.getJSONObject(0);
-//        String imageUrl = obj.getString("imageUrl");
-//
-//
-//        System.out.println(imageUrl);
-//
-//
-//
-//
-//
-//        return ProfileVo.builder()
-//                .profileUrl(imageUrl)
-//                .nickname(nickname)
-//                .build();
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    private String asString(String data,String dataname) {
-//        try{
-//            JsonParser parser = new JsonParser();
-//            JsonElement element = parser.parse(data);
-//            return element.getAsJsonObject().get(dataname).getAsString();
-//        } catch(Exception e) {
-//            log.error("not JsonObject");
-//        }
-//        return "not JsonObject";
-//    }
-    }
-
-
-// for(int i = 0 ; i < jsonArray.length(); i++){
-//        JSONObject obj = jsonArray.getJSONObject(0);
-//        String imageName = obj.getString("imageName");
-//        String imageUrl = obj.getString("imageUrl");
-//
-//        System.out.println("imageName : " + imageName);
-//        System.out.println("imageUrl : " + imageUrl);
-//        }
+}

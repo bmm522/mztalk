@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface FollowRepository extends JpaRepository<Follow, Long> {
@@ -16,7 +15,7 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 
 
     @Modifying
-    @Query(value="INSERT INTO FOLLOW(fromUserId,toUserId) VALUES(:fromUserId, :toUserId)", nativeQuery=true)
+    @Query(value="INSERT INTO FOLLOW(fromUserId,toUserId, followStatus) VALUES(:fromUserId, :toUserId, 'FOLLOWING')", nativeQuery=true)
     void mFollow(@Param("fromUserId") Long fromUserId, @Param("toUserId") Long toUserId);
 
     @Modifying
@@ -31,22 +30,22 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     //int mFollowCount(int userId);
 
 
-    @Query(value = "SELECT * from Follow f  where f.fromUserId = :fromUserId", nativeQuery = true)
+    @Query(value = "SELECT * from Follow f  where f.fromUserId = :fromUserId and followStatus != 'ONSELF'", nativeQuery = true)
     List<Follow> getListByFromUserId(Long fromUserId);
 
 
-    @Query(value = "SELECT * from Follow f  where f.toUserId = :toUserId", nativeQuery = true)
+    @Query(value = "SELECT * from Follow f  where f.toUserId = :toUserId and followStatus != 'ONSELF'", nativeQuery = true)
     List<Follow> getListByToUserId(Long toUserId);
 
     Long countByToUserId(long own);    // 팔로워 수 (follower)
     Long countByFromUserId(long own);  // 팔로우 수 (following)
 
 
+    @Modifying
+    @Query(value="INSERT INTO FOLLOW(fromUserId,toUserId, followStatus) VALUES(:fromUserId, :toUserId, 'ONSELF')", nativeQuery=true)
+    void mFollowStatus(Long fromUserId, Long toUserId);
+
 //    List<Follow> findAllByFromUser(long own); // 사용자가 팔로우한 관계를 가져옴
 //    List<Follow> findAllByToUser(long own);	 // 사용자를 팔로우하는 관계를 가져옴
-
-
-
-
 
 }

@@ -2,6 +2,7 @@ package com.mztalk.main.domain.profile.controller;
 
 import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.profile.dto.ProfileDto;
+import com.mztalk.main.domain.profile.dto.ProfileImageResponseDto;
 import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
 import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.profile.service.ProfileService;
@@ -20,9 +21,9 @@ public class ProfileApiController {
     private final ProfileService profileService;
     //사진불러오기
     @GetMapping("/profile/{own}")
-    public ResponseEntity<?> ProfileImg(@PathVariable("own") long own){
+    public ResponseEntity<?> profileImg(@PathVariable("own") long own){
 
-        Optional<Profile> profile = profileService.ProfileImg(own);
+        Optional<ProfileImageResponseDto> profile = profileService.profileImg(own);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
 
@@ -31,9 +32,9 @@ public class ProfileApiController {
 
     //이름불러오기
     @GetMapping("/profile/name/{own}")
-    public ResponseEntity<?> ProfileName(@PathVariable long own){
+    public ResponseEntity<?> profileName(@PathVariable long own){
 
-        Profile profile = profileService.ProfileName(own);
+        Profile profile = profileService.profileName(own);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
     }
@@ -41,9 +42,9 @@ public class ProfileApiController {
 
     //게시판 갯수 불러오기
     @GetMapping("profile/boardCount/{own}")
-    public ResponseEntity<?> BoardCount(@PathVariable long own){
+    public ResponseEntity<?> boardCount(@PathVariable long own){
 
-        Profile profile = profileService.BoardCount(own);
+        Profile profile = profileService.boardCount(own);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
     }
