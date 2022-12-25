@@ -29,66 +29,154 @@ function popup(image) {
 document.getElementById('nickname').value = localStorage.getItem('userNickname');
 
 document.getElementById('nickname').addEventListener('keyup',function(){
-    let userId = localStorage.getItem('userNickname');
+    let nickname = document.getElementById('nickname').value;
   
-    fetch("http://localhost:8000/login/register/username/"+userId, {
+    fetch("http://localhost:8000/login/register/nickname/"+nickname, {
       method:"GET",
     })
     .then((res)=> res.json())
     .then(res=>{
-  
-      if(userId.length >3){
+      console.log(res.checkResult);
+      if(nickname.length >1){
        
         if(res.checkResult == 'available'){
-          idSuccessText();
+          nicknameSuccessText();
         } else if(res.checkResult == 'unavailable'){
-          idFailText();
+          nicknameFailText();
         }
   
       } else {
-          isIdVaildText();
+         isNicknameVaildText();
       }
   
     })
   
   });
 
-  const idSuccessText = () => {
-    let checkIdDiv = document.getElementById('checkId');
-    checkIdDiv.innerHTML = '사용가능합니다.';
-    checkIdDiv.style.color = 'green';
-    document.getElementById('checkIdResult').value = "success";
-  }
-  
-  const idFailText = () => {
-    let checkIdDiv = document.getElementById('checkId');
-    checkIdDiv.innerHTML = '중복된 아이디 입니다.';
-    checkIdDiv.style.color = 'red';
-    document.getElementById('checkIdResult').value = "fail";
-  }
-
-  const isIdVaildText = () =>{
-    let checkIdDiv = document.getElementById('checkId');
-    checkIdDiv.innerHTML = '아이디는 최소 4글자 이상이어야 합니다.';
-    checkIdDiv.style.color = 'red';
-    document.getElementById('checkIdResult').value = "fail";
-  }
-
-  const idBlurText = () => {
-    let checkIdDiv = document.getElementById('checkId');
-    checkIdDiv.innerHTML = '';  
-  }
-
   document.getElementById('nickname').addEventListener('blur',function(){
     idBlurText(); 
   });
 
+  const isNicknameVaildText = () =>{
+    let checkNicknameDiv = document.getElementById('checkNickname');
+    checkNicknameDiv.innerHTML = '닉네임은 최소 2글자 이상이어야 합니다.';
+    checkNicknameDiv.style.color = 'red';
+    document.getElementById('checkNicknameResult').value = "fail";
+  }
+    
+  const nicknameSuccessText = () => {
+    let checkNicknameDiv = document.getElementById('checkNickname');
+    checkNicknameDiv.innerHTML = '사용가능합니다.';
+    checkNicknameDiv.style.color = 'green';
+    document.getElementById('checkNicknameResult').value = "success";
+  }
+  
+  const nicknameFailText = () => {
+    let checkNicknameDiv = document.getElementById('checkNickname');
+    checkNicknameDiv.innerHTML = '중복된 닉네임 입니다.';
+    checkNicknameDiv.style.color = 'red';
+    document.getElementById('checkNicknameResult').value = "fail";
+  }
+  
+  const nicknameBlurText = () => {
+    let checkNicknameDiv = document.getElementById('checkNickname');
+    checkNicknameDiv.innerHTML = '';
+    
+  }
 
 
 
 
-
-
+  document.getElementById('email-box').addEventListener('keyup', function(){
+    isVaildEmail();
+  });
+  
+  document.getElementById('email-box').addEventListener('blur', function(){
+    emailBlurText();
+  });
+  
+  const isVaildEmail =  () => {
+    let email = document.getElementById('email-box').value;
+    const exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+    let checkEmail = document.getElementById('checkEmail');
+      
+    if(exptext.test(email)==false){
+        
+        checkEmail.innerHTML= '이메일 형식이 올바르지 않습니다.';
+        checkEmail.style.color='red';
+        document.getElementById('checkEmailResult').value = "fail";
+      
+      } else{
+      
+        checkEmail.innerHTML= '올바른 형식입니다.';
+        checkEmail.style.color='green';
+        document.getElementById('checkEmailResult').value = "success";
+      
+      }
+  }
+  
+  const emailBlurText = () =>{
+    document.getElementById('checkEmail').innerHTML = '';
+  }
+  
+  let emailAuthCode = '';
+  
+  document.getElementById('email_check').addEventListener('click', function(){
+    if(document.getElementById('checkEmailResult').value == "fail" || document.getElementById('checkEmailResult').value =='none'){
+    
+      alert('이메일을 제대로 입력 후에 눌러주세요');
+      document.getElementById('email-box').focus();
+    
+    } else{
+      fetch("http://localhost:8000/login/register/auth-code/"+document.getElementById('email-box').value, {
+      method:"GET",
+       })
+      .then((res)=> res.json())
+      .then(res=>{
+       console.log(res.authCode);
+        if(!res.authCode == 'It`s not an appropriate email format'){
+          
+          alert('이메일 형식이 올바르지 않습니다.');
+  
+        } else {
+  
+          emailAuthCode = res.authCode;
+          alert('작성하신 이메일로 인증코드를 전송했습니다.');
+          document.getElementById('auth_div').style.display="flex";
+  
+        }
+      })
+    }
+  });
+  
+  document.getElementById('auth-box').addEventListener('keyup', function(){
+    isValidAuthCode();
+  });
+  
+  document.getElementById('auth-box').addEventListener('blur', function(){
+    authBlurText();
+  });
+  
+  
+  
+  const isValidAuthCode = () => {
+    let authCode = document.getElementById('auth-box').value;
+    let checkAuth = document.getElementById('checkAuth');
+    if(emailAuthCode != authCode){
+      checkAuth.innerHTML = '코드가 일치하지 않습니다.';
+      checkAuth.style.color = 'red';
+      document.getElementById('checkAuthResult').value = "fail";
+    } else {
+      checkAuth.innerHTML = '코드가 일치 합니다.';
+      checkAuth.style.color = 'green';
+      document.getElementById('checkAuthResult').value = "success";
+    }
+  }
+  //checkAuthResult
+  const authBlurText = () =>{
+    document.getElementById('checkAuth').innerHTML = '';
+  }
+  
 
 
 

@@ -5,6 +5,7 @@ import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.follow.dto.FollowDto;
 import com.mztalk.main.domain.follow.dto.FollowListResponseDto;
 import com.mztalk.main.domain.follow.dto.FollowingListResponseDto;
+import com.mztalk.main.domain.follow.entity.Follow;
 import com.mztalk.main.domain.follow.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,11 @@ public class FollowApiController {
     //팔로우 성공
     @GetMapping("/follow/{toUserId}/{fromUserId}")
     public ResponseEntity<?> follow(@PathVariable Long toUserId, @PathVariable Long fromUserId){
-        System.out.println("toUserId : " + toUserId);
-        System.out.println("fromUserId : " + fromUserId);
+
         followService.follow(toUserId, fromUserId);
 
-        return new ResponseEntity<>(new CMRespDto<>(1,"팔로우성공",null), HttpStatus.OK);
+        return new ResponseEntity<>(new CMRespDto<>(1,"팔로우성공", null), HttpStatus.OK);
     }
-
 
     //팔로우 취소
     @DeleteMapping("/follow/{toUserId}/{fromUserId}")
@@ -61,7 +60,6 @@ public class FollowApiController {
         return new ResponseEntity<>(new CMRespDto<>(1, "팔로잉리스트", followingListResponseDtoList), HttpStatus.OK);
 
     }
-
 
 
 

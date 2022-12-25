@@ -2,6 +2,7 @@ package com.mztalk.main.domain.follow.service.impl;
 
 
 
+import com.mztalk.main.domain.follow.dto.FollowDto;
 import com.mztalk.main.domain.follow.dto.FollowListResponseDto;
 import com.mztalk.main.domain.follow.dto.FollowingListResponseDto;
 import com.mztalk.main.domain.follow.entity.Follow;
@@ -9,6 +10,7 @@ import com.mztalk.main.domain.follow.repository.FollowRepository;
 import com.mztalk.main.domain.follow.service.FollowService;
 import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.profile.repository.ProfileCustomRepository;
+import com.mztalk.main.handler.exception.CustomApiException;
 import com.mztalk.main.handler.exception.ExceptionCode;
 import com.mztalk.main.handler.exception.FollowException;
 import lombok.RequiredArgsConstructor;
@@ -42,14 +44,15 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     @Transactional
-    public void follow(Long toUserNo, Long fromUserNo) {
+    public void follow(Long toUserId, Long fromUserId) {
         try {
-            followRepository.mFollow(fromUserNo, toUserNo);
-        } catch (Exception e) {
-            throw new FollowException(ExceptionCode.ALREADY_EXIST_FOLLOW);
-        }
+            followRepository.mFollow(fromUserId, toUserId);
+        }catch(Exception e){
 
+            throw new CustomApiException("이미 팔로우 하셨습니다.");
+        }
     }
+
 
     @Override
     @Transactional
@@ -65,6 +68,7 @@ public class FollowServiceImpl implements FollowService {
 
         System.out.println("own : " + toUserId);
         List<Follow> followList = followRepository.getListByToUserId(toUserId);
+        System.out.println("followList" + followList);
         System.out.println("길이 : " + followList.size());
         List<FollowListResponseDto> followDtoList = new ArrayList<>();
 
@@ -105,13 +109,13 @@ public class FollowServiceImpl implements FollowService {
                 String imageName = profileData.getString("objectKey");
 
                 System.out.println("여기 오니?!");
-                followDtoList.add(new FollowListResponseDto(follow, nickname, imageUrl, imageName));
+                followDtoList.add(new FollowListResponseDto(follow, nickname, imageUrl, imageName, follow.getFollowStatus()));
 
 
             } else {
 
                 String personalUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
-                followDtoList.add(new FollowListResponseDto(follow, nickname, personalUrl, "기본이미지"));
+                followDtoList.add(new FollowListResponseDto(follow, nickname, personalUrl, "기본이미지", follow.getFollowStatus()));
 
 
             }
@@ -170,13 +174,13 @@ public class FollowServiceImpl implements FollowService {
                 String imageName = profileData.getString("objectKey");
 
                 System.out.println("여기 오니?!");
-                followDtoList.add(new FollowingListResponseDto(follow, nickname, imageUrl, imageName));
+                followDtoList.add(new FollowingListResponseDto(follow, nickname, imageUrl, imageName, follow.getFollowStatus()));
 
 
             } else {
 
                 String personalUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
-                followDtoList.add(new FollowingListResponseDto(follow, nickname, personalUrl, "기본이미지"));
+                followDtoList.add(new FollowingListResponseDto(follow, nickname, personalUrl, "기본이미지", follow.getFollowStatus()));
 
 
             }
@@ -190,6 +194,7 @@ public class FollowServiceImpl implements FollowService {
 
 
     }
+
 
 
 }

@@ -1,13 +1,12 @@
 package com.mztalk.main.handler.exception;
 
-public class CustomApiException extends EntityException {
+public class CustomApiException extends RuntimeException {
 
 
-   // private static final long serialVersionUID=1L;
+    private static final long serialVersionUID=1L;
 
 
-    public CustomApiException(ExceptionCode exceptionCode) {
-
-        super(exceptionCode);
+    public CustomApiException(String message) {
+        super(message); //부모한테만 던짐
     }
 }

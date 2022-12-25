@@ -9,7 +9,7 @@ window.onload = function(){
   BoardCount();
   FollowCount();
   FollowingCount();
-  FollowingButton();
+  //FollowingButton();
 
 }
 
@@ -212,18 +212,18 @@ function FollowCount(){
 
 
 //페이지주인은 팔로우 버튼 비활성화
-function FollowingButton(){
+// function FollowingButton(){
 
-  if(loginUser!=own){
-    document.querySelector('.profile_follow_btn').innerHTML +=
-    `
-    <button class="profile_follow_btn" onclick="profilecFollow(this)">
-    팔로우
-    </button>
-    `
-  }
+//   if(loginUser!=own){
+//     document.querySelector('.profile_follow_btn').innerHTML +=
+//     `
+//     <button class="profile_follow_btn" onclick="profilecFollow(this)">
+//     팔로우
+//     </button>
+//     `
+//   }
 
-}
+// }
 
 
 
@@ -250,13 +250,14 @@ function storyLoad() {
         //console.log(res.data);
 
         for(let board of res.data){
+
           let boardId = board.id;
           let nickname = board.nickname;
           let privacy = board.privacy;
           let title = board.title;
           let content = board.content;
           let date = board.lastModifiedDate;
-          console.log(board);
+          //console.log(board);
         document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
                     <table id="post-table">
@@ -269,7 +270,7 @@ function storyLoad() {
                                 <div id="post-title-div"><br>&nbsp&nbsp${board.title}</div>
                             </td>
                             <td>
-                                <div id="post-date-div"><br>${board.date}</div>
+                                <div id="post-date-div"><br>${date}</div>
                             </td>
                         </tr>
                         <tr>
@@ -673,10 +674,17 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
 
       document.querySelector(".follower-list").innerHTML  = '';
 
+      console.log("스테이터스" + follower.followStatus);
+
+      console.log(follower);
+
       for(let i = 0; i < follower.length; i++){
         // console.log("길이"+follower.length );
         // console.log("follower" + follower);
+        console.log("뜨니?"+ follower[0].followStatus);
         
+        //if(follower[i].followStatus !== 'ONSELF'){
+
       document.querySelector(".follower-list").innerHTML +=
       `
       <div class="follower__item">
@@ -685,12 +693,15 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
           <input type="hidden" name="bNo" id="bNo" value="${follower[i].userNo}"/>
           <div class="follower__text">
               <h2>${follower[i].userNickname}</h2>
+              <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
           </div>
-          <div class="follower__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
+          <div class="follower__btn"><button onclick="clickFollow(this)">팔로잉</button>
+          <input type="hidden" class="userNo" name="userNo" value="${follower[i].userNo}"/>
+          </div>
       </div> 
       `;
-    }
-      
+          
+    } 
     })
 
 };
@@ -730,15 +741,17 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       //console.log("통신?");
 
       let following = res.data;
-
+      
       document.querySelector(".modal-following").style.display = "flex";
 
       document.querySelector(".following-list").innerHTML  = '';
 
+      
+      
       for(let i = 0; i < following.length; i++){
         // console.log("길이"+follower.length );
         // console.log("follower" + follower);
-        
+        //console.log(following);  
       document.querySelector(".following-list").innerHTML +=
       `
       <div class="following__item">
@@ -747,10 +760,21 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
           <input type="hidden" name="bNo" id="bNo" value="${following[i].userNo}"/>
           <div class="following__text">
               <h2>${following[i].userNickname}</h2>
+              
           </div>
-          <div class="following__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
+          <div class="following__btn">
+          <button class="following_button" onclick="clickFollow(this)">팔로잉 
+          <input type="hidden" class="userNo" name="userNo" value="${following[i].userNo}"/>
+          </button>
+          
+          </div>
       </div> 
       `;
+
+      // let userNo = document.querySelector('.userNo');
+      
+      // console.log(userNo);
+
     }
     })
 
@@ -793,12 +817,27 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
 
 
-  
+  //팔로우리스트에서의 버튼
   function clickFollow(e) {
     console.log(e);
     let _btn = e;
     console.log(_btn.textContent);
+
+    let userButton = document.querySelector('.following_button');
+
+    console.log(userButton);
+  
     if (_btn.textContent === "팔로잉") {
+
+      let fromUserId = localStorage.getItem('userNo');
+      let toUserId = localStorage.getItem("own");
+
+
+
+
+
+
+
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
       _btn.style.color = "#fff";
@@ -811,6 +850,8 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     }
   }
   
+
+
 //팔로우?
   // function clickFollow(e) {
   //   console.log(e);
@@ -835,26 +876,31 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
 
 //팔로우 기능구현
-function followingList(){
+// function followingList(){
 
-  let own = localStorage.getItem("own");
+//   let own = localStorage.getItem("own");
 
-  fetch("http://localhost:8000/story/followingList/"+own,{
-    method:"GET",
-    headers:{
-        "Content-Type":"application/json",
-        Authorization:localStorage.getItem('authorization'),
-        RefreshToken:localStorage.getItem('refreshToken'),
-    },
-  })
-.then((res)=>res.json())
-.then(res =>{
+//   let userNo = document.querySelector('.userNo');
+
+//   console.log(userNo);
+
+//   fetch("http://localhost:8000/story/followingList/"+own,{
+//     method:"GET",
+//     headers:{
+//         "Content-Type":"application/json",
+//         Authorization:localStorage.getItem('authorization'),
+//         RefreshToken:localStorage.getItem('refreshToken'),
+//     },
+//   })
+// .then((res)=>res.json())
+// .then(res =>{
   
-  console.log("통신 성공");
+//   console.log("통신 성공");
    
-  })
+//   })
 
-}
+// }
+
 
 
 //다른사람 피드 팔로우 기능구현
@@ -862,13 +908,13 @@ function followingList(){
     console.log(e);
     let _btn = e;
     console.log(_btn.textContent);
+
     if (_btn.textContent === "팔로우") {
       
-      let toUserId = localStorage.getItem("own");
-      //follow/{toUserId}/{fromUserId}
       let fromUserId = localStorage.getItem('userNo');
-     
-      fetch("http://localhost:8000/story/follow/"+toUserId+"/"+fromUserId,{
+      let toUserId = localStorage.getItem("own");
+
+      fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -878,12 +924,9 @@ function followingList(){
       })
     .then((res)=>res.json())
     .then(res =>{
+             
       
-      //console.log("통신 성공");
-       
-      console.log(res);
-
-
+      //버튼 저장되게끔?
 
       _btn.textContent = "팔로잉";
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
@@ -891,12 +934,11 @@ function followingList(){
       _btn.style.border = "1px solid #ddd";
     })
 
-
     } else {
       let toUserId = localStorage.getItem("own");
       let fromUserId = localStorage.getItem('userNo');
       ///follow/{toUserId}/{fromUserId}
-      fetch("http://localhost:8000/story/follow/"+toUserId+"/"+fromUserId,{
+      fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
         method:"delete",
         headers:{
             "Content-Type":"application/json",
@@ -906,9 +948,7 @@ function followingList(){
       })
     .then((res)=>res.json())
     .then(res =>{
-      
-     // console.log("통신 성공");
-       
+             
       console.log(res);
 
       _btn.textContent = "팔로우";
