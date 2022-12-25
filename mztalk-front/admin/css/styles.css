@@ -11551,6 +11551,7 @@ body {
 }
 
 .dataTable-top {
+  display: none;
   padding: 0 0 1rem;
 }
 
