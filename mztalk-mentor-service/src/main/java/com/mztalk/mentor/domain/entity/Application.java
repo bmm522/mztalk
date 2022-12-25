@@ -22,7 +22,7 @@ public class Application extends BaseTimeEntity {
     @Column(name ="application_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mentee_id")
     @JsonIgnore
     private Mentee mentee;

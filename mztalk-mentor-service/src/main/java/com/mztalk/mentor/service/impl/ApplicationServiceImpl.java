@@ -67,7 +67,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public Result findAll() {
-        List<Application> applications = applicationRepository.findAll();
+        List<Application> applications = applicationRepository.fetchMenteeApplication();
         List<ApplicationDto> result = applications.stream().map(ApplicationDto::new).collect(Collectors.toList());
         return new Result(result);
     }
