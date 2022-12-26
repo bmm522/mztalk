@@ -58,7 +58,7 @@ function profileBox(){
     .then((res)=>res.json())
     .then(res =>{
       
-      //console.log("통신 성공");
+      console.log("통신 성공");
       
       let profileImage = res.data;
       //console.log(profileImage);
