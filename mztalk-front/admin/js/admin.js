@@ -1,3 +1,5 @@
+// const { computeStyles } = require("@popperjs/core");
+
 window.onload = function(){
     console.log('실행');
     document.getElementById('card-header-div').innerHTML += '각 서비스 별 트래픽 수&nbsp&nbsp<small style="font-size: 1px;">&nbsp&nbsp오늘날짜 : '+nowDay+'&nbsp&nbsp(10초마다 업데이트 됩니다) </small> <input id="input-date"  value="'+nowDay+'" type="date"  style="width: 250px; margin-left:200px ; border-radius: 10px; border: 0.1px solid gainsboro;"/><input type="hidden" id="hidden-time"/>';
@@ -17,6 +19,7 @@ window.onload = function(){
     setInterval(getDailyServiceTraffic, 10000);
     getMentor();
     getReportList();
+    getMaliciousUserList();
 }
 
 const getMentor = () =>{
@@ -48,7 +51,7 @@ const getMentor = () =>{
                 <td>${email}</td>
                 <td>${createDate}</td>
                 <td>${authStatus}</td>
-                <td><div id="${userNo}"><button style="cursor:pointer;"  type="button" id="reg-btn-no" onclick="viewDocuments(${userNo}, 'NO');" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">look</button></div></td>
+                <td><div id="${userNo}"><button style="cursor:pointer;"  type="button" id="reg-btn-no" onclick="viewDocuments(${userNo}, 'NO');" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">서류 보기</button></div></td>
             </tr>`;
             } else{
                 document.getElementById('table-body').innerHTML += `<tr>
@@ -58,7 +61,7 @@ const getMentor = () =>{
                 <td>${email}</td>
                 <td>${createDate}</td>
                 <td>${authStatus}</td>
-                <td><div id="${userNo}"><button style="cursor:pointer;"  type="button" id="reg-btn-yes" onclick="viewDocuments(${userNo}, 'YES');" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">look</button></div></td>
+                <td><div id="${userNo}"><button style="cursor:pointer;"  type="button" id="reg-btn-yes" onclick="viewDocuments(${userNo}, 'YES');" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">서류 보기</button></div></td>
             </tr>`;
             }
           
@@ -166,7 +169,7 @@ const getReportList = () =>{
                 <td>${serviceName}</td>
                 <td>${userId}</td>
                 <td><div><button style="cursor:pointer;"  type="button" id="report-btn"  onclick="getBoardDetail(${boardId} , ${userId},'${serviceName}');"  
-                    data-bs-toggle="modal" href="#exampleModalToggle">look</button></div></td>
+                    data-bs-toggle="modal" href="#exampleModalToggle">해당 글 보기</button></div></td>
             </tr>`;
         }
     }
@@ -207,4 +210,42 @@ const postReport = (bId, userId,serviceName) =>{
         location.href="index.html";
     })
 
+}
+
+const getMaliciousUserList = () =>{
+
+    fetch('http://localhost:8000/login/malicious-user', {
+        method:"GET",
+    })
+    .then((res) => res.json())
+    .then(res=>{
+        for(let user of res.data){
+            let userNo = user.userNo;
+            let username = user.username;
+            let nickname = user.nickname;
+            let createDate = user.createDate;
+            let reportCount = user.reportCount;
+
+            document.getElementById('table-body3').innerHTML += `<tr>
+                <td>${userNo}</td>
+                <td>${username}</td>
+                <td>${nickname}</td>
+                <td>${createDate}</td>
+                <td>${reportCount}</td>
+                <td><div><button style="cursor:pointer;"  type="button" id="out-btn"  onclick="outUser(${userNo});" >퇴출</button></div></td>
+            </tr>`;
+        
+        }
+    })
+}
+
+const outUser = (userNo) =>{
+
+    fetch('http://localhost:8000/login/user/status?status=out&userNo='+userNo,{
+        method:"PATCH"
+    })
+    .then(res=>{
+        alert('해당 유저를 퇴출했습니다.');
+        location.href="index.html";
+    })
 }

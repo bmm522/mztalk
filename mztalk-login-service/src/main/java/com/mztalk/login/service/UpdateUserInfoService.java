@@ -18,4 +18,6 @@ public interface UpdateUserInfoService {
     int changeNewNickname(Map<String, String> body);
 
     int changeNewEmail(String userNo, String email);
+
+    long updateUserStatus(String status, long id);
 }

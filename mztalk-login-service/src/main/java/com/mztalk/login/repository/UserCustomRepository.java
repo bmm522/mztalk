@@ -2,6 +2,8 @@ package com.mztalk.login.repository;
 
 import com.mztalk.login.domain.entity.User;
 
+import java.util.List;
+
 public interface UserCustomRepository {
 
 //    public int updateSocialLoginUserNickname(String nickname, String username);
@@ -21,4 +23,8 @@ public interface UserCustomRepository {
     int updateEmail(long parseLong, String email);
 
     int updateReportCount(long id);
+
+    List<User> getMaliciousUser();
+
+    long updateUserStatus(String status, long id);
 }

@@ -69,5 +69,10 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
         return userRepository.updateEmail(Long.parseLong(userNo), email);
     }
 
+    @Override
+    public long updateUserStatus(String status, long id) {
+        return userRepository.updateUserStatus(status, id);
+    }
+
 
 }

@@ -22,16 +22,18 @@ public class MztalkCookie {
     private Cookie userNicknameCookie;
 
     private Cookie usernameCookie;
+    private Cookie userStatusCookie;
 
     public MztalkCookie(String username) throws UnsupportedEncodingException {
         this.usernameCookie =  getCookie("username", URLEncoder.encode(username, "UTF-8"));
     }
 
-    public MztalkCookie(ConcurrentHashMap<String, String>jwtMap, long userNo, String nickname) throws UnsupportedEncodingException {
+    public MztalkCookie(ConcurrentHashMap<String, String>jwtMap, long userNo, String nickname, String status) throws UnsupportedEncodingException {
         this.authorizationCookie = getCookie("Authorization", URLEncoder.encode(jwtMap.get("jwtToken"), "UTF-8"));
         this.refreshTokenCookie =getCookie("RefreshToken", URLEncoder.encode(jwtMap.get("refreshToken"), "UTF-8"));
         this.userNoCookie = getCookie("UserNo", String.valueOf(userNo));
         this.userNicknameCookie = getCookie("UserNickname", nickname);
+        this.userStatusCookie = getCookie("UserStatus", status);
     }
 
 

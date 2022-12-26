@@ -1,5 +1,6 @@
 package com.mztalk.login.controller;
 
+import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.UserInfoDto;
 import com.mztalk.login.service.NewAccessTokenService;
 import com.mztalk.login.service.SelectUserInfoService;
@@ -92,5 +93,13 @@ public class LoginApiController {
         return updateUserInfoService.changeNewEmail(body.get("userNo"), body.get("email"));
     }
 
+    @GetMapping("/malicious-user")
+    public Result<?> getMaliciousUser(){
+        return selectUserInfoService.getMaliciousUser();
+    }
 
+    @PatchMapping("/user/status")
+    public long updateUserStatus(@RequestParam("status")String status, @RequestParam("userNo")long id){
+        return updateUserInfoService.updateUserStatus(status, id);
+    }
 }
