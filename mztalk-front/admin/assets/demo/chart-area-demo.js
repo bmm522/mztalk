@@ -42,29 +42,7 @@ let sixBeforeData = '';
 // document.getElementById('card-header-div').innerHTML = ' ';
 
 
-window.onload = function(){
-  document.getElementById('card-header-div').innerHTML += '각 서비스 별 트래픽 수&nbsp&nbsp<small style="font-size: 1px;">&nbsp&nbsp오늘날짜 : '+nowDay+'&nbsp&nbsp(10초마다 업데이트 됩니다) </small> <input id="input-date"  value="'+nowDay+'" type="date"  style="width: 250px; margin-left:200px ; border-radius: 10px; border: 0.1px solid gainsboro;"/><input type="hidden" id="hidden-time"/>';
-  
-   
 
-  getDailyTraffic();
-
-  document.getElementById('input-date').onchange = function(){
-    
-     getDailyServiceTraffic();
-    
-  }
-
-  getDailyServiceTraffic();
-  setInterval(getDailyTraffic, 10000);
-  setInterval(getDailyServiceTraffic, 10000);
- //setInterval(getDailyServiceTraffic, 1000);
-
-
-  
-   
-
-}
 
 
 

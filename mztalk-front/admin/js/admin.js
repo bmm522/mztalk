@@ -1,6 +1,22 @@
 window.onload = function(){
-
+    console.log('실행');
+    document.getElementById('card-header-div').innerHTML += '각 서비스 별 트래픽 수&nbsp&nbsp<small style="font-size: 1px;">&nbsp&nbsp오늘날짜 : '+nowDay+'&nbsp&nbsp(10초마다 업데이트 됩니다) </small> <input id="input-date"  value="'+nowDay+'" type="date"  style="width: 250px; margin-left:200px ; border-radius: 10px; border: 0.1px solid gainsboro;"/><input type="hidden" id="hidden-time"/>';
+    
+     
+  
+    getDailyTraffic();
+  
+    document.getElementById('input-date').onchange = function(){
+      
+       getDailyServiceTraffic();
+      
+    }
+  
+    getDailyServiceTraffic();
+    setInterval(getDailyTraffic, 10000);
+    setInterval(getDailyServiceTraffic, 10000);
     getMentor();
+    getReportList();
 }
 
 const getMentor = () =>{
@@ -75,7 +91,7 @@ document.getElementById('modal-div').innerHTML += `<div class="modal-body">
         console.log(fileUrl);
         console.log(fileName);
         document.getElementById("table-div").innerHTML +=`<tr>
-            <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a style="text-decoration:none;" href="${fileUrl}" download="${fileName}">${fileName}</a></td>
+            <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a style="text-decoration:none;" href="${fileUrl}" download="${fileName}">${fileName}</a></td><br>
         <tr>`
     }
                       
@@ -116,4 +132,29 @@ const admit = (userNo) =>{
     }
     
     
+}
+
+const getReportList = () =>{
+    fetch('http://localhost:8000/login/report',{
+        method:"GET"
+    })
+    .then((res)=>res.json())
+    .then(res=>{
+        for(let report of res.data){
+            let reportTitle = report.reportTitle;
+            let reportContent = report.reportContent;
+            let boardId = report.boardId;
+            let serviceName = report.serviceName;
+            let userId = report.user.userId;
+
+            document.getElementById('table-body2').innerHTML += `<tr>
+                <td>${reportTitle}</td>
+                <td>${reportContent}</td>
+                <td>${boardId}</td>
+                <td>${serviceName}</td>
+                <td>${userId}</td>
+                <td><div><button style="cursor:pointer;"  type="button" id="reg-btn"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">look</button></div></td>
+            </tr>`;
+        }
+    })
 }

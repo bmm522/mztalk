@@ -22,7 +22,7 @@ public class InsertReportServiceImpl implements InsertReportService {
     public long insertReport(ReportRequestDto reportRequestDto) {
         Report report = reportRequestDto.toEntity(userRepository.findById(Long.parseLong(reportRequestDto.getUserNo()))
                 .orElseThrow(()->new NullPointerException("Not UserNo")));
-        userRepository.updateReportCount(report.getUser().getReportCount(), report.getUser().getId());
-        return reportRepository.save(report).getReportNo();
+        userRepository.updateReportCount(report.getUser().getId());
+        return reportRepository.save(report).getReportId();
     }
 }
