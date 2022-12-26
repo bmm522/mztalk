@@ -296,6 +296,4 @@ public class BungServiceImpl implements BungBoardService {
     public Long bungBoardNowGroup(Long bId) {
         return bungAddRepository.bungBoardNowGroup(bId);
     }
-
-
 }
