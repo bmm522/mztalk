@@ -35,10 +35,6 @@ public class ReportApiController {
 
     @PatchMapping("/report")
     public long postReport(@RequestParam("bId")long boardId, @RequestParam("userId")long userId, @RequestParam("serviceName")String serviceName){
-        System.out.println("요청들어옴? : " + boardId);
-        System.out.println("요청들어옴? : " + userId);
-        System.out.println("요청들어옴? : " + serviceName);
-
         return updateReportService.postReport(boardId, userId, serviceName);
     }
 
