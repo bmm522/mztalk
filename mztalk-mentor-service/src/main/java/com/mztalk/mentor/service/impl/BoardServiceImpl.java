@@ -51,8 +51,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardDto findById(Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new BoardNotFoundException("해당 번호의 글이 존재하지 않습니다."));
+    public BoardDto findBoardByBoardId(Long id) {
+        Board board = boardRepository.findBoardByBoardId(id);
         BoardDto boardDto = new BoardDto(board);
         return boardDto;
     }

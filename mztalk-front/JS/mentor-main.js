@@ -72,6 +72,43 @@ const getBoardList = () =>{
     })
 }
 
+// 글 신고하기
+const reportBoard = () =>{
+    document.getElementById('report-btn').addEventListener('click',function(){
+        const id = document.getElementById('boardId-modal').value;
+        fetch("http://localhost:8000/mentors/board/"+id,{
+            method:"GET",
+            headers:{
+            "Content-Type":"application/json",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken')
+            },
+        })
+        .then((res)=>res.json())
+        .then(res =>{
+            const userId = res.mentor.userId;
+            const id = res.id;
+
+            fetch("http://localhost:8000//신고주소를 입력해주세요",{
+                method:"GET",
+                headers:{
+                "Content-Type":"application/json",
+                    Authorization:localStorage.getItem('authorization'),
+                    RefreshToken:localStorage.getItem('refreshToken')
+                },
+                body:JSON.stringify({
+                    userId : userId,
+                    boardId : id,
+                    service : "Mentor",
+                    title : document.getElementById('reportTitle').value,
+                    content : document.getElementById('reportContent').value
+                })
+            })
+        })
+    });
+}
+
+
 const getBoardDetail = (bId) =>{
         fetch("http://localhost:8000/mentors/board/"+bId,{
             method:"GET",

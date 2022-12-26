@@ -19,7 +19,6 @@ public class BoardDto {
     private String category;
     private String title;
     private String nickname;
-    private Long userId;
     private String content;
     private String introduction;
     private String career;

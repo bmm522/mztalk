@@ -151,13 +151,17 @@
                             </div>
                             <div class="modal-footer">
                                 <div class="card-text" style="float:left;">1회 멘토링 : 1시간 / <span id="modal-salary"></span> 원</div>
+                                <button type="button" class="btn btn-outline-danger" id="report-btn" data-bs-target="#reportModal"
+                                data-bs-toggle="modal">신고</button>
+
                                 <button class="btn btn-outline-success" data-bs-target="#exampleModalToggle2"
-                                    data-bs-toggle="modal">멘토링 신청하기</button>
+                                data-bs-toggle="modal">멘토링 신청하기</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- 멘토링 신청 페이지 시작-->
                 <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -194,8 +198,38 @@
                         </div>
                     </div>
                 </div>
+                <!-- 멘토링 신청 페이지 끝-->
             </div>
         <!--멘토링 글 상세보기 모달 끝-->
+
+        <!-- 신고하기 작성 모달 시작-->
+        <div class="modal fade" id="reportModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">신고하기</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="reportTitle" class="form-label">신고 제목</label>
+                            <input type="text" class="form-control form-control-sm" id="reportTitle" placeholder="예)불법 홍보">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="reportContent">신고사유</label>
+                            <textarea class="form-control" placeholder="신고 사유를 적어주세요." id="reportContent" style="height: 300px; padding-top: 10px;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" id="report-btn">신고 제출 하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 신고하기 작성 모달 끝-->
 
 
         <!-- 리뷰보기 모달 시작-->
