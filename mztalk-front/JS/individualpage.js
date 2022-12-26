@@ -18,7 +18,7 @@ function writeboard() {
     
     const open = document.querySelector(".write_board"); //글쓰기버튼
     const modal = document.querySelector(".textmodal");  //글쓸수 있는곳
-    const close = document.querySelector(".btn-close");  //닫기버튼
+    const close = document.querySelector(".btn-closee");  //닫기버튼
 
     //console.log(open);
 
@@ -234,7 +234,7 @@ function FollowCount(){
 
 
 
-//글쓰는곳DIV
+//글 목록들 DIV
 function storyLoad() {
   
   fetch("http://localhost:8000/story/"+own,{
@@ -256,7 +256,7 @@ function storyLoad() {
           let privacy = board.privacy;
           let title = board.title;
           let content = board.content;
-          let date = board.lastModifiedDate;
+          let date = board.lastModifiedDate.substr(0,10);
           //console.log(board);
         document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
@@ -267,7 +267,7 @@ function storyLoad() {
                                 </div>
                             </td>
                             <td>
-                                <div id="post-title-div"><br>&nbsp&nbsp${board.title}</div>
+                                <div id="post-title-div">${board.title}</div>
                             </td>
                             <td>
                                 <div id="post-date-div"><br>${date}</div>
@@ -276,7 +276,10 @@ function storyLoad() {
                         <tr>
                             <td colspan="3"><br><br>
                                 <div id="edit-delete-div">
-                                    <button style="cursor:pointer;" type="button">수정</button>
+                                       
+                                
+                                    <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
+                                    data-bs-toggle="modal" type="button">수정</button>
                                     <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
                                 </div>
                                 <div id=post-hr>
@@ -318,7 +321,7 @@ function storyLoad() {
                          `
                            <div id="reply-nickname">${reply.replyNickname}</div>
                            <div id="reply-content">${reply.replyContent}</div>
-                           <div id="reply-date">${reply.lastModifiedDate}</div>
+                           <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
                            <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button></div>
                          `;
                       }
@@ -389,7 +392,7 @@ write_board.addEventListener('click', function(){
                                           </div>
                                       </td>
                                       <td>
-                                          <div id="post-title-div"><br>&nbsp&nbsp${board.title}</div>
+                                          <div id="post-title-div">${board.title}</div>
                                       </td>
                                       <td>
                                           <div id="post-date-div"><br>${board.date}</div>
@@ -398,7 +401,9 @@ write_board.addEventListener('click', function(){
                                   <tr>
                                       <td colspan="3"><br><br>
                                           <div id="edit-delete-div">
-                                              <button style="cursor:pointer;" type="button">수정</button>
+                                              
+                                          <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
+                                          data-bs-toggle="modal" type="button">수정</button>
                                               <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
                                           </div>
                                           <div id=post-hr>
@@ -438,13 +443,137 @@ write_board.addEventListener('click', function(){
       });
      
 
+
+
+//수정창상세보기
+function getBoardDetail(boardId){
+
+
+  let title = document.querySelector('#post-title-div').innerText;
+  let content = document.getElementById("post-content-input").innerText;
+  let privacy = document.getElementById('category-div').innerText;
+  
+  
+
+const write_board = document.getElementById('write-board');
+const privacyBound = document.getElementById('privacyBound');
+
+
+  console.log(boardId);
+  console.log(title);
+  console.log(content);
+  console.log(privacy);
+     
+
+    if(privacy==='PUBLIC'){
       
+      document.querySelector('.modal-content').innerHTML +=
+    `
+    <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel"><div id="title-div"><input type="text" class="title-input-text" value="${title}"></div></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="modal-body" class="modal-body">
+      <input type="text" class="content-input-text" id="contents" value="${content}">
+          <input type="hidden" value="${boardId}">
+          <div class="selectBox">
+              <select id="privacyBound" name="privacyBound" class="select">
+              <option disabled value="no">공개범위</option>
+              <option value="PUBLIC" selected>전체공개</option>
+              <option value="SECRET">비공개</option>
+              </select>
+          </div>
+      </div>
+      <div class="modal-footer">
+          
+          <button style="cursor:pointer;" onClick="modification(${boardId})" type="button">수정</button>
+          <div id="btn-div">
+
+      </div>
+
+    </div>
+    `
+    }
+
+    if(privacy==='SECRET'){
+      document.querySelector('.modal-content').innerHTML +=
+    `
+    <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel"><div id="title-div"><input type="text" class="title-input-text" value="${title}"></div></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="modal-body" class="modal-body">
+          
+      <input type="text" class="content-input-text" id="contents" value="${content}">
+          <input type="hidden" value="${boardId}">
+          <div class="selectBox">
+              <select id="privacyBound" name="privacyBound" class="select">
+              <option disabled value="no">공개범위</option>
+              <option value="PUBLIC" >전체공개</option>
+              <option value="SECRET" selected>비공개</option>
+              </select>
+          </div>
+      </div>
+      <div class="modal-footer">
+          
+          <button style="cursor:pointer;" onClick="modification(${boardId})" type="button">수정</button>
+          <div id="btn-div">
+
+      </div>
+
+    </div>
+    `
+    }
+    //document.querySelector('.modal-content').innerHTML='';
+    
+
+
+}
 
 
 
 
+//글수정      
+function modification(boardId){
+    //console.log(localStorage.getItem('authorization'));
 
-      
+    let id = boardId;
+    const privacyBound = document.getElementById('privacyBound');
+
+
+    console.log(localStorage.getItem('userNickname'));
+    console.log(document.querySelector('.title-input-text').value);
+    console.log(document.getElementById("contents").value);
+    console.log(localStorage.getItem('own'));
+    console.log(privacyBound.options[privacyBound.selectedIndex].value);
+    console.log(boardId);
+
+      fetch("http://localhost:8000/story/update/"+id,{
+        method:"PATCH",
+          headers:{
+              "Content-Type":"application/json",
+              Authorization:localStorage.getItem('authorization'),
+              RefreshToken:localStorage.getItem('refreshToken'),
+          },
+          body:JSON.stringify({
+          nickname: localStorage.getItem('userNickname'),
+          title: document.querySelector('.title-input-text').value,
+          content: document.getElementById("contents").value,
+          own: localStorage.getItem('own'),
+          privacy: privacyBound.options[privacyBound.selectedIndex].value,
+          id : boardId,
+        })
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+
+        console.log(res);
+
+        location.href="individualpage.html";   
+    }    
+)}  
+
+
 //글삭제
 function deleteBoard(boardId){
    
@@ -462,9 +591,8 @@ function deleteBoard(boardId){
         })
       .then((res)=>res.json())
       .then(res =>{
-        
-        
-         
+      
+
       })
       location.href="individualpage.html";  
     }
@@ -570,7 +698,7 @@ function addReply(boardId){
 
             let reply = res.data;
             
-            let lastModifiedDate = reply.lastModifiedDate;
+            // let lastModifiedDate = reply.lastModifiedDate;
             document.querySelector(`.reply-div-${boardId}`).innerHTML +=
             `<div>
               <div id="reply-nickname">${reply.replyNickname}</div>
@@ -686,21 +814,8 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
         //console.log("뜨니?"+ follower[0].followStatus);
         //console.log(document.querySelectorAll('.follower__btn'));
 
-        //let followbutton = document.querySelectorAll('.follower__btn');
-        
-        if(follower[i].followStatus==="FOLLOWING"){
-          document.querySelector('.follower__btn').innerHTML += 
-          `<div class="follower__btn"><button class="cta" onclick="clickFollow(this)">팔로잉</button>
-          <input type="hidden" class="userNo" name="userNo" value="${follower[i].userNo}"/>
-          `;
-        }else if(follower[i].followStatus==="UNFOLLOW"){
-          document.querySelector('.follower__btn').innerHTML += 
-          `<div class="follower__btn"><button class="cta blue" onclick="clickFollow(this)">팔로우</button>
-          <input type="hidden" class="userNo" name="userNo" value="${follower[i].userNo}"/>
-          `;
-        }else{
-          document.querySelector('.follower__btn').innerHTML += '';
-        }
+        let followbutton = document.querySelectorAll('.follower__btn');
+        //console.log(follower[i].userNo);
 
       document.querySelector(".follower-list").innerHTML +=
       `
@@ -709,21 +824,15 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
           <input type="hidden" class="imageName" value="${follower[i].imageName}"/>
           <input type="hidden" name="bNo" id="bNo" value="${follower[i].userNo}"/>
           <div class="follower__text">
-              <h2>${follower[i].userNickname}</h2>
+              <h2><a href="http://localhost:8000/story/${follower[i].userNo}">${follower[i].userNickname}</a></h2>
               <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
           </div>
           <div class="follower__btn">
-            
+          
           </div>
       </div> 
       `;
         
-          // follower.forEach((userNickname)=>{
-          //   document.querySelectorAll('.follower__btn').innerHTML +=
-          //   `
-          //   <button class="cta blue" onclick="clickFollow(this)">팔로우</button>
-          //   `;
-
     } 
     })
 
@@ -779,6 +888,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
         // console.log("길이"+follower.length );
         // console.log("follower" + follower);
         //console.log(following);  
+        console.log(following[i].userNo);
       document.querySelector(".following-list").innerHTML +=
       `
       <div class="following__item">
@@ -1003,10 +1113,6 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       _btn.style.border = "0";
 
     })
-
-
-
- 
     }
   }
 

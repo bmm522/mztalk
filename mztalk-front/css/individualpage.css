@@ -53,7 +53,7 @@
     margin-bottom: 5px;
 }
 
-.btn-close{
+.btn-closee{
     width: 750px;
     height: 50px;
     margin-left: 80px;
@@ -63,7 +63,7 @@
     border:1px solid #A66615;
 }
 
-.btn-close:hover{
+.btn-closee:hover{
     box-shadow: 0px 0px 0px 0px #A66615;
     margin-top: 25px;
     margin-bottom: 5px;
@@ -98,6 +98,26 @@
     font-size: 15px;
 }
 
+/*모달에서 */
+.title-input-text{
+  margin-left: 20px;
+  width: 300px;
+  height: 20px;
+  border: 0px;
+  background-color: aliceblue;
+}
+
+.content-input-text{
+  width: 400px;
+  height: 100px;
+  margin-left: 0px;
+  border: 0px;
+  background-color: aliceblue;
+}
+
+
+
+/*끝*/
 #title-input-text{
     margin-left: 20px;
     width: 500px;
@@ -120,7 +140,7 @@
 
 .post-div{
     width: 890px;
-    height: 700px;
+    height: 750px;
     background-color: rgb(238, 243, 198);
     margin-top: 20px;
     margin-left: 2.5%;
@@ -132,8 +152,13 @@
 
 }
 
+.post-div::-webkit-scrollbar{
+  display:none;
+}
+
+
 #category-div{
-    width: 50px;
+    width: 65px;
     height: 100%;
     background-color: aliceblue;
     margin-top: 20px;
@@ -161,7 +186,7 @@
     width: 100px;
     height: 70px;
     margin-top: 20px;
-    margin-left: 30px;
+    margin-left: 15px;
     background-color: aliceblue;
     text-align: center;
     border-radius: 20px;
@@ -819,9 +844,86 @@ button {
 
 
 
-
-
-
+/*수정창 */
+.modal-info {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.modal-info .boardInfo {
+  width: 600px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.modal-info .boardInfo .boardInfo-header {
+  text-align: center;
+  line-height: 50px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+.modal-info .boardInfo .boardInfo-header button {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background-color: transparent;
+  border: 0;
+}
+.modal-info .boardInfo .boardInfo-header button i {
+  font-size: 20px;
+}
+.modal-info .boardInfo .following-list {
+  overflow: hidden;
+  overflow-y: auto;
+}
+.modal-info .boardInfo .following-list .following__item {
+  display: flex;
+  height: 70px;
+  padding: 10px;
+}
+.modal-info .boardInfo .following-list .following__item .following__img {
+  width: 80px;
+  text-align: center;
+}
+.modal-info .boardInfo .following-list .following__item .following__img {
+  width: 80px;
+  text-align: center;
+}
+.modal-info .boardInfo .following-list .following__item .following__img img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.modal-info .boardInfo .following-list .following__item .following__text {
+  padding-top: 5px;
+}
+.modal-info .boardInfo .following-list .following__item .following__text h2 {
+  font-size: 16px;
+  line-height: 50px;
+}
+.modal-info .boardInfo .following-list .following__item .following__btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+.modal-info .boardInfo .following-list .following__item .following__btn button {
+  border: 0;
+  background-color: rgba(128, 128, 128, 0.973);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
 
 
 

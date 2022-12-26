@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/individualpage.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>MZTALK</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
@@ -97,28 +98,27 @@
                 <div id="modal" class="textmodal hidden">
 
                     <div id="write-input-div">
+
                         <div id="write-title-div">
+                            <div class="selectBox">
+                                <select id="privacyBounds" name="privacyBounds" class="select">
+                                <option disabled selected value="no">공개범위</option>
+                                <option value="PUBLIC">전체공개</option>
+                                <option value="SECRET">비공개</option>
+                                </select>
+                            </div>
                             <div id=title-div>                
                                 <input type="text" id="title-input-text">     
                             </div>
                             <hr>
                         </div>
-                        <br>
-                        <div class="selectBox">
-                            <select id="privacyBounds" name="privacyBounds" class="select">
-                            <option disabled selected value="no">공개범위</option>
-                            <option value="PUBLIC">전체공개</option>
-                            <option value="FRIENDS">친구에게만</option>
-                            <option value="SECRET">비공개</option>
-                            </select>
-                        </div>
-                        <br>
+
                         <input type="text" id="content-input-text">
                             
                     </div>
                     
                     <button type="button" style="cursor:pointer;" class="write-btn" id="write-board">글 등록</button>
-                    <button type="button" class="btn-close" aria-label="Close">닫기</button>
+                    <button type="button" class="btn-closee" aria-label="Close">닫기</button>
 
                 </div>
             
@@ -267,9 +267,43 @@
         </div>
     </div>
 
+    
+    <!--수정창-->
+        <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+            tabindex="-1">
+
+            <div class="modal-dialog modal-dialog-centered">
+
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">타이틀</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div id="modal-body" class="modal-body">
+                        
+                        게시글내용
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button style="cursor:pointer;" onClick="modification()" type="button">수정</button>
+                        <div id="btn-div">
+
+                        </div>
+ 
+                    </div> -->
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
 
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
 <script src="JS/individualpage.js"></script>
 <script src="JS/main.js"></script>
 
