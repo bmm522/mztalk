@@ -21,7 +21,7 @@ public class SelectReportServiceImpl implements SelectReportService {
     private final ReportRepository reportRepository;
     @Override
     public Result<?> getAllReport() {
-        List<Report>  reportList = reportRepository.findAll(Sort.by(Sort.Direction.DESC, "reportId"));
+        List<Report>  reportList = reportRepository.findAllByReportStatus("Y",Sort.by(Sort.Direction.DESC, "reportId"));
         return new Result<>(reportList.stream().map(ReportResponseDto::new).collect(Collectors.toList()));
     }
 }
