@@ -74,7 +74,7 @@ const getBoardList = () =>{
 
 // 글 신고하기
 const reportBoard = () =>{
-    document.getElementById('report-btn').addEventListener('click',function(){
+
         const id = document.getElementById('boardId-modal').value;
         fetch("http://localhost:8000/mentors/board/"+id,{
             method:"GET",
@@ -87,25 +87,27 @@ const reportBoard = () =>{
         .then((res)=>res.json())
         .then(res =>{
             const userId = res.mentor.userId;
-            const id = res.id;
+            const bId = res.id;
 
-            fetch("http://localhost:8000//신고주소를 입력해주세요",{
-                method:"GET",
+            fetch("http://localhost:8000/login/report",{
+                method:"POST",
                 headers:{
-                "Content-Type":"application/json",
-                    Authorization:localStorage.getItem('authorization'),
-                    RefreshToken:localStorage.getItem('refreshToken')
+                    "Content-Type":"application/json",
                 },
                 body:JSON.stringify({
-                    userId : userId,
-                    boardId : id,
-                    service : "Mentor",
-                    title : document.getElementById('reportTitle').value,
-                    content : document.getElementById('reportContent').value
+                    reportTitle : document.getElementById('reportTitle').value,
+                    reportContent : document.getElementById('reportContent').value,
+                    boardId : bId,
+                    serviceName : "mentor",
+                    userNo : userId,                   
                 })
             })
         })
-    });
+        .then(res=>{
+            alert('신고가 접수되었습니다.');
+            location.href="mentor-main.html";
+        })
+
 }
 
 

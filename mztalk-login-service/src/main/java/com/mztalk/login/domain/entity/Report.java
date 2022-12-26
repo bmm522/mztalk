@@ -1,6 +1,7 @@
 package com.mztalk.login.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reportNo;
+    private Long reportId;
 
     private String reportTitle;
     private String reportContent;
@@ -30,6 +31,7 @@ public class Report {
 
     @JoinColumn(name = "id")
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     private Date reportTime;

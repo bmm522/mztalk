@@ -20,5 +20,5 @@ public interface UserCustomRepository {
 
     int updateEmail(long parseLong, String email);
 
-    int updateReportCount(long reportCount, long id);
+    int updateReportCount(long id);
 }

@@ -60,9 +60,8 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
     }
 
     @Override
-    public int updateReportCount(long reportCount, long id) {
-        return entityManager.createQuery("UPDATE User u SET u.reportCount = :reportCount + 1 WHERE u.id = :id")
-                .setParameter("reportCount", reportCount)
+    public int updateReportCount(long id) {
+        return entityManager.createQuery("UPDATE User u SET u.reportCount = u.reportCount + 1 WHERE u.id = :id")
                 .setParameter("id", id)
                 .executeUpdate();
     }

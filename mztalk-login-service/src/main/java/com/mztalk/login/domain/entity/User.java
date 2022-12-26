@@ -1,5 +1,6 @@
 package com.mztalk.login.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.login.domain.cookie.MztalkCookie;
 import com.mztalk.login.domain.dto.UserInfoDto;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,7 @@ public class User {
     private long reportCount;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Report> reports;
 
 

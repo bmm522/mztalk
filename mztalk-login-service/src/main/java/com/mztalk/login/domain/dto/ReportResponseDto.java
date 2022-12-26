@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,15 +19,15 @@ public class ReportResponseDto {
     private String reportContent;
     private String boardId;
     private String serviceName;
-    private User user;
+    private UserInfoDto user;
     private String path;
 
-    public ReportResponseDto(Report report){
+    public ReportResponseDto(Report report, UserInfoDto userInfoDto){
         this.reportTitle = report.getReportTitle();
         this.reportContent = report.getReportContent();
         this.boardId = report.getBoardId();
         this.serviceName = report.getServiceName();
-        this.user = report.getUser();
+        this.user = userInfoDto;
         this.path = report.getPath();
     }
 }
