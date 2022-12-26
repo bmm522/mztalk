@@ -257,8 +257,8 @@ function storyLoad() {
           let title = board.title;
           let content = board.content;
           let date = board.lastModifiedDate.substr(0,10);
-          //console.log(board);
-        document.querySelector("#contentList").innerHTML += 
+          
+          document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
                     <table id="post-table">
                         <tr>
@@ -277,7 +277,6 @@ function storyLoad() {
                             <td colspan="3"><br><br>
                                 <div id="edit-delete-div">
                                        
-                                
                                     <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
                                     data-bs-toggle="modal" type="button">수정</button>
                                     <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
@@ -324,11 +323,33 @@ function storyLoad() {
                            <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
                            <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button></div>
                          `;
+                         
                       }
                      )
                       
-              }
-             
+              
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }  
             
            })
 }
@@ -661,7 +682,9 @@ function profileImageUpload(){
       reader.readAsDataURL(f); 
 
       })
+      
     })
+    
   })
 };
 
@@ -824,7 +847,7 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
           <input type="hidden" class="imageName" value="${follower[i].imageName}"/>
           <input type="hidden" name="bNo" id="bNo" value="${follower[i].userNo}"/>
           <div class="follower__text">
-              <h2><a href="http://localhost:8000/story/${follower[i].userNo}">${follower[i].userNickname}</a></h2>
+              <h2>${follower[i].userNickname}</h2>
               <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
           </div>
           <div class="follower__btn">
@@ -1120,7 +1143,14 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
 
 
+function logout(){
 
+  localStorage.clear();
+        
+  location.href="loginpage.html";
+
+
+}
 
 
 
