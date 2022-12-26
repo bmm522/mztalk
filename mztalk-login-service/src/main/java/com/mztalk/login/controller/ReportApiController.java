@@ -5,6 +5,7 @@ import com.mztalk.login.domain.dto.ReportResponseDto;
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.service.InsertReportService;
 import com.mztalk.login.service.SelectReportService;
+import com.mztalk.login.service.UpdateReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,8 @@ public class ReportApiController {
 
     private final SelectReportService selectReportService;
 
+    private final UpdateReportService updateReportService;
+
 
 
     @PostMapping("/report")
@@ -28,6 +31,15 @@ public class ReportApiController {
     public Result<?> getAllReport(){
         return selectReportService.getAllReport();
 
+    }
+
+    @PatchMapping("/report")
+    public long postReport(@RequestParam("bId")long boardId, @RequestParam("userId")long userId, @RequestParam("serviceName")String serviceName){
+        System.out.println("요청들어옴? : " + boardId);
+        System.out.println("요청들어옴? : " + userId);
+        System.out.println("요청들어옴? : " + serviceName);
+
+        return updateReportService.postReport(boardId, userId, serviceName);
     }
 
 
