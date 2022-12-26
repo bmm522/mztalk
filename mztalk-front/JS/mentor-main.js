@@ -72,42 +72,39 @@ const getBoardList = () =>{
     })
 }
 
-// 글 신고하기
+//글 신고하기
 const reportBoard = () =>{
-
-        const id = document.getElementById('boardId-modal').value;
-        fetch("http://localhost:8000/mentors/board/"+id,{
-            method:"GET",
-            headers:{
+    const id = document.getElementById('boardId-modal').value;
+    fetch("http://localhost:8000/mentors/board/"+id,{
+        method:"GET",
+        headers:{
             "Content-Type":"application/json",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        const userId = res.mentor.userId;
+        const bId = res.id;
+        fetch("http://localhost:8000/login/report",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
             },
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-            const userId = res.mentor.userId;
-            const bId = res.id;
-
-            fetch("http://localhost:8000/login/report",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json",
-                },
-                body:JSON.stringify({
-                    reportTitle : document.getElementById('reportTitle').value,
-                    reportContent : document.getElementById('reportContent').value,
-                    boardId : bId,
-                    serviceName : "mentor",
-                    userNo : userId,                   
-                })
+            body:JSON.stringify({
+                reportTitle : document.getElementById('reportTitle').value,
+                reportContent : document.getElementById('reportContent').value,
+                boardId : bId,
+                service : "mentor",
+                userNo : userId
             })
         })
-        .then(res=>{
-            alert('신고가 접수되었습니다.');
-            location.href="mentor-main.html";
-        })
-
+    })
+    .then(res =>{
+        alert('신고가 접수되었습니다.');
+        location.href="mentor-main.html";
+    })
 }
 
 

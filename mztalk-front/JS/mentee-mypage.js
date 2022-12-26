@@ -1,6 +1,10 @@
 window.onload = function(){
     getBoardList();
+    addFile();
+    
 
+}
+const addFile = () =>{
     document.getElementById("addFile").addEventListener('click', () => { 
         if(document.getElementsByName("file").length < 3) {
             const newDiv = document.createElement('div');
@@ -11,8 +15,9 @@ window.onload = function(){
             alert("파일은 3개까지 첨부 가능합니다.");
         }
     });
-
 }
+
+
 
 const getAccessToken = () =>{
     localStorage.removeItem('authorization');

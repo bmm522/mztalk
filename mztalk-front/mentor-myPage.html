@@ -98,7 +98,7 @@
                         <tbody>
                           <tr id="myBoardList">
                             
-                            <!--내가 작성한 신청자 리스트 보는곳-->
+                            <!--내가 작성한 글에대한 신청자 리스트 출력 레이아웃-->
 
                           </tr>
                         </tbody>
@@ -128,7 +128,9 @@
                         </thead>
                         <tbody>
                           <tr id="myMentees">
-                            <!-- 종료된 멘티들 출력화면-->
+
+                            <!-- 종료된 멘티들 출력 레이아웃-->
+
                           </tr>
                         </tbody>
                     </table>
@@ -138,7 +140,6 @@
     </div>
     <!-- 완료된 멘토링 보기 모달 끝 -->
 
-    
     <!-- 멘토링 글 작성 모달 시작 -->
         <div class="modal fade" id="writeModal" aria-hidden="true" aria-labelledby="writeModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
@@ -170,13 +171,13 @@
                             <input type="text" class="form-control form-control-sm" id="career" name="career" placeholder="예)~직업 ~년차">
                         </div>
                         <div class="mb-3">
-                            <label for="salary" class="form-label">시급</label>
+                            <label for="salary" class="form-label">금액</label>
                             <input type="text" class="form-control form-control-sm" id="salary" name="salary" placeholder="예)25000">
                         </div>
                         <div class="mb-3">
                             <label for="content">내용</label>
                             <textarea class="form-control" id="content" name="content" style="height: 300px"
-                            placeholder="예)소개 : 내용: 종류: 진행방식 : 사전 준비물:  "></textarea>
+                            placeholder="진행방식 : "></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
