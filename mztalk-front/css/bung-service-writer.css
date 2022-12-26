@@ -75,12 +75,11 @@ nav {
 
 .mainContainer {
   font-family: 'CookieRun';
-  display: flex;
   justify-content: space-between;
   margin: 0 auto;
   width: 935px;
   margin-top: 55px;
-  height: 10000px;
+  height: 1220px;
   background-color: rgb(242, 244, 226);
 } 
 
@@ -197,17 +196,139 @@ footer .container .copy p{font-size: 13px;padding-top: 2px;}
   margin-bottom:-10px;
 }
 
-.search{
-  text-align: center;
-  }
-
-#searchButton{
-  display: inline-block;
+.main{
+  margin: auto;
+  font-family: 'CookieRun';
+  background-color: rgb(242, 244, 226);		
 }
 
-.searchBar{
+#footerColor{
+  background-color: rgb(242, 244, 226);
+}
+
+a {
+     text-decoration-line: none;
+}
+.buttonGroup{
+     text-align: center;
+}
+.button{
+   display: inline-block;
+}
+
+hr {
+ border: none;
+ border-top: 1px dotted;
+}
+
+#date{
+  text-align: right;
+}
+
+#header{
   text-align: center;
-  background-color: #c3d773;
+  line-height: 50px;
+  font-size: 30px;
+}
+
+* {box-sizing: border-box;}
+body {font-family: Verdana, sans-serif;}
+.mySlides {display: none;}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Caption text */
+/* .text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+} */
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .text {font-size: 11px}
+}
+
+.writerBtn {
+  text-align: center;
+}
+
+.btn-outline-warning {
+  display :inline-block;
+}
+
+.actionBtn {
+  text-align: center;
+}
+
+.btn-outline-warning {
+  display :inline-block;
+}
+
+.infomationBtn {
+  text-align: center;
+}
+
+.btn-outline-warning {
+  display :inline-block;
+}
+
+#bungContent input {
+  padding: 0 1em; 
+  border: 0;
+  height: 38px;
+  width: 100%;
+  border-radius: 30px;
+}
+
+#bungContent {
+  width: 80%;
+  height: 200px;
 }
 
 table {
@@ -215,63 +336,43 @@ table {
   margin: auto;
 }
 
-#writeBtn{
-  position: fixed;
-  float: right;
-  right: 350px;
-  bottom: 50px;
-  border-radius: 100%;
-  overflow: hidden;
+a { 
+  color:#000000;text-decoration:none;
 }
 
-#groupTotal{
-  text-align: right;
-  vertical-align: bottom;
+.scriptCalendar {
+   text-align:center;
 }
 
-#imageBtn{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.scriptCalendar > thead > tr > td {
+  width:50px;height:50px;
 }
 
-#writer{
-  text-align: right;
-  vertical-align: bottom;
+.scriptCalendar > thead > tr:first-child > td {
+   font-weight:bold;
 }
 
-hr {
-  border-top: 1px blue dotted;
+.scriptCalendar > thead > tr:last-child > td {
+   background-color:#90EE90;
 }
 
-.PageBtn {
-  text-align: right;
+.scriptCalendar > tbody > tr > td {
+   width:50px;height:50px;
 }
 
-#PageBtn {
-  text-align: right;
+#bungTitle{
+  border: none;
+  cursor: pointer;
 }
 
-.card-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 270px;
-  height: 40px;
+#bungContent {
+  width: 80%;
+  height: 200px;
+  border: none;
+  cursor: pointer;
 }
 
-.card-header {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 285px;
-  height: 40px;
-}
 
-#count{
-  text-align: right;
-  vertical-align: bottom;
-}
 
 
 
