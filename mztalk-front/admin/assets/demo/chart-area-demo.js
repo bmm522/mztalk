@@ -212,15 +212,7 @@ const getDailyTraffic = () =>{
 
     }
 
-    // oneBeforeData =res.data[0].count;
-    // todayData = res.data[1].count;
-    // twoBeforeData = res.data[2].count;
-    // threeBeforeData = res.data[3].count;
-    // fourBeforeData = res.data[4].count;
-    // fiveBeforeData = res.data[5].count;
-    // sixBeforeData = res.data[6].count;
-    console.log(res);
-    // console.log('today : ' + todayData);
+
   var ctx = document.getElementById("myAreaChart");
   var myLineChart = new Chart(ctx, {
     type: 'line',

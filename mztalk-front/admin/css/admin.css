@@ -1,6 +1,37 @@
-#reg-btn{
-    background-color: aliceblue;
+#reg-btn-no{
+    background-color: red;
+    color: white;
+    border: 0.1px solid gray;
+    border-radius: 10px;
+    box-shadow: 0px 5px 0px 0px #f39b81;
+}
+
+#reg-btn-yes{
+    background-color: rgb(241, 236, 234);
+    color: black;
     border: 0.1px solid gray;
     border-radius: 10px;
     box-shadow: 0px 5px 0px 0px #0b0b0a;
+}
+
+
+
+#report-btn{
+    background-color: aliceblue;
+    color: black;
+    border: 0.1px solid gray;
+    border-radius: 10px;
+    box-shadow: 0px 5px 0px 0px #0b0b0a;
+    width: 60px;
+    height: 30px;
+}
+
+#rep-btn{
+    background-color: red;
+    color: white;
+    border: 0.1px solid gray;
+    border-radius: 10px;
+    box-shadow: 0px 5px 0px 0px #f39b81;
+    width: 100px;
+    height: 30px;
 }

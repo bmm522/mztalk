@@ -22,6 +22,8 @@ public class ReportResponseDto {
     private UserInfoDto user;
     private String path;
 
+    private String reportStatus;
+
     public ReportResponseDto(Report report, UserInfoDto userInfoDto){
         this.reportTitle = report.getReportTitle();
         this.reportContent = report.getReportContent();
@@ -29,5 +31,6 @@ public class ReportResponseDto {
         this.serviceName = report.getServiceName();
         this.user = userInfoDto;
         this.path = report.getPath();
+        this.reportStatus=report.getReportStatus();
     }
 }
