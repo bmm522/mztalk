@@ -1,6 +1,7 @@
 package com.mztalk.main.domain.reply.service;
 
 import com.mztalk.main.domain.reply.Reply;
+import com.mztalk.main.domain.reply.dto.ReplyResponseDto;
 import com.mztalk.main.domain.reply.repository.ReplyRepository;
 import com.mztalk.main.domain.reply.dto.ReplyRequestDto;
 import com.mztalk.main.domain.board.repository.BoardRepository;
@@ -24,7 +25,6 @@ public class ReplyServiceImpl implements ReplyService{
         boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         return replyRepository.save(replyRequestDto.toEntity(id));
-
     }
 
     @Override

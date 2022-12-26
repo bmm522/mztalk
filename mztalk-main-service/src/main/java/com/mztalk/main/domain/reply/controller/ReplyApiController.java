@@ -3,6 +3,7 @@ package com.mztalk.main.domain.reply.controller;
 
 import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.reply.Reply;
+import com.mztalk.main.domain.reply.dto.ReplyResponseDto;
 import com.mztalk.main.domain.reply.service.ReplyService;
 import com.mztalk.main.domain.reply.dto.ReplyRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +22,11 @@ public class ReplyApiController {
     //댓글쓰기
     @ResponseBody
     @PostMapping("/board/{id}/reply")
-    public ResponseEntity<?> replySave(@PathVariable("id") Long id, @RequestBody ReplyRequestDto replyRequestDto){
+    public Reply replySave(@PathVariable("id") Long id, @RequestBody ReplyRequestDto replyRequestDto){
 
-       Reply reply = replyService.replySave(id, replyRequestDto);
+       return replyService.replySave(id, replyRequestDto);
 
-        return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기성공", reply), HttpStatus.CREATED);
+
 //        return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기성공", result), HttpStatus.CREATED);
     }
 

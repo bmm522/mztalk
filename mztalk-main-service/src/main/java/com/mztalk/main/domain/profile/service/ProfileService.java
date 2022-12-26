@@ -16,7 +16,7 @@ public interface ProfileService {
     Optional<ProfileImageResponseDto> profileImg(long own);
 
 
-    Profile profileName(long own);
+    ProfileResponseDto profileName(long own);
 
     Profile boardCount(long own);
 

@@ -34,7 +34,7 @@ public class ProfileApiController {
     @GetMapping("/profile/name/{own}")
     public ResponseEntity<?> profileName(@PathVariable long own){
 
-        Profile profile = profileService.profileName(own);
+        ProfileResponseDto profile = profileService.profileName(own);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
     }

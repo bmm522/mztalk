@@ -1,6 +1,8 @@
 package com.mztalk.main.domain.profile.service.impl;
 
 
+
+import com.mztalk.main.domain.board.repository.BoardRepository;
 import com.mztalk.main.domain.follow.repository.FollowRepository;
 import com.mztalk.main.domain.profile.dto.ProfileDto;
 import com.mztalk.main.domain.profile.dto.ProfileImageResponseDto;
@@ -9,7 +11,6 @@ import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.profile.repository.ProfileCustomRepository;
 import com.mztalk.main.domain.profile.repository.ProfileRepository;
 import com.mztalk.main.domain.profile.service.ProfileService;
-import com.mztalk.main.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -32,9 +33,10 @@ public class ProfileServiceImpl implements ProfileService {
     private final FollowRepository followRepository;
     private final ProfileRepository profileRepository;
 
+    private final BoardRepository boardRepository;
     private final ProfileCustomRepository profileCustomRepository;
 
-    private final BoardRepository boardRepository;
+
 
 
     //개인 프로필 사진
@@ -89,7 +91,7 @@ public class ProfileServiceImpl implements ProfileService {
     //개인 프로필 이름
     @Override
     @Transactional(readOnly = true)
-    public Profile profileName(long own) {
+    public ProfileResponseDto profileName(long own) {
 
         HttpHeaders headerName = new HttpHeaders();
         headerName.add("Content-type", "text/html");
@@ -108,7 +110,7 @@ public class ProfileServiceImpl implements ProfileService {
         JSONObject ownName = new JSONObject(responseName.getBody());
         String nickname = ownName.getString("nickname");
 
-        return Profile.builder()
+        return ProfileResponseDto.builder()
                 .nickname(nickname)
                 .build();
     }

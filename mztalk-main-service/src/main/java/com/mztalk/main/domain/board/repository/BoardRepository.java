@@ -10,16 +10,8 @@ import java.util.Optional;
 
 
 public interface BoardRepository extends JpaRepository<Board, Long>, BoardCustomRepository {
-//    Iterable<Board> findByUserId(Long own);
 
-//    @Query(value ="SELECT * FROM Board b WHERE own = :own ORDER BY b.id DESC ", nativeQuery = true)
-//    List<Board> findAll(@PathVariable("own")Long own);
-
+    @Query(value = "select count(*) from Board b where b.status ='YES' and b.own = :own", nativeQuery = true)
     long countByOwn(long own);
-
-    //Optional<Board> findByUserId(Long toUserId);
-
-
-
 
 }

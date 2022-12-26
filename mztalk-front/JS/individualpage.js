@@ -320,7 +320,7 @@ function storyLoad() {
                            <div id="reply-content">${reply.replyContent}</div>
                            <div id="reply-date">${reply.lastModifiedDate}</div>
                            <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button></div>
-                         `
+                         `;
                       }
                      )
                       
@@ -570,6 +570,7 @@ function addReply(boardId){
 
             let reply = res.data;
             
+            let lastModifiedDate = reply.lastModifiedDate;
             document.querySelector(`.reply-div-${boardId}`).innerHTML +=
             `<div>
               <div id="reply-nickname">${reply.replyNickname}</div>
@@ -674,16 +675,32 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
 
       document.querySelector(".follower-list").innerHTML  = '';
 
-      console.log("스테이터스" + follower.followStatus);
+ 
 
       console.log(follower);
+
 
       for(let i = 0; i < follower.length; i++){
         // console.log("길이"+follower.length );
         // console.log("follower" + follower);
-        console.log("뜨니?"+ follower[0].followStatus);
+        //console.log("뜨니?"+ follower[0].followStatus);
+        //console.log(document.querySelectorAll('.follower__btn'));
+
+        //let followbutton = document.querySelectorAll('.follower__btn');
         
-        //if(follower[i].followStatus !== 'ONSELF'){
+        if(follower[i].followStatus==="FOLLOWING"){
+          document.querySelector('.follower__btn').innerHTML += 
+          `<div class="follower__btn"><button class="cta" onclick="clickFollow(this)">팔로잉</button>
+          <input type="hidden" class="userNo" name="userNo" value="${follower[i].userNo}"/>
+          `;
+        }else if(follower[i].followStatus==="UNFOLLOW"){
+          document.querySelector('.follower__btn').innerHTML += 
+          `<div class="follower__btn"><button class="cta blue" onclick="clickFollow(this)">팔로우</button>
+          <input type="hidden" class="userNo" name="userNo" value="${follower[i].userNo}"/>
+          `;
+        }else{
+          document.querySelector('.follower__btn').innerHTML += '';
+        }
 
       document.querySelector(".follower-list").innerHTML +=
       `
@@ -695,12 +712,18 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
               <h2>${follower[i].userNickname}</h2>
               <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
           </div>
-          <div class="follower__btn"><button onclick="clickFollow(this)">팔로잉</button>
-          <input type="hidden" class="userNo" name="userNo" value="${follower[i].userNo}"/>
+          <div class="follower__btn">
+            
           </div>
       </div> 
       `;
-          
+        
+          // follower.forEach((userNickname)=>{
+          //   document.querySelectorAll('.follower__btn').innerHTML +=
+          //   `
+          //   <button class="cta blue" onclick="clickFollow(this)">팔로우</button>
+          //   `;
+
     } 
     })
 
@@ -718,6 +741,10 @@ document.querySelector(".modal-follow").addEventListener("click", (e) => {
     document.querySelector(".modal-follow").style.display = "none";
   }
 });
+
+
+
+
 
 
 
@@ -763,7 +790,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
               
           </div>
           <div class="following__btn">
-          <button class="following_button" onclick="clickFollow(this)">팔로잉 
+          <button class="following_button" value="${following[i].userNo}" onclick="clickFollow(this)">팔로잉 
           <input type="hidden" class="userNo" name="userNo" value="${following[i].userNo}"/>
           </button>
           
@@ -825,23 +852,42 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
     let userButton = document.querySelector('.following_button');
 
-    console.log(userButton);
+    console.log("버튼"+ _btn.value);
+
   
     if (_btn.textContent === "팔로잉") {
 
       let fromUserId = localStorage.getItem('userNo');
-      let toUserId = localStorage.getItem("own");
+      let toUserId = _btn.value;
+
+      fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+             
+      console.log(res);
 
 
-
-
-
-
-
+      
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
       _btn.style.color = "#fff";
       _btn.style.border = "1px solid #ddd";
+    }) 
+    
+    
+
+
+
+
+
+
     } else {
       _btn.textContent = "팔로잉";
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
@@ -925,7 +971,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     .then((res)=>res.json())
     .then(res =>{
              
-      
+      console.log(res);
       //버튼 저장되게끔?
 
       _btn.textContent = "팔로잉";
@@ -963,11 +1009,6 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
  
     }
   }
-
-
-
-
-
 
 
 

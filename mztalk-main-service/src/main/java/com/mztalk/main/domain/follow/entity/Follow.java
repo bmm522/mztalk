@@ -31,29 +31,6 @@ public class Follow {
     private FollowStatus followStatus; // 글 status
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
