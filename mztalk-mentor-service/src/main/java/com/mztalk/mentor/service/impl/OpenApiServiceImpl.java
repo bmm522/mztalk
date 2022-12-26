@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mztalk.mentor.domain.dto.AccountInfoDto;
 import com.mztalk.mentor.domain.dto.OpenApiAccessTokenDto;
-import com.mztalk.mentor.domain.entity.AccountInfo;
 import com.mztalk.mentor.domain.entity.OpenApiAccessToken;
-import com.mztalk.mentor.repository.AccessTokenRepository;
-import com.mztalk.mentor.repository.AccountInfoRepository;
 import com.mztalk.mentor.service.OpenApiService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
@@ -31,16 +28,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class OpenApiServiceImpl implements OpenApiService {
 
-    private final AccessTokenRepository accessTokenRepository;
-    private final AccountInfoRepository accountInfoRepository;
-
     @Value("${account.clientId}")
     private String CLIENT_ID;
 
     @Value("${account.clientSecret}")
     private String CLIENT_SECRET;
-
-    private String uniqueNum = String.valueOf(System.currentTimeMillis()%1000000000);
 
     @Override
     public OpenApiAccessToken requestOpenApiAccessToken() {
@@ -71,15 +63,14 @@ public class OpenApiServiceImpl implements OpenApiService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        OpenApiAccessToken savedToken = accessTokenRepository.save(openApiAccessTokenDto.toEntity());
-
-        return savedToken;
+        return openApiAccessTokenDto.toEntity();
     }
 
     @Override
     @Transactional
-    public boolean requestMatchAccountRealName(ConcurrentHashMap<String,String> accountMap) {
+    public AccountInfoDto requestMatchAccountRealName(ConcurrentHashMap<String,String> accountMap) {
         OpenApiAccessToken token = requestOpenApiAccessToken();
+        int uniqueNum = (int)((Math.random()+10) * 10000000);
 
         String tokenType = token.getTokenType();
         String accessToken = token.getAccessToken();
@@ -88,8 +79,6 @@ public class OpenApiServiceImpl implements OpenApiService {
         String bankAccount = accountMap.get("bankAccount");
         String birthday = accountMap.get("birthday");
 
-        if(birthday.length() != 6){return false;}
-
         RestTemplate accountRestTemplate = new RestTemplate();
 
         HttpHeaders accountHeaders = new HttpHeaders();
@@ -97,21 +86,18 @@ public class OpenApiServiceImpl implements OpenApiService {
         accountHeaders.add("Authorization", tokenType + " " + accessToken);
 
         JSONObject accountBody = new JSONObject();
-        accountBody.put("bank_tran_id",token.getClientUseCode() + "U" + uniqueNum);
+        accountBody.put("bank_tran_id",token.getClientUseCode() + "U" + (uniqueNum));
         accountBody.put("bank_code_std",bankCode);
         accountBody.put("account_num",bankAccount);
         accountBody.put("account_holder_info_type","");
         accountBody.put("account_holder_info",birthday);
         accountBody.put("tran_dtime", LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
 
-        AccountInfoDto accountInfoDto;
-        accountInfoDto = accountRestTemplate.postForObject("https://testapi.openbanking.or.kr/v2.0/inquiry/real_name",
+        AccountInfoDto accountInfoDto = accountRestTemplate.postForObject("https://testapi.openbanking.or.kr/v2.0/inquiry/real_name",
                 new HttpEntity<>(accountBody.toString(), accountHeaders),
                 AccountInfoDto.class);
 
-        AccountInfo accountInfo = accountInfoRepository.save(accountInfoDto.toEntity());
-
-        return false;
+        return accountInfoDto;
     }
 
 }
