@@ -19,4 +19,6 @@ public interface UserCustomRepository {
     int updateNickname(long id, String nickname);
 
     int updateEmail(long parseLong, String email);
+
+    int updateReportCount(long reportCount, long id);
 }

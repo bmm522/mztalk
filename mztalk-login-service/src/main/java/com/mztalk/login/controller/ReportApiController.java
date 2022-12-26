@@ -4,6 +4,7 @@ import com.mztalk.login.domain.dto.ReportRequestDto;
 import com.mztalk.login.domain.dto.ReportResponseDto;
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.service.InsertReportService;
+import com.mztalk.login.service.SelectReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,8 @@ public class ReportApiController {
 
     private final InsertReportService insertReportService;
 
+    private final SelectReportService selectReportService;
+
 
 
     @PostMapping("/report")
@@ -21,11 +24,11 @@ public class ReportApiController {
         return insertReportService.insertReport(reportRequestDto);
     }
 
-//    @GetMapping("/report")
-//    public Result<?> getAllReport(){
-//        return
-//
-//    }
+    @GetMapping("/report")
+    public Result<?> getAllReport(){
+        return selectReportService.getAllReport();
+
+    }
 
 
 }

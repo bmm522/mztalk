@@ -37,6 +37,7 @@ public class ReportRequestDto {
                 .serviceName(serviceName)
                 .user(user)
                 .path(path)
+                .reportStatus("Y")
                 .build();
     }
 }

@@ -34,6 +34,8 @@ public class Report {
 
     private Date reportTime;
 
+    private String reportStatus;
+
     @PrePersist
     public void onPrePersist(){
         this.reportTime = Date.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
