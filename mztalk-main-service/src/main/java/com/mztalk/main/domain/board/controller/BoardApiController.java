@@ -10,9 +10,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/story")
@@ -41,7 +41,7 @@ public class BoardApiController {
     //글수정
     @PatchMapping("/update/{id}")
     public Long updateForm(@PathVariable("id") Long id, @RequestBody BoardDto boardDto) {
-
+        System.out.println(boardDto);
         return boardService.updateBoard(id, boardDto);
     }
 

@@ -20,7 +20,7 @@ import java.util.List;
 public class BoardDto {
 
     private Long id; //글번호
-    //private Board nickname; //작성자
+   // private Board nickname; //작성자
     private String title; //글제목
     private String content; //글내용
     private BoardStatus status; //글상태
@@ -61,7 +61,7 @@ public class BoardDto {
         this.own = board.getOwn();
         this.privacy = board.getPrivacy();
         this.replyList = board.getReplyList();
-
+        this.lastModifiedDate = board.getLastModifiedDate();
 
     }
 

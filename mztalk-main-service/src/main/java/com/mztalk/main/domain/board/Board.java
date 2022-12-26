@@ -82,10 +82,10 @@ public class Board extends BaseTimeEntity {
         this.title = boardDto.getTitle();
         this.content = boardDto.getContent();
         this.own = boardDto.getOwn();
-        this.replyList = boardDto.getReplyList();
-        this.status = boardDto.getStatus();
+        //this.replyList = boardDto.getReplyList();
+        this.status = BoardStatus.YES;
         this.privacy = boardDto.getPrivacy();
-    
+
     }
 
     //글삭제(status = N)
