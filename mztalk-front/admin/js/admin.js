@@ -20,7 +20,7 @@ const getMentor = () =>{
                 let currentJob = application.job;
                 let phone = application.phone;
                 let email = application.email;
-                let createDate = application.createdDate.substr(0,9);
+                let createDate = application.createdDate.substr(0,10);
                 let authStatus = application.authStatus;
                 let userNo = application.mentee.id;
 

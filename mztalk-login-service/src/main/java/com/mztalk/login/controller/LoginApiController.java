@@ -34,10 +34,10 @@ public class LoginApiController {
         return updateUserInfoService.updatePassword(body.get("username"), body.get("password"));
     }
 
-    @PatchMapping("/mentor-status/{nickname}")
-    public int updateMentorStatus(@PathVariable("nickname")String nickname){
-        return updateUserInfoService.updateMentorStatus(nickname);
-    }
+//    @PatchMapping("/mentor-status/{nickname}")
+//    public int updateMentorStatus(@PathVariable("nickname")String nickname){
+//        return updateUserInfoService.updateMentorStatus(nickname);
+//    }
 
     @PatchMapping("/status/{nickname}")
     public int updateStatus(@PathVariable("nickname")String nickname){
@@ -57,7 +57,7 @@ public class LoginApiController {
     public UserInfoDto getUserInfoByUserNo(@PathVariable("id")String id){
         return selectUserInfoService.getUserInfoByUserNo(id);
     }
-    @GetMapping("user/{nickname}")
+    @GetMapping("user-info/{nickname}")
     public UserInfoDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
         return selectUserInfoService.getUserInfoByNickname(nickname);
     }

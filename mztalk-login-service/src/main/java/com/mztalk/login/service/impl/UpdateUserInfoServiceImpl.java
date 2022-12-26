@@ -24,10 +24,10 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
        return userRepository.updatePassword(username, bCryptPasswordEncoder.encode(password));
     }
 
-    @Override
-    public int updateMentorStatus(String nickname) {
-        return userRepository.updateMentorStatus(nickname);
-    }
+//    @Override
+//    public int updateMentorStatus(String nickname) {
+//        return userRepository.updateMentorStatus(nickname);
+//    }
 
     @Override
     public int updateStatus(String nickname) {

@@ -8,14 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstance;
@@ -39,9 +37,13 @@ public class User {
     private String providerId;
     @CreationTimestamp
     private Timestamp createDate;
-    private String mentorStatus;
     private String status;
-    private String nicknameCheck;
+
+    private long reportCount;
+
+    @OneToMany(mappedBy = "user")
+    private List<Report> reports;
+
 
     public void changeNickname(String nickname){
         this.nickname = nickname;
@@ -56,9 +58,8 @@ public class User {
                 .provider(provider)
                 .providerId(providerId)
                 .createDate(createDate)
-                .mentorStatus(mentorStatus)
                 .status(status)
-                .nicknameCheck(nicknameCheck)
+                .reportCount(String.valueOf(reportCount))
                 .build();
     }
 

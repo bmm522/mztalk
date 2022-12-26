@@ -37,9 +37,8 @@ public class GoogleUserInfo implements SocialUserInfo{
                 .role("ROLE_USER")
                 .provider("GOOGLE")
                 .providerId((String) userInfoMap.get("sub"))
-                .mentorStatus("N")
                 .status("Y")
-                .nicknameCheck("N")
+                .reportCount(0L)
                 .build();
     }
 

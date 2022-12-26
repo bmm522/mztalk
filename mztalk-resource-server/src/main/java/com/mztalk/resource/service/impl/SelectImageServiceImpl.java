@@ -26,7 +26,6 @@ import static com.mztalk.resource.factory.NotiResponseFactory.*;
 public class SelectImageServiceImpl implements SelectImageService {
 
 
-    @Autowired
     private final ImageRepository imageRepository;
 
     @Override
