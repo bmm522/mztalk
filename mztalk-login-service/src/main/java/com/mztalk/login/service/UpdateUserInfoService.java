@@ -16,4 +16,6 @@ public interface UpdateUserInfoService {
     int changeNewPassword(Map<String, String> body);
 
     int changeNewNickname(Map<String, String> body);
+
+    int changeNewEmail(String userNo, String email);
 }

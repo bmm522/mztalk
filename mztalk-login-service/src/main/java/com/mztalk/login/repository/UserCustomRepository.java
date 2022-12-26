@@ -17,4 +17,6 @@ public interface UserCustomRepository {
     String findByPasswordWithId(long id);
 
     int updateNickname(long id, String nickname);
+
+    int updateEmail(long parseLong, String email);
 }
