@@ -87,5 +87,10 @@ public class LoginApiController {
         return updateUserInfoService.changeNewNickname(body);
     }
 
+    @PatchMapping("/user/email")
+    public int changeNewEmail(@RequestBody Map<String, String> body){
+        return updateUserInfoService.changeNewEmail(body.get("userNo"), body.get("email"));
+    }
+
 
 }

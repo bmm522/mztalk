@@ -51,6 +51,14 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
                 .executeUpdate();
     }
 
+    @Override
+    public int updateEmail(long id, String email) {
+        return entityManager.createQuery("UPDATE User u SET u.email = :email WHERE u.id = :id")
+                .setParameter("email", email)
+                .setParameter("id" , id)
+                .executeUpdate();
+    }
+
 
     public  void commit(){
         entityManager.flush();
