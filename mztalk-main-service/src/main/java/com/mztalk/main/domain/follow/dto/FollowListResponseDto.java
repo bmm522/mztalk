@@ -22,7 +22,7 @@ public class FollowListResponseDto {
 
 
     public FollowListResponseDto(Follow follow, String nickname, String imageUrl, String imageName, FollowStatus followStatus) {
-        this.userNo = String.valueOf(follow.getToUserId());
+        this.userNo = String.valueOf(follow.getFromUserId());
         this.userNickname = nickname;
         this.imageUrl = imageUrl;
         this.imageName = imageName;

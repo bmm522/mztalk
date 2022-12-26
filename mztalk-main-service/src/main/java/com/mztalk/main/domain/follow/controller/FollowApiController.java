@@ -28,7 +28,7 @@ public class FollowApiController {
 
         followService.follow(toUserId, fromUserId);
 
-        return new ResponseEntity<>(new CMRespDto<>(1,"팔로우성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new CMRespDto<>(1,"팔로우성공", "ok"), HttpStatus.OK);
     }
 
     //팔로우 취소
@@ -37,7 +37,7 @@ public class FollowApiController {
 
         followService.unFollow(toUserId, fromUserId);
 
-        return new ResponseEntity<>(new CMRespDto<>(1, "팔로우취소성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new CMRespDto<>(1, "팔로우취소성공", "ok"), HttpStatus.OK);
     }
 
 

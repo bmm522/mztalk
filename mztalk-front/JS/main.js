@@ -1,132 +1,7 @@
-// const commentInput = document.querySelector('.commentWrap input');
-// const addComment = document.querySelector('.textWrap .comment');
-// const commetBtn = document.querySelector('.commetBtn');
-// const commentStart = document.querySelector('.commentStart');
-// const heart = document.querySelector('.heart');
-// const heartColor = document.querySelector('.heartColor');
-// const trashBtn = document.querySelector('i.far.fa-trash-alt');
-// const commentHeart = document.querySelector('.fa-heart');
-// const commentHeartColor = document.querySelector('.colorHeart');
+window.onload = function(){
+    newMentorBoard();
 
-
-// commentInput.addEventListener('keypress', function(value){
-//     let myName = '94_yongyong_lee';
-//     let addCommentUnoderList = document.createElement('ul'); 
-//     let addCommentList = document.createElement('li');
-//     let boldNameWrap = document.createElement('h4');
-//     let commentInnerTextBox = document.createElement('div');
-//     let heartBox = document.createElement('div');
-
-//     if(value.code === "Enter"){
-//         boldNameWrap.innerText = myName;
-//         addCommentList.innerText = commentInput.value;
-//         commentStart.appendChild(addCommentUnoderList);
-//         addCommentUnoderList.appendChild(commentInnerTextBox);
-//         commentInnerTextBox.appendChild(boldNameWrap);
-//         commentInnerTextBox.appendChild(addCommentList);
-//         addCommentUnoderList.appendChild(commentInnerTextBox);
-
-//         addCommentUnoderList.appendChild(heartBox);
-//         addCommentUnoderList.appendChild(heartBox);
-//         heartBox.appendChild(commentHeartColor);
-//         heartBox.appendChild(commentHeart);
-//         heartBox.appendChild(trashBtn);
-        
-        
-//         addCommentUnoderList.style.justifyContent ="space-between";     
-//         addCommentUnoderList.style.display ="flex";     
-//         boldNameWrap.style.marginRight = "5px";
-//         heartBox.style.flexDirection = "row-reverse";
-//         heartBox.style.display = "flex";
-//         commentInnerTextBox.style.display = "flex";
-//         commentHeart.style.display = "flex";
-//         trashBtn.style.marginRight = "5px";
-//         trashBtn.style.display = "flex";
-//         return commentInput.value = "";
-//     };
-// })
-
-// function addCommentListBtn(){
-//     let myName = '94_yongyong_lee';
-//     let addCommentUnoderList = document.createElement('ul'); 
-//     let addCommentList = document.createElement('li');
-//     let boldNameWrap = document.createElement('h4');
-
-//     boldNameWrap.innerText = myName;
-//     addCommentList.innerText = commentInput.value;
-//     commentStart.appendChild(addCommentUnoderList);
-//     addCommentUnoderList.appendChild(boldNameWrap);
-//     addCommentUnoderList.appendChild(addCommentList);
-    
-//     boldNameWrap.style.marginRight = "5px";
-//     addCommentUnoderList.style.display ="flex";
-//     return commentInput.value = "";
-// }
-
-// function redHeartColorChange(){
-//     heartColor.style.display = "inline-block";
-//     heart.style.display = "none";
-// }
-
-// function blackHeartColorChange(){
-//     heart.style.display = "inline-block";
-//     heartColor.style.display = "none";
-// }
-
-// function changeButtonColor(value){
-//     if(value.length !== 1){
-//         commetBtn.style.color = "#0095f6";
-//     }
-//     if(value.code === "Enter"){
-//         return commetBtn.style.color ="#BFE0FD";
-//     }
-// }
-// function buttonColorReset(){
-//     return commetBtn.style.color ="#BFE0FD";
-// }
-        
-// function removeComment(){
-//     let removeText = document.querySelector('.commentStart ul');
-//     return removeText.remove();
-// }
-
-// function commentHeartChangeRed(){
-//     commentHeart.style.display = "none";
-//     commentHeartColor.style.display = "flex";
-// }
-
-// function commentHeartChangeBlack(){
-//     commentHeart.style.display = "flex";
-//     commentHeartColor.style.display = "none";
-// }
-
-// function toggleLike() {
-// 	let likeIcon = $("#storyLikeIcon-1");
-// 	if (likeIcon.hasClass("far")) {
-// 		likeIcon.addClass("fas");
-// 		likeIcon.addClass("active");
-// 		likeIcon.removeClass("far");
-// 	} else {
-// 		likeIcon.removeClass("fas");
-// 		likeIcon.removeClass("active");
-// 		likeIcon.addClass("far");
-// 	}
-// }
-
-
-
-
-// commetBtn.addEventListener('click',addCommentListBtn);
-// commetBtn.addEventListener('click',buttonColorReset);
-// commentInput.addEventListener('keydown',changeButtonColor);
-// trashBtn.addEventListener('click', removeComment);
-// commentHeart.addEventListener('click', commentHeartChangeRed);
-// commentHeartColor.addEventListener('click', commentHeartChangeBlack);
-
-//
-// localStorage.removeItem('own');
-// localStorage.setItem('own', userNo);
-
+}
 
 //개인페이지
 document.getElementById('move-story-service').addEventListener('click',function(){
@@ -229,7 +104,7 @@ document.getElementById('move-auction-service').addEventListener('click',functio
 });
 
 
-
+//멘토 최신글뽑아오기
 function newMentorBoard(){
     fetch("http://localhost:8000/mentors/board/latest",{
         method:"GET",
@@ -241,9 +116,38 @@ function newMentorBoard(){
       .then((res)=> res.json())
       .then(res=>{       
         console.log(res.data);
-            
-      
+        
+        for(let board of res.data){
+            let boardId = board.id;
+            let category = board.category;
+            let nickname = board.nickname;
+            let career = board.career;
+            let title = board.title;    
+        document.querySelector('.col-md-6').innerHTML=
+        `
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary">World{카테고리}</strong>
+                <h3 class="mb-0">{글제목}</h3>
+                <div class="mb-1 text-muted">Nov 12{작성일}</div>
+                <p class="card-text mb-auto">
+                zzz
+                </p>
+                <a href="#" class="stretched-link">자세히보기</a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+                <img src="img/recommend_02.jpeg" style="width: 150px; height: 250px;" >      
+            </div>
+            </div>
+        </div>
+        `;
+        }
+
+
+
+
+
         
             
-           })
+    })
 }
