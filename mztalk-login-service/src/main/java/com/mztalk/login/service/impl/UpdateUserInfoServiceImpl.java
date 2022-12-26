@@ -59,5 +59,10 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
         return 0;
     }
 
+    @Override
+    public int changeNewNickname(Map<String, String> body) {
+        return userRepository.updateNickname(Long.parseLong(body.get("userNo")),body.get("nickname"));
+    }
+
 
 }
