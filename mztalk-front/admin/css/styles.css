@@ -11684,6 +11684,7 @@ body {
 }
 
 .dataTables-empty {
+  display: none;
   text-align: center;
 }
 
