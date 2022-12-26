@@ -147,7 +147,7 @@ document.getElementById('nickname').addEventListener('keyup',function(){
           emailAuthCode = res.authCode;
           document.querySelector('#final_check').disabled = false;
           alert('작성하신 이메일로 인증코드를 전송했습니다.');
-          document.getElementById('auth_div').style.display="flex";
+         
           
         }
       })
@@ -249,7 +249,7 @@ function profileBox(){
 function ch_nickName(){
   
   let nickname = document.getElementById('nickname').value;
-  console.log(nickname);
+  //console.log(nickname);
   let userNo = localStorage.getItem('userNo');
   
   if(confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')){
@@ -270,10 +270,44 @@ function ch_nickName(){
     .then(res =>{
 
       alert('닉네임변경완료');
-      sessionStorage.clear();
+
+      localStorage.clear();
+      
       location.href="loginpage.html";
 
     })
   }
-}
-  
+};
+
+
+//이메일 변경
+function ch_email(){ 
+
+  // let email = document.getElementById('#email-box').value;
+
+    fetch("http://localhost:8000/login/user/email",{
+          method:"PATCH",
+            headers:{
+                "Content-Type":"application/json",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken'),
+            },
+            body:JSON.stringify({
+              email: document.querySelector('#email-box').value,
+              userNo: localStorage.getItem('userNo'),
+          })
+      })
+      .then((res)=>res.json())
+      .then(res =>{
+        
+        alert('이메일변경완료');
+        
+        localStorage.clear();
+        
+        location.href="loginpage.html";
+
+      })
+    }
+
+
+

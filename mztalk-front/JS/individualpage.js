@@ -1143,7 +1143,14 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
 
 
+function logout(){
 
+  localStorage.clear();
+        
+  location.href="loginpage.html";
+
+
+}
 
 
 
