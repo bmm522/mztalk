@@ -16,9 +16,8 @@ public class UserInfoDto {
     private String provider;
     private String providerId;
     private Timestamp createDate;
-    private String mentorStatus;
     private String status;
-    private String nicknameCheck;
+    private String reportCount;
 
 
 }

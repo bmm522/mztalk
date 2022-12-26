@@ -39,9 +39,10 @@ public class User {
     private String providerId;
     @CreationTimestamp
     private Timestamp createDate;
-    private String mentorStatus;
     private String status;
-    private String nicknameCheck;
+
+    private long reportCount;
+
 
     public void changeNickname(String nickname){
         this.nickname = nickname;
@@ -56,9 +57,8 @@ public class User {
                 .provider(provider)
                 .providerId(providerId)
                 .createDate(createDate)
-                .mentorStatus(mentorStatus)
                 .status(status)
-                .nicknameCheck(nicknameCheck)
+                .reportCount(String.valueOf(reportCount))
                 .build();
     }
 

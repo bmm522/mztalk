@@ -38,9 +38,8 @@ public class NaverUserInfo implements SocialUserInfo{
                 .role("ROLE_USER")
                 .provider("NAVER")
                 .providerId((String)userInfoMap.get("id"))
-                .mentorStatus("N")
                 .status("Y")
-                .nicknameCheck("N")
+                .reportCount(0L)
                 .build();
     }
 
