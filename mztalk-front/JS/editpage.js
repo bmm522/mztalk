@@ -53,15 +53,16 @@ document.getElementById('nickname').addEventListener('keyup',function(){
   
   });
 
-  document.getElementById('nickname').addEventListener('blur',function(){
-    idBlurText(); 
-  });
+  // document.getElementById('nickname').addEventListener('blur',function(){
+  //   idBlurText(); 
+  // });
 
   const isNicknameVaildText = () =>{
     let checkNicknameDiv = document.getElementById('checkNickname');
     checkNicknameDiv.innerHTML = '닉네임은 최소 2글자 이상이어야 합니다.';
     checkNicknameDiv.style.color = 'red';
     document.getElementById('checkNicknameResult').value = "fail";
+    document.querySelector('#nickname_check').disabled = true;
   }
     
   const nicknameSuccessText = () => {
@@ -69,6 +70,7 @@ document.getElementById('nickname').addEventListener('keyup',function(){
     checkNicknameDiv.innerHTML = '사용가능합니다.';
     checkNicknameDiv.style.color = 'green';
     document.getElementById('checkNicknameResult').value = "success";
+    document.querySelector('#nickname_check').disabled = false;
   }
   
   const nicknameFailText = () => {
@@ -76,6 +78,7 @@ document.getElementById('nickname').addEventListener('keyup',function(){
     checkNicknameDiv.innerHTML = '중복된 닉네임 입니다.';
     checkNicknameDiv.style.color = 'red';
     document.getElementById('checkNicknameResult').value = "fail";
+    document.querySelector('#nickname_check').disabled = true;
   }
   
   const nicknameBlurText = () => {
@@ -111,6 +114,7 @@ document.getElementById('nickname').addEventListener('keyup',function(){
         checkEmail.innerHTML= '올바른 형식입니다.';
         checkEmail.style.color='green';
         document.getElementById('checkEmailResult').value = "success";
+
       
       }
   }
@@ -139,11 +143,12 @@ document.getElementById('nickname').addEventListener('keyup',function(){
           alert('이메일 형식이 올바르지 않습니다.');
   
         } else {
-  
+          
           emailAuthCode = res.authCode;
+          document.querySelector('#final_check').disabled = false;
           alert('작성하신 이메일로 인증코드를 전송했습니다.');
           document.getElementById('auth_div').style.display="flex";
-  
+          
         }
       })
     }
@@ -232,3 +237,43 @@ function profileBox(){
       }
     })
   }
+
+
+
+
+//    @PatchMapping("/mentor-status/{nickname}")
+//    public int updateMentorStatus(@PathVariable("nickname")String nickname){
+//        return updateUserInfoService.updateMentorStatus(nickname);
+//    }
+//닉네임변경
+function ch_nickName(){
+  
+  let nickname = document.getElementById('nickname').value;
+  console.log(nickname);
+  let userNo = localStorage.getItem('userNo');
+  
+  if(confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')){
+
+  fetch("http://localhost:8000/login/user/nickname",{
+        method:"PATCH",
+          headers:{
+              "Content-Type":"application/json",
+              Authorization:localStorage.getItem('authorization'),
+              RefreshToken:localStorage.getItem('refreshToken'),
+          },
+          body:JSON.stringify({
+            nickname: document.getElementById('nickname').value,
+            userNo: localStorage.getItem('userNo'),
+        })
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+
+      alert('닉네임변경완료');
+      sessionStorage.clear();
+      location.href="loginpage.html";
+
+    })
+  }
+}
+  

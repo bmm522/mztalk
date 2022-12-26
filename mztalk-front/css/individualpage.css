@@ -523,20 +523,20 @@ button {
     align-items: center;
     justify-content: center;
   }
-  .modal-image .modal {
+  .modal-image .modals {
     width: 400px;
     background-color: #fff;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
   }
-  .modal-image .modal button {
+  .modal-image .modals button {
     border: 0;
     background-color: transparent;
     height: 48px;
     cursor: pointer;
   }
-  .modal-image .modal p {
+  .modal-image .modals p {
     line-height: 50px;
     text-align: center;
     border-bottom: 1px solid #ddd;
@@ -544,11 +544,11 @@ button {
     color: #222;
     font-size: 18px;
   }
-  .modal-image .modal button:nth-child(2) {
+  .modal-image .modals button:nth-child(2) {
     font-weight: 600;
     color: #0095f6;
   }
-  .modal-image .modal button:not(:last-child) {
+  .modal-image .modals button:not(:last-child) {
     border-bottom: 1px solid #dbdbdb;
   }
   
@@ -650,21 +650,21 @@ button {
     justify-content: center;
     
   }
-  .modal-info .modal {
+  .modal-info .modalz {
     width: 400px;
     background-color: #fff;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
   }
-  .modal-info .modal button {
+  .modal-info .modalz button {
     border: 0;
     background-color: transparent;
     height: 48px;
     cursor: pointer;
   }
   
-  .modal-info .modal button:not(:last-child) {
+  .modal-info .modalz button:not(:last-child) {
     border-bottom: 1px solid #dbdbdb;
   }
 

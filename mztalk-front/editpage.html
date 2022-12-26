@@ -81,8 +81,17 @@
                                         <div id="checkNickname" class="vaild-div"></div>
                                         <input type="hidden" id="checkNicknameResult" value="fail"/>
                                     </div>
+                                        
                                 </div>
                                 
+                                <div class="content-item__11">
+                                    <div class="item__title"></div>
+                                    <div class="item__input">
+
+                                        <button type="button" class="btn btn-primary" id="nickname_check" onclick="ch_nickName();" disabled="disabled">제출</button>
+                                    </div>
+                                </div>
+
                                 <div class="content-item__07">
                                     <div class="item__title"></div>
                                     <div class="item__input">
@@ -115,7 +124,7 @@
                                 <div class="content-item__11">
                                     <div class="item__title"></div>
                                     <div class="item__input">
-                                        <button type="button" class="btn btn-primary" disabled>제출</button>
+                                        <button type="button" class="btn btn-primary" id="final_check" disabled="disabled">이메일변경</button>
                                     </div>
                                 </div>
                                 
@@ -416,13 +425,13 @@
        </footer>
    
      <!--프로필사진 바꾸기 모달-->
-     <div class="modal-image" onclick="modalImage()">
+     <!-- <div class="modal-image" onclick="modalImage()">
         <div class="modal">
             <p>프로필 사진 바꾸기</p>
             <button onclick="profileImageUpload()">사진 업로드</button>
             <button onclick="closePopup('.modal-image')">취소</button>
         </div>
-    </div>
+    </div> -->
 
     <!--프로필사진 바꾸기 모달end-->
     
