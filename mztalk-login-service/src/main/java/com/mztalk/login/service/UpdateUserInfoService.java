@@ -14,4 +14,6 @@ public interface UpdateUserInfoService {
     int updateRoleChangeToUser(Long id);
 
     int changeNewPassword(Map<String, String> body);
+
+    int changeNewNickname(Map<String, String> body);
 }

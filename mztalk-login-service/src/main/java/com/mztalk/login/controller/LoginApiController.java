@@ -82,5 +82,10 @@ public class LoginApiController {
         return updateUserInfoService.changeNewPassword(body);
     }
 
+    @PatchMapping("/user/nickname")
+    public int changeNewNickname(@RequestBody Map<String, String> body){
+        return updateUserInfoService.changeNewNickname(body);
+    }
+
 
 }

@@ -15,4 +15,6 @@ public interface UserCustomRepository {
     int changedPassword(String newPassword, long id);
 
     String findByPasswordWithId(long id);
+
+    int updateNickname(long id, String nickname);
 }

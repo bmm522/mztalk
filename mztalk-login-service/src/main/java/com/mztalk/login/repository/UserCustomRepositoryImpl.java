@@ -43,6 +43,14 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
                 .getSingleResult();
     }
 
+    @Override
+    public int updateNickname(long id, String nickname) {
+        return entityManager.createQuery("UPDATE User u SET u.nickname = :nickname WHERE u.id=:id")
+                .setParameter("nickname", nickname)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
 
     public  void commit(){
         entityManager.flush();
