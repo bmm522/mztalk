@@ -24,17 +24,18 @@ const newMentorBoard = () =>{
             let boardId = board.id;
             let category = board.category;
             let nickname = board.nickname;
-            let career = board.career;
-            let title = board.title;    
+            let title = board.title;
+            let content = board.content;
+            let date = board.lastModifiedDate.substr(0,10); // 0~10까지
         document.querySelector('.col-md-6').innerHTML=
         `
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary">World{카테고리}</strong>
-                <h3 class="mb-0">{글제목}</h3>
-                <div class="mb-1 text-muted">Nov 12{작성일}</div>
+                <strong class="d-inline-block mb-2 text-primary">${category}</strong>
+                <h3 class="mb-0">${title}</h3>
+                <div class="mb-1 text-muted">${date}</div>
                 <p class="card-text mb-auto">
-                zzz
+                ${content}
                 </p>
                 <a href="#" class="stretched-link">자세히보기</a>
             </div>

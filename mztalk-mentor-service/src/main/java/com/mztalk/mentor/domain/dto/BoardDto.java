@@ -4,6 +4,7 @@ import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class BoardDto {
     private List<Participant> participants = new ArrayList<>();
     private List<Payment> payments = new ArrayList<>();
     private Status status;
+    private LocalDateTime lastModifiedDate;
 
     public Board toEntity() {
         Board board = Board.builder()
@@ -58,6 +60,7 @@ public class BoardDto {
         this.participants = board.getParticipants();
         this.payments = board.getPayments();
         this.status = board.getStatus();
+        this.lastModifiedDate = board.getLastModifiedDate();
     }
 
 }
