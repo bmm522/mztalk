@@ -118,7 +118,6 @@ const el = {
   
   // Behavior of the inputs and labels
   for (input of el.inputs) {
-    console.log(input)
     input.addEventListener('keydown', function() {
       this.labels[0].style.top = '10px';
     });
@@ -549,8 +548,9 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         localStorage.setItem("userNo", response.headers.get("UserNo"));
         localStorage.setItem("userNickname", decodeURIComponent(response.headers.get('UserNickname')));
         window.open('admin/index.html', '_self');
+      } else if(result == 'Out User'){
+        window.open('loginpage.html', '_self');
       } else {
-
         localStorage.setItem("authorization", response.headers.get('Authorization'));
         localStorage.setItem("refreshToken", response.headers.get('RefreshToken'));
         localStorage.setItem("userNo", response.headers.get("UserNo"));
@@ -587,18 +587,12 @@ document.getElementById('kakaoBtn').addEventListener('click',function(){
   console.log(getCookieValue('Authorization'));
   console.log(getCookieValue('RefreshToken'));
   console.log(getCookieValue('LoginResult'));
+  console.log(getCookieValue('UserStatus'));
   
 
-
-
-
-
-
       if(!getCookieValue('Authorization') == ''){
-          console.log('쿠키있음');
-          // localStorage.removeItem("authorization");
-          // localStorage.removeItem("RefreshToken");
-
+    
+        if(getCookieValue('UserStatus') == 'Y'){
           localStorage.setItem('authorization', getCookieValue('Authorization').replace("+"," "));
           localStorage.setItem('refreshToken', getCookieValue('RefreshToken').replace("+"," "));
           localStorage.setItem('userNo', getCookieValue('UserNo').replace("+"," "));
@@ -609,10 +603,25 @@ document.getElementById('kakaoBtn').addEventListener('click',function(){
           console.log("소셜로그인 : " + localStorage.getItem('userNickname'));
           console.log('소셜로그인쪽 실행됨');
           window.open('main.html', '_self');
+        } else if(getCookieValue('UserStatus') == 'out'){
+          alert('이용이 정지된 회원입니다. (신고 누적)');
+          console.log('아웃 실행');
+          deleteCookie('Authorization');
+          deleteCookie('RefreshToken');
+          deleteCookie('LoginResult');
+          deleteCookie('UserStatus');
+          window.open('loginpage.html', '_self');
+        }else if(getCookieValue('UserStatus') == 'N'){
+          alert('사용불가능한 계정입니다.');
+          deleteCookie('Authorization');
+          deleteCookie('RefreshToken');
+          deleteCookie('LoginResult');
+          deleteCookie('UserStatus');
+          window.open('loginpage.html', '_self');
+        }
+          
       }
-  console.log("여기가 실행되면 안돼");
-  console.log(localStorage.getItem('authorization'));
-  console.log(localStorage.getItem('refreshToken'));
+
   };
   
   
