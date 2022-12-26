@@ -299,10 +299,11 @@
                         <div class="mb-3">
                             <button class="btn btn-outline-success" type="button" id="accountButton">실명인증하기</button>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3" id = "fileArea">
                             <form action="http://localhost:8000/resource/files" method="POST" enctype="multipart/form-data" id="file-form">
                                 <label for="file-box" class="form-label">인증서류</label>
-                                <input type="file" id="file-box" name="file"/>
+                                <button type = "button" id = "addFile" style = "margin-top: 20px; margin-left: 10px;">+</button>
+                                <!-- 첨부파일 레이아웃-->
                                 <input type="hidden" name="id" id="id-hidden"/>
                             </form>
                         </div>

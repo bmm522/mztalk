@@ -1,5 +1,17 @@
 window.onload = function(){
     getBoardList();
+
+    document.getElementById("addFile").addEventListener('click', () => { 
+        if(document.getElementsByName("file").length < 3) {
+            const newDiv = document.createElement('div');
+            newDiv.classList.add('col-10');
+            newDiv.innerHTML = '<input type = "file" class = "form-control" name = "file">';
+            document.getElementById('file-form').append(newDiv);
+        } else {
+            alert("파일은 3개까지 첨부 가능합니다.");
+        }
+    });
+
 }
 
 const getAccessToken = () =>{
@@ -16,8 +28,7 @@ const getAccessToken = () =>{
      })
 }
 
-
-// 멘토 등록 신청서 작성 이미존재할 경우 return false 강제로 작성하면 서버측에서 Exception발생
+// 멘토 등록 신청서 작성(제출), 실명인증이 안되어있는경우 제출 불가.
 let isAccount = false;
 document.getElementById('sendResume').addEventListener('click', function(){
     if(isAccount){
@@ -92,6 +103,7 @@ document.getElementById('accountButton').addEventListener('click', function(){
     })
     .then((res)=>res.json())
     .then(res =>{
+        console.log(res);
         if(res.rsp_code =='A0321'){
             alert('생년월일이 형식에 부적합 합니다');
             isAccount = false;
@@ -114,59 +126,6 @@ document.getElementById('accountButton').addEventListener('click', function(){
 
     })
 });
-
-// 멘토 신청하기
-// document.getElementById('sendResume').addEventListener('click', function(){
-//     const userId = localStorage.getItem('userNo');
-//     fetch("http://localhost:8000/mentors/application?userId="+userId,{
-//         method:"GET",
-//         headers:{
-//             "Content-Type":"application/json;",
-//             Authorization:localStorage.getItem('authorization'),
-//             RefreshToken:localStorage.getItem('refreshToken')
-//         },
-//     })    
-//     .then((res)=>res.json())
-//     .then(res =>{
-//         if(res){
-//             window.alert('이미 신청한 지원서가 존재합니다.');
-//             location.href="mentee-mypage.html";
-//             return false;
-//         } else {
-//             document.getElementById('id-hidden').value = userId;
-//             document.getElementById('file-form').submit();
-//             fetch("http://localhost:8000/mentors/application",{
-//             method:"POST",
-//             headers:{
-//                 "Content-Type":"application/json;",
-//                 Authorization:localStorage.getItem('authorization'),
-//                 RefreshToken:localStorage.getItem('refreshToken')
-//              },
-//             body:JSON.stringify({
-//                 name :document.getElementById("mentor-name").value,
-//                 phone : document.getElementById("mentor-phone").value,
-//                 email : document.getElementById("mentor-email").value,
-//                 job : document.getElementById("job").value,
-//                 bank : document.getElementById("realBankCode").value,
-//                 account : document.getElementById("realBankAccount").value,
-//                 userId : localStorage.getItem('userNo')
-//             })
-//         })    
-//         .then((res)=>res.json())
-//         .then(res =>{
-//             if(res > 0){
-//                 window.alert('멘토 신청 완료');
-//                 location.href="mentor-main.html";
-//             } else {
-//                 window.alert('멘토 신청 실패');
-//                 return false;
-//             }    
-//     })
-//         }
-//     })
-//     document.getElementById('id-hidden').value='';
-// });
-
 
 // 리뷰 제출하기
 const writeReview = () => {

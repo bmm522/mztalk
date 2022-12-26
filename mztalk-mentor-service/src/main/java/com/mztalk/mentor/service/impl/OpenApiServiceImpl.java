@@ -34,8 +34,6 @@ public class OpenApiServiceImpl implements OpenApiService {
     @Value("${account.clientSecret}")
     private String CLIENT_SECRET;
 
-    private String unique = String.valueOf(System.currentTimeMillis() % 1000000000);
-    private Integer uniqueNum = Integer.parseInt(unique);
     @Override
     public OpenApiAccessToken requestOpenApiAccessToken() {
         RestTemplate restTemplate = new RestTemplate();
@@ -72,6 +70,7 @@ public class OpenApiServiceImpl implements OpenApiService {
     @Transactional
     public AccountInfoDto requestMatchAccountRealName(ConcurrentHashMap<String,String> accountMap) {
         OpenApiAccessToken token = requestOpenApiAccessToken();
+        int uniqueNum = (int)((Math.random()+10) * 10000000);
 
         String tokenType = token.getTokenType();
         String accessToken = token.getAccessToken();
@@ -87,7 +86,7 @@ public class OpenApiServiceImpl implements OpenApiService {
         accountHeaders.add("Authorization", tokenType + " " + accessToken);
 
         JSONObject accountBody = new JSONObject();
-        accountBody.put("bank_tran_id",token.getClientUseCode() + "U" + (++uniqueNum));
+        accountBody.put("bank_tran_id",token.getClientUseCode() + "U" + (uniqueNum));
         accountBody.put("bank_code_std",bankCode);
         accountBody.put("account_num",bankAccount);
         accountBody.put("account_holder_info_type","");
