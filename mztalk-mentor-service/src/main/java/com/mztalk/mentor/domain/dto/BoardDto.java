@@ -25,8 +25,11 @@ public class BoardDto {
     private String introduction;
     private String career;
     private int salary;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
+    private Score score;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime mentoringDate;
+
     private Participant participant;
     private Payment payment;
     private Status status;
@@ -43,6 +46,7 @@ public class BoardDto {
                 .introduction(introduction)
                 .career(career)
                 .salary(salary)
+                .score(score)
                 .mentoringDate(mentoringDate)
                 .participant(participant)
                 .payment(payment)
@@ -61,6 +65,7 @@ public class BoardDto {
         this.introduction = board.getIntroduction();
         this.career = board.getCareer();
         this.salary = board.getSalary();
+        this.score = board.getScore();
         this.mentoringDate = board.getMentoringDate();
         this.participant = board.getParticipant();
         this.payment = board.getPayment();

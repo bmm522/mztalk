@@ -26,7 +26,7 @@ const getMyReview = () =>{
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken'),
-        },  
+        },
     })
     .then((res)=>res.json())
     .then(res =>{
@@ -45,7 +45,7 @@ const getMyReview = () =>{
                         <button type="button" class="btn btn-outline-success" onclick="myReview(${score.id});" data-bs-toggle="modal" data-bs-target="#myReview">보기</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-outline-danger" onclick="deleteReview(${score.id});">삭제</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="deleteReview();">삭제</button>
                     </td>
                 </tr> 
                 
@@ -77,7 +77,7 @@ const getMyReview = () =>{
                             </div>
                         </div>
                     <div class="modal-footer">
-                        <button class="btn btn-outline-success" type="button" onclick="modifyReview(${score.id});" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정하기</button>
+                        <button class="btn btn-outline-success" type="button" onclick="modifyReview();" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정하기</button>
                     </div>
                 </div>
             </div>
@@ -89,6 +89,7 @@ const getMyReview = () =>{
 
 // 내가 작성한 리뷰 얻기
 const myReview = (scoreId) =>{
+    document.getElementById('scoreModifyId').value = scoreId;
     fetch("http://localhost:8000/mentors/score/"+scoreId,{
         method:"GET",
         headers:{
@@ -109,35 +110,36 @@ const myReview = (scoreId) =>{
 }
 
 // 리뷰 수정하기
-const modifyReview = (scoreId) => {
-    console.log(scoreId);
-    fetch("http://localhost:8000/mentors/score/"+scoreId,{
+const modifyReview = () => {
+    const modifyId= document.getElementById('scoreModifyId').value;
+    fetch("http://localhost:8000/mentors/score/"+modifyId,{
          method:"PATCH",
          headers:{
-             "Content-Type":"application/json;",
-             Authorization:localStorage.getItem('authorization'),
-             RefreshToken:localStorage.getItem('refreshToken')
+            "Content-Type":"application/json;",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
          },
          body:JSON.stringify({
-             count : document.getElementById("count").value,
-             content : document.getElementById("content").value,
-         })
+            count : document.getElementById("count").value,
+            content : document.getElementById("content").value,
+        })
      })    
      .then((res)=>res.json())
      .then(res =>{
          if(res > 0){
-             window.alert('리뷰 수정 완료');
-             location.href="mentee-review-page.html";
-         } else{
-             window.alert('리뷰 수정에 실패하셨습니다.');
-             location.href="mentee-review-page.html";
-         }
+            window.alert('리뷰 수정 완료');
+            location.href="mentee-review-page.html";
+        } else{
+            window.alert('리뷰 수정에 실패하셨습니다.');
+            location.href="mentee-review-page.html";
+        }
      })
  }
 
 // 리뷰 삭제 메소드
-const deleteReview = (scoreId) => {
-    fetch("http://localhost:8000/mentors/score/"+scoreId,{
+const deleteReview = () => {
+    const deleteId= document.getElementById('scoreModifyId').value;
+    fetch("http://localhost:8000/mentors/score/"+deleteId,{
         method:"DELETE",
         headers:{
             "Content-Type":"application/json;",
@@ -175,7 +177,6 @@ document.getElementById('myPage').addEventListener('click', function(){
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log("res : " + res);
         if(res){
             location.href="mentor-mypage.html";
         } else {

@@ -320,12 +320,12 @@
                     </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="boardId" class="form-label">글번호</label>
+                                <label class="form-label">글번호</label>
                                 <input type="text" class="form-control form-control-sm" id="boardId" name="boardId" readonly>
                                 <input type="hidden" class="form-control form-control-sm" id="mentorNickname" readonly>
                             </div>
                             <div class="mb-3">
-                                <label for="boardId" class="form-label">별점</label>
+                                <label class="form-label">별점</label>
                                 <select id="count" class="form-select">
                                     <option value="5.0">★★★★★</option>
                                     <option value="4.0">★★★★</option>
@@ -462,8 +462,7 @@
                 pay_method: "card",
                 merchant_uid: "ORD"+ year + month + date +  "-" + random,
                 name: "MZTALK - 멘토링",
-                // amount: document.getElementById('board-price').value,
-                amount : 100,
+                amount: document.getElementById('board-price').value,
                 buyer_email: document.getElementById("email").value,
                 buyer_name: document.getElementById("name").value, 
                 buyer_tel: document.getElementById("phone").value,

@@ -56,7 +56,7 @@ public class BoardServiceImpl implements BoardService {
         return boardDto;
     }
 
-    //멘티가 본인이 신청한 멘토링 글에 대한 참가자를 보는 메소드.
+    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
     @Override
     public Result findBoardByUserId(Long userId) {
         List<Board> boardList = boardRepository.findBoardByUserId(userId);

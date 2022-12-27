@@ -1,5 +1,6 @@
 package com.mztalk.mentor.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class Payment extends BaseTimeEntity{
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="board_id")
+    @JsonIgnore
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)

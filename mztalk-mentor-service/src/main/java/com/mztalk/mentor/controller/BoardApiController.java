@@ -27,7 +27,7 @@ public class BoardApiController {
         return boardService.findBoardByBoardId(id);
     }
 
-    //멘티가 본인이 신청한 멘토링 글을 보는 메소드
+    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
     @GetMapping("/board")
     public Result findBoardByUserId(@RequestParam("userId")Long userId){
         return boardService.findBoardByUserId(userId);

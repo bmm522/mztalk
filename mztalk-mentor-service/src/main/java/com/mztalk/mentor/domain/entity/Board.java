@@ -52,14 +52,20 @@ public class Board extends BaseTimeEntity{
     @NotNull
     private int salary; //시급
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Score score;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime mentoringDate;
 
-    @OneToOne(mappedBy = "board")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "board")
+    @JsonIgnore
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Participant participant;
 
     @OneToOne(mappedBy = "board")
+    @JsonIgnore
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Payment payment;
 
@@ -68,7 +74,7 @@ public class Board extends BaseTimeEntity{
 
     @Builder
     public Board(Long id, Mentor mentor, String category, String title, String nickname, String content, String introduction,
-                 String career, int salary, LocalDateTime mentoringDate, Participant participant,
+                 String career, int salary, LocalDateTime mentoringDate, Score score, Participant participant,
                  Payment payment, Status status) {
         this.id = id;
         this.mentor = mentor;
@@ -80,6 +86,7 @@ public class Board extends BaseTimeEntity{
         this.career = career;
         this.salary = salary;
         this.mentoringDate = mentoringDate;
+        this.score = score;
         this.participant = participant;
         this.payment = payment;
         this.status = status;
@@ -110,5 +117,9 @@ public class Board extends BaseTimeEntity{
 
     public void addPayment(Payment payment){
         this.payment = payment;
+    }
+
+    public void addScore(Score score) {
+        this.score = score;
     }
 }

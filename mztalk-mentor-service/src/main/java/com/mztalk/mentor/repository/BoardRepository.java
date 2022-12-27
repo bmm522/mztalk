@@ -13,4 +13,7 @@ public interface BoardRepository extends JpaRepository<Board,Long>, BoardReposit
     Board findBoardByBoardId(@Param("id") Long id);
 
     List<Board> findByPaymentIsNull();
+
+//    @Query("select b from Board b join fetch b.mentor m where b.payment IS NULL")
+//    List<Board> findAllFetchMentor();
 }

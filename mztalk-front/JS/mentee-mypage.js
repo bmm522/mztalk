@@ -134,7 +134,6 @@ document.getElementById('accountButton').addEventListener('click', function(){
 // 완료된 멘토링 목록 >> 리뷰 버튼 클릭시 리뷰 작성 페이지
 const endMentoring = ()=>{
     const userId = localStorage.getItem('userNo');
-    console.log(userId);
     fetch("http://localhost:8000/mentors/board?userId="+userId,{
         method:"GET",
         headers:{
@@ -153,7 +152,7 @@ const endMentoring = ()=>{
             <td>${endBoard.title}</td>
             <td style="text-align: center;">
                 <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#writeReview"
-                onclick="showBoardId(${endBoard.id},'${endBoard.nickname}');"
+                onclick="showBoardId(${endBoard.id});"
                 style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
             </td>`
         }
@@ -163,16 +162,14 @@ document.getElementById('endBoardList').innerHTML ='';
 }
 
 // 리뷰 작성 페이지 글번호 보여주기
-const showBoardId = (boardId,nickname)=>{
+const showBoardId = (boardId)=>{
     document.getElementById('boardId').value = boardId;
-    document.getElementById('mentorNickname').value = nickname;
 }
 
 // 리뷰 제출하기
 const writeReview = () => {
     const userId = localStorage.getItem('userNo');
     const boardId = document.getElementById('boardId').value;
-    console.log('리뷰제출하기 시작')
     fetch("http://localhost:8000/mentors/score/mentee?userId=" + userId + "&boardId=" + boardId,{
         method:"GET",
         headers:{
@@ -185,6 +182,7 @@ const writeReview = () => {
     .then(res =>{
         if(res){
             window.alert('해당 글에 대한 작성한 리뷰가 존재합니다.');
+            location.href="mentee-myPage.html";
             return false;
         } else{
             fetch("http://localhost:8000/mentors/score",{

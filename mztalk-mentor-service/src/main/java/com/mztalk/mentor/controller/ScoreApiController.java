@@ -60,7 +60,8 @@ public class ScoreApiController {
         return scoreService.updateScore(id, scoreDto);
     }
 
-    @GetMapping("/score/mentee") // 멘티가 해당 글에 대해 리뷰를 작성했는지 확인.
+    // 멘티가 해당 글에 대해 리뷰를 작성했는지 확인한다.
+    @GetMapping("/score/mentee")
     public boolean isExist(@RequestParam("userId")Long userId, @RequestParam("boardId")Long boardId){
         return scoreService.isExist(userId, boardId);
     }

@@ -1,6 +1,7 @@
 package com.mztalk.mentor.domain.dto;
 
 import com.mztalk.mentor.domain.Status;
+import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Score;
@@ -17,6 +18,7 @@ public class ScoreDto {
     private Long id;
     private Mentor mentor;
     private Mentee mentee;
+    private Board board;
     private Double count;
     private String content;
     private Status status;
@@ -25,6 +27,7 @@ public class ScoreDto {
         this.id = score.getId();
         this.mentor = score.getMentor();
         this.mentee = score.getMentee();
+        this.board = score.getBoard();
         this.count = score.getCount();
         this.content = score.getContent();
         this.status = score.getStatus();
@@ -35,6 +38,7 @@ public class ScoreDto {
                 .id(id)
                 .mentor(mentor)
                 .mentee(mentee)
+                .board(board)
                 .count(count)
                 .content(content)
                 .status(Status.YES)

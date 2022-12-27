@@ -29,8 +29,6 @@ const getBoardList = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log(res);
-        console.log(res.data);
         if(res.status==401){
             getAccessToken();
             location.href = "mentor-main.html";
