@@ -11,6 +11,7 @@ public interface UserRepository extends JpaRepository<User, Long>, UserCustomRep
     User findByUsername(String username);
     boolean existsByUsername(String username);
     boolean existsByNickname(String nickname);
+    boolean existsByEmail(String email);
     User findByEmail(String email);
 
     @Transactional
@@ -31,6 +32,7 @@ public interface UserRepository extends JpaRepository<User, Long>, UserCustomRep
     int updateStatus(@Param(value="nickname")String nickname);
 
     User findByNickname(String nickname);
+
 
 
 }

@@ -41,6 +41,11 @@ public class RegisterApiController {
         return  checkService.checkNickname(nickname);
     }
 
+    @GetMapping("/email/{email}")
+    public ConcurrentHashMap<String, Object> checkEmail(@PathVariable("email")String email){
+        return checkService.checkEmail(email);
+    }
+
     // 이메일 인증코드 전송
     @GetMapping("/auth-code/{email}")
     public ConcurrentHashMap<String, Object> getAuthCodeOfEmail(@PathVariable("email")String email){
