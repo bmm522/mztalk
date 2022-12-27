@@ -2,6 +2,7 @@ package com.mztalk.main.domain.follow.controller;
 
 
 import com.mztalk.main.common.CMRespDto;
+import com.mztalk.main.domain.follow.dto.FollowDto;
 import com.mztalk.main.domain.follow.dto.FollowListResponseDto;
 import com.mztalk.main.domain.follow.dto.FollowingListResponseDto;
 import com.mztalk.main.domain.follow.service.FollowService;
@@ -44,6 +45,8 @@ public class FollowApiController {
     @GetMapping("/followList/{toUserId}")
     public ResponseEntity<?> followList(@PathVariable Long toUserId){
         //own을 팔로우 하고 있는 모든 사람(login한 사람한테 보여줘야하니)
+        //System.out.println("오니?");
+
          List<FollowListResponseDto> followListResponseDtoList = followService.followList(toUserId);
         return new ResponseEntity<>(new CMRespDto<>(1, "팔로워리스트", followListResponseDtoList), HttpStatus.OK);
     }
@@ -57,6 +60,18 @@ public class FollowApiController {
 
         return new ResponseEntity<>(new CMRespDto<>(1, "팔로잉리스트", followingListResponseDtoList), HttpStatus.OK);
 
+    }
+
+
+    //팔로우상태
+    @GetMapping("/followStatus/{fromUserId}/{toUserId}")
+    public ResponseEntity<?> followStatus(@PathVariable Long fromUserId, @PathVariable Long toUserId){
+
+        Long result = followService.followStatus(fromUserId, toUserId);
+
+        System.out.println(result);
+
+        return new ResponseEntity<>(new CMRespDto<>(1, "팔로잉리스트", result), HttpStatus.OK);
     }
 
 
