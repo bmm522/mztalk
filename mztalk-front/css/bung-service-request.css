@@ -305,10 +305,10 @@ img {vertical-align: middle;}
 
 .userName {
   position: absolute;
-  left: 14%;
+  left: 10%;
   top: 10%;
   height: 13%;
-  width: 70%;
+  width: 80%;
   background-color: rgb(255, 193, 7);
   text-align: center;
   line-height:38px;
@@ -321,10 +321,10 @@ img {vertical-align: middle;}
 
 .userPhone {
   position: absolute;
-  left: 14%;
+  left: 10%;
   top: 29%;
   height: 13%;
-  width: 70%;
+  width: 80%;
   background-color: rgb(255, 193, 7);
   text-align: center;
   line-height:38px;
@@ -332,10 +332,10 @@ img {vertical-align: middle;}
 
 .userReason {
   position: absolute;
-  left: 14%;
+  left: 10%;
   top: 48%;
   height: 26%;
-  width: 70%;
+  width: 80%;
   background-color: rgb(255, 193, 7);
   text-align: center;
   line-height:38px;
@@ -344,12 +344,17 @@ img {vertical-align: middle;}
 
 .btnGroup {
   position: absolute;
-  left: 14%;
-  bottom: 10%;
-  height: 13%;
-  width: 70%;
-  text-align: center;
+  left: 10%;
+  bottom: 19%;
+  height: 4.7%;
+  width: 80%;
+  /* text-align: center; */
   line-height:38px;
+  border: dotted 5px;
+  border-color: rgb(145, 103, 14);
+  /* display: inline-block; */
+  /* margin: auto; */
+  text-align: center;
 }
 
 .inputType{
@@ -365,6 +370,11 @@ img {vertical-align: middle;}
 		text-align: left;
 		vertical-align: middle;
 		text-align: right;
+}
+
+#btnbtn{
+  /* margin: auto; */
+  display: inline-block;
 }
 
 
