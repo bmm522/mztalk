@@ -33,10 +33,7 @@ public class BoardServiceImpl implements BoardService {
     public Long saveBoard(ConcurrentHashMap<String,String> boardMap) {
         Long userId = Long.parseLong(boardMap.get("userId"));
         String mentoringDate = boardMap.get("mentoringDate");
-        System.out.println("mentoringDate = " + mentoringDate);
-        if(findBoardByMentorId(userId)){
-            throw new DuplicateException("이미 작성한 게시글이 존재합니다.");
-        }
+
         Mentor mentor = mentorRepository.findMentorByUserId(userId);
         Board board = Board.builder().
                 category(boardMap.get("category")).
@@ -68,14 +65,6 @@ public class BoardServiceImpl implements BoardService {
         return new Result(collect);
     }
 
-    // 순수하게 본인이 작성한 글만 불러오기
-    @Override
-    public MyBoardDto getBoardByMentorId(Long mentorId) {
-        Board findBoard = boardRepository.getBoardByMentorId(mentorId);
-        MyBoardDto boardDto = new MyBoardDto(findBoard);
-        return boardDto;
-    }
-
     @Override
     public Result latestBoard() {
         List<Board> boards = boardRepository.latestBoard();
@@ -84,10 +73,10 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean findBoardByMentorId(Long mentorId) {
-        Board board = boardRepository.findBoardByMentorId(mentorId);
-        boolean isTrue = board == null ? false : true; //이미 작성한 글이 존재하면 true반환.
-        return isTrue;
+    public Result findBoardByMentorId(Long mentorId) {
+        List<Board> boards = boardRepository.findBoardByMentorId(mentorId);
+        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
     }
 
     @Override

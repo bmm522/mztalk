@@ -52,11 +52,17 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
     @Override
     public List<Board> latestBoard() {
-        List<Board> resultList = entityManager.createQuery("select b from Board b order by b.lastModifiedDate desc", Board.class)
+        return entityManager.createQuery("select b from Board b order by b.lastModifiedDate desc", Board.class)
                 .setFirstResult(0)
                 .setMaxResults(3)
                 .getResultList();
-        return resultList;
+    }
+
+    @Override
+    public List<Board> findBoardByMentorId(Long mentorId) {
+        return entityManager.createQuery("select b from Board b where b.mentor.id =:mentorId", Board.class)
+                .setParameter("mentorId",mentorId)
+                .getResultList();
     }
 
     private BooleanExpression eqCategory(String category){

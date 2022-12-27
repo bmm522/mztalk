@@ -33,17 +33,9 @@ public class BoardApiController {
         return boardService.findBoardByUserId(userId);
     }
 
-    //멘토가 작성한 글이 있는지 확인하는 메소드
     @GetMapping("/board/mentor/{mentorId}")
-    public boolean findBoardByMentorId(@PathVariable("mentorId")Long mentorId){
+    public Result findBoardByMentorId(@PathVariable("mentorId")Long mentorId){
         return boardService.findBoardByMentorId(mentorId);
-    }
-
-    //멘토가 작성한 글만 가져오는 메소드
-    @GetMapping("/board/mentor")
-    public MyBoardDto getBoardByMentorId(@RequestParam("mentorId")Long mentorId){
-        MyBoardDto findBoardDto = boardService.getBoardByMentorId(mentorId);
-        return findBoardDto;
     }
 
     @GetMapping("/boards")

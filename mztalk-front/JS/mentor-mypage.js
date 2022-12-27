@@ -4,53 +4,35 @@ window.onload = () =>{
     // getMyBoard();
 }
 
-// 멘토 글 작성하기 // 중복 검사 후 중복이 존재하면 글 작성 실패
+// 멘토 글 작성하기
 document.getElementById('mentor-write-btn').addEventListener('click',function(){
-    const mentorId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board/mentor/"+mentorId,{
-        method:"GET",
+    fetch("http://localhost:8000/mentors/board",{
+        method:"POST",
         headers:{
             "Content-Type":"application/json;",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken')
         },
-    })  
+        body:JSON.stringify({
+            category:document.getElementById('write-category').value,
+            title : document.getElementById('title').value,
+            nickname : localStorage.getItem('userNickname'),
+            userId : localStorage.getItem('userNo'),
+            content : document.getElementById('content').value,
+            introduction : document.getElementById('introduction').value,
+            career : document.getElementById('career').value,
+            salary : document.getElementById('salary').value,
+            mentoringDate : document.getElementById('mentoringDate').value
+        })
+    })    
     .then((res)=>res.json())
     .then(res =>{
-        if(res){
-            window.alert('이미 작성하신 게시글이 존재합니다.');
-            location.href="mentor-mypage.html";
-            return false;
+        if(res > 0){
+            window.alert('게시글이 작성 되었습니다.');
+            location.href="mentor-main.html";
         } else {
-            fetch("http://localhost:8000/mentors/board",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json;",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
-             },
-            body:JSON.stringify({
-                category:document.getElementById('write-category').value,
-                title : document.getElementById('title').value,
-                nickname : localStorage.getItem('userNickname'),
-                userId : localStorage.getItem('userNo'),
-                content : document.getElementById('content').value,
-                introduction : document.getElementById('introduction').value,
-                career : document.getElementById('career').value,
-                salary : document.getElementById('salary').value,
-                mentoringDate : document.getElementById('mentoringDate').value
-            })
-        })    
-        .then((res)=>res.json())
-        .then(res =>{
-            if(res > 0){
-                window.alert('게시글이 작성 되었습니다.');
-                location.href="mentor-main.html";
-            } else {
-                window.alert('멘토 신청 실패');
-                return false;
-            }
-    })
+            window.alert('멘토 신청 실패');
+            return false;
         }
     })
 });
