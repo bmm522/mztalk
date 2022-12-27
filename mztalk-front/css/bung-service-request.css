@@ -75,8 +75,9 @@ nav {
 
 .mainContainer {
   font-family: 'CookieRun';
+  margin: auto;
   justify-content: space-between;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   width: 935px;
   margin-top: 55px;
   height: 1050px;
@@ -197,7 +198,6 @@ footer .container .copy p{font-size: 13px;padding-top: 2px;}
 }
 
 .main{
-  margin: auto;
   font-family: 'CookieRun';
   background-color: rgb(242, 244, 226);		
 }
@@ -238,8 +238,7 @@ img {vertical-align: middle;}
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 500px;
-  height: 500px;
+  max-width: 1000px;
   position: relative;
   margin: auto;
 }
@@ -264,65 +263,108 @@ img {vertical-align: middle;}
   top: 0;
 }
 
-.writerBtn {
-  text-align: center;
+/* The dots/bullets/indicators */
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
 }
 
-.btn-outline-warning {
-  display :inline-block;
+.active {
+  background-color: #717171;
 }
 
-.actionBtn {
-  text-align: center;
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
 }
 
-.btn-outline-warning {
-  display :inline-block;
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
 }
 
-.infomationBtn {
-  text-align: center;
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .text {font-size: 11px}
 }
 
-.btn-outline-warning {
-  display :inline-block;
-}
-
-#bungContent input {
-  padding: 0 1em; 
-  border: 0;
-  height: 38px;
-  width: 100%;
-  border-radius: 30px;
-}
-
-#bungContent {
-  width: 80%;
-  height: 200px;
-  border: none;
-}
-
-#carouselExampleControls {
+.main {
+  position: relative;
+  height: 1050px;
+  width: 750px;
   margin: auto;
-  height: 400px;
+  background-color: rgb(242, 244, 226);
+  font-family: 'CookieRun';
+}
+
+.userName {
+  position: absolute;
+  left: 14%;
+  top: 10%;
+  height: 13%;
   width: 70%;
+  background-color: rgb(255, 193, 7);
+  text-align: center;
+  line-height:38px;
 }
 
-.carousel-inner{
-  height: 400px;
-  width: 50%;
-  /* display: inline;
-  overflow: hidden; */
+.form-label {
+  font-size: large;
+  font-weight: bold;
 }
 
-/* img{
-  width: 50%;
-  height: 400px;
-  
-} */
+.userPhone {
+  position: absolute;
+  left: 14%;
+  top: 29%;
+  height: 13%;
+  width: 70%;
+  background-color: rgb(255, 193, 7);
+  text-align: center;
+  line-height:38px;
+}
 
-#bungTitle{
+.userReason {
+  position: absolute;
+  left: 14%;
+  top: 48%;
+  height: 26%;
+  width: 70%;
+  background-color: rgb(255, 193, 7);
+  text-align: center;
+  line-height:38px;
+  display: table;
+}
+
+.btnGroup {
+  position: absolute;
+  left: 14%;
+  bottom: 10%;
+  height: 13%;
+  width: 70%;
+  text-align: center;
+  line-height:38px;
+}
+
+.inputType{
   border: none;
+  cursor: pointer;
+  /* width: 30px; */
+  margin: auto;
+  height: 50px;
+}
+
+#reason{
+  display: table-cell;
+		text-align: left;
+		vertical-align: middle;
+		text-align: right;
 }
 
 

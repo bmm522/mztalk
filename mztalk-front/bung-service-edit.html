@@ -8,7 +8,7 @@
     <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/bung-service-writer.css">
+    <link rel="stylesheet" href="css/bung-service-edit.css">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -41,26 +41,37 @@
                 <br>
                     <span class="form-label">제 목 : &nbsp;</span>
                     <input type="text" id="bungTitle" name="bungTitle" style="width: 700px; margin: auto; height: 100;"> 
-                <!-- <span class="form-label">제 목 : &nbsp;</span>
-                <input type="text" class="form-control" id="bungTitle" name="bungTitle" style="width: 700px; margin: auto;"> -->
             </div>
         
-            <form action="http://localhost:8000/resource/images" enctype="multipart/form-data" method="POST" id="image-form">
+            <!-- <button type="button" class="btn btn-outline-warning" style="float: right;" id="addFile" name="file" onclick="addBtn();">파일 추가</button> -->
+            <!-- <input type="file" style="float: right;" id="fileUpload">  -->
+            <form  id="image-form">
             <div id="fileArea">
-                
+              
                 <input type="hidden" name="serviceName" value="bung"/>
-                <input type="hidden" name="bNo" id="bId-hidden"/>
+                <input type="hidden" name="bNo" id="bId-hidden" />
                 <div class="mb-3">
-                    <input type="file" style="float: left;" name="image"id="fileUpload">  <button type="button" class="btn btn-outline-warning" style="float: right;" id="addFile" name="file" onclick="addBtn();">파일 추가</button>
+                    <!-- <input type="file" style="float: left;" name="image"id="fileUpload">  -->
+                     <button type="button" class="btn btn-outline-warning" style="float: right;" id="addFile" name="file" onclick="addBtn();">파일 추가</button>
                 </div>
           
             </div>
-        </form>
-            
+            </form>
+        
             <br>
-            <div class="slideshow-container" style="width:100%" height="400px;">
-                <img src="dog.jpg" style="width:100%" height="400px;">
-            </div>
+        
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner" id="image-div-div">
+                    <!-- <div class="carousel-item active"><img class="d-block w-100" src="dog.jpg" alt="사진이 없습니다" /></div>
+                    <div class="carousel-item"><img class="d-block w-100" src="dog2.jpg" alt="사진이 없습니다" /></div>
+                    <div class="carousel-item"><img class="d-block w-100" src="duck.jpg" alt="사진이 없습니다" /></div> -->
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span> </button>
+            </div> 
             
             <br>
         
@@ -69,11 +80,15 @@
                 <br>
                 <textarea id="bungContent" name="bungContent" rows="10" Placeholder="{벙 게시글 내용}" style="resize: none;"></textarea>
             </div>
-
-            <br>
         
             <div class="infomationBtn" style="height: 200px; float: left; width: 50%;">
                 
+        <br>
+               기존 날짜 :  <input type="text" id="deadlineDate" style="width:200px; border: 0.1px solid gray; border-radius: 10px; " readonly>
+                
+                
+                
+                <br>
                 <table class="scriptCalendar">
                     <thead>
                         <tr>
@@ -94,7 +109,7 @@
             <div class="writerBtn" style="height: 200px; float: left; width: 50%;">
                 <br><br><br><br>
                 <div id="group" style="height: 100px;">
-                    <select id="full-group">
+                    <select id="group-select">
                         <option value="2">2명</option>
                         <option value="3">3명</option>
                         <option value="4">4명</option>
@@ -126,12 +141,10 @@
                     </div>
                 </div>
                 <div id="group" style="height: 66.66px;">
-                    <button type="button" id="bung-write-btn" class="btn btn-outline-warning" >작성하기</button>
+                    <button type="button" id="edit-btn" class="btn btn-outline-warning">수정 하기</button>
                 </div>
             </div>
         </div>
-        
-
     </main>
 
     <div class="floating">
@@ -190,31 +203,7 @@
         </div> -->
    
 <script>
-    var count = 0;
-const addBtn = () =>{
-        const fileArea = document.querySelector('#fileArea');   
-        document.getElementById('addFile').addEventListener('click', function(){
-            
-            console.log('클릭');
-            for(let i = 0; i < 1; i++) {
-                if(count < 2) {
-                    count++;
-                    const newDiv = document.createElement('div');
-                    newDiv.classList.add('mb-3');
-                    newDiv.innerHTML = '<input type="file" id="fileUpload" style="float: left;" name="image">';
-			        fileArea.append(newDiv);
-                } else {
-                    return false;
-                }         
-            }
-        });
-    
-}
-    window.onload = () =>{
-		
-	}
-    
-    document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
         buildCalendar();
     });
 
@@ -402,8 +391,8 @@ const addBtn = () =>{
         }
         return num;
     }
-</script>
+</script>        
 </body>
 <script src="JS/main.js"></script>
-<script src="JS/bung-writer.js"></script>
+<script src="JS/bung-update.js"></script>
 </html>
