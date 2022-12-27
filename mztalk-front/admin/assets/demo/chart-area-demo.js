@@ -41,35 +41,13 @@ let sixBeforeData = '';
 
 // document.getElementById('card-header-div').innerHTML = ' ';
 
-console.log(oneBeforeData);
-window.onload = function(){
-  document.getElementById('card-header-div').innerHTML += '각 서비스 별 트래픽 수&nbsp&nbsp<small style="font-size: 1px;">&nbsp&nbsp오늘날짜 : '+nowDay+'&nbsp&nbsp(10초마다 업데이트 됩니다) </small> <input id="input-date"  value="'+nowDay+'" type="date"  style="width: 250px; margin-left:150px ; border-radius: 10px; border: 0.1px solid gainsboro;"/><input type="hidden" id="hidden-time"/>';
-  
-   
-
-  getDailyTraffic();
-
-  document.getElementById('input-date').onchange = function(){
-    
-     getDailyServiceTraffic();
-    
-  }
-
-  getDailyServiceTraffic();
-  setInterval(getDailyTraffic, 10000);
- //setInterval(getDailyServiceTraffic, 1000);
 
 
-  
-   
-
-}
 
 
 
 function getDailyServiceTraffic() {
  
-  console.log("이벤트 값 : " + document.getElementById('input-date').value);
   fetch('http://localhost:8000/gateway/daily-traffic?requestTime='+ document.getElementById('input-date').value,{
     method:"GET"
   })
@@ -77,8 +55,8 @@ function getDailyServiceTraffic() {
   .then(res =>{
 
     for(let i = 0; i < res.data.length ; i++){
-      // console.log()
-      // console.log(res.data[i].serviceName);
+
+
       if(res.data[i].serviceName == 'auction'){
         auctionData = res.data[i].count;
       }
@@ -142,8 +120,8 @@ function getDailyServiceTraffic() {
 
 
 const getBarChar = () =>{
-  document.getElementById('card-div').innerHTML = '';
-  document.getElementById('card-div').innerHTML = '<canvas id="myBarChart" width="100%" height="40"></canvas>';
+  document.getElementById('card-bar-div').innerHTML = '';
+  document.getElementById('card-bar-div').innerHTML = '<canvas id="myBarChart" width="100%" height="40"></canvas>';
   var ctx = document.getElementById("myBarChart");
   var myLineChart = new Chart(ctx, {
     type: 'bar',
@@ -172,8 +150,8 @@ const getBarChar = () =>{
         yAxes: [{
           ticks: {
             min: 0,
-            max: 12,
-            maxTicksLimit: 12
+            max: 1000,
+            maxTicksLimit: 24
           },
           gridLines: {
             display: true
@@ -193,18 +171,47 @@ const getBarChar = () =>{
 
 
 const getDailyTraffic = () =>{
+  document.getElementById('card-chart-div').innerHTML = '';
+  document.getElementById('card-chart-div').innerHTML = '<canvas id="myAreaChart" width="100%" height="40"></canvas>';
   fetch('http://localhost:8000/gateway/traffic?sixBefore='+sixBefore+'&fiveBefore='+fiveBefore+'&fourBefore='+fourBefore+'&threeBefore='+threeBefore+'&twoBefore='+twoBefore+'&oneBefore='+oneBefore+'&today='+nowDay,{
      method:"GET"
    })
    .then((res) => res.json())
    .then(res=>{
-    oneBeforeData =res.data[0].count;
-    todayData = res.data[1].count;
-    twoBeforeData = res.data[2].count;
-    threeBeforeData = res.data[3].count;
-    fourBeforeData = res.data[4].count;
-    fiveBeforeData = res.data[5].count;
-    sixBeforeData = res.data[6].count;
+    for(let i = 0 ; i < res.data.length ; i++){
+        
+      if(res.data[i].requestTime ==nowDay){
+        
+        todayData = res.data[i].count;
+      }
+
+      if(res.data[i].requestTime ==oneBefore){
+        oneBeforeData = res.data[i].count;
+      }
+
+      if(res.data[i].requestTime ==twoBefore){
+        twoBeforeData = res.data[i].count;
+      }
+
+      if(res.data[i].requestTime ==threeBefore){
+        threeBeforeData = res.data[i].count;
+      }
+
+      if(res.data[i].requestTime ==fourBefore){
+        fourBeforeData = res.data[i].count;
+      }
+
+      if(res.data[i].requestTime ==fiveBefore){
+        fiveBeforeData = res.data[i].count;
+      }
+
+      if(res.data[i].requestTime ==sixBefore){
+        sixBeforeData = res.data[i].count;
+      }
+  
+
+    }
+
 
   var ctx = document.getElementById("myAreaChart");
   var myLineChart = new Chart(ctx, {
@@ -242,7 +249,7 @@ const getDailyTraffic = () =>{
         yAxes: [{
           ticks: {
             min: 0,
-            max: 100,
+            max: 1000,
             maxTicksLimit: 20
           },
           gridLines: {

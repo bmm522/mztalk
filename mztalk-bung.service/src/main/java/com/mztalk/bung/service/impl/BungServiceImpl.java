@@ -56,7 +56,6 @@ public class BungServiceImpl implements BungBoardService {
                 boardContent(bungBoardDto.getBoardContent()).
                 deadlineDate(Date.valueOf(bungBoardDto.getDeadlineDate())).
                 fullGroup(bungBoardDto.getFullGroup()).
-                nowGroup(1L).
                 createDate(bungBoardDto.getCreateDate()).
                 modifyDate(bungBoardDto.getModifyDate()).
                 boardCount(0L).
@@ -64,13 +63,49 @@ public class BungServiceImpl implements BungBoardService {
                 category(bungBoardDto.getCategory()).
                 build();
 
-                return bungRepository.save(bungBoardEntity).getBoardId();
+                bungRepository.save(bungBoardEntity);
+
+        Long boardId = bungBoardEntity.getBoardId();
+
+//        BungBoard bungBoard = bungRepository.findBungBoardByWriterBoardId(boardId);
+        BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
+
+//        System.out.println(bungBoard.getBoardId());
+
+        BungAddBoard bungAddBoardEntity = BungAddBoard.builder().
+//                addId(bungAddBoardDto.getAddId()).
+                addPhone(null).
+                addNickName(bungBoardDto.getBoardWriter()).
+                boardStatus(BoardStatus.YES).
+                bungBoard(bungBoard).
+                build();
+
+        // 빌더로 add엔티티 만들어서
+        //// bungAddRepository.save(bungAdd)
+
+//        Long result1 = bungRepository.save(bungBoardEntity).getBoardId();
+//        ConcurrentHashMap<String, String> bungAddBoardMap = new ConcurrentHashMap<>();
+//        bungAddBoardMap.put("bId" , String.valueOf(result1));
+//        bungAddBoardMap.put("writer", bungBoardDto.getBoardWriter());
+//
+//        System.out.println(result1);
+//        System.out.println(bungBoardDto.getBoardWriter());
+//
+//        Long result2 = addWriterBungBoard(bungAddBoardMap);
+//
+//        if(result1 > 0 && result2 > 0) {
+//            return result1;
+//        } else {
+//            new BoardException("게시글 작성이 실패하였습니다.");
+//            return Long.parseLong(String.valueOf(0));
+//        }
+        return bungAddRepository.save(bungAddBoardEntity).getAddId();
     }
 
     // 메인 서비스 게시글 조회
     @Override
     public Result mainSelectList() {
-        List<BungBoard> bungBoards = bungRepository.findAll();
+        List<BungBoard> bungBoards = bungRepository.findByBoardStatus(BoardStatus.YES);
         List<BungBoardResponseDto> bungBoardResponseDtoList = new ArrayList<>();
         for(BungBoard bungBoard : bungBoards){
             System.out.println(bungBoard.getBoardId());
@@ -132,6 +167,8 @@ public class BungServiceImpl implements BungBoardService {
         for(int i = 0; i < jsonArray.length() ; i ++){
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
             map.put("imageUrl", jsonArray.getJSONObject(i).getString("imageUrl"));
+            System.out.println(jsonArray.getJSONObject(i).getString("imageName"));
+            map.put("imageName", jsonArray.getJSONObject(i).getString("imageName"));
             map.put("objectKey", jsonArray.getJSONObject(i).getString("objectKey"));
             map.put("imageLevel", jsonArray.getJSONObject(i).getString("imageLevel"));
             mapList.add(map);
@@ -151,10 +188,18 @@ public class BungServiceImpl implements BungBoardService {
     @Override
     public ConcurrentHashMap<String, String> getRecentBoardNo() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        map.put("bId", String.valueOf(bungRepository.findFirstByOrderByBoardIdDesc().getBoardId()+1));
+        long bId = 0L;
+        try{
+            bId = bungRepository.findFirstByOrderByBoardIdDesc().getBoardId()+1;
+        } catch (NullPointerException e){
+            map.put("bId", "1");
+            return map;
+        }
+        map.put("bId", String.valueOf(bId));
         return map;
     }
 
+    // 벙 신청 요청자 게시글 등록 메소드
     @Override
     @Transactional
     public Long addBungBoard(ConcurrentHashMap<String, String> bungAddBoardMap) {
@@ -167,6 +212,25 @@ public class BungServiceImpl implements BungBoardService {
 
         return bungAddRepository.save(bungAddBoard).getAddId();
     }
+
+    // 주최자가 게시글 등록하면 bungAddBoard에 자동 작성되는 메소드 (삭제 예정)
+//    @Override
+//    @Transactional
+//    public Long addWriterBungBoard(ConcurrentHashMap<String, String> bungAddBoardMap) {
+//
+////        Long boardId = Long.parseLong(bungAddBoardMap.get("boardId"));
+//
+//        Long bId = Long.parseLong(bungAddBoardMap.get("bId"));
+//        System.out.println(bId);
+//
+//        BungBoard bungBoard = bungRepository.findBungBoardByBoardId(bId);
+//
+//        System.out.println(bungBoard);
+//
+//        BungAddBoard bungAddBoard = BungAddBoard.createWriterBungAddBoard(bungAddBoardMap, bungBoard);
+//
+//        return bungAddRepository.save(bungAddBoard).getAddId();
+//    }
 
     @Override
     public Result addBungBoardsList() {
@@ -186,9 +250,24 @@ public class BungServiceImpl implements BungBoardService {
     @Override
     @Transactional
     public Long addBungBoardAccept(Long addId) {
+        System.out.println("adddId : "+ addId);
         BungAddBoard addBungBoardAccept = bungAddRepository.findById(addId).orElseThrow(() ->new AddBoardException("해당하는 신청글이 존재하지 않습니다."));
-        addBungBoardAccept.changeStatus();
-        return addBungBoardAccept.getAddId();
+//        System.out.println(addBungBoardAccept.getAddId());
+        Long boardId = addBungBoardAccept.getAddId();
+//        long boardId = addBungBoardAccept.getBungBoard().getBoardId();
+        BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
+        System.out.println(boardId);
+        Long fullGroup = bungBoard.getFullGroup();
+        Long nowGroup = bungBoardNowGroup(boardId);
+
+        if(nowGroup < fullGroup) {
+            addBungBoardAccept.changeStatus();
+            return addBungBoardAccept.getAddId();
+        } else {
+            new AddBoardException("모집인원이 초과하였습니다.");
+            return null;
+        }
+//        return null;
     }
 
     @Override
@@ -210,5 +289,11 @@ public class BungServiceImpl implements BungBoardService {
         BungAddBoard findBungAddBoard = bungAddRepository.findById(addId).orElseThrow(() ->new AddBoardException("해당하는 신청글이 존재하지 않습니다."));
         bungAddRepository.delete(findBungAddBoard);
         return findBungAddBoard.getAddId();
+    }
+
+    @Override
+    @Transactional
+    public Long bungBoardNowGroup(Long bId) {
+        return bungAddRepository.bungBoardNowGroup(bId);
     }
 }

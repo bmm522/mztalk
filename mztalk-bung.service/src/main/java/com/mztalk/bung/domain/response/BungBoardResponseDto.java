@@ -16,6 +16,7 @@ public class BungBoardResponseDto {
     private String imageUrl;
     private String imageName;
 
+    private String objectKey;
     private String count;
     private String title;
     private String category;
@@ -37,7 +38,7 @@ public class BungBoardResponseDto {
         this.content = bungBoard.getBoardContent();
         this.category = bungBoard.getCategory();
         this.writer = bungBoard.getBoardWriter();
-        this.nowGroup = bungBoard.getNowGroup();
+//        this.nowGroup = bungBoard.getNowGroup();
         this.fullGroup = bungBoard.getFullGroup();
         this.deadlineDate = String.valueOf(bungBoard.getDeadlineDate());
 

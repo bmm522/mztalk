@@ -11551,6 +11551,7 @@ body {
 }
 
 .dataTable-top {
+  display: none;
   padding: 0 0 1rem;
 }
 
@@ -11683,6 +11684,7 @@ body {
 }
 
 .dataTables-empty {
+  display: none;
   text-align: center;
 }
 

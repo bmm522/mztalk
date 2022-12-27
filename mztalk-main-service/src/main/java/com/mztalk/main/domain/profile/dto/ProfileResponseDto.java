@@ -1,15 +1,14 @@
-package com.mztalk.main.domain.follow.dto;
+package com.mztalk.main.domain.profile.dto;
 
 
-import com.mztalk.main.domain.follow.entity.Profile;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.mztalk.main.domain.profile.entity.Profile;
+import lombok.*;
 
 
 @Getter
-@Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ProfileResponseDto {
 
     private String profileUrl;

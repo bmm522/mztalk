@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="APPLICATION")
 @EntityListeners(AuditingEntityListener.class)
-public class Application extends com.mztalk.mentor.domain.entity.BaseTimeEntity {
+public class Application extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name ="application_id")

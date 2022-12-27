@@ -7,7 +7,12 @@ import com.mztalk.mentor.domain.entity.File;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Mentor;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -28,6 +33,11 @@ public class ApplicationDto {
     private Long userId; // 홈페이지 내 유저 고유 정보
     private AuthStatus authStatus;
     private Status status;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime lastModifiedDate;
 
     public Application toEntity(){
         Application application = Application.builder()
@@ -60,6 +70,8 @@ public class ApplicationDto {
         this.account = application.getAccount();
         this.authStatus = application.getAuthStatus();
         this.status = application.getStatus();
+        this.createdDate = application.getCreatedDate();
+        this.lastModifiedDate = application.getLastModifiedDate();
     }
 
 }

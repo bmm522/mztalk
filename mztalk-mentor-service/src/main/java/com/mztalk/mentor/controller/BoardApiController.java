@@ -24,7 +24,7 @@ public class BoardApiController {
 
     @GetMapping("/board/{id}")
     public BoardDto findById(@PathVariable("id")Long id){
-        return boardService.findById(id);
+        return boardService.findBoardByBoardId(id);
     }
 
     //멘티가 본인이 신청한 멘토링 글을 보는 메소드

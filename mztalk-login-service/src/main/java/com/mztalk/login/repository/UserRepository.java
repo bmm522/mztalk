@@ -20,10 +20,10 @@ public interface UserRepository extends JpaRepository<User, Long>, UserCustomRep
 
 
 
-    @Transactional
-    @Modifying(clearAutomatically = true)
-    @Query("UPDATE User u set u.mentorStatus = 'Y' where u.nickname = :nickname")
-    int updateMentorStatus(@Param(value = "nickname") String nickname);
+//    @Transactional
+//    @Modifying(clearAutomatically = true)
+//    @Query("UPDATE User u set u.mentorStatus = 'Y' where u.nickname = :nickname")
+//    int updateMentorStatus(@Param(value = "nickname") String nickname);
 
     @Transactional
     @Modifying(clearAutomatically = true)
@@ -31,7 +31,6 @@ public interface UserRepository extends JpaRepository<User, Long>, UserCustomRep
     int updateStatus(@Param(value="nickname")String nickname);
 
     User findByNickname(String nickname);
-
 
 
 }

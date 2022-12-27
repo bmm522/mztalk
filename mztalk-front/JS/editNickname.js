@@ -74,6 +74,7 @@ document.getElementById('nickname-box').addEventListener('keyup',function(){
 		localStorage.setItem("refreshToken", res.refreshToken);
 		localStorage.setItem("userNo", res.userNo);
 		localStorage.setItem("userNickname", res.userNickname);
+		localStorage.setItem('path', 'SOCIAL');
 		window.open('main.html', '_self');
 	})
   });

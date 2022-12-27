@@ -1,6 +1,5 @@
 window.onload = function(){
-     getBoardList();
-     
+    getBoardList();
 }
 
 const getAccessToken = () =>{
@@ -52,9 +51,9 @@ const getBoardList = () =>{
                 </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
                 type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
                 cnt += 1;
-                // participate(boardId);  
+                document.getElementById('boardId-modal').value = boardId;
             } else {
-                document.getElementById('row-div').innerHTML +=  
+                document.getElementById('row-div').innerHTML += 
                 `<div class="col-3">
                 <div class="card" style="width: 13rem; height:14rem;">
                 <div class="card-body" onclick="getBoardDetail(${boardId});"
@@ -66,15 +65,53 @@ const getBoardList = () =>{
                  type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
                  </div><div class="row" style="padding:20px;" id="row-div">`;
                 cnt += 1;
-                // participate(boardId);  
+                document.getElementById('boardId-modal').value = boardId;
             }
       }
         }        
     })
 }
 
+// 글 신고하기
+const reportBoard = () =>{
+
+        const id = document.getElementById('boardId-modal').value;
+        fetch("http://localhost:8000/mentors/board/"+id,{
+            method:"GET",
+            headers:{
+            "Content-Type":"application/json",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken')
+            },
+        })
+        .then((res)=>res.json())
+        .then(res =>{
+            const userId = res.mentor.userId;
+            const bId = res.id;
+
+            fetch("http://localhost:8000/login/report",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({
+                    reportTitle : document.getElementById('reportTitle').value,
+                    reportContent : document.getElementById('reportContent').value,
+                    boardId : bId,
+                    serviceName : "mentor",
+                    userNo : userId,                   
+                })
+            })
+        })
+        .then(res=>{
+            alert('신고가 접수되었습니다.');
+            location.href="mentor-main.html";
+        })
+
+}
+
+
 const getBoardDetail = (bId) =>{
-        console.log("http://localhost:8000/mentors/board/"+bId);
         fetch("http://localhost:8000/mentors/board/"+bId,{
             method:"GET",
             headers:{
@@ -86,9 +123,10 @@ const getBoardDetail = (bId) =>{
         .then((res)=>res.json())
         .then(res =>{
             if(res != null){
-                document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "</br>";
+                document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
                 document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
                 document.getElementById('modal-salary').innerHTML = res.salary;
+                document.getElementById('board-price').value = res.salary;
             } else {
                 console.log('실패');
             }
@@ -126,10 +164,9 @@ const watchReview = (nickname) =>{
     document.getElementById('reviewBody').innerHTML ='';
 }
 
-//참가 신청
+// 참가 신청
 // const participate = (bId) =>{
 //     document.getElementById('participant-btn').addEventListener('click', function(){
-//         requestPay();
 //         fetch("http://localhost:8000/mentors/participant",{
 //             method:"POST",
 //             headers:{
@@ -157,11 +194,8 @@ const watchReview = (nickname) =>{
 //     });
 // }
 
-
-
 // 검색 조건
 document.getElementById('sendSearch').addEventListener('click', function(){
-    console.log('검색실행');
     const categoryValue = document.getElementById('category').value;
     const salaryValue = document.getElementById('salary').value;
     const selected = document.getElementById('type').value;
@@ -197,7 +231,7 @@ document.getElementById('sendSearch').addEventListener('click', function(){
                     </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
                     type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
                     cnt += 1;
-                    participate(boardId);  
+                    document.getElementById('boardId-modal').value = boardId;
                 } else {
                     document.getElementById('row-div').innerHTML +=  
                     `<div class="col-3">
@@ -211,7 +245,7 @@ document.getElementById('sendSearch').addEventListener('click', function(){
                     type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
                     </div><div class="row" style="padding:20px;" id="row-div">`;
                     cnt += 1;
-                    participate(boardId);  
+                    document.getElementById('boardId-modal').value = boardId;
                 }
             }
         } else if(res ==''){
@@ -289,6 +323,7 @@ document.getElementById('myPage').addEventListener('click', function(){
         }
     })
 });
+
 
 
 

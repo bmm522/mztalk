@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/individualpage.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>MZTALK</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
@@ -57,24 +58,24 @@
                                      <input type="hidden" name="bNo" id="bNo" value="${own}"/>
                                  </form>
                                 
-                                   <img class="profile-image" src='duck.jpg' onerror="this.src='duck.jpg'" id="userProfileImage">
+                                   <!--<img class="profile-image" src='duck.jpg' onerror="this.src='duck.jpg'" id="userProfileImage">
                                    <input type="hidden" class="imageName" value="objectKey"/>
-                                   <input type="hidden" name="bNo" id="bNo" value="own"/>
-                                
+                                   <input type="hidden" name="bNo" id="bNo" value="own"/>-->
+                                   
                              </div>
                          </div>
                 
                          <div class="profile-right">
                              <div class="name-group">
-                                 <h2>${nickname}</h2>
+                                 <h2 class="own_name"></h2>
                                  <button class="profile_follow_btn" onclick="profilecFollow(this)">팔로우</button>
                                  <button class="modi" onclick="popup('.modal-info')"><i class="fas fa-cog"></i></button>
                              </div>
                              <div class="follow">
                                 <ul>
-                                    <li><a href="">게시물<span>6</span></a> </li>
-                                     <li><a href="" id="subscribeBtn1">팔로워<span>106</span></a> </li> <!--나를 친구한-->
-                                     <li><a href="" id="subscribeBtn">팔로잉<span>106</span></a> </li> <!--내가 친구신청한--><!--팔로우: 친구신청걸기-->
+                                    <li><a>게시물<span class="board_count"></span></a> </li>
+                                     <li><a href="" id="subscribeBtn1">팔로워<span class="follower_count"></span></a> </li> <!--나를 친구한-->
+                                     <li><a href="" id="subscribeBtn">팔로잉<span class="following_count"></span></a> </li> <!--내가 친구신청한--><!--팔로우: 친구신청걸기-->
                                  </ul>
                             </div>
                             
@@ -97,28 +98,27 @@
                 <div id="modal" class="textmodal hidden">
 
                     <div id="write-input-div">
+
                         <div id="write-title-div">
+                            <div class="selectBox">
+                                <select id="privacyBounds" name="privacyBounds" class="select">
+                                <option disabled selected value="no">공개범위</option>
+                                <option value="PUBLIC">전체공개</option>
+                                <option value="SECRET">비공개</option>
+                                </select>
+                            </div>
                             <div id=title-div>                
                                 <input type="text" id="title-input-text">     
                             </div>
                             <hr>
                         </div>
-                        <br>
-                        <div class="selectBox">
-                            <select id="privacyBounds" name="privacyBounds" class="select">
-                            <option disabled selected value="no">공개범위</option>
-                            <option value="PUBLIC">전체공개</option>
-                            <option value="FRIENDS">친구에게만</option>
-                            <option value="SECRET">비공개</option>
-                            </select>
-                        </div>
-                        <br>
+
                         <input type="text" id="content-input-text">
                             
                     </div>
                     
                     <button type="button" style="cursor:pointer;" class="write-btn" id="write-board">글 등록</button>
-                    <button type="button" class="btn-close" aria-label="Close">닫기</button>
+                    <button type="button" class="btn-closee" aria-label="Close">닫기</button>
 
                 </div>
             
@@ -191,9 +191,9 @@
     </footer>
 
     <div class="modal-info">
-        <div class="modal">
+        <div class="modalz">
             <button id="profile-edit-btn">회원정보 변경</button>
-            <button>로그아웃</button>
+            <button onclick="logout();">로그아웃</button>
             <button onclick="closePopup('.modal-info')">취소</button>
         </div>
     </div>
@@ -201,24 +201,53 @@
     
     <!--프로필사진 바꾸기 모달-->
     <div class="modal-image">
-        <div class="modal">
+        <div class="modals">
             <p>프로필 사진 바꾸기</p>
             <button id="file-btn" onclick="profileImageUpload()">사진 업로드</button> 
-            
+
             <button onclick="closePopup('.modal-image')">취소</button>
             
         </div>
     </div>
     
-    <!--팔로우 팔로워 리스트..?-->
-    <div class="modal-follow">
-        <div class="follower">
-            <div class="follower-header">
+    <!--팔로잉 리스트..?-->
+    <div class="modal-following">
+        <div class="following">
+            <div class="following-header">
                 <span>팔로잉정보</span>
                 <button onclick="closeFollow()"><i class="fas fa-times"></i></button>
             </div>
+            <div class="following-list">
+                <!-- <div class="following__item">
+                    <div class="following__img"><img src="duck.jpg" alt=""></div>
+                    <div class="following__text">
+                        <h2>아이디</h2>
+                    </div>
+                    <div class="following__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
+                </div>
+                
+                <div class="following__item">
+                    <div class="following__img"><img src="duck.jpg" alt=""></div>
+                    <div class="following__text">
+                        <h2>아이디</h2>
+                    </div>
+                    <div class="following__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--팔로워 리스트..?-->
+    <div class="modal-follow">
+        <div class="follower">
+            <div class="follower-header">
+                <span>팔로워정보</span>
+                <button onclick="closeFollow()"><i class="fas fa-times"></i></button>
+            </div>
             <div class="follower-list">
-                <div class="follower__item">
+                <!-- <div class="follower__item">
                     <div class="follower__img"><img src="duck.jpg" alt=""></div>
                     <div class="follower__text">
                         <h2>아이디</h2>
@@ -232,58 +261,49 @@
                         <h2>아이디</h2>
                     </div>
                     <div class="follower__btn"><button onclick="clickFollow(this)">팔로잉</button></div>
-                </div>
+                </div> -->
 
             </div>
         </div>
     </div>
 
+    
+    <!--수정창-->
+        <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+            tabindex="-1">
 
-    <!--프로필사진 바꾸기 모달end-->
-    
-    <!-- <div class="modal-subscribe" id="modal-subscribe">
-        <div class="subscribe">
-            <div class="subscribe-header">
-                <span>구독정보</span>
-                <button onclick="modalClose()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-    
-            <div class="subscribe-list" id="subscribeModalList">
-    
-                <div class="subscribe__item" id="subscribeModalItem-1">
-                    <div class="subscribe__img">
-                        <img src='duck.jpg'/>
+            <div class="modal-dialog modal-dialog-centered">
+
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">타이틀</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="subscribe__text">
-                        <h2>love</h2>
+                    <div id="modal-body" class="modal-body">
+                        
+                        게시글내용
                     </div>
-                    <div class="subscribe__btn">
-                        <button class="cta blue" onclick="toggleSubscribeModal(this)">구독취소</button>
-                    </div>
+                    <div class="modal-footer">
+                        
+                        <button style="cursor:pointer;" onClick="modification()" type="button">수정</button>
+                        <div id="btn-div">
+
+                        </div>
+ 
+                    </div> -->
                 </div>
-    
-    
-                <div class="subscribe__item" id="subscribeModalItem-2">
-                    <div class="subscribe__img">
-                        <img src="#" src='duck.jpg'/>
-                    </div>
-                    <div class="subscribe__text">
-                        <h2>ssar</h2>
-                    </div>
-                    <div class="subscribe__btn">
-                        <button class="cta blue" onclick="toggleSubscribeModal(this)">구독취소</button>
-                    </div>
-                </div>
+
             </div>
         </div>
-    
-    </div> -->
+
+
+
+
 
 
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
 <script src="JS/individualpage.js"></script>
 <script src="JS/main.js"></script>
 

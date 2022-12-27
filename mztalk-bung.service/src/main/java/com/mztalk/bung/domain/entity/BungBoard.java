@@ -37,8 +37,6 @@ public class BungBoard {
     private Date deadlineDate;
     @Column(nullable = false)
     private Long fullGroup;
-    @Column(nullable = false)
-    private Long nowGroup;
     @CreationTimestamp
     private Timestamp createDate;
     @CreationTimestamp
@@ -52,7 +50,6 @@ public class BungBoard {
     @OneToMany(mappedBy = "bungBoard")
     @JsonBackReference // 순환참조 방지(부모->자식)
     private List<BungAddBoard> bungAddBoards;
-
 
     public void mainBoardUpdate(BungBoardDto bungBoardDto) {
         this.boardTitle = bungBoardDto.getBoardTitle();
@@ -76,7 +73,16 @@ public class BungBoard {
         }
     }
 
-//    public BungBoard(Long boardId, String boardWriter, String boardTitle, String boardContent, Date deadlineDate, Long fullGroup, Long nowGroup, Timestamp createDate, Timestamp modifyDate, Long boardCount, String boardStatus, String category) {
+//    @Override
+//    public String toString() {
+//        return "BungBoard{" +
+//                "boardId=" + boardId +
+//                ", boardWriter='" + boardWriter + '\'' +
+//                ", boardTitle='" + boardTitle + '\'' +
+//                '}';
+//    }
+
+    //    public BungBoard(Long boardId, String boardWriter, String boardTitle, String boardContent, Date deadlineDate, Long fullGroup, Long nowGroup, Timestamp createDate, Timestamp modifyDate, Long boardCount, String boardStatus, String category) {
 //        this.boardId = boardId;
 //        this.boardWriter = boardWriter;
 //        this.boardTitle = boardTitle;

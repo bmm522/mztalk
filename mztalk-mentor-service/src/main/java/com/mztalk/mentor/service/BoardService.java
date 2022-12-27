@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public interface BoardService {
     Long saveBoard(ConcurrentHashMap<String,String> boardMap);
 
-    BoardDto findById(Long id);
+    BoardDto findBoardByBoardId(Long id);
 
     Result findAll();
 

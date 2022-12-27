@@ -4,7 +4,6 @@ import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.QBoard;
-import com.mztalk.mentor.domain.entity.QMentor;
 import com.mztalk.mentor.repository.BoardRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

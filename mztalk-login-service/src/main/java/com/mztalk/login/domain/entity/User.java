@@ -1,5 +1,6 @@
 package com.mztalk.login.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.login.domain.cookie.MztalkCookie;
 import com.mztalk.login.domain.dto.UserInfoDto;
 import lombok.AllArgsConstructor;
@@ -8,14 +9,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstance;
@@ -39,9 +38,14 @@ public class User {
     private String providerId;
     @CreationTimestamp
     private Timestamp createDate;
-    private String mentorStatus;
     private String status;
-    private String nicknameCheck;
+
+    private long reportCount;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Report> reports;
+
 
     public void changeNickname(String nickname){
         this.nickname = nickname;
@@ -49,6 +53,7 @@ public class User {
 
     public UserInfoDto toUserInfoDto() {
         return UserInfoDto.builder()
+                .userId(String.valueOf(id))
                 .username(username)
                 .nickname(nickname)
                 .email(email)
@@ -56,9 +61,8 @@ public class User {
                 .provider(provider)
                 .providerId(providerId)
                 .createDate(createDate)
-                .mentorStatus(mentorStatus)
                 .status(status)
-                .nicknameCheck(nicknameCheck)
+                .reportCount(String.valueOf(reportCount))
                 .build();
     }
 
@@ -67,7 +71,7 @@ public class User {
     }
 
     public MztalkCookie toMztalkCookieWithExistsUser(ConcurrentHashMap<String, String> jwtMap) throws UnsupportedEncodingException {
-        return new MztalkCookie(jwtMap, id, nickname);
+        return new MztalkCookie(jwtMap, id, nickname, status);
     }
 
 }

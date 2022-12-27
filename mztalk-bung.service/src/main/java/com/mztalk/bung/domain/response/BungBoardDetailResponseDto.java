@@ -34,7 +34,7 @@ public class BungBoardDetailResponseDto {
         this.createDate = String.valueOf(bungBoard.getCreateDate());
         this.imageInfo = mapList;
         this.content = bungBoard.getBoardContent();
-        this.nowGroup = String.valueOf(bungBoard.getNowGroup());
+//        this.nowGroup = String.valueOf(bungBoard.getNowGroup());
         this.fullGroup = String.valueOf(bungBoard.getFullGroup());
         this.category = bungBoard.getCategory();
         this.deadlineDate = String.valueOf(bungBoard.getDeadlineDate());

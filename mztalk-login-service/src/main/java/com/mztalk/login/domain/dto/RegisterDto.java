@@ -24,9 +24,8 @@ public class RegisterDto {
                 .role("ROLE_USER")
                 .provider("LOCAL")
                 .providerId("NULL")
-                .mentorStatus("N")
                 .status("Y")
-                .nicknameCheck("Y")
+                .reportCount(0L)
                 .build();
     }
 

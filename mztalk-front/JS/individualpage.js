@@ -4,8 +4,13 @@ let own = localStorage.getItem("own");
 
 window.onload = function(){
     storyLoad();
-  // profile();
   profileBox();
+  profileName();
+  BoardCount();
+  FollowCount();
+  FollowingCount();
+  //FollowingButton();
+
 }
 
 
@@ -13,7 +18,7 @@ function writeboard() {
     
     const open = document.querySelector(".write_board"); //글쓰기버튼
     const modal = document.querySelector(".textmodal");  //글쓸수 있는곳
-    const close = document.querySelector(".btn-close");  //닫기버튼
+    const close = document.querySelector(".btn-closee");  //닫기버튼
 
     //console.log(open);
 
@@ -37,17 +42,11 @@ document.getElementById('profile-edit-btn').addEventListener('click',function(){
   location.href="editpage.html";
 });
 
-//개인페이지박스
+//사진박스
 function profileBox(){
 
-  // const form = document.getElementById('image-form');
     let own = localStorage.getItem("own");
-  // const payload = new FormData(form);
 
-    // fetch('http://localhost:8000/resource/main-image',{
-    //     method: 'POST',
-    //     // body: payload,
-    // })
       fetch("http://localhost:8000/story/profile/"+own,{
         method:"GET",
         headers:{
@@ -56,19 +55,175 @@ function profileBox(){
             RefreshToken:localStorage.getItem('refreshToken'),
         },
       })
+    .then((res)=>res.json())
     .then(res =>{
       
       console.log("통신 성공");
-
-
-
       
+      let profileImage = res.data;
+      //console.log(profileImage);
+      if(!res.data){
+        document.querySelector('.profile-img-wrap').innerHTML +=
+        `
+        <img class="profile-image" src='https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png' onerror="this.src='duck.jpg'" id="userProfileImage">
+        <input type="hidden" class="imageName" value="profileName"/>
+        <input type="hidden" name="bNo" id="bNo" value="own"/>
+        `  
+     }else{
+      let profileUrl = profileImage.postImageUrl;
+      let profileName = profileImage.profileImageName;
+      let own = profileImage.own
 
+      document.querySelector('.profile-img-wrap').innerHTML +=
+      `
+      <img class="profile-image" src='${profileUrl}' onerror="this.src='duck.jpg'" id="userProfileImage">
+      <input type="hidden" class="imageName" value="${profileName}"/>
+      <input type="hidden" name="bNo" id="bNo" value="${own}"/>
+      `
+     }
       })
     }
        
 
-  
+
+    
+//이름박스
+function profileName(){
+
+    let own = localStorage.getItem("own");
+
+      fetch("http://localhost:8000/story/profile/name/"+own,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+      
+      //console.log("통신 성공");
+      
+      let profileName = res.data;
+      //console.log(profileName);
+      let nickname = profileName.nickname;
+      document.querySelector('.own_name').innerHTML +=
+      `
+      ${nickname}
+      `
+      })
+    }
+
+
+
+//게시물 갯수
+function BoardCount(){
+
+  let own = localStorage.getItem("own");
+
+    fetch("http://localhost:8000/story/profile/boardCount/"+own,{
+      method:"GET",
+      headers:{
+          "Content-Type":"application/json",
+          Authorization:localStorage.getItem('authorization'),
+          RefreshToken:localStorage.getItem('refreshToken'),
+      },
+    })
+  .then((res)=>res.json())
+  .then(res =>{
+    
+    //console.log("통신 성공");
+    
+    let board = res.data;
+    //console.log(board);
+    document.querySelector('.board_count').innerHTML +=
+    `
+    ${board.boardCount}
+    `
+    })
+  }
+
+
+//팔로잉 명수
+function FollowingCount(){
+
+  let own = localStorage.getItem("own");
+
+    fetch("http://localhost:8000/story/profile/followingCount/"+own,{
+      method:"GET",
+      headers:{
+          "Content-Type":"application/json",
+          Authorization:localStorage.getItem('authorization'),
+          RefreshToken:localStorage.getItem('refreshToken'),
+      },
+    })
+  .then((res)=>res.json())
+  .then(res =>{
+    
+    //console.log("통신 성공");
+    
+    let following = res.data;
+    
+
+    if(document.querySelector('.following_count') != null){
+      document.querySelector('.following_count').innerHTML +=
+    `
+    ${following.followingCount}
+    ` 
+   }
+
+    })
+  }
+
+
+
+
+//팔로워 명수
+function FollowCount(){
+
+  let own = localStorage.getItem("own");
+
+    fetch("http://localhost:8000/story/profile/followerCount/"+own,{
+      method:"GET",
+      headers:{
+          "Content-Type":"application/json",
+          Authorization:localStorage.getItem('authorization'),
+          RefreshToken:localStorage.getItem('refreshToken'),
+      },
+    })
+  .then((res)=>res.json())
+  .then(res =>{
+    
+    //console.log("통신 성공");
+    
+    let follower = res.data;
+   // console.log(follower);
+    document.querySelector('.follower_count').innerHTML +=
+    `
+    ${follower.followerCount}
+    `
+    })
+  }
+
+
+
+
+
+
+//페이지주인은 팔로우 버튼 비활성화
+// function FollowingButton(){
+
+//   if(loginUser!=own){
+//     document.querySelector('.profile_follow_btn').innerHTML +=
+//     `
+//     <button class="profile_follow_btn" onclick="profilecFollow(this)">
+//     팔로우
+//     </button>
+//     `
+//   }
+
+// }
 
 
 
@@ -79,7 +234,7 @@ function profileBox(){
 
 
 
-//글쓰는곳DIV
+//글 목록들 DIV
 function storyLoad() {
   
   fetch("http://localhost:8000/story/"+own,{
@@ -95,14 +250,15 @@ function storyLoad() {
         //console.log(res.data);
 
         for(let board of res.data){
+
           let boardId = board.id;
           let nickname = board.nickname;
           let privacy = board.privacy;
           let title = board.title;
           let content = board.content;
-          let date = board.lastModifiedDate;
+          let date = board.lastModifiedDate.substr(0,10);
           
-        document.querySelector("#contentList").innerHTML += 
+          document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
                     <table id="post-table">
                         <tr>
@@ -111,16 +267,18 @@ function storyLoad() {
                                 </div>
                             </td>
                             <td>
-                                <div id="post-title-div"><br>&nbsp&nbsp${board.title}</div>
+                                <div id="post-title-div">${board.title}</div>
                             </td>
                             <td>
-                                <div id="post-date-div"><br>${board.date}</div>
+                                <div id="post-date-div"><br>${date}</div>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="3"><br><br>
                                 <div id="edit-delete-div">
-                                    <button style="cursor:pointer;" type="button">수정</button>
+                                       
+                                    <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
+                                    data-bs-toggle="modal" type="button">수정</button>
                                     <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
                                 </div>
                                 <div id=post-hr>
@@ -162,14 +320,36 @@ function storyLoad() {
                          `
                            <div id="reply-nickname">${reply.replyNickname}</div>
                            <div id="reply-content">${reply.replyContent}</div>
-                           <div id="reply-date">${reply.lastModifiedDate}</div>
+                           <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
                            <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button></div>
-                         `
+                         `;
+                         
                       }
                      )
                       
-              }
-             
+              
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }  
             
            })
 }
@@ -233,7 +413,7 @@ write_board.addEventListener('click', function(){
                                           </div>
                                       </td>
                                       <td>
-                                          <div id="post-title-div"><br>&nbsp&nbsp${board.title}</div>
+                                          <div id="post-title-div">${board.title}</div>
                                       </td>
                                       <td>
                                           <div id="post-date-div"><br>${board.date}</div>
@@ -242,7 +422,9 @@ write_board.addEventListener('click', function(){
                                   <tr>
                                       <td colspan="3"><br><br>
                                           <div id="edit-delete-div">
-                                              <button style="cursor:pointer;" type="button">수정</button>
+                                              
+                                          <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
+                                          data-bs-toggle="modal" type="button">수정</button>
                                               <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
                                           </div>
                                           <div id=post-hr>
@@ -282,17 +464,141 @@ write_board.addEventListener('click', function(){
       });
      
 
+
+
+//수정창상세보기
+function getBoardDetail(boardId){
+
+
+  let title = document.querySelector('#post-title-div').innerText;
+  let content = document.getElementById("post-content-input").innerText;
+  let privacy = document.getElementById('category-div').innerText;
+  
+  
+
+const write_board = document.getElementById('write-board');
+const privacyBound = document.getElementById('privacyBound');
+
+
+  console.log(boardId);
+  console.log(title);
+  console.log(content);
+  console.log(privacy);
+     
+
+    if(privacy==='PUBLIC'){
       
+      document.querySelector('.modal-content').innerHTML +=
+    `
+    <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel"><div id="title-div"><input type="text" class="title-input-text" value="${title}"></div></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="modal-body" class="modal-body">
+      <input type="text" class="content-input-text" id="contents" value="${content}">
+          <input type="hidden" value="${boardId}">
+          <div class="selectBox">
+              <select id="privacyBound" name="privacyBound" class="select">
+              <option disabled value="no">공개범위</option>
+              <option value="PUBLIC" selected>전체공개</option>
+              <option value="SECRET">비공개</option>
+              </select>
+          </div>
+      </div>
+      <div class="modal-footer">
+          
+          <button style="cursor:pointer;" onClick="modification(${boardId})" type="button">수정</button>
+          <div id="btn-div">
+
+      </div>
+
+    </div>
+    `
+    }
+
+    if(privacy==='SECRET'){
+      document.querySelector('.modal-content').innerHTML +=
+    `
+    <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel"><div id="title-div"><input type="text" class="title-input-text" value="${title}"></div></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="modal-body" class="modal-body">
+          
+      <input type="text" class="content-input-text" id="contents" value="${content}">
+          <input type="hidden" value="${boardId}">
+          <div class="selectBox">
+              <select id="privacyBound" name="privacyBound" class="select">
+              <option disabled value="no">공개범위</option>
+              <option value="PUBLIC" >전체공개</option>
+              <option value="SECRET" selected>비공개</option>
+              </select>
+          </div>
+      </div>
+      <div class="modal-footer">
+          
+          <button style="cursor:pointer;" onClick="modification(${boardId})" type="button">수정</button>
+          <div id="btn-div">
+
+      </div>
+
+    </div>
+    `
+    }
+    //document.querySelector('.modal-content').innerHTML='';
+    
+
+
+}
 
 
 
 
+//글수정      
+function modification(boardId){
+    //console.log(localStorage.getItem('authorization'));
 
-      
+    let id = boardId;
+    const privacyBound = document.getElementById('privacyBound');
+
+
+    console.log(localStorage.getItem('userNickname'));
+    console.log(document.querySelector('.title-input-text').value);
+    console.log(document.getElementById("contents").value);
+    console.log(localStorage.getItem('own'));
+    console.log(privacyBound.options[privacyBound.selectedIndex].value);
+    console.log(boardId);
+
+      fetch("http://localhost:8000/story/update/"+id,{
+        method:"PATCH",
+          headers:{
+              "Content-Type":"application/json",
+              Authorization:localStorage.getItem('authorization'),
+              RefreshToken:localStorage.getItem('refreshToken'),
+          },
+          body:JSON.stringify({
+          nickname: localStorage.getItem('userNickname'),
+          title: document.querySelector('.title-input-text').value,
+          content: document.getElementById("contents").value,
+          own: localStorage.getItem('own'),
+          privacy: privacyBound.options[privacyBound.selectedIndex].value,
+          id : boardId,
+        })
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+
+        console.log(res);
+
+        location.href="individualpage.html";   
+    }    
+)}  
+
+
 //글삭제
 function deleteBoard(boardId){
    
-    console.log("찍힘?123123123");
+ 
 
     console.log(boardId);
   
@@ -306,24 +612,11 @@ function deleteBoard(boardId){
         })
       .then((res)=>res.json())
       .then(res =>{
-        
-        
-         
+      
+
       })
       location.href="individualpage.html";  
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -389,47 +682,11 @@ function profileImageUpload(){
       reader.readAsDataURL(f); 
 
       })
+      
     })
+    
   })
 };
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -438,14 +695,7 @@ function addReply(boardId){
   //let replyContent = document.querySelector();
   let replyContent = document.querySelector(`.reply-write-input-${boardId}`);
   let replyButton = document.querySelector('#replyButton');
-  //let replyButton = document.getElementById('replyButton');
-  // let replyList = document.getquerySelector(`reply-div-${boardId}`);
-  //let replyList = document.getElementById('reply-div');
-  //let id = localStorage.getItem('userNo');
-  //console.log(replyButton);
-  //replyButton.addEventListener('click', function(){
- // console.log("클림됨?");
-      //console.log(replyContent);
+
         if(replyContent.value === ''){
           alert("댓글을 작성해주세요!");
         }else{
@@ -470,7 +720,8 @@ function addReply(boardId){
             //console.log("res.data: "+ res.data);
 
             let reply = res.data;
-            //document.getElementsByClassName(`reply-div-${boardId}`).innerHTML +=
+            
+            // let lastModifiedDate = reply.lastModifiedDate;
             document.querySelector(`.reply-div-${boardId}`).innerHTML +=
             `<div>
               <div id="reply-nickname">${reply.replyNickname}</div>
@@ -551,33 +802,152 @@ function deleteReply(Id){
 
 
 
-//팔로우 기능구현
+
+
+//팔로워리스트
+document.querySelector("#subscribeBtn1").onclick = (e) => {
+  e.preventDefault();
+  
+  let toUserId = localStorage.getItem("own");
+ 
+  fetch("http://localhost:8000/story/followList/"+toUserId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+
+      let follower = res.data;
+      document.querySelector(".modal-follow").style.display = "flex";
+
+      document.querySelector(".follower-list").innerHTML  = '';
+
+ 
+
+      console.log(follower);
+
+
+      for(let i = 0; i < follower.length; i++){
+        // console.log("길이"+follower.length );
+        // console.log("follower" + follower);
+        //console.log("뜨니?"+ follower[0].followStatus);
+        //console.log(document.querySelectorAll('.follower__btn'));
+
+        let followbutton = document.querySelectorAll('.follower__btn');
+        //console.log(follower[i].userNo);
+
+      document.querySelector(".follower-list").innerHTML +=
+      `
+      <div class="follower__item">
+          <div class="follower__img"><img class="profile-image" src='${follower[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"></div>
+          <input type="hidden" class="imageName" value="${follower[i].imageName}"/>
+          <input type="hidden" name="bNo" id="bNo" value="${follower[i].userNo}"/>
+          <div class="follower__text">
+              <h2>${follower[i].userNickname}</h2>
+              <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
+          </div>
+          <div class="follower__btn">
+          
+          </div>
+      </div> 
+      `;
+      
+        
+    } 
+    })
+
+};
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-//팔로우
-document.querySelector("#subscribeBtn").onclick = (e) => {
-    e.preventDefault();
-    document.querySelector(".modal-follow").style.display = "flex";
-  };
-
-  function closeFollow() {
+function closeFollow() {
+  document.querySelector(".modal-follow").style.display = "none";
+}
+document.querySelector(".modal-follow").addEventListener("click", (e) => {
+  if (e.target.tagName !== "BUTTON") {
     document.querySelector(".modal-follow").style.display = "none";
   }
-  document.querySelector(".modal-follow").addEventListener("click", (e) => {
+});
+
+
+
+
+
+
+
+//팔로우리스트
+document.querySelector("#subscribeBtn").onclick = (e) => {
+    e.preventDefault();
+
+    let fromUserId = localStorage.getItem("own");
+
+    fetch("http://localhost:8000/story/followingList/"+fromUserId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+
+      //console.log("통신?");
+
+      let following = res.data;
+      
+      document.querySelector(".modal-following").style.display = "flex";
+
+      document.querySelector(".following-list").innerHTML  = '';
+
+      
+      
+      for(let i = 0; i < following.length; i++){
+        // console.log("길이"+follower.length );
+        // console.log("follower" + follower);
+        //console.log(following);  
+        console.log(following[i].userNo);
+      document.querySelector(".following-list").innerHTML +=
+      `
+      <div class="following__item">
+          <div class="following__img"><img class="profile-image" src='${following[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"></div>
+          <input type="hidden" class="imageName" value="${following[i].imageName}"/>
+          <input type="hidden" name="bNo" id="bNo" value="${following[i].userNo}"/>
+          <div class="following__text">
+              <h2>${following[i].userNickname}</h2>
+              
+          </div>
+          <div class="following__btn">
+          <button class="following_button" value="${following[i].userNo}" onclick="clickFollow(this)">팔로잉 
+          <input type="hidden" class="userNo" name="userNo" value="${following[i].userNo}"/>
+          </button>
+          
+          </div>
+      </div> 
+      `;
+
+      // let userNo = document.querySelector('.userNo');
+      
+      // console.log(userNo);
+
+    }
+    })
+
+  };
+
+
+  function closeFollow() {
+    document.querySelector(".modal-following").style.display = "none";
+  }
+  document.querySelector(".modal-following").addEventListener("click", (e) => {
     if (e.target.tagName !== "BUTTON") {
-      document.querySelector(".modal-follow").style.display = "none";
+      document.querySelector(".modal-following").style.display = "none";
     }
   });
 
@@ -606,15 +976,52 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
   });
 
 
+
+
+  //팔로우리스트에서의 버튼
   function clickFollow(e) {
     console.log(e);
     let _btn = e;
     console.log(_btn.textContent);
+
+    let userButton = document.querySelector('.following_button');
+
+    console.log("버튼"+ _btn.value);
+
+  
     if (_btn.textContent === "팔로잉") {
+
+      let fromUserId = localStorage.getItem('userNo');
+      let toUserId = _btn.value;
+
+      fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+             
+      console.log(res);
+
+
+      
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
       _btn.style.color = "#fff";
       _btn.style.border = "1px solid #ddd";
+    }) 
+    
+    
+
+
+
+
+
+
     } else {
       _btn.textContent = "팔로잉";
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
@@ -623,30 +1030,113 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     }
   }
   
+
+
+//팔로우?
+  // function clickFollow(e) {
+  //   console.log(e);
+  //   let _btn = e;
+  //   console.log(_btn.textContent);
+  //   if (_btn.textContent === "팔로잉") {
+  //     _btn.textContent = "팔로우";
+  //     _btn.style.backgroundColor = "#0095f6";
+  //     _btn.style.color = "#fff";
+  //     _btn.style.border = "1px solid #ddd";
+  //   } else {
+  //     _btn.textContent = "팔로잉";
+  //     _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
+  //     _btn.style.color = "#fff";
+  //     _btn.style.border = "0";
+  //   }
+  // }
+
+
+
+
+
+
+//팔로우 기능구현
+// function followingList(){
+
+//   let own = localStorage.getItem("own");
+
+//   let userNo = document.querySelector('.userNo');
+
+//   console.log(userNo);
+
+//   fetch("http://localhost:8000/story/followingList/"+own,{
+//     method:"GET",
+//     headers:{
+//         "Content-Type":"application/json",
+//         Authorization:localStorage.getItem('authorization'),
+//         RefreshToken:localStorage.getItem('refreshToken'),
+//     },
+//   })
+// .then((res)=>res.json())
+// .then(res =>{
+  
+//   console.log("통신 성공");
+   
+//   })
+
+// }
+
+
+
+//다른사람 피드 팔로우 기능구현
   function profilecFollow(e) {
     console.log(e);
     let _btn = e;
     console.log(_btn.textContent);
+
     if (_btn.textContent === "팔로우") {
+      
+      let fromUserId = localStorage.getItem('userNo');
+      let toUserId = localStorage.getItem("own");
+
+      fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+             
+      console.log(res);
+      //버튼 저장되게끔?
+
       _btn.textContent = "팔로잉";
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
       _btn.style.color = "#fff";
       _btn.style.border = "1px solid #ddd";
+    })
+
     } else {
+      let toUserId = localStorage.getItem("own");
+      let fromUserId = localStorage.getItem('userNo');
+      ///follow/{toUserId}/{fromUserId}
+      fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
+        method:"delete",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+             
+      console.log(res);
+
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
       _btn.style.color = "#fff";
       _btn.style.border = "0";
-    }
-  }
 
-
-  function follow(check, userno){
-    //true -> follow하기
-    //false -> unfollow하기
-    let url = "/follow"/+userno
-    if(check){
-
+    })
     }
   }
 
@@ -654,134 +1144,21 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
 
 
+function logout(){
 
-
-
-
-
-
-
-
-
-
-
-
-
-//결국엔 페이지 주인은 own
-//접속자도 userNo
-
-//접속자의 own으로 가는거니까
-
-
-
-
-// function replyList(){
-//    console.log('실행됨');
-//     for(let i = 0 ; i < 10 ; i++){
-//         document.getElementById('reply-div').innerHTML += "<div> <div id='reply-nickname'>{작성자 닉네임}</div> <div id='reply-content'>{댓글 내용}</div><div id='reply-date'>{date}</div> <div id='reply-edit-btn'><button style='cursor:pointer;' type='button'>X</button></div></div>";
-
-
-
-//         // const reply = document.createElement("div");
-//         // reply.id='reply-nickname';
-//         // reply.innerHTML = "작성자";
-//         // const reply2 = document.createElement("div");
-//         // reply.id='reply-content';
-//         // reply.innerHTML = "댓글내용";
-//         // const reply3 = document.createElement("div");
-//         // reply3.id='reply-date';
-//         // reply.innerHTML = "date";
-//         // // const reply4 = document.createElement("div").attributes('reply-edit-btn');
-//         // // reply.innerHTML = "X";
+  localStorage.clear();
         
+  location.href="loginpage.html";
 
 
-//         // document.getElementById('reply-div').appendChild(reply);
-//         // document.getElementById('reply-div').appendChild(reply2);
-//         // document.getElementById('reply-div').appendChild(reply3);
-//         // document.getElementById('reply-div').appendChild(reply4);
-//     }
-// }
+}
 
 
-// (1) 유저 프로파일 페이지 구독하기, 구독취소
-// function toggleSubscribe(obj) {
-//     if ($(obj).text() === "구독취소") {
-//         $(obj).text("구독하기");
-//         $(obj).toggleClass("blue");
-//     } else {
-//         $(obj).text("구독취소");
-//         $(obj).toggleClass("blue");
-//     }
-// }
-
-// // (2) 구독자 정보  모달 보기
-// function subscribeInfoModalOpen() {
-//     document.getElementById("modal-subscribe").css("display", "flex");
-// }
-
-// function getSubscribeModalItem() {
-
-// }
 
 
-// (3) 구독자 정보 모달에서 구독하기, 구독취소
-// function toggleSubscribeModal(obj) {
-//     if ($(obj).text() === "구독취소") {
-//         $(obj).text("구독하기");
-//         $(obj).toggleClass("blue");
-//     } else {
-//         $(obj).text("구독취소");
-//         $(obj).toggleClass("blue");
-//     }
-// }
-
-// (4) 유저 프로파일 사진 변경 (완)
-// function profileImageUpload() {
-//     $("#userProfileImageInput").click();
-
-//     $("#userProfileImageInput").on("change", (e) => {
-//         let f = e.target.files[0];
-
-//         if (!f.type.match("image.*")) {
-//             alert("이미지를 등록해야 합니다.");
-//             return;
-//         }
-
-//         // 사진 전송 성공시 이미지 변경
-//         let reader = new FileReader();
-//         reader.onload = (e) => {
-//             $("#userProfileImage").attr("src", e.target.result);
-//         }
-//         reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
-//     });
-// }
-
-// (5) 사용자 정보 메뉴 열기 닫기
-// function popup(obj) {
-//     $(obj).css("display", "flex");
-// }
-
-// function closePopup(obj) {
-//     $(obj).css("display", "none");
-// }
-
-// (6) 사용자 정보(회원정보, 로그아웃, 닫기) 모달
-// function modalInfo() {
-//     $(".modal-info").css("display", "none");
-// }
 
 
-// (7) 사용자 프로파일 이미지 메뉴(사진업로드, 취소) 모달
-// function modalImage() {
-//     $(".modal-image").css("display", "none");
-// }
 
-// (8) 구독자 정보 모달 닫기
-// function modalClose() {
-//     $(".modal-subscribe").css("display", "none");
-//     location.reload();
-// }
 
 
 

@@ -99,6 +99,8 @@
     justify-content: space-between;
   }
   
+
+
   /*제출버튼*/
   .setting-container .setting__content .content-item__11 .item__input button {
     border: 0;
@@ -108,6 +110,27 @@
     color: #fff;
     cursor: pointer;
   }
+
+    /*닉네임 변경 버튼*/
+    .content-item__3 .item__input {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    .content-item__04 .item__input .button{
+      border: 0;
+      background-color: #0095f6;
+      padding: 5px 9px;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+
+
+
 
 
 /*------------------구독권------------  */

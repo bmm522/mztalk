@@ -24,10 +24,10 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
        return userRepository.updatePassword(username, bCryptPasswordEncoder.encode(password));
     }
 
-    @Override
-    public int updateMentorStatus(String nickname) {
-        return userRepository.updateMentorStatus(nickname);
-    }
+//    @Override
+//    public int updateMentorStatus(String nickname) {
+//        return userRepository.updateMentorStatus(nickname);
+//    }
 
     @Override
     public int updateStatus(String nickname) {
@@ -57,6 +57,21 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
 
         }
         return 0;
+    }
+
+    @Override
+    public int changeNewNickname(Map<String, String> body) {
+        return userRepository.updateNickname(Long.parseLong(body.get("userNo")),body.get("nickname"));
+    }
+
+    @Override
+    public int changeNewEmail(String userNo, String email) {
+        return userRepository.updateEmail(Long.parseLong(userNo), email);
+    }
+
+    @Override
+    public long updateUserStatus(String status, long id) {
+        return userRepository.updateUserStatus(status, id);
     }
 
 

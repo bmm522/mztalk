@@ -3,7 +3,7 @@
 window.onload = () => {
     const imageInfo = JSON.parse(localStorage.getItem("imageInfo"));
     console.log("update imageInfo: " + imageInfo);
-    document.getElementById("title").value = localStorage.getItem("title");
+    document.getElementById("title").innerHTML = localStorage.getItem("title");
     for(let i = 0; i < imageInfo.length; i++) {
         console.log("hidden-objectKey 넣을 값: " + imageInfo[i].objectKey);
    //  document.getElementById("hidden-objectKey").value = imageInfo[i].objectKey;
@@ -85,6 +85,7 @@ function deleteFile(objectKey) {
                 console.log("이미지 삭제 완료");
                 checkFile();
             }
+
         })
     }
 

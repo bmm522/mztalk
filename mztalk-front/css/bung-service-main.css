@@ -207,6 +207,7 @@ footer .container .copy p{font-size: 13px;padding-top: 2px;}
 
 .searchBar{
   text-align: center;
+  background-color: #c3d773;
 }
 
 table {
@@ -219,7 +220,7 @@ table {
   float: right;
   right: 350px;
   bottom: 50px;
-  border-radius: 90%;
+  border-radius: 100%;
   overflow: hidden;
 }
 
@@ -249,6 +250,27 @@ hr {
 
 #PageBtn {
   text-align: right;
+}
+
+.card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 270px;
+  height: 40px;
+}
+
+.card-header {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 285px;
+  height: 40px;
+}
+
+#count{
+  text-align: right;
+  vertical-align: bottom;
 }
 
 

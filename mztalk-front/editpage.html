@@ -56,15 +56,14 @@
                             <!--프로필셋팅 아이디영역-->
                             <div class="content-item__01">
                                 <div class="profile-left">
-                                    <div class="profile-img-wrap story-border"
-                                        onclick="popup('.modal-image')">
-                                        <form id="userProfileImageForm">
+                                    <div class="profile-img-wrap story-border">
+                                        <!-- <form id="userProfileImageForm">
                                             <input type="file" name="profileImageFile" style="display: none;"
                                                 id="userProfileImageInput" />
-                                        </form>
+                                        </form> -->
                         
-                                        <img class="profile-image" src="img/instagram_feed.jpg"
-                                             id="userProfileImage" />
+                                        <!-- <img class="profile-image" src="img/instagram_feed.jpg"
+                                             id="userProfileImage" /> -->
                                     </div>
                                 </div>
                                 <div class="item__username">
@@ -78,12 +77,21 @@
                                 <div class="content-item__02">
                                     <div class="item__title">닉네임</div>
                                     <div class="item__input">
-                                        <input type="text" name="name" placeholder="닉네임" id="nickname"  />
-                                        <div id="checkId" class="vaild-div"></div>
-                                        <input type="hidden" id="checkIdResult" value="fail"/>
+                                        <input type="text" name="name" placeholder="닉네임" id="nickname" class="own_name" />
+                                        <div id="checkNickname" class="vaild-div"></div>
+                                        <input type="hidden" id="checkNicknameResult" value="fail"/>
                                     </div>
+                                        
                                 </div>
                                 
+                                <div class="content-item__11">
+                                    <div class="item__title"></div>
+                                    <div class="item__input">
+
+                                        <button type="button" class="btn btn-primary" id="nickname_check" onclick="ch_nickName();" disabled="disabled">제출</button>
+                                    </div>
+                                </div>
+
                                 <div class="content-item__07">
                                     <div class="item__title"></div>
                                     <div class="item__input">
@@ -98,12 +106,16 @@
                                     <div class="item__title">이메일</div>
                                     <div class="item__input">
                                         <input type="text" name="email" placeholder="이메일"
-                                            value=""/>
+                                           id="email-box"/>
+                                           <div id="checkEmail"  class="vaild-div"></div>
+                                           <input type="hidden" id="checkEmailResult" value="fail"/>
                                         <br>    
                                         <button class="btn btn-primary" type="button" id="email_check">인증번호 전송</button>    
                                         <br>    
                                         <input type="text" name="email" placeholder="인증번호"
-                                        style="width:280px" value=""/> 
+                                        style="width:280px" id="auth-box"/> 
+                                        <div id="checkAuth"  class="vaild-div"></div>
+                                        <input type="hidden" id="checkAuthResult" value="fail"/>
                                           
                                     </div>
                                 </div>
@@ -112,7 +124,7 @@
                                 <div class="content-item__11">
                                     <div class="item__title"></div>
                                     <div class="item__input">
-                                        <button type="button" class="btn btn-primary" disabled>제출</button>
+                                        <button type="button" class="btn btn-primary" id="final_check" onclick="ch_email();" disabled="disabled">이메일변경</button>
                                     </div>
                                 </div>
                                 
@@ -120,7 +132,11 @@
                             </form>
                             <!--프로필수정 form end-->
                         </article>
-                    </section>    
+                    </section>
+
+
+
+                    
 
                     <div class="col-0.5">
                         &nbsp;<!--공백-->
@@ -413,13 +429,13 @@
        </footer>
    
      <!--프로필사진 바꾸기 모달-->
-     <div class="modal-image" onclick="modalImage()">
+     <!-- <div class="modal-image" onclick="modalImage()">
         <div class="modal">
             <p>프로필 사진 바꾸기</p>
             <button onclick="profileImageUpload()">사진 업로드</button>
             <button onclick="closePopup('.modal-image')">취소</button>
         </div>
-    </div>
+    </div> -->
 
     <!--프로필사진 바꾸기 모달end-->
     
@@ -439,4 +455,5 @@
 </body>
 <script src="JS/main.js"></script>
 <script src="JS/editpage.js"></script>
+<script src="JS/socialForService.js"></script>
 </html>

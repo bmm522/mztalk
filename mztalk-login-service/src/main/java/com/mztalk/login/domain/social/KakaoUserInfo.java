@@ -38,9 +38,8 @@ public class KakaoUserInfo implements SocialUserInfo{
                 .role("ROLE_USER")
                 .provider("KAKAO")
                 .providerId(String.valueOf(userInfoMap.get("id")))
-                .mentorStatus("N")
                 .status("Y")
-                .nicknameCheck("N")
+                .reportCount(0L)
                 .build();
     }
 }

@@ -123,7 +123,7 @@
                 </form>
             </div>
             <!--검색창 끝-->
-
+            
             <!-- boardList 뿌려주는 div 시작 -->
             <div id="board-list-div">
                     
@@ -131,6 +131,7 @@
 
             <!-- boardList 뿌려주는 div 끝 -->
             <input type="hidden" id="boardId-modal"/>
+            <input type="hidden" id="board-price"/>
 
             <!--멘토링 글 상세보기 모달 시작-->
             <div id="model-section">
@@ -144,17 +145,23 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div id="modal-body" class="modal-body">
+
+                                <!-- 게시글 상세 보기 모달창-->
                                 
                             </div>
                             <div class="modal-footer">
                                 <div class="card-text" style="float:left;">1회 멘토링 : 1시간 / <span id="modal-salary"></span> 원</div>
+                                <button type="button" class="btn btn-outline-danger" id="report-btn" data-bs-target="#reportModal"
+                                data-bs-toggle="modal">신고</button>
+
                                 <button class="btn btn-outline-success" data-bs-target="#exampleModalToggle2"
-                                    data-bs-toggle="modal">멘토링 신청하기</button>
+                                data-bs-toggle="modal">멘토링 신청하기</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- 멘토링 신청 페이지 시작-->
                 <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -186,13 +193,43 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" id="participant-btn" class="btn btn-outline-success">결제하기</button>
+                                <button type="button" onclick="requestPay();" class="btn btn-outline-success">결제하기</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- 멘토링 신청 페이지 끝-->
             </div>
         <!--멘토링 글 상세보기 모달 끝-->
+
+        <!-- 신고하기 작성 모달 시작-->
+        <div class="modal fade" id="reportModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">신고하기</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="reportTitle" class="form-label">신고 제목</label>
+                            <input type="text" class="form-control form-control-sm" id="reportTitle" placeholder="예)불법 홍보">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="reportContent">신고사유</label>
+                            <textarea class="form-control" placeholder="신고 사유를 적어주세요." id="reportContent" style="height: 300px; padding-top: 10px;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" id="report-btn" onclick="reportBoard();">신고 제출 하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 신고하기 작성 모달 끝-->
 
 
         <!-- 리뷰보기 모달 시작-->
@@ -281,7 +318,79 @@
 </body>
 <script src="JS/main.js"></script>
 <script src="JS/mentor-main.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script type="text/javascript">
 
+    const random = Math.ceil(Math.random()*100000000);
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth()+1;
+    const date = today.getDate();
+
+    const IMP = window.IMP; 
+    IMP.init("imp43500426");
+
+    //아임포트 결제
+    function requestPay() {
+
+        IMP.request_pay({
+                pg: "html5_inicis",
+                pay_method: "card",
+                merchant_uid: "ORD"+ year + month + date +  "-" + random,
+                name: "MZTALK - 멘토링",
+                amount: document.getElementById('board-price').value,
+                buyer_email: document.getElementById("email").value,
+                buyer_name: document.getElementById("name").value, 
+                buyer_tel: document.getElementById("phone").value,
+            },
+            function (rsp) {
+                if (rsp.success) {
+                    $.ajax({
+                        url: "http://localhost:8000/mentors/participant",
+                        method: "POST",
+                        headers: { 
+                            "Content-Type": "application/json;",
+                            Authorization:localStorage.getItem('authorization'),
+                            RefreshToken:localStorage.getItem('refreshToken')
+                        },
+                        data: JSON.stringify({
+                            userId : localStorage.getItem('userNo'),
+                            boardId : document.getElementById('boardId-modal').value,
+                            name : rsp.buyer_name,
+                            phone : rsp.buyer_tel,
+                            email : rsp.buyer_email,
+                            price : rsp.paid_amount,
+                            message : document.getElementById("message").value
+                        })
+                    })
+                    .done(function (data) {
+
+                        $.ajax({
+                            url: "http://localhost:8000/mentors/payment",
+                            method: "POST",
+                            headers: { 
+                                "Content-Type": "application/json;",
+                                Authorization:localStorage.getItem('authorization'),
+                                RefreshToken:localStorage.getItem('refreshToken')
+                            },
+                            data: JSON.stringify({
+                                userId : localStorage.getItem('userNo'),
+                                boardId : document.getElementById('boardId-modal').value,
+                                price : rsp.paid_amount
+                            })
+                        })
+                        alert('멘토링 신청이 완료되었습니다.');
+                        location.href="mentor-main.html";
+                    })
+                } else {
+                    alert('멘토링 결제를 실패하셨습니다');
+                    location.href="mentor-main.html";
+                }
+            });
+    }
+</script>
 
 
 </html>

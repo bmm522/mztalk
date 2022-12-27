@@ -1,5 +1,6 @@
 package com.mztalk.login.controller;
 
+import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.UserInfoDto;
 import com.mztalk.login.service.NewAccessTokenService;
 import com.mztalk.login.service.SelectUserInfoService;
@@ -34,10 +35,10 @@ public class LoginApiController {
         return updateUserInfoService.updatePassword(body.get("username"), body.get("password"));
     }
 
-    @PatchMapping("/mentor-status/{nickname}")
-    public int updateMentorStatus(@PathVariable("nickname")String nickname){
-        return updateUserInfoService.updateMentorStatus(nickname);
-    }
+//    @PatchMapping("/mentor-status/{nickname}")
+//    public int updateMentorStatus(@PathVariable("nickname")String nickname){
+//        return updateUserInfoService.updateMentorStatus(nickname);
+//    }
 
     @PatchMapping("/status/{nickname}")
     public int updateStatus(@PathVariable("nickname")String nickname){
@@ -57,10 +58,10 @@ public class LoginApiController {
     public UserInfoDto getUserInfoByUserNo(@PathVariable("id")String id){
         return selectUserInfoService.getUserInfoByUserNo(id);
     }
-    @GetMapping("user/{nickname}")
-    public UserInfoDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
-        return selectUserInfoService.getUserInfoByNickname(nickname);
-    }
+//    @GetMapping("user-info/{nickname}")
+//    public UserInfoDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
+//        return selectUserInfoService.getUserInfoByNickname(nickname);
+//    }
 
 
 
@@ -82,5 +83,23 @@ public class LoginApiController {
         return updateUserInfoService.changeNewPassword(body);
     }
 
+    @PatchMapping("/user/nickname")
+    public int changeNewNickname(@RequestBody Map<String, String> body){
+        return updateUserInfoService.changeNewNickname(body);
+    }
 
+    @PatchMapping("/user/email")
+    public int changeNewEmail(@RequestBody Map<String, String> body){
+        return updateUserInfoService.changeNewEmail(body.get("userNo"), body.get("email"));
+    }
+
+    @GetMapping("/malicious-user")
+    public Result<?> getMaliciousUser(){
+        return selectUserInfoService.getMaliciousUser();
+    }
+
+    @PatchMapping("/user/status")
+    public long updateUserStatus(@RequestParam("status")String status, @RequestParam("userNo")long id){
+        return updateUserInfoService.updateUserStatus(status, id);
+    }
 }

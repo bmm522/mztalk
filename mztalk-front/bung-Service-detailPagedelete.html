@@ -21,58 +21,53 @@
 <body>
     <div class="main" style="height: 1050px;" id="main-div">
        <div id="header" style="height: 50px;">
-            <strong>{제목}</strong> 
+            <label for="bungTitle" class="form-label">제 목</label>
+            <input type="text" class="form-control" id="bungTitle" name="bungTitle">
         </div>
-        <hr>
-        <div id="writer" style="float: left; width: 50%;">
-             {작성자} 
-        </div>
-        <div id="date" style="float: left; width: 50%;">
-             {작성일}
-        </div>
+        <br><br>
+        <form  id="image-form">
+            <div id="fileArea">
+          
+                <input type="hidden" name="serviceName" value="bung"/>
+                <input type="hidden" name="bNo" id="bId-hidden" />
+                <div class="mb-3">
+                    <!-- <input type="file" style="float: left;" name="image"id="fileUpload">  -->
+                    <button type="button" class="btn btn-outline-warning" style="float: right;" id="addFile" name="file" onclick="addBtn();">파일 추가</button>
+                </div>
+      
+            </div>
+        </form>
 
-        <hr>
-        <hr>
-        <hr>
-
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active"><img class="d-block w-100" src="dog.jpg" alt="사진이 없습니다" /></div>
+       <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner" id="image-div-div">
+                <!-- <div class="carousel-item active"><img class="d-block w-100" src="dog.jpg" alt="사진이 없습니다" /></div>
                 <div class="carousel-item"><img class="d-block w-100" src="dog2.jpg" alt="사진이 없습니다" /></div>
-                <div class="carousel-item"><img class="d-block w-100" src="duck.jpg" alt="사진이 없습니다" /></div>
+                <div class="carousel-item"><img class="d-block w-100" src="duck.jpg" alt="사진이 없습니다" /></div> -->
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span> </button>
-        </div>
+        </div> 
 
         <br>
 
-        <!-- <div style="text-align:center" id="dot-div">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-        </div> -->
-
         <div style="width: 100%; height: 225px; float: left; text-align: center;">
             <br>
-            <input type="text" Placeholder="{벙 게시글 내용}" id="bungContent" name="bungContent" readonly>
+            <input type="text" Placeholder="{벙 게시글 내용}" id="bungContent" name="bungContent">
         </div>
-
-        <br><br><br><br><br>
 
         <div class="infomationBtn" style="height: 200px; float: left; width: 33%;">
             <br>
             <div id="group" style="height: 66.66px;">
-                {현재인원} / {총원}
+               
             </div>
             <div id="category" style="height: 66.66px;">
-                {카테 고리}
+               
             </div>
             <div id="closeRead" style="height: 66.66px;">
-                {마감 조회}
+               
             </div>
         </div>
         <div class="writerBtn" style="height: 200px; float: left; width: 33%;">
@@ -81,10 +76,10 @@
                 <button type="button" class="btn btn-outline-warning">신청자 현황 보기</button>
             </div>
             <div id="category" style="height: 66.66px;">
-                <button type="button" class="btn btn-outline-warning">게시글 수정</button>
+                <button type="button" class="btn btn-outline-warning" onclick="updateMove();">게시글 수정</button>
             </div>
             <div id="closeRead" style="height: 66.66px;">
-                <button type="button" class="btn btn-outline-warning">게시글 삭제</button>
+                <button type="button" class="btn btn-outline-warning" id="delete-btn" onclick="deleteEvent();">게시글 삭제</button>
             </div>
         </div>
         <div class="actionBtn" style="height: 200px; float: left; width: 33%;">
@@ -104,12 +99,36 @@
 
 
     <script>
+    var count = document.getElementsByClassName('count-div').length;
+    const addBtn = () =>{
+    console.log("1 : " + document.getElementsByClassName('count-div').length);
 
+    if(document.getElementsByClassName('count-div').length < 3){
+        const fileArea = document.querySelector('#fileArea');   
 
+            console.log("2 : " + document.getElementsByClassName('count-div').length);
+            console.log('클릭');
+             for(let i = 0; i < 1; i++) {
+                if(count < 3) {
+                    count++;
+                    const newDiv = document.createElement('div');
+                    newDiv.classList.add('mb-3');
+                    newDiv.innerHTML = '<div class="count-div"></div><input type="file" id="fileUpload" style="float: left;" name="image">';
+			        fileArea.append(newDiv);
+                } else {
+                   
+                    return false;
+                }         
+            }
+
+    } else{
+        alert('사진은 최대 3장까지만 가능합니다.');
+    }
+}
             
         
     </script>
-    <!-- <script src="JS/bung-detail.js" /> -->
+    <script src="JS/bung-detail.js" />
 </body>
 
 </html>
