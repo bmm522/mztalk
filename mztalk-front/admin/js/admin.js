@@ -226,6 +226,29 @@ const getBoardDetail = (bId, userId,serviceName, path) =>{
             }
         })
         ocument.getElementById('modal-body').innerHTML = '';
+    } else if(serviceName == 'bung'){
+        fetch('http://localhost:8000/bung/mainBoardSelect/'+bId, {
+            method:"GET",
+            headers:{
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken'),
+            }
+        })
+        .then((res)=>res.json())
+        .then(res=>{
+            if(res != null){
+                document.getElementById('exampleModalToggleLabel').innerHTML = '벙 서비스'
+                document.getElementById('modal-body').innerHTML = "제목 : " + res.title + "<br/>";
+                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
+                // document.getElementById('board-price').innerHTML = res.salary;
+                document.getElementById('btn-div').innerHTML = ` <button type="button" id="detail-btn" onclick="moveDetail(${bId}, '${serviceName}', '${path}');">해당 글 상세보기</button>
+                <button type="button" id="rep-btn" onclick="postReport(${bId},${userId},'${serviceName}');">신고 받기</button>
+                
+                `;
+            } else {
+                console.log('실패');
+            }
+        })
     }
 }
 

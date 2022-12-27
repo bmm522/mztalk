@@ -25,7 +25,7 @@ public class ReportRequestDto {
     public Report toEntity(User user){
         String path = "";
         switch (serviceName){
-            case "bung" : path="http://127.0.0.1:5501/bung-Service-detailPage.html"; break;
+            case "bung" : path="http://127.0.0.1:5501/bung-service-detail.html"; break;
             case "auction" : path="http://127.0.0.1:5501/auctionDetail.html"; break;
             case "mentor" : path="null"; break;
         }
