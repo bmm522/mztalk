@@ -270,6 +270,3 @@ document.getElementById('report-btn').addEventListener('click', function(){
             })
 } );
 
-const postReport=()=>{
-   
-}
