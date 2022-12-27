@@ -32,6 +32,8 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public Long saveBoard(ConcurrentHashMap<String,String> boardMap) {
         Long userId = Long.parseLong(boardMap.get("userId"));
+        String mentoringDate = boardMap.get("mentoringDate");
+        System.out.println("mentoringDate = " + mentoringDate);
         if(findBoardByMentorId(userId)){
             throw new DuplicateException("이미 작성한 게시글이 존재합니다.");
         }
@@ -44,6 +46,7 @@ public class BoardServiceImpl implements BoardService {
                 introduction(boardMap.get("introduction")).
                 career(boardMap.get("career")).
                 salary(Integer.parseInt(boardMap.get("salary"))).
+                mentoringDate(boardMap.get("mentoringDate")).
                 status(Status.YES).
                 build();
         board.addMentor(mentor);

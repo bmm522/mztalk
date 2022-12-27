@@ -37,7 +37,8 @@ document.getElementById('mentor-write-btn').addEventListener('click',function(){
                 content : document.getElementById('content').value,
                 introduction : document.getElementById('introduction').value,
                 career : document.getElementById('career').value,
-                salary : document.getElementById('salary').value
+                salary : document.getElementById('salary').value,
+                mentoringDate : document.getElementById('mentoringDate').value
             })
         })    
         .then((res)=>res.json())
@@ -54,33 +55,20 @@ document.getElementById('mentor-write-btn').addEventListener('click',function(){
     })
 });
 
-const modify = () =>{
-    const mentorId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board/edit/"+mentorId,{
-        method:"PATCH",
-        headers:{
-            "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-        },
-        body:JSON.stringify({
-            title : document.getElementById('modify-title').value,
-            introduction : document.getElementById('modify-introduction').value,
-            career : document.getElementById('modify-career').value,
-            salary : document.getElementById('modify-salary').value,
-            content : document.getElementById('modify-content').value
-        })    
-    })
-    .then((res)=>res.json())
-    .then(res =>{
-        if(res>0){
-            window.alert('글이 수정되었습니다.');
-        } else{
-            console.log('글 수정 실패');
-        }
-    })  
+// 글 작성시 최소 날짜 설정.
+const dateControl = document.getElementById('mentoringDate');
+const date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -5);
+dateControl.value = date;
+dateControl.setAttribute("min",date);
+
+function setMinValue() {
+    if(dateControl.value < date) {
+        alert('현재 시간보다 이전의 날짜는 설정할 수 없습니다.');
+        dateControl.value = date;
+    }
 }
 
+// 글삭제 하기
 const deleteBoard = () =>{
     const mentorId = localStorage.getItem('userNo');
     fetch("http://localhost:8000/mentors/board/"+mentorId,{

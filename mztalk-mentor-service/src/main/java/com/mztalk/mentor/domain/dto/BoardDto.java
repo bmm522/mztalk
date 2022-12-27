@@ -23,6 +23,7 @@ public class BoardDto {
     private String introduction;
     private String career;
     private int salary;
+    private String mentoringDate;
     private List<Participant> participants = new ArrayList<>();
     private List<Payment> payments = new ArrayList<>();
     private Status status;
@@ -39,6 +40,7 @@ public class BoardDto {
                 .introduction(introduction)
                 .career(career)
                 .salary(salary)
+                .mentoringDate(mentoringDate)
                 .participants(participants)
                 .payments(payments)
                 .status(Status.YES)
@@ -56,6 +58,7 @@ public class BoardDto {
         this.introduction = board.getIntroduction();
         this.career = board.getCareer();
         this.salary = board.getSalary();
+        this.mentoringDate = board.getMentoringDate();
         this.participants = board.getParticipants();
         this.payments = board.getPayments();
         this.status = board.getStatus();

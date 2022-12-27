@@ -50,6 +50,9 @@ public class Board extends BaseTimeEntity{
     @NotNull
     private int salary; //시급
 
+    @NotNull
+    private String mentoringDate;
+
     @OneToMany(mappedBy = "board")
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Participant> participants = new ArrayList<>();
@@ -63,7 +66,7 @@ public class Board extends BaseTimeEntity{
 
     @Builder
     public Board(Long id, Mentor mentor, String category, String title, String nickname, String content, String introduction,
-                 String career, int salary, List<Participant> participants,
+                 String career, int salary, String mentoringDate, List<Participant> participants,
                  List<Payment> payments, Status status) {
         this.id = id;
         this.mentor = mentor;
@@ -74,6 +77,7 @@ public class Board extends BaseTimeEntity{
         this.introduction = introduction;
         this.career = career;
         this.salary = salary;
+        this.mentoringDate = mentoringDate;
         this.participants = participants;
         this.payments = payments;
         this.status = status;
@@ -89,6 +93,7 @@ public class Board extends BaseTimeEntity{
         this.career = boardDto.getCareer();
         this.salary = boardDto.getSalary();
         this.content = boardDto.getContent();
+        this.mentoringDate = boardDto.getMentoringDate();
     }
 
     //== 연관관계 편의 메소드==//

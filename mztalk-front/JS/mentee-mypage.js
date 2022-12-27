@@ -1,9 +1,9 @@
 window.onload = function(){
     getBoardList();
     addFile();
-    
-
 }
+
+// 멘토 신청시 첨부파일 추가 버튼 생성
 const addFile = () =>{
     document.getElementById("addFile").addEventListener('click', () => { 
         if(document.getElementsByName("file").length < 3) {
@@ -17,8 +17,7 @@ const addFile = () =>{
     });
 }
 
-
-
+// 토큰 만료 시 토큰 재발급
 const getAccessToken = () =>{
     localStorage.removeItem('authorization');
     let refreshToken = localStorage.getItem('refreshToken');
@@ -188,7 +187,7 @@ const getBoardList = () =>{
     .then((res)=>res.json())
     .then(res =>{
         if(res.status==401){
-            getAccessToken(); 
+            getAccessToken();
             location.href = "mentor-main.html";
         } else {
             let cnt = 1;
@@ -210,7 +209,7 @@ const getBoardList = () =>{
                 </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
                 type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
                 cnt += 1;
-                document.getElementById('boardId-modal').value = boardId; 
+                document.getElementById('boardId-modal').value = boardId;
             } else {
                 document.getElementById('row-div').innerHTML += 
                 `<div class="col-3">
@@ -231,42 +230,42 @@ const getBoardList = () =>{
     })
 }
 
-// 글신고하기
+// 글 신고하기
 const reportBoard = () =>{
-    document.getElementById('report-btn').addEventListener('click',function(){
-        const id = document.getElementById('boardId-modal').value;
-        fetch("http://localhost:8000/mentors/board/"+id,{
-            method:"GET",
-            headers:{
+    const id = document.getElementById('boardId-modal').value;
+    fetch("http://localhost:8000/mentors/board/"+id,{
+        method:"GET",
+        headers:{
             "Content-Type":"application/json",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        const userId = res.mentor.userId;
+        const bId = res.id;
+        fetch("http://localhost:8000/login/report",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
             },
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-            const userId = res.mentor.userId;
-            const id = res.id;
-
-            fetch("http://localhost:8000//신고주소를 입력해주세요",{
-                method:"GET",
-                headers:{
-                "Content-Type":"application/json",
-                    Authorization:localStorage.getItem('authorization'),
-                    RefreshToken:localStorage.getItem('refreshToken')
-                },
-                body:JSON.stringify({
-                    userId : userId,
-                    boardId : id,
-                    service : "Mentor",
-                    title : document.getElementById('reportTitle').value,
-                    content : document.getElementById('reportContent').value
-                })
+            body:JSON.stringify({
+                reportTitle : document.getElementById('reportTitle').value,
+                reportContent : document.getElementById('reportContent').value,
+                boardId : bId,
+                service : "mentor",
+                userNo : userId
             })
         })
-    });
+    })
+    .then(res =>{
+        alert('신고가 접수되었습니다.');
+        location.href="mentor-main.html";
+    })
 }
 
+// 글번호에 대해 글 상세 보기
 const getBoardDetail = (bId) =>{
     fetch("http://localhost:8000/mentors/board/"+bId,{
         method:"GET",
@@ -282,7 +281,8 @@ const getBoardDetail = (bId) =>{
         if(res != null){
             document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
             document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
-            document.getElementById('modal-salary').innerHTML = res.salary;
+            document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.salary + "원";
+            document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.mentoringDate.substr(0,10) +"&nbsp&nbsp"+ res.mentoringDate.substr(11,5);
             document.getElementById('board-price').value = res.salary;
         } else {
             console.log('실패');
@@ -291,7 +291,7 @@ const getBoardDetail = (bId) =>{
 }
 
 
-//멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
+// 멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
 const watchReview = (nickname) =>{
     fetch("http://localhost:8000/mentors/score?nickname="+nickname,{
         method:"GET",

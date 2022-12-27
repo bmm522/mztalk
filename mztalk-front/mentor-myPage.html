@@ -41,7 +41,7 @@
             <div class="row" style="padding-top: 20px;">
                 <form class="d-flex" role="search">
                     <div class="mentors-myPage col-2" data-bs-toggle="modal" href="#mentorModal">
-                        <span onclick="myMentees();" >작성한 멘토링 현황</span>
+                        <span onclick="myMentees();">신청자 명단</span>
                     </div>
 
                     <div class="mentors-myPage col-3">
@@ -85,7 +85,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <label class="form-label">멘토링 신청자 명단</label>
+                    <label class="form-label">신청자 명단</label>
                     <table class="table table-hover mentors-table">
                         <thead>
                           <tr>
@@ -168,16 +168,19 @@
                         </div>
                         <div class="mb-3">
                             <label for="career" class="form-label">경력</label>
-                            <input type="text" class="form-control form-control-sm" id="career" name="career" placeholder="예)~직업 ~년차">
+                            <input type="text" class="form-control form-control-sm" id="career" name="career" placeholder="예)~ 직업 ~ 년차">
                         </div>
                         <div class="mb-3">
                             <label for="salary" class="form-label">금액</label>
-                            <input type="text" class="form-control form-control-sm" id="salary" name="salary" placeholder="예)25000">
+                            <input type="text" class="form-control form-control-sm" id="salary" name="salary" placeholder="25000">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mentoringDate" class="form-label">날짜</label>
+                            <input type="datetime-local" onchange="setMinValue();" class="form-control form-control-sm" id="mentoringDate" name="mentoringDate" style="margin-top: 0.4rem;">
                         </div>
                         <div class="mb-3">
                             <label for="content">내용</label>
-                            <textarea class="form-control" id="content" name="content" style="height: 300px"
-                            placeholder="진행방식 : "></textarea>
+                            <textarea class="form-control" id="content" name="content" style="height: 200px" placeholder="소개 :"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

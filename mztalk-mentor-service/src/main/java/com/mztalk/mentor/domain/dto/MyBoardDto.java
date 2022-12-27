@@ -24,6 +24,7 @@ public class MyBoardDto {
     private String introduction;
     private String career;
     private int salary;
+    private String mentoringDate;
     private Status status;
 
     public Board toEntity() {
@@ -38,6 +39,7 @@ public class MyBoardDto {
                 .career(career)
                 .salary(salary)
                 .status(Status.YES)
+                .mentoringDate(mentoringDate)
                 .build();
         return board;
     }
@@ -52,6 +54,7 @@ public class MyBoardDto {
         this.introduction = board.getIntroduction();
         this.career = board.getCareer();
         this.salary = board.getSalary();
+        this.mentoringDate = board.getMentoringDate();
         this.status = board.getStatus();
     }
 

@@ -2,6 +2,7 @@ window.onload = function(){
     getBoardList();
 }
 
+// 토큰 만료 시 토큰 재발급
 const getAccessToken = () =>{
     localStorage.removeItem('authorization');
     let refreshToken = localStorage.getItem('refreshToken');
@@ -29,7 +30,7 @@ const getBoardList = () =>{
     .then((res)=>res.json())
     .then(res =>{
         if(res.status==401){
-            getAccessToken(); 
+            getAccessToken();
             location.href = "mentor-main.html";
         } else {
             let cnt = 1;
@@ -72,7 +73,7 @@ const getBoardList = () =>{
     })
 }
 
-//글 신고하기
+// 글 신고하기
 const reportBoard = () =>{
     const id = document.getElementById('boardId-modal').value;
     fetch("http://localhost:8000/mentors/board/"+id,{
@@ -107,7 +108,7 @@ const reportBoard = () =>{
     })
 }
 
-
+// 글번호에 대해 글 상세 보기
 const getBoardDetail = (bId) =>{
         fetch("http://localhost:8000/mentors/board/"+bId,{
             method:"GET",
@@ -122,7 +123,10 @@ const getBoardDetail = (bId) =>{
             if(res != null){
                 document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
                 document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
-                document.getElementById('modal-salary').innerHTML = res.salary;
+                document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.mentoringDate.substr(0,10) +"&nbsp&nbsp"+ res.mentoringDate.substr(11,5);
+                document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.salary + "원";
+                
+                // 결제 하기 위한 금액 설정
                 document.getElementById('board-price').value = res.salary;
             } else {
                 console.log('실패');
@@ -130,7 +134,7 @@ const getBoardDetail = (bId) =>{
         })
 }
 
-//글 작성자 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
+// 멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
 const watchReview = (nickname) =>{
     fetch("http://localhost:8000/mentors/score?nickname="+nickname,{
         method:"GET",
@@ -160,36 +164,6 @@ const watchReview = (nickname) =>{
     })
     document.getElementById('reviewBody').innerHTML ='';
 }
-
-// 참가 신청
-// const participate = (bId) =>{
-//     document.getElementById('participant-btn').addEventListener('click', function(){
-//         fetch("http://localhost:8000/mentors/participant",{
-//             method:"POST",
-//             headers:{
-//                 "Content-Type":"application/json;",
-//                 Authorization:localStorage.getItem('authorization'),
-//                 RefreshToken:localStorage.getItem('refreshToken')
-//             },
-//             body:JSON.stringify({
-//                 userId : localStorage.getItem('userNo'),
-//                 boardId : bId,
-//                 name :document.getElementById("name").value,
-//                 phone : document.getElementById("phone").value,
-//                 email : document.getElementById("email").value,
-//                 message : document.getElementById("message").value
-//             })
-//         })
-//         .then((res)=>res.json())
-//         .then(res =>{
-//             if(res > 0){
-//                 location.href="mentor-main.html";
-//             } else {
-//                 console.log('실패');
-//             }
-//         })
-//     });
-// }
 
 // 검색 조건
 document.getElementById('sendSearch').addEventListener('click', function(){
@@ -275,30 +249,6 @@ sort.addEventListener('change', function(){
     })
 });
 
-
-// boardId이용해서 리뷰 >> 점수 평균 가져오기.
-// document.getElementById('watchScore').addEventListener('click', function(){
-//     const boardId = document.getElementById('boardId').value
-//     fetch("http://localhost:8000/mentors/score/"+boardId,{
-//         method:"GET",
-//         headers:{
-//             "Content-Type":"application/json;",
-//             Authorization:localStorage.getItem('authorization'),
-//             RefreshToken:localStorage.getItem('refreshToken')
-//         },
-//     })
-//     .then((res)=>res.json())
-//     .then(res =>{
-//         console.log("res : " + res);
-//         if(res > 0){
-//             console.log('통신성공');
-//         } else {
-//             console.log('실패');
-//         }
-//     })
-// });
-
-
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
 document.getElementById('myPage').addEventListener('click', function(){
     const userId = localStorage.getItem('userNo');
@@ -321,6 +271,24 @@ document.getElementById('myPage').addEventListener('click', function(){
     })
 });
 
-
-
-
+// boardId이용해서 리뷰 >> 점수 평균 가져오기.
+// document.getElementById('watchScore').addEventListener('click', function(){
+//     const boardId = document.getElementById('boardId').value
+//     fetch("http://localhost:8000/mentors/score/"+boardId,{
+//         method:"GET",
+//         headers:{
+//             "Content-Type":"application/json;",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken')
+//         },
+//     })
+//     .then((res)=>res.json())
+//     .then(res =>{
+//         console.log("res : " + res);
+//         if(res > 0){
+//             console.log('통신성공');
+//         } else {
+//             console.log('실패');
+//         }
+//     })
+// });

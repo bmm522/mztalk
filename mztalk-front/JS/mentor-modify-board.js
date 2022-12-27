@@ -37,7 +37,8 @@ document.getElementById('mentor-write-btn').addEventListener('click',function(){
                 content : document.getElementById('content').value,
                 introduction : document.getElementById('introduction').value,
                 career : document.getElementById('career').value,
-                salary : document.getElementById('salary').value
+                salary : document.getElementById('salary').value,
+                mentoringDate : document.getElementById('mentoringDate').value
             })
         })    
         .then((res)=>res.json())
@@ -105,8 +106,12 @@ const getMyBoard = () =>{
                                 <input type="text" class="form-control form-control-sm" id="modify-career" value="${res.career}">
                             </div>
                             <div class="mb-3">
-                                <label for="modify-salary" class="form-label">시급</label>
+                                <label for="modify-salary" class="form-label">금액</label>
                                 <input type="text" class="form-control form-control-sm" id="modify-salary" value="${res.salary}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="mentoringDate" class="form-label">날짜</label>
+                                <input type="datetime-local" value="${res.mentoringDate}" onchange="setMinValue();" class="form-control form-control-sm" id="mentoringDate" name="mentoringDate" style="margin-top: 0.4rem;">
                             </div>
                             <div class="mb-3">
                                 <label for="modify-content">내용</label>
@@ -122,6 +127,7 @@ const getMyBoard = () =>{
     });
 };
 
+//글 작성 수정하기
 const modify = () =>{
     const mentorId = localStorage.getItem('userNo');
     fetch("http://localhost:8000/mentors/board/edit/"+mentorId,{
@@ -136,6 +142,7 @@ const modify = () =>{
             introduction : document.getElementById('modify-introduction').value,
             career : document.getElementById('modify-career').value,
             salary : document.getElementById('modify-salary').value,
+            mentoringDate : document.getElementById('mentoringDate').value,
             content : document.getElementById('modify-content').value
         })    
     })
@@ -149,6 +156,18 @@ const modify = () =>{
     })  
 }
 
+// 글 수정 시 현재시간 보다 빠를 경우 에러.
+const dateControl = document.getElementById('mentoringDate');
+const date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -5);
+
+function setMinValue() {
+    if(dateControl.value < date) {
+        alert('현재 시간보다 이전의 날짜는 설정할 수 없습니다.');
+        dateControl.value = date;
+    }
+}
+
+// 멘토글 삭제
 const deleteBoard = () =>{
     const mentorId = localStorage.getItem('userNo');
     fetch("http://localhost:8000/mentors/board/"+mentorId,{
