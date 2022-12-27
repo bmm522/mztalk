@@ -101,7 +101,7 @@ public class ProfileServiceImpl implements ProfileService {
         headersNames.add("Content-type", "text/html");
 
         ResponseEntity<String> responseName = new RestTemplate().exchange(
-                "http://localhost:8000/login/user-info/" + String.valueOf(own),
+                "http://localhost:8000/login/user-info/" + own,
                 HttpMethod.GET,
                 new HttpEntity<String>(headerName),
                 String.class
@@ -118,31 +118,31 @@ public class ProfileServiceImpl implements ProfileService {
     //게시물 갯수 보여주기
     @Override
     @Transactional
-    public Profile boardCount(long own) {
+    public ProfileDto boardCount(long own) {
 
         long count = boardRepository.countByOwn(own);
 
-        return Profile.builder()
+        return ProfileDto.builder()
                 .boardCount(count)
                 .build();
     }
 
     @Override
-    public Profile followerCount(long own) {
+    public ProfileDto followerCount(long own) {
 
         long count = followRepository.countByToUserId(own);
 
-        return Profile.builder()
+        return ProfileDto.builder()
                 .followerCount(count)
                 .build();
     }
 
     @Override
-    public Profile followingCount(long own) {
+    public ProfileDto followingCount(long own) {
 
         long count = followRepository.countByFromUserId(own);
 
-        return Profile.builder()
+        return ProfileDto.builder()
                 .followingCount(count)
                 .build();
     }
@@ -156,7 +156,7 @@ public class ProfileServiceImpl implements ProfileService {
         headerImage.add("Content-type", "text/html");
 
         ResponseEntity<String> responseproImg = new RestTemplate().exchange(
-                "http://localhost:8000/resource/main-image?bNo=" + String.valueOf(own) + "&serviceName=story",    //첫번째: url
+                "http://localhost:8000/resource/main-image?bNo=" + own + "&serviceName=story",    //첫번째: url
                 HttpMethod.GET,
                 new HttpEntity<String>(headerImage),     //바디, 헤더 다 담기 가능/엔티티
                 String.class

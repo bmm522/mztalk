@@ -1,6 +1,6 @@
 window.onload = () =>{
-   // newMentorBoard();
-
+   newMentorBoard();
+    
 }
 
 
