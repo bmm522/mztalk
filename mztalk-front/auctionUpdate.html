@@ -74,22 +74,21 @@
 					<label for="title">제목</label>
 					<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
 				</div>
-				<div class="mb-3">
+				<div class="mb-3" id = "fileDiv">
                     <label for="inputFiles">파일 첨부</label>
+                    <form id="update-form">
                     <div id = "fileList" style="margin-top: 10px; margin-left: 20px;">
-                        <!--
-                        <span id = "fileName">파일.jpg</span>
+                        <!--<span id = "fileName">파일.jpg</span>
                         <span id = "fileDelete" style = "color: gray;">X</span> -->
                     </div>
-                    <form id="update-form">
                         <input type = "hidden" id = "hidden-bId" name="bNo"/>
                         <input type = "hidden" name = "serviceName" value="auction"/>
                     <div class = "row" id = "fileArea">
                         <div class = "col-10" id = "count">
                             <input type="file" class="form-control" id="inputFiles" name = "image" accept="image/*">
-                        </div>
-                        <div class = "col-2">
+                            <div class = "col-2">
                             <button type = "button" id = "addFile" style = "margin-top: 20px;margin-left: 10px;">+</button>
+                            </div>
                         </div>
                     </div>
                     </form>
@@ -106,7 +105,7 @@
 				<div class="mb-3 row">
                     <div class = "col-6">
 					    <label for="minPrice">시작가</label>
-					    <input type="text" class="form-control" onblur="priceStandard(this)" name="startPrice" id="startPrice" placeholder="5,000" readonly>
+					    <input type="text" class="form-control" onblur="priceStandard(this)" name="currentPrice" id="currentPrice" placeholder="5,000" readonly>
                     </div>
                     <div class = "col-6">
                         <label for="timeLimit">시간</label>

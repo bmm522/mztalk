@@ -6,28 +6,29 @@ window.onload = () => {
     document.getElementById("title").innerHTML = localStorage.getItem("title");
     for(let i = 0; i < imageInfo.length; i++) {
         console.log("hidden-objectKey 넣을 값: " + imageInfo[i].objectKey);
-   //     document.getElementById("hidden-objectKey").value = imageInfo[i].objectKey;
+   //  document.getElementById("hidden-objectKey").value = imageInfo[i].objectKey;
    //  document.getElementById("hidden-objectKey").innerHTML = imageInfo[i].objectKey;
-        let objectData = imageInfo[i].objectKey;
-        console.log("찍히니 ? : " + objectData);
-        document.getElementById("fileList").innerHTML += `<span class = "imageName">${imageInfo[i].imageName}</span><span id = "fileDelete" style="color: gray;margin-left: 5px; cursor: pointer;" onclick="deleteFile('${objectData}');">X<br></span>`;
+        let objectKey = imageInfo[i].objectKey;
+        let imageName = imageInfo[i].imageName;
+        console.log("찍히니 ? : " + objectKey);
+        document.getElementById("fileList").innerHTML += `<div id="${objectKey}"><span class = "imageName">${imageInfo[i].imageName}</span><span id = "fileDelete" style="color: gray;margin-left: 5px; cursor: pointer;" onclick="deleteFile('${objectKey}');">X<br></span></div>`;
 
     }
-    console.log(document.getElementsByClassName('imageName')[0].innerHTML);
-    console.log(document.getElementsByClassName('imageName')[1].innerHTML);
+    // console.log(document.getElementsByClassName('imageName')[0].innerHTML);
+    // console.log(document.getElementsByClassName('imageName')[1].innerHTML);
     
     document.getElementById("content").value = localStorage.getItem("content");
-    document.getElementById("startPrice").value = localStorage.getItem("startPrice");
+    document.getElementById("currentPrice").value = localStorage.getItem("currentPrice");
     document.getElementById("timeLimit").value = localStorage.getItem("timeLimit");
     document.getElementById("hidden-bId").value = localStorage.getItem("bId");
 
 
     localStorage.removeItem("title");
     localStorage.removeItem("content");
-    localStorage.removeItem("startPrice");
+    localStorage.removeItem("currentPrice");
     localStorage.removeItem("timeLimit");
 
-    document.getElementById("startPrice").addEventListener('click', function() {
+    document.getElementById("currentPrice").addEventListener('click', function() {
         alert("시작가는 변경할 수 없습니다.");
     });
     document.getElementById("timeLimit").addEventListener('click', function() {
@@ -35,30 +36,43 @@ window.onload = () => {
     });
 
 
+    //첨부 파일 개수 체크
+    checkFile();
 }
 
-//파일 추가 버튼
-document.getElementById("addFile").addEventListener('click', function() {
-    const fileArea = document.getElementById("fileArea");
-    
-    if(Number(document.getElementsByName("image").length) + Number(document.getElementsByClassName("imageName").length) < 3) {
-        const newDiv = document.createElement('div');
-        newDiv.classList.add('col-10');
-        newDiv.innerHTML = '<input type = "file" class = "form-control" name = "image" accept="image/*"">';
-        fileArea.append(newDiv);
+function checkFile() {
+    if(Number(document.getElementsByClassName('imageName').length) == 3) {
+        document.getElementById('count').innerHTML = '<span style="color:gray;">사진은 최대 3장까지 첨부 가능합니다.</span>';
     } else {
-        alert("파일은 3개까지 첨부 가능합니다.");
+        //파일 추가 버튼
+        document.getElementById("addFile").addEventListener('click', function () {
+            const fileArea = document.getElementById("fileArea");
+            console.log("수정 첨부 파일: " + document.getElementsByName("image").length);
+            console.log("이미 첨부한 파일: " + Number(document.getElementsByClassName("imageName").length));
+        
+            
+            if(Number(document.getElementsByName("image").length) + Number(document.getElementsByClassName("imageName").length) < 3) {
+                const newDiv = document.createElement('div');
+                newDiv.classList.add('col-10');
+                newDiv.innerHTML = '<input type = "file" class = "form-control" name = "image" accept="image/*"">';
+                fileArea.append(newDiv);
+        
+            } else {
+                alert("사진은 최대 3개까지 첨부 가능합니다.");
+            }
+        });  
     }
-});
+}
 
 
 //파일 삭제
-function deleteFile(objectData) {
-    console.log(objectData);
+function deleteFile(objectKey) {
+    document.getElementById(objectKey).remove();
+    console.log(objectKey);
    // console.log("파일삭제 시 hidden-objectKey: " + document.getElementById("hidden-objectKey").value);
     if(confirm('정말 삭제하시겠습니까?')) {
-        console.log("삭제시objectKey: " + objectData);
-        fetch('http://localhost:8000/resource/image-detail?imageName=' + objectData, {
+        console.log("삭제시objectKey: " + objectKey);
+        fetch('http://localhost:8000/resource/image-detail?imageName=' + objectKey, {
             method: 'DELETE',
             headers: {
                 "Content-Type": "text/html",
@@ -69,8 +83,9 @@ function deleteFile(objectData) {
         .then(res=>{
             if(res.status == 200) {
                 console.log("이미지 삭제 완료");
-                document.getElementById("fileList").innerHTML += "";
-            } 
+                checkFile();
+            }
+
         })
     }
 
@@ -92,17 +107,12 @@ function updateBoard() {
      })
     } else {
         updateData();
-    }
-
-
-
-
-    
+    };
 }
 
 const updateData = () =>{
     console.log("수정하기 버튼 눌렀을 시 bId: " + document.getElementById("hidden-bId").value);
-    fetch("http://localhost:8000/auction/" + document.getElementById('hidden-bId').value, {
+    fetch("http://localhost:8000/auction/board/" + document.getElementById('hidden-bId').value, {
         method: "PATCH",
         headers: {
             "Content-Type":"application/json",
@@ -111,12 +121,14 @@ const updateData = () =>{
         },
         body:JSON.stringify({
             "title" : document.getElementById('title').value,
-            "writer": localStorage.getItem('userNickname'),
-            "content":document.getElementById('content').value,
-            "bId": document.getElementById('hidden-bId').value
+            "content": document.getElementById('content').value
         }),
     })
     .then(res => {
+        if(res.status = 200) {
+            console.log("수정 완료");
+    
+        }
         location.href="auctionDetail.html";
     });
 }
