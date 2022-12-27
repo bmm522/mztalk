@@ -41,7 +41,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     //개인 프로필 사진
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<ProfileImageResponseDto> profileImg(long own) {
 
         HttpHeaders headersImg = new HttpHeaders();
@@ -96,6 +96,8 @@ public class ProfileServiceImpl implements ProfileService {
         HttpHeaders headerName = new HttpHeaders();
         headerName.add("Content-type", "text/html");
 
+        System.out.println("own어디"+own);
+
         //유저의이름
         HttpHeaders headersNames = new HttpHeaders();
         headersNames.add("Content-type", "text/html");
@@ -128,6 +130,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional
     public ProfileDto followerCount(long own) {
 
         long count = followRepository.countByToUserId(own);
@@ -138,6 +141,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional
     public ProfileDto followingCount(long own) {
 
         long count = followRepository.countByFromUserId(own);

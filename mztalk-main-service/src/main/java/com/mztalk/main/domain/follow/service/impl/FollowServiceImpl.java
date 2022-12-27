@@ -129,7 +129,7 @@ public class FollowServiceImpl implements FollowService {
 
 
     }
-
+    //팔로잉리스트
     @Override
     @Transactional
     public List<FollowingListResponseDto> followingList(Long fromUserId) {
@@ -157,13 +157,18 @@ public class FollowServiceImpl implements FollowService {
             HttpHeaders headersImg = new HttpHeaders();
             headersImg.add("Content-type", "text/html");
             Optional<Profile> profile = profileCustomRepository.findByToUserImage(follow.getToUserId());
-            //Optional<Profile> profile = profileCustomRepository.findByUserStatus(toUserId);
-            System.out.println("팔로워 사진" + profile);
+            //Optional<Profile> profile = profileCustomRepository.findByUserStatus(follow.getToUserId());
+//            System.out.println("팔로워 사진" + profile);
+//            System.out.println("여기 사람 있어요!" +follow.getToUserId());
 
             if (profile.isPresent()) {
 
+//                System.out.println("사람 살려!!!!!!");
+//                System.out.println("----"+profile);
+//                System.out.println(follow.getFromUserId());
+
                 ResponseEntity<String> responseImg = new RestTemplate().exchange(
-                        "http://localhost:8000/resource/main-image?bNo=" + follow.getFromUserId() + "&serviceName=story",
+                        "http://localhost:8000/resource/main-image?bNo=" + follow.getToUserId() + "&serviceName=story",
                         HttpMethod.GET,
                         new HttpEntity<String>(headersImg),
                         String.class
@@ -174,7 +179,7 @@ public class FollowServiceImpl implements FollowService {
                 String imageUrl = profileData.getString("imageUrl");
                 String imageName = profileData.getString("objectKey");
 
-                System.out.println("여기 오니?!");
+                //System.out.println("여기 오니?!");
                 followDtoList.add(new FollowingListResponseDto(follow, nickname, imageUrl, imageName, follow.getFollowStatus()));
 
 
@@ -202,7 +207,7 @@ public class FollowServiceImpl implements FollowService {
 
         Long followDto = followRepository.followStatus(fromUserId, toUserId);
 
-        //System.out.println("살려줘 싀바리먼이;ㄹ"+followDto);
+        //System.out.println("살려줘 ;ㄹ"+followDto);
         
         return followDto;
     }
