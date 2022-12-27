@@ -14,7 +14,7 @@ public interface BoardService {
 
     Result findAll();
 
-    Long delete(Long mentorId);
+    Long delete(Long id);
 
     Long updateBoard(Long id, BoardDto boardDto);
 

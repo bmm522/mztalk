@@ -171,16 +171,15 @@
                                 <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">신청하기</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">이름</label>
-                                    <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="예)홍길동">
+                                    <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="홍길동">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">연락 가능한 연락처</label>
-                                    <input type="text" class="form-control form-control-sm" id="phone" name="phone" placeholder="010-1111-2222">
+                                    <input type="text" class="form-control form-control-sm" id="phone" name="phone" placeholder="01011112222">
                                 </div>
 
                                 <div class="mb-3">
@@ -193,7 +192,6 @@
                                     <textarea class="form-control" placeholder="멘토에게 자신을 소개해주세요." id="message" style="height: 300px; padding-top: 10px;"></textarea>
                                 </div>
                             </div>
-
                             <div class="modal-footer">
                                 <button type="button" onclick="requestPay();" class="btn btn-outline-success">결제하기</button>
                             </div>
@@ -242,7 +240,7 @@
                 </div>
                 <div class="modal-body" id="reviewBody" style="text-align: left;">
                     
-                    <!-- 리뷰 나오는 레이아웃-->
+                    <!-- 리뷰 나오는 레이아웃 -->
 
                 </div>
                 <div class="modal-footer">
@@ -341,7 +339,8 @@
                 pay_method: "card",
                 merchant_uid: "ORD"+ year + month + date +  "-" + random,
                 name: "MZTALK - 멘토링",
-                amount: document.getElementById('board-price').value,
+                // amount: document.getElementById('board-price').value,
+                amount : 100,
                 buyer_email: document.getElementById("email").value,
                 buyer_name: document.getElementById("name").value, 
                 buyer_tel: document.getElementById("phone").value,

@@ -44,11 +44,11 @@ public class BoardApiController {
     }
 
     @DeleteMapping("/board/{id}") // 진짜로 삭제한다.
-    public Long deleteBoard(@PathVariable("id")Long mentorId){
-        return boardService.delete(mentorId);
+    public Long deleteBoard(@PathVariable("id")Long id){
+        return boardService.delete(id);
     }
 
-    @PatchMapping("/board/edit/{id}") //멘토 아이디로 글찾고 정보 수정
+    @PatchMapping("/board/edit/{id}") //boardId로 글찾기
     public Long updateBoard(@PathVariable("id")Long id,@RequestBody BoardDto boardDto){
         return boardService.updateBoard(id, boardDto);
     }
@@ -63,6 +63,9 @@ public class BoardApiController {
         return boardService.latestBoard();
     }
 
-
+    // 끝난 멘토링 찾기
+    // LocalDateTime localDateTime = LocalDateTime.parse("mentoringDate");
+    // entityManager.setParameter해서 파싱.mentoringDate < LocalDateTime인것만 가져오는거 만들어서
+    // userId로 보드를 찾고 조건절에 파싱.mentoringDate < LocalDateTime하기
 
 }

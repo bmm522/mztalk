@@ -9,8 +9,4 @@ public interface BoardRepository extends JpaRepository<Board,Long>, BoardReposit
     @Query("select b from Board b join fetch b.mentor m where b.status ='YES' and b.id =:id")
     Board findBoardByBoardId(@Param("id") Long id);
 
-    @Query("select b from Board b join fetch b.mentor m where b.status = 'YES' and m.id =:mentorId")
-    Board getBoardByMentorId(@Param("mentorId") Long mentorId);
-
-
 }

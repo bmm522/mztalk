@@ -198,34 +198,32 @@ const getBoardList = () =>{
                 let nickname = board.nickname;
                 let career = board.career;
                 let title = board.title;
-            if(cnt%4 !== 0 ){
-                document.getElementById('row-div').innerHTML +=  `<div class="col-3">
-                <div class="card" style="width: 13rem; height:14rem;">
-                <div class="card-body" onclick="getBoardDetail(${boardId});"  
-                data-bs-toggle="modal" href="#exampleModalToggle">
-                <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
-                ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
-                ${career}</h6><p class="card-text">제목:${title}</p>
-                </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
-                type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
-                cnt += 1;
-                document.getElementById('boardId-modal').value = boardId;
-            } else {
-                document.getElementById('row-div').innerHTML += 
-                `<div class="col-3">
-                <div class="card" style="width: 13rem; height:14rem;">
-                <div class="card-body" onclick="getBoardDetail(${boardId});"
-                data-bs-toggle="modal" href="#exampleModalToggle">
-                <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
-                ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
-                ${career}</h6><p class="card-text">제목:${title}</p>
-                </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview('${nickname}');"
-                 type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
-                 </div><div class="row" style="padding:20px;" id="row-div">`;
-                cnt += 1;
-                document.getElementById('boardId-modal').value = boardId;
+                if(cnt%4 !== 0 ){
+                    document.getElementById('row-div').innerHTML +=  `<div class="col-3">
+                    <div class="card" style="width: 13rem; height:14rem;">
+                    <div class="card-body" onclick="getBoardDetail(${boardId});"  
+                    data-bs-toggle="modal" href="#exampleModalToggle">
+                    <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
+                    ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
+                    ${career}</h6><p class="card-text">제목:${title}</p>
+                    </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
+                    cnt += 1;
+                } else {
+                    document.getElementById('row-div').innerHTML += 
+                    `<div class="col-3">
+                    <div class="card" style="width: 13rem; height:14rem;">
+                    <div class="card-body" onclick="getBoardDetail(${boardId});"
+                    data-bs-toggle="modal" href="#exampleModalToggle">
+                    <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
+                    ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
+                    ${career}</h6><p class="card-text">제목:${title}</p>
+                    </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview('${nickname}');"
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
+                    </div><div class="row" style="padding:20px;" id="row-div">`;
+                    cnt += 1;
+                }
             }
-      }
         }        
     })
 }
@@ -267,6 +265,7 @@ const reportBoard = () =>{
 
 // 글번호에 대해 글 상세 보기
 const getBoardDetail = (bId) =>{
+    document.getElementById('boardId-modal').value = bId;
     fetch("http://localhost:8000/mentors/board/"+bId,{
         method:"GET",
         headers:{
@@ -277,7 +276,6 @@ const getBoardDetail = (bId) =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log("res : " + res);
         if(res != null){
             document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
             document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
@@ -313,7 +311,7 @@ const watchReview = (nickname) =>{
                     case 2 : star ='★★'; break; 
                     case 1 : star ='★'; break;
                 }
-                document.getElementById('reviewBody').innerHTML +=  '<br/>' + star + '<br/>' + '<br/>' + score.content + '<br/>';
+            document.getElementById('reviewBody').innerHTML +=  '<br/>' + star + '<br/>' + '<br/>' + score.content + '<br/>';
             }
         } else {
             console.log('실패');

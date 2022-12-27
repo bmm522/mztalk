@@ -32,8 +32,6 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public Long saveBoard(ConcurrentHashMap<String,String> boardMap) {
         Long userId = Long.parseLong(boardMap.get("userId"));
-        String mentoringDate = boardMap.get("mentoringDate");
-
         Mentor mentor = mentorRepository.findMentorByUserId(userId);
         Board board = Board.builder().
                 category(boardMap.get("category")).
@@ -88,8 +86,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional //상태만 수정한다. // 수정 후 Status = No여서보이면 안된다.
-    public Long delete(Long mentorId) {
-        Board findBoard = boardRepository.getBoardByMentorId(mentorId);
+    public Long delete(Long id) {
+        Board findBoard = boardRepository.findBoardByBoardId(id);
         boardRepository.delete(findBoard);
         return findBoard.getId();
     }
@@ -97,7 +95,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long updateBoard(Long id, BoardDto boardDto) {
-        Board savedBoard = boardRepository.getBoardByMentorId(id);
+        Board savedBoard = boardRepository.findBoardByBoardId(id);
         savedBoard.updateBoard(boardDto);
         return savedBoard.getId();
     }

@@ -65,10 +65,10 @@ const getMyBoard = () =>{
 };
 
 
-//글 작성 수정하기
+// 글 수정하기
 const modify = () =>{
-    const mentorId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board/edit/"+mentorId,{
+    
+    fetch("http://localhost:8000/mentors/board/edit/"+boardId,{
         method:"PATCH",
         headers:{
             "Content-Type":"application/json",

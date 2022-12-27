@@ -41,34 +41,33 @@ const getBoardList = () =>{
                 let nickname = board.nickname;
                 let career = board.career;
                 let title = board.title;
-            if(cnt%4 !== 0 ){
-                document.getElementById('row-div').innerHTML +=  `<div class="col-3">
-                <div class="card" style="width: 13rem; height:14rem;">
-                <div class="card-body" onclick="getBoardDetail(${boardId});"  
-                data-bs-toggle="modal" href="#exampleModalToggle">
-                <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
-                ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
-                ${career}</h6><p class="card-text">제목:${title}</p>
-                </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
-                type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
-                cnt += 1;
-                document.getElementById('boardId-modal').value = boardId;
-            } else {
-                document.getElementById('row-div').innerHTML += 
-                `<div class="col-3">
-                <div class="card" style="width: 13rem; height:14rem;">
-                <div class="card-body" onclick="getBoardDetail(${boardId});"
-                data-bs-toggle="modal" href="#exampleModalToggle">
-                <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
-                ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
-                ${career}</h6><p class="card-text">제목:${title}</p>
-                </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview('${nickname}');"
-                 type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
-                 </div><div class="row" style="padding:20px;" id="row-div">`;
-                cnt += 1;
-                document.getElementById('boardId-modal').value = boardId;
+
+                if(cnt%4 !== 0 ){
+                    document.getElementById('row-div').innerHTML +=  `<div class="col-3">
+                    <div class="card" style="width: 13rem; height:14rem;">
+                    <div class="card-body" onclick="getBoardDetail(${boardId});"  
+                    data-bs-toggle="modal" href="#exampleModalToggle">
+                    <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
+                    ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
+                    ${career}</h6><p class="card-text">제목:${title}</p>
+                    </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
+                    cnt += 1;
+                } else {
+                    document.getElementById('row-div').innerHTML += 
+                    `<div class="col-3">
+                    <div class="card" style="width: 13rem; height:14rem;">
+                    <div class="card-body" onclick="getBoardDetail(${boardId});"
+                    data-bs-toggle="modal" href="#exampleModalToggle">
+                    <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
+                    ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
+                    ${career}</h6><p class="card-text">제목:${title}</p>
+                    </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview('${nickname}');"
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
+                    </div><div class="row" style="padding:20px;" id="row-div">`;
+                    cnt += 1;
+                }
             }
-      }
         }        
     })
 }
@@ -110,28 +109,28 @@ const reportBoard = () =>{
 
 // 글번호에 대해 글 상세 보기
 const getBoardDetail = (bId) =>{
-        fetch("http://localhost:8000/mentors/board/"+bId,{
-            method:"GET",
-            headers:{
+    document.getElementById('boardId-modal').value = bId;
+    fetch("http://localhost:8000/mentors/board/"+bId,{
+        method:"GET",
+        headers:{
             "Content-Type":"application/json",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
-            },
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-            if(res != null){
-                document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
-                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
-                document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.mentoringDate.substr(0,10) +"&nbsp&nbsp"+ res.mentoringDate.substr(11,5);
-                document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.salary + "원";
-                
-                // 결제 하기 위한 금액 설정
-                document.getElementById('board-price').value = res.salary;
-            } else {
-                console.log('실패');
-            }
-        })
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        if(res != null){
+            document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
+            document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
+            document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.mentoringDate.substr(0,10) +"&nbsp&nbsp"+ res.mentoringDate.substr(11,5);
+            document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.salary + "원";
+            // 결제 하기 위한 금액 설정
+            document.getElementById('board-price').value = res.salary;
+        } else {
+            console.log('실패');
+        }
+    })
 }
 
 // 멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
