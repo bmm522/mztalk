@@ -555,6 +555,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         localStorage.setItem("refreshToken", response.headers.get('RefreshToken'));
         localStorage.setItem("userNo", response.headers.get("UserNo"));
         localStorage.setItem("userNickname", decodeURIComponent(response.headers.get('UserNickname')));
+        localStorage.setItem('path', 'LOCAL');
         window.open('main.html', '_self');
       }
      
@@ -597,6 +598,7 @@ document.getElementById('kakaoBtn').addEventListener('click',function(){
           localStorage.setItem('refreshToken', getCookieValue('RefreshToken').replace("+"," "));
           localStorage.setItem('userNo', getCookieValue('UserNo').replace("+"," "));
           localStorage.setItem('userNickname',getCookieValue('UserNickname'));
+          localStorage.setItem('path', 'SOCIAL');
           console.log("소셜로그인 : " + localStorage.getItem('authorization'));
           console.log("소셜로그인 : " + localStorage.getItem('refreshToken'));
           console.log("소셜로그인 : " + localStorage.getItem('userNo'));
