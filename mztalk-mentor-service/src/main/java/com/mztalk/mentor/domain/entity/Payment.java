@@ -22,7 +22,7 @@ public class Payment extends BaseTimeEntity{
     @Column(name="payment_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="board_id")
     private Board board;
 
@@ -58,11 +58,8 @@ public class Payment extends BaseTimeEntity{
     }
 
     public void addBoard(Board board){
-        if(this.board != null){
-            this.board.getPayments().remove(this);
-        }
         this.board = board;
-        board.getPayments().add(this);
+        board.addPayment(this);
     }
 
     //== 결제 생성 메소드 ==//

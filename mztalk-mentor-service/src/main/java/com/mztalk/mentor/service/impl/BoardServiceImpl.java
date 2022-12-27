@@ -78,8 +78,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Result findAll() {
-        List<Board> boards = boardRepository.findAll();
+    public Result findByPaymentIsNull() {
+        List<Board> boards = boardRepository.findByPaymentIsNull();
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
     }

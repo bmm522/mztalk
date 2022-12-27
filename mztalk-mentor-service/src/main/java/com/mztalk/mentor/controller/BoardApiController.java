@@ -40,7 +40,7 @@ public class BoardApiController {
 
     @GetMapping("/boards")
     public Result findAll(){
-        return boardService.findAll();
+        return boardService.findByPaymentIsNull();
     }
 
     @DeleteMapping("/board/{id}") // 진짜로 삭제한다.

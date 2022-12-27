@@ -24,8 +24,8 @@ public class BoardDto {
     private String career;
     private int salary;
     private String mentoringDate;
-    private List<Participant> participants = new ArrayList<>();
-    private List<Payment> payments = new ArrayList<>();
+    private Participant participant;
+    private Payment payment;
     private Status status;
     private LocalDateTime lastModifiedDate;
 
@@ -41,8 +41,8 @@ public class BoardDto {
                 .career(career)
                 .salary(salary)
                 .mentoringDate(mentoringDate)
-                .participants(participants)
-                .payments(payments)
+                .participant(participant)
+                .payment(payment)
                 .status(Status.YES)
                 .build();
         return board;
@@ -59,8 +59,8 @@ public class BoardDto {
         this.career = board.getCareer();
         this.salary = board.getSalary();
         this.mentoringDate = board.getMentoringDate();
-        this.participants = board.getParticipants();
-        this.payments = board.getPayments();
+        this.participant = board.getParticipant();
+        this.payment = board.getPayment();
         this.status = board.getStatus();
         this.lastModifiedDate = board.getLastModifiedDate();
     }

@@ -53,21 +53,21 @@ public class Board extends BaseTimeEntity{
     @NotNull
     private String mentoringDate;
 
-    @OneToMany(mappedBy = "board")
+    @OneToOne(mappedBy = "board")
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private List<Participant> participants = new ArrayList<>();
+    private Participant participant;
 
-    @OneToMany(mappedBy = "board")
+    @OneToOne(mappedBy = "board")
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private List<Payment> payments = new ArrayList<>();
+    private Payment payment;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @Builder
     public Board(Long id, Mentor mentor, String category, String title, String nickname, String content, String introduction,
-                 String career, int salary, String mentoringDate, List<Participant> participants,
-                 List<Payment> payments, Status status) {
+                 String career, int salary, String mentoringDate, Participant participant,
+                 Payment payment, Status status) {
         this.id = id;
         this.mentor = mentor;
         this.category = category;
@@ -78,8 +78,8 @@ public class Board extends BaseTimeEntity{
         this.career = career;
         this.salary = salary;
         this.mentoringDate = mentoringDate;
-        this.participants = participants;
-        this.payments = payments;
+        this.participant = participant;
+        this.payment = payment;
         this.status = status;
     }
 
@@ -102,17 +102,11 @@ public class Board extends BaseTimeEntity{
         mentor.addBoard(this);
     }
 
-    public void addParticipants(Participant participant){
-        this.participants.add(participant);
-        if(participant.getBoard() != this){
-            participant.addBoard(this);
-        }
+    public void addParticipant(Participant participant){
+        this.participant = participant;
     }
 
     public void addPayment(Payment payment){
-        this.payments.add(payment);
-        if(payment.getBoard() != this){
-            payment.addBoard(this);
-        }
+        this.payment = payment;
     }
 }

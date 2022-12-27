@@ -22,7 +22,7 @@ public class Participant extends BaseTimeEntity{
     @Column(name="participant_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
@@ -65,11 +65,8 @@ public class Participant extends BaseTimeEntity{
 
     //== 연관관계 편의 메소드==//
     public void addBoard(Board board){
-        if(this.board != null){
-            this.board.getParticipants().remove(this);
-        }
         this.board = board;
-        board.getParticipants().add(this);
+        board.addParticipant(this);
     }
 
     public void addMentee(Mentee mentee){

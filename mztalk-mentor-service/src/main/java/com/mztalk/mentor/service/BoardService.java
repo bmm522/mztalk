@@ -12,7 +12,7 @@ public interface BoardService {
 
     BoardDto findBoardByBoardId(Long id);
 
-    Result findAll();
+    Result findByPaymentIsNull();
 
     Long delete(Long id);
 

@@ -28,8 +28,8 @@ const getAccessToken = () =>{
     .then(res =>{
         localStorage.removeItem('refreshtoken');
         localStorage.setItem('authorization',res.jwtToken);
-        localStorage.setItem('refreshToken', res.refreshToken);
-     })
+        localStorage.setItem('refreshToken',res.refreshToken);
+    })
 }
 
 // 멘토 등록 신청서 작성(제출), 실명인증이 안되어있는경우 제출 불가.
@@ -70,7 +70,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
                     account : document.getElementById("realBankAccount").value,
                     userId : localStorage.getItem('userNo')
                 })
-            })    
+                })    
             .then((res)=>res.json())
             .then(res =>{
                 if(res > 0){
@@ -131,24 +131,62 @@ document.getElementById('accountButton').addEventListener('click', function(){
     })
 });
 
+// 완료된 멘토링 목록 >> 리뷰 버튼 클릭시 리뷰 작성 페이지
+const endMentoring = ()=>{
+    const userId = localStorage.getItem('userNo');
+    console.log(userId);
+    fetch("http://localhost:8000/mentors/board?userId="+userId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json;",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+    if(res!=null){
+        for(const endBoard of res.data){
+            document.getElementById('endBoardList').innerHTML +=
+            `<td>${endBoard.id}</td>
+            <td>${endBoard.nickname}</td>
+            <td>${endBoard.title}</td>
+            <td style="text-align: center;">
+                <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#writeReview"
+                onclick="showBoardId(${endBoard.id},'${endBoard.nickname}');"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
+            </td>`
+        }
+    } 
+ })
+document.getElementById('endBoardList').innerHTML ='';
+}
+
+// 리뷰 작성 페이지 글번호 보여주기
+const showBoardId = (boardId,nickname)=>{
+    document.getElementById('boardId').value = boardId;
+    document.getElementById('mentorNickname').value = nickname;
+}
+
 // 리뷰 제출하기
 const writeReview = () => {
     const userId = localStorage.getItem('userNo');
-    const boardId = document.getElementById("boardId").value;
-    fetch("http://localhost:8000/mentors/score/mentee?userId="+userId+"&boardId="+boardId,{
-            method:"GET",
-            headers:{
-                "Content-Type":"application/json;",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
-            },
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-            if(res){
-                window.alert('해당 글에 대한 작성한 리뷰가 존재합니다.');
-                return false;
-            } else{
+    const boardId = document.getElementById('boardId').value;
+    console.log('리뷰제출하기 시작')
+    fetch("http://localhost:8000/mentors/score/mentee?userId=" + userId + "&boardId=" + boardId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json;",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        if(res){
+            window.alert('해당 글에 대한 작성한 리뷰가 존재합니다.');
+            return false;
+        } else{
             fetch("http://localhost:8000/mentors/score",{
                 method:"POST",
                 headers:{
@@ -288,7 +326,6 @@ const getBoardDetail = (bId) =>{
     })
 }
 
-
 // 멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
 const watchReview = (nickname) =>{
     fetch("http://localhost:8000/mentors/score?nickname="+nickname,{
@@ -318,42 +355,6 @@ const watchReview = (nickname) =>{
         }
     })
     document.getElementById('reviewBody').innerHTML ='';
-}
-
-// 완료된 멘토링 목록
-const endMentoring = ()=>{
-        const userId = localStorage.getItem('userNo');
-        console.log(userId);
-        fetch("http://localhost:8000/mentors/board?userId="+userId,{
-            method:"GET",
-            headers:{
-                "Content-Type":"application/json;",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
-            },
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-        if(res!=null){
-            for(const endBoard of res.data){
-                document.getElementById('endBoardList').innerHTML +=
-                `<td>${endBoard.id}</td>
-                <td>${endBoard.nickname}</td>
-                <td>${endBoard.title}</td>
-                <td style="text-align: center;">
-                    <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#writeReview"
-                    onclick="showBoardId(${endBoard.id});"
-                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
-                </td>`
-            }
-        } 
-     })
-    document.getElementById('endBoardList').innerHTML ='';
-}
-
-// 리뷰 작성 페이지 글번호 보여주기
-const showBoardId = (boardId)=>{
-    document.getElementById('boardId').value = boardId;
 }
 
 // 신청한 멘토링 목록

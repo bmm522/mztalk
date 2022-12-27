@@ -17,6 +17,7 @@ const getAccessToken = () =>{
      })
 }
 
+// 내가 작성한 리뷰 얻기
 const getMyReview = () =>{
     const userId = localStorage.getItem('userNo');
     fetch("http://localhost:8000/mentors/score/mentee/"+userId,{
@@ -107,7 +108,7 @@ const myReview = (scoreId) =>{
     })
 }
 
-// 리뷰 제출하기
+// 리뷰 수정하기
 const modifyReview = (scoreId) => {
     console.log(scoreId);
     fetch("http://localhost:8000/mentors/score/"+scoreId,{
