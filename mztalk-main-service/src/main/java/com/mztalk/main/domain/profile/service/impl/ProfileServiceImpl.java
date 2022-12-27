@@ -101,7 +101,7 @@ public class ProfileServiceImpl implements ProfileService {
         headersNames.add("Content-type", "text/html");
 
         ResponseEntity<String> responseName = new RestTemplate().exchange(
-                "http://localhost:8000/login/user-info/" + own,
+                "http://localhost:8000/login/user-info/" + String.valueOf(own),
                 HttpMethod.GET,
                 new HttpEntity<String>(headerName),
                 String.class
@@ -156,7 +156,7 @@ public class ProfileServiceImpl implements ProfileService {
         headerImage.add("Content-type", "text/html");
 
         ResponseEntity<String> responseproImg = new RestTemplate().exchange(
-                "http://localhost:8000/resource/main-image?bNo=" + own + "&serviceName=story",    //첫번째: url
+                "http://localhost:8000/resource/main-image?bNo=" + String.valueOf(own) + "&serviceName=story",    //첫번째: url
                 HttpMethod.GET,
                 new HttpEntity<String>(headerImage),     //바디, 헤더 다 담기 가능/엔티티
                 String.class
