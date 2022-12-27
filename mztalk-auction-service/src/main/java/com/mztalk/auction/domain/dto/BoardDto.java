@@ -5,6 +5,8 @@ import com.mztalk.auction.repository.BoardRepository;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,6 +18,7 @@ public class BoardDto {
     private Integer startPrice;
     private Integer timeLimit;
     private Integer currentPrice;
+    private List<CommentDto> comments;
 
     public Board toEntity() {
         return Board.builder()

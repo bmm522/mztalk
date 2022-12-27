@@ -2,8 +2,10 @@ package com.mztalk.auction.repository.impl;
 
 import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.BoardDto;
+import com.mztalk.auction.domain.dto.BoardEditDto;
 import com.mztalk.auction.domain.dto.CommentDto;
 import com.mztalk.auction.domain.entity.Board;
+import com.mztalk.auction.domain.entity.Comment;
 import com.mztalk.auction.repository.CustomAuctionRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,25 +20,34 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    //전체 게시글 조회
+    //전체 게시글 조회, 검색
     @Override
     public List<Board> selectBoardList() {
-        return entityManager.createQuery("select b from Board b where b.status = 'Y'").getResultList();
+        return entityManager.createQuery("select b from Board b where b.status = 'Y'")
+                .getResultList();
+    }
+
+    //게시글 검색
+    @Override
+    public List<Board> searchBoard(String keyword) {
+        return entityManager.createQuery("select b from Board b where b.status = 'Y' and b.title like concat('%', :keyword, '%') or b.content like concat('%', :keyword, '%')")
+                .setParameter("keyword", keyword)
+                .getResultList();
     }
 
 
-
+    //게시글 수정
     @Transactional
     @Override
-    public int boardUpdate(Long bId, BoardDto boardDto) {
-        return entityManager.createQuery("update Board b set b.title= :title, b.content= :content where b.boardId = :bId and b.writer = :writer")
-                .setParameter("title", boardDto.getTitle())
-                .setParameter("content", boardDto.getContent())
+    public int boardUpdate(Long bId, BoardEditDto boardEditDto) {
+        return entityManager.createQuery("update Board b set b.title= :title, b.content= :content where b.boardId = :bId")
+                .setParameter("title", boardEditDto.getTitle())
+                .setParameter("content", boardEditDto.getContent())
                 .setParameter("bId", bId)
-                .setParameter("writer", boardDto.getWriter())
                 .executeUpdate();
     }
 
+    //게시글 삭제
     @Transactional
     @Override
     public int deleteBoard(Long bId, String writer) {
@@ -46,6 +57,7 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
                 .executeUpdate();
     }
 
+    //입찰가
     @Transactional
     @Override
     public int updatePrice(Long bId, BoardDto boardDto) {
@@ -56,6 +68,7 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
                 .executeUpdate();
     }
 
+    //조회수 증가
     @Transactional
     @Override
     public int updateCount(Long bId) {
@@ -65,23 +78,32 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     }
 
 
+    //댓글 수정
     @Transactional
     @Override
     public int updateComment(Long cId, CommentDto commentDto) {
-        return entityManager.createQuery("update Comment c set c.content = :content where c.cId = :cId and c.nickname = :nickname")
+        return entityManager.createQuery("update Comment c set c.content = :content where c.cId = :cId and c.writer = :writer")
                 .setParameter("content", commentDto.getContent())
                 .setParameter("cId", cId)
-                .setParameter("nickname", commentDto.getNickname())
+                .setParameter("writer", commentDto.getWriter())
                 .executeUpdate();
     }
 
+    //댓글 삭제
     @Transactional
     @Override
     public int deleteComment(Long cId, CommentDto commentDto) {
-        return entityManager.createQuery("update Comment c set c.status = 'N' where c.cId = :cId and c.nickname = :nickname")
+        return entityManager.createQuery("update Comment c set c.status = 'N' where c.cId = :cId and c.writer = :writer")
                 .setParameter("cId", cId)
-                .setParameter("nickname", commentDto.getNickname())
+                .setParameter("writer", commentDto.getWriter())
                 .executeUpdate();
+    }
+
+    //댓글 전체 조회
+    @Override
+    public List<CommentDto> selectCommentList() {
+        return entityManager.createQuery("select c from Comment c where status = 'Y'")
+                .getResultList();
     }
 
 

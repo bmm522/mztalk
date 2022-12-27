@@ -1,10 +1,7 @@
 package com.mztalk.auction.service;
 
 import com.mztalk.auction.domain.Result;
-import com.mztalk.auction.domain.dto.BoardDetailResponseDto;
-import com.mztalk.auction.domain.dto.BoardRequestDto;
-import com.mztalk.auction.domain.dto.BoardDto;
-import com.mztalk.auction.domain.dto.CommentDto;
+import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 
@@ -17,7 +14,7 @@ public interface AuctionService {
 
     Long insertBoard(BoardRequestDto boardRequestDto);
 
-    int updateBoard(Long bId, BoardDto boardDto);
+    int updateBoard(Long bId, BoardEditDto boardEditDtoDto);
 
     Result<?> selectBoardList() throws ParseException;
 
@@ -31,10 +28,13 @@ public interface AuctionService {
 
     ConcurrentHashMap<String, String> getRecentBoardNo();
 
-    Comment insertComment(CommentDto commentDto, Long bId);
+    Comment insertComment(CommentRequestDto commentRequestDto);
 
     int updateComment(Long cId, CommentDto commentDto);
 
     int deleteComment(Long cId, CommentDto commentDto);
 
+    Result<?> searchBoard(String keyword) throws ParseException;
+
+    Result<?> selectCommentList();
 }

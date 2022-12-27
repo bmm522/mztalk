@@ -90,13 +90,18 @@ function showPreview(event) {
     }
 }
 
-//예비 bId 받아오기
-// window.onload = function() {
-//     document.getElementById('bId').value=localStorage.getItem('bId');
-// }
-
-
-// //뒤로 가기 bId 지우기
-// window.onload = function() {
-//     localStorage.removeItem('bId');
-// }
+//책 검색
+document.getElementById('searchBtn').addEventListener('click', function() {
+    fetch("https://dapi.kakao.com/v3/search/book", {
+        method: "GET",
+        headers: {
+            Authorization: "KakaoAK d7041cb01ccfe4c12792028ae9cb5fff"
+        }
+    })
+    .then(res => {
+        if(res.status == 200) {
+            console.log("api서비스 통신 성공");
+            console.log(res.documents[0].title);
+        }
+    })
+});
