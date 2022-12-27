@@ -19,7 +19,7 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
 
 
-    //전체글 불러오기
+    //퍼블릭글 불러오기
     @Override
     @Transactional(readOnly  = true)
     public Result findAllByOwn(Long own) {
@@ -27,6 +27,16 @@ public class BoardServiceImpl implements BoardService {
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
     }
+
+    @Override
+    @Transactional(readOnly  = true)
+    public Result findByOwn(Long own) {
+        List<Board> boards = boardRepository.findByOwn(own);
+        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
+
+
 
     //글쓰기
     @Override
@@ -59,6 +69,8 @@ public class BoardServiceImpl implements BoardService {
         return board.getId();
 
     }
+
+
 
 
 }
