@@ -1,10 +1,12 @@
 package com.mztalk.login.repository;
 
+import com.mztalk.login.domain.entity.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -20,5 +22,12 @@ public class ReportCustomRepositoryImpl implements ReportCustomRepository{
                 .setParameter("id", id)
                 .setParameter("serviceName", serviceName)
                 .executeUpdate();
+    }
+
+    @Override
+    public List<Report> getEditListOfUserNo(long id) {
+        return entityManager.createQuery("SELECT r FROM Report r WHERE  r.user.id = :id", Report.class)
+                .setParameter("id", id)
+                .getResultList();
     }
 }
