@@ -10,18 +10,41 @@ window.onload = function(){
   FollowCount();
   FollowingCount();
   //FollowingButton();
+  followButtonStatus();
+  writeOwn();
+ //writeboard();
+}
+
+
+function writeOwn(){
+
+  let own = localStorage.getItem("own");
+  let userNo = localStorage.getItem('userNo');
+
+  if(own==userNo){
+    
+    document.getElementById('ownWrite').innerHTML='<button type="button" style="cursor:pointer;" onclick="writeboard();" id="write_board" class="write_board">글쓰기</button>';
+
+
+  }else{
+    document.getElementById('ownWrite').innerHTML = '';
+  }
+
 
 }
 
 
+
+//글쓰기버튼
 function writeboard() {
-    
-    const open = document.querySelector(".write_board"); //글쓰기버튼
+
+    const open = document.querySelector("#ownWrite button"); //글쓰기버튼
     const modal = document.querySelector(".textmodal");  //글쓸수 있는곳
     const close = document.querySelector(".btn-closee");  //닫기버튼
 
     //console.log(open);
 
+  
     open.addEventListener("click", function(){
         //console.log(open);
         
@@ -34,7 +57,7 @@ function writeboard() {
         open.classList.remove("hidden");
     });
 }
-writeboard();
+
 
 //정보 수정
 document.getElementById('profile-edit-btn').addEventListener('click',function(){
@@ -83,7 +106,67 @@ function profileBox(){
      }
       })
     }
-       
+  
+    
+
+
+//팔로우 버튼테스트
+function followButtonStatus(){
+  
+  let toUserId = localStorage.getItem("own");
+  let fromUserId = localStorage.getItem('userNo');
+
+  fetch("http://localhost:8000/story/followStatus/"+fromUserId+"/"+toUserId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+  
+      let follow = res.data;
+
+      console.log(follow);
+
+       if(follow>=1){
+        
+        document.getElementById('followStatus').innerHTML ='';
+        //document.getElementById('followStatus').innerHTML ='<button class="cta" onclick="profilecFollow(this);">팔로워</button>';
+        document.getElementById('followStatus').innerHTML ='<button class="profile_follow_btn" onclick="profilecFollow(this);" style="background-color: rgba(128, 128, 128, 0.973); color: rgb(255, 255, 255); border: 1px solid rgb(221, 221, 221);">팔로잉</button>';
+
+      } else if(loginUser==own){
+        document.getElementById('followStatus').innerHTML = '';
+      }else{
+        document.getElementById('followStatus').innerHTML =
+        `
+        <button class="profile_follow_btn" onclick="profilecFollow(this);">
+          팔로우
+        </button>
+        `
+      }
+
+      //document.getElementById('followStatus').innerHTML='';
+    })
+    
+  }
+
+//페이지주인은 팔로우 버튼 비활성화
+function FollowingButton(){
+
+  if(loginUser!=own){
+    document.querySelector('#followStatus').innerHTML =
+    `
+    <button class="profile_follow_btn" onclick="profilecFollow(this)">
+    팔로우
+    </button>
+    `
+   }
+ }
+
+
 
 
     
@@ -211,29 +294,6 @@ function FollowCount(){
 
 
 
-//페이지주인은 팔로우 버튼 비활성화
-// function FollowingButton(){
-
-//   if(loginUser!=own){
-//     document.querySelector('.profile_follow_btn').innerHTML +=
-//     `
-//     <button class="profile_follow_btn" onclick="profilecFollow(this)">
-//     팔로우
-//     </button>
-//     `
-//   }
-
-// }
-
-
-
-
-
-
-
-
-
-
 //글 목록들 DIV
 function storyLoad() {
   
@@ -321,37 +381,14 @@ function storyLoad() {
                            <div id="reply-nickname">${reply.replyNickname}</div>
                            <div id="reply-content">${reply.replyContent}</div>
                            <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
-                           <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button></div>
+                           <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
+                           <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
+                           </div>
                          `;
-                         
                       }
                      )
-                      
-              
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            }  
-            
-           })
+                   }  
+             })
 }
       
 
@@ -458,9 +495,9 @@ write_board.addEventListener('click', function(){
                           </div>
                       </div>`;
                })
-               location.href="individualpage.html";      
+                  
           }   
-            
+          location.href="individualpage.html";   
       });
      
 
@@ -630,7 +667,7 @@ function profileImageUpload(){
   let userProfileImage = document.getElementById('userProfileImageInput');
   document.getElementById('bNo').value = own;
   if(own != loginUser){
-		alert("프로필 사진을 수정할 수 없는 유저입니다.");
+		alert("본인만 수정할 수 있습니다.");
 		return;
 	}
   userProfileImage.click();
@@ -727,7 +764,9 @@ function addReply(boardId){
               <div id="reply-nickname">${reply.replyNickname}</div>
               <div id="reply-content">${reply.replyContent}</div>
               <div id="reply-date">${reply.lastModifiedDate}</div>
-              <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button></div>
+              <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
+              <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
+              </div>
             </div>`;
           })
           location.href="individualpage.html";   
@@ -738,6 +777,19 @@ function addReply(boardId){
     
 //댓글삭제    
 function deleteReply(Id){
+
+      let replyUserNo = document.querySelector('.replyDelete').value;
+      let loginUser = localStorage.getItem('userNo');
+     
+      console.log(replyUserNo);
+      console.log(loginUser);
+
+     
+      if(replyUserNo != loginUser){
+      alert('댓글 쓴 유저만 지울 수 있습니다.');
+      return;
+     }
+     
 
 
     fetch("http://localhost:8000/story/board/"+Id+"/reply",{
@@ -758,49 +810,7 @@ function deleteReply(Id){
 
 
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 
 
 
@@ -851,7 +861,7 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
               <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
           </div>
           <div class="follower__btn">
-          
+            <button onclick="movePage(${follower[i].userNo});">페이지이동</button>
           </div>
       </div> 
       `;
@@ -881,7 +891,7 @@ document.querySelector(".modal-follow").addEventListener("click", (e) => {
 
 
 
-//팔로우리스트
+//팔로워리스트
 document.querySelector("#subscribeBtn").onclick = (e) => {
     e.preventDefault();
 
@@ -898,7 +908,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     .then((res)=>res.json())
     .then(res =>{
 
-      //console.log("통신?");
+      console.log("통신?");
 
       let following = res.data;
       
@@ -912,20 +922,19 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
         // console.log("길이"+follower.length );
         // console.log("follower" + follower);
         //console.log(following);  
-        console.log(following[i].userNo);
+        console.log("팔로잉리스트"+following[i].userNo);
       document.querySelector(".following-list").innerHTML +=
       `
       <div class="following__item">
           <div class="following__img"><img class="profile-image" src='${following[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"></div>
-          <input type="hidden" class="imageName" value="${following[i].imageName}"/>
+          <input type="hidden" class="imageName"  value="${following[i].imageName}"/>
           <input type="hidden" name="bNo" id="bNo" value="${following[i].userNo}"/>
           <div class="following__text">
               <h2>${following[i].userNickname}</h2>
               
           </div>
           <div class="following__btn">
-          <button class="following_button" value="${following[i].userNo}" onclick="clickFollow(this)">팔로잉 
-          <input type="hidden" class="userNo" name="userNo" value="${following[i].userNo}"/>
+            <button onclick="movePage(${following[i].userNo});">페이지이동</button>
           </button>
           
           </div>
@@ -935,7 +944,8 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       // let userNo = document.querySelector('.userNo');
       
       // console.log(userNo);
-
+    // <button class="following_button" value="${following[i].userNo}" onclick="clickFollow(this)">팔로잉 
+    //       <input type="hidden" class="userNo" name="userNo" value="${following[i].userNo}"/>
     }
     })
 
@@ -980,15 +990,15 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
   //팔로우리스트에서의 버튼
   function clickFollow(e) {
+
+    
+
     console.log(e);
     let _btn = e;
     console.log(_btn.textContent);
-
     let userButton = document.querySelector('.following_button');
-
     console.log("버튼"+ _btn.value);
 
-  
     if (_btn.textContent === "팔로잉") {
 
       let fromUserId = localStorage.getItem('userNo');
@@ -1006,8 +1016,6 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     .then(res =>{
              
       console.log(res);
-
-
       
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
@@ -1016,12 +1024,6 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     }) 
     
     
-
-
-
-
-
-
     } else {
       _btn.textContent = "팔로잉";
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
@@ -1052,9 +1054,6 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
 
 
-
-
-
 //팔로우 기능구현
 // function followingList(){
 
@@ -1081,20 +1080,26 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
 // }
 
+console.log("로칼:(2)"+localStorage.getItem("own"));
+console.log("로칼조현재:(1)"+localStorage.getItem('userNo'));
 
 
 //다른사람 피드 팔로우 기능구현
   function profilecFollow(e) {
-    console.log(e);
-    let _btn = e;
-    console.log(_btn.textContent);
 
-    if (_btn.textContent === "팔로우") {
+    //console.log("배한성:(2)"+localStorage.getItem("own"));
+    //console.log("조현재:(1)"+localStorage.getItem('userNo'));
+
+    //console.log(e);
+    let _btn = e;
+    //console.log(_btn.textContent);
+
+    if (_btn.textContent.includes("팔로우")) {
       
       let fromUserId = localStorage.getItem('userNo');
       let toUserId = localStorage.getItem("own");
 
-      fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
+      fetch("http://localhost:8000/story/follow/"+toUserId+"/"+fromUserId,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -1104,9 +1109,6 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       })
     .then((res)=>res.json())
     .then(res =>{
-             
-      console.log(res);
-      //버튼 저장되게끔?
 
       _btn.textContent = "팔로잉";
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
@@ -1117,8 +1119,8 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     } else {
       let toUserId = localStorage.getItem("own");
       let fromUserId = localStorage.getItem('userNo');
-      ///follow/{toUserId}/{fromUserId}
-      fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
+   
+      fetch("http://localhost:8000/story/follow/"+toUserId+"/"+fromUserId,{
         method:"delete",
         headers:{
             "Content-Type":"application/json",
@@ -1129,7 +1131,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     .then((res)=>res.json())
     .then(res =>{
              
-      console.log(res);
+      //console.log(res);
 
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
@@ -1155,10 +1157,17 @@ function logout(){
 
 
 }
-
-
+//쿠키삭제
 function deleteCookie(name) {
   document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+
+//페이지이동 userNo
+const movePage = (userNo) =>{
+  localStorage.removeItem('own');
+  localStorage.setItem('own', userNo);
+  location.href="individualpage.html";
 }
 
 

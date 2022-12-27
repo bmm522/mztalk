@@ -131,6 +131,7 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
+    @Transactional
     public List<FollowingListResponseDto> followingList(Long fromUserId) {
 
         System.out.println("own : " + fromUserId);
@@ -195,8 +196,16 @@ public class FollowServiceImpl implements FollowService {
 
     }
 
+    @Override
+    @Transactional
+    public Long followStatus(Long fromUserId, Long toUserId) {
 
+        Long followDto = followRepository.followStatus(fromUserId, toUserId);
 
+        //System.out.println("살려줘 싀바리먼이;ㄹ"+followDto);
+        
+        return followDto;
+    }
 }
 
 

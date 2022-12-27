@@ -1,5 +1,6 @@
 package com.mztalk.main.domain.follow.repository;
 
+import com.mztalk.main.domain.follow.dto.FollowDto;
 import com.mztalk.main.domain.follow.entity.Follow;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -44,6 +45,9 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Modifying
     @Query(value="INSERT INTO FOLLOW(fromUserId,toUserId, followStatus) VALUES(:fromUserId, :toUserId, 'ONSELF')", nativeQuery=true)
     void mFollowStatus(Long fromUserId, Long toUserId);
+
+    @Query(value="SELECT count(*) FROM follow f WHERE f.fromUserId = :fromUserId and f.toUserId= :toUserId", nativeQuery = true)
+    Long followStatus(Long fromUserId, Long toUserId);
 
 //    List<Follow> findAllByFromUser(long own); // 사용자가 팔로우한 관계를 가져옴
 //    List<Follow> findAllByToUser(long own);	 // 사용자를 팔로우하는 관계를 가져옴
