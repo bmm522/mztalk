@@ -533,7 +533,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
       // localStorage.removeItem("RefreshToken");
       console.log("헤더값 : " + response.headers);
        let result =   response.headers.get('LoginResult');
-      console.log('통신성공');
+      console.log('result : ' + result);
       if(result =='Not found userId or userPassword'){
         alert('아이디 또는 비밀번호가 틀렸습니다.');
         document.getElementById('userId').value = "";
@@ -543,6 +543,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         document.getElementById('userId').value = "";
         document.getElementById('password-in').value ="";
       } else if(result == 'Admin Login'){
+        console.log('어드민로그인');
         localStorage.setItem("authorization", response.headers.get('Authorization'));
         localStorage.setItem("refreshToken", response.headers.get('RefreshToken'));
         localStorage.setItem("userNo", response.headers.get("UserNo"));
