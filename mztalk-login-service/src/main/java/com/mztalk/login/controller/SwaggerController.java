@@ -1,18 +1,16 @@
-package com.mztalk.resource.controller;
-
+package com.mztalk.login.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
-@RequestMapping("/resource")
+@RequestMapping("/login")
 @Controller
 @ApiIgnore
-public class ResourceApiController {
+public class SwaggerController {
 
-    @GetMapping
+    @GetMapping("/swagger")
     public String moveSwaggerForm(){
         return "redirect:/swagger-ui.html";
     }
