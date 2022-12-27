@@ -53,6 +53,7 @@ public class User {
 
     public UserInfoDto toUserInfoDto() {
         return UserInfoDto.builder()
+                .userId(String.valueOf(id))
                 .username(username)
                 .nickname(nickname)
                 .email(email)

@@ -1,12 +1,12 @@
 window.onload = () =>{
-    newMentorBoard();
+   // newMentorBoard();
 
 }
 
 
 
 //멘토 최신글뽑아오기
-const newMentorBoard = () =>{
+const newMentorBoard = () =>{ 
     console.log("성공?");
     fetch("http://localhost:8000/mentors/board/latest",{
         method:"GET",
@@ -55,3 +55,6 @@ const newMentorBoard = () =>{
             
     })
 }
+
+//3개 다 받을때 db를 하나 만들어서 status으로  해서 클릭시 status가 no가 되게끔
+//if(mentor&&bung&&auction){newMentorBoard(); getBungBoard(); getAuctionBoard();}
