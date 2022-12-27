@@ -89,5 +89,5 @@ document.getElementById('write-btn').addEventListener('click',function(){
 
 const moveDetails = (boardId) =>{
     localStorage.setItem("bId", boardId);
-    location.href="bung-service-detailPage.html";
+    location.href="bung-service-detail.html";
 }

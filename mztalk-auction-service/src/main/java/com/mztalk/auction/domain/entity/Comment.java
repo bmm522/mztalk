@@ -1,14 +1,14 @@
 package com.mztalk.auction.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Date;
 
+@ToString(exclude = "board")
 @Entity
 @Getter
 @Builder
@@ -25,20 +25,22 @@ public class Comment {
     private Date createDate;
 
     @ManyToOne
-    @JoinColumn(name = "bId")
+    @JoinColumn(name = "boardId", nullable=false)
+    @JsonManagedReference
     private Board board;
 
     private String status;
 
-    private String nickname;
+    private String writer;
 
-//    public Comment(Long cId, String content, Date createDate, Board board, String status, String nickname) {
+
+//    public Comment(Long cId, String content, Date createDate, Board board, String status, String writer) {
 //        this.cId = cId;
 //        this.content = content;
 //        this.createDate = createDate;
 //        this.board = board;
 //        this.status = status;
-//        this.nickname = nickname;
+//        this.writer = writer;
 //    }
 
 }

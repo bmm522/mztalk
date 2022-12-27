@@ -58,10 +58,10 @@ public class LoginApiController {
     public UserInfoDto getUserInfoByUserNo(@PathVariable("id")String id){
         return selectUserInfoService.getUserInfoByUserNo(id);
     }
-    @GetMapping("user-info/{nickname}")
-    public UserInfoDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
-        return selectUserInfoService.getUserInfoByNickname(nickname);
-    }
+//    @GetMapping("user-info/{nickname}")
+//    public UserInfoDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
+//        return selectUserInfoService.getUserInfoByNickname(nickname);
+//    }
 
 
 

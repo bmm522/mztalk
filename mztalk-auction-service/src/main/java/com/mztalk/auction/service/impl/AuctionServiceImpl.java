@@ -49,8 +49,8 @@ public class AuctionServiceImpl implements AuctionService {
 
     //게시글 수정
     @Override
-    public int updateBoard(Long bId, BoardDto boardDto) {
-        return boardRepository.boardUpdate(bId, boardDto);
+    public int updateBoard(Long bId, BoardEditDto boardEditDto) {
+        return boardRepository.boardUpdate(bId, boardEditDto);
     }
 
     //전체 게시글 조회
@@ -84,7 +84,6 @@ public class AuctionServiceImpl implements AuctionService {
         return new Result<>(boardListResponseDtoList);
 
     }
-
     private Duration getTimeDuration(Board board) {
         return Duration.between(getLocalDateTime(board.getTimeLimit()), getLocalDateTime(board.getCurrentTime()));
     }
@@ -100,7 +99,34 @@ public class AuctionServiceImpl implements AuctionService {
         return boardRepository.deleteBoard(bId, writer);
     }
 
+
     //게시글 검색
+    @Override
+    public Result<?> searchBoard(String keyword) throws ParseException {
+        List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
+        List<Board> boardList =  boardRepository.searchBoard(keyword);
+        System.out.println("service 검색 리스트: " + boardList);
+
+        for(Board board : boardList){
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "text/html");
+            System.out.println("검색 list 가져오기 : " + board.getBoardId());
+            ResponseEntity<String> response = new RestTemplate().exchange(
+                    "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
+                    HttpMethod.GET,
+                    new HttpEntity<String>(headers),
+                    String.class
+            );
+            JSONObject jsonObject = new JSONObject(response.getBody());
+            JSONObject jsonData = jsonObject.getJSONObject("data");
+            String imageUrl = jsonData.getString("imageUrl");
+            String imageName = jsonData.getString("objectKey");
+
+            boardListResponseDtoList.add(new BoardListResponseDto(board, String.valueOf(getTimeDuration(board)),imageUrl, imageName));
+
+        }
+        return new Result<>(boardListResponseDtoList);
+    }
 
 
     //특정 게시물 조회
@@ -164,8 +190,18 @@ public class AuctionServiceImpl implements AuctionService {
 
     //댓글 작성
     @Override
-    public Comment insertComment(CommentDto commentDto, Long bId) {
-        return commentRepository.save(commentDto.toEntity());
+    public Comment insertComment(CommentRequestDto commentRequestDto) {
+
+        Board board = boardRepository.findByBoardId(commentRequestDto.getBoardId());
+
+        Comment comment = Comment.builder()
+                .board(board)
+                .content(commentRequestDto.getContent())
+                .writer(commentRequestDto.getWriter())
+                .createDate(commentRequestDto.getCreateDate())
+                .status("Y")
+                .build();
+        return commentRepository.save(comment);
     }
 
     //댓글 수정
@@ -179,6 +215,14 @@ public class AuctionServiceImpl implements AuctionService {
     public int deleteComment(Long cId, CommentDto commentDto) {
         return commentRepository.deleteComment(cId, commentDto);
     }
+
+    //댓글 전체 조회
+    @Override
+    public Result<?> selectCommentList() {
+        List<CommentDto> commentDtoList = commentRepository.selectCommentList();
+        return new Result<>(commentDtoList);
+    }
+
 
 
 

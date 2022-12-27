@@ -1,17 +1,22 @@
 package com.mztalk.auction.controller;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.mztalk.auction.domain.Result;
-import com.mztalk.auction.domain.dto.BoardDetailResponseDto;
-import com.mztalk.auction.domain.dto.BoardRequestDto;
-import com.mztalk.auction.domain.dto.BoardDto;
-import com.mztalk.auction.domain.dto.CommentDto;
+import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 import com.mztalk.auction.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.Path;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,12 +44,16 @@ public class AuctionController {
 
     //게시글 수정
     @PatchMapping("/board/{bId}")
-    public int updateBoard(@PathVariable Long bId, @RequestBody BoardDto boardDto) {
-        System.out.println(boardDto);
-        return auctionService.updateBoard(bId, boardDto);
+    public int updateBoard(@PathVariable Long bId, @RequestBody BoardEditDto boardEditDto) {
+        return auctionService.updateBoard(bId, boardEditDto);
     }
 
     //게시글 검색
+    @GetMapping("/board/keyword/{keyword}")
+    public Result<?> searchBoard(@PathVariable String keyword) throws ParseException, UnsupportedEncodingException {
+        System.out.println(keyword);
+        return auctionService.searchBoard(keyword);
+    }
 
     //전체 게시글 목록
     @GetMapping("/board")
@@ -56,6 +65,7 @@ public class AuctionController {
     @GetMapping("/board/{bId}")
     public BoardDetailResponseDto selectBoard(@PathVariable Long bId) {
         auctionService.updateCount(bId); //조회수 증가
+
         return auctionService.selectBoard(bId);
     }
 
@@ -87,9 +97,9 @@ public class AuctionController {
     }
 
     //댓글 작성
-    @PostMapping("/comment/{bId}")
-    public Comment insertComment(@RequestBody CommentDto commentDto, @PathVariable Long bId) {
-        return auctionService.insertComment(commentDto, bId);
+    @PostMapping("/comment")
+    public Comment insertComment(@RequestBody CommentRequestDto commentRequestDto) {
+        return auctionService.insertComment(commentRequestDto);
     }
 
     //댓글 수정
@@ -102,6 +112,12 @@ public class AuctionController {
     @PatchMapping("/deleteComment/{cId}")
     public int deleteComment(@PathVariable Long cId, @RequestBody CommentDto commentDto) {
         return auctionService.deleteComment(cId, commentDto);
+    }
+
+    //댓글 전체 조회
+    @GetMapping("/comment")
+    public Result<?> selectCommentList() {
+        return auctionService.selectCommentList();
     }
 
 

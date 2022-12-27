@@ -69,6 +69,8 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl -->
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

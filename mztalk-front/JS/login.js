@@ -232,7 +232,8 @@ document.getElementById('sign-up-btn').addEventListener('click',function(e){
     })
    
     .then((res) => res.json())
-    .then(res => {  
+    .then(res => {
+
     });
 
   }
@@ -424,21 +425,34 @@ document.getElementById('email-box').addEventListener('blur', function(){
 });
 
 const isVaildEmail =  () => {
-	let email = document.getElementById('email-box').value;
-	const exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+  let email = document.getElementById('email-box').value;
+  const exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 	let checkEmail = document.getElementById('checkEmail');
-		
+	console.log(email);
   if(exptext.test(email)==false){
 			
-      checkEmail.innerHTML= '이메일 형식이 올바르지 않습니다.';
+      checkEmail.innerHTML= '이메일 형식에 맞게 입력해주세요.';
 			checkEmail.style.color='red';
 			document.getElementById('checkEmailResult').value = "fail";
 		
     } else{
-		
-      checkEmail.innerHTML= '올바른 형식입니다.';
-			checkEmail.style.color='green';
-			document.getElementById('checkEmailResult').value = "success";
+      console.log("email : " + email);
+          fetch('http://localhost:8000/login/register/email/'+email,{
+            method:"GET"
+          })
+          .then((res)=>res.json())
+          .then(res=>{
+            console.log(res.checkResult);
+            if(res.checkResult == 'available'){
+              checkEmail.innerHTML= '사용가능한 이메일 입니다.';
+			        checkEmail.style.color='green';
+			        document.getElementById('checkEmailResult').value = "success";
+            } else{
+              checkEmail.innerHTML= '중복된 이메일 입니다.';
+			        checkEmail.style.color='red';
+			        document.getElementById('checkEmailResult').value = "fail";
+            }
+          })
 		
     }
 }
@@ -533,7 +547,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
       // localStorage.removeItem("RefreshToken");
       console.log("헤더값 : " + response.headers);
        let result =   response.headers.get('LoginResult');
-      console.log('통신성공');
+      console.log('result : ' + result);
       if(result =='Not found userId or userPassword'){
         alert('아이디 또는 비밀번호가 틀렸습니다.');
         document.getElementById('userId').value = "";
@@ -543,6 +557,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         document.getElementById('userId').value = "";
         document.getElementById('password-in').value ="";
       } else if(result == 'Admin Login'){
+        console.log('어드민로그인');
         localStorage.setItem("authorization", response.headers.get('Authorization'));
         localStorage.setItem("refreshToken", response.headers.get('RefreshToken'));
         localStorage.setItem("userNo", response.headers.get("UserNo"));
@@ -555,6 +570,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         localStorage.setItem("refreshToken", response.headers.get('RefreshToken'));
         localStorage.setItem("userNo", response.headers.get("UserNo"));
         localStorage.setItem("userNickname", decodeURIComponent(response.headers.get('UserNickname')));
+        localStorage.setItem('path', 'LOCAL');
         window.open('main.html', '_self');
       }
      
@@ -597,6 +613,7 @@ document.getElementById('kakaoBtn').addEventListener('click',function(){
           localStorage.setItem('refreshToken', getCookieValue('RefreshToken').replace("+"," "));
           localStorage.setItem('userNo', getCookieValue('UserNo').replace("+"," "));
           localStorage.setItem('userNickname',getCookieValue('UserNickname'));
+          localStorage.setItem('path', 'SOCIAL');
           console.log("소셜로그인 : " + localStorage.getItem('authorization'));
           console.log("소셜로그인 : " + localStorage.getItem('refreshToken'));
           console.log("소셜로그인 : " + localStorage.getItem('userNo'));

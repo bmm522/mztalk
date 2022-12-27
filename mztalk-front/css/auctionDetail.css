@@ -163,7 +163,7 @@ input {
     text-decoration: underline;
 }
 
-#updateBtn, #deleteBtn {
+#updateBtn, #deleteBtn, #reportBtn {
     width: 70px;
     height:30px;
     background-color: burlywood;

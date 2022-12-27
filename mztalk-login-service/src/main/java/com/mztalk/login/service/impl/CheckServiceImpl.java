@@ -21,6 +21,11 @@ public class CheckServiceImpl implements CheckService {
         return getResultMap(userRepository.existsByNickname(nickname));
     }
 
+    @Override
+    public ConcurrentHashMap<String, Object> checkEmail(String email) {
+        return getResultMap(userRepository.existsByEmail(email));
+    }
+
     private ConcurrentHashMap<String, Object> getResultMap(boolean checkResult){
 
         ConcurrentHashMap<String, Object> checkUsernameMap = new ConcurrentHashMap<String, Object>();
