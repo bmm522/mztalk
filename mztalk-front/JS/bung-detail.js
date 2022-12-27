@@ -111,5 +111,5 @@ const deleteAllImage = () =>{
 }
 
 const updateMove = () =>{
-    location.href="bung-Service-editPage.html";
+    location.href="bung-Service-edit.html";
 }

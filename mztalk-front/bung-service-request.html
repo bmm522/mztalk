@@ -8,7 +8,7 @@
     <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/bung-service-AcceptPage.css">
+    <link rel="stylesheet" href="css/bung-service-request.css">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -36,73 +36,32 @@
     </nav>
    <!-- 여기서 놀아주세요. -->
     <main class="mainContainer">
-        
-        <div class="title" style="height: 20px; width: 935px;">
-            <!-- <div class="pageList">
-                벙 참가 신청 리스트
+        <div class="main">
+            <div class="userName">
+                <br>
+                <span class="form-label">이 름 : &nbsp;</span>
+                <input type="text" class="inputType" id="bungRequestUserName" name="bungRequestUserName" required style="width: 350px;" maxlength="10">
             </div>
-            <div class="pageList">
-            
+    
+            <div class="userPhone">
+                <br>
+                <span class="form-label" id="phoneNumber">번 호 : &nbsp;</span>
+                <input type="text" class="inputType" id="bungRequestUserPhone" name="bungRequestUserPhone" required style="width: 350px;" maxlength="13">
             </div>
-            <div class="pageList">
-                
+    
+            <div class="userReason">
+                <br>
+                <span class="form-label" id="reason">&nbsp;&nbsp;&nbsp;&nbsp;사 유 : </span>
+                <br>
+                <textarea class="inputType" id="bungRequestuserReason" name="bungRequestuserReason" required rows="5" style="width: 350px; height: 200px; resize: none;" ></textarea>
             </div>
-        </div>
-
-        <hr> -->
-        <br><br>
-
-        <div class="listArea" style="width: 935px;">
-            <div class="requestList">
-                <div class="d-grid gap-2 col-6 requestUserBtn">
-                    <button type="button" class="btn btn-warning">상세 보기</button>
-                </div>
-                <div class="requestUserId">
-                    {신청자 ID}
-                </div>
-            </div>
-        </div>
-
-        <br><br>
-
-        <div class="listArea" style="width: 935px; ">
-            <div class="requestList">
-                <div class="d-grid gap-2 col-6 requestUserBtn">
-                    <button type="button" class="btn btn-warning">상세 보기</button>
-                </div>
-                <div class="requestUserId">
-                    {신청자 ID}
-                </div>
+    
+            <div class="btnGroup">
+                <button type="button" class="btn btn-warning">수락하기</button>
+                <button type="button" class="btn btn-warning">취소하기</button>
+                <button type="button" class="btn btn-warning">신청하기</button>
             </div>
         </div>
-
-        <br><br>
-
-        <div class="listArea" style="width: 935px; ">
-            <div class="requestList">
-                <div class="d-grid gap-2 col-6 requestUserBtn">
-                    <button type="button" class="btn btn-warning">상세 보기</button>
-                </div>
-                <div class="requestUserId">
-                    {신청자 ID}
-                </div>
-            </div>
-        </div>
-
-        <br><br>
-
-        <div class="listArea" style="width: 935px; ">
-            <div class="requestList">
-                <div class="d-grid gap-2 col-6 requestUserBtn">
-                    <button type="button" class="btn btn-warning">상세 보기</button>
-                </div>
-                <div class="requestUserId">
-                    {신청자 ID}
-                </div>
-            </div>
-        </div>
-        
-
     </main>
 
     <div class="floating">
@@ -160,6 +119,42 @@
         </ul>
         </div> -->
    
+<script>
+    function autoHypenPhone(str){
+            str = str.replace(/[^0-9]/g, '');
+            var tmp = '';
+            if( str.length < 4){
+                return str;
+            }else if(str.length < 7){
+                tmp += str.substr(0, 3);
+                tmp += '-';
+                tmp += str.substr(3);
+                return tmp;
+            }else if(str.length < 11){
+                tmp += str.substr(0, 3);
+                tmp += '-';
+                tmp += str.substr(3, 3);
+                tmp += '-';
+                tmp += str.substr(6);
+                return tmp;
+            }else{              
+                tmp += str.substr(0, 3);
+                tmp += '-';
+                tmp += str.substr(3, 4);
+                tmp += '-';
+                tmp += str.substr(7);
+                return tmp;
+            }
+            return str;
+        }
+
+var cellPhone = document.getElementById('bungRequestUserPhone');
+cellPhone.onkeyup = function(event){
+        event = event || window.event;
+        var _val = this.value.trim();
+        this.value = autoHypenPhone(_val) ;
+}
+</script>
 </body>
 <script src="JS/main.js"></script>
 </html>

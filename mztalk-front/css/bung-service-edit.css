@@ -75,11 +75,12 @@ nav {
 
 .mainContainer {
   font-family: 'CookieRun';
+  margin: auto;
   justify-content: space-between;
   margin: 0 auto;
   width: 935px;
   margin-top: 55px;
-  height: 1050px;
+  height: 1220px;
   background-color: rgb(242, 244, 226);
 } 
 
@@ -197,7 +198,6 @@ footer .container .copy p{font-size: 13px;padding-top: 2px;}
 }
 
 .main{
-  margin: auto;
   font-family: 'CookieRun';
   background-color: rgb(242, 244, 226);		
 }
@@ -238,8 +238,7 @@ img {vertical-align: middle;}
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 500px;
-  height: 500px;
+  max-width: 1000px;
   position: relative;
   margin: auto;
 }
@@ -262,6 +261,37 @@ img {vertical-align: middle;}
   padding: 8px 12px;
   position: absolute;
   top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .text {font-size: 11px}
 }
 
 .writerBtn {
@@ -299,8 +329,21 @@ img {vertical-align: middle;}
 #bungContent {
   width: 80%;
   height: 200px;
-  border: none;
 }
+
+table {
+  width: 350px;
+  margin: auto;
+}
+
+a { 
+  color:#000000;text-decoration:none;
+}
+.scriptCalendar { text-align:center; }
+.scriptCalendar > thead > tr > td { width:50px;height:50px; }
+.scriptCalendar > thead > tr:first-child > td { font-weight:bold; }
+.scriptCalendar > thead > tr:last-child > td { background-color:#90EE90; }
+.scriptCalendar > tbody > tr > td { width:50px;height:50px; }
 
 #carouselExampleControls {
   margin: auto;
@@ -318,16 +361,19 @@ img {vertical-align: middle;}
 /* img{
   width: 50%;
   height: 400px;
-  
 } */
 
 #bungTitle{
   border: none;
+  cursor: pointer;
 }
 
-
-
-
+#bungContent {
+  width: 80%;
+  height: 200px;
+  border: none;
+  cursor: pointer;
+}
 
 
 

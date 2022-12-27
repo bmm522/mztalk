@@ -85,8 +85,28 @@
              <div class="writerBtn" style="height: 200px; float: left; width: 33%;">
                  <br>
                  <div id="group" style="height: 66.66px;">
-                     <button type="button" class="btn btn-outline-warning">신청자 현황 보기</button>
+                    <!-- modal button -->
+                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#groupList">신청자 현황 보기</button>
                  </div>
+                 <!-- modal -->
+                    <div class="modal fade" id="groupList" tabindex="-1" aria-labelledby="groupList" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="groupList">참여자 현황</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="groupUser">{참여자 정보}</div>
+                                    <br>
+                                    <div class="groupUser">{참여자 정보}</div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                  <div id="category" style="height: 66.66px;">
                      <button type="button" class="btn btn-outline-warning" onclick="updateMove();">게시글 수정</button>
                  </div>
@@ -96,9 +116,37 @@
              </div>
              <div class="actionBtn" style="height: 200px; float: left; width: 33%;">
                  <br>
+                 <!-- model button -->
                  <div id="group" style="height: 66.66px;">
-                     <button type="button" class="btn btn-outline-danger">신고하기</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#reportModal" data-whatever="신고">신고하기</button>
                  </div>
+                 <!-- model -->
+                    <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">신고 작성</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="recipient-name" class="col-form-label">신고 제목</label>
+                                            <input type="text" class="form-control" id="recipient-name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="message-text" class="col-form-label">신고 사유</label>
+                                            <textarea class="form-control" id="message-text"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-outline-danger">신고 접수</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                  <div id="category" style="height: 66.66px;">
                      <button type="button" class="btn btn-outline-warning">문의하기</button>
                  </div>
