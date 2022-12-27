@@ -97,7 +97,7 @@ const reportBoard = () =>{
                 reportTitle : document.getElementById('reportTitle').value,
                 reportContent : document.getElementById('reportContent').value,
                 boardId : bId,
-                service : "mentor",
+                serviceName : "mentor",
                 userNo : userId
             })
         })
