@@ -18,10 +18,10 @@ public interface ProfileService {
 
     ProfileResponseDto profileName(long own);
 
-    Profile boardCount(long own);
+    ProfileDto boardCount(long own);
 
 
-    Profile followerCount(long own);
+    ProfileDto followerCount(long own);
 
-    Profile followingCount(long own);
+    ProfileDto followingCount(long own);
 }

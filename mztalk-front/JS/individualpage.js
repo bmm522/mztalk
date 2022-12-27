@@ -1143,16 +1143,23 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
 
 
-
+//로그아웃
 function logout(){
 
   localStorage.clear();
-        
+  
+  deleteCookie('Authorization');
+  deleteCookie('RefreshToken');
+
   location.href="loginpage.html";
 
 
 }
 
+
+function deleteCookie(name) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
 
 
 
