@@ -2,6 +2,7 @@ package com.mztalk.auction.repository;
 
 import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.BoardDto;
+import com.mztalk.auction.domain.dto.BoardEditDto;
 import com.mztalk.auction.domain.dto.CommentDto;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
@@ -13,7 +14,7 @@ import java.util.List;
 
 
 public interface CustomAuctionRepository {
-    int boardUpdate(Long bId, BoardDto boardDto);
+    int boardUpdate(Long bId, BoardEditDto boardEditDto);
 
     int deleteBoard(Long bId, String writer);
 
@@ -29,4 +30,7 @@ public interface CustomAuctionRepository {
 
     List<Board> selectBoardList();
 
+    List<Board> searchBoard(String keyword);
+
+    List<CommentDto> selectCommentList();
 }

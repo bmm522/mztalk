@@ -1,5 +1,6 @@
 package com.mztalk.auction.domain.dto;
 
+import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,15 +13,21 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommentDto {
+
+
+    private Board board;
     private String content;
+    private String writer;
     private Date createDate;
-    private String nickname;
+
+
 
     public Comment toEntity() {
         return Comment.builder()
+                .board(board)
                 .content(content)
                 .createDate(createDate)
-                .nickname(nickname)
+                .writer(writer)
                 .status("Y")
                 .build();
     }

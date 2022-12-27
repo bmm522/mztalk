@@ -1,5 +1,6 @@
 package com.mztalk.auction.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -8,7 +9,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
-@ToString(exclude = "Images")
+@ToString(exclude = "comments")
 @Entity
 @Getter
 @Builder
@@ -19,6 +20,7 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="boardId")
     private long boardId;
 
     @Column(nullable = false, length = 100)
@@ -54,12 +56,13 @@ public class Board {
 
     private String buyerNickname;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy("cId desc")
-    private List<Comment> comments;
+    @JsonBackReference
+    private List<Comment> comment;
 
-    public Board(Long bId, String title, String content, String writer, Integer count, Integer startPrice, Integer timeLimit, Integer CurrentPrice, String buyerNickname) {
-        this.boardId = bId;
+    public Board(Long boardId, String title, String content, String writer, Integer count, Integer startPrice, Integer timeLimit, Integer CurrentPrice, String buyerNickname) {
+        this.boardId = boardId;
         this.title = title;
         this.content = content;
         this.writer = writer;
@@ -68,4 +71,6 @@ public class Board {
         this.timeLimit = String.valueOf(timeLimit);
         this.buyerNickname = buyerNickname;
     }
+
+
 }

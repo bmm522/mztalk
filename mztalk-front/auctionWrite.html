@@ -72,12 +72,49 @@
 					<label for="title">제목</label>
 					<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
 				</div>
+                <div class = "mb-3">
+                    <div class = "row">
+                        <div class = "col-10">
+                            <label for = "searchBook">책 검색</label>
+                            <input type = "text" class = "form-control" name = "searchBook" id = "searchBook" placeholder = "책 제목을 입력해 주세요"/>
+                        </div>
+                        <!--modalBtn-->
+                        <div class = "col-2 mt-5 modal-header">
+                            <button type = "button" id = "searchBtn" data-bs-toggle="modal" data-bs-target="#searchModal">검색</button>
+                        </div>
+                        <!--modal-->
+                        <div class="modal fade bd-example-modal-sm" tabindex="-50" role="dialog"
+                                aria-labelledby="mySmallModalLabel" aria-hidden="true" id = "searchModal">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content" style = "width:500px;height:300px;">
+                                        <div class = "modal-header">
+                                            <h6>책 검색 결과</h6>
+                                            <button type = "button" class = "btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class = "modal-body row" style="text-align: center; display: flex;">
+                                            <div class = "row">
+                                                <div class = "col-4" id = "bookImg">
+                                                    <img src = "img/auction/book1.jpeg" style = "width: 50%; height: 50%;">
+                                                </div>
+                                                <div class = "col-8 mt-3" id = "bookTitle">
+                                                    <span style="display:block;">자바의 정석</span>
+                                                    <span style="color:gray;">저자 | 남궁성 출판 | 도우출판 2019.12.31.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+
+
+                    </div>
+                </div>
 				<div class="mb-3">
                     <label for="inputFiles">파일 첨부</label>
-                    
                     <form id="image-form-form">
                     <div class = "row" id = "fileArea">
-                        
                             <input type="hidden" name="serviceName" value="auction"/>
                             <input type="hidden" name="bNo" id="hidden-bId"/> 
                             <div class = "col-10" id = "count">

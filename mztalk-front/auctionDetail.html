@@ -61,6 +61,24 @@
                 </div>
             </div>
 
+            <!--Modal-->
+            <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id = "reportModal">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content" style = "width:500px;height:500px;">
+                        <div class = "modal-header">
+                            <h6>신고</h6>
+                        </div>
+                        <div class = "modal-body row" style="text-align: center; display: flex;float: center;">
+                            <label for = "reportTitle"></label>
+                            <input type = "text" id = "reportTitle" placeholder = "신고 제목을 입력해 주세요" style="width:300px; height:50px;"/>
+                            <label for = "reportContent"></label>
+                            <input type = "text" id = "reportContent" placeholder = "신고 내용을 입력해 주세요" style = "width: 300px; height: 200px;"/>
+                            <button type = "button" id="report-btn">신고하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
         <div class="row">
@@ -92,13 +110,13 @@
                             <button type="button" data-bs-toggle="modal" data-bs-target="#priceModal"
                                 id="priceBtn">입찰</button>
                             <!-- Modal -->
-                            <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                            <div class="modal fade bd-example-modal-sm" tabindex="-10" role="dialog"
                                 aria-labelledby="mySmallModalLabel" aria-hidden="true" id = "priceModal">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content" style = "width:500px;height:300px;">
                                         <div class = "modal-header">
                                             <h6>입찰 금액 입력</h6>
-                                            <butto type = "button" class = "btn-close" data-bs-dismiss="modal"></butto>
+                                            <button type = "button" class = "btn-close" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class = "modal-body row" style="text-align: center; display: flex;">
                                             <input type = "text" class = "col-8" style = "margin: auto;" placeholder="10,000" id = "inputPrice">
@@ -115,22 +133,22 @@
                     <div id = "commentContent" class = "m-3">
                         <span style="font-weight: bold;">댓글</span>
                         <input type = "text" id = "commInput"/>
-                        <button type = "button" id="commBtn" onclick="writeComment();">작성</button>
+                        <button type = "button" id="commBtn">작성</button>
                         <div id="commentArea" class = "row">
                             <!-- cId -->
                             <input type = "hidden" id = "hidden-cId"/>
-                                <div class = "col-1">
-                                    <span id = "commNickName">닉네임</span>
+                                <div class = "col-1" id = "nicknameArea">
+                                    <!-- <span id = "commNickname">{닉네임}</span> -->
                                 </div>
-                                <div class = "col-7">
-                                    <span id = "commContent" style="margin-right: 10px;">댓글 내용</span>
+                                <div class = "col-7" id = "contentArea">
+                                    <!-- <span id = "commContent" style="margin-right: 10px;">{댓글 내용}</span> -->
                                 </div>
-                                <div class = "col-2">
-                                    <span id = "commCreateDate" style="color:gray;font-size: smaller;margin-right:10px;">2022-12-19</span>
+                                <div class = "col-2" id = "createDateArea">
+                                    <!-- <span id = "commCreateDate" style="color:gray;font-size: smaller;margin-right:10px;">{2022-12-19}</span> -->
                                 </div>
-                                <div class = "col-2">
-                                    <span id = "commUpdate" style="color:gray;font-size: small; margin-right: 20px;" onclick = "updateComment();">수정</span>
-                                    <span id = "commDelete" style="color:gray;font-size: small;" onclick = "deleteComment();">삭제</span>
+                                <div class = "col-2" id = "commBtnArea">
+                                    <!-- <span id = "commUpdate" style="color:gray;font-size: small; margin-right: 20px;" onclick = "updateComment();">수정</span>
+                                    <span id = "commDelete" style="color:gray;font-size: small;" onclick = "deleteComment();">삭제</span> -->
                                 </div>
                         </div>
                     </div>
