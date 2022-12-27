@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Score extends BaseTimeEntity{
 
-    @Id  @GeneratedValue
+    @Id @GeneratedValue
     @Column(name="score_id")
     private Long id;
 

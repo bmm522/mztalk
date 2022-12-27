@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -41,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
                 introduction(boardMap.get("introduction")).
                 career(boardMap.get("career")).
                 salary(Integer.parseInt(boardMap.get("salary"))).
-                mentoringDate(boardMap.get("mentoringDate")).
+                mentoringDate(LocalDateTime.parse(boardMap.get("mentoringDate"))).
                 status(Status.YES).
                 build();
         board.addMentor(mentor);

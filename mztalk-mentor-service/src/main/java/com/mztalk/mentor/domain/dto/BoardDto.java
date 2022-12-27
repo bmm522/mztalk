@@ -1,9 +1,11 @@
 package com.mztalk.mentor.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,8 @@ public class BoardDto {
     private String introduction;
     private String career;
     private int salary;
-    private String mentoringDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime mentoringDate;
     private Participant participant;
     private Payment payment;
     private Status status;

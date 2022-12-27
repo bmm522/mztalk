@@ -1,5 +1,6 @@
 package com.mztalk.mentor.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.BoardDto;
@@ -8,6 +9,7 @@ import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class Board extends BaseTimeEntity{
     @Column(name="board_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mentor_id")
     @JsonIgnore
     private Mentor mentor;
@@ -50,8 +52,8 @@ public class Board extends BaseTimeEntity{
     @NotNull
     private int salary; //시급
 
-    @NotNull
-    private String mentoringDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime mentoringDate;
 
     @OneToOne(mappedBy = "board")
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -66,7 +68,7 @@ public class Board extends BaseTimeEntity{
 
     @Builder
     public Board(Long id, Mentor mentor, String category, String title, String nickname, String content, String introduction,
-                 String career, int salary, String mentoringDate, Participant participant,
+                 String career, int salary, LocalDateTime mentoringDate, Participant participant,
                  Payment payment, Status status) {
         this.id = id;
         this.mentor = mentor;
@@ -97,7 +99,7 @@ public class Board extends BaseTimeEntity{
     }
 
     //== 연관관계 편의 메소드==//
-    public void addMentor(Mentor mentor) {
+    public void addMentor(Mentor mentor){
         this.mentor = mentor;
         mentor.addBoard(this);
     }
