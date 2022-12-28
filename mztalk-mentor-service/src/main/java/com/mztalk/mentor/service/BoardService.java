@@ -26,4 +26,6 @@ public interface BoardService {
     Result findBoardByMentorId(Long mentorId);
 
     Result latestBoard();
+
+    Result findByMentoringDateBefore();
 }

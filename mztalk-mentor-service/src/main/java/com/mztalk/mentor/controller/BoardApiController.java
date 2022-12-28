@@ -63,9 +63,9 @@ public class BoardApiController {
         return boardService.latestBoard();
     }
 
-    // 끝난 멘토링 찾기
-    // LocalDateTime localDateTime = LocalDateTime.parse("mentoringDate");
-    // entityManager.setParameter해서 파싱.mentoringDate < LocalDateTime인것만 가져오는거 만들어서
-    // userId로 보드를 찾고 조건절에 파싱.mentoringDate < LocalDateTime하기
+    @GetMapping("/board/notdeadline")
+    public Result findByMentoringDateAfter(){
+        return boardService.findByMentoringDateBefore();
+    }
 
 }

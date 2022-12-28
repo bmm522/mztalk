@@ -59,7 +59,8 @@ public class BoardServiceImpl implements BoardService {
     //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
     @Override
     public Result findBoardByUserId(Long userId) {
-        List<Board> boardList = boardRepository.findBoardByUserId(userId);
+        LocalDateTime now = LocalDateTime.now();
+        List<Board> boardList = boardRepository.findBoardByUserId(userId,now);
         List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
     }
@@ -67,6 +68,14 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Result latestBoard() {
         List<Board> boards = boardRepository.latestBoard();
+        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
+
+    @Override
+    public Result findByMentoringDateBefore() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Board> boards = boardRepository.findByMentoringDateBefore(now);
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
     }

@@ -1,7 +1,5 @@
 window.onload = () =>{
     myMentees();
-    // endMyBoard();
-    // getMyBoard();
 }
 
 // 멘토 글 작성하기
@@ -100,33 +98,6 @@ const myMentees = () =>{
         }
     }) 
 }
-
-// 멘토링이 종료된 멘티들
-// const endMyBoard = () =>{
-//     document.getElementById('endMyMentoring').addEventListener('click',function(){
-//     const mentorId = localStorage.getItem('userNo');
-//     fetch("http://localhost:8000/mentors/participant?mentorId="+mentorId,{
-//         method:"GET",
-//         headers:{
-//             "Content-Type":"application/json",
-//             Authorization:localStorage.getItem('authorization'),
-//             RefreshToken:localStorage.getItem('refreshToken'),
-//         },
-//     })
-//     .then((res)=>res.json())
-//     .then(res =>{
-//         if(res!=null){
-//             for(const data of res.data){
-//             document.getElementById('myMentees').innerHTML =
-//                 `<td>${data.board.id}</td>
-//                 <td>${data.mentee.nickname}</td>`
-//              }
-//         } else{
-//             console.log('값없음');
-//         }
-//     })  
-//     });
-// }
 
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지

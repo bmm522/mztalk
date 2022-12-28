@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
@@ -44,9 +45,10 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
     //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
     @Override
-    public List<Board> findBoardByUserId(Long userId) {
-        return entityManager.createQuery("select b from Board b join b.participant p where p.mentee.id =:userId", Board.class)
+    public List<Board> findBoardByUserId(Long userId, LocalDateTime now) {
+        return entityManager.createQuery("select b from Board b join b.participant p where p.mentee.id =:userId and b.mentoringDate<:now", Board.class)
                 .setParameter("userId", userId)
+                .setParameter("now",now)
                 .getResultList();
     }
 
