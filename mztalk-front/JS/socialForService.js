@@ -58,28 +58,7 @@ const newMentorBoard = () =>{
             let content = board.content;
             let date = board.lastModifiedDate.substr(0,10); // 0~10까지
 
-        if(cnt%2 !==0){    
-        document.querySelector('.col-md-6').innerHTML +=
-        `
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary">${category}</strong>
-                <h3 class="mb-0">${title}</h3>
-                <div class="mb-1 text-muted">${date}</div>
-                <p class="card-text mb-auto">
-                ${content}
-                </p>
-                <a href="#" class="stretched-link">자세히보기</a>
-            </div>
-            <div class="col-auto d-none d-lg-block">
-                <img src="img/recommend_02.jpeg" style="width: 150px; height: 250px;" >      
-            </div>
-            </div>
-        </div>
-        `;
-        cnt +=1;
-
-        } else{
+            if(cnt%2 !==0){    
             document.querySelector('.col-md-6').innerHTML +=
             `
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -95,6 +74,28 @@ const newMentorBoard = () =>{
                 <div class="col-auto d-none d-lg-block">
                     <img src="img/recommend_02.jpeg" style="width: 150px; height: 250px;" >      
                 </div>
+                </div>
+            </div>
+            `;
+            cnt +=1;
+
+            } else{
+            document.querySelector('.col-md-6').innerHTML +=
+            `
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-primary">${category}</strong>
+                        <h3 class="mb-0">${title}</h3>
+                        <div class="mb-1 text-muted">${date}</div>
+                        <p class="card-text mb-auto">
+                        ${content}
+                        </p>
+                        <a href="#" class="stretched-link">자세히보기</a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <img src="img/recommend_02.jpeg" style="width: 150px; height: 250px;" >      
+                     </div>
+                    </div>
                 </div>
             </div>
             `;
