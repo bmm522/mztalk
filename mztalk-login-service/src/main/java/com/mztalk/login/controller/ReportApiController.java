@@ -1,5 +1,6 @@
 package com.mztalk.login.controller;
 
+import com.mztalk.login.domain.dto.EditReponseDto;
 import com.mztalk.login.domain.dto.ReportRequestDto;
 import com.mztalk.login.domain.dto.ReportResponseDto;
 import com.mztalk.login.domain.dto.Result;
@@ -38,6 +39,11 @@ public class ReportApiController {
     @PatchMapping("/report")
     public long postReport(@RequestParam("bId")long boardId, @RequestParam("userId")long userId, @RequestParam("serviceName")String serviceName){
         return updateReportService.postReport(boardId, userId, serviceName);
+    }
+
+    @GetMapping("/report/{userNo}")
+    public Result<?> getEditList(@PathVariable("userNo")long userNo){
+        return selectReportService.getEditList(userNo);
     }
 
 

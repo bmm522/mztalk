@@ -118,4 +118,6 @@ public class LoginApiController {
     public long updateUserStatus(@RequestParam("status")String status, @RequestParam("userNo")long id){
         return updateUserInfoService.updateUserStatus(status, id);
     }
+
+
 }

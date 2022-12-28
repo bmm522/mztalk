@@ -346,8 +346,113 @@ function noSocial(){
     
     buttonss.innerHTML +=`<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
 
-
   }
 
 
+
+}
+
+
+//내가 신고당한 글 리스트
+function myReport(){
+  let userNo = localStorage.getItem('userNo')
+
+  console.log("여기 찍히니???");
+  
+  fetch("http://localhost:8000/login/report/"+userNo,{
+    method:"GET",
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:localStorage.getItem('authorization'),
+      RefreshToken:localStorage.getItem('refreshToken'),
+      },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+
+      //let report = res.data;
+
+      //console.log("통신성공?"+ report);
+
+      for(let report of res.data){
+        let boardId = report.boardId;
+        let content = report.reportContent;
+        let title = report.reportTitle;
+        let serviceName = report.serviceName;
+        let UserInfo = report.user;
+        let path = report.path;
+        let reportStatus = report.reportStatus;
+
+
+
+
+        //let list = document.querySelector("#reportAllList");
+      if(serviceName.includes('mentor')){
+
+        document.querySelector("#reportAllList").innerHTML +=
+        `
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+            <div class="col-md-4">
+                <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">신고글제목</h5>
+                <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+            </div>
+        </div>
+        `;
+
+
+      }else if(serviceName.includes('auction')){
+
+        document.querySelector("#reportAllList").innerHTML +=
+        `
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+            <div class="col-md-4">
+                <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <span class="badge text-bg-success" id="serviceAuction">경매</span>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+            </div>
+        </div>
+        `;
+
+      }else{
+
+        document.querySelector("#reportAllList").innerHTML +=
+        `
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+            <div class="col-md-4">
+                <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <span class="badge text-bg-info" id="serviceBung">벙</span>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+            </div>
+        </div>
+        `;
+      }
+      
+      }
+
+  })
 }

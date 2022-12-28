@@ -20,7 +20,7 @@ public class FollowApiController {
 
 
     //팔로우 성공
-    @GetMapping("/follow/{toUserId}/{fromUserId}")
+    @PostMapping("/follow/{toUserId}/{fromUserId}")
     public ResponseEntity<?> follow(@PathVariable Long toUserId, @PathVariable Long fromUserId){
 
         followService.follow(toUserId, fromUserId);
@@ -72,7 +72,7 @@ public class FollowApiController {
         return new ResponseEntity<>(new CMRespDto<>(1, "팔로잉리스트", result), HttpStatus.OK);
     }
 
-    @PostMapping("/matpalList/{fromUserId}")
+    @GetMapping("/matpalList/{fromUserId}")
     public ResponseEntity<?> matpalList(@PathVariable Long fromUserId){
 
         List<MatpalGroup> matpalListResponseDtoList = followService.matpalList(fromUserId);
