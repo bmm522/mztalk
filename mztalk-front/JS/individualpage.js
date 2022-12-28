@@ -393,7 +393,7 @@ function storyLoad() {
                      )
                    }else if(privacy==='SECRET') {
                       //비밀글 
-                      console.log("되니?");
+                      //console.log("되니?");
                       document.querySelector("#contentList").innerHTML += 
                       `<div id="post-div-${boardId}" class="post-div">
                           <table id="post-table">

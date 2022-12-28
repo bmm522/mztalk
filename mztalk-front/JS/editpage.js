@@ -342,7 +342,7 @@ function noSocial(){
   let SOCIAL = localStorage.getItem('path');
   let buttonss = document.querySelectorAll('#v-pills-home-tab');
   let buttonz = `<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
-  if(SOCIAL==='SOCIAL'){
+  if(SOCIAL.includes("LOCAL")){
     
     buttonss.innerHTML= `<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
 
