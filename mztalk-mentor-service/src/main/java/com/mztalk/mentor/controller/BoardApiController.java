@@ -2,7 +2,6 @@ package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardDto;
-import com.mztalk.mentor.domain.dto.MyBoardDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -63,9 +62,7 @@ public class BoardApiController {
         return boardService.latestBoard();
     }
 
-    @GetMapping("/board/notdeadline")
-    public Result findByMentoringDateAfter(){
-        return boardService.findByMentoringDateBefore();
-    }
+//        return new ResponseEntity <> (boards, HttpStatus.OK);
+
 
 }

@@ -6,8 +6,6 @@ import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Participant;
 import lombok.*;
 
-import javax.persistence.*;
-
 @Getter
 @Setter
 @NoArgsConstructor

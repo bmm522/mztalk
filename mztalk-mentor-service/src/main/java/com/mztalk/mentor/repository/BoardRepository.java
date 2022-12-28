@@ -16,6 +16,4 @@ public interface BoardRepository extends JpaRepository<Board,Long>, BoardReposit
 
     List<Board> findByMentoringDateBefore(LocalDateTime now);
 
-//    @Query("select b from Board b join fetch b.mentor m where b.payment IS NULL")
-//    List<Board> findAllFetchMentor();
 }
