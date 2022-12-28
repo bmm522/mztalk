@@ -1,5 +1,5 @@
 window.onload = () =>{
-   newMentorBoard();
+   //newMentorBoard();
    //scroll();
 }
 
@@ -10,17 +10,17 @@ let page =0;
 window.onscroll = function(e){
     //window height + window scrollY 값이 document height 보다 클 경우
 
-    console.log("윈도우 scrollTop :", window.scrollY);
-	console.log("문서의 높이 :", document.body.offsetHeight);
-	console.log("윈도우 높이(window height):", window.innerHeight);
-    
-    //let checkNum = $(window).scrollTop() - ( $(document).height() - $(window).height() );
+    // console.log("윈도우 scrollTop :", window.scrollY);
+	// console.log("문서의 높이 :", document.body.offsetHeight);
+	// console.log("윈도우 높이(window height):", window.innerHeight);
     
     let checkNum = window.scrollY -(document.body.offsetHeight -window.innerHeight);
 
     if(checkNum < 1 && checkNum > -1){
 		page++;
-		newMentorBoard();
+		//newMentorBoard();
+        //실행할 로직
+    
 	}
 
 }
