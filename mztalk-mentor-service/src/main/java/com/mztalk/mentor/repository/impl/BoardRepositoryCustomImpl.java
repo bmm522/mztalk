@@ -4,6 +4,7 @@ import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.QBoard;
+import com.mztalk.mentor.domain.entity.QPayment;
 import com.mztalk.mentor.repository.BoardRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,27 +19,28 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     private EntityManager entityManager;
 
     private final JPAQueryFactory queryFactory;
+
     public BoardRepositoryCustomImpl(EntityManager entityManager){
         this.queryFactory = new JPAQueryFactory(entityManager);
     }
 
     QBoard board = QBoard.board;
+    QPayment payment = QPayment.payment;
 
     @Override
     public List<Board> searchWithCondition(SearchCondition searchCondition) {
-        return queryFactory
-                .selectFrom(board)
-                .where(
-                                eqCategory(searchCondition.getCategory()).
-                                and(lePrice(searchCondition.getSalary())).
-                                and(afterNow(searchCondition.getNow())).
-                                or(containsContent(searchCondition.getContent())).
-                                or(containsTitle(searchCondition.getTitle())).
-                                or(containsWriter(searchCondition.getNickname()))
 
-                )
-//                .where(board.payment.isNull())
-                .fetch();
+        return queryFactory.selectFrom(board)
+                .leftJoin(payment)
+                .on(board.eq(payment.board))
+                .where(payment.isNull()
+                        .and(afterNow(searchCondition.getNow()))
+                        .and(lePrice(searchCondition.getSalary()))
+                        .and(eqCategory(searchCondition.getCategory()))
+                        .and(containsContent(searchCondition.getContent()))
+                        .and(containsTitle(searchCondition.getTitle()))
+                        .and(containsWriter(searchCondition.getNickname()))
+                ).fetch();
     }
 
     @Override

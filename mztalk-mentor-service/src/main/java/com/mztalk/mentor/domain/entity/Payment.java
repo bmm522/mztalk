@@ -24,7 +24,7 @@ public class Payment extends BaseTimeEntity{
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="board_id")
+    @JoinColumn(name = "board_id")
     @JsonIgnore
     private Board board;
 

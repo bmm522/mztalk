@@ -221,6 +221,7 @@ document.getElementById('sendSearch').addEventListener('click', function(){
             }
         } else if(res.data.length == 0) {
             alert('검색에 맞는 글이 존재하지 않습니다.');
+            location.href="mentor-main.html";
         }
     });
 });

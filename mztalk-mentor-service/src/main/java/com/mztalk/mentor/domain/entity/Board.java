@@ -65,7 +65,7 @@ public class Board extends BaseTimeEntity{
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Participant participant;
 
-    @OneToOne(mappedBy = "board")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "board")
     @JsonIgnore
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Payment payment;
