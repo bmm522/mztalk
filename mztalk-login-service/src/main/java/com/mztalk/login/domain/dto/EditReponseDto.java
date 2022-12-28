@@ -16,9 +16,12 @@ public class EditReponseDto {
     private String title;
     private String content;
 
+    private String serviceName;
+
     public EditReponseDto(String imageUrl, Report report) {
         this.imageUrl = imageUrl;
         this.title=report.getReportTitle();
         this.content = report.getReportContent();
+        this.serviceName = report.getServiceName();
     }
 }
