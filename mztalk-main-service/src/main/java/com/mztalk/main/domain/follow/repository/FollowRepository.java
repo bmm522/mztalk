@@ -1,6 +1,8 @@
 package com.mztalk.main.domain.follow.repository;
 
 import com.mztalk.main.domain.follow.dto.FollowDto;
+import com.mztalk.main.domain.follow.dto.MatpalGroup;
+import com.mztalk.main.domain.follow.dto.MatpalListResponseDto;
 import com.mztalk.main.domain.follow.entity.Follow;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -48,6 +50,13 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 
     @Query(value="SELECT count(*) FROM follow f WHERE f.fromUserId = :fromUserId and f.toUserId= :toUserId", nativeQuery = true)
     Long followStatus(Long fromUserId, Long toUserId);
+
+
+
+
+    @Modifying
+    @Query(value="select A.fromUserId, A.toUserId, A.postImageUrl, A.followStatus, A.matpal from (select f1.fromUserId, f1.toUserId, f1.postImageUrl, f1.followStatus, if(f2.fromUserId is null, false, true) as matpal from follow f1 left outer join follow f2 on f1.fromUserId=f2.toUserId and f1.toUserId= f2.fromUserId order by f1.id) AS A where A.matpal ='1' and A.fromUserId =:fromUserId", nativeQuery = true)
+    List<MatpalGroup> getListByMatpalListFromUserId(@Param("fromUserId") Long fromUserId);
 
 //    List<Follow> findAllByFromUser(long own); // 사용자가 팔로우한 관계를 가져옴
 //    List<Follow> findAllByToUser(long own);	 // 사용자를 팔로우하는 관계를 가져옴

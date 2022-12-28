@@ -3,7 +3,8 @@ let loginUser = localStorage.getItem('userNo');
 let own = localStorage.getItem("own");
 
 window.onload = function(){
-    storyLoad();
+  writeOwn();
+  storyLoad();
   profileBox();
   profileName();
   BoardCount();
@@ -11,8 +12,8 @@ window.onload = function(){
   FollowingCount();
   //FollowingButton();
   followButtonStatus();
-  writeOwn();
-  storySecretLoad()
+  
+  //storySecretLoad(); 
  //writeboard();
 }
 
@@ -44,19 +45,20 @@ function writeboard() {
     const close = document.querySelector(".btn-closee");  //닫기버튼
 
     //console.log(open);
-
+   console.log("첫번쨰클릭");
   
     open.addEventListener("click", function(){
-        //console.log(open);
+        console.log("두번쨰클릭");
         
         modal.classList.remove("hidden");
         open.classList.add("hidden");
 
     });
     close.addEventListener("click", function(){
-        modal.classList.add("hidden");
-        open.classList.remove("hidden");
-    });
+      modal.classList.add("hidden");
+      open.classList.remove("hidden");
+  });
+    
 }
 
 
@@ -319,7 +321,7 @@ function storyLoad() {
           let content = board.content;
           let date = board.lastModifiedDate.substr(0,10);
           
-          if(privacy==='PUBLIC'){
+          if(privacy.includes("PUBLIC")){
           document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
                     <table id="post-table">
@@ -380,7 +382,7 @@ function storyLoad() {
                      board.replyList.forEach((reply)=>{
                      document.querySelector(`.reply-div-${boardId}`).innerHTML +=
                          `
-                           <div id="reply-nickname">${reply.replyNickname}</div>
+                           <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
                            <div id="reply-content">${reply.replyContent}</div>
                            <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
                            <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
@@ -389,7 +391,81 @@ function storyLoad() {
                          `;
                       }
                      )
-                   } //else
+                   }else if(privacy==='SECRET') {
+                      //비밀글 
+                      console.log("되니?");
+                      document.querySelector("#contentList").innerHTML += 
+                      `<div id="post-div-${boardId}" class="post-div">
+                          <table id="post-table">
+                              <tr>
+                                  <td>
+                                      <div id="category-div">${privacy}
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div id="post-title-div">${title}</div>
+                                  </td>
+                                  <td>
+                                      <div id="post-date-div"><br>${date}</div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="3"><br><br>
+                                      <div id="edit-delete-div">
+                                             
+                                          <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
+                                          data-bs-toggle="modal" type="button">수정</button>
+                                          <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
+                                      </div>
+                                      <div id=post-hr>
+                                          <hr>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="3">
+                                      <div id="post-content">
+                                          <div id="post-content-input">${content}</div>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </table>
+                          <div id="reply-div" class="reply-div-${boardId}">
+                            <div>
+          
+                            </div>
+                            </div>
+                            <div id="reply-write-div">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div id="reply-write-box"><input type="text" class="reply-write-input-${boardId}" id="reply-write-input"></div>
+                            </div>
+                            </td>
+                            <td>  
+                                <div id="reply-write-btn"><button onClick="addReply(${boardId})" id="replyButton" style="cursor:pointer;" type="button">등록</button></div>
+                            </td>
+                            </tr>
+                            </table>
+                          </div>
+                         </div>
+                          `;
+                          
+                           board.replyList.forEach((reply)=>{
+                           document.querySelector(`.reply-div-${boardId}`).innerHTML +=
+                               `
+                                 <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
+                                 <div id="reply-content">${reply.replyContent}</div>
+                                 <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
+                                 <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
+                                 <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
+                                 </div>
+                               `;
+                            })
+
+
+
+                   }
                   }
 
         })
@@ -488,7 +564,7 @@ function storySecretLoad() {
                  board.replyList.forEach((reply)=>{
                  document.querySelector(`.reply-div-${boardId}`).innerHTML +=
                      `
-                       <div id="reply-nickname">${reply.replyNickname}</div>
+                       <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
                        <div id="reply-content">${reply.replyContent}</div>
                        <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
                        <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
@@ -504,45 +580,6 @@ function storySecretLoad() {
      }
 
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -879,8 +916,9 @@ function profileImageUpload(){
       reader.readAsDataURL(f); 
 
 
-      modal.style.display = "none"
+      
       })
+      closePopup('.modal-image');
       
     })
     
@@ -923,7 +961,7 @@ function addReply(boardId){
             // let lastModifiedDate = reply.lastModifiedDate;
             document.querySelector(`.reply-div-${boardId}`).innerHTML +=
             `<div>
-              <div id="reply-nickname">${reply.replyNickname}</div>
+              <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
               <div id="reply-content">${reply.replyContent}</div>
               <div id="reply-date">${reply.lastModifiedDate}</div>
               <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
@@ -1070,7 +1108,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     .then((res)=>res.json())
     .then(res =>{
 
-      console.log("통신?");
+      //console.log("통신?");
 
       let following = res.data;
       
@@ -1084,7 +1122,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
         // console.log("길이"+follower.length );
         // console.log("follower" + follower);
         //console.log(following);  
-        console.log("팔로잉리스트"+following[i].userNo);
+        //console.log("팔로잉리스트"+following[i].userNo);
       document.querySelector(".following-list").innerHTML +=
       `
       <div class="following__item">
