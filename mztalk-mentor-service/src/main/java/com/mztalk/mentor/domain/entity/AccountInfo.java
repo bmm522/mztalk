@@ -7,14 +7,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@Table(name = "ACCOUNT")
+
 public class AccountInfo {
 
-    @Id @GeneratedValue
-    @Column(name = "account_id")
     private Long id;
-
     private String api_tran_id;
     private String api_tran_dtm;
     private String rsp_code;

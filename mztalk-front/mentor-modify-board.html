@@ -65,14 +65,14 @@
 
     <!-- boardList 뿌려주는 div 시작 -->
     <div id="board-list-div" style="text-align:center;">
-                   
+    <hr>               
         
 
     </div>
     <!-- boardList 뿌려주는 div 끝 -->
 
 
-    <!--내가 작성한 글 보기 모달-->
+    <!-- 신청자 보기 모달-->
     <div class="modal fade" id="mentorModal" aria-hidden="true" aria-labelledby="mentorModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -103,38 +103,55 @@
             </div>
         </div>
     </div>
-    <!--내가 작성한 글 보기 모달 끝-->
+    <!--신청자 모달 끝-->
 
-    <!--완료된 멘토링 보기 모달 시작-->
-    <div class="modal fade" id="endMentorModal" aria-hidden="true" aria-labelledby="endMentorModal" tabindex="-1">
+    <!-- 멘토링 수정 모달 -->
+    <div class="modal fade" id="modifyModal" aria-hidden="true" aria-labelledby="modifyModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="endMentorModal">종료된 멘토링</h1>
+                    <h1 class="modal-title fs-5" id="modifyModal">멘토링 작성 페이지</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <label class="form-label">완료된 신청자 목록</label>
-                    <table class="table table-hover mentors-table">
-                        <thead>
-                          <tr>
-                            <th scope="col">글번호</th>
-                            <th scope="col">멘티 닉네임</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr id="myMentees">
-                            <!-- 종료된 멘티들 출력화면-->
-                          </tr>
-                        </tbody>
-                    </table>
+                    <div class="mb-3">
+                        <label for="modifyBoardId" class="form-label">글번호</label>
+                        <input type="text" class="form-control form-control-sm" id="modifyBoardId" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyTitle" class="form-label">제목</label>
+                        <input type="text" class="form-control form-control-sm" id="modifyTitle">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyIntroduction" class="form-label">자기소개</label>
+                        <input type="text" class="form-control form-control-sm" id="modifyIntroduction">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyCareer" class="form-label">경력</label>
+                        <input type="text" class="form-control form-control-sm" id="modifyCareer">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifySalary" class="form-label">금액</label>
+                        <input type="text" class="form-control form-control-sm" id="modifySalary">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyMentoringDate" class="form-label">날짜</label>
+                        <input type="datetime-local" onchange="setMinValue();" class="form-control form-control-sm" id="modifyMentoringDate" style="margin-top: 0.4rem;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyContent">내용</label>
+                        <textarea class="form-control" id="modifyContent" style="height: 200px"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-success" id="mentor-modify-btn" onclick="modifyBoard();">수정</button>
+                    <button type="button" class="btn btn-outline-danger" id="mentor-delete-btn" onclick="deleteBoard();">삭제</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 완료된 멘토링 보기 모달 끝 -->
+    <!-- 멘토링 수정 모달 -->
 
-    
     <!-- 멘토링 글 작성 모달 시작 -->
         <div class="modal fade" id="writeModal" aria-hidden="true" aria-labelledby="writeModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">

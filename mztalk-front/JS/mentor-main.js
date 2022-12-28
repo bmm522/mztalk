@@ -269,25 +269,3 @@ document.getElementById('myPage').addEventListener('click', function(){
         }
     })
 });
-
-// boardId이용해서 리뷰 >> 점수 평균 가져오기.
-// document.getElementById('watchScore').addEventListener('click', function(){
-//     const boardId = document.getElementById('boardId').value
-//     fetch("http://localhost:8000/mentors/score/"+boardId,{
-//         method:"GET",
-//         headers:{
-//             "Content-Type":"application/json;",
-//             Authorization:localStorage.getItem('authorization'),
-//             RefreshToken:localStorage.getItem('refreshToken')
-//         },
-//     })
-//     .then((res)=>res.json())
-//     .then(res =>{
-//         console.log("res : " + res);
-//         if(res > 0){
-//             console.log('통신성공');
-//         } else {
-//             console.log('실패');
-//         }
-//     })
-// });

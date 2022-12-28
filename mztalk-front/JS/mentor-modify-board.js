@@ -1,6 +1,5 @@
 window.onload = () =>{
     myMentees();
-    // endMyBoard();
     getMyBoard();
 }
 
@@ -55,19 +54,68 @@ const getMyBoard = () =>{
             document.getElementById("board-list-div").innerHTML = 
             `<div>작성하신 글이 존재하지 않습니다.</div>`
         } else{
+            document.getElementById("board-list-div").innerHTML +=
+            `<div class="container text-center" style="padding-top:30px;">
+                <div class="row">
+                    <div class="col-4">
+                        글번호
+                    </div>
+                    <div class="col-4">
+                        제목
+                    </div>
+                    <div class="col-4">
+                        상세보기
+                    </div>
+                </div>
+            </div>
+            `
             for(const board of res.data){
-                document.getElementById("board-list-div").innerHTML += 
-                `<div>${board.title}</div>
-                <div>==========</div>`
+                document.getElementById("board-list-div").innerHTML +=
+                `<div class="container text-center" style="padding-top:30px;">
+                    <div class="row">
+                        <div class="col-4">
+                            ${board.id}
+                        </div>
+                        <div class="col-4">
+                            ${board.title}
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modifyModal" onclick="showBoard(${board.id});">작성한 내용 보기</button>
+                        </div>
+                    </div>
+                </div>
+                `
             }
         }
-    })  
+    })
 };
 
+// 내가 작성한글 보기
+const showBoard = (boardId) =>{
+    fetch("http://localhost:8000/mentors/board/"+boardId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },  
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        document.getElementById('modifyBoardId').value = res.id;
+        document.getElementById('modifyTitle').value = res.title;
+        document.getElementById('modifyIntroduction').value = res.introduction;
+        document.getElementById('modifyCareer').value = res.career;
+        document.getElementById('modifySalary').value = res.salary;
+        document.getElementById('modifyMentoringDate').value = res.mentoringDate;
+        document.getElementById('modifyContent').value = res.content;
+        console.log(res.id);
+    }) 
+}
 
 // 글 수정하기
-const modify = () =>{
-    
+const modifyBoard = () =>{
+    const boardId = document.getElementById('modifyBoardId').value;
     fetch("http://localhost:8000/mentors/board/edit/"+boardId,{
         method:"PATCH",
         headers:{
@@ -76,20 +124,22 @@ const modify = () =>{
             RefreshToken:localStorage.getItem('refreshToken'),
         },
         body:JSON.stringify({
-            title : document.getElementById('modify-title').value,
-            introduction : document.getElementById('modify-introduction').value,
-            career : document.getElementById('modify-career').value,
-            salary : document.getElementById('modify-salary').value,
-            mentoringDate : document.getElementById('mentoringDate').value,
-            content : document.getElementById('modify-content').value
+            title : document.getElementById('modifyTitle').value,
+            introduction : document.getElementById('modifyIntroduction').value,
+            career : document.getElementById('modifyCareer').value,
+            salary : document.getElementById('modifySalary').value,
+            mentoringDate : document.getElementById('modifyMentoringDate').value,
+            content : document.getElementById('modifyContent').value
         })    
     })
     .then((res)=>res.json())
     .then(res =>{
         if(res>0){
             window.alert('글이 수정되었습니다.');
+            location.href="mentor-modify-board.html";
         } else{
-            console.log('글 수정 실패');
+            window.alert('글 수정 실패.');
+            location.href="mentor-modify-board.html";
         }
     })  
 }
@@ -109,8 +159,8 @@ function setMinValue() {
 
 // 멘토글 삭제
 const deleteBoard = () =>{
-    const mentorId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board/"+mentorId,{
+    const boardId = document.getElementById('modifyBoardId').value;
+    fetch("http://localhost:8000/mentors/board/"+boardId,{
         method:"DELETE",
         headers:{
             "Content-Type":"application/json",
@@ -124,7 +174,8 @@ const deleteBoard = () =>{
             window.alert('글이 삭제되었습니다.');
             location.href="mentor-main.html";
         } else{
-            window.alert('글  삭제 실패');
+            window.alert('글 삭제 실패');
+            location.href="mentor-main.html";
             return false;
         }
     })  
@@ -157,34 +208,6 @@ const myMentees = () =>{
         }
     }) 
 }
-
-// 멘토링이 종료된 멘티들
-// const endMyBoard = () =>{
-//     document.getElementById('endMyMentoring').addEventListener('click',function(){
-//     const mentorId = localStorage.getItem('userNo');
-//     fetch("http://localhost:8000/mentors/participant?mentorId="+mentorId,{
-//         method:"GET",
-//         headers:{
-//             "Content-Type":"application/json",
-//             Authorization:localStorage.getItem('authorization'),
-//             RefreshToken:localStorage.getItem('refreshToken'),
-//         },
-//     })
-//     .then((res)=>res.json())
-//     .then(res =>{
-//         if(res!=null){
-//             for(const data of res.data){
-//             document.getElementById('myMentees').innerHTML =
-//                 `<td>${data.board.id}</td>
-//                 <td>${data.mentee.nickname}</td>`
-//              }
-//         } else{
-//             console.log('값없음');
-//         }
-//     })  
-//     });
-// }
-
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
 document.getElementById('myPage').addEventListener('click', function(){

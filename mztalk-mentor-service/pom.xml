@@ -105,22 +105,7 @@
 			<version>1.4</version>
 		</dependency>
 
-		<!-- 아임포트 라이브러리-->
-		<dependency>
-			<groupId>com.github.iamport</groupId>
-			<artifactId>iamport-rest-client-java</artifactId>
-			<version>0.2.22</version>
-		</dependency>
-
 	</dependencies>
-
-	<!-- 아임포트 리포지토리-->
-	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
-	</repositories>
 
 	<dependencyManagement>
 		<dependencies>

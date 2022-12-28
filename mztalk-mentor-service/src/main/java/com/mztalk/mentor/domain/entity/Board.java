@@ -56,7 +56,7 @@ public class Board extends BaseTimeEntity{
     @JsonIgnore
     private Score score;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime mentoringDate;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "board")
