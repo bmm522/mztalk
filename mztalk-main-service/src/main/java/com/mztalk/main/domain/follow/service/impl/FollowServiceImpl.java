@@ -157,15 +157,8 @@ public class FollowServiceImpl implements FollowService {
             HttpHeaders headersImg = new HttpHeaders();
             headersImg.add("Content-type", "text/html");
             Optional<Profile> profile = profileCustomRepository.findByToUserImage(follow.getToUserId());
-            //Optional<Profile> profile = profileCustomRepository.findByUserStatus(follow.getToUserId());
-//            System.out.println("팔로워 사진" + profile);
-//            System.out.println("여기 사람 있어요!" +follow.getToUserId());
 
             if (profile.isPresent()) {
-
-//                System.out.println("사람 살려!!!!!!");
-//                System.out.println("----"+profile);
-//                System.out.println(follow.getFromUserId());
 
                 ResponseEntity<String> responseImg = new RestTemplate().exchange(
                         "http://localhost:8000/resource/main-image?bNo=" + follow.getToUserId() + "&serviceName=story",
@@ -182,22 +175,17 @@ public class FollowServiceImpl implements FollowService {
                 //System.out.println("여기 오니?!");
                 followDtoList.add(new FollowingListResponseDto(follow, nickname, imageUrl, imageName, follow.getFollowStatus()));
 
-
             } else {
 
                 String personalUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
                 followDtoList.add(new FollowingListResponseDto(follow, nickname, personalUrl, "기본이미지", follow.getFollowStatus()));
 
-
             }
-
 
         }
         System.out.println("followDtoList" + followDtoList);
 
-
         return followDtoList;
-
 
     }
 
@@ -207,8 +195,6 @@ public class FollowServiceImpl implements FollowService {
 
         Long followDto = followRepository.followStatus(fromUserId, toUserId);
 
-        //System.out.println("살려줘 ;ㄹ"+followDto);
-
         return followDto;
     }
 
@@ -217,11 +203,10 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public List<MatpalGroup> matpalList(Long fromUserId) {
 
-        //List<MatpalListResponseDto> matpalListResponseDto = followCustomRepository.findByMatpalList(fromUserId);
         List<MatpalGroup> matpalListResponseDtoList = followRepository.getListByMatpalListFromUserId(fromUserId);
 
-        for (MatpalGroup m : matpalListResponseDtoList) {
-            System.out.println("없니?" + m.getToUserId());
+            for (MatpalGroup m : matpalListResponseDtoList) {
+                System.out.println("없니?" + m.getToUserId());
 
             }
             return matpalListResponseDtoList;
