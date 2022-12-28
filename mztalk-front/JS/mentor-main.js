@@ -171,6 +171,8 @@ document.getElementById('sendSearch').addEventListener('click', function(){
     const selected = document.getElementById('type').value;
     const searchValue = document.getElementById('searchValue').value;
 
+    console.log("category=" + categoryValue + "&salary=" + salaryValue + "&" + selected + "=" + searchValue);
+
     fetch("http://localhost:8000/mentors/board/search?category=" + categoryValue + "&salary=" + salaryValue + "&" + selected + "=" + searchValue,{
         method:"GET",
         headers:{
@@ -181,9 +183,10 @@ document.getElementById('sendSearch').addEventListener('click', function(){
     })
     .then((res)=>res.json())
     .then(res =>{
-        if(res != ''){
+        console.log(res.data);
+        if(res.data.length != 0){
             let cnt = 1;
-            document.getElementById('board-list-div').innerHTML += '<div class="row" style="padding:20px;" id="row-div">';
+            document.getElementById('board-list-div').innerHTML = '<div class="row" style="padding:20px;" id="row-div">';
             for(let board of res.data){
                 let boardId = board.id;
                 let category = board.category;
@@ -191,9 +194,9 @@ document.getElementById('sendSearch').addEventListener('click', function(){
                 let career = board.career;
                 let title = board.title;
                 if(cnt%4 !== 0 ){
-                    document.getElementById('row-div').innerHTML =  `<div class="col-3">
+                    document.getElementById('row-div').innerHTML +=  `<div class="col-3">
                     <div class="card" style="width: 13rem; height:14rem;">
-                    <div class="card-body" onclick="getBoardDetail(${boardId});"  
+                    <div class="card-body" onclick="getBoardDetail(${boardId});"
                     data-bs-toggle="modal" href="#exampleModalToggle">
                     <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
@@ -201,9 +204,8 @@ document.getElementById('sendSearch').addEventListener('click', function(){
                     </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
                     type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
                     cnt += 1;
-                    document.getElementById('boardId-modal').value = boardId;
                 } else {
-                    document.getElementById('row-div').innerHTML +=  
+                    document.getElementById('row-div').innerHTML += 
                     `<div class="col-3">
                     <div class="card" style="width: 13rem; height:14rem;">
                     <div class="card-body" onclick="getBoardDetail(${boardId});"
@@ -215,37 +217,12 @@ document.getElementById('sendSearch').addEventListener('click', function(){
                     type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
                     </div><div class="row" style="padding:20px;" id="row-div">`;
                     cnt += 1;
-                    document.getElementById('boardId-modal').value = boardId;
                 }
             }
-        } else if(res ==''){
-            location.href="mentor-main.html";
+        } else if(res.data.length == 0) {
+            alert('검색에 맞는 글이 존재하지 않습니다.');
         }
     });
-});
-
-// 정렬 조건
-const sort = document.getElementById('sort');
-sort.addEventListener('change', function(){
-    const sortValue = this.value;
-
-    console.log("http://localhost:8000/mentors/board/search?sort="+sortValue);
-    fetch("http://localhost:8000/mentors/board/search?sort="+sortValue,{
-        method:"GET",
-        headers:{
-            "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken')
-        },
-    })
-    .then((res)=>res.json())
-    .then(res =>{
-        if(res > 0){
-            console.log('통신성공');
-        } else {
-            console.log('실패');
-        }
-    })
 });
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지

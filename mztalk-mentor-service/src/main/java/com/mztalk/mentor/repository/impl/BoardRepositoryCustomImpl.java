@@ -28,11 +28,16 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     public List<Board> searchWithCondition(SearchCondition searchCondition) {
         return queryFactory
                 .selectFrom(board)
-                .where(eqCategory(searchCondition.getCategory()).
-                        or(lePrice(searchCondition.getSalary())).
-                        or(containsContent(searchCondition.getContent())).
-                        or(containsTitle(searchCondition.getTitle())).
-                        or(containsWriter(searchCondition.getNickname())))
+                .where(
+                                eqCategory(searchCondition.getCategory()).
+                                and(lePrice(searchCondition.getSalary())).
+                                and(afterNow(searchCondition.getNow())).
+                                or(containsContent(searchCondition.getContent())).
+                                or(containsTitle(searchCondition.getTitle())).
+                                or(containsWriter(searchCondition.getNickname()))
+
+                )
+//                .where(board.payment.isNull())
                 .fetch();
     }
 
@@ -65,6 +70,10 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         return entityManager.createQuery("select b from Board b where b.mentor.id =:mentorId", Board.class)
                 .setParameter("mentorId",mentorId)
                 .getResultList();
+    }
+
+    private BooleanExpression afterNow(LocalDateTime now){
+        return now != null ? board.mentoringDate.after(now) : null;
     }
 
     private BooleanExpression eqCategory(String category){

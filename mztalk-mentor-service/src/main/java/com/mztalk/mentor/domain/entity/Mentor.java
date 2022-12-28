@@ -28,7 +28,7 @@ public class Mentor extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "mentor")
     @JsonIgnore
-    private List<Board> boards;
+    private List<Board> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "mentor")
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

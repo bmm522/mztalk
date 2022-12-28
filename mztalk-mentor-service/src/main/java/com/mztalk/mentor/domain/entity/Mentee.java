@@ -30,7 +30,7 @@ public class Mentee extends BaseTimeEntity{
     private List<Payment> payments = new ArrayList<>();
 
     @OneToMany(mappedBy = "mentee")
-    private List<Score> scores;
+    private List<Score> scores = new ArrayList<>();
 
     @ManyToMany(mappedBy = "mentees")
     private List<Mentor> mentors = new ArrayList<>();

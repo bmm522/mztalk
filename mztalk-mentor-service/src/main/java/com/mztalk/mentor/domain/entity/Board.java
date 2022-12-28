@@ -123,4 +123,24 @@ public class Board extends BaseTimeEntity{
     public void addScore(Score score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "id=" + id +
+                ", mentor=" + mentor +
+                ", category='" + category + '\'' +
+                ", title='" + title + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", content='" + content + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", career='" + career + '\'' +
+                ", salary=" + salary +
+                ", score=" + score +
+                ", mentoringDate=" + mentoringDate +
+                ", participant=" + participant +
+                ", payment=" + payment +
+                ", status=" + status +
+                '}';
+    }
 }
