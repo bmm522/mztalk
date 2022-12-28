@@ -48,4 +48,19 @@ public class BungAddBoardRepositoryCustomImpl implements BungAddBoardRepositoryC
                 .setParameter("addId", addId)
                 .getFirstResult();
     }
+
+    @Override
+    public String findAddBoardByWriter(Long boardId, String addWriter) {
+        return (String) entityManager.createQuery("select a.addNickName from BungAddBoard a where a.bungBoard.boardId = :boardId and a.addNickName = :addWriter")
+                .setParameter("boardId", boardId)
+                .setParameter("addWriter", addWriter)
+                .getSingleResult();
+    }
+
+//    @Override
+//    public String findAddBoardByWriter(Long boardId) {
+//        return (String) entityManager.createQuery("select a.addNickName from BungAddBoard a where a.bungBoard.boardId = :boardId")
+//                .setParameter("boardId", boardId)
+//                .getSingleResult();
+//    }
 }

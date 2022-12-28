@@ -10,4 +10,8 @@ public interface BungAddBoardRepositoryCustom {
     Long bungBoardNowGroup(Long bId);
 
     int findAddBoardByBoardId(Long addId);
+
+    String findAddBoardByWriter(Long boardId, String addWriter);
+
+//    String findAddBoardByWriter(Long boardId, addWriter);
 }
