@@ -42,7 +42,7 @@
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                   <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">프로필 설정</button>
                   <!-- <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button> -->
-                  <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">신고 조회</button>
+                  <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false" onclick="myReport();">신고 조회</button>
                   <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">구독권</button>
                   
                 </div>
@@ -267,38 +267,70 @@
                             <div class="col-0.5">
                                 &nbsp;<!--공백-->
                             </div>
-                                  <div class="card mb-3" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                      <div class="col-md-4">
-                                        <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
-                                      </div>
-                                      <div class="col-md-8">
-                                        <div class="card-body">
-                                          <h5 class="card-title">신고글제목</h5>
-                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+
+                                 <div id="reportAllList">
+                                    <!--리스트 뿌려주는곳-->
+
+<!-- 
+                                    <div class="card mb-3" style="max-width: 540px;">
+                                        <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
                                         </div>
-                                      </div>
-                                    </div>
-                                  </div>
-
-
-                                  <div class="card mb-3" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                      <div class="col-md-4">
-                                        <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
-                                      </div>
-                                      <div class="col-md-8">
-                                        <div class="card-body">
-                                          <h5 class="card-title">Card title</h5>
-                                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                            <h5 class="card-title">신고글제목</h5>
+                                            <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
+                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
                                         </div>
-                                      </div>
+                                        </div>
                                     </div>
-                                  </div>
 
-                           
+
+                                    <div class="card mb-3" style="max-width: 540px;">
+                                        <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                            <h5 class="card-title">Card title</h5>
+                                            <span class="badge text-bg-info" id="serviceBung">벙</span>
+                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card mb-3" style="max-width: 540px;">
+                                        <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                            <h5 class="card-title">Card title</h5>
+                                            <span class="badge text-bg-success" id="serviceAuction">경매</span>
+                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div> -->
+
+
+
+
+
+
+
+
+
+
+                                </div>
                         </div>  
 
 
@@ -439,6 +471,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 <script src="JS/main.js"></script>
-<script src="JS/editpage.js"></script>
+<script src="JS/personal/editpage.js"></script>
+
 <!-- <script src="JS/socialForService.js"></script> -->
 </html>
