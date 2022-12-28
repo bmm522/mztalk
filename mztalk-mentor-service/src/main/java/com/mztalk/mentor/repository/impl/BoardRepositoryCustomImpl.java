@@ -34,13 +34,20 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
                 .leftJoin(payment)
                 .on(board.eq(payment.board))
                 .where(payment.isNull()
+                        .and(eqCategory(searchCondition.getCategory()))
                         .and(afterNow(searchCondition.getNow()))
                         .and(lePrice(searchCondition.getSalary()))
-                        .and(eqCategory(searchCondition.getCategory()))
                         .and(containsContent(searchCondition.getContent()))
                         .and(containsTitle(searchCondition.getTitle()))
                         .and(containsWriter(searchCondition.getNickname()))
                 ).fetch();
+    }
+
+    @Override
+    public List<Board> findNullPaymentWithBeforeMentoringDate(LocalDateTime now) {
+        return entityManager.createQuery("select b from Board b join fetch b.mentor m left join b.payment p where p.id IS NULL and b.mentoringDate >:now", Board.class)
+                .setParameter("now",now)
+                .getResultList();
     }
 
     @Override
@@ -62,8 +69,6 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     @Override
     public List<Board> latestBoard() {
         return entityManager.createQuery("select b from Board b order by b.lastModifiedDate desc", Board.class)
-                .setFirstResult(0)
-                .setMaxResults(3)
                 .getResultList();
     }
 
@@ -79,7 +84,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     }
 
     private BooleanExpression eqCategory(String category){
-        return category != null ? board.category.eq(category) : null;
+        return category != null ? board.category.contains(category) : null;
     }
 
     private BooleanExpression lePrice(Integer salary){

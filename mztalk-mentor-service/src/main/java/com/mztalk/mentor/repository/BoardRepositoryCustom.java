@@ -19,5 +19,8 @@ public interface BoardRepositoryCustom {
 
     List<Board> findBoardByMentorId(Long mentorId);
 
+    // 메인페이지 출력 메소드, 결제가 안되고 멘토링 전 글만 출력된다.
+    List<Board> findNullPaymentWithBeforeMentoringDate(LocalDateTime now);
+
     
 }

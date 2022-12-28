@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -49,6 +50,15 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.save(board).getId();
     }
 
+    // 메인페이지 출력 메소드, 결제가 안되고 멘토링 전 글만 출력된다.
+    @Override
+    public Result findNullPaymentWithBeforeMentoringDate() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Board> boards = boardRepository.findNullPaymentWithBeforeMentoringDate(now);
+        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
+
     @Override
     public BoardDto findBoardByBoardId(Long id) {
         Board board = boardRepository.findBoardByBoardId(id);
@@ -72,6 +82,7 @@ public class BoardServiceImpl implements BoardService {
         return new Result(collect);
     }
 
+    // 멘티가 멘토링 신청 후 멘토링 시간이 지난 후에 리뷰창에 나타난다.
     @Override
     public Result findByMentoringDateBefore() {
         LocalDateTime now = LocalDateTime.now();
@@ -83,13 +94,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Result findBoardByMentorId(Long mentorId) {
         List<Board> boards = boardRepository.findBoardByMentorId(mentorId);
-        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
-    }
-
-    @Override
-    public Result findByPaymentIsNull() {
-        List<Board> boards = boardRepository.findByPaymentIsNull();
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
     }

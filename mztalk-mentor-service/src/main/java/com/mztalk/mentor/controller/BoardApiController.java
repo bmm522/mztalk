@@ -17,6 +17,11 @@ public class BoardApiController {
 
     private final BoardService boardService;
 
+    @GetMapping("/boards")
+    public Result findNullPaymentWithBeforeMentoringDate(){
+        return boardService.findNullPaymentWithBeforeMentoringDate();
+    }
+
     @PostMapping("/board")
     public Long saveBoard(@RequestBody ConcurrentHashMap<String,String> boardMap){
         return boardService.saveBoard(boardMap);
@@ -36,11 +41,6 @@ public class BoardApiController {
     @GetMapping("/board/mentor/{mentorId}")
     public Result findBoardByMentorId(@PathVariable("mentorId")Long mentorId){
         return boardService.findBoardByMentorId(mentorId);
-    }
-
-    @GetMapping("/boards")
-    public Result findAll(){
-        return boardService.findByPaymentIsNull();
     }
 
     @DeleteMapping("/board/{id}") // 진짜로 삭제한다.

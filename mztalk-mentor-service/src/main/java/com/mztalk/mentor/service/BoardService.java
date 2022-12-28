@@ -12,8 +12,6 @@ public interface BoardService {
 
     BoardDto findBoardByBoardId(Long id);
 
-    Result findByPaymentIsNull();
-
     Long delete(Long id);
 
     Long updateBoard(Long id, BoardDto boardDto);
@@ -28,4 +26,6 @@ public interface BoardService {
     Result latestBoard();
 
     Result findByMentoringDateBefore();
+
+    Result findNullPaymentWithBeforeMentoringDate();
 }
