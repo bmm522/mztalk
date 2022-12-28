@@ -38,7 +38,7 @@ public class DeleteImageServiceImpl implements DeleteImageService {
 
         for(String objectKey : objectKeyList ){
             try{
-                s3Factory.deleteImage(objectKey);
+           //     s3Factory.deleteImage(objectKey);
                 imageRepository.deleteByObjectKey(objectKey);
             }
             catch (AmazonServiceException e){

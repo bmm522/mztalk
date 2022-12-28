@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/bung-service-edit.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <title>bung EditPage</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav>
+        <div class="navContainer">
+            <article class="logoWrap">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" alt="로고">
+                <div class="columnLine"></div>
+                <h1 class="logo">MZTALK</h1>
+            </article>
+            <!-- <article class="search">
+                <input type="text" placeholder="검색" >
+            </article> -->
+            <article class="pictogramWrap">
+                
+                <i class="fa-solid fa-comments" style=""></i>
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필">
+            </article>
+        </div>
+    </nav>
+   <!-- 여기서 놀아주세요. -->
+    <main class="mainContainer">
+        <div class="main">
+            <div id="header" style="height: 100px;">
+                <br>
+                    <span class="form-label">제 목 : &nbsp;</span>
+                    <input type="text" id="bungTitle" name="bungTitle" style="width: 700px; margin: auto; height: 100;"> 
+            </div>
+        
+            <!-- <button type="button" class="btn btn-outline-warning" style="float: right;" id="addFile" name="file" onclick="addBtn();">파일 추가</button> -->
+            <!-- <input type="file" style="float: right;" id="fileUpload">  -->
+            <form  id="image-form">
+            <div id="fileArea">
+              
+                <input type="hidden" name="serviceName" value="bung"/>
+                <input type="hidden" name="bNo" id="bId-hidden" />
+                <div class="mb-3">
+                    <!-- <input type="file" style="float: left;" name="image"id="fileUpload">  -->
+                     <button type="button" class="btn btn-outline-warning" style="float: right;" id="addFile" name="file" onclick="addBtn();">파일 추가</button>
+                </div>
+          
+            </div>
+            </form>
+        
+            <br>
+        
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner" id="image-div-div">
+                    <!-- <div class="carousel-item active"><img class="d-block w-100" src="dog.jpg" alt="사진이 없습니다" /></div>
+                    <div class="carousel-item"><img class="d-block w-100" src="dog2.jpg" alt="사진이 없습니다" /></div>
+                    <div class="carousel-item"><img class="d-block w-100" src="duck.jpg" alt="사진이 없습니다" /></div> -->
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span> </button>
+            </div> 
+            
+            <br>
+        
+        
+            <div id="bungContentDiv" style="width: 80%; height: 260px; margin: auto; text-align: center; border: dotted 5px; border-color: rgb(145, 103, 14);">
+                <br>
+                <textarea id="bungContent" name="bungContent" rows="10" Placeholder="{벙 게시글 내용}" style="resize: none;"></textarea>
+            </div>
+        
+            <div class="infomationBtn" style="height: 200px; float: left; width: 50%;">
+                
+        <br>
+               기존 날짜 :  <input type="text" id="deadlineDate" style="width:200px; border: 0.1px solid gray; border-radius: 10px; " readonly>
+                
+                
+                
+                <br>
+                <table class="scriptCalendar">
+                    <thead>
+                        <tr>
+                            <td onClick="prevCalendar();" style="cursor:pointer;">&#60;&#60;</td>
+                            <td colspan="5">
+                                <span id="calYear">YYYY</span>년
+                                <span id="calMonth">MM</span>월
+                            </td>
+                            <td onClick="nextCalendar();" style="cursor:pointer;">&#62;&#62;</td>
+                        </tr>
+                        <tr>
+                            <td>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td>토</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="writerBtn" style="height: 200px; float: left; width: 50%;">
+                <br><br><br><br>
+                <div id="group" style="height: 100px;">
+                    <select id="group-select">
+                        <option value="2">2명</option>
+                        <option value="3">3명</option>
+                        <option value="4">4명</option>
+                        <option value="5">5명</option>
+                    </select>
+                </div>
+                <div class="form-check form-switch form-check-reverse" style="height: 100px;">
+                    <div id="category" style="height: 100px;">
+                        <table>
+                            <tr>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" id="study" value="study">
+                                    <label class="form-check-label" for="study" value="study">공부</label>
+                                </th>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" id="hobby" value="hobby">
+                                    <label class="form-check-label" for="hobby" value="hobby">취미</label>
+                                </th>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" id="enjoy"  value="enjoy">
+                                    <label class="form-check-label" for="enjoy" value="enjoy">놀기</label>
+                                </th>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" id="food"  value="food">
+                                    <label class="form-check-label" for="food"  value="food">음식</label>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="group" style="height: 66.66px;">
+                    <button type="button" id="edit-btn" class="btn btn-outline-warning">수정 하기</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="floating">
+        <div class="remocon"> 
+            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
+           
+            <figure> <img src="img/qjd.png" id="qjd" style="width: 70px;"/></figure>
+            
+            <figure>  <img src="img/book.png" id="book" style="width: 70px; margin-top:30px;"/></figure>
+            
+
+            <!-- <figure><i class="fa-solid fa-comments" style="width: 85px;"></i></figure> -->
+        </div>
+
+
+        <div class="side side1"></div>
+        <div class="side side2"></div>
+        <div class="side side3"></div>
+        <div class="side side4"></div>
+    </div>
+
+    <!-- <div id="upBtn">
+        <a href="#"><figure id="up-figure"><img src="img/top.png" style="width: 40px;"/></figure></a>
+    
+    </div>  -->
+
+    <div id="upBtn">
+          <a href="#"><figure><img src="img/top.png" style="width: 50px;"/></figure></a>
+    </div>
+    <footer>
+        <div class="container">
+            <ul>
+               <li><a href="#a">소개</a></li>
+               <li><a href="#a">블로그</a></li>
+               <li><a href="#a">채용 정보</a></li>
+               <li><a href="#a">도움말</a></li>
+               <li><a href="#a">API</a></li>
+               <li><a href="#a">개인정보처리방침</a></li>
+               <li><a href="#a">약관</a></li>
+               <li><a href="#a">인기 계정</a></li>
+               <li><a href="#a">해시태그</a></li>
+               <li><a href="#a">위치</a></li>
+            </ul>
+            <div class="copy">
+               <p>© 2022 MZTALK from Spring</p>
+            </div>
+         </div>
+      
+    
+       </footer>
+   
+    <!-- <div id="upBtn">
+    <ul class="menu align-center expanded text-center SMN_effect-74">
+        <li><a href="#" data-hover="Home" id="homeRef">UP</a></li>
+        </ul>
+        </div> -->
+   
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+        buildCalendar();
+    });
+
+    var today = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
+    var date = new Date();  // @param 전역 변수, today의 Date를 세어주는 역할
+
+    /**
+     * @brief   이전달 버튼 클릭
+     */
+    function prevCalendar() {
+        this.today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+        buildCalendar();    // @param 전월 캘린더 출력 요청
+    }
+
+    /**
+     * @brief   다음달 버튼 클릭
+     */
+    function nextCalendar() {
+        this.today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+        buildCalendar();    // @param 명월 캘린더 출력 요청
+    }
+
+    /**
+     * @brief   캘린더 오픈
+     * @details 날짜 값을 받아 캘린더 폼을 생성하고, 날짜값을 채워넣는다.
+     */
+    function buildCalendar() {
+
+        let doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        let lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+        let tbCalendar = document.querySelector(".scriptCalendar > tbody");
+
+        document.getElementById("calYear").innerText = today.getFullYear();                                  // @param YYYY월
+        document.getElementById("calMonth").innerText = autoLeftPad((today.getMonth() + 1), 2);   // @param MM월
+
+
+        // @details 이전 캘린더의 출력결과가 남아있다면, 이전 캘린더를 삭제한다.
+        while(tbCalendar.rows.length > 0) {
+            tbCalendar.deleteRow(tbCalendar.rows.length - 1);
+        }
+
+
+        // @param 첫번째 개행
+        let row = tbCalendar.insertRow();
+
+
+
+        // @param 날짜가 표기될 열의 증가값
+        let dom = 1;
+
+        // @details 시작일의 요일값( doMonth.getDay() ) + 해당월의 전체일( lastDate.getDate())을  더해준 값에서
+        //               7로 나눈값을 올림( Math.ceil() )하고 다시 시작일의 요일값( doMonth.getDay() )을 빼준다.
+        let daysLength = (Math.ceil((doMonth.getDay() + lastDate.getDate()) / 7) * 7) - doMonth.getDay();
+
+        // @param 달력 출력
+        // @details 시작값은 1일을 직접 지정하고 요일값( doMonth.getDay() )를 빼서 마이너스( - )로 for문을 시작한다.
+        for(let day = 1 - doMonth.getDay(); daysLength >= day; day++) {
+
+            let column = row.insertCell();
+
+            // @param 평일( 전월일과 익월일의 데이터 제외 )
+            if(Math.sign(day) == 1 && lastDate.getDate() >= day) {
+
+
+                // @param 평일 날짜 데이터 삽입
+
+                column.innerText = autoLeftPad(day, 2);
+
+
+                // @param 일요일인 경우
+                if(dom % 7 == 1) {
+                    column.style.color = "#FF4D4D";
+                }
+
+                // @param 토요일인 경우
+                if(dom % 7 == 0) {
+                    column.style.color = "#4D4DFF";
+                    row = tbCalendar.insertRow();   // @param 토요일이 지나면 다시 가로 행을 한줄 추가한다.
+                }
+
+            }
+
+            // @param 평일 전월일과 익월일의 데이터 날짜변경
+            else {
+                let exceptDay = new Date(doMonth.getFullYear(), doMonth.getMonth(), day);
+                column.innerText = autoLeftPad(exceptDay.getDate(), 2);
+                column.style.color = "#A9A9A9";
+            }
+
+            // @brief   전월, 명월 음영처리
+            // @details 현재년과 선택 년도가 같은경우
+            if(today.getFullYear() == date.getFullYear()) {
+
+                // @details 현재월과 선택월이 같은경우
+                if(today.getMonth() == date.getMonth()) {
+
+                    // @details 현재일보다 이전인 경우이면서 현재월에 포함되는 일인경우
+                    if(date.getDate() > day && Math.sign(day) == 1) {
+                        column.style.backgroundColor = "#E5E5E5";
+                    }
+
+                    // @details 현재일보다 이후이면서 현재월에 포함되는 일인경우
+                    else if(date.getDate() < day && lastDate.getDate() >= day) {
+                        column.style.backgroundColor = "#FFFFFF";
+                        column.style.cursor = "pointer";
+                        column.onclick = function(){ calendarChoiceDay(this); }
+                    }
+
+                    // @details 현재일인 경우
+                    else if(date.getDate() == day) {
+                        column.style.backgroundColor = "#FFFFE6";
+                        column.style.cursor = "pointer";
+                        column.onclick = function(){ calendarChoiceDay(this); }
+                    }
+
+                // @details 현재월보다 이전인경우
+                } else if(today.getMonth() < date.getMonth()) {
+                    if(Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                        column.style.backgroundColor = "#E5E5E5";
+                    }
+                }
+
+                // @details 현재월보다 이후인경우
+                else {
+                    if(Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                        column.style.backgroundColor = "#FFFFFF";
+                        column.style.cursor = "pointer";
+                        column.onclick = function(){ calendarChoiceDay(this); }
+                    }
+                }
+            }
+
+            // @details 선택한년도가 현재년도보다 작은경우
+            else if(today.getFullYear() < date.getFullYear()) {
+                if(Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                    column.style.backgroundColor = "#E5E5E5";
+                }
+            }
+
+            // @details 선택한년도가 현재년도보다 큰경우
+            else {
+                if(Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                    column.style.backgroundColor = "#FFFFFF";
+                    column.style.cursor = "pointer";
+                    column.onclick = function(){ calendarChoiceDay(this); }
+                }
+            }
+
+
+            dom++;
+
+        }
+    }
+
+    /**
+     * @brief   날짜 선택
+     * @details 사용자가 선택한 날짜에 체크표시를 남긴다.
+     */
+    function calendarChoiceDay(column) {
+
+        // @param 기존 선택일이 존재하는 경우 기존 선택일의 표시형식을 초기화 한다.
+        if(document.getElementsByClassName("choiceDay")[0]) {
+            document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
+            document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");
+        }
+
+        // @param 선택일 체크 표시
+        column.style.backgroundColor = "#FF9999";
+
+
+        // @param 선택일 클래스명 변경
+        column.classList.add("choiceDay");
+    }
+
+    /**
+     * @brief   숫자 두자릿수( 00 ) 변경
+     * @details 자릿수가 한자리인 ( 1, 2, 3등 )의 값을 10, 11, 12등과 같은 두자리수 형식으로 맞추기위해 0을 붙인다.
+     * @param   num     앞에 0을 붙일 숫자 값
+     * @param   digit   글자의 자릿수를 지정 ( 2자릿수인 경우 00, 3자릿수인 경우 000 … )
+     */
+    function autoLeftPad(num, digit) {
+        if(String(num).length < digit) {
+            num = new Array(digit - String(num).length + 1).join("0") + num;
+        }
+        return num;
+    }
+</script>        
+</body>
+<script src="JS/main.js"></script>
+<script src="JS/bung-update.js"></script>
+</html>

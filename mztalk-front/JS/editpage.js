@@ -1,11 +1,12 @@
-window.onload=function(){
+window.onload =() =>{
     console.log("수정페이지 : " + localStorage.getItem('authorization'));
     console.log("수정페이지 : " + localStorage.getItem('refreshToken'));
     console.log("수정페이지 : " + localStorage.getItem('userNo'));
     console.log("수정페이지 : " + localStorage.getItem('userNickname'));
     profileBox();
-
+    noSocial();
 }
+
 
 
 
@@ -111,10 +112,25 @@ document.getElementById('nickname').addEventListener('keyup',function(){
       
       } else{
       
-        checkEmail.innerHTML= '올바른 형식입니다.';
-        checkEmail.style.color='green';
-        document.getElementById('checkEmailResult').value = "success";
-
+        // checkEmail.innerHTML= '올바른 형식입니다.';
+        // checkEmail.style.color='green';
+        // document.getElementById('checkEmailResult').value = "success";
+        fetch('http://localhost:8000/login/register/email/'+email,{
+          method:"GET"
+        })
+        .then((res)=>res.json())
+        .then(res=>{
+          console.log(res.checkResult);
+          if(res.checkResult == 'available'){
+            checkEmail.innerHTML= '사용가능한 이메일 입니다.';
+            checkEmail.style.color='green';
+            document.getElementById('checkEmailResult').value = "success";
+          } else{
+            checkEmail.innerHTML= '중복된 이메일 입니다.';
+            checkEmail.style.color='red';
+            document.getElementById('checkEmailResult').value = "fail";
+          }
+        })
       
       }
   }
@@ -189,18 +205,13 @@ document.getElementById('nickname').addEventListener('keyup',function(){
 
 
 
-
   //프로필 사진
 function profileBox(){
 
-  // const form = document.getElementById('image-form');
     let own = localStorage.getItem("own");
-  // const payload = new FormData(form);
 
-    // fetch('http://localhost:8000/resource/main-image',{
-    //     method: 'POST',
-    //     // body: payload,
-    // })
+    console.log("실행?");
+
       fetch("http://localhost:8000/story/profile/"+own,{
         method:"GET",
         headers:{
@@ -212,10 +223,10 @@ function profileBox(){
     .then((res)=>res.json())
     .then(res =>{
       
-      //console.log("통신 성공");
+     // console.log("통신 성공");
       
       let profileImage = res.data;
-      //console.log(profileImage);
+      console.log("없니?"+profileImage);
       if(!res.data){
         document.querySelector('.profile-img-wrap').innerHTML +=
         `
@@ -227,6 +238,9 @@ function profileBox(){
       let profileUrl = profileImage.postImageUrl;
       let profileName = profileImage.profileImageName;
       let own = profileImage.own
+      
+
+
 
       document.querySelector('.profile-img-wrap').innerHTML +=
       `
@@ -239,12 +253,6 @@ function profileBox(){
   }
 
 
-
-
-//    @PatchMapping("/mentor-status/{nickname}")
-//    public int updateMentorStatus(@PathVariable("nickname")String nickname){
-//        return updateUserInfoService.updateMentorStatus(nickname);
-//    }
 //닉네임변경
 function ch_nickName(){
   
@@ -273,6 +281,10 @@ function ch_nickName(){
 
       localStorage.clear();
       
+      deleteCookie('Authorization');
+      
+      deleteCookie('RefreshToken');
+
       location.href="loginpage.html";
 
     })
@@ -304,10 +316,38 @@ function ch_email(){
         
         localStorage.clear();
         
+        deleteCookie('Authorization');
+        deleteCookie('RefreshToken');
+
+
         location.href="loginpage.html";
 
       })
     }
 
 
+    function deleteCookie(name) {
+      document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
 
+
+
+
+console.log(document.querySelectorAll('#v-pills-home-tab'));
+
+function noSocial(){
+  console.log(localStorage.getItem('path'));
+
+  //console.log("v-pills-profile-tab");
+  let SOCIAL = localStorage.getItem('path');
+  let buttonss = document.querySelectorAll('#v-pills-home-tab');
+  let buttonz = `<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
+  if(SOCIAL.includes("LOCAL")){
+    
+    buttonss.innerHTML= `<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
+
+
+  }
+
+
+}

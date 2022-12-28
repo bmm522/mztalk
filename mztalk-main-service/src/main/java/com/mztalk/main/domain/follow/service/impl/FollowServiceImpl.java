@@ -2,17 +2,14 @@ package com.mztalk.main.domain.follow.service.impl;
 
 
 
-import com.mztalk.main.domain.follow.dto.FollowDto;
-import com.mztalk.main.domain.follow.dto.FollowListResponseDto;
-import com.mztalk.main.domain.follow.dto.FollowingListResponseDto;
+import com.mztalk.main.domain.follow.dto.*;
 import com.mztalk.main.domain.follow.entity.Follow;
+import com.mztalk.main.domain.follow.repository.FollowCustomRepository;
 import com.mztalk.main.domain.follow.repository.FollowRepository;
 import com.mztalk.main.domain.follow.service.FollowService;
 import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.profile.repository.ProfileCustomRepository;
 import com.mztalk.main.handler.exception.CustomApiException;
-import com.mztalk.main.handler.exception.ExceptionCode;
-import com.mztalk.main.handler.exception.FollowException;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -37,6 +34,8 @@ public class FollowServiceImpl implements FollowService {
 
     private final FollowRepository followRepository;
 
+    private final FollowCustomRepository followCustomRepository;
+
     private final ProfileCustomRepository profileCustomRepository;
 
     private final EntityManager em;
@@ -47,7 +46,7 @@ public class FollowServiceImpl implements FollowService {
     public void follow(Long toUserId, Long fromUserId) {
         try {
             followRepository.mFollow(fromUserId, toUserId);
-        }catch(Exception e){
+        } catch (Exception e) {
 
             throw new CustomApiException("이미 팔로우 하셨습니다.");
         }
@@ -130,7 +129,9 @@ public class FollowServiceImpl implements FollowService {
 
     }
 
+    //팔로잉리스트
     @Override
+    @Transactional
     public List<FollowingListResponseDto> followingList(Long fromUserId) {
 
         System.out.println("own : " + fromUserId);
@@ -156,13 +157,18 @@ public class FollowServiceImpl implements FollowService {
             HttpHeaders headersImg = new HttpHeaders();
             headersImg.add("Content-type", "text/html");
             Optional<Profile> profile = profileCustomRepository.findByToUserImage(follow.getToUserId());
-            //Optional<Profile> profile = profileCustomRepository.findByUserStatus(toUserId);
-            System.out.println("팔로워 사진" + profile);
+            //Optional<Profile> profile = profileCustomRepository.findByUserStatus(follow.getToUserId());
+//            System.out.println("팔로워 사진" + profile);
+//            System.out.println("여기 사람 있어요!" +follow.getToUserId());
 
             if (profile.isPresent()) {
 
+//                System.out.println("사람 살려!!!!!!");
+//                System.out.println("----"+profile);
+//                System.out.println(follow.getFromUserId());
+
                 ResponseEntity<String> responseImg = new RestTemplate().exchange(
-                        "http://localhost:8000/resource/main-image?bNo=" + follow.getFromUserId() + "&serviceName=story",
+                        "http://localhost:8000/resource/main-image?bNo=" + follow.getToUserId() + "&serviceName=story",
                         HttpMethod.GET,
                         new HttpEntity<String>(headersImg),
                         String.class
@@ -173,7 +179,7 @@ public class FollowServiceImpl implements FollowService {
                 String imageUrl = profileData.getString("imageUrl");
                 String imageName = profileData.getString("objectKey");
 
-                System.out.println("여기 오니?!");
+                //System.out.println("여기 오니?!");
                 followDtoList.add(new FollowingListResponseDto(follow, nickname, imageUrl, imageName, follow.getFollowStatus()));
 
 
@@ -195,9 +201,36 @@ public class FollowServiceImpl implements FollowService {
 
     }
 
+    @Override
+    @Transactional
+    public Long followStatus(Long fromUserId, Long toUserId) {
+
+        Long followDto = followRepository.followStatus(fromUserId, toUserId);
+
+        //System.out.println("살려줘 ;ㄹ"+followDto);
+
+        return followDto;
+    }
+
+
+    //맞팔 리스트
+    @Override
+    public List<MatpalGroup> matpalList(Long fromUserId) {
+
+        //List<MatpalListResponseDto> matpalListResponseDto = followCustomRepository.findByMatpalList(fromUserId);
+        List<MatpalGroup> matpalListResponseDtoList = followRepository.getListByMatpalListFromUserId(fromUserId);
+
+        for (MatpalGroup m : matpalListResponseDtoList) {
+            System.out.println("없니?" + m.getToUserId());
+
+            }
+            return matpalListResponseDtoList;
+    }
 
 
 }
+
+
 
 
 

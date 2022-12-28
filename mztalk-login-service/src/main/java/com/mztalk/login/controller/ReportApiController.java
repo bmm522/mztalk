@@ -8,10 +8,12 @@ import com.mztalk.login.service.SelectReportService;
 import com.mztalk.login.service.UpdateReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/login")
+@ApiIgnore
 public class ReportApiController {
 
     private final InsertReportService insertReportService;

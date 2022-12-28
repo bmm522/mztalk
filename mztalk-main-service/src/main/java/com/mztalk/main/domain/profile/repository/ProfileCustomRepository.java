@@ -16,4 +16,6 @@ public interface ProfileCustomRepository {
 
     //팔로잉 이미지
     Optional<Profile> findByToUserImage(Long toUserId);
+
+
 }

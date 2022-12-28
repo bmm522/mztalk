@@ -41,7 +41,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     //개인 프로필 사진
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<ProfileImageResponseDto> profileImg(long own) {
 
         HttpHeaders headersImg = new HttpHeaders();
@@ -96,12 +96,14 @@ public class ProfileServiceImpl implements ProfileService {
         HttpHeaders headerName = new HttpHeaders();
         headerName.add("Content-type", "text/html");
 
+        System.out.println("own어디"+own);
+
         //유저의이름
         HttpHeaders headersNames = new HttpHeaders();
         headersNames.add("Content-type", "text/html");
 
         ResponseEntity<String> responseName = new RestTemplate().exchange(
-                "http://localhost:8000/login/user-info/" + String.valueOf(own),
+                "http://localhost:8000/login/user-info/" + own,
                 HttpMethod.GET,
                 new HttpEntity<String>(headerName),
                 String.class
@@ -118,31 +120,33 @@ public class ProfileServiceImpl implements ProfileService {
     //게시물 갯수 보여주기
     @Override
     @Transactional
-    public Profile boardCount(long own) {
+    public ProfileDto boardCount(long own) {
 
         long count = boardRepository.countByOwn(own);
 
-        return Profile.builder()
+        return ProfileDto.builder()
                 .boardCount(count)
                 .build();
     }
 
     @Override
-    public Profile followerCount(long own) {
+    @Transactional
+    public ProfileDto followerCount(long own) {
 
         long count = followRepository.countByToUserId(own);
 
-        return Profile.builder()
+        return ProfileDto.builder()
                 .followerCount(count)
                 .build();
     }
 
     @Override
-    public Profile followingCount(long own) {
+    @Transactional
+    public ProfileDto followingCount(long own) {
 
         long count = followRepository.countByFromUserId(own);
 
-        return Profile.builder()
+        return ProfileDto.builder()
                 .followingCount(count)
                 .build();
     }
@@ -156,7 +160,7 @@ public class ProfileServiceImpl implements ProfileService {
         headerImage.add("Content-type", "text/html");
 
         ResponseEntity<String> responseproImg = new RestTemplate().exchange(
-                "http://localhost:8000/resource/main-image?bNo=" + String.valueOf(own) + "&serviceName=story",    //첫번째: url
+                "http://localhost:8000/resource/main-image?bNo=" + own + "&serviceName=story",    //첫번째: url
                 HttpMethod.GET,
                 new HttpEntity<String>(headerImage),     //바디, 헤더 다 담기 가능/엔티티
                 String.class

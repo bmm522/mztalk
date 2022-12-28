@@ -44,7 +44,7 @@ public class ProfileApiController {
     @GetMapping("profile/boardCount/{own}")
     public ResponseEntity<?> boardCount(@PathVariable long own){
 
-        Profile profile = profileService.boardCount(own);
+        ProfileDto profile = profileService.boardCount(own);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
     }
@@ -53,7 +53,7 @@ public class ProfileApiController {
     @GetMapping("profile/followerCount/{own}")
     public ResponseEntity<?> followerCount(@PathVariable long own){
 
-        Profile profile = profileService.followerCount(own);
+        ProfileDto profile = profileService.followerCount(own);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
     }
@@ -62,7 +62,7 @@ public class ProfileApiController {
     @GetMapping("profile/followingCount/{own}")
     public ResponseEntity<?> followingCount(@PathVariable long own){
 
-        Profile profile = profileService.followingCount(own);
+        ProfileDto profile = profileService.followingCount(own);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
     }

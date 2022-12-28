@@ -1,10 +1,11 @@
-package com.mztalk.main.domain.reply.service;
+package com.mztalk.main.domain.reply.service.impl;
 
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.domain.reply.dto.ReplyResponseDto;
 import com.mztalk.main.domain.reply.repository.ReplyRepository;
 import com.mztalk.main.domain.reply.dto.ReplyRequestDto;
 import com.mztalk.main.domain.board.repository.BoardRepository;
+import com.mztalk.main.domain.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class ReplyServiceImpl implements ReplyService{
+public class ReplyServiceImpl implements ReplyService {
 
     private final BoardRepository boardRepository;
     private final ReplyRepository replyRepository;

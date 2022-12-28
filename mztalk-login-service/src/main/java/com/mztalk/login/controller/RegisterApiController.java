@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,6 +25,7 @@ public class RegisterApiController {
 
     // 회원가입
     @PostMapping("/user")
+    @ApiIgnore
     public void registerUser(@RequestBody RegisterDto registerDto ){
         System.out.println("요청들어옴");
         registerService.registerUser(registerDto);

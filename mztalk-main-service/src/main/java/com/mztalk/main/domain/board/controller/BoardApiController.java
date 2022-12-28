@@ -21,11 +21,17 @@ public class BoardApiController {
     private final BoardService boardService;
 
 
-    //글목록
+    //퍼블릭인 글 목록
     @GetMapping("/{own}")
     public Result findAllByOwn(@PathVariable Long own){
         return boardService.findAllByOwn(own);
     }
+
+
+    @PostMapping("/{own}")
+    public Result findByOwn(@PathVariable Long own){return boardService.findByOwn(own);}
+
+
 
 
     //글쓰기
@@ -35,8 +41,11 @@ public class BoardApiController {
 
         Board board = boardService.save(boardDto);
 
-        return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기성공", board), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CMRespDto<>(1, "글쓰기성공", board), HttpStatus.CREATED);
     }
+
+
+
 
     //글수정
     @PatchMapping("/update/{id}")

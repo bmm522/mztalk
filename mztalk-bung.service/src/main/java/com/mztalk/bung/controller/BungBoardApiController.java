@@ -60,6 +60,7 @@ public class BungBoardApiController {
     public BungBoardDetailResponseDto mainBoardSelect(@PathVariable("boardId") String bId) {
         bungBoardService.increaseCount(Long.parseLong(bId));
         return bungBoardService.mainBoardSelect(Long.parseLong(bId));
+
     }
 
     // 벙 신청 게시글 작성

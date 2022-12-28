@@ -24,5 +24,12 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
                 .getResultList();
     }
 
+    @Override
+    public List<Board> findByOwn(Long own) {
+        return entityManager.createQuery("SELECT b FROM Board b WHERE b.own = :own and b.status= 'YES' and b.privacy ='SECRET' ORDER BY b.id DESC", Board.class)
+                .setParameter("own", own)
+                .getResultList();
+    }
+
 
 }

@@ -159,7 +159,7 @@ const getReportList = () =>{
             let serviceName = report.serviceName;
             let userId = report.user.userId;
             let reportStatus = report.reportStatus;
-
+            let path = report.path;
             if(reportStatus.includes('Y')){
 
             document.getElementById('table-body2').innerHTML += `<tr>
@@ -168,7 +168,7 @@ const getReportList = () =>{
                 <td>${boardId}</td>
                 <td>${serviceName}</td>
                 <td>${userId}</td>
-                <td><div><button style="cursor:pointer;"  type="button" id="report-btn"  onclick="getBoardDetail(${boardId} , ${userId},'${serviceName}');"  
+                <td><div><button style="cursor:pointer;"  type="button" id="report-btn"  onclick="getBoardDetail(${boardId} , ${userId},'${serviceName}', '${path}');"  
                     data-bs-toggle="modal" href="#exampleModalToggle">해당 글 보기</button></div></td>
             </tr>`;
         }
@@ -176,28 +176,80 @@ const getReportList = () =>{
     })
 }
 
-const getBoardDetail = (bId, userId,serviceName) =>{
-    fetch("http://localhost:8000/mentors/board/"+bId,{
-        method:"GET",
-        headers:{
-        "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken')
-        },
-    })
-    .then((res)=>res.json())
-    .then(res =>{
-        console.log("salary : " + res.salary);
-        if(res != null){
-            document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
-            document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
-            document.getElementById('modal-salary').innerHTML = res.salary;
-            // document.getElementById('board-price').innerHTML = res.salary;
-            document.getElementById('btn-div').innerHTML = ` <button type="button" id="rep-btn" onclick="postReport(${bId},${userId},'${serviceName}');">신고 받기</button>`;
-        } else {
-            console.log('실패');
-        }
-    })
+const getBoardDetail = (bId, userId,serviceName, path) =>{
+    if(serviceName == 'mentor'){
+        console.log('멘토실행됨');
+        fetch("http://localhost:8000/mentors/board/"+bId,{
+            method:"GET",
+            headers:{
+            "Content-Type":"application/json",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken')
+            },
+        })
+        .then((res)=>res.json())
+        .then(res =>{
+            if(res != null){
+                document.getElementById('exampleModalToggleLabel').innerHTML = '멘토-멘티 서비스'
+                document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
+                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
+                document.getElementById('modal-salary').innerHTML = '1회 멘토링 : 1시간 / '+res.salary+'원';
+                // document.getElementById('board-price').innerHTML = res.salary;
+                document.getElementById('btn-div').innerHTML = ` <button type="button" id="rep-btn" onclick="postReport(${bId},${userId},'${serviceName}');">신고 받기</button>`;
+            } else {
+                console.log('실패');
+            }
+        })
+        document.getElementById('modal-body').innerHTML = '';
+
+    } else if(serviceName == 'auction'){
+        fetch('http://localhost:8000/auction/board/' + bId, {
+            method: "GET",
+            headers: {
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken'),
+            }
+        })
+        .then((res)=>res.json())
+        .then(res=>{
+            if(res != null){
+                document.getElementById('exampleModalToggleLabel').innerHTML = '책 중고거래 서비스'
+                document.getElementById('modal-body').innerHTML = "제목 : " + res.title + "<br/>";
+                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
+                // document.getElementById('board-price').innerHTML = res.salary;
+                document.getElementById('btn-div').innerHTML = ` <button type="button" id="detail-btn" onclick="moveDetail(${bId}, '${serviceName}', '${path}');">해당 글 상세보기</button>
+                <button type="button" id="rep-btn" onclick="postReport(${bId},${userId},'${serviceName}');">신고 받기</button>
+                
+                `;
+            } else {
+                console.log('실패');
+            }
+        })
+        ocument.getElementById('modal-body').innerHTML = '';
+    } else if(serviceName == 'bung'){
+        fetch('http://localhost:8000/bung/mainBoardSelect/'+bId, {
+            method:"GET",
+            headers:{
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken'),
+            }
+        })
+        .then((res)=>res.json())
+        .then(res=>{
+            if(res != null){
+                document.getElementById('exampleModalToggleLabel').innerHTML = '벙 서비스'
+                document.getElementById('modal-body').innerHTML = "제목 : " + res.title + "<br/>";
+                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
+                // document.getElementById('board-price').innerHTML = res.salary;
+                document.getElementById('btn-div').innerHTML = ` <button type="button" id="detail-btn" onclick="moveDetail(${bId}, '${serviceName}', '${path}');">해당 글 상세보기</button>
+                <button type="button" id="rep-btn" onclick="postReport(${bId},${userId},'${serviceName}');">신고 받기</button>
+                
+                `;
+            } else {
+                console.log('실패');
+            }
+        })
+    }
 }
 
 const postReport = (bId, userId,serviceName) =>{
@@ -248,4 +300,9 @@ const outUser = (userNo) =>{
         alert('해당 유저를 퇴출했습니다.');
         location.href="index.html";
     })
+}
+
+const moveDetail = (bId, serviceName, path) =>{
+    localStorage.setItem('bId', bId);
+    location.href = path;
 }

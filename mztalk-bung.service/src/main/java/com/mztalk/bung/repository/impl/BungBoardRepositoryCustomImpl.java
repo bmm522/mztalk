@@ -1,16 +1,12 @@
 package com.mztalk.bung.repository.impl;
 
-import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.QBungBoard;
 import com.mztalk.bung.repository.BungBoardRepositoryCustom;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -39,6 +35,14 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
     @Transactional
     public BungBoard findBungBoardByWriterBoardId(Long boardId) {
         return (BungBoard) entityManager.createQuery("select b.boardId from BungBoard b where b.boardId = :boardId")
+                .setParameter("boardId", boardId)
+                .getSingleResult();
+    }
+
+    @Override
+    @Transactional
+    public String findBungBoardWriter(Long boardId) {
+        return (String) entityManager.createQuery("select b.boardWriter from BungBoard b where b.boardId = :boardId")
                 .setParameter("boardId", boardId)
                 .getSingleResult();
     }

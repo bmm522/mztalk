@@ -1,9 +1,6 @@
 package com.mztalk.main.domain.follow.service;
 
-import com.mztalk.main.domain.follow.dto.FollowDto;
-import com.mztalk.main.domain.follow.dto.FollowListResponseDto;
-import com.mztalk.main.domain.follow.dto.FollowingListResponseDto;
-import com.mztalk.main.domain.follow.entity.Follow;
+import com.mztalk.main.domain.follow.dto.*;
 
 import java.util.List;
 
@@ -18,4 +15,7 @@ public interface FollowService {
     List<FollowingListResponseDto> followingList(Long fromUserId);
 
 
+    Long followStatus(Long fromUserId, Long toUserId);
+
+    List<MatpalGroup> matpalList(Long fromUserId);
 }
