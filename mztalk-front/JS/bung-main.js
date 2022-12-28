@@ -1,4 +1,6 @@
 window.onload = function(){
+    console.log(localStorage.getItem('authorization'));
+    console.log(localStorage.getItem('refreshToken'));
      localStorage.removeItem('bId');
     
     fetch('http://localhost:8000/bung/mainBoards', {
@@ -29,14 +31,12 @@ window.onload = function(){
                 let boardId = board.boardId;
 
                 document.getElementById('output-div').innerHTML +=
-                ` <div class="col" onclick='moveDetails(${boardId});' style="cursor:pointer;">
-                <div class="card h-100">
-             
+                ` <div class="col" onclick='moveDetails(${boardId});' style="cursor:pointer;"><br>
+                <div class="card h-100">            
                      <div class="card shadow-sm h-100">
                          <div class="card-header">
-                            ${title}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp조회수 : &nbsp${count}
-                         </div>
-                         
+                            ${title}
+                         </div>                      
                          <img src="${imageUrl}" style="height: 250px;">
                          <input type="hidden" name="imageName" value="${imageName}"/>
                          <div class="card-body">
@@ -44,6 +44,7 @@ window.onload = function(){
                              <p class="card-text">${content}</p>
                          </div>
                          <hr>
+                         <div id="count">${count}</div>
                          <div id="writer">마감일 : ${deadlineDate}</div>
                          <div id="writer">
                              ${writer}

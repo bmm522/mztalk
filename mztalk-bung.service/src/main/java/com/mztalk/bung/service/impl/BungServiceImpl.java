@@ -205,12 +205,23 @@ public class BungServiceImpl implements BungBoardService {
     public Long addBungBoard(ConcurrentHashMap<String, String> bungAddBoardMap) {
 
         Long boardId = Long.parseLong(bungAddBoardMap.get("boardId"));
-
         BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
 
-        BungAddBoard bungAddBoard = BungAddBoard.createBungAddBoard(bungAddBoardMap, bungBoard);
+        // 벙 게시글 작성자 신청 방지 로직
+        String bungBoardWriter = bungRepository.findBungBoardWriter(boardId);
+        String boardWriter = bungAddBoardMap.get("addNickName");
 
-        return bungAddRepository.save(bungAddBoard).getAddId();
+        // 벙 게시글 신청자 중복 신청 방지 로직
+        String addWriter = bungAddBoardMap.get("addNickName");
+        String bungAddBoardWriter = bungAddRepository.findAddBoardByWriter(boardId, addWriter);
+
+        if(bungBoardWriter.equals(boardWriter) || bungAddBoardWriter.equals(addWriter)) {
+            new AddBoardException("신청 오류");
+            return 0L;
+        } else {
+            BungAddBoard bungAddBoard = BungAddBoard.createBungAddBoard(bungAddBoardMap, bungBoard);
+            return bungAddRepository.save(bungAddBoard).getAddId();
+        }
     }
 
     // 주최자가 게시글 등록하면 bungAddBoard에 자동 작성되는 메소드 (삭제 예정)
@@ -250,13 +261,12 @@ public class BungServiceImpl implements BungBoardService {
     @Override
     @Transactional
     public Long addBungBoardAccept(Long addId) {
-        System.out.println("adddId : "+ addId);
+//        System.out.println("adddId : "+ addId);
         BungAddBoard addBungBoardAccept = bungAddRepository.findById(addId).orElseThrow(() ->new AddBoardException("해당하는 신청글이 존재하지 않습니다."));
 //        System.out.println(addBungBoardAccept.getAddId());
-        Long boardId = addBungBoardAccept.getAddId();
-//        long boardId = addBungBoardAccept.getBungBoard().getBoardId();
+        long boardId = addBungBoardAccept.getBungBoard().getBoardId();
         BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
-        System.out.println(boardId);
+//        System.out.println(boardId);
         Long fullGroup = bungBoard.getFullGroup();
         Long nowGroup = bungBoardNowGroup(boardId);
 
@@ -264,8 +274,9 @@ public class BungServiceImpl implements BungBoardService {
             addBungBoardAccept.changeStatus();
             return addBungBoardAccept.getAddId();
         } else {
+            System.out.println("벙 신청 게시물 실행?");
             new AddBoardException("모집인원이 초과하였습니다.");
-            return null;
+            return 0L;
         }
 //        return null;
     }
