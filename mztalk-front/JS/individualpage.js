@@ -1200,7 +1200,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       let toUserId = _btn.value;
 
       fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
-        method:"GET",
+        method:"POST",
         headers:{
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
@@ -1247,7 +1247,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       let toUserId = localStorage.getItem("own");
 
       fetch("http://localhost:8000/story/follow/"+toUserId+"/"+fromUserId,{
-        method:"GET",
+        method:"POST",
         headers:{
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
