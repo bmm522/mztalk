@@ -5,10 +5,15 @@ import com.mztalk.bung.domain.entity.QBungAddBoard;
 import com.mztalk.bung.repository.BungAddBoardRepositoryCustom;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 import static com.mztalk.bung.domain.BoardStatus.YES;
 
@@ -50,11 +55,25 @@ public class BungAddBoardRepositoryCustomImpl implements BungAddBoardRepositoryC
     }
 
     @Override
-    public String findAddBoardByWriter(Long boardId, String addWriter) {
-        return (String) entityManager.createQuery("select a.addNickName from BungAddBoard a where a.bungBoard.boardId = :boardId and a.addNickName = :addWriter")
-                .setParameter("boardId", boardId)
-                .setParameter("addWriter", addWriter)
-                .getSingleResult();
+    public Optional<String> findAddBoardByWriter(Long boardId, String addWriter) {
+        Optional<String> writer = Optional.empty();
+        try {
+            return Optional.ofNullable(entityManager.createQuery("select a.addNickName from BungAddBoard a where a.bungBoard.boardId = :boardId and a.addNickName = :addWriter", String.class)
+                    .setParameter("boardId", boardId)
+                    .setParameter("addWriter", addWriter)
+                    .getSingleResult());
+        } catch (NoResultException e){
+            return writer;
+        }
+    }
+
+    @Transactional
+    @Modifying
+    @Override
+    public int deleteByBoardId(Long bId) {
+        return entityManager.createQuery("delete from BungAddBoard a where a.bungBoard.boardId = :bId")
+                .setParameter("bId", bId)
+                .executeUpdate();
     }
 
 //    @Override
