@@ -43,6 +43,7 @@ nav {
     margin-left: 25px;
     font-size: 22px;
     font-family: 'Lobster', cursive;
+    cursor: pointer;
 }
 
 .search {
@@ -65,6 +66,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     width: 70px;
+    cursor: pointer;
 }
 
 .pictogramWrap img{
