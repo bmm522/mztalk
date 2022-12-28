@@ -4,8 +4,9 @@ window.onload =() =>{
     console.log("수정페이지 : " + localStorage.getItem('userNo'));
     console.log("수정페이지 : " + localStorage.getItem('userNickname'));
     profileBox();
-
+    noSocial();
 }
+
 
 
 
@@ -111,10 +112,25 @@ document.getElementById('nickname').addEventListener('keyup',function(){
       
       } else{
       
-        checkEmail.innerHTML= '올바른 형식입니다.';
-        checkEmail.style.color='green';
-        document.getElementById('checkEmailResult').value = "success";
-
+        // checkEmail.innerHTML= '올바른 형식입니다.';
+        // checkEmail.style.color='green';
+        // document.getElementById('checkEmailResult').value = "success";
+        fetch('http://localhost:8000/login/register/email/'+email,{
+          method:"GET"
+        })
+        .then((res)=>res.json())
+        .then(res=>{
+          console.log(res.checkResult);
+          if(res.checkResult == 'available'){
+            checkEmail.innerHTML= '사용가능한 이메일 입니다.';
+            checkEmail.style.color='green';
+            document.getElementById('checkEmailResult').value = "success";
+          } else{
+            checkEmail.innerHTML= '중복된 이메일 입니다.';
+            checkEmail.style.color='red';
+            document.getElementById('checkEmailResult').value = "fail";
+          }
+        })
       
       }
   }
@@ -313,3 +329,25 @@ function ch_email(){
     function deleteCookie(name) {
       document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
+
+
+
+
+console.log(document.querySelectorAll('#v-pills-home-tab'));
+
+function noSocial(){
+  console.log(localStorage.getItem('path'));
+
+  //console.log("v-pills-profile-tab");
+  let SOCIAL = localStorage.getItem('path');
+  let buttonss = document.querySelectorAll('#v-pills-home-tab');
+  let buttonz = `<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
+  if(SOCIAL==='SOCIAL'){
+    
+    buttonss.innerHTML= `<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
+
+
+  }
+
+
+}

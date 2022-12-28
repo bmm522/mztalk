@@ -2,17 +2,14 @@ package com.mztalk.main.domain.follow.service.impl;
 
 
 
-import com.mztalk.main.domain.follow.dto.FollowDto;
-import com.mztalk.main.domain.follow.dto.FollowListResponseDto;
-import com.mztalk.main.domain.follow.dto.FollowingListResponseDto;
+import com.mztalk.main.domain.follow.dto.*;
 import com.mztalk.main.domain.follow.entity.Follow;
+import com.mztalk.main.domain.follow.repository.FollowCustomRepository;
 import com.mztalk.main.domain.follow.repository.FollowRepository;
 import com.mztalk.main.domain.follow.service.FollowService;
 import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.profile.repository.ProfileCustomRepository;
 import com.mztalk.main.handler.exception.CustomApiException;
-import com.mztalk.main.handler.exception.ExceptionCode;
-import com.mztalk.main.handler.exception.FollowException;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -37,6 +34,8 @@ public class FollowServiceImpl implements FollowService {
 
     private final FollowRepository followRepository;
 
+    private final FollowCustomRepository followCustomRepository;
+
     private final ProfileCustomRepository profileCustomRepository;
 
     private final EntityManager em;
@@ -47,7 +46,7 @@ public class FollowServiceImpl implements FollowService {
     public void follow(Long toUserId, Long fromUserId) {
         try {
             followRepository.mFollow(fromUserId, toUserId);
-        }catch(Exception e){
+        } catch (Exception e) {
 
             throw new CustomApiException("이미 팔로우 하셨습니다.");
         }
@@ -129,6 +128,7 @@ public class FollowServiceImpl implements FollowService {
 
 
     }
+
     //팔로잉리스트
     @Override
     @Transactional
@@ -208,10 +208,29 @@ public class FollowServiceImpl implements FollowService {
         Long followDto = followRepository.followStatus(fromUserId, toUserId);
 
         //System.out.println("살려줘 ;ㄹ"+followDto);
-        
+
         return followDto;
     }
+
+
+    //맞팔 리스트
+    @Override
+    public List<MatpalGroup> matpalList(Long fromUserId) {
+
+        //List<MatpalListResponseDto> matpalListResponseDto = followCustomRepository.findByMatpalList(fromUserId);
+        List<MatpalGroup> matpalListResponseDtoList = followRepository.getListByMatpalListFromUserId(fromUserId);
+
+        for (MatpalGroup m : matpalListResponseDtoList) {
+            System.out.println("없니?" + m.getToUserId());
+
+            }
+            return matpalListResponseDtoList;
+    }
+
+
 }
+
+
 
 
 
