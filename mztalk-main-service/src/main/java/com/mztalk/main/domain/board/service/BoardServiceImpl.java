@@ -18,7 +18,6 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
 
-
     //퍼블릭글 불러오기
     @Override
     @Transactional(readOnly  = true)
@@ -36,18 +35,10 @@ public class BoardServiceImpl implements BoardService {
         return new Result(collect);
     }
 
-
-
     //글쓰기
     @Override
     @Transactional
-    public Board save(BoardDto boardDto) {
-       // System.out.println("@@@@");
-        //System.out.println(boardDto.getNickname());
-        //System.out.println(boardDto.getOwn());
-
-        return boardRepository.save(boardDto.toEntity());
-    }
+    public Board save(BoardDto boardDto) {return boardRepository.save(boardDto.toEntity());}
 
     //글수정
     @Override

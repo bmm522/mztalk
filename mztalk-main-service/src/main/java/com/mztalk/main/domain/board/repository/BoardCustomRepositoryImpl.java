@@ -12,10 +12,8 @@ import java.util.List;
 @Transactional
 public class BoardCustomRepositoryImpl implements BoardCustomRepository {
 
-
     @Autowired
     EntityManager entityManager;
-
 
     @Override
     public List<Board> findAllByOwn(Long own) {

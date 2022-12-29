@@ -4,15 +4,11 @@ package com.mztalk.main.domain.follow.service.impl;
 
 import com.mztalk.main.domain.follow.dto.*;
 import com.mztalk.main.domain.follow.entity.Follow;
-import com.mztalk.main.domain.follow.repository.FollowCustomRepository;
 import com.mztalk.main.domain.follow.repository.FollowRepository;
 import com.mztalk.main.domain.follow.service.FollowService;
-import com.mztalk.main.domain.profile.dto.ProfileDto;
-import com.mztalk.main.domain.profile.dto.ProfileImageResponseDto;
 import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.profile.repository.ProfileCustomRepository;
 import com.mztalk.main.handler.exception.CustomApiException;
-import com.mztalk.main.status.FollowStatus;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -22,13 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
-import javax.persistence.EntityManager;
-
-
 import java.util.*;
-
-
 
 @Service
 @RequiredArgsConstructor
@@ -36,13 +26,7 @@ import java.util.*;
 public class FollowServiceImpl implements FollowService {
 
     private final FollowRepository followRepository;
-
-    private final FollowCustomRepository followCustomRepository;
-
     private final ProfileCustomRepository profileCustomRepository;
-
-    private final EntityManager em;
-
 
     @Override
     @Transactional
