@@ -30,9 +30,6 @@ public class Application extends BaseTimeEntity {
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "application")
     private Mentor mentor;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "application")
-    private List<File> files = new ArrayList<>();
-
     @NotNull
     private String name;
     @NotNull
@@ -53,13 +50,12 @@ public class Application extends BaseTimeEntity {
     private Status status;
 
     @Builder
-    public Application(Long id, Mentee mentee, Mentor mentor, List<File> files, String name, String phone,
+    public Application(Long id, Mentee mentee, Mentor mentor, String name, String phone,
                        String email, String job, String bank, String account,
                        AuthStatus authStatus, Status status) {
         this.id = id;
         this.mentee = mentee;
         this.mentor = mentor;
-        this.files = files;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -80,12 +76,6 @@ public class Application extends BaseTimeEntity {
     }
 
     //== 연관관계 편의 메소드 ==//
-    public void addFile(File file){
-        this.files.add(file);
-        if(file.getApplication() != this){
-            file.addApplication(this);
-        }
-    }
 
     public void addMentee(Mentee mentee){
         this.mentee = mentee;

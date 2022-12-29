@@ -358,7 +358,7 @@ const watchReview = (nickname) =>{
 // 신청한 멘토링 목록
 const allMentoring =()=>{
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board?userId="+userId,{
+    fetch("http://localhost:8000/mentors/board/mentee/"+userId,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",
@@ -386,6 +386,7 @@ const allMentoring =()=>{
             }
         }
     })
+    document.getElementById('mentoringRow').innerHTML ='';
 }
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지

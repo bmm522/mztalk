@@ -122,7 +122,7 @@ const getBoardDetail = (bId) =>{
     .then(res =>{
         if(res != null){
             document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
-            document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
+            document.getElementById('modal-body').innerHTML += res.content;
             document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.mentoringDate.substr(0,10) +"&nbsp&nbsp"+ res.mentoringDate.substr(11,5);
             document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.salary + "원";
             // 결제 하기 위한 금액 설정

@@ -3,6 +3,8 @@ package com.mztalk.mentor.service.impl;
 import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ApplicationDto;
+import com.mztalk.mentor.domain.dto.MenteeApplicationDto;
+import com.mztalk.mentor.domain.dto.MenteeDto;
 import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Result;
@@ -68,7 +70,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public Result findAll() {
         List<Application> applications = applicationRepository.fetchMenteeApplication();
-        List<ApplicationDto> result = applications.stream().map(ApplicationDto::new).collect(Collectors.toList());
+        List<ApplicationDto> result = applications.stream().map(a->new ApplicationDto(a,new MenteeApplicationDto(a.getMentee()))).collect(Collectors.toList());
         return new Result(result);
     }
 

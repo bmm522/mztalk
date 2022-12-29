@@ -31,10 +31,16 @@ public class BoardApiController {
         return boardService.findBoardByBoardId(id);
     }
 
-    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
+    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드 멘토링 이후의 글만 출력되게 한다.(완료된 멘토링 목록)
     @GetMapping("/board")
     public Result findBoardByUserId(@RequestParam("userId")Long userId){
         return boardService.findBoardByUserId(userId);
+    }
+
+    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
+    @GetMapping("/board/mentee/{menteeId}")
+    public Result findBoardByMenteeId(@PathVariable("menteeId")Long MenteeId){
+        return boardService.findBoardByMenteeId(MenteeId);
     }
 
     @GetMapping("/board/mentor/{mentorId}")
@@ -42,12 +48,14 @@ public class BoardApiController {
         return boardService.findBoardByMentorId(mentorId);
     }
 
-    @DeleteMapping("/board/{id}") // 진짜로 삭제한다.
+    // 진짜로 삭제한다.
+    @DeleteMapping("/board/{id}")
     public Long deleteBoard(@PathVariable("id")Long id){
         return boardService.delete(id);
     }
 
-    @PatchMapping("/board/edit/{id}") //boardId로 글찾기
+    // boardId로 글찾은 후 수정하기
+    @PatchMapping("/board/edit/{id}")
     public Long updateBoard(@PathVariable("id")Long id,@RequestBody BoardDto boardDto){
         return boardService.updateBoard(id, boardDto);
     }

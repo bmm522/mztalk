@@ -3,6 +3,8 @@ package com.mztalk.mentor.service.impl;
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.BoardDto;
+import com.mztalk.mentor.domain.dto.BoardMenteeDto;
+import com.mztalk.mentor.domain.dto.MentorBoardDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Result;
@@ -55,10 +57,18 @@ public class BoardServiceImpl implements BoardService {
         return new Result(collect);
     }
 
+    // 멘티가 본인이 신청한 글에 대한 정보만 가져온다.
+    @Override
+    public Result findBoardByMenteeId(Long menteeId) {
+        List<Board> boards = boardRepository.findBoardByMenteeId(menteeId);
+        List<BoardMenteeDto> collect = boards.stream().map(BoardMenteeDto::new).collect(Collectors.toList());
+        return new Result(collect);
+    }
+
     @Override
     public BoardDto findBoardByBoardId(Long id) {
         Board board = boardRepository.findBoardByBoardId(id);
-        BoardDto boardDto = new BoardDto(board);
+        BoardDto boardDto = new BoardDto(board,new MentorBoardDto(board.getMentor()));
         return boardDto;
     }
 
@@ -67,7 +77,7 @@ public class BoardServiceImpl implements BoardService {
     public Result findBoardByUserId(Long userId) {
         LocalDateTime now = LocalDateTime.now();
         List<Board> boardList = boardRepository.findBoardByUserId(userId,now);
-        List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
+        List<BoardMenteeDto> collect = boardList.stream().map(BoardMenteeDto::new).collect(Collectors.toList());
         return new Result(collect);
     }
 
@@ -112,9 +122,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Result searchWithCondition(SearchCondition searchCondition) {
-        System.out.println(searchCondition.toString());
         List<Board> boardList = boardRepository.searchWithCondition(searchCondition);
-        System.out.println("boardList = " + boardList.toString());
         List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
     }

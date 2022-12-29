@@ -47,6 +47,7 @@ public class ScoreApiController {
         return scoreService.findAll();
     }
 
+    // 멘티가 작성한 리뷰 삭제하기
     @DeleteMapping("/score/{id}")
     public Long deleteScore(@PathVariable("id")Long id){
         return scoreService.deleteScore(id);

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class BoardDto {
 
     private Long id;
-    private MentorDto mentor;
+    private MentorBoardDto mentor;
     private String category;
     private String title;
     private String nickname;
@@ -35,7 +35,6 @@ public class BoardDto {
     public Board toEntity() {
         Board board = Board.builder()
                 .id(id)
-                .mentor(mentor.toEntity())
                 .category(category)
                 .title(title)
                 .nickname(nickname)
@@ -53,6 +52,22 @@ public class BoardDto {
     }
 
     public BoardDto(Board board){
+        this.id = board.getId();
+        this.category = board.getCategory();
+        this.title = board.getTitle();
+        this.nickname = board.getNickname();
+        this.content = board.getContent();
+        this.introduction = board.getIntroduction();
+        this.career = board.getCareer();
+        this.salary = board.getSalary();
+        this.mentoringDate = board.getMentoringDate();
+        this.status = board.getStatus();
+        this.createdDate = board.getCreatedDate();
+        this.lastModifiedDate = board.getLastModifiedDate();
+    }
+
+    public BoardDto(Board board,MentorBoardDto mentor){
+        this.mentor = mentor;
         this.id = board.getId();
         this.category = board.getCategory();
         this.title = board.getTitle();

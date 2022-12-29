@@ -1,6 +1,7 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.ScoreDto;
+import com.mztalk.mentor.domain.dto.ScoreMenteeDto;
 import com.mztalk.mentor.domain.entity.*;
 import com.mztalk.mentor.exception.BoardNotFoundException;
 import com.mztalk.mentor.exception.ScoreNotFoundException;
@@ -64,7 +65,7 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public Result findByUserId(Long userId) {
         List<Score> scores = scoreRepository.findByUserId(userId);
-        List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
+        List<ScoreMenteeDto> collect = scores.stream().map(ScoreMenteeDto::new).collect(Collectors.toList());
         return new Result(collect);
     }
 

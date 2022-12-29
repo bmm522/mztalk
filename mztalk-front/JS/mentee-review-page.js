@@ -45,7 +45,7 @@ const getMyReview = () =>{
                         <button type="button" class="btn btn-outline-success" onclick="myReview(${score.id});" data-bs-toggle="modal" data-bs-target="#myReview">보기</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-outline-danger" onclick="deleteReview();">삭제</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="deleteReview(${score.id});">삭제</button>
                     </td>
                 </tr> 
                 
@@ -87,7 +87,7 @@ const getMyReview = () =>{
     });
 }
 
-// 내가 작성한 리뷰 얻기
+// 리뷰 디테일
 const myReview = (scoreId) =>{
     document.getElementById('scoreModifyId').value = scoreId;
     fetch("http://localhost:8000/mentors/score/"+scoreId,{
@@ -137,8 +137,8 @@ const modifyReview = () => {
  }
 
 // 리뷰 삭제 메소드
-const deleteReview = () => {
-    const deleteId= document.getElementById('scoreModifyId').value;
+const deleteReview = (deleteId) => {
+    console.log('글번호 어디감?' + deleteId);
     fetch("http://localhost:8000/mentors/score/"+deleteId,{
         method:"DELETE",
         headers:{

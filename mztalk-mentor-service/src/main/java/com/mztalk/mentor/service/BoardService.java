@@ -27,4 +27,6 @@ public interface BoardService {
     Result findByMentoringDateBefore();
 
     Result findNullPaymentWithBeforeMentoringDate();
+
+    Result findBoardByMenteeId(Long menteeId);
 }
