@@ -16,9 +16,5 @@ public class MztalkMentorServiceApplication {
 		SpringApplication.run(MztalkMentorServiceApplication.class, args);
 	}
 
-	@Bean
-	Hibernate5Module hibernate5Module(){
-		return new Hibernate5Module();
-	}
 
 }

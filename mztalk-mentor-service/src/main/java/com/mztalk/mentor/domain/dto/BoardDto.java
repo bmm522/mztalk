@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 public class BoardDto {
 
     private Long id;
-    private Mentor mentor;
+    private MentorDto mentor;
     private String category;
     private String title;
     private String nickname;
@@ -22,20 +23,19 @@ public class BoardDto {
     private String introduction;
     private String career;
     private int salary;
-    private Score score;
-
+    private ScoreDto score;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime mentoringDate;
-
-    private Participant participant;
-    private Payment payment;
+    private ParticipantDto participant;
+    private PaymentDto payment;
     private Status status;
+    private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 
     public Board toEntity() {
         Board board = Board.builder()
                 .id(id)
-                .mentor(mentor)
+                .mentor(mentor.toEntity())
                 .category(category)
                 .title(title)
                 .nickname(nickname)
@@ -43,10 +43,10 @@ public class BoardDto {
                 .introduction(introduction)
                 .career(career)
                 .salary(salary)
-                .score(score)
+                .score(score.toEntity())
                 .mentoringDate(mentoringDate)
-                .participant(participant)
-                .payment(payment)
+                .participant(participant.toEntity())
+                .payment(payment.toEntity())
                 .status(Status.YES)
                 .build();
         return board;
@@ -54,7 +54,6 @@ public class BoardDto {
 
     public BoardDto(Board board){
         this.id = board.getId();
-        this.mentor = board.getMentor();
         this.category = board.getCategory();
         this.title = board.getTitle();
         this.nickname = board.getNickname();
@@ -62,11 +61,9 @@ public class BoardDto {
         this.introduction = board.getIntroduction();
         this.career = board.getCareer();
         this.salary = board.getSalary();
-        this.score = board.getScore();
         this.mentoringDate = board.getMentoringDate();
-        this.participant = board.getParticipant();
-        this.payment = board.getPayment();
         this.status = board.getStatus();
+        this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();
     }
 

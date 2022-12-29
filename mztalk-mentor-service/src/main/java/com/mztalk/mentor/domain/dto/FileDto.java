@@ -1,32 +1,34 @@
 package com.mztalk.mentor.domain.dto;
 
-import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.File;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 public class FileDto {
 
     private Long id;
-    private Application application;
     private String fileName;
     private String objectKey;
     private String fileUrl;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 
 
     public FileDto(File file) {
         this.id = file.getId();
-        this.application = file.getApplication();
         this.fileName = file.getFileName();
         this.objectKey = file.getObjectKey();
         this.fileUrl = file.getFileUrl();
+        this.createdDate = file.getCreatedDate();
+        this.lastModifiedDate = file.getLastModifiedDate();
     }
 
     public File toEntity(){
         File file = File.builder()
                 .id(id)
-                .application(application)
                 .fileName(fileName)
                 .objectKey(objectKey)
                 .fileUrl(fileUrl)
@@ -35,11 +37,12 @@ public class FileDto {
     }
 
     @Builder
-    public FileDto(Long id, Application application, String fileName, String objectKey, String fileUrl) {
+    public FileDto(Long id, String fileName, String objectKey, String fileUrl, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
         this.id = id;
-        this.application = application;
         this.fileName = fileName;
         this.objectKey = objectKey;
         this.fileUrl = fileUrl;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
     }
 }

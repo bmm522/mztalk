@@ -4,29 +4,27 @@ import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class MentorDto {
 
     private Long userId;
-    private Application application;
-    private List<Board> boards = new ArrayList<>();
-    private List<Score> scores = new ArrayList<>();
-    private List<Mentee> mentees = new ArrayList<>();
     private Status status;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
+    private List<BoardDto> boards = new ArrayList<>();
+    private List<ScoreDto> scores = new ArrayList<>();
+    private List<MenteeDto> mentees = new ArrayList<>();
 
     public Mentor toEntity(){
         Mentor mentor = Mentor.builder()
                 .userId(userId)
-                .application(application)
-                .boards(boards)
-                .scores(scores)
-                .mentees(mentees)
                 .status(Status.YES)
                 .build();
         return mentor;
@@ -34,11 +32,13 @@ public class MentorDto {
 
     public MentorDto(Mentor mentor) {
         this.userId = mentor.getUserId();
-        this.application = mentor.getApplication();
-        this.boards = mentor.getBoards();
-        this.scores = mentor.getScores();
-        this.mentees = mentor.getMentees();
         this.status = mentor.getStatus();
+        this.createdDate = mentor.getCreatedDate();
+        this.lastModifiedDate = mentor.getLastModifiedDate();
+        this.boards = mentor.getBoards().stream().map(b->new BoardDto(b)).collect(Collectors.toList());
+        this.scores = mentor.getScores().stream().map(s->new ScoreDto(s)).collect(Collectors.toList());
+        this.mentees = mentor.getMentees().stream().map(m->new MenteeDto(m)).collect(Collectors.toList());
     }
+
 
 }

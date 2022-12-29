@@ -73,7 +73,6 @@ public class Application extends BaseTimeEntity {
     }
 
     public void updateApplication(ApplicationDto applicationDto){
-        this.files = applicationDto.getFiles();
         this.name = applicationDto.getName();
         this.phone = applicationDto.getPhone();
         this.email = applicationDto.getEmail();
