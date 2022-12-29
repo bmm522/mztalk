@@ -1,3 +1,7 @@
+#v-pills-profile-tab {
+  display: hidden;
+}
+
 /*프로필셋팅 섹션*/
 .setting-container {
     width: 700px;

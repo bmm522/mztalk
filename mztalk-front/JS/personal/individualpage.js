@@ -10,11 +10,8 @@ window.onload = function(){
   BoardCount();
   FollowCount();
   FollowingCount();
-  //FollowingButton();
   followButtonStatus();
-  
-  //storySecretLoad(); 
- //writeboard();
+
 }
 
 
@@ -1108,7 +1105,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     .then((res)=>res.json())
     .then(res =>{
              
-      console.log(res);
+      //console.log(res);
       
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
@@ -1184,7 +1181,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       _btn.style.border = "0";
 
     })
-    window.onload;
+    
     }
 
   }
