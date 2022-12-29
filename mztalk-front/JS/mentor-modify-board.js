@@ -174,7 +174,7 @@ const deleteBoard = () =>{
             window.alert('글이 삭제되었습니다.');
             location.href="mentor-main.html";
         } else{
-            window.alert('글 삭제 실패');
+            window.alert('작성되어있는 리뷰가 존재하여 삭제할 수 없습니다.');
             location.href="mentor-main.html";
             return false;
         }
@@ -197,7 +197,7 @@ const myMentees = () =>{
     .then(res =>{
         if(res!=null){
             for(const data of res.data){
-            document.getElementById('myBoardList').innerHTML =
+            document.getElementById('myBoardList').innerHTML +=
                 `<td>${data.board.id}</td>
                 <td>${data.mentee.nickname}</td>
                 <td>${data.phone}</td>
@@ -206,7 +206,8 @@ const myMentees = () =>{
         } else{
             console.log('값없음');
         }
-    }) 
+    })
+    document.getElementById('myBoardList').innerHTML = '';
 }
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지

@@ -1,5 +1,7 @@
 package com.mztalk.mentor.service.impl;
 
+import com.mztalk.mentor.domain.dto.BoardMenteeDto;
+import com.mztalk.mentor.domain.dto.MenteeApplicationDto;
 import com.mztalk.mentor.domain.dto.ParticipantDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentee;
@@ -41,21 +43,25 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public ParticipantDto findById(Long id) {
         Participant participant = participantRepository.findById(id).orElseThrow(() -> new ParticipantNotFoundException("해당하는 참가자는 존재하지 않습니다."));
-        ParticipantDto participantDto = new ParticipantDto(participant);
+        ParticipantDto participantDto = new ParticipantDto(participant,new MenteeApplicationDto(participant.getMentee()),new BoardMenteeDto(participant.getBoard()));
         return participantDto;
     }
 
     @Override
     public Result findParticipantsByMentorId(Long boardId) {
         List<Participant> participants = participantRepository.findParticipantsByMentorId(boardId);
-        List<ParticipantDto> collect = participants.stream().map(ParticipantDto::new).collect(Collectors.toList());
+        List<ParticipantDto> collect = participants.stream()
+                .map(p->new ParticipantDto(p,new MenteeApplicationDto(p.getMentee()),new BoardMenteeDto(p.getBoard())))
+                .collect(Collectors.toList());
         return new Result(collect);
     }
 
     @Override
     public Result findAll() {
         List<Participant> participantList = participantRepository.findAll();
-        List<ParticipantDto> collect = participantList.stream().map(ParticipantDto::new).collect(Collectors.toList());
+        List<ParticipantDto> collect = participantList.stream()
+                .map(p->new ParticipantDto(p,new MenteeApplicationDto(p.getMentee()),new BoardMenteeDto(p.getBoard())))
+                .collect(Collectors.toList());
         return new Result(collect);
     }
 

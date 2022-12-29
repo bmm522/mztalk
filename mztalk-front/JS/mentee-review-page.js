@@ -138,7 +138,6 @@ const modifyReview = () => {
 
 // 리뷰 삭제 메소드
 const deleteReview = (deleteId) => {
-    console.log('글번호 어디감?' + deleteId);
     fetch("http://localhost:8000/mentors/score/"+deleteId,{
         method:"DELETE",
         headers:{

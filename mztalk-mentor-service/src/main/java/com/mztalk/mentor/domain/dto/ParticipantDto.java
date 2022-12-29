@@ -19,8 +19,9 @@ public class ParticipantDto {
     private String phone;
     private String message;
     private String email;
-    private String userId;
     private Status status;
+    private MenteeApplicationDto mentee;
+    private BoardMenteeDto board;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 
@@ -37,6 +38,19 @@ public class ParticipantDto {
     }
 
     public ParticipantDto(Participant participant){
+        this.id = participant.getId();
+        this.name = participant.getName();
+        this.phone = participant.getPhone();
+        this.message = participant.getMessage();
+        this.email = participant.getEmail();
+        this.status = participant.getStatus();
+        this.createdDate = participant.getCreatedDate();
+        this.lastModifiedDate = participant.getLastModifiedDate();
+    }
+
+    public ParticipantDto(Participant participant,MenteeApplicationDto mentee, BoardMenteeDto board){
+        this.mentee = mentee;
+        this.board = board;
         this.id = participant.getId();
         this.name = participant.getName();
         this.phone = participant.getPhone();

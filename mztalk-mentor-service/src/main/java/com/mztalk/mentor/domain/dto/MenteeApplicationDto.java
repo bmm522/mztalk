@@ -24,6 +24,9 @@ public class MenteeApplicationDto {
     }
 
     public Mentee toEntity(){
-        return Mentee.builder().id(id).nickname(nickname).build();
+        return Mentee.builder()
+                .id(id)
+                .nickname(nickname)
+                .build();
     }
 }

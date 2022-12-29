@@ -72,7 +72,7 @@ const deleteBoard = () =>{
 }
 
 
-// 작성한 글에 대한 멘토 신청 현황
+// 멘토가 작성한 글에 대한 신청 현황
 const myMentees = () =>{
     const mentorId = localStorage.getItem('userNo');
     fetch("http://localhost:8000/mentors/participant?mentorId="+mentorId,{
@@ -87,7 +87,7 @@ const myMentees = () =>{
     .then(res =>{
         if(res!=null){
             for(const data of res.data){
-            document.getElementById('myBoardList').innerHTML =
+            document.getElementById('myBoardList').innerHTML +=
                 `<td>${data.board.id}</td>
                 <td>${data.mentee.nickname}</td>
                 <td>${data.phone}</td>
@@ -96,7 +96,8 @@ const myMentees = () =>{
         } else{
             console.log('값없음');
         }
-    }) 
+    })
+    document.getElementById('myBoardList').innerHTML ='';
 }
 
 

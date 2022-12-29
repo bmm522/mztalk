@@ -1,7 +1,7 @@
 package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.dto.AccountInfoDto;
-import com.mztalk.mentor.domain.entity.OpenApiAccessToken;
+import com.mztalk.mentor.domain.OpenApiAccessToken;
 
 import java.util.concurrent.ConcurrentHashMap;
 

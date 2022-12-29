@@ -1,4 +1,4 @@
-package com.mztalk.mentor.domain.entity;
+package com.mztalk.mentor.domain;
 
 import lombok.*;
 

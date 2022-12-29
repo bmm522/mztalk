@@ -1,6 +1,6 @@
 package com.mztalk.mentor.domain.dto;
 
-import com.mztalk.mentor.domain.entity.OpenApiAccessToken;
+import com.mztalk.mentor.domain.OpenApiAccessToken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

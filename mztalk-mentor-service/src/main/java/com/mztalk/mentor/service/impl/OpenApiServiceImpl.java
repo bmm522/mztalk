@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mztalk.mentor.domain.dto.AccountInfoDto;
 import com.mztalk.mentor.domain.dto.OpenApiAccessTokenDto;
-import com.mztalk.mentor.domain.entity.OpenApiAccessToken;
+import com.mztalk.mentor.domain.OpenApiAccessToken;
 import com.mztalk.mentor.service.OpenApiService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
