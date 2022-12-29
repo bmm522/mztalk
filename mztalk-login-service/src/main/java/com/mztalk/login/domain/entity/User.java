@@ -67,6 +67,21 @@ public class User {
                 .build();
     }
 
+    public UserInfoDto toUserInfoDto() {
+        return UserInfoDto.builder()
+                .userId(String.valueOf(id))
+                .username(username)
+                .nickname(nickname)
+                .email(email)
+                .role(role)
+                .provider(provider)
+                .providerId(providerId)
+                .createDate(createDate)
+                .status(status)
+                .reportCount(String.valueOf(reportCount))
+                .build();
+    }
+
     public MztalkCookie getUsernameCookieFromMztalk() throws UnsupportedEncodingException {
         return new MztalkCookie(username);
     }
