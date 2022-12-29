@@ -10,7 +10,6 @@ window.onload =() =>{
 
 
 
-
 const image = document.querySelector(".modal-image");
 
 function modalImage() {
@@ -341,15 +340,13 @@ function noSocial(){
   //console.log("v-pills-profile-tab");
   let SOCIAL = localStorage.getItem('path');
   let buttonss = document.querySelectorAll('#v-pills-home-tab');
-  let buttonz = `<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
-  if(SOCIAL.includes("SOCIAL")){
-    
-    buttonss.innerHTML +=`<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
-
+  //let buttonz = `<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
+  if(SOCIAL.includes("LOCAL")){
+    document.querySelector('#v-pills-profile-tab').hide();
   }
-
-
-
+  if(SOCIAL.includes('SOCIAL')){
+    document.getElementById('v-pills-profile-tab').style.display = "none";
+  }
 }
 
 
@@ -456,3 +453,8 @@ function myReport(){
 
   })
 }
+
+
+
+//결제부분
+

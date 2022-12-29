@@ -53,4 +53,7 @@ public class BoardApiController {
         //Page<Board> board =  boardService.boardStory(own, pageable);
         return new ResponseEntity<>(new CMRespDto<>(1, "성공", null), HttpStatus.OK);
     }
+
+
+
 }

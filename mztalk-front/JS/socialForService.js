@@ -1,9 +1,17 @@
+//let auctionResult = null;
 window.onload = () =>{
    //newMentorBoard();
    //scroll();
    //newAuctionBoard();
+   console.log('here!');
+   //newAuctionBoard();
+   //console.log(auctionResult);
    //latest();
+   console.log('여기다 여기!!!');
+   console.log()
 }
+
+
 
 let boardsURL = "main.html";
 
@@ -26,8 +34,6 @@ window.onscroll = function(e){
 	}
 
 }
-
-
 
 
 
@@ -88,31 +94,30 @@ const newMentorBoard = () =>{
 //if(mentor&&bung&&auction){newMentorBoard(); getBungBoard(); getAuctionBoard();}
 
 
+
+
 //경매서비스
 //auction/board
-const newAuctionBoard = () =>{ 
-
+async function newAuctionBoard(){ 
     
-    fetch("http://localhost:8000/auction/board",{
+    const response = fetch("http://localhost:8000/auction/board",{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken'),
         },
-      })
-      .then((res)=> res.json())
-      .then(res=>{       
-        let obj ={}
-        console.log("경매최신글"+res.data);
-        obj.auction = res.data;
-        return fetch(boardsURL)
-      }).then((res)=>res.json())
-      .then((res)=>{
-        auctionB = response
-        return obj;
+      });
 
-      })
+      return response;
+
+    //   .then((res)=> res.json())
+    //   .then(res=>{       
+    //     result = res.data;
+        
+    //   })
+
+    //   return result;
         //let cnt = 1;
         
         // document.getElementById('storyList').innerHTML += '<div class="card mb-3" style="max-width: 900px;">';
@@ -143,9 +148,30 @@ const newAuctionBoard = () =>{
         //     `;
            
             }
+            
+            newAuctionBoard()
+            .then(res => res.json())
+            .then(json => test(json));
 
-  
+            function test(data){
+                console.log('here! hear!!')
+                console.log(data);
 
+                return data;
+            }
+
+    //             exec();
+      
+    //    async function exec(){
+    //         let text;
+    //         try{
+    //             text = await newAuctionBoard();
+    //             console.log(text[0].board);
+    //         }
+    //         catch(error){
+    //             console.log(error);
+    //         }
+    //    }     
 
 
 // const latest = () =>{

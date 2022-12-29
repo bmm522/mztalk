@@ -86,7 +86,7 @@ public class FollowServiceImpl implements FollowService {
             JSONObject profileData = profileImage.getJSONObject("data");
             imageUrl = profileData.getString("imageUrl");
             imageName = profileData.getString("objectKey");
-            
+
             } catch (Exception e){
                 imageUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
                 imageName = "기본이미지";
