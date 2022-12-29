@@ -316,7 +316,7 @@ function storyLoad() {
           let privacy = board.privacy;
           let title = board.title;
           let content = board.content;
-          let date = board.lastModifiedDate.substr(0,10);
+          let date = board.lastModifiedDate;
           
           if(privacy.includes("PUBLIC")){
           document.querySelector("#contentList").innerHTML += 
@@ -937,16 +937,12 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
 
       let follower = res.data;
       document.querySelector(".modal-follow").style.display = "flex";
-
       document.querySelector(".follower-list").innerHTML  = '';
-
- 
-
       console.log(follower);
 
 
       for(let i = 0; i < follower.length; i++){
-        // console.log("길이"+follower.length );
+        console.log("길이"+follower.length );
         // console.log("follower" + follower);
         //console.log("뜨니?"+ follower[0].followStatus);
         //console.log(document.querySelectorAll('.follower__btn'));
@@ -1090,8 +1086,6 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
   //팔로우리스트에서의 버튼
   function clickFollow(e) {
 
-    
-
     console.log(e);
     let _btn = e;
     console.log(_btn.textContent);
@@ -1190,7 +1184,9 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       _btn.style.border = "0";
 
     })
+    window.onload;
     }
+
   }
 
 

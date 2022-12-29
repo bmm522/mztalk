@@ -25,8 +25,6 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class ProfileServiceImpl implements ProfileService {
     private final FollowRepository followRepository;
-    private final ProfileRepository profileRepository;
-
     private final BoardRepository boardRepository;
 
     //개인 프로필 사진
