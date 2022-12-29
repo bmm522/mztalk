@@ -30,6 +30,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.transaction.Transactional;
 import java.awt.geom.RectangularShape;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -218,6 +220,12 @@ public class BungServiceImpl implements BungBoardService {
         Long boardId = Long.parseLong(bungAddBoardMap.get("boardId"));
         BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
 
+        // 마감제한 시 신청 방지 로직
+        LocalDate nowTime = LocalDate.now();
+        Date bungBoardDeadlineDate = (Date) bungRepository.findBungBoardByDeadlineDate(boardId);
+        Date nowTimeLast = Date.valueOf(nowTime);
+        int result = nowTimeLast.compareTo(bungBoardDeadlineDate);
+
         // 벙 게시글 작성자 신청 방지 로직
         String bungBoardWriter = bungRepository.findBungBoardWriter(boardId);
         String boardWriter = bungAddBoardMap.get("addNickName");
@@ -226,7 +234,7 @@ public class BungServiceImpl implements BungBoardService {
         String addWriter = bungAddBoardMap.get("addNickName");
         Optional<?> bungAddBoardWriter = bungAddRepository.findAddBoardByWriter(boardId, addWriter);
 
-        if (bungBoardWriter.equals(boardWriter) || bungAddBoardWriter.isPresent()) {
+        if (bungBoardWriter.equals(boardWriter) || bungAddBoardWriter.isPresent() || result > 0) {
             new AddBoardException("신청 오류");
             return 0L;
         } else {
@@ -302,13 +310,9 @@ public class BungServiceImpl implements BungBoardService {
 
     @Override
     public Result bungBoardSearch(SearchKeyWord searchKeyWord) {
-//        System.out.println(searchKeyWord.getBoardContent());
-//        System.out.println(searchKeyWord.getBoardTitle());
-//        System.out.println(searchKeyWord.getBoardWriter());
-//        System.out.println(searchKeyWord.getCategory());
         System.out.println(searchKeyWord.toString());
-        List<BungBoard> bungBoardList = bungRepository.search(searchKeyWord);
 
+        List<BungBoard> bungBoardList = bungRepository.search(searchKeyWord);
         List<BungBoardDto> collect = bungBoardList.stream().map(BungBoardDto::new).collect(Collectors.toList());
 
         return new Result(collect);
