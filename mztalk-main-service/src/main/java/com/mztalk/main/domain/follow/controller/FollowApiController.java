@@ -35,33 +35,22 @@ public class FollowApiController {
     //팔로워 리스트(팔로워쪽)
     @GetMapping("/followList/{toUserId}")
     public ResponseEntity<?> followList(@PathVariable Long toUserId){
-        //own을 팔로우 하고 있는 모든 사람(login한 사람한테 보여줘야하니)
-        //System.out.println("오니?");
-
          List<FollowListResponseDto> followListResponseDtoList = followService.followList(toUserId);
         return new ResponseEntity<>(new CMRespDto<>(1, "팔로워리스트", followListResponseDtoList), HttpStatus.OK);
     }
 
-
     //팔로잉 리스트
     @GetMapping("/followingList/{fromUserId}")
     public ResponseEntity<?>followingList(@PathVariable Long fromUserId){
-        //own이 팔로우 하고 있는 모든 사람(login한 사람한테 보여줘야하니)
         List<FollowingListResponseDto> followingListResponseDtoList = followService.followingList(fromUserId);
-
         return new ResponseEntity<>(new CMRespDto<>(1, "팔로잉리스트", followingListResponseDtoList), HttpStatus.OK);
-
     }
 
 
     //팔로우상태
     @GetMapping("/followStatus/{fromUserId}/{toUserId}")
     public ResponseEntity<?> followStatus(@PathVariable Long fromUserId, @PathVariable Long toUserId){
-
         Long result = followService.followStatus(fromUserId, toUserId);
-
-        System.out.println(result);
-
         return new ResponseEntity<>(new CMRespDto<>(1, "팔로잉리스트", result), HttpStatus.OK);
     }
 
