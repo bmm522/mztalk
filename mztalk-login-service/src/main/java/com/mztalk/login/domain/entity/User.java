@@ -51,7 +51,7 @@ public class User {
         this.nickname = nickname;
     }
 
-    public UserInfoDto toUserInfoDto() {
+    public UserInfoDto toUserInfoDto(String imageUrl) {
         return UserInfoDto.builder()
                 .userId(String.valueOf(id))
                 .username(username)
@@ -62,6 +62,7 @@ public class User {
                 .providerId(providerId)
                 .createDate(createDate)
                 .status(status)
+                .imageUrl(imageUrl)
                 .reportCount(String.valueOf(reportCount))
                 .build();
     }
