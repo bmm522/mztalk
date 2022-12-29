@@ -1,5 +1,6 @@
 package com.mztalk.bung.controller;
 
+import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
@@ -112,6 +113,12 @@ public class BungBoardApiController {
     @GetMapping("bungBoardNowGroup/{boardId}")
     public Long bungBoardNowGroup(@PathVariable("boardId") Long bId) {
         return bungBoardService.bungBoardNowGroup(bId);
+    }
+
+    // 벙 게시물 카테고리, 검색어 검색기능
+    @GetMapping("/bungBoardSearch")
+    public Result bungBoardSearch(@ModelAttribute("searchKeyWord") SearchKeyWord searchKeyWord) {
+        return bungBoardService.bungBoardSearch(searchKeyWord);
     }
 
     @GetMapping("/recent-board")
