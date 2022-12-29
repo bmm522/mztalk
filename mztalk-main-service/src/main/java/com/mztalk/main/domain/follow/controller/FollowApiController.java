@@ -18,26 +18,19 @@ public class FollowApiController {
 
     private final FollowService followService;
 
-
     //팔로우 성공
     @PostMapping("/follow/{toUserId}/{fromUserId}")
     public ResponseEntity<?> follow(@PathVariable Long toUserId, @PathVariable Long fromUserId){
-
         followService.follow(toUserId, fromUserId);
-
         return new ResponseEntity<>(new CMRespDto<>(1,"팔로우성공", "ok"), HttpStatus.OK);
     }
 
     //팔로우 취소
     @DeleteMapping("/follow/{toUserId}/{fromUserId}")
     public ResponseEntity<?> unfollow(@PathVariable Long toUserId, @PathVariable Long fromUserId){
-
         followService.unFollow(toUserId, fromUserId);
-
         return new ResponseEntity<>(new CMRespDto<>(1, "팔로우취소성공", "ok"), HttpStatus.OK);
     }
-
-
 
     //팔로워 리스트(팔로워쪽)
     @GetMapping("/followList/{toUserId}")

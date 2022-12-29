@@ -11,13 +11,13 @@ import lombok.*;
 @Builder
 public class ProfileResponseDto {
 
-    private String profileUrl;
+    private String postImageUrl;
     private String profileImageName;
     private String nickname;
 
 
     public ProfileResponseDto(Profile profile){
-        this.profileUrl = profile.getPostImageUrl();
+        //this.profileUrl = profile.getPostImageUrl();
         this.profileImageName = profile.getProfileImageName();
         this.nickname = profile.getNickname();
     }
