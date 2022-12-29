@@ -1,6 +1,7 @@
 package com.mztalk.bung.service.impl;
 
 import com.mztalk.bung.domain.BoardStatus;
+import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.entity.BungAddBoard;
@@ -297,5 +298,19 @@ public class BungServiceImpl implements BungBoardService {
     @Transactional
     public Long bungBoardNowGroup(Long bId) {
         return bungAddRepository.bungBoardNowGroup(bId);
+    }
+
+    @Override
+    public Result bungBoardSearch(SearchKeyWord searchKeyWord) {
+//        System.out.println(searchKeyWord.getBoardContent());
+//        System.out.println(searchKeyWord.getBoardTitle());
+//        System.out.println(searchKeyWord.getBoardWriter());
+//        System.out.println(searchKeyWord.getCategory());
+        System.out.println(searchKeyWord.toString());
+        List<BungBoard> bungBoardList = bungRepository.search(searchKeyWord);
+
+        List<BungBoardDto> collect = bungBoardList.stream().map(BungBoardDto::new).collect(Collectors.toList());
+
+        return new Result(collect);
     }
 }
