@@ -41,4 +41,6 @@ public interface BungBoardService {
     Long bungBoardNowGroup(Long bId);
 
     Result bungBoardSearch(SearchKeyWord searchKeyWord);
+
+    Long bungAddBoardGroupDrop(Long bId, Long aId);
 }

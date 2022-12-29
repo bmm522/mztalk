@@ -310,11 +310,16 @@ public class BungServiceImpl implements BungBoardService {
 
     @Override
     public Result bungBoardSearch(SearchKeyWord searchKeyWord) {
-        System.out.println(searchKeyWord.toString());
 
         List<BungBoard> bungBoardList = bungRepository.search(searchKeyWord);
         List<BungBoardDto> collect = bungBoardList.stream().map(BungBoardDto::new).collect(Collectors.toList());
 
         return new Result(collect);
+    }
+
+    @Override
+    @Transactional
+    public Long bungAddBoardGroupDrop(Long bId, Long aId) {
+        return bungAddRepository.bungAddBoardGroupDrop(bId, aId);
     }
 }
