@@ -25,11 +25,9 @@ public class Application extends BaseTimeEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mentee_id")
-    @JsonIgnore
     private Mentee mentee;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "application")
-    @JsonIgnore
     private Mentor mentor;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "application")

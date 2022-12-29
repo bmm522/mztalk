@@ -27,7 +27,6 @@ public class Board extends BaseTimeEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mentor_id")
-    @JsonIgnore
     private Mentor mentor;
 
     @NotNull
@@ -53,7 +52,6 @@ public class Board extends BaseTimeEntity{
     private int salary; //시급
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     private Score score;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
@@ -61,12 +59,10 @@ public class Board extends BaseTimeEntity{
     private LocalDateTime mentoringDate;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "board")
-    @JsonIgnore
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Participant participant;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "board")
-    @JsonIgnore
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Payment payment;
 
@@ -124,23 +120,4 @@ public class Board extends BaseTimeEntity{
         this.score = score;
     }
 
-    @Override
-    public String toString() {
-        return "Board{" +
-                "id=" + id +
-                ", mentor=" + mentor +
-                ", category='" + category + '\'' +
-                ", title='" + title + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", content='" + content + '\'' +
-                ", introduction='" + introduction + '\'' +
-                ", career='" + career + '\'' +
-                ", salary=" + salary +
-                ", score=" + score +
-                ", mentoringDate=" + mentoringDate +
-                ", participant=" + participant +
-                ", payment=" + payment +
-                ", status=" + status +
-                '}';
-    }
 }
