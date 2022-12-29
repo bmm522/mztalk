@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -51,14 +52,21 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
 
     // 카테고리, 키워드별 검색 기능 로직
     @Override
+    @Transactional
     public List<BungBoard> search(SearchKeyWord searchKeyWord) {
-        System.out.println(searchKeyWord.toString());
         return queryFactory.selectFrom(bungBoard)
                 .where(eqCategory(searchKeyWord.getCategory()),
                     (containsBoardTitle(searchKeyWord.getBoardTitle())),
                     (containsBoardContent(searchKeyWord.getBoardContent())),
                     (containsBoardWriter(searchKeyWord.getBoardWriter()))
                 ).fetch();
+    }
+
+    @Override
+    public Date findBungBoardByDeadlineDate(Long boardId) {
+        return (java.sql.Date) entityManager.createQuery("select b.deadlineDate from BungBoard b where b.boardId = :boardId")
+                .setParameter("boardId", boardId)
+                .getSingleResult();
     }
 
     private BooleanExpression eqCategory(String category) {
