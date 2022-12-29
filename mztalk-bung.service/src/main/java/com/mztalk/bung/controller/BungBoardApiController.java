@@ -62,7 +62,6 @@ public class BungBoardApiController {
     public BungBoardDetailResponseDto mainBoardSelect(@PathVariable("boardId") String bId) {
         bungBoardService.increaseCount(Long.parseLong(bId));
         return bungBoardService.mainBoardSelect(Long.parseLong(bId));
-
     }
 
     // 벙 신청 게시글 작성
@@ -104,14 +103,14 @@ public class BungBoardApiController {
         return bungBoardService.bungAddBoardSelect(addId);
     }
 
-    // 벙 게시글 수락된 신청자목록 보기 // 수정해야됨 Status Y인것들만 뽑아서 보이는 걸로
+    // 벙 게시글 수락된 신청자목록 보기
     @GetMapping("/bungRequestList/{boardId}")
     public Result bungRequestList(@PathVariable("boardId") Long bId) {
         return bungBoardService.bungRequestList(bId);
     }
 
     // 벙 게시물 현재인원 조회
-    @GetMapping("bungBoardNowGroup/{boardId}")
+    @GetMapping("/bungBoardNowGroup/{boardId}")
     public Long bungBoardNowGroup(@PathVariable("boardId") Long bId) {
         return bungBoardService.bungBoardNowGroup(bId);
     }
@@ -120,6 +119,12 @@ public class BungBoardApiController {
     @GetMapping("/bungBoardSearch")
     public Result bungBoardSearch(@ModelAttribute("searchKeyWord") SearchKeyWord searchKeyWord) {
         return bungBoardService.bungBoardSearch(searchKeyWord);
+    }
+
+    // 벙 게시물 현인원 추방 기능
+    @DeleteMapping("/bungAddBoardGroupDrop/{boardId}/{addId}")
+    public Long bungAddBoardGroupDrop(@PathVariable("boardId") Long bId, @PathVariable("addId") Long aId) {
+        return bungBoardService.bungAddBoardGroupDrop(bId, aId);
     }
 
     @GetMapping("/recent-board")

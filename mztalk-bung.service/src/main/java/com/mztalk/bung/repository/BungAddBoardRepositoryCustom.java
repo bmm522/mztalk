@@ -16,5 +16,7 @@ public interface BungAddBoardRepositoryCustom {
 
     int deleteByBoardId(Long bId);
 
+    Long bungAddBoardGroupDrop(Long bId, Long aId);
+
 //    String findAddBoardByWriter(Long boardId, addWriter);
 }
