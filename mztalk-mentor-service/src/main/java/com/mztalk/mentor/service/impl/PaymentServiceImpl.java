@@ -44,10 +44,10 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Result findAll() {
+    public List<PaymentDto> findAll() {
         List<Payment> paymentList = paymentRepository.findAll();
         List<PaymentDto> collect = paymentList.stream().map(PaymentDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     @Override

@@ -50,19 +50,19 @@ public class BoardServiceImpl implements BoardService {
 
     // 메인페이지 출력 메소드, 결제가 안되고 멘토링 전 글만 출력된다.
     @Override
-    public Result findNullPaymentWithBeforeMentoringDate() {
+    public List<BoardDto> findNullPaymentWithBeforeMentoringDate() {
         LocalDateTime now = LocalDateTime.now();
         List<Board> boards = boardRepository.findNullPaymentWithBeforeMentoringDate(now);
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     // 멘티가 본인이 신청한 글에 대한 정보만 가져온다.
     @Override
-    public Result findBoardByMenteeId(Long menteeId) {
+    public List<BoardMenteeDto> findBoardByMenteeId(Long menteeId) {
         List<Board> boards = boardRepository.findBoardByMenteeId(menteeId);
         List<BoardMenteeDto> collect = boards.stream().map(BoardMenteeDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     @Override
@@ -74,34 +74,34 @@ public class BoardServiceImpl implements BoardService {
 
     //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드 멘토링 이후의 글만 출력되게 한다.
     @Override
-    public Result findBoardByUserId(Long userId) {
+    public List<BoardMenteeDto> findBoardByUserId(Long userId) {
         LocalDateTime now = LocalDateTime.now();
         List<Board> boardList = boardRepository.findBoardByUserId(userId,now);
         List<BoardMenteeDto> collect = boardList.stream().map(BoardMenteeDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     @Override
-    public Result latestBoard() {
+    public List<BoardDto> latestBoard() {
         List<Board> boards = boardRepository.latestBoard();
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     // 멘티가 멘토링 신청 후 멘토링 시간이 지난 후에 리뷰창에 나타난다.
     @Override
-    public Result findByMentoringDateBefore() {
+    public List<BoardDto> findByMentoringDateBefore() {
         LocalDateTime now = LocalDateTime.now();
         List<Board> boards = boardRepository.findByMentoringDateBefore(now);
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     @Override
-    public Result findBoardByMentorId(Long mentorId) {
+    public List<BoardDto> findBoardByMentorId(Long mentorId) {
         List<Board> boards = boardRepository.findBoardByMentorId(mentorId);
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     @Override
@@ -121,9 +121,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Result searchWithCondition(SearchCondition searchCondition) {
+    public List<BoardDto> searchWithCondition(SearchCondition searchCondition) {
         List<Board> boardList = boardRepository.searchWithCondition(searchCondition);
         List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 }

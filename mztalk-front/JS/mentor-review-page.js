@@ -87,7 +87,7 @@ const myReview = (scoreId) =>{
     .then(res =>{
         if(res != null){
             document.getElementById('scoreId').value = scoreId;
-            document.getElementById('content').innerHTML = res.content;
+            document.getElementById('content').innerHTML = res.data.content;
         } else {
             alert('리뷰가 존재하지 않습니다');
         }
@@ -107,7 +107,6 @@ document.getElementById('myPage').addEventListener('click', function(){
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log("res : " + res);
         if(res){
             location.href="mentor-mypage.html";
         } else {

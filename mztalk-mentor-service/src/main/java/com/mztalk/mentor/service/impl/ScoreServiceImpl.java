@@ -48,10 +48,10 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public Result findScoresByNickname(String nickname) {
+    public List<ScoreDto> findScoresByNickname(String nickname) {
         List<Score> scores = scoreRepository.findByNickname(nickname);
         List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     // 멘티가 해당 글에 대해 리뷰를 작성했는지 확인한다.
@@ -63,24 +63,24 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public Result findByUserId(Long userId) {
+    public List<ScoreMenteeDto> findByUserId(Long userId) {
         List<Score> scores = scoreRepository.findByUserId(userId);
         List<ScoreMenteeDto> collect = scores.stream().map(ScoreMenteeDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     @Override
-    public Result findByMentorId(Long mentorId) {
+    public List<ScoreDto> findByMentorId(Long mentorId) {
         List<Score> scores = scoreRepository.findByMentorId(mentorId);
         List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     @Override
-    public Result findAll() {
+    public List<ScoreDto> findAll() {
         List<Score> scoreList = scoreRepository.findAll();
         List<ScoreDto> collect = scoreList.stream().map(ScoreDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     @Override

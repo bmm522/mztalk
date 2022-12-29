@@ -85,8 +85,8 @@ const reportBoard = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        const userId = res.mentor.userId;
-        const bId = res.id;
+        const userId = res.data.mentor.userId;
+        const bId = res.data.id;
         fetch("http://localhost:8000/login/report",{
             method:"POST",
             headers:{
@@ -121,12 +121,12 @@ const getBoardDetail = (bId) =>{
     .then((res)=>res.json())
     .then(res =>{
         if(res != null){
-            document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
-            document.getElementById('modal-body').innerHTML += res.content;
-            document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.mentoringDate.substr(0,10) +"&nbsp&nbsp"+ res.mentoringDate.substr(11,5);
-            document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.salary + "원";
+            document.getElementById('modal-body').innerHTML = "자기소개 : " + res.data.introduction + "<br/>";
+            document.getElementById('modal-body').innerHTML += res.data.content;
+            document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.data.mentoringDate.substr(0,10) +"&nbsp"+ res.data.mentoringDate.substr(11,5);
+            document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.data.salary + "원";
             // 결제 하기 위한 금액 설정
-            document.getElementById('board-price').value = res.salary;
+            document.getElementById('board-price').value = res.data.salary;
         } else {
             console.log('실패');
         }
@@ -238,7 +238,6 @@ document.getElementById('myPage').addEventListener('click', function(){
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log("res : " + res);
         if(res){
             location.href="mentor-mypage.html";
         } else {

@@ -25,7 +25,7 @@ document.getElementById('mentor-write-btn').addEventListener('click',function(){
     })    
     .then((res)=>res.json())
     .then(res =>{
-        if(res > 0){
+        if(res != null){
             window.alert('게시글이 작성 되었습니다.');
             location.href="mentor-main.html";
         } else {
@@ -61,7 +61,7 @@ const deleteBoard = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        if(res>0){
+        if(res != null){
             window.alert('글이 삭제되었습니다.');
             location.href="mentor-main.html";
         } else{

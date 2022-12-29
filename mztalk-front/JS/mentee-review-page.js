@@ -102,7 +102,7 @@ const myReview = (scoreId) =>{
     .then(res =>{
         if(res != null){
             document.getElementById('scoreId').value = scoreId;
-            document.getElementById('content').innerHTML = res.content;
+            document.getElementById('content').innerHTML = res.data.content;
         } else {
             alert('리뷰가 존재하지 않습니다');
         }
@@ -126,7 +126,7 @@ const modifyReview = () => {
      })    
      .then((res)=>res.json())
      .then(res =>{
-         if(res > 0){
+         if(res != null){
             window.alert('리뷰 수정 완료');
             location.href="mentee-review-page.html";
         } else{
@@ -148,7 +148,7 @@ const deleteReview = (deleteId) => {
     })
     .then((res)=>res.json())
     .then(res =>{
-        if(res>0){
+        if(res != null){
             window.alert('리뷰가 삭제 되었습니다.');
             location.href="mentee-review-page.html";
         } else {

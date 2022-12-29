@@ -34,10 +34,10 @@ public class MenteeServiceImpl implements MenteeService {
     }
 
     @Override
-    public Result findAll() {
+    public List<MenteeDto> findAll() {
         List<Mentee> menteeList = menteeRepository.findAll();
         List<MenteeDto> collect = menteeList.stream().map(MenteeDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
 

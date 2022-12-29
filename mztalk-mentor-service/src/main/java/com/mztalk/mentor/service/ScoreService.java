@@ -1,8 +1,10 @@
 package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.dto.ScoreDto;
+import com.mztalk.mentor.domain.dto.ScoreMenteeDto;
 import com.mztalk.mentor.domain.entity.Result;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface ScoreService {
@@ -10,17 +12,17 @@ public interface ScoreService {
 
     ScoreDto findById(Long id);
 
-    Result findAll();
+    List<ScoreDto> findAll();
 
     Long deleteScore(Long id);
 
     Long updateScore(Long id, ScoreDto scoreDto);
 
-    Result findScoresByNickname(String nickname);
+    List<ScoreDto> findScoresByNickname(String nickname);
 
     boolean isExist(Long userId, Long boardId);
 
-    Result findByUserId(Long userId);
+    List<ScoreMenteeDto> findByUserId(Long userId);
 
-    Result findByMentorId(Long mentorId);
+    List<ScoreDto> findByMentorId(Long mentorId);
 }

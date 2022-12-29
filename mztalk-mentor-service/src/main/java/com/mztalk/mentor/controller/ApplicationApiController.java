@@ -4,9 +4,12 @@ import com.mztalk.mentor.domain.dto.ApplicationDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -17,14 +20,15 @@ public class ApplicationApiController {
     private final ApplicationService applicationService;
 
     @PostMapping("/application")
-    public Long saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationMap, HttpServletRequest request) {
+    public ResponseEntity<?> saveApplication(@RequestBody ConcurrentHashMap<String, String> applicationMap, HttpServletRequest request) {
         Long applicationId = applicationService.save(applicationMap);
-        return applicationId;
+        return new ResponseEntity<>(new Result<>("지원서 작성 성공",applicationId), HttpStatus.CREATED);
     }
 
     @GetMapping("/application/{id}")
-    public ApplicationDto findById(@PathVariable("id")Long id){
-        return applicationService.findById(id);
+    public ResponseEntity<?> findById(@PathVariable("id")Long id){
+        ApplicationDto applicationDto = applicationService.findById(id);
+        return new ResponseEntity<>(new Result<>("해당 번호에 대한 지원서",applicationDto),HttpStatus.OK);
     }
 
     @GetMapping("/application")
@@ -33,13 +37,15 @@ public class ApplicationApiController {
     }
 
     @GetMapping("/applications")
-    public Result findAll(){
-        return applicationService.findAll();
+    public ResponseEntity<?> findAll(){
+        List<ApplicationDto> applications = applicationService.findAll();
+        return new ResponseEntity<>(new Result<>("모든 지원서 목록", applications), HttpStatus.OK);
     }
 
     @DeleteMapping("/application/{id}")
-    public Long delete(@PathVariable("id") Long id){
-        return applicationService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable("id") Long id){
+        Long deleteId = applicationService.delete(id);
+        return new ResponseEntity<>(new Result<>("해당 지원서가 삭제되었습니다.", deleteId), HttpStatus.OK);
     }
 
     @PatchMapping("/application/{id}")

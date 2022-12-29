@@ -54,10 +54,10 @@ public class MentorServiceImpl implements MentorService {
     }
 
     @Override
-    public Result findAll() {
+    public List<MentorDto> findAll() {
         List<Mentor> mentors = mentorRepository.findAll();
         List<MentorDto> collect = mentors.stream().map(MentorDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
     }
 
     @Override
