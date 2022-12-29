@@ -75,10 +75,12 @@ public class FollowApiController {
     @GetMapping("/matpalList/{fromUserId}")
     public ResponseEntity<?> matpalList(@PathVariable Long fromUserId){
 
-        List<MatpalGroup> matpalListResponseDtoList = followService.matpalList(fromUserId);
+        List<MatpalListResponseDto> matpalListResponseDtoList = followService.matpalList(fromUserId);
 
         return new ResponseEntity<>(new CMRespDto<>(1, "맞팔리스트", matpalListResponseDtoList), HttpStatus.OK);
     }
+
+
 
 
 }

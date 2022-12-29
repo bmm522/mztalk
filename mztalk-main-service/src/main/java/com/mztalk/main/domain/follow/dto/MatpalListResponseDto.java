@@ -24,6 +24,9 @@ public class MatpalListResponseDto {
 
     private String matpal;
 
+//    private String fromPostImageUrl;
+
+
 
     public MatpalListResponseDto(Long fromUserId, Long toUserId, String postImageUrl, FollowStatus followStatus, String matpal){
         this.fromUserId = fromUserId;
@@ -31,11 +34,7 @@ public class MatpalListResponseDto {
         this.postImageUrl = postImageUrl;
         this.followStatus = followStatus;
         this.matpal = matpal;
-
-
-
-
+//        this.fromPostImageUrl = fromPostImageUrl;
     }
-
 
 }

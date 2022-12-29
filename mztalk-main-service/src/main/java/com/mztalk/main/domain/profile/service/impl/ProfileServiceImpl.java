@@ -69,11 +69,7 @@ public class ProfileServiceImpl implements ProfileService {
                    .profileImageName(imageName)
                    .build());
 
-//            Profile.builder()
-//                    .postImageUrl(profile.get().getPostImageUrl())
-//                    .build();
 
-//            return profile;
         } else {
             String personalUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
             System.out.println("여기 실행?!!!!");

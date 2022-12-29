@@ -10,7 +10,7 @@ public interface MatpalGroup {
 
     String getPostImageUrl();
 
-    String getFollowStatus();
+    FollowStatus getFollowStatus();
 
     String getMatpal();
 }
