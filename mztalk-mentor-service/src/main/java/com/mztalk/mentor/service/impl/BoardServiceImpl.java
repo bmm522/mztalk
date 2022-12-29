@@ -62,7 +62,7 @@ public class BoardServiceImpl implements BoardService {
         return boardDto;
     }
 
-    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
+    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드 멘토링 이후의 글만 출력되게 한다.
     @Override
     public Result findBoardByUserId(Long userId) {
         LocalDateTime now = LocalDateTime.now();
