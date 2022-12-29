@@ -23,20 +23,14 @@ public class ReplyApiController {
     @ResponseBody
     @PostMapping("/board/{id}/reply")
     public Reply replySave(@PathVariable("id") Long id, @RequestBody ReplyRequestDto replyRequestDto){
-
        return replyService.replySave(id, replyRequestDto);
-
-
 //        return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기성공", result), HttpStatus.CREATED);
     }
 
     //댓글삭제
     @DeleteMapping("/board/{id}/reply")
-    public ResponseEntity<?> deleteScore(
-            @PathVariable("id") Long id
-    ){
+    public ResponseEntity<?> deleteScore(@PathVariable("id") Long id){
         replyService.deleteReply(id);
-
         return new ResponseEntity<>(new CMRespDto<>(1, "댓글삭제성공", null), HttpStatus.OK);
     }
 

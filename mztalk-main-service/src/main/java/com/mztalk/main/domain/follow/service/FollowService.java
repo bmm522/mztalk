@@ -17,5 +17,7 @@ public interface FollowService {
 
     Long followStatus(Long fromUserId, Long toUserId);
 
-    List<MatpalGroup> matpalList(Long fromUserId);
+    List<MatpalListResponseDto> matpalList(Long fromUserId);
+
+
 }

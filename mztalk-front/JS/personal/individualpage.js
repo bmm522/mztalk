@@ -391,7 +391,7 @@ function storyLoad() {
                          `;
                       }
                      )
-                   }else if(privacy==='SECRET') {
+                   }else if(privacy.includes('SECRET')) {
                       //비밀글 
                       //console.log("되니?");
                       document.querySelector("#contentList").innerHTML += 
@@ -475,111 +475,111 @@ function storyLoad() {
 
 
 //비밀글
-function storySecretLoad() {
+// function storySecretLoad() {
 
-  if(own=loginUser){
-    //console.log('실행되니?');
+//   if(own=loginUser){
+//     //console.log('실행되니?');
     
 
-    fetch("http://localhost:8000/story/"+own,{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-        },
-      })
-      .then((res)=> res.json())
-      .then(res=>{     
+//     fetch("http://localhost:8000/story/"+own,{
+//         method:"POST",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//       })
+//       .then((res)=> res.json())
+//       .then(res=>{     
 
-        //console.log("hi"+res.data);
+//         //console.log("hi"+res.data);
 
-        for(let board of res.data){
+//         for(let board of res.data){
 
-          let boardId = board.id;
-          let nickname = board.nickname;
-          let privacy = board.privacy;
-          let title = board.title;
-          let content = board.content;
-          let date = board.lastModifiedDate.substr(0,10);
+//           let boardId = board.id;
+//           let nickname = board.nickname;
+//           let privacy = board.privacy;
+//           let title = board.title;
+//           let content = board.content;
+//           let date = board.lastModifiedDate.substr(0,10);
 
-          if(privacy==='SECRET'){
-            document.querySelector("#contentList").innerHTML += 
-            `<div id="post-div-${boardId}" class="post-div">
-                <table id="post-table">
-                    <tr>
-                        <td>
-                            <div id="category-div">${privacy}
-                            </div>
-                        </td>
-                        <td>
-                            <div id="post-title-div">${title}</div>
-                        </td>
-                        <td>
-                            <div id="post-date-div"><br>${date}</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"><br><br>
-                            <div id="edit-delete-div">
+//           if(privacy==='SECRET'){
+//             document.querySelector("#contentList").innerHTML += 
+//             `<div id="post-div-${boardId}" class="post-div">
+//                 <table id="post-table">
+//                     <tr>
+//                         <td>
+//                             <div id="category-div">${privacy}
+//                             </div>
+//                         </td>
+//                         <td>
+//                             <div id="post-title-div">${title}</div>
+//                         </td>
+//                         <td>
+//                             <div id="post-date-div"><br>${date}</div>
+//                         </td>
+//                     </tr>
+//                     <tr>
+//                         <td colspan="3"><br><br>
+//                             <div id="edit-delete-div">
                                    
-                                <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
-                                data-bs-toggle="modal" type="button">수정</button>
-                                <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
-                            </div>
-                            <div id=post-hr>
-                                <hr>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <div id="post-content">
-                                <div id="post-content-input">${content}</div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <div id="reply-div" class="reply-div-${boardId}">
-                  <div>
+//                                 <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
+//                                 data-bs-toggle="modal" type="button">수정</button>
+//                                 <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
+//                             </div>
+//                             <div id=post-hr>
+//                                 <hr>
+//                             </div>
+//                         </td>
+//                     </tr>
+//                     <tr>
+//                         <td colspan="3">
+//                             <div id="post-content">
+//                                 <div id="post-content-input">${content}</div>
+//                             </div>
+//                         </td>
+//                     </tr>
+//                 </table>
+//                 <div id="reply-div" class="reply-div-${boardId}">
+//                   <div>
 
-                  </div>
-                  </div>
-                  <div id="reply-write-div">
-                      <table>
-                          <tr>
-                              <td>
-                                  <div id="reply-write-box"><input type="text" class="reply-write-input-${boardId}" id="reply-write-input"></div>
-                  </div>
-                  </td>
-                  <td>  
-                      <div id="reply-write-btn"><button onClick="addReply(${boardId})" id="replyButton" style="cursor:pointer;" type="button">등록</button></div>
-                  </td>
-                  </tr>
-                  </table>
-                </div>
-               </div>
-                `;
+//                   </div>
+//                   </div>
+//                   <div id="reply-write-div">
+//                       <table>
+//                           <tr>
+//                               <td>
+//                                   <div id="reply-write-box"><input type="text" class="reply-write-input-${boardId}" id="reply-write-input"></div>
+//                   </div>
+//                   </td>
+//                   <td>  
+//                       <div id="reply-write-btn"><button onClick="addReply(${boardId})" id="replyButton" style="cursor:pointer;" type="button">등록</button></div>
+//                   </td>
+//                   </tr>
+//                   </table>
+//                 </div>
+//                </div>
+//                 `;
                 
-                 board.replyList.forEach((reply)=>{
-                 document.querySelector(`.reply-div-${boardId}`).innerHTML +=
-                     `
-                       <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
-                       <div id="reply-content">${reply.replyContent}</div>
-                       <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
-                       <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
-                       <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
-                       </div>
-                     `;
-                  }
-                 )
-               } //else
-              }
+//                  board.replyList.forEach((reply)=>{
+//                  document.querySelector(`.reply-div-${boardId}`).innerHTML +=
+//                      `
+//                        <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
+//                        <div id="reply-content">${reply.replyContent}</div>
+//                        <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
+//                        <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
+//                        <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
+//                        </div>
+//                      `;
+//                   }
+//                  )
+//                } //else
+//               }
 
-          })
-     }
+//           })
+//      }
 
-  }
+//   }
 
 
 
@@ -957,6 +957,7 @@ function addReply(boardId){
             //console.log("res.data: "+ res.data);
 
             let reply = res.data;
+            console.log(reply.replyUserNo);
             
             // let lastModifiedDate = reply.lastModifiedDate;
             document.querySelector(`.reply-div-${boardId}`).innerHTML +=

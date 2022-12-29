@@ -27,6 +27,9 @@ public class FollowDto {
 
     private FollowStatus followStatus;
 
+    private String toUserName;
+
+    private String toUserUrl;
 
     public Follow toEntity() {
         Follow follow = Follow.builder()
