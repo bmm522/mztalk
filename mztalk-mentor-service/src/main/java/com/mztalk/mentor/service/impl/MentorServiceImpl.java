@@ -33,7 +33,6 @@ public class MentorServiceImpl implements MentorService {
         Mentor mentor = Mentor.builder().
                 userId(userId).
                 status(Status.YES).build();
-
         mentor.addApplication(application);
         return mentorRepository.save(mentor).getUserId();
     }
@@ -58,14 +57,6 @@ public class MentorServiceImpl implements MentorService {
         List<Mentor> mentors = mentorRepository.findAll();
         List<MentorDto> collect = mentors.stream().map(MentorDto::new).collect(Collectors.toList());
         return collect;
-    }
-
-    @Override
-    @Transactional
-    public Long delete(Long id) {
-        Mentor findMentor = mentorRepository.findById(id).orElseThrow(() -> new MentorNotFoundException("해당 멘토가 존재하지 않습니다."));
-        findMentor.changeStatus();
-        return findMentor.getUserId();
     }
 
 }

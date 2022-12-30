@@ -68,6 +68,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
                     job : document.getElementById("job").value,
                     bank : document.getElementById("realBankCode").value,
                     account : document.getElementById("realBankAccount").value,
+                    birthday : document.getElementById('realBirthday').value,
                     userId : localStorage.getItem('userNo')
                 })
                 })    

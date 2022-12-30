@@ -14,7 +14,5 @@ public interface MentorService {
 
     List<MentorDto> findAll();
 
-    Long delete(Long id);
-
     boolean isExist(Long userId);
 }

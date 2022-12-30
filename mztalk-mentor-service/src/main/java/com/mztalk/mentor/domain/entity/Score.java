@@ -3,6 +3,8 @@ package com.mztalk.mentor.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ScoreDto;
+import com.mztalk.mentor.domain.dto.ScoreModifyDto;
+import com.mztalk.mentor.domain.dto.ScoreReqDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,7 +59,7 @@ public class Score extends BaseTimeEntity{
         this.status = status;
     }
 
-    public void updateScore(ScoreDto scoreDto) {
+    public void updateScore(ScoreModifyDto scoreDto) {
         this.count = scoreDto.getCount();
         this.content = scoreDto.getContent();
     }
@@ -85,10 +87,10 @@ public class Score extends BaseTimeEntity{
     }
 
     // == 리뷰 생성 메소드 ==//
-    public static Score createScore(ConcurrentHashMap<String,String> scoreMap,Mentee mentee, Mentor mentor, Board board){
+    public static Score createScore(ScoreReqDto scoreDto, Mentee mentee, Mentor mentor, Board board){
         Score score = new Score();
-        score.count = Double.parseDouble(scoreMap.get("count"));
-        score.content = scoreMap.get("content");
+        score.count = scoreDto.getCount();
+        score.content = scoreDto.getContent();
         score.status = Status.YES;
         score.addMentee(mentee);
         score.addMentor(mentor);

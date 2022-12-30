@@ -3,6 +3,7 @@ package com.mztalk.mentor.service.impl;
 import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ApplicationDto;
+import com.mztalk.mentor.domain.dto.ApplicationReqDto;
 import com.mztalk.mentor.domain.dto.MenteeApplicationDto;
 import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Mentee;
@@ -31,22 +32,13 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     @Transactional
-    public Long save(ConcurrentHashMap<String, String> applicationMap) {
-        Long userId = Long.parseLong(applicationMap.get("userId"));
+    public Long save(ApplicationReqDto applicationDto) {
+        Long userId = applicationDto.getUserId();
         Mentee mentee = menteeRepository.findById(userId).orElseThrow(() -> new MentorNotFoundException("해당 번호의 유저가 존재하지 않습니다."));
         if(isExist(userId)){
             throw new DuplicateException("이미 지원하신 서류가 존재합니다.");
         }
-        Application application = Application.builder().
-                name(applicationMap.get("name")).
-                phone(applicationMap.get("phone")).
-                email(applicationMap.get("email")).
-                job(applicationMap.get("job")).
-                bank(applicationMap.get("bank")).
-                account(applicationMap.get("account")).
-                authStatus(AuthStatus.NO).
-                status(Status.YES).
-                build();
+        Application application = applicationDto.toEntity();
         application.addMentee(mentee);
         return applicationRepository.save(application).getId();
     }

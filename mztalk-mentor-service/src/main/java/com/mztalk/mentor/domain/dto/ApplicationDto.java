@@ -25,6 +25,7 @@ public class ApplicationDto {
     private String email;
     private String job;
     private String bank;
+    private String birthday;
     private String account;
     private AuthStatus authStatus;
     private Status status;
@@ -44,6 +45,7 @@ public class ApplicationDto {
                 .job(job)
                 .bank(bank)
                 .account(account)
+                .birthday(birthday)
                 .authStatus(AuthStatus.NO)
                 .status(Status.YES)
                 .build();
@@ -59,6 +61,7 @@ public class ApplicationDto {
         this.job = application.getJob();
         this.bank = application.getBank();
         this.account = application.getAccount();
+        this.birthday = application.getBirthday();
         this.authStatus = application.getAuthStatus();
         this.status = application.getStatus();
         this.createdDate = application.getCreatedDate();
@@ -73,6 +76,7 @@ public class ApplicationDto {
         this.job = application.getJob();
         this.bank = application.getBank();
         this.account = application.getAccount();
+        this.birthday = application.getBirthday();
         this.authStatus = application.getAuthStatus();
         this.status = application.getStatus();
         this.createdDate = application.getCreatedDate();
@@ -80,7 +84,7 @@ public class ApplicationDto {
     }
 
     @Builder
-    public ApplicationDto(Long id, MenteeApplicationDto mentee, MentorDto mentor, String name, String phone, String email, String job, String bank, String account, AuthStatus authStatus, Status status, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public ApplicationDto(Long id, MenteeApplicationDto mentee, MentorDto mentor, String name, String phone, String email, String job, String bank, String account, String birthday, AuthStatus authStatus, Status status, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
         this.id = id;
         this.mentee = mentee;
         this.mentor = mentor;
@@ -90,6 +94,7 @@ public class ApplicationDto {
         this.job = job;
         this.bank = bank;
         this.account = account;
+        this.birthday = birthday;
         this.authStatus = authStatus;
         this.status = status;
         this.createdDate = createdDate;

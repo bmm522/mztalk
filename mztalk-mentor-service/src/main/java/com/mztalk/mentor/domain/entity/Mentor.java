@@ -71,7 +71,4 @@ public class Mentor extends BaseTimeEntity{
         }
     }
 
-    public void changeStatus() {
-        this.status = Status.NO;
-    }
 }

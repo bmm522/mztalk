@@ -2,6 +2,8 @@ package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.ScoreDto;
 import com.mztalk.mentor.domain.dto.ScoreMenteeDto;
+import com.mztalk.mentor.domain.dto.ScoreModifyDto;
+import com.mztalk.mentor.domain.dto.ScoreReqDto;
 import com.mztalk.mentor.domain.entity.*;
 import com.mztalk.mentor.exception.BoardNotFoundException;
 import com.mztalk.mentor.exception.ScoreNotFoundException;
@@ -28,15 +30,12 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     @Transactional
-    public Long save(ConcurrentHashMap<String,String> scoreMap) {
-        Long userId = Long.parseLong(scoreMap.get("userId"));
-        Long boardId = Long.parseLong(scoreMap.get("boardId"));
+    public Long save(ScoreReqDto scoreDto) {
+        Mentee mentee = menteeRepository.findMenteeByUserId(scoreDto.getUserId());
+        Mentor mentor = boardRepository.findMentorByBoardId(scoreDto.getBoardId());
+        Board board = boardRepository.findById(scoreDto.getBoardId()).orElseThrow(()-> new BoardNotFoundException("해당 번호의 글이 존재하지 않습니다."));
 
-        Mentee mentee = menteeRepository.findMenteeByUserId(userId);
-        Mentor mentor = boardRepository.findMentorByBoardId(boardId);
-        Board board = boardRepository.findById(boardId).orElseThrow(()-> new BoardNotFoundException("해당 번호의 글이 존재하지 않습니다."));
-
-        Score score = Score.createScore(scoreMap, mentee, mentor, board);
+        Score score = Score.createScore(scoreDto, mentee, mentor, board);
         return scoreRepository.save(score).getId();
     }
 
@@ -93,7 +92,7 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     @Transactional
-    public Long updateScore(Long id, ScoreDto scoreDto) {
+    public Long updateScore(Long id, ScoreModifyDto scoreDto) {
         Score score = scoreRepository.findById(id).orElseThrow(() -> new ScoreNotFoundException("해당하는 평점이 존재하지 않습니다."));
         score.updateScore(scoreDto);
         return score.getId();

@@ -4,6 +4,7 @@ import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.BoardDto;
 import com.mztalk.mentor.domain.dto.BoardMenteeDto;
+import com.mztalk.mentor.domain.dto.BoardReqDto;
 import com.mztalk.mentor.domain.dto.MentorBoardDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
@@ -30,20 +31,10 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public Long saveBoard(ConcurrentHashMap<String,String> boardMap) {
-        Long userId = Long.parseLong(boardMap.get("userId"));
+    public Long saveBoard(BoardReqDto boardDto) {
+        Long userId = boardDto.getUserId();
         Mentor mentor = mentorRepository.findMentorByUserId(userId);
-        Board board = Board.builder().
-                category(boardMap.get("category")).
-                title(boardMap.get("title")).
-                nickname(boardMap.get("nickname")).
-                content(boardMap.get("content")).
-                introduction(boardMap.get("introduction")).
-                career(boardMap.get("career")).
-                salary(Integer.parseInt(boardMap.get("salary"))).
-                mentoringDate(LocalDateTime.parse(boardMap.get("mentoringDate"))).
-                status(Status.YES).
-                build();
+        Board board = boardDto.toEntity();
         board.addMentor(mentor);
         return boardRepository.save(board).getId();
     }

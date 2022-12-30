@@ -3,13 +3,14 @@ package com.mztalk.mentor.service;
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardDto;
 import com.mztalk.mentor.domain.dto.BoardMenteeDto;
+import com.mztalk.mentor.domain.dto.BoardReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface BoardService {
-    Long saveBoard(ConcurrentHashMap<String,String> boardMap);
+    Long saveBoard(BoardReqDto boardDto);
 
     BoardDto findBoardByBoardId(Long id);
 

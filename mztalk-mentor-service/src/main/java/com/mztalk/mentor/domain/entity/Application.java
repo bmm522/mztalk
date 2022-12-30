@@ -5,6 +5,7 @@ import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ApplicationDto;
 import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -21,6 +22,7 @@ public class Application extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name ="application_id")
+    @ApiModelProperty(value="지원서 고유 번호", example = "1", required = false)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -42,6 +44,8 @@ public class Application extends BaseTimeEntity {
     private String bank;
     @NotNull
     private String account;
+    @NotNull
+    private String birthday;
 
     @Enumerated(EnumType.STRING)
     private AuthStatus authStatus;
@@ -51,7 +55,7 @@ public class Application extends BaseTimeEntity {
 
     @Builder
     public Application(Long id, Mentee mentee, Mentor mentor, String name, String phone,
-                       String email, String job, String bank, String account,
+                       String email, String job, String bank, String account, String birthday,
                        AuthStatus authStatus, Status status) {
         this.id = id;
         this.mentee = mentee;
@@ -62,6 +66,7 @@ public class Application extends BaseTimeEntity {
         this.job = job;
         this.bank = bank;
         this.account = account;
+        this.birthday = birthday;
         this.authStatus = authStatus;
         this.status = status;
     }
