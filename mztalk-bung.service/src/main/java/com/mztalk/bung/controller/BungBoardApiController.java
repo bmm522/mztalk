@@ -33,13 +33,6 @@ public class BungBoardApiController {
     @ResponseBody
     @PostMapping("/mainInsertBoard")
     public Long mainInsertBoard(@RequestBody BungBoardDto bungBoardDto) {
-        // 현재인원 실시간 체크 메소드
-//        Long bId = bungBoardDto.getBoardId();
-//
-//        System.out.println(bId);
-//        Long nowGroup = bungBoardService.bungBoardNowGroup(bId);
-//        System.out.println(nowGroup);
-
         return bungBoardService.mainInsertBoard(bungBoardDto);
     }
 
