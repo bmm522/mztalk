@@ -7,8 +7,7 @@ window.onload = () =>{
    //newAuctionBoard();
    //console.log(auctionResult);
    //latest();
-   console.log('여기다 여기!!!');
-   console.log()
+   
 }
 
 
@@ -110,55 +109,47 @@ async function newAuctionBoard(){
       });
 
       return response;
+     
+    }
 
-    //   .then((res)=> res.json())
-    //   .then(res=>{       
-    //     result = res.data;
-        
-    //   })
+    // newAuctionBoard()
+    // .then(res => res.json())
+    // .then(json => test(json));
 
-    //   return result;
-        //let cnt = 1;
-        
-        // document.getElementById('storyList').innerHTML += '<div class="card mb-3" style="max-width: 900px;">';
-        // console.log("오니?");
+    // function test(data, data){
+    //     console.log('here! hear!!')
+    //     console.log(data);
+    //     let boardAuction = [data, data];
 
-        // for(let board of res.data){
-        //     let boardId = board.id;
-        //     let category = board.category;
-        //     let nickname = board.nickname;
-        //     let title = board.title;
-        //     let content = board.content;
-        //     //let date = board.lastModifiedDate.substr(0,10); // 0~10까지
+    //     console.log("엄마!"+boardAuction);
 
-        //     document.querySelector('.col-md-6').innerHTML +=
-        //     `
-        //     <div class="row g-0">
-        //     <div class="col-md-4">
-        //         <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
-        //     </div>
-        //     <div class="col-md-8">
-        //         <div class="card-body">
-        //         <h5 class="card-title">들어가니?</h5>
-        //         <span class="badge text-bg-info" id="serviceBung">벙</span>
-        //         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        //         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        //         </div>
-        //     </div>
-        //     `;
-           
-            }
-            
-            newAuctionBoard()
-            .then(res => res.json())
-            .then(json => test(json));
+    //     return data;
+    // }
 
-            function test(data){
-                console.log('here! hear!!')
-                console.log(data);
 
-                return data;
-            }
+//벙서비스
+///mainBoards
+async function newBungBoard(){
+
+    const responses = fetch("http://localhost:8000/bung/mainBoards",{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      });
+
+      return responses;
+}
+newBungBoard()
+.then(res => res.json())
+.then(json => test(json));
+
+
+
+
+
 
     //             exec();
       
