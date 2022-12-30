@@ -187,7 +187,7 @@
                                 <div class="content-item__04">
                                     <div class="item__title">이전 비밀번호</div>
                                     <div class="item__input">
-                                        <input type="password" name="current-password" autocomplete="off" placeholder="이전 비밀번호"
+                                        <input type="password" id="passwd" name="current-password" autocomplete="off" placeholder="이전 비밀번호"
                                             />
                                     </div>
                                 </div>
@@ -195,14 +195,18 @@
                                 <div class="content-item__05">
                                     <div class="item__title">새 비밀번호</div>
                                     <div class="item__input">
-                                        <input type="password" name="new-password" autocomplete="off"  placeholder="새 비밀번호"  />
+                                        <input type="password" id="password" placeholder="새 비밀번호"/>
+                                        <div id="checkPw"  class="vaild-div"></div>
+                                        <input type="hidden" id="checkPasswordResult" value="fail"/>
                                     </div>
                                 </div>
 
                                 <div class="content-item__06">
                                     <div class="item__title">새 비밀번호 확인</div>
                                     <div class="item__input">
-                                        <input type="password" name="new-password_check" autocomplete="off" placeholder="새 비밀번호 확인"  />
+                                        <input type="password" id="re_password" placeholder="새 비밀번호 확인"/>
+                                        <div id="checkRePw"  class="vaild-div"></div>
+                                        <input type="hidden" id="checkRePasswordResult" value="fail"/>
                                     </div>
                                 </div>
                                 
@@ -210,7 +214,7 @@
                                 <div class="content-item__11">
                                     <div class="item__title"></div>
                                     <div class="item__input">
-                                        <button type="button" class="btn btn-primary" disabled>제출</button>
+                                        <button id="password_button_check" onclick="ch_Password();" type="button" class="btn btn-primary" disabled>제출</button>
                                     </div>
                                 </div>
                                 
