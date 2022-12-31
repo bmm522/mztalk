@@ -23,6 +23,6 @@ public class BoardMenteeDto {
         this.title = board.getTitle();
         this.nickname = board.getNickname();
         this.status = board.getStatus();
-
     }
+
 }

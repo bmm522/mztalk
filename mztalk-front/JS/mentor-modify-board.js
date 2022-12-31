@@ -169,7 +169,8 @@ const deleteBoard = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        if(res != null){
+        console.log(res.status);
+        if(res.status != 500){
             window.alert('글이 삭제되었습니다.');
             location.href="mentor-main.html";
         } else{

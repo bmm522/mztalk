@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OpenApiAccessTokenDto {
+
     private String access_token;
     private String token_type;
     private String expires_in;

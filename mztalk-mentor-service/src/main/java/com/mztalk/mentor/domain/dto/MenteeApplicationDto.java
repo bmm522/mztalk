@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class MenteeApplicationDto {
+
     private Long id;
     private String nickname;
     private LocalDateTime createdDate;

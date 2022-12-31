@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/mentor.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>일반사용자 마이 페이지</title>
+    <title>멘티 마이 페이지</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -62,7 +62,16 @@
                     <img src="https://cdn-icons-png.flaticon.com/128/8763/8763321.png" style="width: 28px; height: 28px;"id="myPage">
                 </div>      
             </form>  
-        </div>  
+        </div>
+
+        <!-- boardList 뿌려주는 div 시작 -->
+        <div id="board-list-div">
+                            
+        </div>
+        <!-- boardList 뿌려주는 div 끝 -->
+
+        <input type="hidden" id="boardId-modal"/>
+        <input type="hidden" id="board-price"/>
     </div>
 
     <!--멘토 자격 신청 페이지 모달 시작-->
@@ -140,15 +149,6 @@
         </div>
     </div>
     <!--멘토 신청 작성 모달 끝-->
-
-    <!-- boardList 뿌려주는 div 시작 -->
-    <div id="board-list-div">
-                        
-    </div>
-    <!-- boardList 뿌려주는 div 끝 -->
-
-    <input type="hidden" id="boardId-modal"/>
-    <input type="hidden" id="board-price"/>
 
     <!--멘토링 글 상세보기 모달 시작-->
     <div id="model-section">
