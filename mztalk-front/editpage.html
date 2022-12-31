@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <link rel="stylesheet" href="css/common.css">
@@ -350,7 +349,7 @@
                             <!--프로필셋팅 아이디영역-->
                             <div class="content-item__01">
                                 <form>    
-                                    <button type="button" class="btn btn-outline-primary">
+                                    <button onclick="requestPay();" type="button" id="subscribe_" class="btn btn-outline-primary">
                                         <p>
                                             <h1>정기 구독하기</h1>
                                             <h4>월 9,900원</h4>
@@ -479,8 +478,126 @@
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 
+ <!-- 제이쿼리 -->
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+ <!-- 아임포트 -->
+ <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+
+ <script type="text/javascript">
+
+//결제부분
+function requestPay(){
+
+    
+    var IMP = window.IMP;
+    IMP.init("imp23774718"); //식별코드
+    let uuid = self.crypto.randomUUID();
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth()+1;
+    const date = today.getDate();
+
+    // if(confirm('구매시 환불이 어렵습니다. 결제 하시겠습니까?')){
+// 결제금액(9,900원)일정 / 유저이름 / 상품이름(VIP)
+     console.log("여기 안와?");
+    IMP.request_pay({
+        pg: "kakaopay",
+        pay_method: "kakaopay",
+        merchant_uid: "ORD"+ year + month + date + "-" + uuid,
+        name : "VIP",
+        amout: 9900,
+        buyer_email: "nowing0108@gmail.com",
+        buyer_name: localStorage.getItem('userNickname'),
+        buyer_tel: "01074402770",
+    }),
+    function (rsp){
+        console.log(rsp+"오니?");
+        if (rsp.success) {
+              
+              // 결제 성공 시 로직,
+              console.log("!!!");
+          } else {
+              
+              // 결제 실패 시 로직,
+              console.log("?");
+          }
+        }
+    }
 
 
 
-<!-- <script src="JS/socialForService.js"></script> -->
+
+
+
+
+
+
+
+
+
+    // if (rsp.success) {
+    //             $.ajax({
+    //                 url: "http://localhost:8000/story/subscribe",
+    //                 method: "POST",
+    //                 headers: { 
+    //                     "Content-Type": "application/json;",
+    //                     Authorization:localStorage.getItem('authorization'),
+    //                     RefreshToken:localStorage.getItem('refreshToken')
+    //                 },
+    //                 data: JSON.stringify({
+    //                     userNo : localStorage.getItem('userNo'),
+    //                     username : rsp.buyer_name,
+    //                 })
+    //             })
+    //             .done(function (data) {
+    //                 $.ajax({
+    //                     url: "http://localhost:8000/login/role/vip/"+userNo,
+    //                     method: "POST",
+    //                     headers: { 
+    //                         "Content-Type": "application/json;",
+    //                         Authorization:localStorage.getItem('authorization'),
+    //                         RefreshToken:localStorage.getItem('refreshToken')
+    //                     },
+    //                     data: JSON.stringify({
+    //                         userNo : localStorage.getItem('userNo'),
+    //                     })
+    //                 })
+    //                 alert('VIP 신청이 완료되었습니다.');
+    //                 location.href="editpage.html";
+    //             })
+    //         } else {
+    //             alert('결제를 실패하셨습니다');
+    //             location.href="editpage.html";
+    //             }
+    //         }
+    //     )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
 </html>
