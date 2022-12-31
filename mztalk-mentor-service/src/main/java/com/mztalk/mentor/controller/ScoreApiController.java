@@ -1,6 +1,6 @@
 package com.mztalk.mentor.controller;
 
-import com.mztalk.mentor.domain.dto.ScoreDto;
+import com.mztalk.mentor.domain.dto.ScoreResDto;
 import com.mztalk.mentor.domain.dto.ScoreMenteeDto;
 import com.mztalk.mentor.domain.dto.ScoreModifyDto;
 import com.mztalk.mentor.domain.dto.ScoreReqDto;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 @ApiResponses({
         @ApiResponse(code = 200, message = "OK"),
@@ -33,15 +32,15 @@ public class ScoreApiController {
 
     @ApiOperation(value = "리뷰 저장", notes = "리뷰를 저장하는 메소드입니다.", response = Long.class)
     @PostMapping("/score")
-    public ResponseEntity<?> saveScore(@RequestBody ScoreReqDto scoreDto){
-        Long savedId = scoreService.save(scoreDto);
+    public ResponseEntity<?> saveScore(@RequestBody ScoreReqDto scoreReqDto){
+        Long savedId = scoreService.save(scoreReqDto);
         return new ResponseEntity<>(new Result<>("해당 리뷰가 정상적으로 저장되었습니다.", savedId), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "리뷰 정보 리턴", notes = "해당 번호에 해당하는 리뷰 정보를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/score/{id}")
     public ResponseEntity<?> findById(@PathVariable("id")Long id){
-        ScoreDto score = scoreService.findById(id);
+        ScoreResDto score = scoreService.findById(id);
         return new ResponseEntity<>(new Result<>("해당 번호에 대한 리뷰 정보 입니다.", score), HttpStatus.OK);
     }
 
@@ -49,7 +48,7 @@ public class ScoreApiController {
     @ApiOperation(value = "멘토의 모든 리뷰 리턴", notes = "해당 닉네임에 해당하는 모든 리뷰 정보를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/score")
     public ResponseEntity<?> findByNickname(@RequestParam("nickname")String nickname){
-        List<ScoreDto> scores = scoreService.findScoresByNickname(nickname);
+        List<ScoreResDto> scores = scoreService.findScoresByNickname(nickname);
         return new ResponseEntity<>(new Result<>("멘토의 닉네임으로 검색한 리뷰 목록입니다.", scores), HttpStatus.OK);
     }
 
@@ -65,14 +64,14 @@ public class ScoreApiController {
     @ApiOperation(value = "멘토의 모든 리뷰 리턴", notes = "해당 번호에 해당하는 멘토의 모든리뷰를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/score/mentor/{mentorId}")
     public ResponseEntity<?> findByMentorId(@PathVariable("mentorId")Long mentorId){
-        List<ScoreDto> scores = scoreService.findByMentorId(mentorId);
+        List<ScoreResDto> scores = scoreService.findByMentorId(mentorId);
         return new ResponseEntity<>(new Result<>("멘토의 고유 식별자로 멘토에게 작성된 모든 리뷰 목록", scores), HttpStatus.OK);
     }
 
     @ApiOperation(value = "모든 리뷰 리턴", notes = "저장되어 있는 모든 리뷰를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/scores")
     public ResponseEntity<?> findScores(){
-        List<ScoreDto> scores = scoreService.findAll();
+        List<ScoreResDto> scores = scoreService.findAll();
         return new ResponseEntity<>(new Result<>("멘토 서비스내 작성된 모든 리뷰 목록입니다.", scores), HttpStatus.OK);
     }
 
@@ -86,8 +85,8 @@ public class ScoreApiController {
 
     @ApiOperation(value = "리뷰 수정", notes = "해당 번호에 해당하는 리뷰를 수정하는 메소드입니다.", response = Result.class)
     @PatchMapping("/score/{id}")
-    public ResponseEntity<?> updateScore(@PathVariable("id")Long id, @RequestBody ScoreModifyDto scoreDto){
-        Long modifiedId = scoreService.updateScore(id, scoreDto);
+    public ResponseEntity<?> updateScore(@PathVariable("id")Long id, @RequestBody ScoreModifyDto scoreModifyDto){
+        Long modifiedId = scoreService.updateScore(id, scoreModifyDto);
         return new ResponseEntity<>(new Result<>("해당 번호의 리뷰가 수정되었습니다.", modifiedId), HttpStatus.OK);
     }
 

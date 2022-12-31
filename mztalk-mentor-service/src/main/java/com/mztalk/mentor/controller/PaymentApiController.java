@@ -1,6 +1,6 @@
 package com.mztalk.mentor.controller;
 
-import com.mztalk.mentor.domain.dto.PaymentDto;
+import com.mztalk.mentor.domain.dto.PaymentResDto;
 import com.mztalk.mentor.domain.dto.PaymentReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.PaymentService;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 @ApiResponses({
         @ApiResponse(code = 200, message = "OK"),
@@ -39,14 +38,14 @@ public class PaymentApiController {
     @ApiOperation(value = "결제 정보 리턴", notes = "해당 번호에 해당하는 결제 정보를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/payment/{id}")
     public ResponseEntity<?> findPayment(@PathVariable("id")Long id){
-        PaymentDto payment = paymentService.findById(id);
+        PaymentResDto payment = paymentService.findById(id);
         return new ResponseEntity<>(new Result<>("해당 번호에 대한 결제 정보", payment), HttpStatus.OK);
     }
 
     @ApiOperation(value = "모든 결제 정보 리턴", notes = "모든 결제 정보를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/payments")
     public ResponseEntity<?> findAll(){
-        List<PaymentDto> payments = paymentService.findAll();
+        List<PaymentResDto> payments = paymentService.findAll();
         return new ResponseEntity<>(new Result<>("멘토 서비스에서 결제된 모든 결제 정보", payments), HttpStatus.OK);
     }
 

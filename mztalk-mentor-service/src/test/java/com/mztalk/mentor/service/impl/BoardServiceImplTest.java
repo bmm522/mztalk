@@ -1,22 +1,11 @@
 package com.mztalk.mentor.service.impl;
 
 
-import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.BoardDto;
-import com.mztalk.mentor.domain.entity.Board;
-import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.service.BoardService;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
 
 @Transactional
 @SpringBootTest

@@ -1,5 +1,7 @@
 package com.mztalk.mentor.domain.dto;
 
+import com.mztalk.mentor.domain.Status;
+import com.mztalk.mentor.domain.entity.Score;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +18,13 @@ public class ScoreReqDto {
     private String content;
     private Long userId;
     private Long boardId;
+
+    public Score toEntity(){
+        return Score.builder()
+                .count(count)
+                .content(content)
+                .status(Status.YES)
+                .build();
+    }
 
 }

@@ -63,14 +63,4 @@ public class Payment extends BaseTimeEntity{
         this.board = board;
         board.addPayment(this);
     }
-
-    //== 결제 생성 메소드 ==//
-    public static Payment createPayment(PaymentReqDto paymentReqDto, Mentee mentee, Board board){
-        Payment payment = new Payment();
-        payment.price = paymentReqDto.getPrice();
-        payment.status = Status.YES;
-        payment.addMentee(mentee);
-        payment.addBoard(board);
-        return payment;
-    }
 }

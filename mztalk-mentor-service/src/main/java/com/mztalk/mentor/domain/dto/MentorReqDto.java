@@ -1,28 +1,24 @@
 package com.mztalk.mentor.domain.dto;
 
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.entity.Payment;
+import com.mztalk.mentor.domain.entity.Mentor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-public class PaymentReqDto {
+public class MentorReqDto {
 
     private Long userId;
-    private Long boardId;
-    private int price;
+    private Status status;
 
-    public Payment toEntity(){
-        Payment payment = Payment.builder()
-                .price(price)
+    public Mentor toEntity(){
+        Mentor mentor = Mentor.builder()
+                .userId(userId)
                 .status(Status.YES)
                 .build();
-        return payment;
+        return mentor;
     }
-
-
 }

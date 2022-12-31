@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountInfoDto {
+public class AccountInfoResDto {
     private String api_tran_id;
     private String api_tran_dtm;
     private String rsp_code;

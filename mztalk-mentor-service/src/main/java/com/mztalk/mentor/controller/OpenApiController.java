@@ -1,7 +1,6 @@
 package com.mztalk.mentor.controller;
 
-import com.mztalk.mentor.domain.dto.AccountInfoDto;
-import com.mztalk.mentor.domain.entity.Result;
+import com.mztalk.mentor.domain.dto.AccountInfoResDto;
 import com.mztalk.mentor.service.OpenApiService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +27,7 @@ public class OpenApiController {
 
     @ApiOperation(value = "실명인증 메소드", notes = "금융결제원 API를 이용하여 실명인증을 위한 메소드입니다.")
     @PostMapping("/realname")
-    public AccountInfoDto requestMatchAccountRealName(@RequestBody ConcurrentHashMap<String,String> accountMap){
+    public AccountInfoResDto requestMatchAccountRealName(@RequestBody ConcurrentHashMap<String,String> accountMap){
         return openApiService.requestMatchAccountRealName(accountMap);
     }
 

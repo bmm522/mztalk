@@ -1,7 +1,7 @@
 package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.SearchCondition;
-import com.mztalk.mentor.domain.dto.BoardDto;
+import com.mztalk.mentor.domain.dto.BoardResDto;
 import com.mztalk.mentor.domain.dto.BoardMenteeDto;
 import com.mztalk.mentor.domain.dto.BoardReqDto;
 
@@ -10,24 +10,24 @@ import java.util.List;
 public interface BoardService {
     Long saveBoard(BoardReqDto boardReqDto);
 
-    BoardDto findBoardByBoardId(Long id);
+    BoardResDto findBoardByBoardId(Long id);
 
     Long delete(Long id);
 
-    Long updateBoard(Long id, BoardDto boardDto);
+    Long updateBoard(Long id, BoardResDto boardResDto);
 
-    List<BoardDto> searchWithCondition(SearchCondition searchCondition);
+    List<BoardResDto> searchWithCondition(SearchCondition searchCondition);
 
     //멘티가 본인이 신청한 멘토링 글을 보는 메소드
     List<BoardMenteeDto> findBoardByUserId(Long userId);
 
-    List<BoardDto> findBoardByMentorId(Long mentorId);
+    List<BoardResDto> findBoardByMentorId(Long mentorId);
 
-    List<BoardDto> latestBoard();
+    List<BoardResDto> latestBoard();
 
-    List<BoardDto> findByMentoringDateBefore();
+    List<BoardResDto> findByMentoringDateBefore();
 
-    List<BoardDto> findNullPaymentWithBeforeMentoringDate();
+    List<BoardResDto> findNullPaymentWithBeforeMentoringDate();
 
     List<BoardMenteeDto> findBoardByMenteeId(Long menteeId);
 }

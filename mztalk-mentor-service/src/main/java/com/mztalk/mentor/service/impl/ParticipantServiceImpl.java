@@ -2,12 +2,11 @@ package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.BoardMenteeDto;
 import com.mztalk.mentor.domain.dto.MenteeApplicationDto;
-import com.mztalk.mentor.domain.dto.ParticipantDto;
+import com.mztalk.mentor.domain.dto.ParticipantResDto;
 import com.mztalk.mentor.domain.dto.ParticipantReqDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Participant;
-import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.ParticipantNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,31 +33,36 @@ public class ParticipantServiceImpl implements ParticipantService {
     public Long save(ParticipantReqDto participantReqDto) {
         Board board = boardRepository.findBoardByBoardId(participantReqDto.getBoardId());
         Mentee mentee = menteeRepository.findMenteeByUserId(participantReqDto.getUserId());
-        Participant participant = Participant.createParticipant(participantReqDto, mentee, board);
-        return participantRepository.save(participant).getId();
+
+        Participant participant = participantReqDto.toEntity();
+        participant.addBoard(board);
+        participant.addMentee(mentee);
+
+        Participant savedParticipant = participantRepository.save(participant);
+        return savedParticipant.getId();
     }
 
     @Override
-    public ParticipantDto findById(Long id) {
+    public ParticipantResDto findById(Long id) {
         Participant participant = participantRepository.findById(id).orElseThrow(() -> new ParticipantNotFoundException("해당하는 참가자는 존재하지 않습니다."));
-        ParticipantDto participantDto = new ParticipantDto(participant,new MenteeApplicationDto(participant.getMentee()),new BoardMenteeDto(participant.getBoard()));
-        return participantDto;
+        ParticipantResDto participantResDto = new ParticipantResDto(participant,new MenteeApplicationDto(participant.getMentee()),new BoardMenteeDto(participant.getBoard()));
+        return participantResDto;
     }
 
     @Override
-    public List<ParticipantDto> findParticipantsByMentorId(Long boardId) {
+    public List<ParticipantResDto> findParticipantsByMentorId(Long boardId) {
         List<Participant> participants = participantRepository.findParticipantsByMentorId(boardId);
-        List<ParticipantDto> collect = participants.stream()
-                .map(p->new ParticipantDto(p,new MenteeApplicationDto(p.getMentee()),new BoardMenteeDto(p.getBoard())))
+        List<ParticipantResDto> collect = participants.stream()
+                .map(p->new ParticipantResDto(p,new MenteeApplicationDto(p.getMentee()),new BoardMenteeDto(p.getBoard())))
                 .collect(Collectors.toList());
         return collect;
     }
 
     @Override
-    public List<ParticipantDto> findAll() {
+    public List<ParticipantResDto> findAll() {
         List<Participant> participantList = participantRepository.findAll();
-        List<ParticipantDto> collect = participantList.stream()
-                .map(p->new ParticipantDto(p,new MenteeApplicationDto(p.getMentee()),new BoardMenteeDto(p.getBoard())))
+        List<ParticipantResDto> collect = participantList.stream()
+                .map(p->new ParticipantResDto(p,new MenteeApplicationDto(p.getMentee()),new BoardMenteeDto(p.getBoard())))
                 .collect(Collectors.toList());
         return collect;
     }

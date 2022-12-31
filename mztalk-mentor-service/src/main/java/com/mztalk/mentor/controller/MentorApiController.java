@@ -1,6 +1,7 @@
 package com.mztalk.mentor.controller;
 
-import com.mztalk.mentor.domain.dto.MentorDto;
+import com.mztalk.mentor.domain.dto.MentorResDto;
+import com.mztalk.mentor.domain.dto.MentorReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.MentorService;
 import io.swagger.annotations.Api;
@@ -30,15 +31,15 @@ public class MentorApiController {
 
     @ApiOperation(value = "멘토권한 부여", notes = "멘토 권한을 부여하는 메소드입니다.", response = Result.class)
     @PostMapping("/member") //멘토 신청 후 허락 버튼
-    public ResponseEntity<?> save(@RequestBody MentorDto mentorDto){
-        Long savedId = mentorService.save(mentorDto);
+    public ResponseEntity<?> save(@RequestBody MentorReqDto mentorReqDto){
+        Long savedId = mentorService.save(mentorReqDto);
         return new ResponseEntity<>(new Result<>("해당 멘토가 등록되었습니다.", savedId), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "멘토 정보 리턴", notes = "해당번호의 멘토 정보를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/member/{id}")
     public ResponseEntity<?> findById(@PathVariable("id")Long id){
-        MentorDto mentor = mentorService.findById(id);
+        MentorResDto mentor = mentorService.findById(id);
         return new ResponseEntity<>(new Result<>("해당 번호에 대한 멘토 정보", mentor), HttpStatus.OK);
     }
 
@@ -51,7 +52,7 @@ public class MentorApiController {
     @ApiOperation(value = "모든 멘토 정보 리턴", notes = "멘토로 등록되어 있는 모든 사용자 정보를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/members")
     public ResponseEntity<?> findAll(){
-        List<MentorDto> mentors = mentorService.findAll();
+        List<MentorResDto> mentors = mentorService.findAll();
         return new ResponseEntity<>(new Result<>("멘토로 등록된 모든 사용자 목록", mentors), HttpStatus.OK);
     }
 

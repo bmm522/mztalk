@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ApplicationReqDto {
 
+    private Long userId;
     private String name;
     private String phone;
     private String email;
@@ -19,7 +20,6 @@ public class ApplicationReqDto {
     private String bank;
     private String birthday;
     private String account;
-    private Long userId;
     private AuthStatus authStatus;
     private Status status;
 

@@ -1,8 +1,8 @@
 package com.mztalk.mentor.service.impl;
 
 
-import com.mztalk.mentor.domain.dto.MenteeDto;
-import com.mztalk.mentor.domain.dto.MentorDto;
+import com.mztalk.mentor.domain.dto.MenteeReqDto;
+import com.mztalk.mentor.domain.dto.MentorResDto;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.repository.MenteeRepository;
@@ -28,26 +28,24 @@ class MenteeServiceImplTest {
     @Test
     public void test() throws Exception {
         //given
-        MentorDto mentorDto1 = new MentorDto();
-        MentorDto mentorDto2 = new MentorDto();
+        MentorResDto mentorResDto1 = new MentorResDto();
+        MentorResDto mentorResDto2 = new MentorResDto();
 
-        Mentor mentor1 = mentorDto1.toEntity();
-        Mentor mentor2 = mentorDto2.toEntity();
+        Mentor mentor1 = mentorResDto1.toEntity();
+        Mentor mentor2 = mentorResDto2.toEntity();
 
         ArrayList<Mentor> mentors = new ArrayList<>();
         mentors.add(mentor1);
         mentors.add(mentor2);
 
         //when
-        MenteeDto menteeDto = new MenteeDto();
-        menteeDto.setNickname("Jake");
-        menteeDto.setMentors(mentors);
-        Long savedId = menteeService.saveClient(menteeDto);
+        MenteeReqDto menteeReqDto = new MenteeReqDto();
+        Long savedId = menteeService.saveClient(menteeReqDto);
 
         Mentee mentee = menteeRepository.findById(savedId).get();
         //then
         assertThat(mentors.size()).isEqualTo(2);
-        assertThat(mentee.getNickname()).isEqualTo(menteeDto.getNickname());
+        assertThat(mentee.getNickname()).isEqualTo(menteeReqDto.getNickname());
         assertThat(mentee.getMentors().get(0)).isEqualTo(mentor1);
         assertThat(mentee.getMentors().get(1)).isEqualTo(mentor2);
     }

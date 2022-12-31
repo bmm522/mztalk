@@ -1,16 +1,12 @@
 package com.mztalk.mentor.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.ParticipantDto;
 import com.mztalk.mentor.domain.dto.ParticipantReqDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.servlet.http.Part;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
 @Getter
@@ -79,16 +75,4 @@ public class Participant extends BaseTimeEntity{
         mentee.getParticipants().add(this);
     }
 
-    // 참가 신청 생성 메소드
-    public static Participant createParticipant(ParticipantReqDto participantReqDto, Mentee mentee, Board board){
-        Participant participant = new Participant();
-        participant.name = participantReqDto.getName();
-        participant.phone = participantReqDto.getPhone();
-        participant.message = participantReqDto.getMessage();
-        participant.email = participantReqDto.getEmail();
-        participant.status = Status.YES;
-        participant.addMentee(mentee);
-        participant.addBoard(board);
-        return participant;
-    }
 }

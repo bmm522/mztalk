@@ -1,8 +1,8 @@
 package com.mztalk.mentor.service.impl;
 
-import com.mztalk.mentor.domain.dto.MenteeDto;
+import com.mztalk.mentor.domain.dto.MenteeReqDto;
+import com.mztalk.mentor.domain.dto.MenteeResDto;
 import com.mztalk.mentor.domain.entity.Mentee;
-import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.MenteeNotFoundException;
 import com.mztalk.mentor.repository.MenteeRepository;
 import com.mztalk.mentor.service.MenteeService;
@@ -21,22 +21,22 @@ public class MenteeServiceImpl implements MenteeService {
 
     @Override
     @Transactional
-    public Long saveClient(MenteeDto menteeDto) {
-        Mentee savedClient = menteeRepository.save(menteeDto.toEntity());
+    public Long saveClient(MenteeReqDto menteeReqDto) {
+        Mentee savedClient = menteeRepository.save(menteeReqDto.toEntity());
         return savedClient.getId();
     }
 
     @Override
-    public MenteeDto findClient(Long id) {
+    public MenteeResDto findClient(Long id) {
         Mentee mentee = menteeRepository.findById(id).orElseThrow(() -> new MenteeNotFoundException("해당하는 클라이언트가 존재하지 않습니다."));
-        MenteeDto menteeDto = new MenteeDto(mentee);
-        return menteeDto;
+        MenteeResDto menteeResDto = new MenteeResDto(mentee);
+        return menteeResDto;
     }
 
     @Override
-    public List<MenteeDto> findAll() {
+    public List<MenteeResDto> findAll() {
         List<Mentee> menteeList = menteeRepository.findAll();
-        List<MenteeDto> collect = menteeList.stream().map(MenteeDto::new).collect(Collectors.toList());
+        List<MenteeResDto> collect = menteeList.stream().map(MenteeResDto::new).collect(Collectors.toList());
         return collect;
     }
 

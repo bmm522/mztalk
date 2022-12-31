@@ -1,17 +1,14 @@
 package com.mztalk.mentor.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.ApplicationDto;
+import com.mztalk.mentor.domain.dto.ApplicationResDto;
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -71,13 +68,13 @@ public class Application extends BaseTimeEntity {
         this.status = status;
     }
 
-    public void updateApplication(ApplicationDto applicationDto){
-        this.name = applicationDto.getName();
-        this.phone = applicationDto.getPhone();
-        this.email = applicationDto.getEmail();
-        this.job = applicationDto.getJob();
-        this.bank = applicationDto.getBank();
-        this.account = applicationDto.getAccount();
+    public void updateApplication(ApplicationResDto applicationResDto){
+        this.name = applicationResDto.getName();
+        this.phone = applicationResDto.getPhone();
+        this.email = applicationResDto.getEmail();
+        this.job = applicationResDto.getJob();
+        this.bank = applicationResDto.getBank();
+        this.account = applicationResDto.getAccount();
     }
 
     //== 연관관계 편의 메소드 ==//

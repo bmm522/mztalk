@@ -2,7 +2,7 @@ package com.mztalk.mentor.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mztalk.mentor.domain.dto.AccountInfoDto;
+import com.mztalk.mentor.domain.dto.AccountInfoResDto;
 import com.mztalk.mentor.domain.dto.OpenApiAccessTokenDto;
 import com.mztalk.mentor.domain.OpenApiAccessToken;
 import com.mztalk.mentor.service.OpenApiService;
@@ -68,7 +68,7 @@ public class OpenApiServiceImpl implements OpenApiService {
 
     @Override
     @Transactional
-    public AccountInfoDto requestMatchAccountRealName(ConcurrentHashMap<String,String> accountMap) {
+    public AccountInfoResDto requestMatchAccountRealName(ConcurrentHashMap<String,String> accountMap) {
         OpenApiAccessToken token = requestOpenApiAccessToken();
         int uniqueNum = (int)((Math.random()+10) * 10000000);
 
@@ -93,11 +93,11 @@ public class OpenApiServiceImpl implements OpenApiService {
         accountBody.put("account_holder_info",birthday);
         accountBody.put("tran_dtime", LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
 
-        AccountInfoDto accountInfoDto = accountRestTemplate.postForObject("https://testapi.openbanking.or.kr/v2.0/inquiry/real_name",
+        AccountInfoResDto accountInfoResDto = accountRestTemplate.postForObject("https://testapi.openbanking.or.kr/v2.0/inquiry/real_name",
                 new HttpEntity<>(accountBody.toString(), accountHeaders),
-                AccountInfoDto.class);
+                AccountInfoResDto.class);
 
-        return accountInfoDto;
+        return accountInfoResDto;
     }
 
 }

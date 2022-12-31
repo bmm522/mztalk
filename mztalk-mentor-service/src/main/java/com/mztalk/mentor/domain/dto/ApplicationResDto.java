@@ -3,23 +3,19 @@ package com.mztalk.mentor.domain.dto;
 import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.Application;
-import com.mztalk.mentor.domain.entity.Mentee;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class ApplicationDto {
+public class ApplicationResDto {
 
     private Long id;
     private MenteeApplicationDto mentee;
-    private MentorDto mentor;
+    private MentorResDto mentor;
     private String name;
     private String phone;
     private String email;
@@ -34,25 +30,7 @@ public class ApplicationDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModifiedDate;
 
-    public Application toEntity(){
-        Application application = Application.builder()
-                .id(id)
-                .mentee(mentee.toEntity())
-                .mentor(mentor.toEntity())
-                .name(name)
-                .phone(phone)
-                .email(email)
-                .job(job)
-                .bank(bank)
-                .account(account)
-                .birthday(birthday)
-                .authStatus(AuthStatus.NO)
-                .status(Status.YES)
-                .build();
-        return application;
-    }
-
-    public ApplicationDto(Application application,MenteeApplicationDto mentee){
+    public ApplicationResDto(Application application, MenteeApplicationDto mentee){
         this.mentee = mentee;
         this.id = application.getId();
         this.name = application.getName();
@@ -68,7 +46,7 @@ public class ApplicationDto {
         this.lastModifiedDate = application.getLastModifiedDate();
     }
 
-    public ApplicationDto(Application application){
+    public ApplicationResDto(Application application){
         this.id = application.getId();
         this.name = application.getName();
         this.phone = application.getPhone();
@@ -84,7 +62,7 @@ public class ApplicationDto {
     }
 
     @Builder
-    public ApplicationDto(Long id, MenteeApplicationDto mentee, MentorDto mentor, String name, String phone, String email, String job, String bank, String account, String birthday, AuthStatus authStatus, Status status, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public ApplicationResDto(Long id, MenteeApplicationDto mentee, MentorResDto mentor, String name, String phone, String email, String job, String bank, String account, String birthday, AuthStatus authStatus, Status status, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
         this.id = id;
         this.mentee = mentee;
         this.mentor = mentor;

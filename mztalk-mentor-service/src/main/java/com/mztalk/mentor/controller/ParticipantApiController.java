@@ -1,6 +1,6 @@
 package com.mztalk.mentor.controller;
 
-import com.mztalk.mentor.domain.dto.ParticipantDto;
+import com.mztalk.mentor.domain.dto.ParticipantResDto;
 import com.mztalk.mentor.domain.dto.ParticipantReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.ParticipantService;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 @ApiResponses({
         @ApiResponse(code = 200, message = "OK"),
@@ -40,21 +39,21 @@ public class ParticipantApiController {
     @ApiOperation(value = "참가자 정보 리턴", notes = "해당 번호에 해당하는 참가자 정보를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/participant/{id}")
     public ResponseEntity<?> findParticipant(@PathVariable("id") Long id){
-        ParticipantDto participant = participantService.findById(id);
+        ParticipantResDto participant = participantService.findById(id);
         return new ResponseEntity<>(new Result<>("해당 번호에 대한 참가자 정보", participant), HttpStatus.OK);
     }
 
     @ApiOperation(value = "멘토에게 신청한 모든 참가자 정보 리턴", notes = "해당 멘토에게 신청기록이 존재하는 모든 참가가정보를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/participant")
     public ResponseEntity<?> findParticipantsByMentorId(@RequestParam("mentorId")Long mentorId){
-        List<ParticipantDto> participants = participantService.findParticipantsByMentorId(mentorId);
+        List<ParticipantResDto> participants = participantService.findParticipantsByMentorId(mentorId);
         return new ResponseEntity<>(new Result<>("해당 멘토에게 신청한 유저 목록", participants), HttpStatus.OK);
     }
 
     @ApiOperation(value = "멘토링 참가기록이 존재하는 모든 사용자 정보 리턴", notes = "멘토링 참가기록이 존재하는 모든 사용자 정보 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/participants")
     public ResponseEntity<?> findAll(){
-        List<ParticipantDto> participants = participantService.findAll();
+        List<ParticipantResDto> participants = participantService.findAll();
         return new ResponseEntity<>(new Result<>("모든 참가자 목록", participants), HttpStatus.OK);
     }
 

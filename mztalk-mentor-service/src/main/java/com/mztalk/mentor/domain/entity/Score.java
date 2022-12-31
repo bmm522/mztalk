@@ -1,8 +1,6 @@
 package com.mztalk.mentor.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.ScoreDto;
 import com.mztalk.mentor.domain.dto.ScoreModifyDto;
 import com.mztalk.mentor.domain.dto.ScoreReqDto;
 import lombok.AccessLevel;
@@ -10,11 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
 @Getter
@@ -85,18 +80,5 @@ public class Score extends BaseTimeEntity{
         this.board = board;
         board.addScore(this);
     }
-
-    // == 리뷰 생성 메소드 ==//
-    public static Score createScore(ScoreReqDto scoreDto, Mentee mentee, Mentor mentor, Board board){
-        Score score = new Score();
-        score.count = scoreDto.getCount();
-        score.content = scoreDto.getContent();
-        score.status = Status.YES;
-        score.addMentee(mentee);
-        score.addMentor(mentor);
-        score.addBoard(board);
-        return score;
-    }
-
 
 }

@@ -1,6 +1,7 @@
 package com.mztalk.mentor.controller;
 
-import com.mztalk.mentor.domain.dto.MenteeDto;
+import com.mztalk.mentor.domain.dto.MenteeReqDto;
+import com.mztalk.mentor.domain.dto.MenteeResDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.MenteeService;
 import io.swagger.annotations.Api;
@@ -29,22 +30,22 @@ public class MenteeApiController {
 
     @ApiOperation(value = "멘토 서비스 사용자 등록", notes = "서비스 사용자 등록 메소드입니다.", response = Result.class)
     @PostMapping
-    public ResponseEntity<?> saveClient(@RequestBody MenteeDto menteeDto){
-        Long id = menteeService.saveClient(menteeDto);
+    public ResponseEntity<?> saveClient(@RequestBody MenteeReqDto menteeReqDto){
+        Long id = menteeService.saveClient(menteeReqDto);
         return new ResponseEntity<>(new Result<>("사용자가 서비스 등록되었습니다.",id), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "사용자 정보 리턴", notes = "해당번호의 사용자정보를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/mentee/{id}")
     public ResponseEntity<?> findClient(@PathVariable("id") Long id){
-        MenteeDto mentee = menteeService.findClient(id);
+        MenteeResDto mentee = menteeService.findClient(id);
         return new ResponseEntity<>(new Result<>("멘티에 관한 정보",mentee),HttpStatus.OK);
     }
 
     @ApiOperation(value = "모든 사용자 정보 리턴", notes = "모든 서비스 사용자 정보를 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/mentees")
     public ResponseEntity<?> findAll(){
-        List<MenteeDto> mentees = menteeService.findAll();
+        List<MenteeResDto> mentees = menteeService.findAll();
         return new ResponseEntity<>(new Result<>("멘티 전체 목록", mentees), HttpStatus.OK);
     }
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardDto {
+public class BoardResDto {
 
     private Long id;
     private MentorBoardDto mentor;
@@ -23,35 +22,16 @@ public class BoardDto {
     private String introduction;
     private String career;
     private int salary;
-    private ScoreDto score;
+    private ScoreResDto score;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime mentoringDate;
-    private ParticipantDto participant;
-    private PaymentDto payment;
+    private ParticipantResDto participant;
+    private PaymentResDto payment;
     private Status status;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 
-    public Board toEntity() {
-        Board board = Board.builder()
-                .id(id)
-                .category(category)
-                .title(title)
-                .nickname(nickname)
-                .content(content)
-                .introduction(introduction)
-                .career(career)
-                .salary(salary)
-                .score(score.toEntity())
-                .mentoringDate(mentoringDate)
-                .participant(participant.toEntity())
-                .payment(payment.toEntity())
-                .status(Status.YES)
-                .build();
-        return board;
-    }
-
-    public BoardDto(Board board){
+    public BoardResDto(Board board){
         this.id = board.getId();
         this.category = board.getCategory();
         this.title = board.getTitle();
@@ -66,7 +46,7 @@ public class BoardDto {
         this.lastModifiedDate = board.getLastModifiedDate();
     }
 
-    public BoardDto(Board board,MentorBoardDto mentor){
+    public BoardResDto(Board board, MentorBoardDto mentor){
         this.mentor = mentor;
         this.id = board.getId();
         this.category = board.getCategory();

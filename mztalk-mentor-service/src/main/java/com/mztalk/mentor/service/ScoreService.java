@@ -1,30 +1,28 @@
 package com.mztalk.mentor.service;
 
-import com.mztalk.mentor.domain.dto.ScoreDto;
+import com.mztalk.mentor.domain.dto.ScoreResDto;
 import com.mztalk.mentor.domain.dto.ScoreMenteeDto;
 import com.mztalk.mentor.domain.dto.ScoreModifyDto;
 import com.mztalk.mentor.domain.dto.ScoreReqDto;
-import com.mztalk.mentor.domain.entity.Result;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 public interface ScoreService {
-    Long save(ScoreReqDto scoreDto);
+    Long save(ScoreReqDto scoreReqDto);
 
-    ScoreDto findById(Long id);
+    ScoreResDto findById(Long id);
 
-    List<ScoreDto> findAll();
+    List<ScoreResDto> findAll();
 
     Long deleteScore(Long id);
 
-    Long updateScore(Long id, ScoreModifyDto scoreDto);
+    Long updateScore(Long id, ScoreModifyDto scoreModifyDto);
 
-    List<ScoreDto> findScoresByNickname(String nickname);
+    List<ScoreResDto> findScoresByNickname(String nickname);
 
     boolean isExist(Long userId, Long boardId);
 
     List<ScoreMenteeDto> findByUserId(Long userId);
 
-    List<ScoreDto> findByMentorId(Long mentorId);
+    List<ScoreResDto> findByMentorId(Long mentorId);
 }

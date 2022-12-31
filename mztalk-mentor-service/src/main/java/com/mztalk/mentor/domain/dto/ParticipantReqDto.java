@@ -1,5 +1,7 @@
 package com.mztalk.mentor.domain.dto;
 
+import com.mztalk.mentor.domain.Status;
+import com.mztalk.mentor.domain.entity.Participant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +16,18 @@ public class ParticipantReqDto {
     private String name;
     private String phone;
     private String email;
-    private int price;
     private String message;
+
+    public Participant toEntity(){
+        Participant participant = Participant.builder()
+                .name(name)
+                .phone(phone)
+                .email(email)
+                .message(message)
+                .status(Status.YES)
+                .build();
+        return participant;
+    }
 
 
 }

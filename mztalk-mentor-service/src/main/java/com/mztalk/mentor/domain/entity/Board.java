@@ -1,17 +1,14 @@
 package com.mztalk.mentor.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.BoardDto;
+import com.mztalk.mentor.domain.dto.BoardResDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -93,13 +90,13 @@ public class Board extends BaseTimeEntity{
         this.status = Status.NO;
     }
 
-    public void updateBoard(BoardDto boardDto){
-        this.title = boardDto.getTitle();
-        this.introduction = boardDto.getIntroduction();
-        this.career = boardDto.getCareer();
-        this.salary = boardDto.getSalary();
-        this.content = boardDto.getContent();
-        this.mentoringDate = boardDto.getMentoringDate();
+    public void updateBoard(BoardResDto boardResDto){
+        this.title = boardResDto.getTitle();
+        this.introduction = boardResDto.getIntroduction();
+        this.career = boardResDto.getCareer();
+        this.salary = boardResDto.getSalary();
+        this.content = boardResDto.getContent();
+        this.mentoringDate = boardResDto.getMentoringDate();
     }
 
     //== 연관관계 편의 메소드==//

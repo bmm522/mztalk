@@ -1,9 +1,6 @@
 package com.mztalk.mentor.domain.dto;
 
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.entity.Board;
-import com.mztalk.mentor.domain.entity.Mentee;
-import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.Score;
 import lombok.*;
 
@@ -13,19 +10,19 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScoreDto {
+public class ScoreResDto {
 
     private Long id;
-    private MentorDto mentor;
-    private MenteeDto mentee;
-    private BoardDto board;
+    private MentorResDto mentor;
+    private MenteeResDto mentee;
+    private BoardResDto board;
     private Double count;
     private String content;
     private Status status;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 
-    public ScoreDto(Score score) {
+    public ScoreResDto(Score score) {
         this.id = score.getId();
         this.count = score.getCount();
         this.content = score.getContent();
@@ -34,17 +31,5 @@ public class ScoreDto {
         this.lastModifiedDate = score.getLastModifiedDate();
     }
 
-    public Score toEntity(){
-        Score score = Score.builder()
-                .id(id)
-                .mentor(mentor.toEntity())
-                .mentee(mentee.toEntity())
-                .board(board.toEntity())
-                .count(count)
-                .content(content)
-                .status(Status.YES)
-                .build();
-        return score;
-    }
 
 }

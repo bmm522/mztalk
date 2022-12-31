@@ -1,7 +1,7 @@
 package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.SearchCondition;
-import com.mztalk.mentor.domain.dto.BoardDto;
+import com.mztalk.mentor.domain.dto.BoardResDto;
 import com.mztalk.mentor.domain.dto.BoardMenteeDto;
 import com.mztalk.mentor.domain.dto.BoardReqDto;
 import com.mztalk.mentor.domain.entity.Result;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 @ApiResponses({
         @ApiResponse(code = 200, message = "OK"),
@@ -35,7 +34,7 @@ public class BoardApiController {
     @ApiOperation(value = "모든 글 리턴", notes = "결제정보가 없고, 멘토링 시작 전인 모든 글을 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/boards")
     public ResponseEntity<?> findNullPaymentWithBeforeMentoringDate(){
-        List<BoardDto> boards = boardService.findNullPaymentWithBeforeMentoringDate();
+        List<BoardResDto> boards = boardService.findNullPaymentWithBeforeMentoringDate();
         return new ResponseEntity<>(new Result<>("모든 글 목록", boards), HttpStatus.OK);
     }
 
@@ -49,7 +48,7 @@ public class BoardApiController {
     @ApiOperation(value = "글 정보 리턴", notes = "해당 번호에 해당하는 글을 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/board/{id}")
     public ResponseEntity<?> findById(@PathVariable("id")Long id){
-        BoardDto board = boardService.findBoardByBoardId(id);
+        BoardResDto board = boardService.findBoardByBoardId(id);
         return new ResponseEntity<>(new Result<>("해당 번호에 해당하는 글", board), HttpStatus.OK);
     }
 
@@ -72,7 +71,7 @@ public class BoardApiController {
     @ApiOperation(value = "멘토의 모든 글 리턴", notes = "해당번호의 멘토가 작성한 모든글을 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/board/mentor/{mentorId}")
     public ResponseEntity<?> findBoardByMentorId(@PathVariable("mentorId")Long mentorId){
-        List<BoardDto> boards = boardService.findBoardByMentorId(mentorId);
+        List<BoardResDto> boards = boardService.findBoardByMentorId(mentorId);
         return new ResponseEntity<>(new Result<>("해당 멘토에 대한 모든 글", boards), HttpStatus.OK);
     }
 
@@ -86,21 +85,21 @@ public class BoardApiController {
     // boardId로 글찾은 후 수정하기
     @ApiOperation(value = "글 수정", notes = "해당번호의 글을 수정하는 메소드입니다.", response = Long.class)
     @PatchMapping("/board/edit/{id}")
-    public Long updateBoard(@PathVariable("id")Long id,@RequestBody BoardDto boardDto){
-        return boardService.updateBoard(id, boardDto);
+    public Long updateBoard(@PathVariable("id")Long id,@RequestBody BoardResDto boardResDto){
+        return boardService.updateBoard(id, boardResDto);
     }
 
     @ApiOperation(value = "글 검색", notes = "검색조건에 맞는 글을 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/board/search")
     public ResponseEntity<?> searchWithCondition(@ModelAttribute("SearchCondition")SearchCondition searchCondition){
-        List<BoardDto> boards = boardService.searchWithCondition(searchCondition);
+        List<BoardResDto> boards = boardService.searchWithCondition(searchCondition);
         return new ResponseEntity<>(new Result<>("글 검색 결과", boards), HttpStatus.OK);
     }
 
     @ApiOperation(value = "최신 글 리턴", notes = "작성된 글을 최신순으로 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/board/latest")
     public ResponseEntity<?> latestBoard(){
-        List<BoardDto> boards = boardService.latestBoard();
+        List<BoardResDto> boards = boardService.latestBoard();
         return new ResponseEntity<>(new Result<>("최신 글 목록", boards), HttpStatus.OK);
     }
 
