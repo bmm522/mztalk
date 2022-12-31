@@ -1,6 +1,7 @@
 package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.ParticipantDto;
+import com.mztalk.mentor.domain.dto.ParticipantReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.ParticipantService;
 import io.swagger.annotations.Api;
@@ -31,8 +32,8 @@ public class ParticipantApiController {
 
     @ApiOperation(value = "멘토링 참가 신청", notes = "결제 후 참가자정보를 저장하는 메소드입니다.", response = Result.class)
     @PostMapping("/participant")
-    public ResponseEntity<?> save(@RequestBody ConcurrentHashMap<String,String> participantMap){
-        Long savedId = participantService.save(participantMap);
+    public ResponseEntity<?> save(@RequestBody ParticipantReqDto participantReqDto){
+        Long savedId = participantService.save(participantReqDto);
         return new ResponseEntity<>(new Result<>("신청이 완료되었습니다.", savedId), HttpStatus.CREATED);
     }
 

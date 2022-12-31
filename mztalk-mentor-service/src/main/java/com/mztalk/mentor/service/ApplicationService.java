@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public interface ApplicationService {
 
-    Long save(ApplicationReqDto applicationDto);
+    Long save(ApplicationReqDto applicationReqDto);
 
     ApplicationDto findById(Long id);
 

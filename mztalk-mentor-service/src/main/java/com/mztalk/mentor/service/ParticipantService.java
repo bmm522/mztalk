@@ -1,13 +1,14 @@
 package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.dto.ParticipantDto;
+import com.mztalk.mentor.domain.dto.ParticipantReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface ParticipantService {
-    Long save(ConcurrentHashMap<String,String> participantMap);
+    Long save(ParticipantReqDto participantReqDto);
 
     ParticipantDto findById(Long id);
 

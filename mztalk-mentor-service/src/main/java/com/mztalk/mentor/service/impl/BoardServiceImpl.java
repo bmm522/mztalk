@@ -31,10 +31,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public Long saveBoard(BoardReqDto boardDto) {
-        Long userId = boardDto.getUserId();
-        Mentor mentor = mentorRepository.findMentorByUserId(userId);
-        Board board = boardDto.toEntity();
+    public Long saveBoard(BoardReqDto boardReqDto) {
+        Mentor mentor = mentorRepository.findMentorByUserId(boardReqDto.getUserId());
+        Board board = boardReqDto.toEntity();
         board.addMentor(mentor);
         return boardRepository.save(board).getId();
     }

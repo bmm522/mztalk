@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,13 +31,13 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     @Transactional
-    public Long save(ApplicationReqDto applicationDto) {
-        Long userId = applicationDto.getUserId();
+    public Long save(ApplicationReqDto applicationReqDto) {
+        Long userId = applicationReqDto.getUserId();
         Mentee mentee = menteeRepository.findById(userId).orElseThrow(() -> new MentorNotFoundException("해당 번호의 유저가 존재하지 않습니다."));
         if(isExist(userId)){
             throw new DuplicateException("이미 지원하신 서류가 존재합니다.");
         }
-        Application application = applicationDto.toEntity();
+        Application application = applicationReqDto.toEntity();
         application.addMentee(mentee);
         return applicationRepository.save(application).getId();
     }

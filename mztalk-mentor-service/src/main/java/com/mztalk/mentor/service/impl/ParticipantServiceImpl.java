@@ -3,6 +3,7 @@ package com.mztalk.mentor.service.impl;
 import com.mztalk.mentor.domain.dto.BoardMenteeDto;
 import com.mztalk.mentor.domain.dto.MenteeApplicationDto;
 import com.mztalk.mentor.domain.dto.ParticipantDto;
+import com.mztalk.mentor.domain.dto.ParticipantReqDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Participant;
@@ -31,12 +32,10 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     @Transactional
-    public Long save(ConcurrentHashMap<String,String> participantMap) {
-        Long boardId = Long.parseLong(participantMap.get("boardId"));
-        Long userId = Long.parseLong(participantMap.get("userId"));
-        Board board = boardRepository.findBoardByBoardId(boardId);
-        Mentee mentee = menteeRepository.findMenteeByUserId(userId);
-        Participant participant = Participant.createParticipant(participantMap, mentee, board);
+    public Long save(ParticipantReqDto participantReqDto) {
+        Board board = boardRepository.findBoardByBoardId(participantReqDto.getBoardId());
+        Mentee mentee = menteeRepository.findMenteeByUserId(participantReqDto.getUserId());
+        Participant participant = Participant.createParticipant(participantReqDto, mentee, board);
         return participantRepository.save(participant).getId();
     }
 

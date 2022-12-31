@@ -1,6 +1,7 @@
 package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.PaymentDto;
+import com.mztalk.mentor.domain.dto.PaymentReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.PaymentService;
 import io.swagger.annotations.Api;
@@ -30,8 +31,8 @@ public class PaymentApiController {
 
     @ApiOperation(value = "결제 정보 저장", notes = "결제 정보를 저장하는 메소드입니다.", response = Long.class)
     @PostMapping("/payment")
-    public ResponseEntity<?> savePayment(@RequestBody ConcurrentHashMap<String,String> paymentMap){
-        Long savedId = paymentService.save(paymentMap);
+    public ResponseEntity<?> savePayment(@RequestBody PaymentReqDto paymentReqDto){
+        Long savedId = paymentService.save(paymentReqDto);
         return new ResponseEntity<>(new Result<>("해당 결제가 정상적으로 저장되었습니다.",savedId), HttpStatus.OK);
     }
 

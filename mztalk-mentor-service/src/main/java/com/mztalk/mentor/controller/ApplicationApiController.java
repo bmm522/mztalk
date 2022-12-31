@@ -27,8 +27,8 @@ public class ApplicationApiController {
 
     @ApiOperation(value = "지원서 저장", notes = "지원서를 저장하는 메소드입니다.", response = Result.class)
     @PostMapping("/application")
-    public ResponseEntity<?> saveApplication(@RequestBody ApplicationReqDto applicationDto) {
-        Long applicationId = applicationService.save(applicationDto);
+    public ResponseEntity<?> saveApplication(@RequestBody ApplicationReqDto applicationReqDto) {
+        Long applicationId = applicationService.save(applicationReqDto);
         return new ResponseEntity<>(new Result<>("지원서 작성 성공",applicationId), HttpStatus.CREATED);
     }
 

@@ -41,8 +41,8 @@ public class BoardApiController {
 
     @ApiOperation(value = "글 저장", notes = "글을 저장하는 메소드입니다.", response = Result.class)
     @PostMapping("/board")
-    public ResponseEntity<?> saveBoard(@RequestBody BoardReqDto boardDto){
-        Long savedId = boardService.saveBoard(boardDto);
+    public ResponseEntity<?> saveBoard(@RequestBody BoardReqDto boardReqDto){
+        Long savedId = boardService.saveBoard(boardReqDto);
         return new ResponseEntity<>(new Result<>("글 등록 완료", savedId), HttpStatus.CREATED);
     }
 

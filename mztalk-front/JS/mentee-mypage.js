@@ -315,7 +315,7 @@ const getBoardDetail = (bId) =>{
     .then(res =>{
         if(res != null){
             document.getElementById('modal-body').innerHTML = "자기소개 : " + res.data.introduction + "<br/>";
-            document.getElementById('modal-body').innerHTML += "글 내용 : " + res.data.content;
+            document.getElementById('modal-body').innerHTML += res.data.content;
             document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.data.salary + "원";
             document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.data.mentoringDate.substr(0,10) +"&nbsp"+ res.data.mentoringDate.substr(11,5);
             document.getElementById('board-price').value = res.data.salary;

@@ -2,6 +2,7 @@ package com.mztalk.mentor.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
+import com.mztalk.mentor.domain.dto.PaymentReqDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -64,12 +65,12 @@ public class Payment extends BaseTimeEntity{
     }
 
     //== 결제 생성 메소드 ==//
-    public static Payment createPayment(ConcurrentHashMap<String,String> paymentMap, Mentee mentee, Board board){
+    public static Payment createPayment(PaymentReqDto paymentReqDto, Mentee mentee, Board board){
         Payment payment = new Payment();
+        payment.price = paymentReqDto.getPrice();
+        payment.status = Status.YES;
         payment.addMentee(mentee);
         payment.addBoard(board);
-        payment.price = Integer.parseInt(paymentMap.get("price"));
-        payment.status = Status.YES;
         return payment;
     }
 }

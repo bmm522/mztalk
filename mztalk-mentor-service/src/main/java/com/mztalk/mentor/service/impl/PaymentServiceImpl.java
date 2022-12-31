@@ -1,6 +1,7 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.PaymentDto;
+import com.mztalk.mentor.domain.dto.PaymentReqDto;
 import com.mztalk.mentor.domain.entity.*;
 import com.mztalk.mentor.exception.PaymentNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
@@ -25,14 +26,11 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional
-    public Long save(ConcurrentHashMap<String,String> paymentMap) {
-        Long boardId = Long.parseLong(paymentMap.get("boardId"));
-        Long userId = Long.parseLong(paymentMap.get("userId"));
+    public Long save(PaymentReqDto paymentReqDto) {
+        Board board = boardRepository.findBoardByBoardId(paymentReqDto.getBoardId());
+        Mentee mentee = menteeRepository.findMenteeByUserId(paymentReqDto.getUserId());
 
-        Board board = boardRepository.findBoardByBoardId(boardId);
-        Mentee mentee = menteeRepository.findMenteeByUserId(userId);
-
-        Payment payment = Payment.createPayment(paymentMap, mentee, board);
+        Payment payment = Payment.createPayment(paymentReqDto, mentee, board);
         Payment savedPayment = paymentRepository.save(payment);
         return savedPayment.getId();
     }
