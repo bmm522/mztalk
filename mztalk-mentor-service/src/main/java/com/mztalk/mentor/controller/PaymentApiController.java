@@ -4,10 +4,7 @@ import com.mztalk.mentor.domain.dto.PaymentResDto;
 import com.mztalk.mentor.domain.dto.PaymentReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.PaymentService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +33,7 @@ public class PaymentApiController {
     }
 
     @ApiOperation(value = "결제 정보 리턴", notes = "해당 번호에 해당하는 결제 정보를 리턴하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "id", value = "결제 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/payment/{id}")
     public ResponseEntity<?> findPayment(@PathVariable("id")Long id){
         PaymentResDto payment = paymentService.findById(id);
@@ -50,6 +48,7 @@ public class PaymentApiController {
     }
 
     @ApiOperation(value = "결제 취소", notes = "해당 번호에 해당하는 결제를 취소하는 메소드입니다.", response = Long.class)
+    @ApiImplicitParam(name = "id", value = "결제 식별자", required = true, dataType = "int", paramType = "path")
     @PatchMapping("/payment/{id}")
     public Long cancelPayment(@PathVariable("id")Long id){
         return paymentService.cancel(id);

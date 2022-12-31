@@ -2,6 +2,7 @@ package com.mztalk.mentor.domain.dto;
 
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.Mentor;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MentorReqDto {
 
+    @ApiModelProperty(value="신청자의 식별자", example = "1", required = true)
     private Long userId;
-    private Status status;
 
     public Mentor toEntity(){
         Mentor mentor = Mentor.builder()

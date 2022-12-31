@@ -4,10 +4,7 @@ import com.mztalk.mentor.domain.dto.MenteeReqDto;
 import com.mztalk.mentor.domain.dto.MenteeResDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.MenteeService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +33,7 @@ public class MenteeApiController {
     }
 
     @ApiOperation(value = "사용자 정보 리턴", notes = "해당번호의 사용자정보를 리턴하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "id", value = "사용자 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/mentee/{id}")
     public ResponseEntity<?> findClient(@PathVariable("id") Long id){
         MenteeResDto mentee = menteeService.findClient(id);

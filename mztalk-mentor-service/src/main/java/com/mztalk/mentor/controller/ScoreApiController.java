@@ -6,10 +6,7 @@ import com.mztalk.mentor.domain.dto.ScoreModifyDto;
 import com.mztalk.mentor.domain.dto.ScoreReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.ScoreService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +35,7 @@ public class ScoreApiController {
     }
 
     @ApiOperation(value = "리뷰 정보 리턴", notes = "해당 번호에 해당하는 리뷰 정보를 리턴하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "id", value = "리뷰 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/score/{id}")
     public ResponseEntity<?> findById(@PathVariable("id")Long id){
         ScoreResDto score = scoreService.findById(id);
@@ -46,6 +44,7 @@ public class ScoreApiController {
 
     //nickname으로 모든 리뷰 가져오기
     @ApiOperation(value = "멘토의 모든 리뷰 리턴", notes = "해당 닉네임에 해당하는 모든 리뷰 정보를 리턴하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "nickname", value = "멘토 닉네임", required = true, dataType = "string", paramType = "query")
     @GetMapping("/score")
     public ResponseEntity<?> findByNickname(@RequestParam("nickname")String nickname){
         List<ScoreResDto> scores = scoreService.findScoresByNickname(nickname);
@@ -54,6 +53,7 @@ public class ScoreApiController {
 
     //mentee의 userId로 작성한 리뷰 가져오기
     @ApiOperation(value = "사용자가 작성한 리뷰 리턴", notes = "해당 번호에 해당하는 참가자가 작성한 모든 리뷰를 리턴하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "userId", value = "사용자 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/score/mentee/{userId}")
     public ResponseEntity<?> findByUserId(@PathVariable("userId")Long userId){
         List<ScoreMenteeDto> scores = scoreService.findByUserId(userId);
@@ -62,6 +62,7 @@ public class ScoreApiController {
 
     //mentor의 userId로 작성된 리뷰 가져오기
     @ApiOperation(value = "멘토의 모든 리뷰 리턴", notes = "해당 번호에 해당하는 멘토의 모든리뷰를 리턴하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "mentorId", value = "멘토 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/score/mentor/{mentorId}")
     public ResponseEntity<?> findByMentorId(@PathVariable("mentorId")Long mentorId){
         List<ScoreResDto> scores = scoreService.findByMentorId(mentorId);
@@ -77,6 +78,7 @@ public class ScoreApiController {
 
     // 멘티가 작성한 리뷰 삭제하기
     @ApiOperation(value = "리뷰 삭제", notes = "해당 번호에 해당하는 리뷰를 삭제하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "id", value = "리뷰 식별자", required = true, dataType = "int", paramType = "path")
     @DeleteMapping("/score/{id}")
     public ResponseEntity<?> deleteScore(@PathVariable("id")Long id){
         Long deleteId = scoreService.deleteScore(id);
@@ -84,6 +86,7 @@ public class ScoreApiController {
     }
 
     @ApiOperation(value = "리뷰 수정", notes = "해당 번호에 해당하는 리뷰를 수정하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "id", value = "리뷰 식별자", required = true, dataType = "int", paramType = "path")
     @PatchMapping("/score/{id}")
     public ResponseEntity<?> updateScore(@PathVariable("id")Long id, @RequestBody ScoreModifyDto scoreModifyDto){
         Long modifiedId = scoreService.updateScore(id, scoreModifyDto);
@@ -92,6 +95,10 @@ public class ScoreApiController {
 
     // 멘티가 해당 글에 대해 리뷰를 작성했는지 확인한다.
     @ApiOperation(value = "참가자 리뷰 작성 여부 확인", notes = "리뷰 작성 여부를 확인하는 메소드입니다.", response = boolean.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "참가자 식별자", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "boardId", value = "글 식별자", required = true, dataType = "int", paramType = "query")
+    })
     @GetMapping("/score/mentee")
     public boolean isExist(@RequestParam("userId")Long userId, @RequestParam("boardId")Long boardId){
         return scoreService.isExist(userId, boardId);

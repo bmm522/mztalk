@@ -4,10 +4,7 @@ import com.mztalk.mentor.domain.dto.MentorResDto;
 import com.mztalk.mentor.domain.dto.MentorReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.MentorService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +34,7 @@ public class MentorApiController {
     }
 
     @ApiOperation(value = "멘토 정보 리턴", notes = "해당번호의 멘토 정보를 리턴하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "id", value = "멘토 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/member/{id}")
     public ResponseEntity<?> findById(@PathVariable("id")Long id){
         MentorResDto mentor = mentorService.findById(id);
@@ -44,6 +42,7 @@ public class MentorApiController {
     }
 
     @ApiOperation(value = "멘토로 등록되어있는지 확인", notes = "해당번호의 이용자가 멘토인지를 확인하는 메소드입니다.", response = boolean.class)
+    @ApiImplicitParam(name = "userId", value = "멘토 식별자", required = true, dataType = "int", paramType = "query")
     @GetMapping("/member")
     public boolean isExist(@RequestParam("userId")Long userId){
         return mentorService.isExist(userId);

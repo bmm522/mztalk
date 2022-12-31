@@ -6,10 +6,7 @@ import com.mztalk.mentor.domain.dto.BoardMenteeDto;
 import com.mztalk.mentor.domain.dto.BoardReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.BoardService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +43,7 @@ public class BoardApiController {
     }
 
     @ApiOperation(value = "글 정보 리턴", notes = "해당 번호에 해당하는 글을 리턴하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "id", value = "글 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/board/{id}")
     public ResponseEntity<?> findById(@PathVariable("id")Long id){
         BoardResDto board = boardService.findBoardByBoardId(id);
@@ -53,7 +51,8 @@ public class BoardApiController {
     }
 
     //멘티의 (완료된 멘토링 목록)
-    @ApiOperation(value = "멘티의 완료된 글 리턴", notes = "해당번호에 해당하는 멘티의 완료된 글을 리턴하는 메소드입니다.", response = Result.class)
+    @ApiOperation(value = "멘티의 완료된 글 리턴", notes = "해당번호에 해당하는 멘티의 완료된 글을 리턴하는 메소드입니다.", response = Result.class) 
+    @ApiImplicitParam(name = "userId", value = "멘티 식별자", required = true, dataType = "int", paramType = "query")
     @GetMapping("/board")
     public ResponseEntity<?> findBoardByUserId(@RequestParam("userId")Long userId){
         List<BoardMenteeDto> boards = boardService.findBoardByUserId(userId);
@@ -62,6 +61,7 @@ public class BoardApiController {
 
     //멘티의 (모든 목록)
     @ApiOperation(value = "멘티의 모든 글 리턴", notes = "해당번호에 해당하는 멘티가 신청한 모든 글을 리턴하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "menteeId", value = "멘티 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/board/mentee/{menteeId}")
     public ResponseEntity<?> findBoardByMenteeId(@PathVariable("menteeId")Long MenteeId){
         List<BoardMenteeDto> boards = boardService.findBoardByMenteeId(MenteeId);
@@ -69,6 +69,7 @@ public class BoardApiController {
     }
 
     @ApiOperation(value = "멘토의 모든 글 리턴", notes = "해당번호의 멘토가 작성한 모든글을 리턴하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "mentorId", value = "멘토 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/board/mentor/{mentorId}")
     public ResponseEntity<?> findBoardByMentorId(@PathVariable("mentorId")Long mentorId){
         List<BoardResDto> boards = boardService.findBoardByMentorId(mentorId);
@@ -77,6 +78,7 @@ public class BoardApiController {
 
     // 진짜로 삭제한다.
     @ApiOperation(value = "글 삭제", notes = "해당번호의 글을 삭제하는 메소드입니다.", response = Long.class)
+    @ApiImplicitParam(name = "id", value = "글 식별자", required = true, dataType = "int", paramType = "path")
     @DeleteMapping("/board/{id}")
     public Long deleteBoard(@PathVariable("id")Long id){
         return boardService.delete(id);
@@ -84,6 +86,7 @@ public class BoardApiController {
 
     // boardId로 글찾은 후 수정하기
     @ApiOperation(value = "글 수정", notes = "해당번호의 글을 수정하는 메소드입니다.", response = Long.class)
+    @ApiImplicitParam(name = "id", value = "글 식별자", required = true, dataType = "int", paramType = "path")
     @PatchMapping("/board/edit/{id}")
     public Long updateBoard(@PathVariable("id")Long id,@RequestBody BoardResDto boardResDto){
         return boardService.updateBoard(id, boardResDto);
