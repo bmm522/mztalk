@@ -3,6 +3,8 @@ package com.mztalk.main.domain.board.service;
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface BoardService {
 
@@ -16,5 +18,5 @@ public interface BoardService {
 
     Long deleteBoard(Long id);
 
-    Result findByOwn(Long own);
+    Result findAllByboardStory(Long own);
 }

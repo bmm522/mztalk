@@ -572,6 +572,3 @@ function myReport(){
 }
 
 
-
-//결제부분
-

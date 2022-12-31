@@ -7,6 +7,7 @@ window.onload = () =>{
    //newAuctionBoard();
    //console.log(auctionResult);
    //latest();
+   newFollowBoard();
    
 }
 
@@ -33,6 +34,54 @@ window.onscroll = function(e){
 	}
 
 }
+
+//팔로우한 사람 글 뿌려쥐
+const newFollowBoard = ()=>{
+    // /main/{own}
+    
+    let own = localStorage.getItem('userNo');
+
+    fetch("http://localhost:8000/story/main/"+own,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+      .then((res)=> res.json())
+      .then(res=>{       
+        
+        console.log("팔로우최신글"+res.data);
+        for(let follow of res.data){
+        return follow;
+        }
+    })
+
+}
+
+function mergeFetch(fetch1, fetch2){
+    const fetchReq1 = fetch(newFollowBoard()).then((res)=> res.json());
+    const fetchReq2 = fetch(newAuctionBoard()).then((res)=> res.json());
+
+    const allData = Promise.all([fetchReq1, fetchReq2]);
+    let allDataArray = [];
+
+    allData.then((res) => {
+        res.forEach((item) => {
+          allDataArray.push(...item);
+        });
+        return allDataArray;
+      });
+     
+    }
+    
+    const data = mergeFetch(
+       
+      );
+      console.log(data);
+
+
 
 
 
@@ -142,9 +191,7 @@ async function newBungBoard(){
 
       return responses;
 }
-newBungBoard()
-.then(res => res.json())
-.then(json => test(json));
+
 
 
 
