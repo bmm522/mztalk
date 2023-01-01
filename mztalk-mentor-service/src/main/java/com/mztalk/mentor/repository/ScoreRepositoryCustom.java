@@ -12,4 +12,5 @@ public interface ScoreRepositoryCustom {
     List<Score> findByUserId(Long userId);
 
     List<Score> findByMentorId(Long mentorId);
+
 }

@@ -2,7 +2,7 @@ package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.ApplicationResDto;
 import com.mztalk.mentor.domain.dto.ApplicationReqDto;
-import com.mztalk.mentor.domain.dto.MenteeApplicationDto;
+import com.mztalk.mentor.domain.dto.MenteeTransferDto;
 import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.exception.ApplicationNotFoundException;
@@ -45,14 +45,15 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public ApplicationResDto findById(Long id) {
         Application application = applicationRepository.findById(id).orElseThrow(()->new ApplicationNotFoundException("해당 지원서가 존재하지 않습니다."));
-        ApplicationResDto applicationResDto = new ApplicationResDto(application);
+        Mentee mentee = menteeRepository.findMenteeByApplicationId(id);
+        ApplicationResDto applicationResDto = new ApplicationResDto(application,new MenteeTransferDto(mentee));
         return applicationResDto;
     }
 
     @Override
     public List<ApplicationResDto> findAll() {
         List<Application> applications = applicationRepository.fetchMenteeApplication();
-        List<ApplicationResDto> result = applications.stream().map(a->new ApplicationResDto(a,new MenteeApplicationDto(a.getMentee()))).collect(Collectors.toList());
+        List<ApplicationResDto> result = applications.stream().map(a->new ApplicationResDto(a,new MenteeTransferDto(a.getMentee()))).collect(Collectors.toList());
         return result;
     }
 

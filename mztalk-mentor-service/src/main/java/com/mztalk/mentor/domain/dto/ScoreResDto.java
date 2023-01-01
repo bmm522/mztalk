@@ -13,9 +13,8 @@ import java.time.LocalDateTime;
 public class ScoreResDto {
 
     private Long id;
-    private MentorResDto mentor;
-    private MenteeResDto mentee;
-    private BoardResDto board;
+    private MentorTransferDto mentor;
+    private MenteeTransferDto mentee;
     private Double count;
     private String content;
     private Status status;
@@ -29,6 +28,17 @@ public class ScoreResDto {
         this.status = score.getStatus();
         this.createdDate = score.getCreatedDate();
         this.lastModifiedDate = score.getLastModifiedDate();
+    }
+
+    public ScoreResDto(Score score,MenteeTransferDto menteeTransferDto, MentorTransferDto mentorTransferDto) {
+        this.id = score.getId();
+        this.count = score.getCount();
+        this.content = score.getContent();
+        this.status = score.getStatus();
+        this.createdDate = score.getCreatedDate();
+        this.lastModifiedDate = score.getLastModifiedDate();
+        this.mentor = mentorTransferDto;
+        this.mentee = menteeTransferDto;
     }
 
 

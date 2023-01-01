@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 public class ApplicationResDto {
 
     private Long id;
-    private MenteeApplicationDto mentee;
-    private MentorResDto mentor;
+    private MenteeTransferDto mentee;
     private String name;
     private String phone;
     private String email;
@@ -30,7 +29,7 @@ public class ApplicationResDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModifiedDate;
 
-    public ApplicationResDto(Application application, MenteeApplicationDto mentee){
+    public ApplicationResDto(Application application, MenteeTransferDto mentee){
         this.mentee = mentee;
         this.id = application.getId();
         this.name = application.getName();
@@ -62,10 +61,9 @@ public class ApplicationResDto {
     }
 
     @Builder
-    public ApplicationResDto(Long id, MenteeApplicationDto mentee, MentorResDto mentor, String name, String phone, String email, String job, String bank, String account, String birthday, AuthStatus authStatus, Status status, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public ApplicationResDto(Long id, MenteeTransferDto mentee, String name, String phone, String email, String job, String bank, String account, String birthday, AuthStatus authStatus, Status status, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
         this.id = id;
         this.mentee = mentee;
-        this.mentor = mentor;
         this.name = name;
         this.phone = phone;
         this.email = email;

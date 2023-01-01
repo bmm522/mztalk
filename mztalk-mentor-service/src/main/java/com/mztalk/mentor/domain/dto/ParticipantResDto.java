@@ -18,7 +18,7 @@ public class ParticipantResDto {
     private String message;
     private String email;
     private Status status;
-    private MenteeApplicationDto mentee;
+    private MenteeTransferDto mentee;
     private BoardMenteeDto board;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
@@ -34,7 +34,7 @@ public class ParticipantResDto {
         this.lastModifiedDate = participant.getLastModifiedDate();
     }
 
-    public ParticipantResDto(Participant participant, MenteeApplicationDto mentee, BoardMenteeDto board){
+    public ParticipantResDto(Participant participant, MenteeTransferDto mentee, BoardMenteeDto board){
         this.mentee = mentee;
         this.board = board;
         this.id = participant.getId();

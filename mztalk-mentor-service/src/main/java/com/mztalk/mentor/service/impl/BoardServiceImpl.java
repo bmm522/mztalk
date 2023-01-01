@@ -4,7 +4,7 @@ import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardResDto;
 import com.mztalk.mentor.domain.dto.BoardMenteeDto;
 import com.mztalk.mentor.domain.dto.BoardReqDto;
-import com.mztalk.mentor.domain.dto.MentorBoardDto;
+import com.mztalk.mentor.domain.dto.MentorTransferDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.repository.BoardRepository;
@@ -55,7 +55,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardResDto findBoardByBoardId(Long id) {
         Board board = boardRepository.findBoardByBoardId(id);
-        BoardResDto boardResDto = new BoardResDto(board,new MentorBoardDto(board.getMentor()));
+        BoardResDto boardResDto = new BoardResDto(board,new MentorTransferDto(board.getMentor()));
         return boardResDto;
     }
 

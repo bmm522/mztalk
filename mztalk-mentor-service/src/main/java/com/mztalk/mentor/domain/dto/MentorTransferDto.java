@@ -11,17 +11,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MentorBoardDto {
+public class MentorTransferDto {
+    
     private Long userId;
-    private Status status;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastModifiedDate;
 
-    public MentorBoardDto(Mentor mentor) {
+    public MentorTransferDto(Mentor mentor) {
         this.userId = mentor.getUserId();
-        this.status = mentor.getStatus();
-        this.createdDate = mentor.getCreatedDate();
-        this.lastModifiedDate = mentor.getLastModifiedDate();
     }
 
 

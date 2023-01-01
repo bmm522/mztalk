@@ -1,7 +1,7 @@
 package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.dto.ScoreResDto;
-import com.mztalk.mentor.domain.dto.ScoreMenteeDto;
+import com.mztalk.mentor.domain.dto.SimpleScoreDto;
 import com.mztalk.mentor.domain.dto.ScoreModifyDto;
 import com.mztalk.mentor.domain.dto.ScoreReqDto;
 
@@ -22,7 +22,7 @@ public interface ScoreService {
 
     boolean isExist(Long userId, Long boardId);
 
-    List<ScoreMenteeDto> findByUserId(Long userId);
+    List<SimpleScoreDto> findByUserId(Long userId);
 
     List<ScoreResDto> findByMentorId(Long mentorId);
 }

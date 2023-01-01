@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class BoardResDto {
 
     private Long id;
-    private MentorBoardDto mentor;
+    private MentorTransferDto mentor;
     private String category;
     private String title;
     private String nickname;
@@ -46,7 +46,7 @@ public class BoardResDto {
         this.lastModifiedDate = board.getLastModifiedDate();
     }
 
-    public BoardResDto(Board board, MentorBoardDto mentor){
+    public BoardResDto(Board board, MentorTransferDto mentor){
         this.mentor = mentor;
         this.id = board.getId();
         this.category = board.getCategory();

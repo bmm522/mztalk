@@ -1,7 +1,7 @@
 package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.ScoreResDto;
-import com.mztalk.mentor.domain.dto.ScoreMenteeDto;
+import com.mztalk.mentor.domain.dto.SimpleScoreDto;
 import com.mztalk.mentor.domain.dto.ScoreModifyDto;
 import com.mztalk.mentor.domain.dto.ScoreReqDto;
 import com.mztalk.mentor.domain.entity.Result;
@@ -56,7 +56,7 @@ public class ScoreApiController {
     @ApiImplicitParam(name = "userId", value = "사용자 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/score/mentee/{userId}")
     public ResponseEntity<?> findByUserId(@PathVariable("userId")Long userId){
-        List<ScoreMenteeDto> scores = scoreService.findByUserId(userId);
+        List<SimpleScoreDto> scores = scoreService.findByUserId(userId);
         return new ResponseEntity<>(new Result<>("해당 멘티가 작성한 모든 리뷰 목록 입니다.", scores), HttpStatus.OK);
     }
 

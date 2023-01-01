@@ -1,14 +1,12 @@
 package com.mztalk.mentor.service.impl;
 
-import com.mztalk.mentor.domain.dto.ScoreResDto;
-import com.mztalk.mentor.domain.dto.ScoreMenteeDto;
-import com.mztalk.mentor.domain.dto.ScoreModifyDto;
-import com.mztalk.mentor.domain.dto.ScoreReqDto;
+import com.mztalk.mentor.domain.dto.*;
 import com.mztalk.mentor.domain.entity.*;
 import com.mztalk.mentor.exception.BoardNotFoundException;
 import com.mztalk.mentor.exception.ScoreNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
+import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.repository.ScoreRepository;
 import com.mztalk.mentor.service.ScoreService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +23,7 @@ public class ScoreServiceImpl implements ScoreService {
 
     private final ScoreRepository scoreRepository;
     private final MenteeRepository menteeRepository;
+    private final MentorRepository mentorRepository;
     private final BoardRepository boardRepository;
 
     @Override
@@ -47,14 +46,15 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public ScoreResDto findById(Long id) {
         Score score = scoreRepository.findById(id).orElseThrow(() -> new ScoreNotFoundException("해당 번호의 리뷰가 존재하지 않습니다."));
-        ScoreResDto scoreResDto = new ScoreResDto(score);
+        ScoreResDto scoreResDto = new ScoreResDto(score,new MenteeTransferDto(score.getMentee()),new MentorTransferDto(score.getMentor()));
         return scoreResDto;
     }
 
     @Override
     public List<ScoreResDto> findScoresByNickname(String nickname) {
         List<Score> scores = scoreRepository.findByNickname(nickname);
-        List<ScoreResDto> collect = scores.stream().map(ScoreResDto::new).collect(Collectors.toList());
+        List<ScoreResDto> collect = scores.stream()
+                .map(s->new ScoreResDto(s,new MenteeTransferDto(s.getMentee()),new MentorTransferDto(s.getMentor()))).collect(Collectors.toList());
         return collect;
     }
 
@@ -67,9 +67,9 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public List<ScoreMenteeDto> findByUserId(Long userId) {
+    public List<SimpleScoreDto> findByUserId(Long userId) {
         List<Score> scores = scoreRepository.findByUserId(userId);
-        List<ScoreMenteeDto> collect = scores.stream().map(ScoreMenteeDto::new).collect(Collectors.toList());
+        List<SimpleScoreDto> collect = scores.stream().map(SimpleScoreDto::new).collect(Collectors.toList());
         return collect;
     }
 
@@ -83,7 +83,9 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public List<ScoreResDto> findAll() {
         List<Score> scoreList = scoreRepository.findAll();
-        List<ScoreResDto> collect = scoreList.stream().map(ScoreResDto::new).collect(Collectors.toList());
+        List<ScoreResDto> collect = scoreList.stream()
+                .map(s->new ScoreResDto(s,new MenteeTransferDto(s.getMentee()),new MentorTransferDto(s.getMentor())))
+                .collect(Collectors.toList());
         return collect;
     }
 

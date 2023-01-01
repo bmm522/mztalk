@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScoreMenteeDto {
+public class SimpleScoreDto {
 
     private Long id;
     private Double count;
@@ -22,7 +22,7 @@ public class ScoreMenteeDto {
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 
-    public ScoreMenteeDto(Score score) {
+    public SimpleScoreDto(Score score) {
         this.id = score.getId();
         this.count = score.getCount();
         this.content = score.getContent();

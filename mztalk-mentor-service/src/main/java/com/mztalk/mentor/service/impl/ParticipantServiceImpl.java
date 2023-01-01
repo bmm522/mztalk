@@ -1,7 +1,7 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.BoardMenteeDto;
-import com.mztalk.mentor.domain.dto.MenteeApplicationDto;
+import com.mztalk.mentor.domain.dto.MenteeTransferDto;
 import com.mztalk.mentor.domain.dto.ParticipantResDto;
 import com.mztalk.mentor.domain.dto.ParticipantReqDto;
 import com.mztalk.mentor.domain.entity.Board;
@@ -45,7 +45,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public ParticipantResDto findById(Long id) {
         Participant participant = participantRepository.findById(id).orElseThrow(() -> new ParticipantNotFoundException("해당하는 참가자는 존재하지 않습니다."));
-        ParticipantResDto participantResDto = new ParticipantResDto(participant,new MenteeApplicationDto(participant.getMentee()),new BoardMenteeDto(participant.getBoard()));
+        ParticipantResDto participantResDto = new ParticipantResDto(participant,new MenteeTransferDto(participant.getMentee()),new BoardMenteeDto(participant.getBoard()));
         return participantResDto;
     }
 
@@ -53,7 +53,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     public List<ParticipantResDto> findParticipantsByMentorId(Long boardId) {
         List<Participant> participants = participantRepository.findParticipantsByMentorId(boardId);
         List<ParticipantResDto> collect = participants.stream()
-                .map(p->new ParticipantResDto(p,new MenteeApplicationDto(p.getMentee()),new BoardMenteeDto(p.getBoard())))
+                .map(p->new ParticipantResDto(p,new MenteeTransferDto(p.getMentee()),new BoardMenteeDto(p.getBoard())))
                 .collect(Collectors.toList());
         return collect;
     }
@@ -62,7 +62,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     public List<ParticipantResDto> findAll() {
         List<Participant> participantList = participantRepository.findAll();
         List<ParticipantResDto> collect = participantList.stream()
-                .map(p->new ParticipantResDto(p,new MenteeApplicationDto(p.getMentee()),new BoardMenteeDto(p.getBoard())))
+                .map(p->new ParticipantResDto(p,new MenteeTransferDto(p.getMentee()),new BoardMenteeDto(p.getBoard())))
                 .collect(Collectors.toList());
         return collect;
     }
