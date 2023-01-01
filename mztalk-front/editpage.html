@@ -348,6 +348,7 @@
 
                             <!--프로필셋팅 아이디영역-->
                             <div class="content-item__01">
+
                                 <form>    
                                     <button onclick="requestPay();" type="button" id="subscribe_" class="btn btn-outline-primary">
                                         <p>
@@ -355,7 +356,9 @@
                                             <h4>월 9,900원</h4>
                                         </p>
                                     </button>
-                                </form>    
+                                </form> 
+                                
+                                
                             </div>
 
                         </article>
@@ -512,7 +515,6 @@
         function (rsp) {
             console.log(rsp);
             if (rsp.success) {
-                console.log("?dasdf");
                $.ajax({
                     url: "http://localhost:8000/story/subscribe",
                     method:"POST",
@@ -528,7 +530,6 @@
                     })                    
                })    
                .done(function(data){
-                    console.log("여기?");
                     $.ajax({
                         url: "http://localhost:8000/login/role/vip/"+userNo,
                         method: "PATCH",
