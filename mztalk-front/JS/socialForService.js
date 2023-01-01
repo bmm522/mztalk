@@ -3,12 +3,24 @@ window.onload = () =>{
    //newMentorBoard();
    //scroll();
    //newAuctionBoard();
-   console.log('here!');
-   //newAuctionBoard();
+   
+   newAuctionBoard();
    //console.log(auctionResult);
    //latest();
    newFollowBoard();
-   
+   newBungBoard();
+
+
+    let arrs  = [];
+    arrs.push(newAuctionBoard());
+    
+    console.log(arrs+"이생키/");
+    arrs.sort();
+
+    
+   //allBoard();
+
+
 }
 
 
@@ -54,33 +66,39 @@ const newFollowBoard = ()=>{
         
         console.log("팔로우최신글"+res.data);
         for(let follow of res.data){
-        return follow;
+            console.log(follow+"뭐있니?");
+            return follow;
         }
+        
     })
 
 }
 
-function mergeFetch(fetch1, fetch2){
-    const fetchReq1 = fetch(newFollowBoard()).then((res)=> res.json());
-    const fetchReq2 = fetch(newAuctionBoard()).then((res)=> res.json());
+console.log("너는?"+newFollowBoard());
 
-    const allData = Promise.all([fetchReq1, fetchReq2]);
-    let allDataArray = [];
 
-    allData.then((res) => {
-        res.forEach((item) => {
-          allDataArray.push(...item);
-        });
-        return allDataArray;
-      });
-     
-    }
-    
-    const data = mergeFetch(
-       
-      );
-      console.log(data);
 
+
+
+
+
+
+
+
+const allBoard = (follow, auction, bung) =>{
+
+    console.log("여기 오니?");    
+
+    console.log(follow+"왜 언디파인?");
+
+
+    let arr = [follow, auction, bung];
+
+    console.log(arr);
+
+
+
+}
 
 
 
@@ -155,11 +173,17 @@ async function newAuctionBoard(){
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken'),
         },
-      });
+    })
+    .then((res)=> res.json())
+    .then(res=>{       
+      
+      console.log("경매최신글"+res.data);
+      for(let auction of res.data){
+      return auction;
+      }
+  })
 
-      return response;
-     
-    }
+}
 
     // newAuctionBoard()
     // .then(res => res.json())
@@ -187,9 +211,16 @@ async function newBungBoard(){
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken'),
         },
-      });
+    })
+    .then((res)=> res.json())
+    .then(res=>{       
+      
+      console.log("벙최신글"+res.data);
+      for(let bung of res.data){
+      return bung;
+      }
+  })
 
-      return responses;
 }
 
 
