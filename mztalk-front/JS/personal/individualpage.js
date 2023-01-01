@@ -1156,6 +1156,8 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
       _btn.style.color = "#fff";
       _btn.style.border = "1px solid #ddd";
+
+
     })
 
     } else {
@@ -1172,7 +1174,8 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       })
     .then((res)=>res.json())
     .then(res =>{
-             
+      // FollowCount();
+      // FollowingCount();
       //console.log(res);
 
       _btn.textContent = "팔로우";
@@ -1180,6 +1183,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       _btn.style.color = "#fff";
       _btn.style.border = "0";
 
+   
     })
     
     }

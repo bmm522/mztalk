@@ -1,31 +1,128 @@
 //let auctionResult = null;
-window.onload = () =>{
-   //newMentorBoard();
-   //scroll();
-   //newAuctionBoard();
-   
-   newAuctionBoard();
-   //console.log(auctionResult);
-   //latest();
-   newFollowBoard();
-   newBungBoard();
 
 
-    let arrs  = [];
-    arrs.push(newAuctionBoard());
+window.addEventListener('load',  async ()=> {
+    //경매
+    const newAuctionBoard = await fetch("http://localhost:8000/auction/board",{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+    })
+    .then((res)=> res.json())
+    .then(res=>{     
+
+      const A = []
+      
+      for(let auction of res.data){
+          
+        A.push(auction)
+       
+      }
+      //console.log('A:', A)
+      return A
+  })
+  console.log('newAuctionBoard:', newAuctionBoard);
+
+    //팔로우들 글
+    let own = localStorage.getItem('userNo');
     
-    console.log(arrs+"이생키/");
-    arrs.sort();
+    const newFollowBoard = await fetch("http://localhost:8000/story/main/"+own,{
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken'),
+            },
+        })
+        .then((res)=> res.json())
+        .then(res=>{       
+        const F = []
+
+        for(let auction of res.data){
+            
+         F.push(auction)
+
+        }
+        //console.log('A:', A)
+        return F
+        })
+
+        console.log('newFollowBoard:', newFollowBoard);
 
     
-   //allBoard();
+
+    //벙
+    const newBungBoard = await fetch("http://localhost:8000/bung/mainBoards",{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+    })
+        .then((res)=> res.json())
+        .then(res=>{     
+
+        const B = []
+        
+        for(let auction of res.data){
+            
+            B.push(auction)
+        
+        }
+        //console.log('A:', A)
+        return B
+    })
+     console.log('newBungBoard:', newBungBoard);
+
+    //멘토newMentorBoard
+    const newMentorBoard = await fetch("http://localhost:8000/mentors/board/latest",{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+    })
+        .then((res)=> res.json())
+        .then(res=>{     
+
+        const M = []
+        
+        for(let auction of res.data){
+            
+            M.push(auction)
+        
+        }
+        //console.log('A:', A)
+        return M
+    })
+     console.log('newMentorBoard:', newMentorBoard);
+
+    const all = []
+    all.push(newMentorBoard);
+    all.push(newBungBoard);
+    all.push(newFollowBoard);
+    all.push(newAuctionBoard);
+
+    console.log(all, "뭐있니?");
+
+})
 
 
-}
+
+// array.sort(function(a, b) {
+//     a = new Date(a.dateModified);
+//     b = new Date(b.dateModified);
+//     return a>b ? -1 : a<b ? 1 : 0;
+// });
 
 
 
-let boardsURL = "main.html";
+
 
 // (2) 스토리 스크롤 페이징하기
 let page =0;
@@ -48,60 +145,31 @@ window.onscroll = function(e){
 }
 
 //팔로우한 사람 글 뿌려쥐
-const newFollowBoard = ()=>{
-    // /main/{own}
+//  const newFollowBoard = async()=>{
+//     // /main/{own}
     
-    let own = localStorage.getItem('userNo');
+//     let own = localStorage.getItem('userNo');
 
-    fetch("http://localhost:8000/story/main/"+own,{
-        method:"GET",
-        headers:{
-            "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-        },
-      })
-      .then((res)=> res.json())
-      .then(res=>{       
+//     await fetch("http://localhost:8000/story/main/"+own,{
+//         method:"GET",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//       })
+//       .then((res)=> res.json())
+//       .then(res=>{       
         
-        console.log("팔로우최신글"+res.data);
-        for(let follow of res.data){
-            console.log(follow+"뭐있니?");
-            return follow;
-        }
+//         console.log("팔로우최신글"+res.data);
+//         for(let follow of res.data){
+//             console.log(follow+"뭐있니?");
+//             return follow;
+//         }
         
-    })
+//     })
 
-}
-
-console.log("너는?"+newFollowBoard());
-
-
-
-
-
-
-
-
-
-
-const allBoard = (follow, auction, bung) =>{
-
-    console.log("여기 오니?");    
-
-    console.log(follow+"왜 언디파인?");
-
-
-    let arr = [follow, auction, bung];
-
-    console.log(arr);
-
-
-
-}
-
-
-
+// }
 
 //나중에 불러오기
 //멘토 최신글뽑아오기
@@ -164,40 +232,29 @@ const newMentorBoard = () =>{
 
 //경매서비스
 //auction/board
-async function newAuctionBoard(){ 
+// async function newAuctionBoard(){ 
     
-    const response = fetch("http://localhost:8000/auction/board",{
-        method:"GET",
-        headers:{
-            "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-        },
-    })
-    .then((res)=> res.json())
-    .then(res=>{       
+//     const response = fetch("http://localhost:8000/auction/board",{
+//         method:"GET",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//     })
+//     .then((res)=> res.json())
+//     .then(res=>{       
+//       const A = []
       
-      console.log("경매최신글"+res.data);
-      for(let auction of res.data){
-      return auction;
-      }
-  })
-
-}
-
-    // newAuctionBoard()
-    // .then(res => res.json())
-    // .then(json => test(json));
-
-    // function test(data, data){
-    //     console.log('here! hear!!')
-    //     console.log(data);
-    //     let boardAuction = [data, data];
-
-    //     console.log("엄마!"+boardAuction);
-
-    //     return data;
-    // }
+//       for(let auction of res.data){
+          
+//         A.push(auction)
+       
+//       }
+//       //console.log('A:', A)
+//       return A
+//   })
+// }
 
 
 //벙서비스
@@ -222,26 +279,6 @@ async function newBungBoard(){
   })
 
 }
-
-
-
-
-
-
-
-    //             exec();
-      
-    //    async function exec(){
-    //         let text;
-    //         try{
-    //             text = await newAuctionBoard();
-    //             console.log(text[0].board);
-    //         }
-    //         catch(error){
-    //             console.log(error);
-    //         }
-    //    }     
-
 
 // const latest = () =>{
 

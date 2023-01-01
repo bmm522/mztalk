@@ -572,3 +572,15 @@ function myReport(){
 }
 
 
+
+
+//VIP시
+
+
+
+
+
+
+
+
+
