@@ -371,23 +371,61 @@ const allMentoring =()=>{
         if(res!=null){
             for(const allBoard of res.data){
                 document.getElementById('mentoringRow').innerHTML +=
-                `<th scope="row">${allBoard.id}</th>
+                `<td scope="row">${allBoard.id}</th>
                 <td>${allBoard.nickname}</td>
                 <td>${allBoard.title}</td>
-                <td style="text-align: center;">${allBoard.status}</td>`
+                <td style="text-align: center;">${allBoard.status}</td>
+                <td><button type="button" class="btn btn-outline-danger" onclick="cancelPay(${allBoard.payment.id},'${allBoard.payment.impUid}','${allBoard.payment.merchantUid}',${allBoard.payment.price});" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">결제 취소</button></td>`
             }
         } else {
-            for(const endBoard of res.data){
-                document.getElementById('mentoringRow').innerHTML +=
-                `<th scope="row">${allBoard.id}</th>
-                <td>${allBoard.nickname}</td>
-                <td>${allBoard.title}</td>
-                <td style="text-align: center;">${allBoard.status}</td>`
-            }
+            document.getElementById('mentoringRow').innerHTML = '<td colspan="5">신청한 게시글이 존재하지 않습니다.</td>';
         }
     })
     document.getElementById('mentoringRow').innerHTML ='';
 }
+
+//아임포트 결제 취소
+function cancelPay(paymentId,impUid,merchantUid,price) {
+    $.ajax({
+        url:"http://localhost:8000/mentors/api/import/cancel",
+        headers: { 
+            "Content-Type": "application/json;",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+        type: "POST",
+        data: JSON.stringify({
+            imp_uid:impUid,
+            merchant_uid: merchantUid,
+            cancel_request_amount: price
+        }),
+        dataType: "json"
+    }).done(function(result){
+        console.log(result);    
+    });
+}
+
+
+    // $.ajax({
+    //     url: "http://localhost:8000/mentors/payment/cancel/"+paymentId,
+    //     headers: { 
+    //         "Content-Type": "application/json;",
+    //         Authorization:localStorage.getItem('authorization'),
+    //         RefreshToken:localStorage.getItem('refreshToken')
+    //     },
+    //     type: "POST",
+    //     data: JSON.stringify({
+            
+    //         merchant_uid: merchantUid,
+    //         cancel_request_amount: price
+    //     }),
+    //     dataType: "json"
+    // }).done(function(result){
+    //     alert('백단갔다옴');
+    // }).fail(function(error){
+    //     alert('환불실패');
+    // });
+// }
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
 document.getElementById('myPage').addEventListener('click', function(){

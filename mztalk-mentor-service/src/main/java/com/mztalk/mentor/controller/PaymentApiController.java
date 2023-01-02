@@ -49,7 +49,7 @@ public class PaymentApiController {
 
     @ApiOperation(value = "결제 취소", notes = "해당 번호에 해당하는 결제를 취소하는 메소드입니다.", response = Long.class)
     @ApiImplicitParam(name = "id", value = "결제 식별자", required = true, dataType = "int", paramType = "path")
-    @PatchMapping("/payment/{id}")
+    @PostMapping("/payment/cancel/{id}")
     public Long cancelPayment(@PathVariable("id")Long id){
         return paymentService.cancel(id);
     }
