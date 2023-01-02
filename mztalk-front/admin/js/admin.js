@@ -191,9 +191,9 @@ const getBoardDetail = (bId, userId,serviceName, path) =>{
         .then(res =>{
             if(res != null){
                 document.getElementById('exampleModalToggleLabel').innerHTML = '멘토-멘티 서비스'
-                document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
-                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
-                document.getElementById('modal-salary').innerHTML = '1회 멘토링 : 1시간 / '+res.salary+'원';
+                document.getElementById('modal-body').innerHTML = "자기소개 : " + res.data.introduction + "<br/>";
+                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.data.content;
+                document.getElementById('modal-salary').innerHTML = '1회 멘토링 : 1시간 / '+res.data.salary+'원';
                 // document.getElementById('board-price').innerHTML = res.salary;
                 document.getElementById('btn-div').innerHTML = ` <button type="button" id="rep-btn" onclick="postReport(${bId},${userId},'${serviceName}');">신고 받기</button>`;
             } else {

@@ -94,6 +94,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
 
         response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
         response.addHeader("RefreshToken", jwtTokenAndRefreshToken.get("refreshToken"));
+        response.addHeader("UserRole", principalDetails.getUser().getRole());
         response.addHeader("UserNo", String.valueOf(principalDetails.getUser().getId()));
         response.addHeader("UserNickname", URLEncoder.encode(principalDetails.getUser().getNickname(),"UTF-8"));
 

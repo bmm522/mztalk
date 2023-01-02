@@ -87,7 +87,7 @@ public class User {
     }
 
     public MztalkCookie toMztalkCookieWithExistsUser(ConcurrentHashMap<String, String> jwtMap) throws UnsupportedEncodingException {
-        return new MztalkCookie(jwtMap, id, nickname, status);
+        return new MztalkCookie(jwtMap, id, nickname, status, role);
     }
 
 }

@@ -3,6 +3,7 @@ window.onload=function(){
     console.log("main : " + localStorage.getItem('refreshToken'));
     console.log("main : " + localStorage.getItem('userNo'));
     console.log("main : " + localStorage.getItem('userNickname'));
+    console.log("main : " + localStorage.getItem('role'));
     
 
 }
