@@ -369,6 +369,7 @@ map.setBounds(bounds);
 }
 
 function displayAddress(places) {
+    let div = document.getElementById('addressName')
     let address = HTMLElement.innerHTML;
     HTMLElement.innerHTML = places.address_name;
     // let address = places.address_name
@@ -376,6 +377,38 @@ function displayAddress(places) {
 
     // address.value;
 }
+
+// 지도에 클릭 이벤트를 등록합니다
+// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+    let el = document.getElementById('placesList')
+    kakao.maps.event.addListener(el, 'click', function(mouseEvent) {        
+        
+        function displayAddress(places) {
+
+        // 클릭한 위도, 경도 정보를 가져옵니다 
+        let address = places.address_name;
+
+        let message = '클릭한 위치의 주소는 ' + address.getLat + ' 입니다. ';       
+
+        var resultDiv = document.getElementById('addressName'); 
+        addressName.innerHTML = message;
+        }
+    });
+    // kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+
+    //     // 클릭한 위도, 경도 정보를 가져옵니다 
+    //     var latlng = mouseEvent.latLng; 
+
+    //     // 마커 위치를 클릭한 위치로 옮깁니다
+    //     marker.setPosition(latlng);
+
+    //     var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+    //     message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+    //     var resultDiv = document.getElementById('clickLatlng'); 
+    //     resultDiv.innerHTML = message;
+
+    // });
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
