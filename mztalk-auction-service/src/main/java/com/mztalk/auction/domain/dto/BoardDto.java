@@ -1,9 +1,8 @@
 package com.mztalk.auction.domain.dto;
 
 import com.mztalk.auction.domain.entity.Board;
-import com.mztalk.auction.repository.BoardRepository;
+import com.mztalk.auction.domain.entity.Comment;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -12,17 +11,19 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardDto {
     private String title;
+    private String bookTitle;
     private String content;
     private String writer;
     private Integer count;
     private Integer startPrice;
     private Integer timeLimit;
     private Integer currentPrice;
-    private List<CommentDto> comments;
+    private List<CommentResponseDto> comments;
 
     public Board toEntity() {
         return Board.builder()
                 .title(title)
+                .bookTitle(bookTitle)
                 .content(content)
                 .writer(writer)
                 .count(count)
@@ -30,6 +31,7 @@ public class BoardDto {
                 .timeLimit(String.valueOf(timeLimit))
                 .currentPrice(currentPrice)
                 .status("Y")
+                .isClose("N")
                 .build();
     }
 }

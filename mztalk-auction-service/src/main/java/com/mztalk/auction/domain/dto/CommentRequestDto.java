@@ -15,5 +15,4 @@ public class CommentRequestDto {
     private String writer;
     private Date createDate;
 
-
 }

@@ -15,9 +15,12 @@ import java.util.Date;
 public class BoardRequestDto {
     private String title;
 
+    private String bookTitle;
+
     private String content;
 
     private String writer;
+
 
     private Integer startPrice;
 
@@ -30,22 +33,22 @@ public class BoardRequestDto {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         java.util.Date date = new Date();
         date.setTime(timestamp);
-
         String Datetime = sdf.format(date);
 
         long timestamp2 = Long.parseLong(currentTime);
         SimpleDateFormat sdf2 = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         java.util.Date date2 = new Date();
         date.setTime(timestamp2);
-
         String Datetime2 = sdf.format(date2);
 
         System.out.println("결과값 = " + Datetime2);
         return Board.builder()
                 .title(title)
                 .content(content)
+                .bookTitle(bookTitle)
                 .count(0)
                 .status("Y")
+                .isClose("N")
                 .writer(writer)
                 .startPrice(startPrice)
                 .currentPrice(startPrice)

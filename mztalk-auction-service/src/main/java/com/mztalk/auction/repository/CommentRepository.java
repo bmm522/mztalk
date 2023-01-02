@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long>, CustomAuctionRepository {
 
-
+    Comment findByCommentId(Long commentId);
 }

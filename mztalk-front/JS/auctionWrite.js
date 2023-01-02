@@ -32,7 +32,6 @@ function boardWrite() {
 }
 
 const postData = () =>{
-
     const startPrice = document.getElementById('startPrice').value;
     const startPriceSplit = startPrice.split(',');
     const startPriceTrans = Number(startPriceSplit[0].concat(startPriceSplit[1]));
@@ -49,6 +48,7 @@ const postData = () =>{
             "title" : document.getElementById('title').value,
             "writer":localStorage.getItem('userNickname'),
             "content":document.getElementById('content').value,
+            "bookTitle": document.getElementById('searchBook').value,
             "startPrice": startPriceTrans,
             "timeLimit":  date.setHours(date.getHours() +  Number(document.getElementById('timeLimit').value)),
             "currentTime" : new Date().getTime(),
@@ -62,6 +62,10 @@ const postData = () =>{
 
 //파일추가
 window.onload = () => {
+    //목록으로
+    document.getElementById('listBtn').addEventListener('click', function() {
+        location.href="auction.html";
+    })
     console.log(document.getElementById('image-form-form'));
     document.getElementById('hidden-bId').value = localStorage.getItem('bId');
     console.log('bId : ' + document.getElementById('hidden-bId').value);
@@ -92,16 +96,39 @@ function showPreview(event) {
 
 //책 검색
 document.getElementById('searchBtn').addEventListener('click', function() {
-    fetch("https://dapi.kakao.com/v3/search/book", {
+    fetch("https://dapi.kakao.com/v3/search/book?target=title&query="+document.getElementById('searchBook').value, {
         method: "GET",
         headers: {
             Authorization: "KakaoAK d7041cb01ccfe4c12792028ae9cb5fff"
         }
     })
+    .then((res) => res.json())
     .then(res => {
-        if(res.status == 200) {
-            console.log("api서비스 통신 성공");
-            console.log(res.documents[0].title);
+        let bookId = 1;
+        for(let book of res.documents) {
+            let title = book.title;
+            let authors = book.authors;
+            let publisher = book.publisher;
+            let thumbnail = "";
+            if(book.thumbnail == "") {
+                thumbnail = "img/auction/noImage.png"
+            } else {
+                thumbnail = book.thumbnail;
+            }
+            document.getElementById('bookSearchArea').innerHTML += `<div class = "col-4" id = "bookImg"><img src = "${thumbnail}" class = "bookThumbnail" style = "width: 50%; height: 80%;"></div><div class = "col-8 mt-3 bookContent"><span id = "${bookId}" class = "bookTitle" style="display:block;" onclick = "selectBook(${bookId});">${title}</span><span class = "bookInform" style="color:gray;">저자 | ${authors} 출판 | ${publisher}</div>`;
+            bookId++;
         }
+        
     })
+    
 });
+
+//책 선택
+function selectBook(bookId) {
+    bookTitle = document.getElementById(bookId).textContent;
+    console.log("타이틀 클릭 시 책title: " + bookTitle);
+    document.getElementById('searchBook').value = bookTitle;
+
+    document.querySelector('.btn-close').click();
+    document.getElementById('bookSearchArea').innerHTML = "";
+}
