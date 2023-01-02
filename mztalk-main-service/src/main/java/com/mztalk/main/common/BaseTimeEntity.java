@@ -13,18 +13,18 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import java.time.LocalDateTime;
 
-@Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@Getter
 public class BaseTimeEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModifiedDate;
 
     @PrePersist //Persist하기 전 이벤트 발생
@@ -33,5 +33,4 @@ public class BaseTimeEntity {
         createdDate = now;
         lastModifiedDate = now;
     }
-
 }

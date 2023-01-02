@@ -185,6 +185,17 @@ footer .container .copy p{font-size: 13px;padding-top: 2px;}
     bottom: 5px;
 }
 
+
+.advertisement {
+  position: fixed;
+  margin-left: 65%;
+ 
+
+}
+
+
+
+
 /*메인*/
 .mainContainer {
   padding-top: 54px;
@@ -211,6 +222,7 @@ footer .container .copy p{font-size: 13px;padding-top: 2px;}
     word-wrap:break-word; 
     line-height: 1.2em;
     height: 3.6em; 
+
 }
 
 .content2 {

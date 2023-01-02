@@ -8,5 +8,5 @@ public interface BoardCustomRepository {
 
     List<Board> findAllByOwn(Long own);
 
-    List<Board> findAllByboardStory(Long own);
+    List<Board> findAllByBoardStory(Long own);
 }

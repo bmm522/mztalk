@@ -46,8 +46,8 @@ public class BoardApiController {
 
     //메인페이지 뿌리기?
     @GetMapping("/main/{own}")
-    public Result findAllByboardStory(@PathVariable("own") Long own){
-        return boardService.findAllByboardStory(own);
+    public Result findAllByBoardStory(@PathVariable("own") Long own){
+        return boardService.findAllByBoardStory(own);
     }
 
 

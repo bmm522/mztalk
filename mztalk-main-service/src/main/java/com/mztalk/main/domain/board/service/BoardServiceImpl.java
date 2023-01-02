@@ -54,8 +54,8 @@ public class BoardServiceImpl implements BoardService {
     //메인화면 뿌려주기
     @Override
     @Transactional(readOnly = true)
-    public Result findAllByboardStory(Long own) {
-        List<Board> boards = boardRepository.findAllByboardStory(own);
+    public Result findAllByBoardStory(Long own) {
+        List<Board> boards = boardRepository.findAllByBoardStory(own);
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
 

@@ -507,7 +507,7 @@ function myReport(){
         `
         <div class="card mb-3" style="width: 750px;" style="height: 250px;">
             <div class="row g-0" style="height: 250px;"> 
-            <div class="col-md-4" style="height: 250px;">
+            <div class="col-md-4" style="overflow: hidden; height:250px">
               <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage" width: 250px" height="150"> 
             </div>
             <div class="col-md-8">
@@ -527,7 +527,7 @@ function myReport(){
         `
         <div class="card mb-3" style="width: 750px;" style="height: 250px;">
             <div class="row g-0" style="height: 250px;">
-            <div class="col-md-4">
+            <div class="col-md-4" style="overflow: hidden; height:250px">
               <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage" width: 250px" height="150">
             </div>
             <div class="col-md-8">
@@ -547,7 +547,7 @@ function myReport(){
         `
         <div class="card mb-3" style="width: 750px;" style="height: 250px;">
             <div class="row g-0" style="height: 250px;">
-              <div class="col-md-4">
+              <div class="col-md-4" style="overflow: hidden; height:250px">
                   <img src='${imageUrl}' width= "250" class="img-fluid rounded-start" height="100">
               </div>
               <div class="col-md-8">

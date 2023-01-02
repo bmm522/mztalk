@@ -41,9 +41,9 @@ window.addEventListener('load',  async ()=> {
         .then(res=>{       
         const F = []
 
-        for(let auction of res.data){
+        for(let follow of res.data){
             
-         F.push(auction)
+         F.push(follow)
 
         }
         //console.log('A:', A)
@@ -68,9 +68,9 @@ window.addEventListener('load',  async ()=> {
 
         const B = []
         
-        for(let auction of res.data){
+        for(let bung of res.data){
             
-            B.push(auction)
+            B.push(bung)
         
         }
         //console.log('A:', A)
@@ -92,9 +92,9 @@ window.addEventListener('load',  async ()=> {
 
         const M = []
         
-        for(let auction of res.data){
+        for(let mentor of res.data){
             
-            M.push(auction)
+            M.push(mentor)
         
         }
         //console.log('A:', A)
@@ -109,6 +109,21 @@ window.addEventListener('load',  async ()=> {
     all.push(newAuctionBoard);
 
     console.log(all, "뭐있니?");
+
+    const result = [];
+
+    for (const innerArray of all) {
+        for (const element of innerArray) {
+            result.push(element);
+        }
+    }
+  
+    result.sort((a, b) => b.date - a.date);
+
+    console.log(result[0].createDate);
+
+    console.log(result, "ㅎㅎ");
+
 
 })
 
@@ -313,3 +328,40 @@ async function newBungBoard(){
 // }));
  
 // => 최종적으로 남은 하나만 리턴
+
+
+//사진 로테이션
+let slideIndex = 0;
+showSlides();
+function showSlides(){ 
+    let i;
+    let slides = document.getElementsByClassName("advertisement");
+//console.log(slides);
+        for(i = 0; i<slides.length; i++){
+        slides[i].style.display = "none";
+        }  
+        slideIndex ++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        slides[slideIndex-1].style.display = "block";  
+        setTimeout(showSlides, 10000);      
+} 
+
+
+{/* <div class="mini-room-wrap">
+<img class="img-miniroom"
+    src="${contextPath}/resources/img/mini_room.gif"
+    alt="mini-room">
+
+</div>
+
+<div class="mini-room-wrap">
+<img class="img-miniroom"
+    src="${contextPath}/resources/img/mini_room2.gif"
+    alt="mini-room" />
+</div>
+
+<div class="mini-room-wrap">
+<img class="img-miniroom"
+    src="${contextPath }/resources/img/mini_room3.gif"
+    alt="mini-room" />
+</div> */}
