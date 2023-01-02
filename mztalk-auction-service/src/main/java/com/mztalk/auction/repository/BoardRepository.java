@@ -15,4 +15,6 @@ public interface BoardRepository extends JpaRepository<Board, Long>, CustomAucti
     Board findFirstByOrderByBoardIdDesc();
 
     List<Board> findByIsCloseAndStatus(String isClose, String status);
+
+    void findByWriter(String writer);
 }

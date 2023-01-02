@@ -57,8 +57,8 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     //입찰가
     @Transactional
     @Override
-    public int updatePrice(BoardPriceDto boardPriceDto) {
-        return entityManager.createQuery("update Board b set b.currentPrice = :currentPrice, b.buyerNickname = :nickName where b.boardId = :boardId")
+    public void updatePrice(BoardPriceDto boardPriceDto) {
+        entityManager.createQuery("update Board b set b.currentPrice = :currentPrice, b.buyerNickname = :nickName where b.boardId = :boardId")
                 .setParameter("currentPrice", boardPriceDto.getCurrentPrice())
                 .setParameter("nickName", boardPriceDto.getBuyer())
                 .setParameter("boardId", boardPriceDto.getBoardId())
@@ -68,9 +68,10 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     //조회수 증가
     @Transactional
     @Override
-    public int updateCount(Long bId) {
-        return entityManager.createQuery("update Board b set b.count = b.count + 1 where b.boardId = :bId")
+    public int updateCount(Long bId, String writer) {
+        return entityManager.createQuery("update Board b set b.count = b.count + 1 where b.boardId = :bId and b.writer != :writer")
                 .setParameter("bId", bId)
+                .setParameter("writer", writer)
                 .executeUpdate();
     }
 

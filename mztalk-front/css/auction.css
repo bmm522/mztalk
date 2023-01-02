@@ -29,6 +29,15 @@ input:focus, input:active {
     cursor: pointer;
 }
 
+a {
+    text-decoration: none;
+    color: burlywood;
+}
+
+a:hover {
+    color: #503C22;
+}
+
 .card-cover {
     position: relative;
     cursor: pointer;

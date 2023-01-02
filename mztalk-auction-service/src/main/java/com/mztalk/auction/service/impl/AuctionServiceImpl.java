@@ -94,7 +94,6 @@ public class AuctionServiceImpl implements AuctionService {
         ConcurrentHashMap<String, Long> timeMap = new ConcurrentHashMap<>();
         timeMap.put("hour", hour);
         timeMap.put("minute", minute);
-        System.out.println(timeMap);
 
         return timeMap;
     }
@@ -172,11 +171,16 @@ public class AuctionServiceImpl implements AuctionService {
 
             imageInfo.add(imageMap);
         }
+        ConcurrentHashMap<String, Long> timeMap = getTimeDuration(board);
+        if(timeMap.get("hour") >= 0 || timeMap.get("minute") >= 0) {
+            timeMap.put("hour", 0L);
+            timeMap.put("minute", 0L);
+        }
 
-
-        return new BoardDetailResponseDto(board, imageInfo);
-
+        return new BoardDetailResponseDto(board, imageInfo, timeMap);
     }
+
+
 
     //입찰가
     @Override
@@ -187,8 +191,8 @@ public class AuctionServiceImpl implements AuctionService {
 
     //조회수
     @Override
-    public int updateCount(Long bId) {
-        return boardRepository.updateCount(bId);
+    public int updateCount(Long bId, String writer) {
+        return boardRepository.updateCount(bId, writer);
     }
 
     //최신 글 번호 받아오기

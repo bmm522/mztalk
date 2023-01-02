@@ -22,7 +22,7 @@ public interface AuctionService {
 
     BoardPriceDto updatePrice(BoardPriceDto boardPriceDto);
 
-    int updateCount(Long bId);
+    int updateCount(Long bId, String writer);
 
     ConcurrentHashMap<String, String> getRecentBoardNo();
 
