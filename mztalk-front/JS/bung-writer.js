@@ -205,26 +205,98 @@ mapOption = {
 // 지도를 생성합니다    
 var map = new window.kakao.maps.Map(mapContainer, mapOption); 
 
+// var geocoder = new kakao.maps.services.Geocoder();
+
+//     // 주소로 좌표를 검색합니다
+//     geocoder.addressSearch('', function(result, status) {
+
+//     // 정상적으로 검색이 완료됐으면 
+//     if (status === kakao.maps.services.Status.OK) {
+
+//     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+//     // 결과값으로 받은 위치를 마커로 표시합니다
+//     var marker = new kakao.maps.Marker({
+//         map: map,
+//         position: coords
+//     });
+
+//     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+//     map.setCenter(coords);
+//     } 
+//     }); 
+
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
 
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch('', function(result, status) {
+var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
+    infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 
-    // 정상적으로 검색이 완료됐으면 
-    if (status === kakao.maps.services.Status.OK) {
+// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
+searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 
-    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            // var detailAddr = result[0].road_address.address_name;
+            var detailAddr = result[0].address.address_name;
+            
+            var content = '<div class="bAddr">' +
+                            '<span class="title">주소정보</span>' + 
+                            detailAddr + 
+                        '</div>';
 
-    // 결과값으로 받은 위치를 마커로 표시합니다
-    var marker = new kakao.maps.Marker({
-        map: map,
-        position: coords
+            // 마커를 클릭한 위치에 표시합니다 
+            marker.setPosition(mouseEvent.latLng);
+            marker.setMap(map);
+
+            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+            infowindow.setContent(content);
+            infowindow.open(map, marker);
+
+            // 클릭한 주소 정보를 가져옵니다 
+            var address = detailAddr;
+
+            var message = detailAddr;
+
+            var resultDiv = document.getElementById('addressName'); 
+            resultDiv.innerHTML = message;
+        }   
     });
+});
 
-    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-    map.setCenter(coords);
-    } 
-    });    
+// 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
+kakao.maps.event.addListener(map, 'idle', function() {
+    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+});
+
+function searchAddrFromCoords(coords, callback) {
+    // 좌표로 행정동 주소 정보를 요청합니다
+    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+}
+
+function searchDetailAddrFromCoords(coords, callback) {
+    // 좌표로 법정동 상세 주소 정보를 요청합니다
+    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+}
+
+// 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
+function displayCenterInfo(result, status) {
+    if (status === kakao.maps.services.Status.OK) {
+        var infoDiv = document.getElementById('centerAddr');
+
+        for(var i = 0; i < result.length; i++) {
+            // 행정동의 region_type 값은 'H' 이므로
+            if (result[i].region_type === 'H') {
+                infoDiv.innerHTML = result[i].address_name;
+                break;
+            }
+        }
+    }    
+}
 
     // 지도를 클릭한 위치에 표출할 마커입니다
     var marker = new kakao.maps.Marker({ 
@@ -233,24 +305,6 @@ var geocoder = new kakao.maps.services.Geocoder();
     }); 
     // 지도에 마커를 표시합니다
     marker.setMap(map);
-
-    // 지도에 클릭 이벤트를 등록합니다
-    // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-
-        // 클릭한 위도, 경도 정보를 가져옵니다 
-        var latlng = mouseEvent.latLng; 
-
-        // 마커 위치를 클릭한 위치로 옮깁니다
-        marker.setPosition(latlng);
-
-        var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-        message += '경도는 ' + latlng.getLng() + ' 입니다';
-
-        var resultDiv = document.getElementById('clickLatlng'); 
-        resultDiv.innerHTML = message;
-
-    });
 
     // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
     var mapTypeControl = new kakao.maps.MapTypeControl();
@@ -368,32 +422,33 @@ menuEl.scrollTop = 0;
 map.setBounds(bounds);
 }
 
-function displayAddress(places) {
-    let div = document.getElementById('addressName')
-    let address = HTMLElement.innerHTML;
-    HTMLElement.innerHTML = places.address_name;
-    // let address = places.address_name
-    // let = document.getElementById('addressName');
+// function displayAddress(places) {
+//     let div = document.getElementById('addressName')
+//     let address = HTMLElement.innerHTML;
+//     HTMLElement.innerHTML = places.address_name;
+//     // let address = places.address_name
+//     // let = document.getElementById('addressName');
 
-    // address.value;
-}
+//     // address.value;
+// }
 
 // 지도에 클릭 이벤트를 등록합니다
 // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-    let el = document.getElementById('placesList')
-    kakao.maps.event.addListener(el, 'click', function(mouseEvent) {        
+    // let el = document.getElementById('placesList')
+    // kakao.maps.event.addListener(el, 'click', function(mouseEvent) {        
         
-        function displayAddress(places) {
+    //     function displayAddress(places) {
 
-        // 클릭한 위도, 경도 정보를 가져옵니다 
-        let address = places.address_name;
+    //     // 클릭한 주소 정보를 가져옵니다 
+    //     let address = places.address_name;
 
-        let message = '클릭한 위치의 주소는 ' + address.getLat + ' 입니다. ';       
+    //     console.log(places.address_name)
+    //     let message = '클릭한 위치의 주소는 ' + address.getLat + ' 입니다. ';       
 
-        var resultDiv = document.getElementById('addressName'); 
-        addressName.innerHTML = message;
-        }
-    });
+    //     var resultDiv = document.getElementById('addressName'); 
+    //     resultDiv.innerHTML = message;
+    //     }
+    // });
     // kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
 
     //     // 클릭한 위도, 경도 정보를 가져옵니다 
@@ -540,7 +595,6 @@ document.getElementById('bung-write-btn').addEventListener('click', function(){
   } else {
     let checkValue = '';
     let cnt = 0;
-     
     for(let i = 0 ; i < document.getElementsByClassName('form-check-input').length ; i++){
         
         if(document.getElementsByClassName('form-check-input')[i].checked){

@@ -28,6 +28,7 @@ public class BungBoardDto {
     private Long boardCount;
     private BoardStatus boardStatus;
     private String category;
+    private String address;
 
     public BungBoard toEntity() {
         BungBoard BungBoardEntity = BungBoard.builder()
@@ -42,6 +43,7 @@ public class BungBoardDto {
                 .boardCount(boardCount)
                 .boardStatus(BoardStatus.YES)
                 .category(category)
+                .address(address)
                 .build();
         return BungBoardEntity;
     }
@@ -58,5 +60,6 @@ public class BungBoardDto {
         this.boardCount = BungBoardEntity.getBoardCount();
         this.boardStatus = BungBoardEntity.getBoardStatus();
         this.category = BungBoardEntity.getCategory();
+        this.address = BungBoardEntity.getAddress();
     }
 }

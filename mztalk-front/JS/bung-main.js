@@ -84,7 +84,7 @@ document.getElementById('write-btn').addEventListener('click',function(){
     .then(res=>{
         console.log(res.bId);
         localStorage.setItem("bId", res.bId);
-        location.href="bung-Service-writer.html";
+        location.href="bung-service-writer.html";
     })
 });
 

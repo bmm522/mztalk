@@ -47,6 +47,8 @@ public class BungBoard {
     private BoardStatus boardStatus;
     @Column(nullable = false, length = 10)
     private String category;
+    @Column(nullable = false, length = 50)
+    private String address;
     @OneToMany(mappedBy = "bungBoard")
     @JsonBackReference // 순환참조 방지(부모->자식)
     private List<BungAddBoard> bungAddBoards;
@@ -57,6 +59,7 @@ public class BungBoard {
         this.deadlineDate = Date.valueOf(bungBoardDto.getDeadlineDate());
         this.fullGroup = bungBoardDto.getFullGroup();
         this.category = bungBoardDto.getCategory();
+        this.address = bungBoardDto.getAddress();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         this.modifyDate = timestamp;
     }
