@@ -118,11 +118,42 @@ window.addEventListener('load',  async ()=> {
         }
     }
   
-    result.sort((a, b) => b.date - a.date);
 
-    console.log(result[0].createDate);
-
+    result.sort((a, b) => new Date(a.createDate) - new Date(b.createDate));
     console.log(result, "ㅎㅎ");
+
+    for(let board of result){
+        //console.log(board+"??");
+
+        let title = board.title;
+        let content = board.content;
+        let boardId = board.id;
+        let imageUrl = board.imageUrl;
+
+        document.querySelector('#storyList').innerHTML +=
+        `
+        <div class="card mb-3" style="width: 750px;" style="height: 150px;">
+            <div class="row g-0" style="height: 150px;"> 
+            <div class="col-md-4" style="overflow: hidden; height:250px">
+              <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage" width: 250px" height="150"> 
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">${content}</h5>
+                <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
+                <p class="card-text">${title}</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        `
+
+
+
+
+
+
+    }
 
 
 })
@@ -345,23 +376,3 @@ function showSlides(){
         slides[slideIndex-1].style.display = "block";  
         setTimeout(showSlides, 10000);      
 } 
-
-
-{/* <div class="mini-room-wrap">
-<img class="img-miniroom"
-    src="${contextPath}/resources/img/mini_room.gif"
-    alt="mini-room">
-
-</div>
-
-<div class="mini-room-wrap">
-<img class="img-miniroom"
-    src="${contextPath}/resources/img/mini_room2.gif"
-    alt="mini-room" />
-</div>
-
-<div class="mini-room-wrap">
-<img class="img-miniroom"
-    src="${contextPath }/resources/img/mini_room3.gif"
-    alt="mini-room" />
-</div> */}
