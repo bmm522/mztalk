@@ -31,6 +31,8 @@ public class BoardDto {
 
     private LocalDateTime lastModifiedDate;
 
+    private LocalDateTime createdDate;
+
     private String nickname;
 
     //레포지토리에 넣기위해
