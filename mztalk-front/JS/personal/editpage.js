@@ -488,85 +488,80 @@ function myReport(){
     })
     .then((res)=>res.json())
     .then(res =>{
-
-      //let report = res.data;
-
-      //console.log("통신성공?"+ report);
-
+      document.querySelector("#reportAllList").innerHTML  = '';
       for(let report of res.data){
         let boardId = report.boardId;
-        let content = report.reportContent;
-        let title = report.reportTitle;
+        let content = report.content;
+        let title = report.title;
         let serviceName = report.serviceName;
         let UserInfo = report.user;
         let path = report.path;
         let reportStatus = report.reportStatus;
-
+        let imageUrl = report.imageUrl;
+        console.log(report+"왜 없어?");
+        console.log(report.title);
         //let list = document.querySelector("#reportAllList");
+        
       if(serviceName.includes('mentor')){
-
         document.querySelector("#reportAllList").innerHTML +=
         `
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-            <div class="col-md-4">
-                <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+        <div class="card mb-3" style="width: 750px;" style="height: 250px;">
+            <div class="row g-0" style="height: 250px;"> 
+            <div class="col-md-4" style="height: 250px;">
+              <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage" width: 250px" height="150"> 
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                <h5 class="card-title">신고글제목</h5>
+                <h5 class="card-title">${content}</h5>
                 <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-            </div>
-        </div>
-        `;
-
-
-      }else if(serviceName.includes('auction')){
-
-        document.querySelector("#reportAllList").innerHTML +=
-        `
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-            <div class="col-md-4">
-                <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <span class="badge text-bg-success" id="serviceAuction">경매</span>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-            </div>
-        </div>
-        `;
-
-      }else{
-
-        document.querySelector("#reportAllList").innerHTML +=
-        `
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-            <div class="col-md-4">
-                <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <span class="badge text-bg-info" id="serviceBung">벙</span>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <p class="card-text">${title}</p>
+               
                 </div>
             </div>
             </div>
         </div>
         `;
       }
+      else if(serviceName.includes('auction')){
+        document.querySelector("#reportAllList").innerHTML +=
+        `
+        <div class="card mb-3" style="width: 750px;" style="height: 250px;">
+            <div class="row g-0" style="height: 250px;">
+            <div class="col-md-4">
+              <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage" width: 250px" height="150">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">${content}</h5>
+                <span class="badge text-bg-success" id="serviceAuction">경매</span>
+                <p class="card-text">${title}</p>
+               
+                </div>
+            </div>
+            </div>
+        </div>
+        `;
+      }
+      else{
+        document.querySelector("#reportAllList").innerHTML +=
+        `
+        <div class="card mb-3" style="width: 750px;" style="height: 250px;">
+            <div class="row g-0" style="height: 250px;">
+              <div class="col-md-4">
+                  <img src='${imageUrl}' width= "250" class="img-fluid rounded-start" height="100">
+              </div>
+              <div class="col-md-8">
+                  <div class="card-body">
+                  <h5 class="card-title">${content}</h5>
+                  <span class="badge text-bg-info" id="serviceBung">벙</span>
+                  <p class="card-text" width="750px">${title}</p>              
+                  </div>
+              </div>
+            </div>
+        </div>
+        `;
+      }
+      
       }
   })
 }
@@ -574,7 +569,7 @@ function myReport(){
 
 
 
-//VIP시
+//VIP시 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 
 
 

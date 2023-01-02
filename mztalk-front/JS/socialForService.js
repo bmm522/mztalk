@@ -102,7 +102,7 @@ window.addEventListener('load',  async ()=> {
     })
      console.log('newMentorBoard:', newMentorBoard);
 
-    const all = []
+    const all=[];
     all.push(newMentorBoard);
     all.push(newBungBoard);
     all.push(newFollowBoard);
