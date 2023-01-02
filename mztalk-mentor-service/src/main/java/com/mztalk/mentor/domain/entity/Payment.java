@@ -33,16 +33,20 @@ public class Payment extends BaseTimeEntity{
     private Mentee mentee;
 
     private int price;
+    private String impUid;
+    private String merchantUid;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @Builder
-    public Payment(Long id, Board board, Mentee mentee, int price, Status status) {
+    public Payment(Long id, Board board, Mentee mentee, int price, String impUid, String merchantUid, Status status) {
         this.id = id;
         this.board = board;
         this.mentee = mentee;
         this.price = price;
+        this.impUid = impUid;
+        this.merchantUid = merchantUid;
         this.status = status;
     }
 

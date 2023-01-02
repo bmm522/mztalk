@@ -14,7 +14,7 @@ public interface BoardRepository extends JpaRepository<Board,Long>, BoardReposit
 
     List<Board> findByMentoringDateBefore(LocalDateTime now);
 
-    @Query("select b from Board b join b.participant p where p.mentee.id =:menteeId")
+    @Query("select b from Board b join fetch b.participant p join fetch b.payment pay where p.mentee.id =:menteeId")
     List<Board> findBoardByMenteeId(@Param("menteeId")Long menteeId);
 
 }

@@ -29,5 +29,5 @@ public interface BoardService {
 
     List<BoardResDto> findNullPaymentWithBeforeMentoringDate();
 
-    List<BoardTransferDto> findBoardByMenteeId(Long menteeId);
+    List<BoardResDto> findBoardByMenteeId(Long menteeId);
 }

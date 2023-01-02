@@ -25,7 +25,7 @@ public class BoardResDto {
     private ScoreResDto score;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime mentoringDate;
-    private ParticipantResDto participant;
+    private ParticipantTransferDto participant;
     private PaymentResDto payment;
     private Status status;
     private LocalDateTime createdDate;
@@ -61,5 +61,22 @@ public class BoardResDto {
         this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();
     }
+
+    public BoardResDto(Board board, PaymentResDto payment){
+        this.payment = payment;
+        this.id = board.getId();
+        this.category = board.getCategory();
+        this.title = board.getTitle();
+        this.nickname = board.getNickname();
+        this.content = board.getContent();
+        this.introduction = board.getIntroduction();
+        this.career = board.getCareer();
+        this.salary = board.getSalary();
+        this.mentoringDate = board.getMentoringDate();
+        this.status = board.getStatus();
+        this.createdDate = board.getCreatedDate();
+        this.lastModifiedDate = board.getLastModifiedDate();
+    }
+
 
 }

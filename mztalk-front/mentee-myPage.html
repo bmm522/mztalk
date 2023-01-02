@@ -499,7 +499,9 @@
                         data: JSON.stringify({
                             userId : localStorage.getItem('userNo'),
                             boardId : document.getElementById('boardId-modal').value,
-                            price : rsp.paid_amount
+                            price : rsp.paid_amount,
+                            impUid : rsp.imp_uid,
+                            merchantUid: rsp.merchant_uid
                         })
                     })
                     alert('멘토링 신청이 완료되었습니다.');

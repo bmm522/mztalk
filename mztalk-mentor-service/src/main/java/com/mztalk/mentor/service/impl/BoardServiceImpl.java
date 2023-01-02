@@ -1,10 +1,7 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.SearchCondition;
-import com.mztalk.mentor.domain.dto.BoardResDto;
-import com.mztalk.mentor.domain.dto.BoardTransferDto;
-import com.mztalk.mentor.domain.dto.BoardReqDto;
-import com.mztalk.mentor.domain.dto.MentorTransferDto;
+import com.mztalk.mentor.domain.dto.*;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.repository.BoardRepository;
@@ -40,15 +37,16 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardResDto> findNullPaymentWithBeforeMentoringDate() {
         LocalDateTime now = LocalDateTime.now();
         List<Board> boards = boardRepository.findNullPaymentWithBeforeMentoringDate(now);
-        List<BoardResDto> collect = boards.stream().map(BoardResDto::new).collect(Collectors.toList());
+        List<BoardResDto> collect = boards.stream()
+                .map(b->new BoardResDto(b,new MentorTransferDto(b.getMentor()))).collect(Collectors.toList());
         return collect;
     }
 
     // 멘티가 본인이 신청한 글에 대한 정보만 가져온다.
     @Override
-    public List<BoardTransferDto> findBoardByMenteeId(Long menteeId) {
+    public List<BoardResDto> findBoardByMenteeId(Long menteeId) {
         List<Board> boards = boardRepository.findBoardByMenteeId(menteeId);
-        List<BoardTransferDto> collect = boards.stream().map(BoardTransferDto::new).collect(Collectors.toList());
+        List<BoardResDto> collect = boards.stream().map(b->new BoardResDto(b,new PaymentResDto(b.getPayment()))).collect(Collectors.toList());
         return collect;
     }
 

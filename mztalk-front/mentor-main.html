@@ -333,6 +333,7 @@
             },
         function (rsp) {
             if (rsp.success) {
+                console.log(rsp);
                 $.ajax({
                     url: "http://localhost:8000/mentors/participant",
                     method: "POST",
@@ -363,15 +364,17 @@
                         data: JSON.stringify({
                             userId : localStorage.getItem('userNo'),
                             boardId : document.getElementById('boardId-modal').value,
-                            price : rsp.paid_amount
+                            price : rsp.paid_amount,
+                            impUid : rsp.imp_uid,
+                            merchantUid: rsp.merchant_uid
                         })
                     })
                     alert('멘토링 신청이 완료되었습니다.');
-                    location.href="mentor-main.html";
+                    location.href='mentor-main.html';
                 })
             } else {
                 alert('멘토링 결제를 실패하셨습니다');
-                location.href="mentor-main.html";
+                location.href='mentor-main.html';
             }
         });
     }

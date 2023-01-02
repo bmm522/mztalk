@@ -64,7 +64,7 @@ public class BoardApiController {
     @ApiImplicitParam(name = "menteeId", value = "멘티 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/board/mentee/{menteeId}")
     public ResponseEntity<?> findBoardByMenteeId(@PathVariable("menteeId")Long MenteeId){
-        List<BoardTransferDto> boards = boardService.findBoardByMenteeId(MenteeId);
+        List<BoardResDto> boards = boardService.findBoardByMenteeId(MenteeId);
         return new ResponseEntity<>(new Result<>("해당 멘티가 신청한 모든 글 목록", boards), HttpStatus.OK);
     }
 
