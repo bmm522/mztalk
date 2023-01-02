@@ -15,18 +15,16 @@ public class BungBoardResponseDto {
     private String boardId;
     private String imageUrl;
     private String imageName;
-
     private String objectKey;
     private String count;
     private String title;
     private String category;
     private String content;
-
     private String writer;
     private long nowGroup;
     private long fullGroup;
-
     private String deadlineDate;
+    private String createDate;
 
 
     public BungBoardResponseDto(BungBoard bungBoard, String imageUrl, String imageName) {
@@ -41,7 +39,6 @@ public class BungBoardResponseDto {
 //        this.nowGroup = bungBoard.getNowGroup();
         this.fullGroup = bungBoard.getFullGroup();
         this.deadlineDate = String.valueOf(bungBoard.getDeadlineDate());
-
-
+        this.createDate = String.valueOf(bungBoard.getCreateDate());
     }
 }
