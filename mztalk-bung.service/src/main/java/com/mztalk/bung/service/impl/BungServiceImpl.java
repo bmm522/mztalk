@@ -65,6 +65,7 @@ public class BungServiceImpl implements BungBoardService {
                 boardCount(0L).
                 boardStatus(BoardStatus.YES).
                 category(bungBoardDto.getCategory()).
+                address(bungBoardDto.getAddress()).
                 build();
 
         bungRepository.save(bungBoardEntity);

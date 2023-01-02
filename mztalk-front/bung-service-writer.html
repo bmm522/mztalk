@@ -89,17 +89,10 @@
                     <hr>
                     <ul id="placesList"></ul>
                     <div id="pagination"></div>       
-                </div>     
-            <div id="clickLatlng">
-
-            </div>     
-            </div>
-            <div id="addressName">
-                <button class="btn btn-outline-warning" onclick="displayAddress();">주소</button>
+                </div>        
             </div>
 
             <div class="infomationBtn" style="height: 150px; float: left; width: 50%;">
-                
                 <table class="scriptCalendar">
                     <thead>
                         <tr>
@@ -117,9 +110,18 @@
                     <tbody></tbody>
                 </table>
             </div>
-            <div class="writerBtn" style="height: 200px; float: left; width: 50%;">
-                <br><br><br><br>
-                <div id="group" style="height: 100px;">
+            <div class="writerBtn" style="height: 400px; float: left; width: 50%;">
+                
+                <br><br>
+                
+                <div id="addressNameArea" style="height: 50px;">
+                    <span style="vertical-align: middle;">모임 장소 : </span>
+                    <textarea id="addressName" name="addressName" rows="4" style="resize: none; height: 50px;"></textarea>
+                </div>
+                
+                <br><br>
+
+                <div id="group" style="height: 50px;">
                     <select id="full-group">
                         <option value="2">2명</option>
                         <option value="3">3명</option>
@@ -127,8 +129,11 @@
                         <option value="5">5명</option>
                     </select>
                 </div>
-                <div class="form-check form-switch form-check-reverse" style="height: 100px;">
-                    <div id="category" style="height: 100px;">
+
+                <br>
+
+                <div class="form-check form-switch form-check-reverse" style="height: 50px;">
+                    <div id="category" style="height: 50px;">
                         <table>
                             <tr>
                                 <th>
@@ -151,7 +156,8 @@
                         </table>
                     </div>
                 </div>
-                <div id="group" style="height: 66.66px;">
+                <br>
+                <div id="group" style="height: 50px;">
                     <button type="button" id="bung-write-btn" class="btn btn-outline-warning">작성하기</button>
                 </div>
             </div>

@@ -25,6 +25,7 @@ public class BungBoardResponseDto {
     private long fullGroup;
     private String deadlineDate;
     private String createDate;
+    private String address;
 
 
     public BungBoardResponseDto(BungBoard bungBoard, String imageUrl, String imageName) {
@@ -40,5 +41,6 @@ public class BungBoardResponseDto {
         this.fullGroup = bungBoard.getFullGroup();
         this.deadlineDate = String.valueOf(bungBoard.getDeadlineDate());
         this.createDate = String.valueOf(bungBoard.getCreateDate());
+        this.address = bungBoard.getAddress();
     }
 }
