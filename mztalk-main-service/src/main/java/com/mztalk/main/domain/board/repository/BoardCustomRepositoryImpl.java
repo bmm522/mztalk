@@ -24,8 +24,8 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
     }
 
     @Override
-    public List<Board> findAllByboardStory(Long own) {
-        return entityManager.createQuery("select b from Board b left join Follow f on(b.own = f.fromUserId) where b.status='YES' and b.privacy='PUBLIC' and f.fromUserId = :own ORDER BY  b.id desc", Board.class)
+    public List<Board> findAllByBoardStory(Long own) {
+        return entityManager.createQuery("select distinct b from Board b left join Follow f on(b.own = f.fromUserId) where b.status='YES' and b.privacy='PUBLIC' and f.fromUserId = :own ORDER BY  b.id desc", Board.class)
                 .setParameter("own", own)
                 .getResultList();
     }

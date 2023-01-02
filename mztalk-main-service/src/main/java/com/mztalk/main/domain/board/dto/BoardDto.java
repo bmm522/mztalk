@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +29,11 @@ public class BoardDto {
     private Long own; //페이지주인
     private PrivacyStatus privacy; //글공개범위
 
-    private List<Reply> replyList = new ArrayList<>();
+    private LocalDateTime createdDate;
 
     private LocalDateTime lastModifiedDate;
 
-    private LocalDateTime createdDate;
+    private List<Reply> replyList = new ArrayList<>();
 
     private String nickname;
 
@@ -64,11 +66,8 @@ public class BoardDto {
         this.own = board.getOwn();
         this.privacy = board.getPrivacy();
         this.replyList = board.getReplyList();
-        this.lastModifiedDate = board.getLastModifiedDate();
 
     }
-
-
 
 
 
