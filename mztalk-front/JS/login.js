@@ -566,6 +566,8 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
       } else if(result == 'Out User'){
         window.open('loginpage.html', '_self');
       } else {
+        console.log(response.headers);
+        console.log('헤더 : ' + response.headers.get('UserRole'));
         localStorage.setItem("authorization", response.headers.get('Authorization'));
         localStorage.setItem("refreshToken", response.headers.get('RefreshToken'));
         localStorage.setItem("userNo", response.headers.get("UserNo"));

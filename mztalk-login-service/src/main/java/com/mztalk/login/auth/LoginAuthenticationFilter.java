@@ -92,6 +92,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
         ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
         JwtTokenFactory jwtTokenFactory = getJwtTokenFactoryInstance();
 
+        System.out.println("일반로그인 : " + principalDetails.getUser().getRole());
         response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
         response.addHeader("RefreshToken", jwtTokenAndRefreshToken.get("refreshToken"));
         response.addHeader("UserRole", principalDetails.getUser().getRole());

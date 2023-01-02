@@ -49,6 +49,7 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
         response.addCookie(mztalkCookie.getUserNoCookie());
         response.addCookie(mztalkCookie.getUserNicknameCookie());
         response.addCookie(mztalkCookie.getUserStatusCookie());
+        response.addCookie(mztalkCookie.getUserRoleCookie());
         return  response;
     }
 
