@@ -23,11 +23,11 @@ public class BoardDetailResponseDto {
     private String buyer;
     private String writer;
     private Date createDate;
-    private String timeLimit;
+    private ConcurrentHashMap<String, Long> timeMap;
     private String isClose;
     private List<ConcurrentHashMap<String, String>> imageInfo;
 
-    public BoardDetailResponseDto(Board board, List<ConcurrentHashMap<String, String>> imageInfo) {
+    public BoardDetailResponseDto(Board board, List<ConcurrentHashMap<String, String>> imageInfo, ConcurrentHashMap<String, Long> timeMap) {
         this.boardId = board.getBoardId();
         this.title = board.getTitle();
         this.bookTitle = board.getBookTitle();
@@ -36,7 +36,7 @@ public class BoardDetailResponseDto {
         this.buyer = board.getBuyerNickname();
         this.writer = board.getWriter();
         this.createDate = board.getCreateDate();
-        this.timeLimit = board.getTimeLimit();
+        this.timeMap = timeMap;
         this.isClose = board.getIsClose();
         this.imageInfo = imageInfo;
     }
