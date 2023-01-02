@@ -2,7 +2,7 @@ package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardResDto;
-import com.mztalk.mentor.domain.dto.BoardMenteeDto;
+import com.mztalk.mentor.domain.dto.BoardTransferDto;
 import com.mztalk.mentor.domain.dto.BoardReqDto;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface BoardService {
     List<BoardResDto> searchWithCondition(SearchCondition searchCondition);
 
     //멘티가 본인이 신청한 멘토링 글을 보는 메소드
-    List<BoardMenteeDto> findBoardByUserId(Long userId);
+    List<BoardTransferDto> findBoardByUserId(Long userId);
 
     List<BoardResDto> findBoardByMentorId(Long mentorId);
 
@@ -29,5 +29,5 @@ public interface BoardService {
 
     List<BoardResDto> findNullPaymentWithBeforeMentoringDate();
 
-    List<BoardMenteeDto> findBoardByMenteeId(Long menteeId);
+    List<BoardTransferDto> findBoardByMenteeId(Long menteeId);
 }

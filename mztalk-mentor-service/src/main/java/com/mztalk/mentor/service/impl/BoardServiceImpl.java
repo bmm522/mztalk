@@ -2,7 +2,7 @@ package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardResDto;
-import com.mztalk.mentor.domain.dto.BoardMenteeDto;
+import com.mztalk.mentor.domain.dto.BoardTransferDto;
 import com.mztalk.mentor.domain.dto.BoardReqDto;
 import com.mztalk.mentor.domain.dto.MentorTransferDto;
 import com.mztalk.mentor.domain.entity.Board;
@@ -46,9 +46,9 @@ public class BoardServiceImpl implements BoardService {
 
     // 멘티가 본인이 신청한 글에 대한 정보만 가져온다.
     @Override
-    public List<BoardMenteeDto> findBoardByMenteeId(Long menteeId) {
+    public List<BoardTransferDto> findBoardByMenteeId(Long menteeId) {
         List<Board> boards = boardRepository.findBoardByMenteeId(menteeId);
-        List<BoardMenteeDto> collect = boards.stream().map(BoardMenteeDto::new).collect(Collectors.toList());
+        List<BoardTransferDto> collect = boards.stream().map(BoardTransferDto::new).collect(Collectors.toList());
         return collect;
     }
 
@@ -61,10 +61,10 @@ public class BoardServiceImpl implements BoardService {
 
     //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드 멘토링 이후의 글만 출력되게 한다.
     @Override
-    public List<BoardMenteeDto> findBoardByUserId(Long userId) {
+    public List<BoardTransferDto> findBoardByUserId(Long userId) {
         LocalDateTime now = LocalDateTime.now();
         List<Board> boardList = boardRepository.findBoardByUserId(userId,now);
-        List<BoardMenteeDto> collect = boardList.stream().map(BoardMenteeDto::new).collect(Collectors.toList());
+        List<BoardTransferDto> collect = boardList.stream().map(BoardTransferDto::new).collect(Collectors.toList());
         return collect;
     }
 

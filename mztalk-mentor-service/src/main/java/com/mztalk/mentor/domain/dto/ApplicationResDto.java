@@ -76,4 +76,5 @@ public class ApplicationResDto {
         this.createdDate = createdDate;
         this.lastModifiedDate = lastModifiedDate;
     }
+
 }

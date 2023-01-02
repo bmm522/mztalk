@@ -12,4 +12,10 @@ public class MenteeRepositoryCustomImpl implements MenteeRepositoryCustom {
     private final EntityManager entityManager;
 
 
+    @Override
+    public Mentee findMenteeByUserId(Long userId) {
+        return entityManager.createQuery("select m from Mentee m where m.id =:userId", Mentee.class)
+                .setParameter("userId",userId)
+                .getSingleResult();
+    }
 }

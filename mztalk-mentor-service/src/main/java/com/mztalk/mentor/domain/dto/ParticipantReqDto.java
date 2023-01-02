@@ -36,5 +36,15 @@ public class ParticipantReqDto {
         return participant;
     }
 
-
+    @Override
+    public String toString() {
+        return "ParticipantReqDto{" +
+                "userId=" + userId +
+                ", boardId=" + boardId +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

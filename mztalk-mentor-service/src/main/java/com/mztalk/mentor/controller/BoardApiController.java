@@ -2,7 +2,7 @@ package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardResDto;
-import com.mztalk.mentor.domain.dto.BoardMenteeDto;
+import com.mztalk.mentor.domain.dto.BoardTransferDto;
 import com.mztalk.mentor.domain.dto.BoardReqDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.BoardService;
@@ -55,7 +55,7 @@ public class BoardApiController {
     @ApiImplicitParam(name = "userId", value = "멘티 식별자", required = true, dataType = "int", paramType = "query")
     @GetMapping("/board")
     public ResponseEntity<?> findBoardByUserId(@RequestParam("userId")Long userId){
-        List<BoardMenteeDto> boards = boardService.findBoardByUserId(userId);
+        List<BoardTransferDto> boards = boardService.findBoardByUserId(userId);
         return new ResponseEntity<>(new Result<>("해당 멘티의 완료된 멘토링 목록", boards), HttpStatus.OK);
     }
 
@@ -64,7 +64,7 @@ public class BoardApiController {
     @ApiImplicitParam(name = "menteeId", value = "멘티 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/board/mentee/{menteeId}")
     public ResponseEntity<?> findBoardByMenteeId(@PathVariable("menteeId")Long MenteeId){
-        List<BoardMenteeDto> boards = boardService.findBoardByMenteeId(MenteeId);
+        List<BoardTransferDto> boards = boardService.findBoardByMenteeId(MenteeId);
         return new ResponseEntity<>(new Result<>("해당 멘티가 신청한 모든 글 목록", boards), HttpStatus.OK);
     }
 

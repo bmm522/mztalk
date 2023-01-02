@@ -27,10 +27,21 @@ public class MenteeResDto {
         this.nickname = mentee.getNickname();
         this.createdDate = mentee.getCreatedDate();
         this.lastModifiedDate = mentee.getLastModifiedDate();
-        this.participants = mentee.getParticipants().stream().map(p->new ParticipantResDto(p)).collect(Collectors.toList());
-        this.payments = mentee.getPayments().stream().map(payment -> new PaymentResDto(payment)).collect(Collectors.toList());
-        this.scores = mentee.getScores().stream().map(s->new ScoreResDto(s)).collect(Collectors.toList());
-        this.mentors = mentee.getMentors().stream().map(m->new MentorResDto(m)).collect(Collectors.toList());
+
+        this.participants = mentee.getParticipants().stream()
+                .map(p-> new ParticipantResDto(p,new MenteeTransferDto(p.getMentee())))
+                .collect(Collectors.toList());
+
+        this.payments = mentee.getPayments().stream()
+                .map(payment -> new PaymentResDto(payment))
+                .collect(Collectors.toList());
+
+        this.scores = mentee.getScores().stream()
+                .map(s->new ScoreResDto(s,new MenteeTransferDto(s.getMentee()),new MentorTransferDto(s.getMentor())))
+                .collect(Collectors.toList());
+
+        this.mentors = mentee.getMentors().stream().
+                map(m->new MentorResDto(m)).collect(Collectors.toList());
     }
 
 
