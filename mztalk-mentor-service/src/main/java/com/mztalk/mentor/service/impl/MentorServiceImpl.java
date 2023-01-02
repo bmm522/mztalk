@@ -49,7 +49,8 @@ public class MentorServiceImpl implements MentorService {
     @Override
     public boolean isExist(Long userId) {
         Mentor mentor = mentorRepository.findMentorByUserId(userId);
-        return mentor == null ? false : true;
+        boolean isTrue = mentor == null? false : true;
+        return isTrue;
     }
 
     @Override

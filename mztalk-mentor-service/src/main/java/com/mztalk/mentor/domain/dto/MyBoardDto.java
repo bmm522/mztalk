@@ -1,5 +1,6 @@
 package com.mztalk.mentor.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
@@ -7,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -24,6 +27,8 @@ public class MyBoardDto {
     private String introduction;
     private String career;
     private int salary;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime mentoringDate;
     private Status status;
 
     public Board toEntity() {
@@ -38,6 +43,7 @@ public class MyBoardDto {
                 .career(career)
                 .salary(salary)
                 .status(Status.YES)
+                .mentoringDate(mentoringDate)
                 .build();
         return board;
     }
@@ -52,6 +58,7 @@ public class MyBoardDto {
         this.introduction = board.getIntroduction();
         this.career = board.getCareer();
         this.salary = board.getSalary();
+        this.mentoringDate = board.getMentoringDate();
         this.status = board.getStatus();
     }
 

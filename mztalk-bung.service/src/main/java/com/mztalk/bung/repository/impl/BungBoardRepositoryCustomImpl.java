@@ -1,18 +1,18 @@
 package com.mztalk.bung.repository.impl;
 
-import com.mztalk.bung.domain.dto.BungBoardDto;
+import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.QBungBoard;
 import com.mztalk.bung.repository.BungBoardRepositoryCustom;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.Date;
+import java.util.List;
 
 @Repository
 public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom {
@@ -25,7 +25,6 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
     }
 
     QBungBoard bungBoard = QBungBoard.bungBoard;
-
 
     @Override
     @Transactional
@@ -43,6 +42,48 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
                 .getSingleResult();
     }
 
+    @Override
+    @Transactional
+    public String findBungBoardWriter(Long boardId) {
+        return (String) entityManager.createQuery("select b.boardWriter from BungBoard b where b.boardId = :boardId")
+                .setParameter("boardId", boardId)
+                .getSingleResult();
+    }
+
+    // 카테고리, 키워드별 검색 기능 로직
+    @Override
+    @Transactional
+    public List<BungBoard> search(SearchKeyWord searchKeyWord) {
+        return queryFactory.selectFrom(bungBoard)
+                .where(eqCategory(searchKeyWord.getCategory()),
+                    (containsBoardTitle(searchKeyWord.getBoardTitle())),
+                    (containsBoardContent(searchKeyWord.getBoardContent())),
+                    (containsBoardWriter(searchKeyWord.getBoardWriter()))
+                ).fetch();
+    }
+
+    @Override
+    public Date findBungBoardByDeadlineDate(Long boardId) {
+        return (java.sql.Date) entityManager.createQuery("select b.deadlineDate from BungBoard b where b.boardId = :boardId")
+                .setParameter("boardId", boardId)
+                .getSingleResult();
+    }
+
+    private BooleanExpression eqCategory(String category) {
+        return category != null ? bungBoard.category.contains(category) : null;
+    }
+
+    private BooleanExpression containsBoardTitle(String boardTitle) {
+        return boardTitle != null ? bungBoard.boardTitle.contains(boardTitle) : null;
+    }
+
+    private BooleanExpression containsBoardContent(String boardContent) {
+        return boardContent != null ? bungBoard.boardContent.contains(boardContent) : null;
+    }
+
+    private BooleanExpression containsBoardWriter(String boardWriter) {
+        return boardWriter != null ? bungBoard.boardWriter.contains(boardWriter) : null;
+    }
 
 //    @Override
 //    public long getRecentBoardNo() {

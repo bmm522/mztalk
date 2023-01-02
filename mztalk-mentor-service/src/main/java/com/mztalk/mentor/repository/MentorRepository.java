@@ -9,4 +9,5 @@ public interface MentorRepository extends JpaRepository<Mentor,Long> {
 
     @Query("select m from Mentor m where m.userId =:userId")
     Mentor findMentorByUserId(@Param("userId") Long userId);
+
 }

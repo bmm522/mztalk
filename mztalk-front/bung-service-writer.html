@@ -12,7 +12,10 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <title>bung Main</title>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a563808a8c46d977ffd3469634effd23"></script>
+    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script> -->
+    <title>bung WriterPage</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -45,7 +48,6 @@
                 <input type="text" class="form-control" id="bungTitle" name="bungTitle" style="width: 700px; margin: auto;"> -->
             </div>
         
-            
             <form action="http://localhost:8000/resource/images" enctype="multipart/form-data" method="POST" id="image-form">
             <div id="fileArea">
                 
@@ -59,21 +61,25 @@
         </form>
             
             <br>
-            <div class="slideshow-container" style="width:100%" height="400px;">
-                <img src="dog.jpg" style="width:100%" height="400px;">
+            <div class="slideshow-container" style="width: 80%; height: 400px; line-height : 400px; text-align : center;">
+                
             </div>
             
             <br>
         
         
-            <div style="width: 100%; height: 225px; text-align: center;">
+            <div id="bungContentDiv" style="width: 80%; height: 260px; margin: auto; text-align: center; border: dotted 5px; border-color: rgb(145, 103, 14);">
                 <br>
                 <textarea id="bungContent" name="bungContent" rows="10" Placeholder="{벙 게시글 내용}" style="resize: none;"></textarea>
             </div>
 
             <br>
         
-            <div class="infomationBtn" style="height: 200px; float: left; width: 50%;">
+            <div class="mapArea" id="map" style="width: 80%; height: 300px; margin: auto; text-align: center; border: dotted 5px; border-color: rgb(145, 103, 14);"></div>
+
+            <br>
+
+            <div class="infomationBtn" style="height: 150px; float: left; width: 50%;">
                 
                 <table class="scriptCalendar">
                     <thead>
@@ -190,26 +196,40 @@
         </ul>
         </div> -->
    
-<script>
-    var count = 0;
+<script>    
+
+var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+var options = { //지도를 생성할 때 필요한 기본 옵션
+	center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+	level: 3 //지도의 레벨(확대, 축소 정도)
+};
+
+var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+var count = document.getElementsByClassName('count-div').length;
 const addBtn = () =>{
+    console.log("1 : " + document.getElementsByClassName('count-div').length);
+
+    if(document.getElementsByClassName('count-div').length < 3){
         const fileArea = document.querySelector('#fileArea');   
-        document.getElementById('addFile').addEventListener('click', function(){
-            
+
+            console.log("2 : " + document.getElementsByClassName('count-div').length);
             console.log('클릭');
-            for(let i = 0; i < 1; i++) {
+             for(let i = 0; i < 1; i++) {
                 if(count < 2) {
                     count++;
                     const newDiv = document.createElement('div');
                     newDiv.classList.add('mb-3');
-                    newDiv.innerHTML = '<input type="file" id="fileUpload" style="float: left;" name="image">';
+                    newDiv.innerHTML = '<div class="count-div"></div><input type="file" id="fileUpload" style="float: left;" name="image">';
 			        fileArea.append(newDiv);
                 } else {
+                    alert('사진은 최대 3장까지만 가능합니다.');
                     return false;
                 }         
             }
-        });
-    
+    } else{
+        // alert('사진은 최대 3장까지만 가능합니다.');
+    }
+
 }
     window.onload = () =>{
 		

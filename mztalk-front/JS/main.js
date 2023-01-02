@@ -99,5 +99,23 @@ document.getElementById('move-auction-service').addEventListener('click',functio
 });
 
 
+//페이지이동
+const moveMainPage = () =>{
+    console.log("main : " + localStorage.getItem('authorization'));
+    console.log("main : " + localStorage.getItem('refreshToken'));
+    console.log("main : " + localStorage.getItem('userNo'));
+    console.log("main : " + localStorage.getItem('userNickname'));
+
+    // localStorage.setItem('authorization');
+    // localStorage.setItem('refreshToken');
+    // localStorage.setItem('userNo');
+    // localStorage.setItem('userNickname');
+
+
+
+    location.href="main.html";
+  }
+
+
 
 

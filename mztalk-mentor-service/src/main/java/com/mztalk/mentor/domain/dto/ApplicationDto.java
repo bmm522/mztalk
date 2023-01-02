@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -23,7 +24,7 @@ public class ApplicationDto {
     private Long id;
     private Mentee mentee;
     private Mentor mentor;
-    private List<File> files;
+    private List<File> files = new ArrayList<>();
     private String name;
     private String phone;
     private String email;

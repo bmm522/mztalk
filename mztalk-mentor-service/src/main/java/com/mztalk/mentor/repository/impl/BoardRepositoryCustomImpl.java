@@ -4,12 +4,14 @@ import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
 import com.mztalk.mentor.domain.entity.QBoard;
+import com.mztalk.mentor.domain.entity.QPayment;
 import com.mztalk.mentor.repository.BoardRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
@@ -17,22 +19,35 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     private EntityManager entityManager;
 
     private final JPAQueryFactory queryFactory;
+
     public BoardRepositoryCustomImpl(EntityManager entityManager){
         this.queryFactory = new JPAQueryFactory(entityManager);
     }
 
     QBoard board = QBoard.board;
+    QPayment payment = QPayment.payment;
 
     @Override
     public List<Board> searchWithCondition(SearchCondition searchCondition) {
-        return queryFactory
-                .selectFrom(board)
-                .where(eqCategory(searchCondition.getCategory()).
-                        or(lePrice(searchCondition.getSalary())).
-                        or(containsContent(searchCondition.getContent())).
-                        or(containsTitle(searchCondition.getTitle())).
-                        or(containsWriter(searchCondition.getNickname())))
-                .fetch();
+
+        return queryFactory.selectFrom(board)
+                .leftJoin(payment)
+                .on(board.eq(payment.board))
+                .where(payment.isNull()
+                        .and(eqCategory(searchCondition.getCategory()))
+                        .and(afterNow(searchCondition.getNow()))
+                        .and(lePrice(searchCondition.getSalary()))
+                        .and(containsContent(searchCondition.getContent()))
+                        .and(containsTitle(searchCondition.getTitle()))
+                        .and(containsWriter(searchCondition.getNickname()))
+                ).fetch();
+    }
+
+    @Override
+    public List<Board> findNullPaymentWithBeforeMentoringDate(LocalDateTime now) {
+        return entityManager.createQuery("select b from Board b join fetch b.mentor m left join b.payment p where p.id IS NULL and b.mentoringDate >:now", Board.class)
+                .setParameter("now",now)
+                .getResultList();
     }
 
     @Override
@@ -42,25 +57,34 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         return mentor;
     }
 
-    //멘티가 본인이 신청한 멘토링 글을 보는 메소드
+    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
     @Override
-    public List<Board> findBoardByUserId(Long userId) {
-        return entityManager.createQuery("select b from Board b join b.participants p where p.mentee.id =:userId", Board.class)
+    public List<Board> findBoardByUserId(Long userId, LocalDateTime now) {
+        return entityManager.createQuery("select b from Board b join b.participant p where p.mentee.id =:userId and b.mentoringDate<:now", Board.class)
                 .setParameter("userId", userId)
+                .setParameter("now",now)
                 .getResultList();
     }
 
     @Override
     public List<Board> latestBoard() {
-        List<Board> resultList = entityManager.createQuery("select b from Board b order by b.lastModifiedDate desc", Board.class)
-                .setFirstResult(0)
-                .setMaxResults(3)
+        return entityManager.createQuery("select b from Board b order by b.lastModifiedDate desc", Board.class)
                 .getResultList();
-        return resultList;
+    }
+
+    @Override
+    public List<Board> findBoardByMentorId(Long mentorId) {
+        return entityManager.createQuery("select b from Board b where b.mentor.id =:mentorId", Board.class)
+                .setParameter("mentorId",mentorId)
+                .getResultList();
+    }
+
+    private BooleanExpression afterNow(LocalDateTime now){
+        return now != null ? board.mentoringDate.after(now) : null;
     }
 
     private BooleanExpression eqCategory(String category){
-        return category != null ? board.category.eq(category) : null;
+        return category != null ? board.category.contains(category) : null;
     }
 
     private BooleanExpression lePrice(Integer salary){

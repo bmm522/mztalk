@@ -7,7 +7,6 @@ import com.mztalk.main.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,8 +17,7 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
 
-
-    //전체글 불러오기
+    //퍼블릭글 불러오기
     @Override
     @Transactional(readOnly  = true)
     public Result findAllByOwn(Long own) {
@@ -31,19 +29,12 @@ public class BoardServiceImpl implements BoardService {
     //글쓰기
     @Override
     @Transactional
-    public Board save(BoardDto boardDto) {
-       // System.out.println("@@@@");
-        //System.out.println(boardDto.getNickname());
-        //System.out.println(boardDto.getOwn());
-
-        return boardRepository.save(boardDto.toEntity());
-    }
+    public Board save(BoardDto boardDto) {return boardRepository.save(boardDto.toEntity());}
 
     //글수정
     @Override
     @Transactional
     public Long updateBoard(Long id, BoardDto boardDto) {
-
         Board savedBoard = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
         savedBoard.updateBoard(boardDto);
         return savedBoard.getId();
@@ -57,6 +48,16 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
         board.changeStatus();
         return board.getId();
+
+    }
+
+    //메인화면 뿌려주기
+    @Override
+    @Transactional(readOnly = true)
+    public Result findAllByboardStory(Long own) {
+        List<Board> boards = boardRepository.findAllByboardStory(own);
+        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
 
     }
 

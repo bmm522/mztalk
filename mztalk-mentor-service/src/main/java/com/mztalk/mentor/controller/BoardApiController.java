@@ -17,6 +17,11 @@ public class BoardApiController {
 
     private final BoardService boardService;
 
+    @GetMapping("/boards")
+    public Result findNullPaymentWithBeforeMentoringDate(){
+        return boardService.findNullPaymentWithBeforeMentoringDate();
+    }
+
     @PostMapping("/board")
     public Long saveBoard(@RequestBody ConcurrentHashMap<String,String> boardMap){
         return boardService.saveBoard(boardMap);
@@ -27,36 +32,23 @@ public class BoardApiController {
         return boardService.findBoardByBoardId(id);
     }
 
-    //멘티가 본인이 신청한 멘토링 글을 보는 메소드
+    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
     @GetMapping("/board")
     public Result findBoardByUserId(@RequestParam("userId")Long userId){
         return boardService.findBoardByUserId(userId);
     }
 
-    //멘토가 작성한 글이 있는지 확인하는 메소드
     @GetMapping("/board/mentor/{mentorId}")
-    public boolean findBoardByMentorId(@PathVariable("mentorId")Long mentorId){
+    public Result findBoardByMentorId(@PathVariable("mentorId")Long mentorId){
         return boardService.findBoardByMentorId(mentorId);
     }
 
-    //멘토가 작성한 글만 가져오는 메소드
-    @GetMapping("/board/mentor")
-    public MyBoardDto getBoardByMentorId(@RequestParam("mentorId")Long mentorId){
-        MyBoardDto findBoardDto = boardService.getBoardByMentorId(mentorId);
-        return findBoardDto;
-    }
-
-    @GetMapping("/boards")
-    public Result findAll(){
-        return boardService.findAll();
-    }
-
     @DeleteMapping("/board/{id}") // 진짜로 삭제한다.
-    public Long deleteBoard(@PathVariable("id")Long mentorId){
-        return boardService.delete(mentorId);
+    public Long deleteBoard(@PathVariable("id")Long id){
+        return boardService.delete(id);
     }
 
-    @PatchMapping("/board/edit/{id}") //멘토 아이디로 글찾고 정보 수정
+    @PatchMapping("/board/edit/{id}") //boardId로 글찾기
     public Long updateBoard(@PathVariable("id")Long id,@RequestBody BoardDto boardDto){
         return boardService.updateBoard(id, boardDto);
     }
@@ -71,6 +63,9 @@ public class BoardApiController {
         return boardService.latestBoard();
     }
 
-
+    @GetMapping("/board/notdeadline")
+    public Result findByMentoringDateAfter(){
+        return boardService.findByMentoringDateBefore();
+    }
 
 }

@@ -79,7 +79,7 @@ nav {
   margin: 0 auto;
   width: 935px;
   margin-top: 55px;
-  height: 1220px;
+  height: 1580px;
   background-color: rgb(242, 244, 226);
 } 
 
@@ -176,9 +176,7 @@ footer .container .copy p{font-size: 13px;padding-top: 2px;}
 } */
 
 #upBtn{
-
   position: fixed;
-
   float: right;
   right: 5px;
   bottom: 5px;

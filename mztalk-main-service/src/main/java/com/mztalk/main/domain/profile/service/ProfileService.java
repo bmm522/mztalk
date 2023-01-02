@@ -13,15 +13,14 @@ public interface ProfileService {
 
     ProfileResponseDto changeProfile(long own, ProfileDto profileDto);
 
-    Optional<ProfileImageResponseDto> profileImg(long own);
+    ProfileImageResponseDto profileImg(long own);
 
 
     ProfileResponseDto profileName(long own);
 
-    Profile boardCount(long own);
+    Long boardCount(long own);
 
+    Long followerCount(long own);
 
-    Profile followerCount(long own);
-
-    Profile followingCount(long own);
+    Long followingCount(long own);
 }

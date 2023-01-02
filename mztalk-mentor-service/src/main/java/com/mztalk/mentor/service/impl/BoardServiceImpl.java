@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -32,9 +34,6 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public Long saveBoard(ConcurrentHashMap<String,String> boardMap) {
         Long userId = Long.parseLong(boardMap.get("userId"));
-        if(findBoardByMentorId(userId)){
-            throw new DuplicateException("이미 작성한 게시글이 존재합니다.");
-        }
         Mentor mentor = mentorRepository.findMentorByUserId(userId);
         Board board = Board.builder().
                 category(boardMap.get("category")).
@@ -44,10 +43,20 @@ public class BoardServiceImpl implements BoardService {
                 introduction(boardMap.get("introduction")).
                 career(boardMap.get("career")).
                 salary(Integer.parseInt(boardMap.get("salary"))).
+                mentoringDate(LocalDateTime.parse(boardMap.get("mentoringDate"))).
                 status(Status.YES).
                 build();
         board.addMentor(mentor);
         return boardRepository.save(board).getId();
+    }
+
+    // 메인페이지 출력 메소드, 결제가 안되고 멘토링 전 글만 출력된다.
+    @Override
+    public Result findNullPaymentWithBeforeMentoringDate() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Board> boards = boardRepository.findNullPaymentWithBeforeMentoringDate(now);
+        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
     }
 
     @Override
@@ -57,20 +66,13 @@ public class BoardServiceImpl implements BoardService {
         return boardDto;
     }
 
-    //멘티가 본인이 신청한 멘토링 글에 대한 참가자를 보는 메소드.
+    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
     @Override
     public Result findBoardByUserId(Long userId) {
-        List<Board> boardList = boardRepository.findBoardByUserId(userId);
+        LocalDateTime now = LocalDateTime.now();
+        List<Board> boardList = boardRepository.findBoardByUserId(userId,now);
         List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
-    }
-
-    // 순수하게 본인이 작성한 글만 불러오기
-    @Override
-    public MyBoardDto getBoardByMentorId(Long mentorId) {
-        Board findBoard = boardRepository.getBoardByMentorId(mentorId);
-        MyBoardDto boardDto = new MyBoardDto(findBoard);
-        return boardDto;
     }
 
     @Override
@@ -80,24 +82,26 @@ public class BoardServiceImpl implements BoardService {
         return new Result(collect);
     }
 
+    // 멘티가 멘토링 신청 후 멘토링 시간이 지난 후에 리뷰창에 나타난다.
     @Override
-    public boolean findBoardByMentorId(Long mentorId) {
-        Board board = boardRepository.findBoardByMentorId(mentorId);
-        boolean isTrue = board == null ? false : true; //이미 작성한 글이 존재하면 true반환.
-        return isTrue;
+    public Result findByMentoringDateBefore() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Board> boards = boardRepository.findByMentoringDateBefore(now);
+        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
+        return new Result(collect);
     }
 
     @Override
-    public Result findAll() {
-        List<Board> boards = boardRepository.findAll();
+    public Result findBoardByMentorId(Long mentorId) {
+        List<Board> boards = boardRepository.findBoardByMentorId(mentorId);
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
     }
 
     @Override
     @Transactional //상태만 수정한다. // 수정 후 Status = No여서보이면 안된다.
-    public Long delete(Long mentorId) {
-        Board findBoard = boardRepository.getBoardByMentorId(mentorId);
+    public Long delete(Long id) {
+        Board findBoard = boardRepository.findBoardByBoardId(id);
         boardRepository.delete(findBoard);
         return findBoard.getId();
     }
@@ -105,7 +109,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long updateBoard(Long id, BoardDto boardDto) {
-        Board savedBoard = boardRepository.getBoardByMentorId(id);
+        Board savedBoard = boardRepository.findBoardByBoardId(id);
         savedBoard.updateBoard(boardDto);
         return savedBoard.getId();
     }

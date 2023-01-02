@@ -21,14 +21,14 @@ public class Mentor extends BaseTimeEntity{
     @Column(name="mentor_id")
     private Long userId;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="application_id")
     @JsonIgnore
     private Application application;
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "mentor")
+    @OneToMany(mappedBy = "mentor")
     @JsonIgnore
-    private Board board;
+    private List<Board> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "mentor")
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -44,10 +44,10 @@ public class Mentor extends BaseTimeEntity{
     private Status status;
 
     @Builder
-    public Mentor(Long userId, Application application, Board board, List<Score> scores, List<Mentee> mentees, Status status) {
+    public Mentor(Long userId, Application application, List<Board> boards, List<Score> scores, List<Mentee> mentees, Status status) {
         this.userId = userId;
         this.application = application;
-        this.board = board;
+        this.boards = boards;
         this.scores = scores;
         this.mentees = mentees;
         this.status = status;
@@ -60,7 +60,10 @@ public class Mentor extends BaseTimeEntity{
     }
 
     public void addBoard(Board board){
-        this.board = board;
+        this.boards.add(board);
+        if(board.getMentor() != this){
+            board.addMentor(this);
+        }
     }
 
     public void addScore(Score score){

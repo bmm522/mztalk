@@ -51,6 +51,22 @@ public class User {
         this.nickname = nickname;
     }
 
+    public UserInfoDto toUserInfoDto(String imageUrl) {
+        return UserInfoDto.builder()
+                .userId(String.valueOf(id))
+                .username(username)
+                .nickname(nickname)
+                .email(email)
+                .role(role)
+                .provider(provider)
+                .providerId(providerId)
+                .createDate(createDate)
+                .status(status)
+                .imageUrl(imageUrl)
+                .reportCount(String.valueOf(reportCount))
+                .build();
+    }
+
     public UserInfoDto toUserInfoDto() {
         return UserInfoDto.builder()
                 .userId(String.valueOf(id))
@@ -71,7 +87,7 @@ public class User {
     }
 
     public MztalkCookie toMztalkCookieWithExistsUser(ConcurrentHashMap<String, String> jwtMap) throws UnsupportedEncodingException {
-        return new MztalkCookie(jwtMap, id, nickname, status);
+        return new MztalkCookie(jwtMap, id, nickname, status, role);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.mztalk.login.controller;
 
+import com.mztalk.login.domain.dto.EditReponseDto;
 import com.mztalk.login.domain.dto.ReportRequestDto;
 import com.mztalk.login.domain.dto.ReportResponseDto;
 import com.mztalk.login.domain.dto.Result;
@@ -8,10 +9,12 @@ import com.mztalk.login.service.SelectReportService;
 import com.mztalk.login.service.UpdateReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/login")
+@ApiIgnore
 public class ReportApiController {
 
     private final InsertReportService insertReportService;
@@ -36,6 +39,11 @@ public class ReportApiController {
     @PatchMapping("/report")
     public long postReport(@RequestParam("bId")long boardId, @RequestParam("userId")long userId, @RequestParam("serviceName")String serviceName){
         return updateReportService.postReport(boardId, userId, serviceName);
+    }
+
+    @GetMapping("/report/{userNo}")
+    public Result<?> getEditList(@PathVariable("userNo")long userNo){
+        return selectReportService.getEditList(userNo);
     }
 
 

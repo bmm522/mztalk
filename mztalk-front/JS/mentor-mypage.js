@@ -1,86 +1,54 @@
 window.onload = () =>{
     myMentees();
-    // endMyBoard();
-    // getMyBoard();
 }
 
-// 멘토 글 작성하기 // 중복 검사 후 중복이 존재하면 글 작성 실패
+// 멘토 글 작성하기
 document.getElementById('mentor-write-btn').addEventListener('click',function(){
-    const mentorId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board/mentor/"+mentorId,{
-        method:"GET",
+    fetch("http://localhost:8000/mentors/board",{
+        method:"POST",
         headers:{
             "Content-Type":"application/json;",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken')
         },
-    })  
+        body:JSON.stringify({
+            category:document.getElementById('write-category').value,
+            title : document.getElementById('title').value,
+            nickname : localStorage.getItem('userNickname'),
+            userId : localStorage.getItem('userNo'),
+            content : document.getElementById('content').value,
+            introduction : document.getElementById('introduction').value,
+            career : document.getElementById('career').value,
+            salary : document.getElementById('salary').value,
+            mentoringDate : document.getElementById('mentoringDate').value
+        })
+    })    
     .then((res)=>res.json())
     .then(res =>{
-        if(res){
-            window.alert('이미 작성하신 게시글이 존재합니다.');
-            location.href="mentor-mypage.html";
-            return false;
+        if(res > 0){
+            window.alert('게시글이 작성 되었습니다.');
+            location.href="mentor-main.html";
         } else {
-            fetch("http://localhost:8000/mentors/board",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json;",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
-             },
-            body:JSON.stringify({
-                category:document.getElementById('write-category').value,
-                title : document.getElementById('title').value,
-                nickname : localStorage.getItem('userNickname'),
-                userId : localStorage.getItem('userNo'),
-                content : document.getElementById('content').value,
-                introduction : document.getElementById('introduction').value,
-                career : document.getElementById('career').value,
-                salary : document.getElementById('salary').value
-            })
-        })    
-        .then((res)=>res.json())
-        .then(res =>{
-            if(res > 0){
-                window.alert('게시글이 작성 되었습니다.');
-                location.href="mentor-main.html";
-            } else {
-                window.alert('멘토 신청 실패');
-                return false;
-            }
-    })
+            window.alert('멘토 신청 실패');
+            return false;
         }
     })
 });
 
-const modify = () =>{
-    const mentorId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board/edit/"+mentorId,{
-        method:"PATCH",
-        headers:{
-            "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-        },
-        body:JSON.stringify({
-            title : document.getElementById('modify-title').value,
-            introduction : document.getElementById('modify-introduction').value,
-            career : document.getElementById('modify-career').value,
-            salary : document.getElementById('modify-salary').value,
-            content : document.getElementById('modify-content').value
-        })    
-    })
-    .then((res)=>res.json())
-    .then(res =>{
-        if(res>0){
-            window.alert('글이 수정되었습니다.');
-        } else{
-            console.log('글 수정 실패');
-        }
-    })  
+// 글 작성시 최소 날짜 설정.
+const dateControl = document.getElementById('mentoringDate');
+const date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -5);
+dateControl.value = date;
+dateControl.setAttribute("min",date);
+
+function setMinValue() {
+    if(dateControl.value < date) {
+        alert('현재 시간보다 이전의 날짜는 설정할 수 없습니다.');
+        dateControl.value = date;
+    }
 }
 
+// 글삭제 하기
 const deleteBoard = () =>{
     const mentorId = localStorage.getItem('userNo');
     fetch("http://localhost:8000/mentors/board/"+mentorId,{
@@ -130,33 +98,6 @@ const myMentees = () =>{
         }
     }) 
 }
-
-// 멘토링이 종료된 멘티들
-// const endMyBoard = () =>{
-//     document.getElementById('endMyMentoring').addEventListener('click',function(){
-//     const mentorId = localStorage.getItem('userNo');
-//     fetch("http://localhost:8000/mentors/participant?mentorId="+mentorId,{
-//         method:"GET",
-//         headers:{
-//             "Content-Type":"application/json",
-//             Authorization:localStorage.getItem('authorization'),
-//             RefreshToken:localStorage.getItem('refreshToken'),
-//         },
-//     })
-//     .then((res)=>res.json())
-//     .then(res =>{
-//         if(res!=null){
-//             for(const data of res.data){
-//             document.getElementById('myMentees').innerHTML =
-//                 `<td>${data.board.id}</td>
-//                 <td>${data.mentee.nickname}</td>`
-//              }
-//         } else{
-//             console.log('값없음');
-//         }
-//     })  
-//     });
-// }
 
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지

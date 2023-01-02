@@ -323,17 +323,29 @@ const deleteFatch = () =>{
 //신고
 const postReport=()=>{
     const bId = document.getElementById('hidden-bId').value;
-    fetch("http://localhost:8000/login/report",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-            },
-            body:JSON.stringify({
-                reportTitle : document.getElementById('reportTitle').value,
-                reportContent : document.getElementById('reportContent').value,
-                boardId : bId,
-                serviceName : "auction",
-                userNo : localStorage.getItem('userNo'),                   
-                })
-            })
-}
+    document.getElementById('report-btn').addEventListener('click', function(){
+      const bId = document.getElementById('hidden-bId').value;
+      console.log('신고 클릭됨');
+      console.log('title : ' +document.getElementById('reportTitle').value);
+      console.log('content : ' + document.getElementById('reportContent').value);
+      console.log('bId : ' + bId);
+      console.log('userNo : ' + localStorage.getItem('userNo'));
+      fetch("http://localhost:8000/login/report",{
+              method:"POST",
+              headers:{
+                  "Content-Type":"application/json",
+              },
+              body:JSON.stringify({
+                  reportTitle : document.getElementById('reportTitle').value,
+                  reportContent : document.getElementById('reportContent').value,
+                  boardId : bId,
+                  serviceName : "auction",
+                  userNo : localStorage.getItem('userNo'),                   
+                  })
+              })
+              .then(res =>{
+                  alert('신고 접수 되었습니다.');
+                  location.href="auctionDetail.html";
+              })
+} );
+

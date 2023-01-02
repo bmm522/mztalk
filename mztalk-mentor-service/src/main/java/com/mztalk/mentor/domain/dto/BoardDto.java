@@ -1,9 +1,11 @@
 package com.mztalk.mentor.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.entity.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,13 @@ public class BoardDto {
     private String introduction;
     private String career;
     private int salary;
-    private List<Participant> participants = new ArrayList<>();
-    private List<Payment> payments = new ArrayList<>();
+    private Score score;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime mentoringDate;
+
+    private Participant participant;
+    private Payment payment;
     private Status status;
     private LocalDateTime lastModifiedDate;
 
@@ -39,8 +46,10 @@ public class BoardDto {
                 .introduction(introduction)
                 .career(career)
                 .salary(salary)
-                .participants(participants)
-                .payments(payments)
+                .score(score)
+                .mentoringDate(mentoringDate)
+                .participant(participant)
+                .payment(payment)
                 .status(Status.YES)
                 .build();
         return board;
@@ -56,8 +65,10 @@ public class BoardDto {
         this.introduction = board.getIntroduction();
         this.career = board.getCareer();
         this.salary = board.getSalary();
-        this.participants = board.getParticipants();
-        this.payments = board.getPayments();
+        this.score = board.getScore();
+        this.mentoringDate = board.getMentoringDate();
+        this.participant = board.getParticipant();
+        this.payment = board.getPayment();
         this.status = board.getStatus();
         this.lastModifiedDate = board.getLastModifiedDate();
     }

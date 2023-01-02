@@ -12,9 +12,7 @@ public interface BoardService {
 
     BoardDto findBoardByBoardId(Long id);
 
-    Result findAll();
-
-    Long delete(Long mentorId);
+    Long delete(Long id);
 
     Long updateBoard(Long id, BoardDto boardDto);
 
@@ -23,9 +21,11 @@ public interface BoardService {
     //멘티가 본인이 신청한 멘토링 글을 보는 메소드
     Result findBoardByUserId(Long userId);
 
-    boolean findBoardByMentorId(Long mentorId);
-
-    MyBoardDto getBoardByMentorId(Long mentorId);
+    Result findBoardByMentorId(Long mentorId);
 
     Result latestBoard();
+
+    Result findByMentoringDateBefore();
+
+    Result findNullPaymentWithBeforeMentoringDate();
 }

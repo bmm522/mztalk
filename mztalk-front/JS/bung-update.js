@@ -78,7 +78,7 @@ const addBtn = () =>{
             console.log("2 : " + document.getElementsByClassName('count-div').length);
             console.log('클릭');
              for(let i = 0; i < 1; i++) {
-                if(count < 2) {
+                if(count < 3) {
                     count++;
                     const newDiv = document.createElement('div');
                     newDiv.classList.add('mb-3');

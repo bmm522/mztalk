@@ -1,5 +1,6 @@
 package com.mztalk.bung.service;
 
+import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.entity.Result;
@@ -38,4 +39,8 @@ public interface BungBoardService {
     Long addBungBoardDelete(Long addId);
 
     Long bungBoardNowGroup(Long bId);
+
+    Result bungBoardSearch(SearchKeyWord searchKeyWord);
+
+    Long bungAddBoardGroupDrop(Long bId, Long aId);
 }

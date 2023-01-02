@@ -14,7 +14,6 @@ public class ResourceApiController {
 
     @GetMapping
     public String moveSwaggerForm(){
-        System.out.println("요청들어옴");
         return "redirect:/swagger-ui.html";
     }
 }

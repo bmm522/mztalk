@@ -300,7 +300,6 @@ img {vertical-align: middle;}
   width: 80%;
   height: 200px;
   border: none;
-  cursor: pointer;
 }
 
 #carouselExampleControls {
@@ -324,7 +323,6 @@ img {vertical-align: middle;}
 
 #bungTitle{
   border: none;
-  cursor: pointer;
 }
 
 

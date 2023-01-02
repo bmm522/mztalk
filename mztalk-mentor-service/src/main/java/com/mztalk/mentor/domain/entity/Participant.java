@@ -1,5 +1,6 @@
 package com.mztalk.mentor.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.ParticipantDto;
 import com.sun.istack.NotNull;
@@ -22,8 +23,9 @@ public class Participant extends BaseTimeEntity{
     @Column(name="participant_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
+    @JsonIgnore
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -65,11 +67,8 @@ public class Participant extends BaseTimeEntity{
 
     //== 연관관계 편의 메소드==//
     public void addBoard(Board board){
-        if(this.board != null){
-            this.board.getParticipants().remove(this);
-        }
         this.board = board;
-        board.getParticipants().add(this);
+        board.addParticipant(this);
     }
 
     public void addMentee(Mentee mentee){

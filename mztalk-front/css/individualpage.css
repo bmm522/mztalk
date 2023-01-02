@@ -32,7 +32,7 @@
     margin-top: 5px;
     height: 250px;
     width: 850px;
-    border-radius: 100px;
+    border-radius: 50px;
     box-shadow: 4px 4px 4px 4px gray;
 
 }
@@ -140,7 +140,7 @@
 
 .post-div{
     width: 890px;
-    height: 750px;
+    /* height: 750px; */
     background-color: rgb(238, 243, 198);
     margin-top: 20px;
     margin-left: 2.5%;
@@ -149,6 +149,8 @@
     box-shadow: 1px 1px 1px 1px gray;
     overflow-y: auto;
     -ms-overflow-style: none;
+    overflow:hidden;
+		height:auto;
 
 }
 
@@ -180,6 +182,7 @@
     border-radius: 20px;
     border: 1px solid rgb(230, 223, 223);
     box-shadow: 1px 1px 1px 1px rgb(20, 20, 20);
+    text-align: center;
 }
 
 #post-date-div{
@@ -260,6 +263,8 @@
     /* background-color: black; */
     width: 850px;
     height: 220px;
+    overflow:hidden;
+		/* height:auto; */
     margin-left: 20px;
     margin-top: 10px;
     overflow-y: auto;
@@ -471,14 +476,17 @@ button {
   }
   .profile .profile-right .subscribe ul li {
     margin-right: 18px;
+    cursor: pointer;
   }
   .profile .profile-right .subscribe ul li a {
     font-size: 16px;
     color: #262626;
+    cursor: pointer;
   }
   .profile .profile-right .subscribe ul li a span {
     font-weight: bold;
     margin-left: 4px;
+    cursor: pointer;
   }
 
   .profile .profile-right .name-group .modi {

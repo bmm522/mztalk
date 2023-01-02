@@ -111,5 +111,30 @@ const deleteAllImage = () =>{
 }
 
 const updateMove = () =>{
-    location.href="bung-Service-editPage.html";
+    location.href="bung-Service-edit.html";
 }
+
+document.getElementById('report-btn').addEventListener('click', function(){
+    const bId = localStorage.getItem('bId');
+    console.log('title : ' +document.getElementById('recipient-name').value);
+    console.log('content : ' + document.getElementById('message-text').value);
+    console.log('bId : ' + bId);
+    console.log('userNo : ' + localStorage.getItem('userNo'));
+    fetch("http://localhost:8000/login/report",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify({
+                reportTitle : document.getElementById('recipient-name').value,
+                reportContent : document.getElementById('message-text').value,
+                boardId : bId,
+                serviceName : "bung",
+                userNo : localStorage.getItem('userNo'),                   
+                })
+            })
+            .then(res =>{
+                alert('신고 접수 되었습니다.');
+                location.href="bung-service-detail.html";
+            })
+} );

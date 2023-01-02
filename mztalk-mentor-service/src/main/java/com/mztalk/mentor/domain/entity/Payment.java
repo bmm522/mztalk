@@ -1,5 +1,6 @@
 package com.mztalk.mentor.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,8 +23,9 @@ public class Payment extends BaseTimeEntity{
     @Column(name="payment_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="board_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    @JsonIgnore
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -58,11 +60,8 @@ public class Payment extends BaseTimeEntity{
     }
 
     public void addBoard(Board board){
-        if(this.board != null){
-            this.board.getPayments().remove(this);
-        }
         this.board = board;
-        board.getPayments().add(this);
+        board.addPayment(this);
     }
 
     //== 결제 생성 메소드 ==//

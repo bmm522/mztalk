@@ -6,29 +6,15 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
 @NoArgsConstructor
 @Getter
-@Table(name="TOKEN")
 public class OpenApiAccessToken {
 
-    @Id @GeneratedValue
-    @Column(name = "token_id", nullable = false)
     private Long id;
-
-    @Column(nullable = false, length = 400)
     private String accessToken;
-
-    @Column(nullable = false)
     private String tokenType;
-
-    @Column(nullable = false)
     private String expireDate;
-
-    @Column(nullable = false)
     private String scope;
-
-    @Column(nullable = false)
     private String clientUseCode;
 
     @Builder

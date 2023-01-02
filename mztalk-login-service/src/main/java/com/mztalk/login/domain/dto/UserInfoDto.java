@@ -26,6 +26,8 @@ public class UserInfoDto {
     private String status;
     private String reportCount;
 
+    private String imageUrl;
+
 
 
     public UserInfoDto(User user){

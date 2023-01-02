@@ -1,10 +1,8 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.dto.ScoreDto;
-import com.mztalk.mentor.domain.entity.Mentee;
-import com.mztalk.mentor.domain.entity.Mentor;
-import com.mztalk.mentor.domain.entity.Result;
-import com.mztalk.mentor.domain.entity.Score;
+import com.mztalk.mentor.domain.entity.*;
+import com.mztalk.mentor.exception.BoardNotFoundException;
 import com.mztalk.mentor.exception.ScoreNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
@@ -35,8 +33,9 @@ public class ScoreServiceImpl implements ScoreService {
 
         Mentee mentee = menteeRepository.findMenteeByUserId(userId);
         Mentor mentor = boardRepository.findMentorByBoardId(boardId);
+        Board board = boardRepository.findById(boardId).orElseThrow(()-> new BoardNotFoundException("해당 번호의 글이 존재하지 않습니다."));
 
-        Score score = Score.createScore(scoreMap, mentee, mentor);
+        Score score = Score.createScore(scoreMap, mentee, mentor, board);
         return scoreRepository.save(score).getId();
     }
 
@@ -54,6 +53,7 @@ public class ScoreServiceImpl implements ScoreService {
         return new Result(collect);
     }
 
+    // 멘티가 해당 글에 대해 리뷰를 작성했는지 확인한다.
     @Override
     public boolean isExist(Long userId, Long boardId) {
         Score score = scoreRepository.isExist(userId, boardId);

@@ -3,38 +3,61 @@ let loginUser = localStorage.getItem('userNo');
 let own = localStorage.getItem("own");
 
 window.onload = function(){
-    storyLoad();
+  writeOwn();
+  storyLoad();
   profileBox();
   profileName();
   BoardCount();
   FollowCount();
   FollowingCount();
-  //FollowingButton();
+  followButtonStatus();
 
 }
 
 
-function writeboard() {
+function writeOwn(){
+
+  let own = localStorage.getItem("own");
+  let userNo = localStorage.getItem('userNo');
+
+  if(own==userNo){
     
-    const open = document.querySelector(".write_board"); //글쓰기버튼
+    document.getElementById('ownWrite').innerHTML='<button type="button" style="cursor:pointer;" onclick="writeboard();" id="write_board" class="write_board">글쓰기</button>';
+
+
+  }else{
+    document.getElementById('ownWrite').innerHTML = '';
+  }
+
+
+}
+
+
+
+//글쓰기버튼
+function writeboard() {
+
+    const open = document.querySelector("#ownWrite button"); //글쓰기버튼
     const modal = document.querySelector(".textmodal");  //글쓸수 있는곳
     const close = document.querySelector(".btn-closee");  //닫기버튼
 
     //console.log(open);
-
+   console.log("첫번쨰클릭");
+  
     open.addEventListener("click", function(){
-        //console.log(open);
+        console.log("두번쨰클릭");
         
         modal.classList.remove("hidden");
         open.classList.add("hidden");
 
     });
     close.addEventListener("click", function(){
-        modal.classList.add("hidden");
-        open.classList.remove("hidden");
-    });
+      modal.classList.add("hidden");
+      open.classList.remove("hidden");
+  });
+    
 }
-writeboard();
+
 
 //정보 수정
 document.getElementById('profile-edit-btn').addEventListener('click',function(){
@@ -58,7 +81,7 @@ function profileBox(){
     .then((res)=>res.json())
     .then(res =>{
       
-      console.log("통신 성공");
+      //console.log("통신 성공");
       
       let profileImage = res.data;
       //console.log(profileImage);
@@ -83,7 +106,67 @@ function profileBox(){
      }
       })
     }
-       
+  
+    
+
+
+//팔로우 버튼테스트
+function followButtonStatus(){
+  
+  let toUserId = localStorage.getItem("own");
+  let fromUserId = localStorage.getItem('userNo');
+
+  fetch("http://localhost:8000/story/followStatus/"+fromUserId+"/"+toUserId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+  
+      let follow = res.data;
+
+      //console.log(follow);
+
+       if(follow>=1){
+        
+        document.getElementById('followStatus').innerHTML ='';
+        //document.getElementById('followStatus').innerHTML ='<button class="cta" onclick="profilecFollow(this);">팔로워</button>';
+        document.getElementById('followStatus').innerHTML ='<button class="profile_follow_btn" onclick="profilecFollow(this);" style="background-color: rgba(128, 128, 128, 0.973); color: rgb(255, 255, 255); border: 1px solid rgb(221, 221, 221);">팔로잉</button>';
+
+      } else if(loginUser==own){
+        document.getElementById('followStatus').innerHTML = '';
+      }else{
+        document.getElementById('followStatus').innerHTML =
+        `
+        <button class="profile_follow_btn" onclick="profilecFollow(this);">
+          팔로우
+        </button>
+        `
+      }
+
+      //document.getElementById('followStatus').innerHTML='';
+    })
+    
+  }
+
+//페이지주인은 팔로우 버튼 비활성화
+function FollowingButton(){
+
+  if(loginUser!=own){
+    document.querySelector('#followStatus').innerHTML =
+    `
+    <button class="profile_follow_btn" onclick="profilecFollow(this)">
+    팔로우
+    </button>
+    `
+   }
+ }
+
+
 
 
     
@@ -136,10 +219,10 @@ function BoardCount(){
     //console.log("통신 성공");
     
     let board = res.data;
-    //console.log(board);
+    //console.log(board+"ㅎㅇ");
     document.querySelector('.board_count').innerHTML +=
     `
-    ${board.boardCount}
+    ${board}
     `
     })
   }
@@ -169,7 +252,7 @@ function FollowingCount(){
     if(document.querySelector('.following_count') != null){
       document.querySelector('.following_count').innerHTML +=
     `
-    ${following.followingCount}
+    ${following}
     ` 
    }
 
@@ -201,40 +284,14 @@ function FollowCount(){
    // console.log(follower);
     document.querySelector('.follower_count').innerHTML +=
     `
-    ${follower.followerCount}
+    ${follower}
     `
     })
   }
 
 
 
-
-
-
-//페이지주인은 팔로우 버튼 비활성화
-// function FollowingButton(){
-
-//   if(loginUser!=own){
-//     document.querySelector('.profile_follow_btn').innerHTML +=
-//     `
-//     <button class="profile_follow_btn" onclick="profilecFollow(this)">
-//     팔로우
-//     </button>
-//     `
-//   }
-
-// }
-
-
-
-
-
-
-
-
-
-
-//글 목록들 DIV
+// 퍼블릭인 글 목록들 DIV
 function storyLoad() {
   
   fetch("http://localhost:8000/story/"+own,{
@@ -256,18 +313,19 @@ function storyLoad() {
           let privacy = board.privacy;
           let title = board.title;
           let content = board.content;
-          let date = board.lastModifiedDate.substr(0,10);
+          let date = board.lastModifiedDate;
           
+          if(privacy.includes("PUBLIC")){
           document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
                     <table id="post-table">
                         <tr>
                             <td>
-                                <div id="category-div">${board.privacy}
+                                <div id="category-div">${privacy}
                                 </div>
                             </td>
                             <td>
-                                <div id="post-title-div">${board.title}</div>
+                                <div id="post-title-div">${title}</div>
                             </td>
                             <td>
                                 <div id="post-date-div"><br>${date}</div>
@@ -289,7 +347,7 @@ function storyLoad() {
                         <tr>
                             <td colspan="3">
                                 <div id="post-content">
-                                    <div id="post-content-input">${board.content}</div>
+                                    <div id="post-content-input">${content}</div>
                                 </div>
                             </td>
                         </tr>
@@ -318,44 +376,95 @@ function storyLoad() {
                      board.replyList.forEach((reply)=>{
                      document.querySelector(`.reply-div-${boardId}`).innerHTML +=
                          `
-                           <div id="reply-nickname">${reply.replyNickname}</div>
+                           <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
                            <div id="reply-content">${reply.replyContent}</div>
                            <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
-                           <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button></div>
+                           <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
+                           <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
+                           </div>
                          `;
-                         
                       }
                      )
-                      
-              
+                   }else if(privacy.includes('SECRET')) {
+                      //비밀글 
+                      //console.log("되니?");
+                      document.querySelector("#contentList").innerHTML += 
+                      `<div id="post-div-${boardId}" class="post-div">
+                          <table id="post-table">
+                              <tr>
+                                  <td>
+                                      <div id="category-div">${privacy}
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div id="post-title-div">${title}</div>
+                                  </td>
+                                  <td>
+                                      <div id="post-date-div"><br>${date}</div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="3"><br><br>
+                                      <div id="edit-delete-div">
+                                             
+                                          <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
+                                          data-bs-toggle="modal" type="button">수정</button>
+                                          <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
+                                      </div>
+                                      <div id=post-hr>
+                                          <hr>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="3">
+                                      <div id="post-content">
+                                          <div id="post-content-input">${content}</div>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </table>
+                          <div id="reply-div" class="reply-div-${boardId}">
+                            <div>
+          
+                            </div>
+                            </div>
+                            <div id="reply-write-div">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div id="reply-write-box"><input type="text" class="reply-write-input-${boardId}" id="reply-write-input"></div>
+                            </div>
+                            </td>
+                            <td>  
+                                <div id="reply-write-btn"><button onClick="addReply(${boardId})" id="replyButton" style="cursor:pointer;" type="button">등록</button></div>
+                            </td>
+                            </tr>
+                            </table>
+                          </div>
+                         </div>
+                          `;
+                          
+                           board.replyList.forEach((reply)=>{
+                           document.querySelector(`.reply-div-${boardId}`).innerHTML +=
+                               `
+                                 <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
+                                 <div id="reply-content">${reply.replyContent}</div>
+                                 <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
+                                 <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
+                                 <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
+                                 </div>
+                               `;
+                            })
 
 
-            
 
+                   }
+                  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            }  
-            
-           })
-}
-      
-
-
+        })
+    }
+          
 
 //글쓰기
 
@@ -392,8 +501,8 @@ write_board.addEventListener('click', function(){
             .then((res)=>res.json())
             .then(res =>{
                 //console.log("res : " + res);
-                    console.log("res.data :" +res.data);
-                    console.log('통신성공');
+                    // console.log("res.data :" +res.data);
+                    // console.log('통신성공');
                     //글썻을떄
                     const open = document.querySelector(".write_board"); //글쓰기버튼
                     const modal = document.querySelector(".textmodal");
@@ -458,9 +567,9 @@ write_board.addEventListener('click', function(){
                           </div>
                       </div>`;
                })
-               location.href="individualpage.html";      
+                  
           }   
-            
+          location.href="individualpage.html";   
       });
      
 
@@ -547,10 +656,7 @@ const privacyBound = document.getElementById('privacyBound');
     }
     //document.querySelector('.modal-content').innerHTML='';
     
-
-
 }
-
 
 
 
@@ -558,16 +664,22 @@ const privacyBound = document.getElementById('privacyBound');
 function modification(boardId){
     //console.log(localStorage.getItem('authorization'));
 
+    if(own != loginUser){
+      alert("본인만 수정할 수 있습니다.");
+      return;
+    }
+
+      
     let id = boardId;
     const privacyBound = document.getElementById('privacyBound');
 
 
-    console.log(localStorage.getItem('userNickname'));
-    console.log(document.querySelector('.title-input-text').value);
-    console.log(document.getElementById("contents").value);
-    console.log(localStorage.getItem('own'));
-    console.log(privacyBound.options[privacyBound.selectedIndex].value);
-    console.log(boardId);
+    // console.log(localStorage.getItem('userNickname'));
+    // console.log(document.querySelector('.title-input-text').value);
+    // console.log(document.getElementById("contents").value);
+    // console.log(localStorage.getItem('own'));
+    // console.log(privacyBound.options[privacyBound.selectedIndex].value);
+    // console.log(boardId);
 
       fetch("http://localhost:8000/story/update/"+id,{
         method:"PATCH",
@@ -598,7 +710,10 @@ function modification(boardId){
 //글삭제
 function deleteBoard(boardId){
    
- 
+    if(own != loginUser){
+      alert("본인만 삭제 할 수 있습니다.");
+      return;
+    }
 
     console.log(boardId);
   
@@ -630,7 +745,7 @@ function profileImageUpload(){
   let userProfileImage = document.getElementById('userProfileImageInput');
   document.getElementById('bNo').value = own;
   if(own != loginUser){
-		alert("프로필 사진을 수정할 수 없는 유저입니다.");
+		alert("본인만 수정할 수 있습니다.");
 		return;
 	}
   userProfileImage.click();
@@ -681,7 +796,29 @@ function profileImageUpload(){
       }
       reader.readAsDataURL(f); 
 
+    //   let profileImage = res.data;
+    //   //console.log(profileImage);
+    //   if(!res.data){
+    //     document.querySelector('.profile-img-wrap').innerHTML +=
+    //     `
+    //     <img class="profile-image" src='https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png' onerror="this.src='duck.jpg'" id="userProfileImage">
+    //     <input type="hidden" class="imageName" value="profileName"/>
+    //     <input type="hidden" name="bNo" id="bNo" value="own"/>
+    //     `  
+    //  }else{
+    //   let profileUrl = profileImage.postImageUrl;
+    //   let profileName = profileImage.profileImageName;
+    //   let own = profileImage.own
+
+    //   document.querySelector('.profile-img-wrap').innerHTML +=
+    //   `
+    //   <img class="profile-image" src='${profileUrl}' onerror="this.src='duck.jpg'" id="userProfileImage">
+    //   <input type="hidden" class="imageName" value="${profileName}"/>
+    //   <input type="hidden" name="bNo" id="bNo" value="${own}"/>
+    //   `
+      
       })
+      closePopup('.modal-image');
       
     })
     
@@ -720,14 +857,17 @@ function addReply(boardId){
             //console.log("res.data: "+ res.data);
 
             let reply = res.data;
+            console.log(reply.replyUserNo);
             
             // let lastModifiedDate = reply.lastModifiedDate;
             document.querySelector(`.reply-div-${boardId}`).innerHTML +=
             `<div>
-              <div id="reply-nickname">${reply.replyNickname}</div>
+              <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
               <div id="reply-content">${reply.replyContent}</div>
               <div id="reply-date">${reply.lastModifiedDate}</div>
-              <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button></div>
+              <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
+              <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
+              </div>
             </div>`;
           })
           location.href="individualpage.html";   
@@ -738,6 +878,19 @@ function addReply(boardId){
     
 //댓글삭제    
 function deleteReply(Id){
+
+      let replyUserNo = document.querySelector('.replyDelete').value;
+      let loginUser = localStorage.getItem('userNo');
+     
+      console.log(replyUserNo);
+      console.log(loginUser);
+
+     
+      if(replyUserNo != loginUser){
+      alert('댓글 쓴 유저만 지울 수 있습니다.');
+      return;
+     }
+     
 
 
     fetch("http://localhost:8000/story/board/"+Id+"/reply",{
@@ -758,49 +911,7 @@ function deleteReply(Id){
 
 
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 
 
 
@@ -823,16 +934,12 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
 
       let follower = res.data;
       document.querySelector(".modal-follow").style.display = "flex";
-
       document.querySelector(".follower-list").innerHTML  = '';
-
- 
-
       console.log(follower);
 
 
       for(let i = 0; i < follower.length; i++){
-        // console.log("길이"+follower.length );
+        console.log("길이"+follower.length );
         // console.log("follower" + follower);
         //console.log("뜨니?"+ follower[0].followStatus);
         //console.log(document.querySelectorAll('.follower__btn'));
@@ -851,7 +958,7 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
               <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
           </div>
           <div class="follower__btn">
-          
+            <button onclick="movePage(${follower[i].userNo});">페이지이동</button>
           </div>
       </div> 
       `;
@@ -881,7 +988,7 @@ document.querySelector(".modal-follow").addEventListener("click", (e) => {
 
 
 
-//팔로우리스트
+//팔로잉리스트
 document.querySelector("#subscribeBtn").onclick = (e) => {
     e.preventDefault();
 
@@ -912,29 +1019,24 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
         // console.log("길이"+follower.length );
         // console.log("follower" + follower);
         //console.log(following);  
-        console.log(following[i].userNo);
+        //console.log("팔로잉리스트"+following[i].userNo);
       document.querySelector(".following-list").innerHTML +=
       `
       <div class="following__item">
           <div class="following__img"><img class="profile-image" src='${following[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"></div>
-          <input type="hidden" class="imageName" value="${following[i].imageName}"/>
+          <input type="hidden" class="imageName"  value="${following[i].imageName}"/>
           <input type="hidden" name="bNo" id="bNo" value="${following[i].userNo}"/>
           <div class="following__text">
               <h2>${following[i].userNickname}</h2>
               
           </div>
           <div class="following__btn">
-          <button class="following_button" value="${following[i].userNo}" onclick="clickFollow(this)">팔로잉 
-          <input type="hidden" class="userNo" name="userNo" value="${following[i].userNo}"/>
+            <button onclick="movePage(${following[i].userNo});">페이지이동</button>
           </button>
           
           </div>
       </div> 
       `;
-
-      // let userNo = document.querySelector('.userNo');
-      
-      // console.log(userNo);
 
     }
     })
@@ -980,22 +1082,20 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
 
   //팔로우리스트에서의 버튼
   function clickFollow(e) {
+
     console.log(e);
     let _btn = e;
     console.log(_btn.textContent);
-
     let userButton = document.querySelector('.following_button');
-
     console.log("버튼"+ _btn.value);
 
-  
     if (_btn.textContent === "팔로잉") {
 
       let fromUserId = localStorage.getItem('userNo');
       let toUserId = _btn.value;
 
       fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
-        method:"GET",
+        method:"POST",
         headers:{
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
@@ -1005,9 +1105,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     .then((res)=>res.json())
     .then(res =>{
              
-      console.log(res);
-
-
+      //console.log(res);
       
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
@@ -1016,12 +1114,6 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     }) 
     
     
-
-
-
-
-
-
     } else {
       _btn.textContent = "팔로잉";
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
@@ -1030,72 +1122,27 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     }
   }
   
-
-
-//팔로우?
-  // function clickFollow(e) {
-  //   console.log(e);
-  //   let _btn = e;
-  //   console.log(_btn.textContent);
-  //   if (_btn.textContent === "팔로잉") {
-  //     _btn.textContent = "팔로우";
-  //     _btn.style.backgroundColor = "#0095f6";
-  //     _btn.style.color = "#fff";
-  //     _btn.style.border = "1px solid #ddd";
-  //   } else {
-  //     _btn.textContent = "팔로잉";
-  //     _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
-  //     _btn.style.color = "#fff";
-  //     _btn.style.border = "0";
-  //   }
-  // }
-
-
-
-
-
-
-//팔로우 기능구현
-// function followingList(){
-
-//   let own = localStorage.getItem("own");
-
-//   let userNo = document.querySelector('.userNo');
-
-//   console.log(userNo);
-
-//   fetch("http://localhost:8000/story/followingList/"+own,{
-//     method:"GET",
-//     headers:{
-//         "Content-Type":"application/json",
-//         Authorization:localStorage.getItem('authorization'),
-//         RefreshToken:localStorage.getItem('refreshToken'),
-//     },
-//   })
-// .then((res)=>res.json())
-// .then(res =>{
-  
-//   console.log("통신 성공");
-   
-//   })
-
-// }
-
+// console.log("로칼:(2)"+localStorage.getItem("own"));
+// console.log("로칼조현재:(1)"+localStorage.getItem('userNo'));
 
 
 //다른사람 피드 팔로우 기능구현
   function profilecFollow(e) {
-    console.log(e);
-    let _btn = e;
-    console.log(_btn.textContent);
 
-    if (_btn.textContent === "팔로우") {
+    //console.log("배한성:(2)"+localStorage.getItem("own"));
+    //console.log("조현재:(1)"+localStorage.getItem('userNo'));
+
+    //console.log(e);
+    let _btn = e;
+    //console.log(_btn.textContent);
+
+    if (_btn.textContent.includes("팔로우")) {
       
       let fromUserId = localStorage.getItem('userNo');
       let toUserId = localStorage.getItem("own");
 
-      fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
-        method:"GET",
+      fetch("http://localhost:8000/story/follow/"+toUserId+"/"+fromUserId,{
+        method:"POST",
         headers:{
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
@@ -1104,21 +1151,20 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       })
     .then((res)=>res.json())
     .then(res =>{
-             
-      console.log(res);
-      //버튼 저장되게끔?
 
       _btn.textContent = "팔로잉";
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
       _btn.style.color = "#fff";
       _btn.style.border = "1px solid #ddd";
+
+
     })
 
     } else {
       let toUserId = localStorage.getItem("own");
       let fromUserId = localStorage.getItem('userNo');
-      ///follow/{toUserId}/{fromUserId}
-      fetch("http://localhost:8000/story/follow/"+fromUserId+"/"+toUserId,{
+   
+      fetch("http://localhost:8000/story/follow/"+toUserId+"/"+fromUserId,{
         method:"delete",
         headers:{
             "Content-Type":"application/json",
@@ -1128,31 +1174,49 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       })
     .then((res)=>res.json())
     .then(res =>{
-             
-      console.log(res);
+      // FollowCount();
+      // FollowingCount();
+      //console.log(res);
 
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
       _btn.style.color = "#fff";
       _btn.style.border = "0";
 
+   
     })
+    
     }
+
   }
 
 
 
 
-
+//로그아웃
 function logout(){
 
   localStorage.clear();
-        
+  
+  deleteCookie('Authorization');
+  deleteCookie('RefreshToken');
+
   location.href="loginpage.html";
 
 
 }
+//쿠키삭제
+function deleteCookie(name) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
 
+
+//페이지이동 userNo
+const movePage = (userNo) =>{
+  localStorage.removeItem('own');
+  localStorage.setItem('own', userNo);
+  location.href="individualpage.html";
+}
 
 
 

@@ -1,6 +1,10 @@
 window.onload = function(){
     getBoardList();
+    addFile();
+}
 
+// 멘토 신청시 첨부파일 추가 버튼 생성
+const addFile = () =>{
     document.getElementById("addFile").addEventListener('click', () => { 
         if(document.getElementsByName("file").length < 3) {
             const newDiv = document.createElement('div');
@@ -11,9 +15,9 @@ window.onload = function(){
             alert("파일은 3개까지 첨부 가능합니다.");
         }
     });
-
 }
 
+// 토큰 만료 시 토큰 재발급
 const getAccessToken = () =>{
     localStorage.removeItem('authorization');
     let refreshToken = localStorage.getItem('refreshToken');
@@ -24,8 +28,8 @@ const getAccessToken = () =>{
     .then(res =>{
         localStorage.removeItem('refreshtoken');
         localStorage.setItem('authorization',res.jwtToken);
-        localStorage.setItem('refreshToken', res.refreshToken);
-     })
+        localStorage.setItem('refreshToken',res.refreshToken);
+    })
 }
 
 // 멘토 등록 신청서 작성(제출), 실명인증이 안되어있는경우 제출 불가.
@@ -66,7 +70,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
                     account : document.getElementById("realBankAccount").value,
                     userId : localStorage.getItem('userNo')
                 })
-            })    
+                })    
             .then((res)=>res.json())
             .then(res =>{
                 if(res > 0){
@@ -127,24 +131,60 @@ document.getElementById('accountButton').addEventListener('click', function(){
     })
 });
 
+// 완료된 멘토링 목록 >> 리뷰 버튼 클릭시 리뷰 작성 페이지
+const endMentoring = ()=>{
+    const userId = localStorage.getItem('userNo');
+    fetch("http://localhost:8000/mentors/board?userId="+userId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json;",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+    if(res!=null){
+        for(const endBoard of res.data){
+            document.getElementById('endBoardList').innerHTML +=
+            `<td>${endBoard.id}</td>
+            <td>${endBoard.nickname}</td>
+            <td>${endBoard.title}</td>
+            <td style="text-align: center;">
+                <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#writeReview"
+                onclick="showBoardId(${endBoard.id});"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
+            </td>`
+        }
+    } 
+ })
+document.getElementById('endBoardList').innerHTML ='';
+}
+
+// 리뷰 작성 페이지 글번호 보여주기
+const showBoardId = (boardId)=>{
+    document.getElementById('boardId').value = boardId;
+}
+
 // 리뷰 제출하기
 const writeReview = () => {
     const userId = localStorage.getItem('userNo');
-    const boardId = document.getElementById("boardId").value;
-    fetch("http://localhost:8000/mentors/score/mentee?userId="+userId+"&boardId="+boardId,{
-            method:"GET",
-            headers:{
-                "Content-Type":"application/json;",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
-            },
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-            if(res){
-                window.alert('해당 글에 대한 작성한 리뷰가 존재합니다.');
-                return false;
-            } else{
+    const boardId = document.getElementById('boardId').value;
+    fetch("http://localhost:8000/mentors/score/mentee?userId=" + userId + "&boardId=" + boardId,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json;",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        if(res){
+            window.alert('해당 글에 대한 작성한 리뷰가 존재합니다.');
+            location.href="mentee-myPage.html";
+            return false;
+        } else{
             fetch("http://localhost:8000/mentors/score",{
                 method:"POST",
                 headers:{
@@ -183,7 +223,7 @@ const getBoardList = () =>{
     .then((res)=>res.json())
     .then(res =>{
         if(res.status==401){
-            getAccessToken(); 
+            getAccessToken();
             location.href = "mentor-main.html";
         } else {
             let cnt = 1;
@@ -194,75 +234,74 @@ const getBoardList = () =>{
                 let nickname = board.nickname;
                 let career = board.career;
                 let title = board.title;
-            if(cnt%4 !== 0 ){
-                document.getElementById('row-div').innerHTML +=  `<div class="col-3">
-                <div class="card" style="width: 13rem; height:14rem;">
-                <div class="card-body" onclick="getBoardDetail(${boardId});"  
-                data-bs-toggle="modal" href="#exampleModalToggle">
-                <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
-                ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
-                ${career}</h6><p class="card-text">제목:${title}</p>
-                </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
-                type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
-                cnt += 1;
-                document.getElementById('boardId-modal').value = boardId; 
-            } else {
-                document.getElementById('row-div').innerHTML += 
-                `<div class="col-3">
-                <div class="card" style="width: 13rem; height:14rem;">
-                <div class="card-body" onclick="getBoardDetail(${boardId});"
-                data-bs-toggle="modal" href="#exampleModalToggle">
-                <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
-                ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
-                ${career}</h6><p class="card-text">제목:${title}</p>
-                </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview('${nickname}');"
-                 type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
-                 </div><div class="row" style="padding:20px;" id="row-div">`;
-                cnt += 1;
-                document.getElementById('boardId-modal').value = boardId;
+                if(cnt%4 !== 0 ){
+                    document.getElementById('row-div').innerHTML +=  `<div class="col-3">
+                    <div class="card" style="width: 13rem; height:14rem;">
+                    <div class="card-body" onclick="getBoardDetail(${boardId});"  
+                    data-bs-toggle="modal" href="#exampleModalToggle">
+                    <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
+                    ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
+                    ${career}</h6><p class="card-text">제목:${title}</p>
+                    </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
+                    cnt += 1;
+                } else {
+                    document.getElementById('row-div').innerHTML += 
+                    `<div class="col-3">
+                    <div class="card" style="width: 13rem; height:14rem;">
+                    <div class="card-body" onclick="getBoardDetail(${boardId});"
+                    data-bs-toggle="modal" href="#exampleModalToggle">
+                    <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
+                    ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
+                    ${career}</h6><p class="card-text">제목:${title}</p>
+                    </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview('${nickname}');"
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
+                    </div><div class="row" style="padding:20px;" id="row-div">`;
+                    cnt += 1;
+                }
             }
-      }
         }        
     })
 }
 
-// 글신고하기
+// 글 신고하기
 const reportBoard = () =>{
-    document.getElementById('report-btn').addEventListener('click',function(){
-        const id = document.getElementById('boardId-modal').value;
-        fetch("http://localhost:8000/mentors/board/"+id,{
-            method:"GET",
-            headers:{
+    const id = document.getElementById('boardId-modal').value;
+    fetch("http://localhost:8000/mentors/board/"+id,{
+        method:"GET",
+        headers:{
             "Content-Type":"application/json",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        const userId = res.mentor.userId;
+        const bId = res.id;
+        fetch("http://localhost:8000/login/report",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
             },
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-            const userId = res.mentor.userId;
-            const id = res.id;
-
-            fetch("http://localhost:8000//신고주소를 입력해주세요",{
-                method:"GET",
-                headers:{
-                "Content-Type":"application/json",
-                    Authorization:localStorage.getItem('authorization'),
-                    RefreshToken:localStorage.getItem('refreshToken')
-                },
-                body:JSON.stringify({
-                    userId : userId,
-                    boardId : id,
-                    service : "Mentor",
-                    title : document.getElementById('reportTitle').value,
-                    content : document.getElementById('reportContent').value
-                })
+            body:JSON.stringify({
+                reportTitle : document.getElementById('reportTitle').value,
+                reportContent : document.getElementById('reportContent').value,
+                boardId : bId,
+                serviceName : "mentor",
+                userNo : userId
             })
         })
-    });
+    })
+    .then(res =>{
+        alert('신고가 접수되었습니다.');
+        location.href="mentor-main.html";
+    })
 }
 
+// 글번호에 대해 글 상세 보기
 const getBoardDetail = (bId) =>{
+    document.getElementById('boardId-modal').value = bId;
     fetch("http://localhost:8000/mentors/board/"+bId,{
         method:"GET",
         headers:{
@@ -273,11 +312,11 @@ const getBoardDetail = (bId) =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log("res : " + res);
         if(res != null){
             document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
             document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
-            document.getElementById('modal-salary').innerHTML = res.salary;
+            document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.salary + "원";
+            document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.mentoringDate.substr(0,10) +"&nbsp&nbsp"+ res.mentoringDate.substr(11,5);
             document.getElementById('board-price').value = res.salary;
         } else {
             console.log('실패');
@@ -285,8 +324,7 @@ const getBoardDetail = (bId) =>{
     })
 }
 
-
-//멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
+// 멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
 const watchReview = (nickname) =>{
     fetch("http://localhost:8000/mentors/score?nickname="+nickname,{
         method:"GET",
@@ -308,49 +346,13 @@ const watchReview = (nickname) =>{
                     case 2 : star ='★★'; break; 
                     case 1 : star ='★'; break;
                 }
-                document.getElementById('reviewBody').innerHTML +=  '<br/>' + star + '<br/>' + '<br/>' + score.content + '<br/>';
+            document.getElementById('reviewBody').innerHTML +=  '<br/>' + star + '<br/>' + '<br/>' + score.content + '<br/>';
             }
         } else {
             console.log('실패');
         }
     })
     document.getElementById('reviewBody').innerHTML ='';
-}
-
-// 완료된 멘토링 목록
-const endMentoring = ()=>{
-        const userId = localStorage.getItem('userNo');
-        console.log(userId);
-        fetch("http://localhost:8000/mentors/board?userId="+userId,{
-            method:"GET",
-            headers:{
-                "Content-Type":"application/json;",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken')
-            },
-        })
-        .then((res)=>res.json())
-        .then(res =>{
-        if(res!=null){
-            for(const endBoard of res.data){
-                document.getElementById('endBoardList').innerHTML +=
-                `<td>${endBoard.id}</td>
-                <td>${endBoard.nickname}</td>
-                <td>${endBoard.title}</td>
-                <td style="text-align: center;">
-                    <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" href="#writeReview"
-                    onclick="showBoardId(${endBoard.id});"
-                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰쓰기</button>
-                </td>`
-            }
-        } 
-     })
-    document.getElementById('endBoardList').innerHTML ='';
-}
-
-// 리뷰 작성 페이지 글번호 보여주기
-const showBoardId = (boardId)=>{
-    document.getElementById('boardId').value = boardId;
 }
 
 // 신청한 멘토링 목록

@@ -17,7 +17,7 @@ public class MenteeDto {
     private String nickname;
     private List<Participant> participants = new ArrayList<>();
     private List<Payment> payments = new ArrayList<>();
-    private List<Score> scores;
+    private List<Score> scores = new ArrayList<>();
     private List<Mentor> mentors = new ArrayList<>();
 
     public Mentee toEntity(){

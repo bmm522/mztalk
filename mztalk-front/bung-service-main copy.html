@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/bung-service-main.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <title>bung Main</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav>
+        <div class="navContainer">
+            <article class="logoWrap">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" alt="로고">
+                <div class="columnLine"></div>
+                <h1 class="logo">MZTALK</h1>
+            </article>
+            <!-- <article class="search">
+                <input type="text" placeholder="검색" >
+            </article> -->
+            <article class="pictogramWrap">
+                
+                <i class="fa-solid fa-comments" style=""></i>
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필">
+            </article>
+        </div>
+    </nav>
+   <!-- 여기서 놀아주세요. -->
+    <main class="mainContainer">
+
+        <br><br>
+        <div class="cardZone" style="height: px; width: 1500px;">
+            <div id="pageBtn" style="height: 35px; float: right; width: 33%; text-align: right;">
+                <button type="button" class="btn btn-outline-warning" class="PageBtn">벙 참가 신청 리스트</button>
+            </div>
+            <div id="pageBtn" style="height: 35px; float: right; width: 33%;">
+            
+            </div>
+            <div id="pageBtn" style="height: 35px; float: rigt; width: 33%;">
+                    
+            </div>
+            <br><br>
+            <div class="searchBar" style="height: 150px; width: 500px; margin: auto;">
+                <form class="navbar-form pull-left">
+                    <br>
+                    <div class="colClass" style="float: left; width: 13%;">
+                        &nbsp;
+                    </div>
+                    <div class="select" style="float: left; width: 21%;">
+                        <select id="type" name="type" class="form-select" style="width: 100px; height: 40px;">
+                            <option value="">검색</option>
+                            <option value="title">제목</option>
+                            <option value="content">내용</option>
+                            <option value="nickname">닉네임</option>
+                        </select>
+                    </div>
+                    <div class="search" style="float: left; width: 66%;">
+                        <input type="text" class="span2" id="searchBox" style="height: 40px;">
+                        &nbsp;
+                        <button class="search-btn" type="submit" style="height: 40px; width: 35px;"><i class="fas fa-search"  style="width: 30px;"></i></button>
+                    </div>
+                    <div  class="form-check form-switch form-check-reverse" style="height: 100px;">
+                        <br><br><br>
+                        <table>
+                            <tr>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" id="study">
+                                    <label class="form-check-label" for="study">공부</label>
+                                </th>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" id="hobby">
+                                    <label class="form-check-label" for="hobby">취미</label>
+                                </th>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" id="enjoy">
+                                    <label class="form-check-label" for="enjoy">놀기</label>
+                                </th>
+                                <th>
+                                    <input class="form-check-input" type="checkbox" id="food">
+                                    <label class="form-check-label" for="food">음식</label>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="output-div">
+             <!-- <div class="col">
+                   <div class="card h-100">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header">
+                                dddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                            </div>   
+                            <img src="duck.jpg" style="height: 250px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{카테고리}</h5>
+                                <p class="card-text">dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
+                            </div>
+                            <hr>
+                            <div id="count">{조회수}</div>
+                            <div id="writer">마감일 : {2022/10/11}</div>
+                            <div id="writer">
+                                {작성자}
+                            </div>
+                            <div id="groupTotal">
+                                {현재 인원} / {총 인원}
+                            </div>
+                        </div>
+                    </div> 
+                </div> -->
+                <!--
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header">
+                                {제목}
+                            </div>
+                            <img src="duck.jpg" style="height: 250px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{카테고리}</h5>
+                                <p class="card-text">{내용}</p>
+                            </div>
+                            <hr>
+                            
+                            <div id="writer">
+                                {작성자}
+                            </div>
+                            <div id="groupTotal">
+                                {현재 인원} / {총 인원}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header">
+                                {제목}
+                            </div>
+                            <img src="duck.jpg" style="height: 250px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{카테고리}</h5>
+                                <p class="card-text">{내용}</p>
+                            </div>
+                            <hr>
+                            <div id="writer">
+                                {작성자}
+                            </div>
+                            <div id="groupTotal">
+                                {현재 인원} / {총 인원}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header">
+                                {제목}
+                            </div>
+                            <img src="duck.jpg" style="height: 250px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{카테고리}</h5>
+                                <p class="card-text">{내용}</p>
+                            </div>
+                            <hr>
+                            <div id="writer">
+                                {작성자}
+                            </div>
+                            <div id="groupTotal">
+                                {현재 인원} / {총 인원}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header">
+                                {제목}
+                            </div>
+                            <img src="duck.jpg" style="height: 250px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{카테고리}</h5>
+                                <p class="card-text">{내용}</p>
+                            </div>
+                            <hr>
+                            <div id="writer">
+                                {작성자}
+                            </div>
+                            <div id="groupTotal">
+                                {현재 인원} / {총 인원}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header">
+                                {제목}
+                            </div>
+                            <img src="duck.jpg" style="height: 250px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{카테고리}</h5>
+                                <p class="card-text">{내용}</p>
+                            </div>
+                            <hr>
+                            <div id="writer">
+                                {작성자}
+                            </div>
+                            <div id="groupTotal">
+                                {현재 인원} / {총 인원}
+                            </div>
+                        </div>
+                    </div>
+                </div>  -->
+            </div>
+        </div>
+    </div>
+
+    <div id="map" style="width:500px;height:400px;"></div>
+
+    <div id="writeBtn">
+        <button type="button" id="write-btn" class="btm_image" style="border: 0px;"><img src="writer.jpg" style="height: 85px; border: 0px;" id="imageBtn"></button>
+    </div>
+
+    </main>
+
+    <div class="floating">
+        <div class="remocon"> 
+            <figure><img src="img/mento.png" style="width: 70px; margin-bottom: 25px; margin-top: 25px;"/></figure>
+           
+            <figure> <img src="img/qjd.png" id="qjd" style="width: 70px;"/></figure>
+            
+            <figure>  <img src="img/book.png" id="book" style="width: 70px; margin-top:30px;"/></figure>
+            
+
+            <!-- <figure><i class="fa-solid fa-comments" style="width: 85px;"></i></figure> -->
+        </div>
+
+
+        <div class="side side1"></div>
+        <div class="side side2"></div>
+        <div class="side side3"></div>
+        <div class="side side4"></div>
+    </div>
+
+    <!-- <div id="upBtn">
+        <a href="#"><figure id="up-figure"><img src="img/top.png" style="width: 40px;"/></figure></a>
+    
+    </div>  -->
+
+    <div id="upBtn">
+          <a href="#"><figure><img src="img/top.png" style="width: 50px;"/></figure></a>
+    </div>
+    <footer>
+        <div class="container">
+            <ul>
+               <li><a href="#a">소개</a></li>
+               <li><a href="#a">블로그</a></li>
+               <li><a href="#a">채용 정보</a></li>
+               <li><a href="#a">도움말</a></li>
+               <li><a href="#a">API</a></li>
+               <li><a href="#a">개인정보처리방침</a></li>
+               <li><a href="#a">약관</a></li>
+               <li><a href="#a">인기 계정</a></li>
+               <li><a href="#a">해시태그</a></li>
+               <li><a href="#a">위치</a></li>
+            </ul>
+            <div class="copy">
+               <p>© 2022 MZTALK from Spring</p>
+            </div>
+         </div>
+      
+    
+       </footer>
+   
+    <!-- <div id="upBtn">
+    <ul class="menu align-center expanded text-center SMN_effect-74">
+        <li><a href="#" data-hover="Home" id="homeRef">UP</a></li>
+        </ul>
+        </div> -->
+   
+
+<script src="JS/main.js"></script>
+<script src="JS/bung-main.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a563808a8c46d977ffd3469634effd23"></script>
+<script>
+    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    var options = { //지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+            level: 3 //지도의 레벨(확대, 축소 정도)
+    };
+
+    var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+</script>
+</body>
+</html>

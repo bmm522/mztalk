@@ -7,4 +7,5 @@ public interface CheckService {
 
     ConcurrentHashMap<String,Object> checkNickname(String nickname);
 
+    ConcurrentHashMap<String, Object> checkEmail(String email);
 }
