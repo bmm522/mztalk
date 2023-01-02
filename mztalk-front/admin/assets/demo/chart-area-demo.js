@@ -17,13 +17,13 @@ let fourBeforeDate = today.getDate() - 4;
 let fiveBeforeDate = today.getDate() - 5;
 let sixBeforeDate = today.getDate() - 6;
 
-let nowDay = year + '-' + month + '-' + date;
-let oneBefore = year + '-' + month + '-' + oneBeforeDate;
-let twoBefore = year + '-' + month + '-' + twoBeforeDate;
-let threeBefore = year + '-' + month + '-' + threeBeforeDate;
-let fourBefore = year + '-' + month + '-' + fourBeforeDate;
-let fiveBefore = year + '-' + month + '-' + fiveBeforeDate;
-let sixBefore = year + '-' + month + '-' + sixBeforeDate;
+let nowDay = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+date:date);
+let oneBefore = year + '-' + (month<9?"0"+month:month) + '-' +  (date<9?"0"+oneBeforeDate:oneBeforeDate);
+let twoBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+twoBeforeDate:twoBeforeDate);
+let threeBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+threeBeforeDate:threeBeforeDate);
+let fourBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+fourBeforeDate:fourBeforeDate);
+let fiveBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+fiveBeforeDate:fiveBeforeDate);
+let sixBefore = year + '-' + (month<9?"0"+month:month) + '-' +  (date<9?"0"+sixBeforeDate:sixBeforeDate);
 
 
 let todayData ='';
