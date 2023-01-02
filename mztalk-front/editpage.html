@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <link rel="stylesheet" href="css/common.css">
@@ -41,7 +40,7 @@
             <div class="d-flex align-items-start">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                   <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">프로필 설정</button>
-                  <!-- <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button> -->
+                  <button class="nav-link hidden" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>
                   <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false" onclick="myReport();">신고 조회</button>
                   <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">구독권</button>
                   
@@ -187,7 +186,7 @@
                                 <div class="content-item__04">
                                     <div class="item__title">이전 비밀번호</div>
                                     <div class="item__input">
-                                        <input type="password" name="current-password" autocomplete="off" placeholder="이전 비밀번호"
+                                        <input type="password" id="passwd" name="current-password" autocomplete="off" placeholder="이전 비밀번호"
                                             />
                                     </div>
                                 </div>
@@ -195,14 +194,18 @@
                                 <div class="content-item__05">
                                     <div class="item__title">새 비밀번호</div>
                                     <div class="item__input">
-                                        <input type="password" name="new-password" autocomplete="off"  placeholder="새 비밀번호"  />
+                                        <input type="password" id="password" placeholder="새 비밀번호"/>
+                                        <div id="checkPw"  class="vaild-div"></div>
+                                        <input type="hidden" id="checkPasswordResult" value="fail"/>
                                     </div>
                                 </div>
 
                                 <div class="content-item__06">
                                     <div class="item__title">새 비밀번호 확인</div>
                                     <div class="item__input">
-                                        <input type="password" name="new-password_check" autocomplete="off" placeholder="새 비밀번호 확인"  />
+                                        <input type="password" id="re_password" placeholder="새 비밀번호 확인"/>
+                                        <div id="checkRePw"  class="vaild-div"></div>
+                                        <input type="hidden" id="checkRePasswordResult" value="fail"/>
                                     </div>
                                 </div>
                                 
@@ -210,7 +213,7 @@
                                 <div class="content-item__11">
                                     <div class="item__title"></div>
                                     <div class="item__input">
-                                        <button type="button" class="btn btn-primary" disabled>제출</button>
+                                        <button id="password_button_check" onclick="ch_Password();" type="button" class="btn btn-primary" disabled>제출</button>
                                     </div>
                                 </div>
                                 
@@ -268,11 +271,26 @@
                                 &nbsp;<!--공백-->
                             </div>
 
-                                 <div id="reportAllList">
+                                <div id="reportAllList">
+                                 <!-- <div id="reportAllList"> -->
                                     <!--리스트 뿌려주는곳-->
+                                     <!-- <div class="card mb-3" style="max-width: 750px;">
+                                        <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                            <h5 class="card-title">신고글제목</h5>
+                                            <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
+                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div> -->
 
-<!-- 
-                                    <div class="card mb-3" style="max-width: 540px;">
+                                    <!-- <div class="card mb-3" style="max-width: 750px;">
                                         <div class="row g-0">
                                         <div class="col-md-4">
                                             <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
@@ -289,7 +307,7 @@
                                     </div>
 
 
-                                    <div class="card mb-3" style="max-width: 540px;">
+                                    <div class="card mb-3" style="max-width: 750px;">
                                         <div class="row g-0">
                                         <div class="col-md-4">
                                             <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
@@ -305,7 +323,7 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="card mb-3" style="max-width: 540px;">
+                                    <div class="card mb-3" style="max-width: 750px;">
                                         <div class="row g-0">
                                         <div class="col-md-4">
                                             <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
@@ -329,9 +347,9 @@
 
 
 
-
                                 </div>
-                        </div>  
+                                <!-- </div> -->
+                    </div>  
 
 
                         
@@ -345,14 +363,17 @@
 
                             <!--프로필셋팅 아이디영역-->
                             <div class="content-item__01">
+
                                 <form>    
-                                    <button type="button" class="btn btn-outline-primary">
+                                    <button onclick="requestPay();" type="button" id="subscribe_" class="btn btn-outline-primary">
                                         <p>
                                             <h1>정기 구독하기</h1>
                                             <h4>월 9,900원</h4>
                                         </p>
                                     </button>
-                                </form>    
+                                </form> 
+                                
+                                
                             </div>
 
                         </article>
@@ -473,5 +494,97 @@
 <script src="JS/main.js"></script>
 <script src="JS/personal/editpage.js"></script>
 
-<!-- <script src="JS/socialForService.js"></script> -->
+
+ <!-- 제이쿼리 -->
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+ <!-- 아임포트 -->
+ <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+
+   <!-- 아임포트 결제 스크립트-->
+   <script type="text/javascript">
+    const random = Math.ceil(Math.random()*100000000);
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth()+1;
+    const date = today.getDate();
+
+    
+    const IMP = window.IMP; 
+    IMP.init("imp43500426");
+    let userNo = localStorage.getItem('userNo');
+    //아임포트 결제
+    function requestPay() {
+
+        IMP.request_pay({
+                pg: "html5_inicis",
+                pay_method: "card",
+                merchant_uid: "ORD"+ year + month + date +  "-" + random,
+                name: "mztalk",
+                amount: 100,
+                buyer_email: 'nowing0108@gmail.com',
+                buyer_name: localStorage.getItem('username'), 
+                buyer_tel: '01074402770',
+            },
+        function (rsp) {
+            console.log(rsp);
+            if (rsp.success) {
+               $.ajax({
+                    url: "http://localhost:8000/story/subscribe",
+                    method:"POST",
+                    headers: {
+                        "Content-Type": "application/json;",
+                        Authorization:localStorage.getItem('authorization'),
+                        RefreshToken:localStorage.getItem('refreshToken')
+                    },
+                    data: JSON.stringify({
+                        userNo : localStorage.getItem('userNo'),
+                        price : rsp.paid_amount,
+                        vipDate : today.setMonth(month),                        
+                    })                    
+               })    
+               .done(function(data){
+                    $.ajax({
+                        url: "http://localhost:8000/login/role/vip/"+userNo,
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json;",
+                            Authorization:localStorage.getItem('authorization'),
+                            RefreshToken:localStorage.getItem('refreshToken')
+                        },
+                        data: JSON.stringify({
+                            userNo : localStorage.getItem('userNo'),
+                        })
+                    })
+                    alert('vip등급이 되었습니다. 다시 로그인해주세요');
+                   
+               })
+            } else {
+                alert('결제를 실패하셨습니다');
+                location.href="editpage.html";
+            }
+        });
+    }
+
+
+
+//로그아웃
+function logout(){
+
+localStorage.clear();
+
+deleteCookie('Authorization');
+deleteCookie('RefreshToken');
+
+location.href="loginpage.html";
+
+
+}
+//쿠키삭제
+function deleteCookie(name) {
+document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+</script>
 </html>

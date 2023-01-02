@@ -17,7 +17,7 @@ import java.sql.Date;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cId;
+    private Long commentId;
 
     private String content;
 

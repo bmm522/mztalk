@@ -1,9 +1,6 @@
 package com.mztalk.auction.repository.impl;
 
-import com.mztalk.auction.domain.Result;
-import com.mztalk.auction.domain.dto.BoardDto;
-import com.mztalk.auction.domain.dto.BoardEditDto;
-import com.mztalk.auction.domain.dto.CommentDto;
+import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 import com.mztalk.auction.repository.CustomAuctionRepository;
@@ -23,14 +20,14 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     //전체 게시글 조회, 검색
     @Override
     public List<Board> selectBoardList() {
-        return entityManager.createQuery("select b from Board b where b.status = 'Y'")
+        return entityManager.createQuery("select b from Board b where b.status = 'Y' order by b.boardId desc")
                 .getResultList();
     }
 
     //게시글 검색
     @Override
     public List<Board> searchBoard(String keyword) {
-        return entityManager.createQuery("select b from Board b where b.status = 'Y' and b.title like concat('%', :keyword, '%') or b.content like concat('%', :keyword, '%')")
+        return entityManager.createQuery("select b from Board b where b.status = 'Y' and b.title like concat('%', :keyword, '%') or b.content like concat('%', :keyword, '%') order by b.boardId desc")
                 .setParameter("keyword", keyword)
                 .getResultList();
     }
@@ -60,11 +57,11 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     //입찰가
     @Transactional
     @Override
-    public int updatePrice(Long bId, BoardDto boardDto) {
-        System.out.println(boardDto.getContent());
-        return entityManager.createQuery("update Board b set b.currentPrice = :currentPrice where b.boardId = :bId")
-                .setParameter("currentPrice", boardDto.getCurrentPrice())
-                .setParameter("bId", bId)
+    public int updatePrice(BoardPriceDto boardPriceDto) {
+        return entityManager.createQuery("update Board b set b.currentPrice = :currentPrice, b.buyerNickname = :nickName where b.boardId = :boardId")
+                .setParameter("currentPrice", boardPriceDto.getCurrentPrice())
+                .setParameter("nickName", boardPriceDto.getBuyer())
+                .setParameter("boardId", boardPriceDto.getBoardId())
                 .executeUpdate();
     }
 
@@ -81,32 +78,39 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     //댓글 수정
     @Transactional
     @Override
-    public int updateComment(Long cId, CommentDto commentDto) {
-        return entityManager.createQuery("update Comment c set c.content = :content where c.cId = :cId and c.writer = :writer")
-                .setParameter("content", commentDto.getContent())
+    public int updateComment(Long cId, CommentUpdateRequestDto commentUpdateRequestDto) {
+        return entityManager.createQuery("update Comment c set c.content = :content where c.commentId = :cId")
+                .setParameter("content", commentUpdateRequestDto.getContent())
                 .setParameter("cId", cId)
-                .setParameter("writer", commentDto.getWriter())
                 .executeUpdate();
     }
 
     //댓글 삭제
     @Transactional
     @Override
-    public int deleteComment(Long cId, CommentDto commentDto) {
-        return entityManager.createQuery("update Comment c set c.status = 'N' where c.cId = :cId and c.writer = :writer")
+    public int deleteComment(Long cId) {
+        return entityManager.createQuery("update Comment c set c.status = 'N' where c.commentId = :cId")
                 .setParameter("cId", cId)
-                .setParameter("writer", commentDto.getWriter())
                 .executeUpdate();
     }
 
     //댓글 전체 조회
     @Override
-    public List<CommentDto> selectCommentList() {
-        return entityManager.createQuery("select c from Comment c where status = 'Y'")
+    public List<Comment> selectCommentList(Long bId) {
+        return entityManager.createQuery("select c from Comment c where c.status = 'Y' and c.board.boardId = :bId", Comment.class)
+                .setParameter("bId", bId)
                 .getResultList();
     }
 
-
+    //입찰 마감
+    @Transactional
+    @Override
+    public void updateIsClose(long boardId) {
+        System.out.println("repository: " + boardId);
+        entityManager.createQuery("update Board b set b.isClose = 'Y' where b.boardId = :boardId")
+                .setParameter("boardId", boardId)
+                .executeUpdate();
+    }
 
 
 }

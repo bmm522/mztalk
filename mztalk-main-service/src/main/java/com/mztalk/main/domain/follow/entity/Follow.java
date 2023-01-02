@@ -1,5 +1,4 @@
 package com.mztalk.main.domain.follow.entity;
-import com.mztalk.main.status.BoardStatus;
 import com.mztalk.main.status.FollowStatus;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

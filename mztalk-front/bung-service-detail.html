@@ -100,12 +100,27 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="groupUser">{참여자 정보}</div>
-                                        <br>
-                                    <div class="groupUser">{참여자 정보}</div>
+                                    <div class="groupUserBox">
+                                        <div class="groupUser" style="height: 50px; float: left; width: 70%; font-size: x-large;">
+                                            {참여자 정보}
+                                        </div>
+                                        <div class="groupUserDrop" style="height: 50px; float: left; width: 30%;">
+                                            <button type="button" class="btn btn-outline-danger btn-sm" id="drop-btn" style="width: 35px; height: 35px; font-size: small;">X</button>
+                                        </div>
+                                        <div class="groupUser" style="height: 50px; float: left; width: 70%; font-size: x-large;">
+                                            {참여자 정보}
+                                        </div>
+                                        <div class="groupUserDrop" style="height: 50px; float: left; width: 30%;">
+                                            <button type="button" class="btn btn-outline-danger btn-sm" id="drop-btn" style="width: 35px; height: 35px; font-size: small;">X</button>
+                                        </div>
+                                    </div>
+                                        <!-- <br>
+                                        <div class="groupUser" style="height: 200px; float: left; width: 50%;">
+                                            {참여자 정보}
+                                        </div> -->     
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -136,8 +151,7 @@
                                         <div class="mb-3">
                                             <label for="message-text" class="col-form-label">신고 사유</label>
                                             <textarea class="form-control" id="message-text"></textarea>
-                                        </div>
-                                    
+                                        </div>                                  
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>

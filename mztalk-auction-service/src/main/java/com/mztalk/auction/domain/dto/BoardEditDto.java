@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BoardEditDto {
     private String title;
+    private String bookTitle;
     private String content;
 
     public BoardEditDto(Board board) {

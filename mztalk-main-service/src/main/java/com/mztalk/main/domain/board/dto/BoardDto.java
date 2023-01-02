@@ -31,9 +31,12 @@ public class BoardDto {
 
     private LocalDateTime lastModifiedDate;
 
+    private LocalDateTime createdDate;
+
     private String nickname;
 
     //레포지토리에 넣기위해
+    // 계층간의 데이터 전송을 위한
     // dto ㅡ> entity
     public Board toEntity(){
         Board board = Board.builder()

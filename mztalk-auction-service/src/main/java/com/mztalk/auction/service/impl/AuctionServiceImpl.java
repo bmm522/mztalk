@@ -8,7 +8,6 @@ import com.mztalk.auction.repository.BoardRepository;
 import com.mztalk.auction.repository.CommentRepository;
 import com.mztalk.auction.service.AuctionService;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.client.methods.HttpHead;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -19,14 +18,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -59,9 +56,7 @@ public class AuctionServiceImpl implements AuctionService {
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
         List<Board> boardList =  boardRepository.selectBoardList();
 
-
         for(Board board : boardList){
-
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/html");
             System.out.println("list 가져오기 : " + board.getBoardId());
@@ -76,16 +71,32 @@ public class AuctionServiceImpl implements AuctionService {
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
 
-            boardListResponseDtoList.add(new BoardListResponseDto(board, String.valueOf(getTimeDuration(board)),imageUrl, imageName));
-
+            ConcurrentHashMap<String, Long> timeMap = getTimeDuration(board);
+            if(timeMap.get("hour") >= 0 && timeMap.get("minute") >= 0) {
+                timeMap.put("hour", 0L);
+                timeMap.put("minute", 0L);
+                boardRepository.updateIsClose(board.getBoardId());
+            }
+            boardListResponseDtoList.add(new BoardListResponseDto(board, timeMap,imageUrl, imageName));
         }
-
-
         return new Result<>(boardListResponseDtoList);
-
     }
-    private Duration getTimeDuration(Board board) {
-        return Duration.between(getLocalDateTime(board.getTimeLimit()), getLocalDateTime(board.getCurrentTime()));
+    private ConcurrentHashMap<String, Long> getTimeDuration(Board board) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        System.out.println("local : " + localDateTime);
+        Duration duration = Duration.between(getLocalDateTime(board.getTimeLimit()), localDateTime);
+        System.out.println("duration : " + duration.getSeconds());
+        long hour = duration.getSeconds() / 3600;
+        long minute = (duration.getSeconds() % 3600)/60 ;
+        System.out.println("hour : " +hour);
+        System.out.println("minute : " + minute);
+
+        ConcurrentHashMap<String, Long> timeMap = new ConcurrentHashMap<>();
+        timeMap.put("hour", hour);
+        timeMap.put("minute", minute);
+        System.out.println(timeMap);
+
+        return timeMap;
     }
 
     private LocalDateTime getLocalDateTime(String time){
@@ -122,7 +133,13 @@ public class AuctionServiceImpl implements AuctionService {
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
 
-            boardListResponseDtoList.add(new BoardListResponseDto(board, String.valueOf(getTimeDuration(board)),imageUrl, imageName));
+            ConcurrentHashMap<String, Long> timeMap = getTimeDuration(board);
+            if(timeMap.get("hour") >= 0 || timeMap.get("minute") >= 0) {
+                timeMap.put("hour", 0L);
+                timeMap.put("minute", 0L);
+            }
+
+            boardListResponseDtoList.add(new BoardListResponseDto(board, timeMap, imageUrl, imageName));
 
         }
         return new Result<>(boardListResponseDtoList);
@@ -163,8 +180,9 @@ public class AuctionServiceImpl implements AuctionService {
 
     //입찰가
     @Override
-    public int updatePrice(Long bId, BoardDto boardDto) {
-        return boardRepository.updatePrice(bId, boardDto);
+    public BoardPriceDto updatePrice(BoardPriceDto boardPriceDto) {
+        boardRepository.updatePrice(boardPriceDto);
+        return boardPriceDto;
     }
 
     //조회수
@@ -190,8 +208,7 @@ public class AuctionServiceImpl implements AuctionService {
 
     //댓글 작성
     @Override
-    public Comment insertComment(CommentRequestDto commentRequestDto) {
-
+    public CommentResponseDto insertComment(CommentRequestDto commentRequestDto) {
         Board board = boardRepository.findByBoardId(commentRequestDto.getBoardId());
 
         Comment comment = Comment.builder()
@@ -201,29 +218,73 @@ public class AuctionServiceImpl implements AuctionService {
                 .createDate(commentRequestDto.getCreateDate())
                 .status("Y")
                 .build();
-        return commentRepository.save(comment);
+        return new CommentResponseDto(commentRepository.save(comment));
     }
 
     //댓글 수정
     @Override
-    public int updateComment(Long cId, CommentDto commentDto) {
-        return commentRepository.updateComment(cId, commentDto);
+    public CommentResponseDto updateComment(Long cId, CommentUpdateRequestDto commentUpdateRequestDto) {
+        int result = commentRepository.updateComment(cId, commentUpdateRequestDto);
+        System.out.println(result);
+        return selectComment(cId);
     }
 
     //댓글 삭제
     @Override
-    public int deleteComment(Long cId, CommentDto commentDto) {
-        return commentRepository.deleteComment(cId, commentDto);
+    public int deleteComment(Long cId) {
+        return commentRepository.deleteComment(cId);
     }
 
     //댓글 전체 조회
     @Override
-    public Result<?> selectCommentList() {
-        List<CommentDto> commentDtoList = commentRepository.selectCommentList();
-        return new Result<>(commentDtoList);
+    public Result<?> selectCommentList(Long bId) {
+        List<Comment> commentList = commentRepository.selectCommentList(bId);
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        for(Comment comment : commentList) {
+            commentResponseDtoList.add(new CommentResponseDto(comment));
+        }
+        return new Result<>(commentResponseDtoList);
     }
 
+    //특정 댓글 조회
+    @Override
+    public CommentResponseDto selectComment(Long commentId) {
+        Comment comment = commentRepository.findByCommentId(commentId);
+        System.out.println("comment: " + comment);
+        return new CommentResponseDto(comment);
+    }
 
+    //입찰 마감 게시글 제외
+    @Override
+    public Result<?> selectCloseBoardList() throws ParseException {
+        List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
+        List<Board> boardList = boardRepository.findByIsCloseAndStatus("N", "Y");
+
+        for (Board board : boardList) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "text/html");
+            System.out.println("list 가져오기 : " + board.getBoardId());
+            ResponseEntity<String> response = new RestTemplate().exchange(
+                    "http://localhost:8000/resource/main-image?bNo=" + board.getBoardId() + "&serviceName=auction",
+                    HttpMethod.GET,
+                    new HttpEntity<String>(headers),
+                    String.class
+            );
+            JSONObject jsonObject = new JSONObject(response.getBody());
+            JSONObject jsonData = jsonObject.getJSONObject("data");
+            String imageUrl = jsonData.getString("imageUrl");
+            String imageName = jsonData.getString("objectKey");
+
+            ConcurrentHashMap<String, Long> timeMap = getTimeDuration(board);
+            if (timeMap.get("hour") >= 0 && timeMap.get("minute") >= 0) {
+                timeMap.put("hour", 0L);
+                timeMap.put("minute", 0L);
+                boardRepository.updateIsClose(board.getBoardId());
+            }
+            boardListResponseDtoList.add(new BoardListResponseDto(board, timeMap, imageUrl, imageName));
+        }
+        return new Result<>(boardListResponseDtoList);
+    }
 
 
 }

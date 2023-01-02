@@ -28,6 +28,7 @@ window.onload = function(){
                 let nowGroup = board.nowGroup;
                 let fullGroup = board.fullGroup;
                 let deadlineDate = board.deadlineDate;
+                let createDate = board.createDate;
                 let boardId = board.boardId;
 
                 document.getElementById('output-div').innerHTML +=
@@ -83,7 +84,7 @@ document.getElementById('write-btn').addEventListener('click',function(){
     .then(res=>{
         console.log(res.bId);
         localStorage.setItem("bId", res.bId);
-        location.href="bung-Service-writer.html";
+        location.href="bung-service-writer.html";
     })
 });
 

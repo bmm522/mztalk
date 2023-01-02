@@ -29,6 +29,8 @@ public class Board {
     @Lob
     private String content;
 
+    private String bookTitle;
+
     private Integer count;
 
     @CreationTimestamp
@@ -37,11 +39,12 @@ public class Board {
     @CreationTimestamp
     private Date modifyDate;
 
-
     @OneToMany(mappedBy = "board")
     private List<Images> images;
 
     private String status;
+
+    private String isClose;
 
     private String writer;
 
@@ -51,13 +54,12 @@ public class Board {
 
     private String currentTime;
 
-
     private Integer currentPrice;
 
     private String buyerNickname;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @OrderBy("cId desc")
+    @OrderBy("commentId desc")
     @JsonBackReference
     private List<Comment> comment;
 
