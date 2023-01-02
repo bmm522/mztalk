@@ -1,6 +1,27 @@
 
 //디테일값 그대로 받아오기
 window.onload = () => {
+    // fetch("http://localhost:8000/auction/board/" + localStorage.getItem("bId"), {
+    //     method: "GET",
+    //     headers: {
+    //         "Content-Type":"application/json",
+    //         Authorization:localStorage.getItem('authorization'),
+    //         RefreshToken:localStorage.getItem('refreshToken'),
+    //     }
+    // })
+    // .then((res)=>res.json())
+    // .then(res=>{
+    //     console.log("detail 받아온 res JSON: " + JSON.stringify(res));
+        
+    //         console.log("deatil 받아온 값: " + res.boardId);
+    //         document.getElementById('title').value = res.title;
+    //         document.getElementById('searchBook').value = res.bookTitle;
+    //         document.getElementById('content').value = res.content;
+
+
+        
+
+    // })
     const imageInfo = JSON.parse(localStorage.getItem("imageInfo"));
     console.log("update imageInfo: " + imageInfo);
     document.getElementById("title").innerHTML = localStorage.getItem("title");
@@ -16,17 +37,12 @@ window.onload = () => {
     }
     // console.log(document.getElementsByClassName('imageName')[0].innerHTML);
     // console.log(document.getElementsByClassName('imageName')[1].innerHTML);
-    
+    document.getElementById("title").value = localStorage.getItem("title");
+    document.getElementById("searchBook").value = localStorage.getItem("bookTitle");
     document.getElementById("content").value = localStorage.getItem("content");
-    document.getElementById("currentPrice").value = localStorage.getItem("currentPrice");
-    document.getElementById("timeLimit").value = localStorage.getItem("timeLimit");
     document.getElementById("hidden-bId").value = localStorage.getItem("bId");
 
 
-    localStorage.removeItem("title");
-    localStorage.removeItem("content");
-    localStorage.removeItem("currentPrice");
-    localStorage.removeItem("timeLimit");
 
     document.getElementById("currentPrice").addEventListener('click', function() {
         alert("시작가는 변경할 수 없습니다.");
@@ -138,6 +154,6 @@ const updateData = () =>{
 
 //목록으로
 function backToMain() {
-    location.href="auction.href";
+    location.href="auction.html";
 }
 

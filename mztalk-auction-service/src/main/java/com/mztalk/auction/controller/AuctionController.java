@@ -1,27 +1,14 @@
 package com.mztalk.auction.controller;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.*;
-import com.mztalk.auction.domain.entity.Board;
-import com.mztalk.auction.domain.entity.Comment;
 import com.mztalk.auction.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.Path;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RequestMapping("/auction")
@@ -33,12 +20,12 @@ public class AuctionController {
     @ResponseBody
 
 
+
     //게시글 작성
     @PostMapping("/board")
     public ConcurrentHashMap<String, String> insertBoard(@RequestBody BoardRequestDto boardRequestDto) throws ParseException {
         ConcurrentHashMap<String, String> map=new ConcurrentHashMap<>();
         map.put("bId", String.valueOf(auctionService.insertBoard(boardRequestDto)));
-        System.out.println(map.get("bId"));
         return map;
     }
 
@@ -61,11 +48,16 @@ public class AuctionController {
         return auctionService.selectBoardList();
     }
 
+    //입찰 마감 게시물 제외
+    @GetMapping("/board/close")
+    public Result<?> selectCloseBoardList() throws ParseException {
+        return auctionService.selectCloseBoardList();
+    }
+
     //게시물 디테일
     @GetMapping("/board/{bId}")
     public BoardDetailResponseDto selectBoard(@PathVariable Long bId) {
         auctionService.updateCount(bId); //조회수 증가
-
         return auctionService.selectBoard(bId);
     }
 
@@ -76,10 +68,11 @@ public class AuctionController {
         return auctionService.deleteBoard(bId, writer);
     }
 
+
     //상세페이지 입찰가
-    @PatchMapping("/board/price/{bId}")
-    public int updatePrice(@PathVariable Long bId, @RequestBody BoardDto boardDto) {
-        return auctionService.updatePrice(bId, boardDto);
+    @PatchMapping("/board/price")
+    public BoardPriceDto updatePrice(@RequestBody BoardPriceDto boardPriceDto) {
+        return auctionService.updatePrice(boardPriceDto);
     }
 
     //최신글 번호뽑아오기
@@ -98,34 +91,32 @@ public class AuctionController {
 
     //댓글 작성
     @PostMapping("/comment")
-    public Comment insertComment(@RequestBody CommentRequestDto commentRequestDto) {
+    public CommentResponseDto insertComment(@RequestBody CommentRequestDto commentRequestDto) {
         return auctionService.insertComment(commentRequestDto);
     }
 
     //댓글 수정
     @PatchMapping("/comment/{cId}")
-    public int updateComment(@PathVariable Long cId, @RequestBody CommentDto commentDto) {
-        return auctionService.updateComment(cId, commentDto);
+    public CommentResponseDto updateComment(@PathVariable Long cId, @RequestBody CommentUpdateRequestDto commentUpdateRequestDto) {
+        return auctionService.updateComment(cId, commentUpdateRequestDto);
     }
 
     //댓글 삭제
     @PatchMapping("/deleteComment/{cId}")
-    public int deleteComment(@PathVariable Long cId, @RequestBody CommentDto commentDto) {
-        return auctionService.deleteComment(cId, commentDto);
+    public int deleteComment(@PathVariable Long cId) {
+        return auctionService.deleteComment(cId);
     }
 
     //댓글 전체 조회
-    @GetMapping("/comment")
-    public Result<?> selectCommentList() {
-        return auctionService.selectCommentList();
+    @GetMapping("/comment/{bId}")
+    public Result<?> selectCommentList(@PathVariable Long bId) {
+        return auctionService.selectCommentList(bId);
     }
 
-
-
-
-
-
-
-
+    //특정 댓글 조회
+    @GetMapping("selectComment/{cId}")
+    public CommentResponseDto selectComment(@PathVariable Long cId) {
+        return auctionService.selectComment(cId);
+    }
 
 }

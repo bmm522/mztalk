@@ -1,15 +1,9 @@
 package com.mztalk.auction.repository;
 
-import com.mztalk.auction.domain.Result;
-import com.mztalk.auction.domain.dto.BoardDto;
-import com.mztalk.auction.domain.dto.BoardEditDto;
-import com.mztalk.auction.domain.dto.CommentDto;
+import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
-import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 
@@ -18,19 +12,21 @@ public interface CustomAuctionRepository {
 
     int deleteBoard(Long bId, String writer);
 
-    int updatePrice(Long bId, BoardDto boardDto);
+    int updatePrice(BoardPriceDto boardPriceDto);
 
     int updateCount(Long bId);
 
 
 
-    int updateComment(Long cId, CommentDto commentDto);
+    int updateComment(Long cId, CommentUpdateRequestDto commentUpdateRequestDto);
 
-    int deleteComment(Long cId, CommentDto commentDto);
+    int deleteComment(Long cId);
 
     List<Board> selectBoardList();
 
     List<Board> searchBoard(String keyword);
 
-    List<CommentDto> selectCommentList();
+    List<Comment> selectCommentList(Long bId);
+
+    void updateIsClose(long boardId);
 }
