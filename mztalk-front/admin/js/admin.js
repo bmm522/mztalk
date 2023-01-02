@@ -2,7 +2,8 @@
 
 window.onload = function(){
     console.log('실행');
-    document.getElementById('card-header-div').innerHTML += '각 서비스 별 트래픽 수&nbsp&nbsp<small style="font-size: 1px;">&nbsp&nbsp오늘날짜 : '+nowDay+'&nbsp&nbsp(10초마다 업데이트 됩니다) </small> <input id="input-date"  value="'+nowDay+'" type="date"  style="width: 250px; margin-left:200px ; border-radius: 10px; border: 0.1px solid gainsboro;"/><input type="hidden" id="hidden-time"/>';
+    console.log(nowDay);
+    document.getElementById('card-header-div').innerHTML += '각 서비스 별 트래픽 수&nbsp&nbsp<small style="font-size: 1px;">&nbsp&nbsp오늘날짜 : '+nowDay+'&nbsp&nbsp(10초마다 업데이트 됩니다) </small> <input id="input-date"  value="'+nowDay+'" type="date"  style="width: 250px; margin-left:200px; border-radius: 10px; border: 0.1px solid gainsboro;"/><input type="hidden" id="hidden-time"/>';
     
      
   

@@ -1,5 +1,6 @@
 package com.mztalk.login.repository;
 
+import com.mztalk.login.domain.entity.Chatroom;
 import com.mztalk.login.domain.entity.User;
 
 import java.util.List;
