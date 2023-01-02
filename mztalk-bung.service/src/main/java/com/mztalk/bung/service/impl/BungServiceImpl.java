@@ -32,6 +32,7 @@ import java.awt.geom.RectangularShape;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -46,7 +47,6 @@ public class BungServiceImpl implements BungBoardService {
     private final BungBoardRepository bungRepository;
 
     private final BungAddBoardRepository bungAddRepository;
-
 
     // 메인 서비스 게시글 작성
     @Override
@@ -72,8 +72,7 @@ public class BungServiceImpl implements BungBoardService {
         Long boardId = bungBoardEntity.getBoardId();
         BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
         BungAddBoard bungAddBoardEntity = BungAddBoard.builder().
-
-        addPhone(null).
+                addPhone(null).
                 addNickName(bungBoardDto.getBoardWriter()).
                 boardStatus(BoardStatus.YES).
                 bungBoard(bungBoard).

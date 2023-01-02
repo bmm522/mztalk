@@ -28,6 +28,7 @@ window.onload = function(){
                 let nowGroup = board.nowGroup;
                 let fullGroup = board.fullGroup;
                 let deadlineDate = board.deadlineDate;
+                let createDate = board.createDate;
                 let boardId = board.boardId;
 
                 document.getElementById('output-div').innerHTML +=
