@@ -309,7 +309,7 @@ function storyLoad() {
         for(let board of res.data){
 
           let boardId = board.id;
-          let nickname = board.nickname;
+          let writer = board.writer;
           let privacy = board.privacy;
           let title = board.title;
           let content = board.content;
@@ -491,7 +491,7 @@ write_board.addEventListener('click', function(){
                 RefreshToken:localStorage.getItem('refreshToken'),
             },
             body:JSON.stringify({
-                nickname: localStorage.getItem('userNickname'),
+                writer: localStorage.getItem('userNickname'),
                 title: document.getElementById('title-input-text').value,
                 content: document.getElementById("content-input-text").value,
                 own: localStorage.getItem('own'),
@@ -569,7 +569,7 @@ write_board.addEventListener('click', function(){
                })
                   
           }   
-          location.href="individualpage.html";   
+          // location.href="individualpage.html";   
       });
      
 
@@ -870,7 +870,7 @@ function addReply(boardId){
               </div>
             </div>`;
           })
-          location.href="individualpage.html";   
+          // location.href="individualpage.html";   
         }   
     }
  // )}

@@ -22,7 +22,8 @@ import java.util.List;
 public class BoardDto {
 
     private Long id; //글번호
-   // private Board nickname; //작성자
+
+    //private Board writer; //작성자
     private String title; //글제목
     private String content; //글내용
     private BoardStatus status; //글상태
@@ -33,9 +34,10 @@ public class BoardDto {
 
     private LocalDateTime lastModifiedDate;
 
+    private String serviceName;
     private List<Reply> replyList = new ArrayList<>();
 
-    private String nickname;
+    private String writer;
 
     //레포지토리에 넣기위해
     // 계층간의 데이터 전송을 위한
@@ -43,7 +45,7 @@ public class BoardDto {
     public Board toEntity(){
         Board board = Board.builder()
                 .id(id)
-                .nickname(nickname)
+                .writer(writer)
                 .title(title)
                 .content(content)
                 .status(BoardStatus.YES)
@@ -59,13 +61,14 @@ public class BoardDto {
     // entity ㅡ> dto
     public BoardDto(Board board){
         this.id = board.getId();
-        this.nickname = board.getNickname();
+        this.writer = board.getWriter();
         this.title = board.getTitle();
         this.content = board.getContent();
         this.status = board.getStatus();
         this.own = board.getOwn();
         this.privacy = board.getPrivacy();
         this.replyList = board.getReplyList();
+        this.serviceName = "story";
 
     }
 
