@@ -1,6 +1,7 @@
 package com.mztalk.login.service.impl;
 
-import com.mztalk.login.domain.dto.request.ChatRequestDto;
+import com.mztalk.login.domain.dto.request.ChatOfUserNicknameRequestDto;
+import com.mztalk.login.domain.dto.request.ChatOfUserNoRequestDto;
 import com.mztalk.login.domain.entity.Chatroom;
 import com.mztalk.login.repository.ChatroomRepository;
 import com.mztalk.login.repository.UserRepository;
@@ -19,9 +20,18 @@ public class InsertChatServiceImpl implements InsertChatService {
 
     private final UserRepository userRepository;
     @Override
-    public long requestChat(ChatRequestDto chatRequestDto) {
-        Chatroom chatroom = chatRequestDto.toEntity
-                (userRepository.findById(chatRequestDto.getFromUserId()).orElseThrow(()->new NullPointerException("Not Found User")));
+    public long requestChatOfUserNo(ChatOfUserNoRequestDto chatOfUserNoRequestDto) {
+        Chatroom chatroom = chatOfUserNoRequestDto.toEntity
+                (userRepository.findById(chatOfUserNoRequestDto.getFromUserId()).orElseThrow(()->new NullPointerException("Not Found User")));
+        return chatroomRepository.save(chatroom).getChatId();
+    }
+
+    @Override
+    public long requestChatOfUserNickname(ChatOfUserNicknameRequestDto chatOfUserNicknameRequestDto) {
+        System.out.println(chatOfUserNicknameRequestDto.getToUserNickname());
+        Chatroom chatroom = chatOfUserNicknameRequestDto.toEntity
+                (userRepository.findByNickname(chatOfUserNicknameRequestDto.getFromUserNickname())
+                ,userRepository.findByNickname(chatOfUserNicknameRequestDto.getToUserNickname()).getId());
         return chatroomRepository.save(chatroom).getChatId();
     }
 }
