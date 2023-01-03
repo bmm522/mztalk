@@ -113,6 +113,7 @@ public class BungServiceImpl implements BungBoardService {
     public Long mainBoardUpdate(Long bId, BungBoardDto bungBoardDto) {
         BungBoard saveBungBoard = bungRepository.findById(bId).orElseThrow(() -> new BoardException("해당 번호의 글이 존재하지 않습니다."));
         saveBungBoard.mainBoardUpdate(bungBoardDto);
+        System.out.println(saveBungBoard.getAddress());
         return saveBungBoard.getBoardId();
     }
 
