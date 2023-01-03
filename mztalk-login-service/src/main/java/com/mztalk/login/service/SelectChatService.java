@@ -3,5 +3,7 @@ package com.mztalk.login.service;
 import com.mztalk.login.domain.dto.Result;
 
 public interface SelectChatService {
-    Result<?> getChatRoomList(long userNo);
+    Result<?> getChatRoomListOfAuction(long userNo);
+
+    Result<?> getChatRoomListOfBung(long userNo);
 }

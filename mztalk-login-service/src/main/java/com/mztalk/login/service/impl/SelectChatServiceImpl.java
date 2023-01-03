@@ -28,9 +28,18 @@ public class SelectChatServiceImpl implements SelectChatService {
 
     private final UserRepository userRepository;
     @Override
-    public Result<?> getChatRoomList(long userNo) {
+    public Result<?> getChatRoomListOfAuction(long userNo) {
+        return new Result<>(getChatResponseDtoList(chatroomRepository.getChatRoomListOfAuction(userNo)));
+    }
+
+    @Override
+    public Result<?> getChatRoomListOfBung(long userNo) {
+        return new Result<>(getChatResponseDtoList(chatroomRepository.getChatRoomListOfAuction(userNo)));
+    }
+
+    public List<ChatResponseDto> getChatResponseDtoList(List<Chatroom> chatroomList){
         List<ChatResponseDto> chatResponseDtoList = new ArrayList<>();
-        List<Chatroom> chatroomList = chatroomRepository.getChatRoomList(userNo);
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "text/html");
 
@@ -52,7 +61,7 @@ public class SelectChatServiceImpl implements SelectChatService {
 
             chatResponseDtoList.add(new ChatResponseDto(chatroom, imageUrl));
         }
+        return chatResponseDtoList;
 
-        return new Result<>(chatResponseDtoList);
     }
 }
