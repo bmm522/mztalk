@@ -159,6 +159,7 @@
         async function main() {
             // 현재 창의 Query string으로부터 '나'의 userId 가져오기
             const meUserId = new URLSearchParams(location.search).get('userId');
+            
 
             //벙 버튼 클릭시 벙 채팅 리스트로 이동
             document.getElementById('bungChat').addEventListener('click', () => {
@@ -176,15 +177,23 @@
 
             //#region 맞팔 유저 목록 가져오기
             const followListRepository = new FollowListRepository();
+            const chatRoomRepository = new ChatRoomRepository();
+            const chatRoomList = await chatRoomRepository.fetch(meUserId);
+            const chatRoomUserIds = chatRoomList.data.map(({ toUserId }) => toUserId);
+
             const followList = await followListRepository.fetch(meUserId);
-            const followedUserIds = followList.data.map(({ toUserId }) => toUserId);
+            const followUserIds = followList.data.map(({ toUserId }) => toUserId);
     
             //#endregion
 
             //#region 맞팔 유저 목록의 유저 정보 가져오기
             const userRepository = new UserRepository();
             const users = await Promise.all(
-                followedUserIds.map((userId) => userRepository.fetch(userId)),
+                chatRoomUserIds.map((userId) => userRepository.fetch(userId)),
+            );
+
+            const users2 =  await Promise.all(
+                followUserIds.map((userId) => userRepository.fetch(userId)),
             );
 
             // const followUserName = await Promise.all(
@@ -199,13 +208,18 @@
             //#region 각 유저별 이전 대화 가져오기
             const conversationRepository = new ConversationRepository(meUserId);
             const usersConversations = await Promise.all(users.map((user) => conversationRepository.fetch(user.userId)));
+
+            const conversationRepository2 = new ConversationRepository(meUserId);
+            const usersConversations2 = await Promise.all(users2.map((user) => conversationRepository.fetch(user.userId)));
             //#endregion
 
             //#region 메시지 박스 컨트롤러 초기화
             const messageBoxController = new MessageBoxController();
+            const messageBoxController2 = new MessageBoxController2();
 
             // 위에서 가져온 유저 리스트와 대화 정보를 DOM으로 빌드하여 UI에 유저 리스트 렌더링
             messageBoxController.setUserList(users, usersConversations);
+            messageBoxController2.setUserList(users2, usersConversations2);
             //#endregion
 
             //#region 로딩 시 읽지 않은 메시지가 있는 유저 하이라이팅
@@ -283,7 +297,7 @@
             // 마지막 대화 내용과 시각을 표기해야 하기 때문에 messages도 같이 받음
             setUserList(users, messages) {
                 this.#users = users;
-
+                console.log(users);
 
                 const userHtmls = users.map((user, index) => `
             <div>
@@ -294,19 +308,7 @@
                 // 리스트에 회원 정보 뿌려주기
                 this.#messageBoxDom.innerHTML += userHtmls.join('\n');
 
-
-                for(let user of users){
-                    
-                    document.getElementById('friendList').innerHTML += `<div id="profile-div" style="display: inline-block;">
-
-<img src="${user.imageUrl}" height="50" width="50" style="margin-left: 30px; margin-top: 10px; border: 1px solid black; border-radius: 30px;" >
-&nbsp&nbsp&nbsp${user.nickname}
-<button id="chatopen-btn" onclick="openChatRoom('${user.nickname}')">대화</button>
-
-</div>`
-                }
-
-                
+                     
 
             }
 
@@ -367,6 +369,32 @@
             </a>
         `;
             }
+        }
+
+        class MessageBoxController2 {
+            
+            #users = [];
+        
+            setUserList(users, messages) {
+                this.#users = users;
+       
+             
+                for(let user of users){
+                    console.log('for문돈다');                    
+                    document.getElementById('friendList').innerHTML += `<div id="profile-div" style="display: inline-block;">
+
+<img src="${user.imageUrl}" height="50" width="50" style="margin-left: 30px; margin-top: 10px; border: 1px solid black; border-radius: 30px;" >
+&nbsp&nbsp&nbsp${user.nickname}
+<button id="chatopen-btn" onclick="openChatRoom('${user.nickname}')">대화</button>
+
+</div>`;
+                }
+
+                
+
+            }
+
+        
         }
 
         
@@ -510,6 +538,19 @@
          */
         class FollowListRepository {
             async fetch(userId) {
+                const response = await fetch(`http://localhost:8000/story/matpalList/${userId}`, {
+                    method: "GET",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                })
+
+                return response.json();
+            }
+        }
+
+        class ChatRoomRepository {
+            async fetch(userId) {
                 const response = await fetch(`http://localhost:8000/login/chat/story?userNo=${userId}`, {
                     method: "GET",
                     headers: {
@@ -572,6 +613,7 @@
         }
 
         const openChatRoom = (nickname) =>{
+            const meUserNickname = new URLSearchParams(location.search).get('userNickname');
             fetch('http://localhost:8000/login/chat/front-nickname', {
                 method:"POST",
                 headers:{
@@ -579,14 +621,17 @@
                 },
                 body:JSON.stringify({
                     "serviceName" : "story",
-                    "fromUserNickname" : localStorage.getItem('userNickname'),
+                    "fromUserNickname" : meUserNickname,
                     "toUserNickname" : nickname
                 })
             })
             .then(res=>res.json())
             .then(res=>{
+                console.log('result : ' + res.result);
                 if(res.result == 0){
                     alert('이미 개설된 채팅방 입니다.');
+                } else {
+                    location.href="http://localhost:3000/chat-friends/?userId=1#"
                 }
             })
         }
