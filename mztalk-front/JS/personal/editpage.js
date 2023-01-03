@@ -508,13 +508,13 @@ function myReport(){
         <div class="card mb-3" style="width: 750px;" style="height: 250px;">
             <div class="row g-0" style="height: 250px;"> 
             <div class="col-md-4" style="overflow: hidden; height:250px">
-              <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage" width: 250px" height="150"> 
+            <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                <h5 class="card-title">${content}</h5>
+                <h5 class="card-title">${title}</h5>
                 <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
-                <p class="card-text">${title}</p>
+                <p class="card-text">${content}</p>
                
                 </div>
             </div>
@@ -528,13 +528,13 @@ function myReport(){
         <div class="card mb-3" style="width: 750px;" style="height: 250px;">
             <div class="row g-0" style="height: 250px;">
             <div class="col-md-4" style="overflow: hidden; height:250px">
-              <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage" width: 250px" height="150">
+              <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                <h5 class="card-title">${content}</h5>
+                <h5 class="card-title">${title}</h5>
                 <span class="badge text-bg-success" id="serviceAuction">경매</span>
-                <p class="card-text">${title}</p>
+                <p class="card-text">${content}</p>
                
                 </div>
             </div>
@@ -548,13 +548,13 @@ function myReport(){
         <div class="card mb-3" style="width: 750px;" style="height: 250px;">
             <div class="row g-0" style="height: 250px;">
               <div class="col-md-4" style="overflow: hidden; height:250px">
-                  <img src='${imageUrl}' width= "250" class="img-fluid rounded-start" height="100">
+              <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
               </div>
               <div class="col-md-8">
                   <div class="card-body">
-                  <h5 class="card-title">${content}</h5>
+                  <h5 class="card-title">${title}</h5>
                   <span class="badge text-bg-info" id="serviceBung">벙</span>
-                  <p class="card-text" width="750px">${title}</p>              
+                  <p class="card-text" width="750px">${content}</p>             
                   </div>
               </div>
             </div>

@@ -4,16 +4,15 @@ package com.mztalk.main.domain.subscribe.controller;
 
 import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.subscribe.dto.SubscribeRequestDto;
+import com.mztalk.main.domain.subscribe.dto.SubscribeResponseDto;
 import com.mztalk.main.domain.subscribe.entity.Subscribe;
 import com.mztalk.main.domain.subscribe.service.SubscribeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -26,10 +25,18 @@ public class SubscribeApiController {
     @PostMapping("/subscribe")
     public ResponseEntity<?> savePayment(@RequestBody SubscribeRequestDto subscribeRequestDto){
 
-        return new ResponseEntity<>(new CMRespDto<>(1, "결제성공", subscribeService.save(subscribeRequestDto)), HttpStatus.CREATED);
+        Subscribe subscribe = subscribeService.save(subscribeRequestDto);
+
+        return new ResponseEntity<>(new CMRespDto<>(1, "결제성공",subscribe), HttpStatus.CREATED);
     }
 
+    @PutMapping("/checkVip/{userNo}")
+    public ResponseEntity<?> updateStatusByUserNo(@PathVariable Long userNo){
 
+        int result = subscribeService.updateStatusByUserNo(userNo);
+        System.out.println(result);
+        return new ResponseEntity<>(new CMRespDto<>(1, "성공",result ), HttpStatus.OK);
+    }
 
 
 

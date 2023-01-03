@@ -313,7 +313,7 @@ function storyLoad() {
           let privacy = board.privacy;
           let title = board.title;
           let content = board.content;
-          let date = board.lastModifiedDate;
+          let date = board.lastModifiedDate.substr(0,10);
           
           if(privacy.includes("PUBLIC")){
           document.querySelector("#contentList").innerHTML += 
@@ -916,58 +916,99 @@ function deleteReply(Id){
 
 
 //팔로워리스트
-document.querySelector("#subscribeBtn1").onclick = (e) => {
-  e.preventDefault();
+// document.querySelector("#subscribeBtn1").onclick = (e) => {
+//   e.preventDefault();
   
-  let toUserId = localStorage.getItem("own");
+//   let toUserId = localStorage.getItem("own");
  
-  fetch("http://localhost:8000/story/followList/"+toUserId,{
-        method:"GET",
-        headers:{
-            "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-        },
-      })
-    .then((res)=>res.json())
-    .then(res =>{
+//   fetch("http://localhost:8000/story/followList/"+toUserId,{
+//         method:"GET",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//       })
+//     .then((res)=>res.json())
+//     .then(res =>{
 
-      let follower = res.data;
-      document.querySelector(".modal-follow").style.display = "flex";
-      document.querySelector(".follower-list").innerHTML  = '';
-      console.log(follower);
+//       let follower = res.data;
+//       document.querySelector(".modal-follow").style.display = "flex";
+//       document.querySelector(".follower-list").innerHTML  = '';
+//       console.log(follower);
 
 
-      for(let i = 0; i < follower.length; i++){
-        console.log("길이"+follower.length );
-        // console.log("follower" + follower);
-        //console.log("뜨니?"+ follower[0].followStatus);
-        //console.log(document.querySelectorAll('.follower__btn'));
+//       for(let i = 0; i < follower.length; i++){
+//         console.log("길이"+follower.length );
+//         // console.log("follower" + follower);
+//         //console.log("뜨니?"+ follower[0].followStatus);
+//         //console.log(document.querySelectorAll('.follower__btn'));
 
-        let followbutton = document.querySelectorAll('.follower__btn');
-        //console.log(follower[i].userNo);
+//         let followbutton = document.querySelectorAll('.follower__btn');
+//         //console.log(follower[i].userNo);
 
-      document.querySelector(".follower-list").innerHTML +=
-      `
-      <div class="follower__item">
-          <div class="follower__img"><img class="profile-image" src='${follower[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"></div>
-          <input type="hidden" class="imageName" value="${follower[i].imageName}"/>
-          <input type="hidden" name="bNo" id="bNo" value="${follower[i].userNo}"/>
-          <div class="follower__text">
-              <h2>${follower[i].userNickname}</h2>
-              <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
-          </div>
-          <div class="follower__btn">
-            <button onclick="movePage(${follower[i].userNo});">페이지이동</button>
-          </div>
-      </div> 
-      `;
+//       document.querySelector(".follower-list").innerHTML +=
+//       `
+//       <div class="follower__item">
+//           <div class="follower__img"><img class="profile-image" src='${follower[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"></div>
+//           <input type="hidden" class="imageName" value="${follower[i].imageName}"/>
+//           <input type="hidden" name="bNo" id="bNo" value="${follower[i].userNo}"/>
+//           <div class="follower__text">
+//               <h2>${follower[i].userNickname}</h2>
+//               <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
+//           </div>
+//           <div class="follower__btn">
+//             <button onclick="movePage(${follower[i].userNo});">페이지이동</button>
+//           </div>
+//       </div> 
+//       `;
       
         
-    } 
-    })
+//     } 
+//     })
 
-};
+// };
+document.querySelector("#subscribeBtn1").addEventListener("click", (e) => {
+  e.preventDefault();
+  
+  const toUserId = localStorage.getItem("own");
+ 
+  fetch(`http://localhost:8000/story/followList/${toUserId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem('authorization'),
+            RefreshToken: localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res) => res.json())
+    .then((res) => {
+      const follower = res.data;
+      document.querySelector(".modal-follow").style.display = "flex";
+      document.querySelector(".follower-list").innerHTML = '';
+
+      for (let i = 0; i < follower.length; i++) {
+        const followbutton = document.querySelectorAll('.follower__btn');
+        document.querySelector(".follower-list").innerHTML +=
+        `
+        <div class="follower__item">
+            <div class="follower__img">
+              <img class="profile-image" src='${follower[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage">
+            </div>
+            <input type="hidden" class="imageName" value="${follower[i].imageName}"/>
+            <input type="hidden" name="bNo" id="bNo" value="${follower[i].userNo}"/>
+            <div class="follower__text">
+                <h2>${follower[i].userNickname}</h2>
+                <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
+            </div>
+            <div class="follower__btn">
+              <button onclick="movePage(${follower[i].userNo});">페이지이동</button>
+            </div>
+        </div> 
+        `;
+      } 
+    });
+});
 
 
 
@@ -1004,22 +1045,13 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       })
     .then((res)=>res.json())
     .then(res =>{
-
-      //console.log("통신?");
-
       let following = res.data;
       
       document.querySelector(".modal-following").style.display = "flex";
 
       document.querySelector(".following-list").innerHTML  = '';
-
-      
-      
       for(let i = 0; i < following.length; i++){
-        // console.log("길이"+follower.length );
-        // console.log("follower" + follower);
-        //console.log(following);  
-        //console.log("팔로잉리스트"+following[i].userNo);
+
       document.querySelector(".following-list").innerHTML +=
       `
       <div class="following__item">

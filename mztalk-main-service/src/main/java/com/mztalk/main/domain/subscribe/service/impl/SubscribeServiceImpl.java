@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.sql.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -64,4 +65,16 @@ public class SubscribeServiceImpl implements SubscribeService {
 
         return subscribeRepository.save(subscribeRequestDto.toEntity());
     }
+
+    @Override
+    public int updateStatusByUserNo(Long userNo) {
+
+        int updatedCount = subscribeRepository.updateStatusByUserNo(userNo);
+
+        if (updatedCount > 0) {
+            return updatedCount;
+        }
+        return 0;
+    }
+
 }
