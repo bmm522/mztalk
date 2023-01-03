@@ -5,6 +5,7 @@ import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.entity.BungAddRequestDto;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
+import com.mztalk.bung.domain.response.ResponseDto;
 import com.mztalk.bung.service.BungBoardService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -94,7 +95,7 @@ public class BungBoardApiController {
     // 벙 게시글 작성자가 신청 게시글 수락
     @ResponseBody
     @PatchMapping("/bungAddBoardAccept/{addId}")
-    public Long addBungBoardAccept(@PathVariable("addId") Long addId) {
+    public ResponseDto addBungBoardAccept(@PathVariable("addId") Long addId) {
         return bungBoardService.addBungBoardAccept(addId);
     }
 

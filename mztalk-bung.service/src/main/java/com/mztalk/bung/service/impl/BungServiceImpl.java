@@ -8,10 +8,7 @@ import com.mztalk.bung.domain.entity.BungAddBoard;
 import com.mztalk.bung.domain.entity.BungAddRequestDto;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.Result;
-import com.mztalk.bung.domain.response.AcceptResponseDto;
-import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
-import com.mztalk.bung.domain.response.BungBoardResponseDto;
-import com.mztalk.bung.domain.response.BungListResponseDto;
+import com.mztalk.bung.domain.response.*;
 import com.mztalk.bung.exception.AddBoardException;
 import com.mztalk.bung.exception.BoardException;
 import com.mztalk.bung.repository.BungAddBoardRepository;
@@ -266,7 +263,7 @@ public class BungServiceImpl implements BungBoardService {
 
     @Override
     @Transactional
-    public Long addBungBoardAccept(Long addId) {
+    public ResponseDto addBungBoardAccept(Long addId) {
         BungAddBoard addBungBoardAccept = bungAddRepository.findById(addId).orElseThrow(() ->new AddBoardException("해당하는 신청글이 존재하지 않습니다."));
         long boardId = addBungBoardAccept.getBungBoard().getBoardId();
         BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
@@ -275,10 +272,10 @@ public class BungServiceImpl implements BungBoardService {
 
         if(nowGroup < fullGroup) {
             addBungBoardAccept.changeStatus();
-            return addBungBoardAccept.getAddId();
+            return new ResponseDto(addBungBoardAccept.getAddId());
         } else {
             new AddBoardException("모집인원이 초과하였습니다.");
-            return 0L;
+            return new ResponseDto(0L);
         }
     }
 
