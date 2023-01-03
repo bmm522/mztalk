@@ -22,6 +22,7 @@ window.onload= function(){
         let fullGroup = res.fullGroup;
         let category = res.category;
         let deadlineDate = res.deadlineDate;
+        let address = res.address;
 
         console.log(JSON.stringify(imageInfo));
 
@@ -31,6 +32,7 @@ window.onload= function(){
         document.getElementById('bungContent').placeholder = content;
         document.getElementById('category').innerHTML = category;
         document.getElementById('closeRead').innerHTML = deadlineDate;
+        document.getElementById('address').innerHTML = address;
 
         localStorage.setItem('title', title);
         localStorage.setItem('writer', writer);
@@ -39,6 +41,7 @@ window.onload= function(){
         localStorage.setItem('category', category);
         localStorage.setItem('closeRead', deadlineDate);
         localStorage.setItem('fullGroup', fullGroup);
+        localStorage.setItem('address', address);
         localStorage.setItem("imageInfo", JSON.stringify(imageInfo));
 
         for(let i = 0 ; i < imageInfo.length ;  i++){
