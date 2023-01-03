@@ -30,7 +30,7 @@ public class BoardListResponseDto {
     private Integer count;
     private String imageUrl;
     private String imageName;
-    private Date createDate;
+    private LocalDateTime createdDate;
     private String serviceName;
 
     public BoardListResponseDto(Board board, ConcurrentHashMap<String, Long> duration, String imageUrl, String imageName) throws ParseException {
@@ -45,7 +45,7 @@ public class BoardListResponseDto {
         this.imageUrl = imageUrl;
         this.imageName = imageName;
         this.isClose = board.getIsClose();
-        this.createDate = board.getCreateDate();
+        this.createdDate = board.getCreateDate();
         this.serviceName = "auction";
 //        this.sortDate = board.getCurrentTime();
 
@@ -67,6 +67,6 @@ public class BoardListResponseDto {
         this.imageUrl = imageUrl;
         this.imageName = imageName;
         this.isClose = board.getIsClose();
-        this.createDate = board.getCreateDate();
+        this.createdDate = board.getCreateDate();
     }
 }

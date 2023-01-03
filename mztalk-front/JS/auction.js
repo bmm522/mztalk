@@ -27,7 +27,7 @@ window.onload = function(){
                 let boardId = board.boardId;
                 let writer = board.writer;
                 let count = board.count;
-                let createDate = board.createDate;
+                let createdDate = board.createdDate.substr(0,10);
 
                 if(i%2 !== 0){
                 document.getElementById('auctionCard').innerHTML += `
@@ -55,7 +55,7 @@ window.onload = function(){
                             <use xlink:href="#calendar3" />
                             </svg>
                             <small style="margin-right: 10px;">${currentPrice}원</small>
-                            <small>${createDate}</samll>
+                            <small>${createdDate}</samll>
                         </li>
                         </ul>
                     </div>
@@ -85,7 +85,7 @@ window.onload = function(){
                                     <use xlink:href="#calendar3" />
                                     </svg>
                                     <small style="margin-right: 10px;">${currentPrice}원</small>
-                                    <small>${createDate}</samll>
+                                    <small>${createdDate}</samll>
                                     <input type="hidden" class="timeLimitHour" value="${timeLimitHour}"/>
                                     <input type="hidden" class="timeLimitMinute" value="${timeLimitMinute}"/>
                                 </li>
@@ -418,7 +418,6 @@ function isClose() {
             let timeLimitAlert = document.getElementsByClassName("timeLimitAlert");
             for(let i = 0; i < timeLimitAlert.length; i++) {
                 if(document.getElementsByClassName('timeLimitHour')[i].value == 0 && document.getElementsByClassName('timeLimitMinute')[i].value == 0) {
-                    console.log('클래스 : ' + timeLimitAlert[i]);
                     timeLimitAlert[i].innerHTML = '입찰마감';
                 }
             }
