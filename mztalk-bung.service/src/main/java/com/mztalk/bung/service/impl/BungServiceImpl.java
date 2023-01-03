@@ -5,10 +5,12 @@ import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.entity.BungAddBoard;
+import com.mztalk.bung.domain.entity.BungAddRequestDto;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.Result;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
 import com.mztalk.bung.domain.response.BungBoardResponseDto;
+import com.mztalk.bung.domain.response.BungListResponseDto;
 import com.mztalk.bung.exception.AddBoardException;
 import com.mztalk.bung.exception.BoardException;
 import com.mztalk.bung.repository.BungAddBoardRepository;
@@ -180,39 +182,73 @@ public class BungServiceImpl implements BungBoardService {
     // 벙 신청 요청자 게시글 등록 메소드
     @Override
     @Transactional
-    public Long addBungBoard(ConcurrentHashMap<String, String> bungAddBoardMap) {
-
+    public BungAddRequestDto addBungBoard(ConcurrentHashMap<String, String> bungAddBoardMap) {
         Long boardId = Long.parseLong(bungAddBoardMap.get("boardId"));
         BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
+        String message = null;
 
         // 마감제한 시 신청 방지 로직
+        message = TimeLimit(boardId);
+        // 벙 게시글 작성자 신청 방지 로직
+//         String bungWriter = bungAddBoardMap.get("addNickName");
+//       message = bungBoardWriterPrevention(boardId, bungWriter);
+        // 벙 게시글 신청자 중복 신청 방지 로직
+        String addWriter = bungAddBoardMap.get("addNickName");
+        message = duplicationPrevention(boardId, addWriter);
+
+        if (message.equals("신청이 완료되었습니다.")) {
+            BungAddBoard bungAddBoard = BungAddBoard.createBungAddBoard(bungAddBoardMap, bungBoard);
+            bungAddRepository.save(bungAddBoard).getAddId();
+            return new BungAddRequestDto(message);
+        } else {
+            return new BungAddRequestDto(message);
+        }
+    }
+
+    private String TimeLimit(Long boardId) {
         LocalDate nowTime = LocalDate.now();
         Date bungBoardDeadlineDate = (Date) bungRepository.findBungBoardByDeadlineDate(boardId);
         Date nowTimeLast = Date.valueOf(nowTime);
         int result = nowTimeLast.compareTo(bungBoardDeadlineDate);
-
-        // 벙 게시글 작성자 신청 방지 로직
-        String bungBoardWriter = bungRepository.findBungBoardWriter(boardId);
-        String boardWriter = bungAddBoardMap.get("addNickName");
-
-        // 벙 게시글 신청자 중복 신청 방지 로직
-        String addWriter = bungAddBoardMap.get("addNickName");
-        Optional<?> bungAddBoardWriter = bungAddRepository.findAddBoardByWriter(boardId, addWriter);
-
-        if (bungBoardWriter.equals(boardWriter) || bungAddBoardWriter.isPresent() || result > 0) {
-            new AddBoardException("신청 오류");
-            return 0L;
+        if(result > 0) {
+            return "마감시간이 종료되었습니다.";
         } else {
-            BungAddBoard bungAddBoard = BungAddBoard.createBungAddBoard(bungAddBoardMap, bungBoard);
-            return bungAddRepository.save(bungAddBoard).getAddId();
+            return "신청이 완료되었습니다.";
         }
     }
 
+    private String duplicationPrevention(Long boardId, String addWriter) {
+        Optional<?> bungAddBoardWriter = bungAddRepository.findAddBoardByWriter(boardId, addWriter);
+        if (bungAddBoardWriter.isPresent()) {
+            return "이미 신청한 게시글입니다.";
+        } else {
+            return "신청이 완료되었습니다.";
+        }
+    }
+
+//    private String bungBoardWriterPrevention(Long boardId, String bungWriter) {
+//        String bungBoardWriter = bungRepository.findBungBoardWriter(boardId);
+//
+//    }
+
+
     @Override
-    public Result addBungBoardsList() {
-        List<BungAddBoard> bungAddBoard = bungAddRepository.findAll();
-        List<BungAddBoardDto> collect = bungAddBoard.stream().map(BungAddBoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+    public Result addBungBoardsList(String boardWriter) {
+//        BungListResponseDto bungListResponseDto = bungRepository.findBungBoardWriterAndBoardStatus(boardWriter, "NO");
+        List<BungListResponseDto> bungListResponseDtoList = new ArrayList<>();
+
+        List<BungBoardDto> bungBoardDtoList = bungRepository.findByBoardWriter(boardWriter);
+//        bungBoardDtoList
+        System.out.println(bungBoardDtoList.toString());
+//        List<BungAddBoardDto> bungAddBoardList = bungRepository.findBungBoardWriterAndBoardStatus(boardWriter, BoardStatus.NO);
+//        for (BungAddBoardDto board : bungAddBoardList) {
+//            bungListResponseDtoList.add(new BungListResponseDto(board.getAddNickName(), board.getAddId()));
+//        }
+////        List<BungAddBoard> bungAddBoard = bungAddRepository.findAllWriter();
+////        List<BungAddBoardDto> collect = bungAddBoard.stream().map(BungAddBoardDto::new).collect(Collectors.toList());
+////        return new Result(collect);
+//        return new Result<>(bungListResponseDtoList);
+        return null;
     }
 
     @Override
@@ -284,9 +320,8 @@ public class BungServiceImpl implements BungBoardService {
     }
 
     @Override
-    public Long findBungBoard() {
-//        return bungRepository.findById()
-        return null;
+    public Long findBungBoard(Long bId) {
+        return bungRepository.findBungBoard(bId);
     }
 
 }

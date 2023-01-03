@@ -3,6 +3,7 @@ package com.mztalk.bung.controller;
 import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
+import com.mztalk.bung.domain.entity.BungAddRequestDto;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
 import com.mztalk.bung.service.BungBoardService;
 import lombok.Getter;
@@ -59,21 +60,21 @@ public class BungBoardApiController {
 
     // 벙 신청 게시글 연결 기능
     @GetMapping("bungAddBoardRequest/{boardId}")
-    public Long addBoardRequest() {
-        return bungBoardService.findBungBoard();
+    public Long addBoardRequest(@PathVariable("boardId") Long bId) {
+        return bungBoardService.findBungBoard(bId);
     }
 
     // 벙 신청 게시글 작성
     @ResponseBody
     @PostMapping("/bungAddBoard")
-    public Long addBungBoard(@RequestBody ConcurrentHashMap<String, String> bungAddBoardMap) {
+    public BungAddRequestDto addBungBoard(@RequestBody ConcurrentHashMap<String, String> bungAddBoardMap) {
         return bungBoardService.addBungBoard(bungAddBoardMap);
     }
 
     // 벙 신청 게시글 리스트 조회
-    @GetMapping("/bungAddBoards")
-    public Result addBungBoardsList() {
-        return bungBoardService.addBungBoardsList();
+    @GetMapping("/bungAddBoards/{boardWriter}")
+    public Result addBungBoardsList(@PathVariable("boardWriter") String boardWriter) {
+        return bungBoardService.addBungBoardsList(boardWriter);
     }
 
     // 벙 신청 게시글 수정
@@ -115,9 +116,15 @@ public class BungBoardApiController {
     }
 
     // 벙 게시물 카테고리, 검색어 검색기능
+//    @GetMapping("/bungBoardSearch")
+//    public Result bungBoardSearch(@ModelAttribute("searchKeyWord") SearchKeyWord searchKeyWord) {
+//        return bungBoardService.bungBoardSearch(searchKeyWord);
+//    }
+
     @GetMapping("/bungBoardSearch")
-    public Result bungBoardSearch(@ModelAttribute("searchKeyWord") SearchKeyWord searchKeyWord) {
-        return bungBoardService.bungBoardSearch(searchKeyWord);
+    public Result bungBoardSearch(@RequestParam("category")String category, @RequestParam("boardTitle")String boardTitle) {
+//        return bungBoardService.bungBoardSearch(new SearchKeyWord(category, boardTitle));
+        return null;
     }
 
     // 벙 게시물 현인원 추방 기능
