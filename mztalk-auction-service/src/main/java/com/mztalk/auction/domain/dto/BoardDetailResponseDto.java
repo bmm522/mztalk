@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,7 +23,7 @@ public class BoardDetailResponseDto {
     private String currentPrice;
     private String buyer;
     private String writer;
-    private Date createDate;
+    private LocalDateTime createDate;
     private ConcurrentHashMap<String, Long> timeMap;
     private String isClose;
     private List<ConcurrentHashMap<String, String>> imageInfo;

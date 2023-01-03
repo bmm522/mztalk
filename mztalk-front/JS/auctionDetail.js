@@ -161,16 +161,18 @@ window.onload = () => {
         if(timeLimitHour == 0 && timeLimitMinute == 0) {
             document.getElementById('time').innerHTML = "";    
         } else {
-            document.getElementById('time').innerHTML = timeLimitHour + ":" + timeLimitMinute;
+            document.getElementById('time').innerHTML = '<span style="color: gray; font-size: smaller; margin-right: 10px;">마감까지...</span>' + timeLimitHour + ":" + timeLimitMinute;
         }
 
         //alert
         if(buyer == null && writer != localStorage.getItem("userNickname")) {
             document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">입찰에 참여해 보세요.</span>';
-        } else if(buyer == null && writer == localStorage.getItem('userNickname')) {
+        } else if(buyer == null && writer == localStorage.getItem('userNickname') && isClose == 'N') {
             document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
-        } else if(isClose == 'Y') {
+        } else if(buyer != null && isClose == 'Y') {
             document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰되었습니다!</span>`;
+        } else if(buyer == null && writer == localStorage.getItem('userNickname') && isClose == 'Y') {
+            document.getElementById('alert').innerHTML = '<span style = "color:gray; font-size: smaller;"><a href = "auctionWrite.html" style="text-decoration: none; color: gray;">입찰한 사용자가 없이 종료되었습니다. 글을 다시 올려 보세요.</a></span>';
         } else {
             document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
         }

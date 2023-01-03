@@ -120,7 +120,7 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     @Override
     public int closeBoard(Long boardId) {
         String nowDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        return entityManager.createQuery("update Board b set b.isClose = 'Y', b.timeLimit = :timeLimit where b.boardId = :boardId")
+        return entityManager.createQuery("update Board b set b.timeLimit = :timeLimit where b.boardId = :boardId")
                 .setParameter("boardId", boardId)
                 .setParameter("timeLimit", nowDateTime)
                 .executeUpdate();

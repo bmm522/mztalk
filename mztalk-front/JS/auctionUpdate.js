@@ -152,8 +152,6 @@ const updateData = () =>{
 //지금 마감시키기
 document.getElementById('closeNow').addEventListener('click', function() {
     if(confirm('정말 지금 마감시키겠습니까?')) {
-        // let nowDateTime = new Date();
-        // console.log("지금 마감시키기 nowDateTime: " + nowDateTime);
         fetch("http://localhost:8000/auction/board/close", {
         method: "PATCH",
         headers: {
@@ -162,7 +160,7 @@ document.getElementById('closeNow').addEventListener('click', function() {
             RefreshToken:localStorage.getItem('refreshToken'),
         },
         body: JSON.stringify({
-            boardId: document.getElementById('hidden-bId')
+            "boardId": document.getElementById('hidden-bId').value
         }),
     })
     .then(res => {
