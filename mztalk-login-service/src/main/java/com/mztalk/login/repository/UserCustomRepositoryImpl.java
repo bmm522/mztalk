@@ -81,6 +81,13 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
                 .executeUpdate();
     }
 
+    @Override
+    public long findToUserIdByToUserNickname(String fromUserNickname) {
+        return entityManager.createQuery("SELECT u.id FROM User u WHERE u.nickname = :fromUserNickname")
+                .setParameter("fromUserNickname", fromUserNickname)
+                .getFirstResult();
+    }
+
 
     public  void commit(){
         entityManager.flush();

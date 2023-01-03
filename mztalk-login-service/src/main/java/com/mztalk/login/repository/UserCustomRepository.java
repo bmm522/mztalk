@@ -28,4 +28,6 @@ public interface UserCustomRepository {
     List<User> getMaliciousUser();
 
     long updateUserStatus(String status, long id);
+
+    long findToUserIdByToUserNickname(String fromUserNickname);
 }

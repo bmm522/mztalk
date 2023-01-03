@@ -8,23 +8,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Optional;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatRequestDto {
+public class ChatOfUserNicknameRequestDto {
 
     private String serviceName;
-    private long fromUserId;
-    private long toUserId;
+    private String fromUserNickname;
+    private String toUserNickname;
 
-    public Chatroom toEntity(User fromUser) {
+    public Chatroom toEntity(User fromUser, long toUserNo){
         return Chatroom.builder()
                 .serviceName(serviceName)
                 .fromUser(fromUser)
-                .toUserNo(toUserId)
+                .toUserNo(toUserNo)
                 .status("Y")
                 .build();
     }
