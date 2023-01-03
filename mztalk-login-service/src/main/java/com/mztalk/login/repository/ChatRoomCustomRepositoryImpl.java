@@ -29,6 +29,13 @@ public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository{
     }
 
     @Override
+    public List<Chatroom> getChatRoomListOfStroy(long id) {
+        return entityManager.createQuery("SELECT c FROM Chatroom c WHERE c.fromUser.id= :id AND c.status = 'Y' AND c.serviceName = 'story'", Chatroom.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
+    @Override
     public long deleteChatRoom(long fromUserNo, long toUserNo) {
         return entityManager.createQuery("UPDATE Chatroom c SET c.status = 'N' WHERE c.fromUser.id=:fromUserNo AND c.toUserNo = :toUserNo")
                 .setParameter("fromUserNo", fromUserNo)
@@ -43,4 +50,6 @@ public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository{
                 .setParameter("toUserId", toUserId)
                 .getSingleResult();
     }
+
+
 }

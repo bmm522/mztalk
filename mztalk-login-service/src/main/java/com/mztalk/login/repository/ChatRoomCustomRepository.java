@@ -15,4 +15,6 @@ public interface ChatRoomCustomRepository {
     long deleteChatRoom(long fromUserNo, long toUserNo);
 
     long checkData(long fromUserId, long toUserId);
+
+    List<Chatroom> getChatRoomListOfStroy(long userNo);
 }
