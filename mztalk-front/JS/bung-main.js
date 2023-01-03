@@ -26,6 +26,7 @@ window.onload = function(){
                 let content = board.content;
                 let writer = board.writer;
                 let fullGroup = board.fullGroup;
+                let nowGroup = board.nowGroup;
                 let deadlineDate = board.deadlineDate;
                 let createdDate = board.createdDate;
                 let boardId = board.boardId;
@@ -44,13 +45,14 @@ window.onload = function(){
                              <p class="card-text">${content}</p>
                          </div>
                          <hr>
+                         
                          <div id="count">${count}</div>
                          <div id="writer">마감일 : ${deadlineDate}</div>
                          <div id="writer">
                              ${writer}
                          </div>
                          <div id="groupTotal">
-                            ${fullGroup}
+                            ${nowGroup}/${fullGroup}
                          </div>
                      </div>
                  </div> 
@@ -201,6 +203,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
                 let content = board.content;
                 let writer = board.writer;
                 let fullGroup = board.fullGroup;
+                let nowGroup = board.nowGroup;
                 let deadlineDate = board.deadlineDate;
                 let createdDate = board.createdDate;
                 let boardId = board.boardId;
@@ -225,7 +228,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
                              ${writer}
                          </div>
                          <div id="groupTotal">
-                            ${fullGroup}
+                         ${nowGroup}/${fullGroup}
                          </div>
                      </div>
                  </div> 
@@ -246,3 +249,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 
     
   });
+
+document.getElementById('bung-request-list-btn').addEventListener('click', function(){
+    location.href = "bung-service-AcceptPage.html";
+});

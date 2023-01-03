@@ -28,6 +28,8 @@ public class BungBoard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardId;
     @Column(nullable = false, length = 20)
+    private Long boardWriterId;
+    @Column(nullable = false, length = 20)
     private String boardWriter;
     @Column(nullable = false, length = 100)
     private String boardTitle;

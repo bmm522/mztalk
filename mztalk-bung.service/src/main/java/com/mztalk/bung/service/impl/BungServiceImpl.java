@@ -8,6 +8,7 @@ import com.mztalk.bung.domain.entity.BungAddBoard;
 import com.mztalk.bung.domain.entity.BungAddRequestDto;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.Result;
+import com.mztalk.bung.domain.response.AcceptResponseDto;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
 import com.mztalk.bung.domain.response.BungBoardResponseDto;
 import com.mztalk.bung.domain.response.BungListResponseDto;
@@ -99,7 +100,10 @@ public class BungServiceImpl implements BungBoardService {
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
 
-            bungBoardResponseDtoList.add(new BungBoardResponseDto(bungBoard, imageUrl, imageName));
+
+            long nowGroup = bungAddRepository.bungBoardNowGroup(bungBoard.getBoardId());
+            System.out.println("nowGroup : " + nowGroup);
+            bungBoardResponseDtoList.add(new BungBoardResponseDto(bungBoard, imageUrl, imageName, nowGroup));
         }
         return new Result(bungBoardResponseDtoList);
     }
@@ -343,12 +347,24 @@ public class BungServiceImpl implements BungBoardService {
             JSONObject jsonData = jsonObject.getJSONObject("data");
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
-            bungBoardResponseDtoList.add(new BungBoardResponseDto(bungBoard, imageUrl, imageName));
+
+            bungBoardResponseDtoList.add(new BungBoardResponseDto(bungBoard, imageUrl, imageName, bungAddRepository.bungBoardNowGroup(bungBoard.getBoardId())));
         }
         System.out.println(bungBoardResponseDtoList.get(0).getTitle());
 
 
         return new Result<>(bungBoardResponseDtoList);
+    }
+
+    @Override
+    public Result<?> getAcceptList(String nickname) {
+        List<BungAddBoard> bungAddBoardList = bungAddRepository.getAcceptList(nickname);
+        List<AcceptResponseDto> AcceptResponseDtoList = new ArrayList<>();
+
+        for (BungAddBoard bungAddBoard : bungAddBoardList){
+            AcceptResponseDtoList.add(new AcceptResponseDto(bungAddBoard));
+        }
+        return new Result<>(AcceptResponseDtoList);
     }
 
 }

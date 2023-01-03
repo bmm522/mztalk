@@ -48,4 +48,6 @@ public interface BungBoardService {
     Long findBungBoard(Long bId);
 
     Result<?> search(String[] categories, String type, String searchText);
+
+    Result<?> getAcceptList(String nickname);
 }

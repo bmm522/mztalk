@@ -24,7 +24,6 @@ window.onload= function(){
         let deadlineDate = res.deadlineDate;
         let address = res.address;
 
-        console.log(JSON.stringify(imageInfo));
 
         document.getElementById('header').innerHTML = '<strong>'+title+'</strong>';
         document.getElementById('writer').innerHTML = writer;
@@ -60,25 +59,26 @@ window.onload= function(){
         // }
 
         getNowGroup(fullGroup);
-    console.log("사이즈 : "  + imageInfo.length);
+        
+        if(localStorage.getItem('writer') != localStorage.getItem('userNickname')) {
+            document.getElementById('boardUpdate').innerHTML = "";
+        }
+    
+        if(localStorage.getItem('writer') != localStorage.getItem('userNickname')) {
+            document.getElementById('deleteBtn').innerHTML = "";
+        }
+    
+        console.log("글쓴이 : " +localStorage.getItem('writer'));
+        console.log("접속 유저 닉네임 : " + localStorage.getItem('userNickname'));
+    
+        if(localStorage.getItem('writer') == localStorage.getItem('userNickname')) {
+            document.getElementById('addBtn').innerHTML = "";
+        }
         
     
     })
 
-    if(localStorage.getItem('writer') != localStorage.getItem('userNickname')) {
-        document.getElementById('boardUpdate').innerHTML = "";
-    }
-
-    if(localStorage.getItem('writer') != localStorage.getItem('userNickname')) {
-        document.getElementById('deleteBtn').innerHTML = "";
-    }
-
-    console.log(localStorage.getItem('writer'));
-    console.log(localStorage.getItem('userNickname'));
-
-    if(localStorage.getItem('writer') == localStorage.getItem('userNickname')) {
-        document.getElementById('addBtn').innerHTML = "";
-    }
+    
 
 }
 const getNowGroup = (fullGroup) =>{
@@ -134,10 +134,6 @@ const updateMove = () =>{
 
 document.getElementById('report-btn').addEventListener('click', function(){
     const bId = localStorage.getItem('bId');
-    console.log('title : ' +document.getElementById('recipient-name').value);
-    console.log('content : ' + document.getElementById('message-text').value);
-    console.log('bId : ' + bId);
-    console.log('userNo : ' + localStorage.getItem('userNo'));
     fetch("http://localhost:8000/login/report",{
             method:"POST",
             headers:{

@@ -17,6 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BungBoardDetailResponseDto {
 
     private String boardId;
+
+    private long boardWriterId;
     private String title;
     private String writer;
     private String createDate;
@@ -30,6 +32,7 @@ public class BungBoardDetailResponseDto {
 
     public BungBoardDetailResponseDto(BungBoard bungBoard, List<ConcurrentHashMap<String, String>> mapList) {
         this.boardId = String.valueOf(bungBoard.getBoardId());
+        this.boardWriterId = bungBoard.getBoardWriterId();
         this.title = bungBoard.getBoardTitle();
         this.writer = bungBoard.getBoardWriter();
         this.createDate = String.valueOf(bungBoard.getCreateDate());

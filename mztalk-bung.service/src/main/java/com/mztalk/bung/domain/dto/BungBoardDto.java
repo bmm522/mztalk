@@ -17,7 +17,9 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class BungBoardDto {
 
+
     private Long boardId;
+    private Long boardWriterId;
     private String boardWriter;
     private String boardTitle;
     private String boardContent;
@@ -33,6 +35,7 @@ public class BungBoardDto {
     public BungBoard toEntity() {
         BungBoard BungBoardEntity = BungBoard.builder()
                 .boardId(boardId)
+                .boardWriterId(boardWriterId)
                 .boardWriter(boardWriter)
                 .boardTitle(boardTitle)
                 .boardContent(boardContent)
@@ -50,6 +53,7 @@ public class BungBoardDto {
 
     public BungBoardDto(BungBoard BungBoardEntity) {
         this.boardId = BungBoardEntity.getBoardId();
+        this.boardWriterId = BungBoardEntity.getBoardWriterId();
         this.boardWriter = BungBoardEntity.getBoardWriter();
         this.boardTitle = BungBoardEntity.getBoardTitle();
         this.boardContent = BungBoardEntity.getBoardContent();

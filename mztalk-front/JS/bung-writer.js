@@ -641,6 +641,7 @@ const postBungData = (checkValue) =>{
        RefreshToken:localStorage.getItem('refreshToken'),
    },
    body:JSON.stringify({
+        boardWriterId : localStorage.getItem('userNo'),
        boardWriter : localStorage.getItem("userNickname"),
        boardTitle : document.getElementById('bungTitle').value,
        boardContent : document.getElementById('bungContent').value,

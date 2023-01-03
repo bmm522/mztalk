@@ -145,4 +145,9 @@ public class BungBoardApiController {
     public ConcurrentHashMap<String, String> getRecentBoardNo(){
         return bungBoardService.getRecentBoardNo();
     }
+
+    @GetMapping("/accept")
+    public Result<?> getAcceptList(@RequestParam("nickname")String nickname){
+        return bungBoardService.getAcceptList(nickname);
+    }
 }
