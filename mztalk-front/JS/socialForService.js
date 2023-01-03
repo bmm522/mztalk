@@ -103,10 +103,11 @@ window.addEventListener('load',  async ()=> {
      console.log('newMentorBoard:', newMentorBoard);
 
     const all=[];
-    all.push(newMentorBoard);
-    all.push(newBungBoard);
-    all.push(newFollowBoard);
-    all.push(newAuctionBoard);
+    all.push(newMentorBoard);   // 멘토-멘티 서비스 정보 객체가 담긴 배열
+    all.push(newBungBoard);     // 벙 서비스 정보 객체가 담긴 배열
+    all.push(newFollowBoard);   // 팔로우&내 글 서비스 정보 객체가 담긴 배열
+    all.push(newAuctionBoard);  // 경매 서비스 정보 객체가 담긴 배열
+    // 이 모든 객체 배열을 all배열에 push
 
     console.log(all, "뭐있니?");
 
@@ -117,10 +118,35 @@ window.addEventListener('load',  async ()=> {
             result.push(element);
         }
     }
-  
-
-    result.sort((a, b) => new Date(a.createDate) - new Date(b.createDate));
+    
+    //result.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
     console.log(result, "ㅎㅎ");
+    let index = 0;
+    for(const obj of result){
+        obj.i = index++;
+    }
+
+    result[0].createDate = result[0].createdDate;
+    result[1].createDate = result[1].createdDate;
+    delete result[0].createdDate;
+    delete result[1].createdDate;
+
+    console.log(result, "ㅎㅎzz");
+
+    const dateArr = [];
+    for(const obj of result){
+        dateArr.push(obj.createDate);
+    }
+
+    console.log(dateArr);
+
+    
+        const sorted_list = result.sort(function(a, b) {
+            return new Date(a.createDate).getTime() - new Date(b.createDate).getTime();
+        }).reverse();
+
+    console.log(sorted_list,"?");
+
 
     for(let board of result){
         //console.log(board+"??");
@@ -130,7 +156,7 @@ window.addEventListener('load',  async ()=> {
         let boardId = board.id;
         let imageUrl = board.imageUrl;
         let writer = board.writer;
-
+        
         document.querySelector('#storyList').innerHTML +=
         `
         <div class="card mb-3" style="width: 750px;" style="height: 150px;">
