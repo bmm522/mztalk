@@ -5,8 +5,15 @@ import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.common.Result;
 import com.mztalk.main.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +67,31 @@ public class BoardServiceImpl implements BoardService {
         return new Result(collect);
 
     }
+
+//    @Override
+//    public Long findByUserNo(String nickname) {
+//
+//        HttpHeaders headerName = new HttpHeaders();
+//        headerName.add("Content-type", "text/html");
+//
+//        //유저의이름
+//        HttpHeaders headersNames = new HttpHeaders();
+//        headersNames.add("Content-type", "text/html");
+//
+//        ResponseEntity<String> responseName = new RestTemplate().exchange(
+//                "http://localhost:8000/login/user-info/" + own,
+//                HttpMethod.GET,
+//                new HttpEntity<String>(headerName),
+//                String.class
+//        );
+//
+//        JSONObject ownName = new JSONObject(responseName.getBody());
+//        Long own = ownName.getLong("userNo");
+//
+//        System.out.println(own);
+//
+//        return own;
+//    }
 
 
 }

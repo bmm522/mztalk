@@ -363,7 +363,6 @@
 
                             <!--프로필셋팅 아이디영역-->
                             <div class="content-item__01">
-
                                 <form>    
                                     <button onclick="requestPay();" type="button" id="subscribe_" class="btn btn-outline-primary">
                                         <p>
@@ -372,10 +371,12 @@
                                         </p>
                                     </button>
                                 </form> 
-                                
+                                   
+                            </div>
+                            <div id="vipDate">
+
                                 
                             </div>
-
                         </article>
                     </section>       
                     
@@ -503,6 +504,8 @@
 
    <!-- 아임포트 결제 스크립트-->
    <script type="text/javascript">
+    let role = localStorage.getItem('role');
+    console.log(role);
     const random = Math.ceil(Math.random()*100000000);
 
     const today = new Date();
@@ -516,6 +519,12 @@
     let userNo = localStorage.getItem('userNo');
     //아임포트 결제
     function requestPay() {
+    
+        if(role.includes('ROLE_VIP')){
+            alert("이미 VIP회원이십니다.");
+            return;
+        }
+        
 
         IMP.request_pay({
                 pg: "html5_inicis",
@@ -528,7 +537,6 @@
                 buyer_tel: '01074402770',
             },
         function (rsp) {
-            console.log(rsp);
             if (rsp.success) {
                $.ajax({
                     url: "http://localhost:8000/story/subscribe",

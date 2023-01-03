@@ -51,5 +51,14 @@ public class BoardApiController {
     }
 
 
+//    @GetMapping("/nameCheck/{nickname}")
+//    public Long findByUserNo(@PathVariable("nickname") String nickname ){
+//
+//        Long own = boardService.findByUserNo(nickname);
+//
+//        return null;
+//    }
+
+
 
 }

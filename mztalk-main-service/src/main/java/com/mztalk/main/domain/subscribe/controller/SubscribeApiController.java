@@ -32,10 +32,14 @@ public class SubscribeApiController {
 
     @PutMapping("/checkVip/{userNo}")
     public ResponseEntity<?> updateStatusByUserNo(@PathVariable Long userNo){
-
         int result = subscribeService.updateStatusByUserNo(userNo);
-        System.out.println(result);
         return new ResponseEntity<>(new CMRespDto<>(1, "성공",result ), HttpStatus.OK);
+    }
+
+    @GetMapping("/vip/{userNo}")
+    public ResponseEntity<?> findByUserNoAndRoleStatus(@PathVariable("userNo") Long userNo){
+        SubscribeResponseDto subscribeResponseDto = subscribeService.findByUserNoAndRoleStatus(userNo);
+        return new ResponseEntity<>(new CMRespDto<>(1, "성공", subscribeResponseDto ), HttpStatus.OK);
     }
 
 

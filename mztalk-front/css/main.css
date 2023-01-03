@@ -15,6 +15,36 @@ nav {
     z-index: 99999;
 }
 
+.separator {
+	margin-top : 10px;
+	border : 1px solid #C3C3C3;
+}
+
+h5 card-title {
+	padding-top : 15px;
+	font-size : 1.3rem;
+	color : #4B4B4B;
+}
+
+#storyList .card {
+
+  border: 10px solid rebeccapurple;
+  border-radius: 1em;
+  border-top-right-radius: 10% 30%;
+  
+}
+
+.author {
+  background-color : #9ECAFF;
+	height : 30px;
+	width : 110px;
+	border-radius : 20px;
+  text-align: center;
+  margin-left: 70%;
+  margin-top: 10%;
+}
+
+
 #story_own {
 
   cursor: pointer;
