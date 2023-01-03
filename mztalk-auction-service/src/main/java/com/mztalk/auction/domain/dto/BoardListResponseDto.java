@@ -24,7 +24,6 @@ public class BoardListResponseDto {
     private String bookTitle;
     private String title;
     private String writer;
-
     private ConcurrentHashMap<String, Long> timeLimit;
     private String currentPrice;
     private String isClose;
@@ -32,8 +31,7 @@ public class BoardListResponseDto {
     private String imageUrl;
     private String imageName;
     private Date createDate;
-
-
+    private String serviceName;
 
     public BoardListResponseDto(Board board, ConcurrentHashMap<String, Long> duration, String imageUrl, String imageName) throws ParseException {
 
@@ -48,6 +46,8 @@ public class BoardListResponseDto {
         this.imageName = imageName;
         this.isClose = board.getIsClose();
         this.createDate = board.getCreateDate();
+        this.serviceName = "auction";
+//        this.sortDate = board.getCurrentTime();
 
 //        if(Long.parseLong(board.getTimeLimit()) < 24){
 //            currentTime = 24;

@@ -146,8 +146,11 @@
                     <div class = "col-6">
                         <label for="timeLimit">시간</label>
 					    <input type="text" class="form-control" placeholder="남은 시간은 변경할 수 없습니다" id="timeLimit" readonly>
+                        <div id="close-div">
+                        <span id = "closeNow">지금 마감시킬까요?</span>
+                        </div>
                     </div>
-				</div> 
+				</div>
 			<div style = "margin-left: 260px;margin-top:50px;">
 				<button type="button" class="boardBtn" id="writeBtn" onclick="updateBoard();">수정하기</button>
 				<button type="button" class="boardBtn" id="listBtn" onclick="backToMain();">목록</button>
