@@ -598,7 +598,7 @@ document.getElementById('bung-write-btn').addEventListener('click', function(){
     for(let i = 0 ; i < document.getElementsByClassName('form-check-input').length ; i++){
         
         if(document.getElementsByClassName('form-check-input')[i].checked){
-            checkValue += document.getElementsByClassName('form-check-input')[i].value+ " ";
+            checkValue += document.getElementsByClassName('form-check-input')[i].value;
             cnt += 1;       
         }
        

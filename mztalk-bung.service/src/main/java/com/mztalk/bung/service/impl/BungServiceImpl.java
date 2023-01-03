@@ -324,4 +324,31 @@ public class BungServiceImpl implements BungBoardService {
         return bungRepository.findBungBoard(bId);
     }
 
+    @Override
+    public Result<?> search(String[] categories, String type, String searchText) {
+        List<BungBoardResponseDto> bungBoardResponseDtoList = new ArrayList<>();
+        List<BungBoard> bungBoardList = bungRepository.getSearchList(categories, type, searchText);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "text/html");
+        for(BungBoard bungBoard : bungBoardList){
+
+
+            ResponseEntity<String> response = new RestTemplate().exchange(
+                    "http://localhost:8000/resource/main-image?bNo=" + bungBoard.getBoardId() + "&serviceName=bung",
+                    HttpMethod.GET,
+                    new HttpEntity<String>(headers),
+                    String.class
+            );
+            JSONObject jsonObject = new JSONObject(response.getBody());
+            JSONObject jsonData = jsonObject.getJSONObject("data");
+            String imageUrl = jsonData.getString("imageUrl");
+            String imageName = jsonData.getString("objectKey");
+            bungBoardResponseDtoList.add(new BungBoardResponseDto(bungBoard, imageUrl, imageName));
+        }
+        System.out.println(bungBoardResponseDtoList.get(0).getTitle());
+
+
+        return new Result<>(bungBoardResponseDtoList);
+    }
+
 }

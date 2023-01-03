@@ -46,4 +46,6 @@ public interface BungBoardService {
     Long bungAddBoardGroupDrop(Long bId, Long aId);
 
     Long findBungBoard(Long bId);
+
+    Result<?> search(String[] categories, String type, String searchText);
 }
