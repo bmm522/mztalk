@@ -32,15 +32,31 @@ public class InsertChatServiceImpl implements InsertChatService {
         System.out.println(chatOfUserNicknameRequestDto.getToUserNickname());
 
         if(chatOfUserNicknameRequestDto.getServiceName().equals("bung")){
-
                 if(chatroomRepository.checkData(userRepository.findByNickname(chatOfUserNicknameRequestDto.getFromUserNickname()).getId(),
-                        userRepository.findByNickname(chatOfUserNicknameRequestDto.getToUserNickname()).getId()) == 0L){
+                        userRepository.findByNickname(chatOfUserNicknameRequestDto.getToUserNickname()).getId(), "bung") == 0L){
                     Chatroom chatroom = chatOfUserNicknameRequestDto.toEntity
                             (userRepository.findByNickname(chatOfUserNicknameRequestDto.getFromUserNickname())
                                     ,userRepository.findByNickname(chatOfUserNicknameRequestDto.getToUserNickname()).getId());
-                    return new ChatResultResponseDto(chatroomRepository.save(chatroom).getChatId());
+                    Chatroom chatroom2 = chatOfUserNicknameRequestDto.toEntity
+                            (userRepository.findByNickname(chatOfUserNicknameRequestDto.getToUserNickname())
+                                    ,userRepository.findByNickname(chatOfUserNicknameRequestDto.getFromUserNickname()).getId());
+                    new ChatResultResponseDto(chatroomRepository.save(chatroom).getChatId());
+                    return  new ChatResultResponseDto(chatroomRepository.save(chatroom2).getChatId());
                 }
 
+        } else if(chatOfUserNicknameRequestDto.getServiceName().equals("story")){
+
+            if(chatroomRepository.checkData(userRepository.findByNickname(chatOfUserNicknameRequestDto.getFromUserNickname()).getId(),
+                    userRepository.findByNickname(chatOfUserNicknameRequestDto.getToUserNickname()).getId(),"story") == 0L){
+                Chatroom chatroom = chatOfUserNicknameRequestDto.toEntity
+                        (userRepository.findByNickname(chatOfUserNicknameRequestDto.getFromUserNickname())
+                                ,userRepository.findByNickname(chatOfUserNicknameRequestDto.getToUserNickname()).getId());
+                Chatroom chatroom2 = chatOfUserNicknameRequestDto.toEntity
+                        (userRepository.findByNickname(chatOfUserNicknameRequestDto.getToUserNickname())
+                                ,userRepository.findByNickname(chatOfUserNicknameRequestDto.getFromUserNickname()).getId());
+                new ChatResultResponseDto(chatroomRepository.save(chatroom).getChatId());
+                return  new ChatResultResponseDto(chatroomRepository.save(chatroom2).getChatId());
+            }
         }
 
         return new ChatResultResponseDto(0L);
