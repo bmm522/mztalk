@@ -32,14 +32,21 @@ public class ChatController {
         return insertChatService.requestChatOfUserNickname(chatOfUserNicknameRequestDto);
     }
 
+
+
     @GetMapping("/chat/nickname")
     public long requestChatOfUserNicknameWhenBack(@RequestParam("serviceName")String serviceName, @RequestParam("fromUserNickname")String fromUserNickname, @RequestParam("toUserNickname")String toUserNickname){
         return insertChatService.requestChatOfUserNickname(new ChatOfUserNicknameRequestDto(serviceName, fromUserNickname, toUserNickname));
     }
 
-    @GetMapping("/chat")
-    public Result<?> getChatRoomList(@RequestParam("userNo")long userNo){
-        return selectChatService.getChatRoomList(userNo);
+    @GetMapping("/chat/auction")
+    public Result<?> getChatRoomListOfAuction(@RequestParam("userNo")long userNo){
+        return selectChatService.getChatRoomListOfAuction(userNo);
+    }
+
+    @GetMapping("/chat/bung")
+    public Result<?> getChatRoomListOfBung(@RequestParam("userNo")long userNo){
+        return selectChatService.getChatRoomListOfBung(userNo);
     }
 
     @PatchMapping("/chat")

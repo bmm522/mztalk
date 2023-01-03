@@ -15,8 +15,15 @@ public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository{
 
 
     @Override
-    public List<Chatroom> getChatRoomList(long id) {
-        return entityManager.createQuery("SELECT c FROM Chatroom c WHERE c.fromUser.id= :id AND c.status = 'Y'", Chatroom.class)
+    public List<Chatroom> getChatRoomListOfAuction(long id) {
+        return entityManager.createQuery("SELECT c FROM Chatroom c WHERE c.fromUser.id= :id AND c.status = 'Y' AND c.serviceName = 'auction'", Chatroom.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
+    @Override
+    public List<Chatroom> getChatRoomListOfBung(long id) {
+        return entityManager.createQuery("SELECT c FROM Chatroom c WHERE c.fromUser.id= :id AND c.status = 'Y' AND c.serviceName = 'bung'", Chatroom.class)
                 .setParameter("id", id)
                 .getResultList();
     }

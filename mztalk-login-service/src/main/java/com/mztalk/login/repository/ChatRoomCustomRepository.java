@@ -8,7 +8,9 @@ import java.util.List;
 public interface ChatRoomCustomRepository {
 
 
-    List<Chatroom> getChatRoomList(long userNo);
+    List<Chatroom> getChatRoomListOfAuction(long userNo);
+
+    List<Chatroom> getChatRoomListOfBung(long userNo);
 
     long deleteChatRoom(long fromUserNo, long toUserNo);
 }
