@@ -35,4 +35,12 @@ public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository{
                 .setParameter("toUserNo", toUserNo)
                 .executeUpdate();
     }
+
+    @Override
+    public long checkData(long fromUserId, long toUserId) {
+        return (Long)entityManager.createQuery("SELECT count(*)  FROM Chatroom  c WHERE c.fromUser.id=:fromUserId AND c.toUserNo=:toUserId AND c.serviceName='bung'")
+                .setParameter("fromUserId", fromUserId)
+                .setParameter("toUserId", toUserId)
+                .getSingleResult();
+    }
 }

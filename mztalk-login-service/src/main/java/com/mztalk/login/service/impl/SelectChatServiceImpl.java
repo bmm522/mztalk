@@ -34,32 +34,14 @@ public class SelectChatServiceImpl implements SelectChatService {
 
     @Override
     public Result<?> getChatRoomListOfBung(long userNo) {
-        return new Result<>(getChatResponseDtoList(chatroomRepository.getChatRoomListOfAuction(userNo)));
+        return new Result<>(getChatResponseDtoList(chatroomRepository.getChatRoomListOfBung(userNo)));
     }
 
     public List<ChatResponseDto> getChatResponseDtoList(List<Chatroom> chatroomList){
         List<ChatResponseDto> chatResponseDtoList = new ArrayList<>();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "text/html");
-
         for(Chatroom chatroom : chatroomList){
-            String imageUrl = "";
-            try{
-                ResponseEntity<String> response = new RestTemplate().exchange(
-                        "http://localhost:8000/resource/main-image?bNo=" + chatroom.getToUserNo() + "&serviceName=story",
-                        HttpMethod.GET,
-                        new HttpEntity<String>(headers),
-                        String.class
-                );
-                JSONObject jsonObject = new JSONObject(response.getBody());
-                JSONObject jsonData = jsonObject.getJSONObject("data");
-                imageUrl =  jsonData.getString("imageUrl");
-            } catch (Exception e){
-                imageUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
-            }
-
-            chatResponseDtoList.add(new ChatResponseDto(chatroom, imageUrl));
+            chatResponseDtoList.add(new ChatResponseDto(chatroom));
         }
         return chatResponseDtoList;
 

@@ -141,3 +141,28 @@ document.getElementById('report-btn').addEventListener('click', function(){
                 location.href="bung-service-detail.html";
             })
 } );
+
+const chatOpen = () =>{
+    
+    fetch('http://localhost:8000/login/chat/front-nickname', {
+        method:"POST",
+        headers:{
+            "Content-Type" : "application/json"
+        },
+        body:JSON.stringify({
+            "serviceName" : "bung",
+            "fromUserNickname" :document.getElementById('writer').innerHTML,
+            "toUserNickname" :  localStorage.getItem('userNickname'),
+            
+        })
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        if(res.result == 0){
+            alert('이미 문의가 완료된 요청입니다.');
+        } else {
+        alert('문의가 완료되었습니다.');
+        location.href = 'bung-service-detail.html';
+        }
+    })
+}
