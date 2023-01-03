@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class PaymentReqDto {
-
+    
     @ApiModelProperty(value="결제 식별자", example = "1", required = true)
     private Long userId;
     @ApiModelProperty(value="결제한 게시글의 식별자", example = "2", required = true)
@@ -21,7 +21,7 @@ public class PaymentReqDto {
     private int price;
     @ApiModelProperty(value="아임포트 결제 고유번호", example = "imp-132132132", required = true)
     private String impUid;
-    @ApiModelProperty(value="가맹정 주문번호", example = "imp656546", required = true)
+    @ApiModelProperty(value="가맹정 주문번호", example = "ORD-656546", required = true)
     private String merchantUid;
 
     public Payment toEntity(){
