@@ -37,6 +37,11 @@ public class SelectChatServiceImpl implements SelectChatService {
         return new Result<>(getChatResponseDtoList(chatroomRepository.getChatRoomListOfBung(userNo)));
     }
 
+    @Override
+    public Result<?> getChatRoomListOfStroy(long userNo) {
+        return new Result<>(getChatResponseDtoList(chatroomRepository.getChatRoomListOfStroy(userNo)));
+    }
+
     public List<ChatResponseDto> getChatResponseDtoList(List<Chatroom> chatroomList){
         List<ChatResponseDto> chatResponseDtoList = new ArrayList<>();
 
