@@ -1,8 +1,8 @@
 package com.mztalk.mentor.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.ScoreDto;
+import com.mztalk.mentor.domain.dto.ScoreModifyDto;
+import com.mztalk.mentor.domain.dto.ScoreReqDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
 @Getter
@@ -34,7 +33,6 @@ public class Score extends BaseTimeEntity{
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
-    @JsonIgnore
     private Board board;
 
     private Double count;
@@ -56,7 +54,7 @@ public class Score extends BaseTimeEntity{
         this.status = status;
     }
 
-    public void updateScore(ScoreDto scoreDto) {
+    public void updateScore(ScoreModifyDto scoreDto) {
         this.count = scoreDto.getCount();
         this.content = scoreDto.getContent();
     }
@@ -82,18 +80,5 @@ public class Score extends BaseTimeEntity{
         this.board = board;
         board.addScore(this);
     }
-
-    // == 리뷰 생성 메소드 ==//
-    public static Score createScore(ConcurrentHashMap<String,String> scoreMap,Mentee mentee, Mentor mentor, Board board){
-        Score score = new Score();
-        score.count = Double.parseDouble(scoreMap.get("count"));
-        score.content = scoreMap.get("content");
-        score.status = Status.YES;
-        score.addMentee(mentee);
-        score.addMentor(mentor);
-        score.addBoard(board);
-        return score;
-    }
-
 
 }

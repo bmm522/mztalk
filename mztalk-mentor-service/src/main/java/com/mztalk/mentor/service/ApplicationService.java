@@ -1,21 +1,21 @@
 package com.mztalk.mentor.service;
 
-import com.mztalk.mentor.domain.dto.ApplicationDto;
-import com.mztalk.mentor.domain.entity.Result;
+import com.mztalk.mentor.domain.dto.ApplicationResDto;
+import com.mztalk.mentor.domain.dto.ApplicationReqDto;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 
 public interface ApplicationService {
 
-    Long save(ConcurrentHashMap<String, String> applicationMap);
+    Long save(ApplicationReqDto applicationReqDto);
 
-    ApplicationDto findById(Long id);
+    ApplicationResDto findById(Long id);
 
-    Result findAll();
+    List<ApplicationResDto> findAll();
 
     Long delete(Long id);
 
-    Long updateApplication(Long id,ApplicationDto applicationMap);
+    Long updateApplication(Long id, ApplicationResDto applicationMap);
 
     boolean isExist(Long userId);
 

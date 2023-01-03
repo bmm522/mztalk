@@ -22,6 +22,7 @@ window.onload= function(){
         let fullGroup = res.fullGroup;
         let category = res.category;
         let deadlineDate = res.deadlineDate;
+        let address = res.address;
 
         console.log(JSON.stringify(imageInfo));
 
@@ -31,6 +32,7 @@ window.onload= function(){
         document.getElementById('bungContent').placeholder = content;
         document.getElementById('category').innerHTML = category;
         document.getElementById('closeRead').innerHTML = deadlineDate;
+        document.getElementById('address').innerHTML = address;
 
         localStorage.setItem('title', title);
         localStorage.setItem('writer', writer);
@@ -39,6 +41,7 @@ window.onload= function(){
         localStorage.setItem('category', category);
         localStorage.setItem('closeRead', deadlineDate);
         localStorage.setItem('fullGroup', fullGroup);
+        localStorage.setItem('address', address);
         localStorage.setItem("imageInfo", JSON.stringify(imageInfo));
 
         for(let i = 0 ; i < imageInfo.length ;  i++){
@@ -138,3 +141,28 @@ document.getElementById('report-btn').addEventListener('click', function(){
                 location.href="bung-service-detail.html";
             })
 } );
+
+const chatOpen = () =>{
+    
+    fetch('http://localhost:8000/login/chat/front-nickname', {
+        method:"POST",
+        headers:{
+            "Content-Type" : "application/json"
+        },
+        body:JSON.stringify({
+            "serviceName" : "bung",
+            "fromUserNickname" :document.getElementById('writer').innerHTML,
+            "toUserNickname" :  localStorage.getItem('userNickname'),
+            
+        })
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        if(res.result == 0){
+            alert('이미 문의가 완료된 요청입니다.');
+        } else {
+        alert('문의가 완료되었습니다.');
+        location.href = 'bung-service-detail.html';
+        }
+    })
+}

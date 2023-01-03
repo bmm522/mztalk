@@ -2,9 +2,10 @@ package com.mztalk.mentor.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mztalk.mentor.domain.dto.AccountInfoDto;
+import com.mztalk.mentor.domain.dto.AccountInfoReqDto;
+import com.mztalk.mentor.domain.dto.AccountInfoResDto;
 import com.mztalk.mentor.domain.dto.OpenApiAccessTokenDto;
-import com.mztalk.mentor.domain.entity.OpenApiAccessToken;
+import com.mztalk.mentor.domain.OpenApiAccessToken;
 import com.mztalk.mentor.service.OpenApiService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
@@ -22,7 +23,6 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -68,16 +68,16 @@ public class OpenApiServiceImpl implements OpenApiService {
 
     @Override
     @Transactional
-    public AccountInfoDto requestMatchAccountRealName(ConcurrentHashMap<String,String> accountMap) {
+    public AccountInfoResDto requestMatchAccountRealName(AccountInfoReqDto accountInfoReqDto) {
         OpenApiAccessToken token = requestOpenApiAccessToken();
         int uniqueNum = (int)((Math.random()+10) * 10000000);
 
         String tokenType = token.getTokenType();
         String accessToken = token.getAccessToken();
 
-        String bankCode = accountMap.get("bankCode");
-        String bankAccount = accountMap.get("bankAccount");
-        String birthday = accountMap.get("birthday");
+        String bankCode = accountInfoReqDto.getBankCode();
+        String bankAccount = accountInfoReqDto.getBankAccount();
+        String birthday = accountInfoReqDto.getBirthday();
 
         RestTemplate accountRestTemplate = new RestTemplate();
 
@@ -93,11 +93,11 @@ public class OpenApiServiceImpl implements OpenApiService {
         accountBody.put("account_holder_info",birthday);
         accountBody.put("tran_dtime", LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
 
-        AccountInfoDto accountInfoDto = accountRestTemplate.postForObject("https://testapi.openbanking.or.kr/v2.0/inquiry/real_name",
+        AccountInfoResDto accountInfoResDto = accountRestTemplate.postForObject("https://testapi.openbanking.or.kr/v2.0/inquiry/real_name",
                 new HttpEntity<>(accountBody.toString(), accountHeaders),
-                AccountInfoDto.class);
+                AccountInfoResDto.class);
 
-        return accountInfoDto;
+        return accountInfoResDto;
     }
 
 }

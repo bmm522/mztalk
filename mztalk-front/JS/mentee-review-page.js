@@ -45,7 +45,7 @@ const getMyReview = () =>{
                         <button type="button" class="btn btn-outline-success" onclick="myReview(${score.id});" data-bs-toggle="modal" data-bs-target="#myReview">보기</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-outline-danger" onclick="deleteReview();">삭제</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="deleteReview(${score.id});">삭제</button>
                     </td>
                 </tr> 
                 
@@ -87,7 +87,7 @@ const getMyReview = () =>{
     });
 }
 
-// 내가 작성한 리뷰 얻기
+// 리뷰 디테일
 const myReview = (scoreId) =>{
     document.getElementById('scoreModifyId').value = scoreId;
     fetch("http://localhost:8000/mentors/score/"+scoreId,{
@@ -102,7 +102,7 @@ const myReview = (scoreId) =>{
     .then(res =>{
         if(res != null){
             document.getElementById('scoreId').value = scoreId;
-            document.getElementById('content').innerHTML = res.content;
+            document.getElementById('content').innerHTML = res.data.content;
         } else {
             alert('리뷰가 존재하지 않습니다');
         }
@@ -126,7 +126,7 @@ const modifyReview = () => {
      })    
      .then((res)=>res.json())
      .then(res =>{
-         if(res > 0){
+         if(res != null){
             window.alert('리뷰 수정 완료');
             location.href="mentee-review-page.html";
         } else{
@@ -137,8 +137,7 @@ const modifyReview = () => {
  }
 
 // 리뷰 삭제 메소드
-const deleteReview = () => {
-    const deleteId= document.getElementById('scoreModifyId').value;
+const deleteReview = (deleteId) => {
     fetch("http://localhost:8000/mentors/score/"+deleteId,{
         method:"DELETE",
         headers:{
@@ -149,7 +148,7 @@ const deleteReview = () => {
     })
     .then((res)=>res.json())
     .then(res =>{
-        if(res>0){
+        if(res != null){
             window.alert('리뷰가 삭제 되었습니다.');
             location.href="mentee-review-page.html";
         } else {

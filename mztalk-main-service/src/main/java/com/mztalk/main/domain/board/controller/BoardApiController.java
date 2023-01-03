@@ -6,6 +6,7 @@ import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
 import com.mztalk.main.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,47 +28,28 @@ public class BoardApiController {
         return boardService.findAllByOwn(own);
     }
 
-
-    @PostMapping("/{own}")
-    public Result findByOwn(@PathVariable Long own){return boardService.findByOwn(own);}
-
-
-
-
     //글쓰기
     @ResponseBody
     @PostMapping ("/saveForm")
     public ResponseEntity<?> saveForm(@RequestBody BoardDto boardDto){
-
         Board board = boardService.save(boardDto);
-
         return new ResponseEntity<>(new CMRespDto<>(1, "글쓰기성공", board), HttpStatus.CREATED);
     }
 
-
-
-
     //글수정
     @PatchMapping("/update/{id}")
-    public Long updateForm(@PathVariable("id") Long id, @RequestBody BoardDto boardDto) {
-        System.out.println(boardDto);
-        return boardService.updateBoard(id, boardDto);
-    }
+    public Long updateForm(@PathVariable("id") Long id, @RequestBody BoardDto boardDto) {return boardService.updateBoard(id, boardDto);}
 
     //글삭제
     @PatchMapping("/delete/{id}")
-    public Long deleteForm(@PathVariable("id") Long id){
-
-        return boardService.deleteBoard(id);
-    }
+    public Long deleteForm(@PathVariable("id") Long id){return boardService.deleteBoard(id);}
 
     //메인페이지 뿌리기?
     @GetMapping("/main/{own}")
-    public ResponseEntity<?> boardStory(@PathVariable("id") Long own,
-                                        @PageableDefault(size=3) Pageable pageable){
-        //Page<Board> board =  boardService.boardStory(own, pageable);
-
-        return new ResponseEntity<>(new CMRespDto<>(1, "성공", null), HttpStatus.OK);
+    public Result findAllByBoardStory(@PathVariable("own") Long own){
+        return boardService.findAllByBoardStory(own);
     }
+
+
 
 }

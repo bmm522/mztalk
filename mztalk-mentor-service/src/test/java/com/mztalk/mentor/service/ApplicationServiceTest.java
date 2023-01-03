@@ -1,17 +1,9 @@
 package com.mztalk.mentor.service;
 
-import com.mztalk.mentor.domain.dto.ApplicationDto;
-import com.mztalk.mentor.domain.entity.Application;
-import com.mztalk.mentor.exception.ApplicationNotFoundException;
 import com.mztalk.mentor.repository.ApplicationRepository;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
 
 
 @Transactional(readOnly = true)

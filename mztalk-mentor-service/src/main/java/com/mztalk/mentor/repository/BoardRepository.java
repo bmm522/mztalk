@@ -12,10 +12,9 @@ public interface BoardRepository extends JpaRepository<Board,Long>, BoardReposit
     @Query("select b from Board b join fetch b.mentor m where b.status ='YES' and b.id =:id")
     Board findBoardByBoardId(@Param("id") Long id);
 
-    List<Board> findByPaymentIsNull();
-
     List<Board> findByMentoringDateBefore(LocalDateTime now);
 
-//    @Query("select b from Board b join fetch b.mentor m where b.payment IS NULL")
-//    List<Board> findAllFetchMentor();
+    @Query("select b from Board b join fetch b.participant p join fetch b.payment pay where p.mentee.id =:menteeId")
+    List<Board> findBoardByMenteeId(@Param("menteeId")Long menteeId);
+
 }

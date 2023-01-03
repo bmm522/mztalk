@@ -68,12 +68,13 @@ document.getElementById('sendResume').addEventListener('click', function(){
                     job : document.getElementById("job").value,
                     bank : document.getElementById("realBankCode").value,
                     account : document.getElementById("realBankAccount").value,
+                    birthday : document.getElementById('realBirthday').value,
                     userId : localStorage.getItem('userNo')
                 })
                 })    
             .then((res)=>res.json())
             .then(res =>{
-                if(res > 0){
+                if(res != null){
                     window.alert('멘토 신청 완료');
                     location.href="mentor-main.html";
                 } else {
@@ -201,7 +202,7 @@ const writeReview = () => {
             })    
             .then((res)=>res.json())
             .then(res =>{
-                if(res > 0){
+                if(res != null){
                     window.alert('리뷰 작성 완료');
                     location.href="mentee-mypage.html";
                 }
@@ -313,11 +314,11 @@ const getBoardDetail = (bId) =>{
     .then((res)=>res.json())
     .then(res =>{
         if(res != null){
-            document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
-            document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
-            document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.salary + "원";
-            document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.mentoringDate.substr(0,10) +"&nbsp&nbsp"+ res.mentoringDate.substr(11,5);
-            document.getElementById('board-price').value = res.salary;
+            document.getElementById('modal-body').innerHTML = "자기소개 : " + res.data.introduction + "<br/>";
+            document.getElementById('modal-body').innerHTML += res.data.content;
+            document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.data.salary + "원";
+            document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.data.mentoringDate.substr(0,10) +"&nbsp"+ res.data.mentoringDate.substr(11,5);
+            document.getElementById('board-price').value = res.data.salary;
         } else {
             console.log('실패');
         }
@@ -337,16 +338,15 @@ const watchReview = (nickname) =>{
     .then((res)=>res.json())
     .then(res =>{
         if(res != null){
-            let star ='';
             for(const score of res.data){
-                switch(score.count){
-                    case 5 : star ='★★★★★'; break;1
-                    case 4 : star ='★★★★'; break; 
-                    case 3 : star ='★★★'; break; 
-                    case 2 : star ='★★'; break; 
-                    case 1 : star ='★'; break;
+                let star = '';
+                const content = score.content;
+                const count = score.count;
+                
+                for(let i = 0; i<count; i++){
+                    star += "<img src='https://cdn-icons-png.flaticon.com/512/7656/7656139.png' style='width:30px; height:30px;'/>";
                 }
-            document.getElementById('reviewBody').innerHTML +=  '<br/>' + star + '<br/>' + '<br/>' + score.content + '<br/>';
+                document.getElementById('reviewBody').innerHTML += star + '<br/>' + content + '<br/>' + '<br/>';
             }
         } else {
             console.log('실패');
@@ -358,7 +358,7 @@ const watchReview = (nickname) =>{
 // 신청한 멘토링 목록
 const allMentoring =()=>{
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board?userId="+userId,{
+    fetch("http://localhost:8000/mentors/board/mentee/"+userId,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",
@@ -371,22 +371,61 @@ const allMentoring =()=>{
         if(res!=null){
             for(const allBoard of res.data){
                 document.getElementById('mentoringRow').innerHTML +=
-                `<th scope="row">${allBoard.id}</th>
+                `<td scope="row">${allBoard.id}</th>
                 <td>${allBoard.nickname}</td>
                 <td>${allBoard.title}</td>
-                <td style="text-align: center;">${allBoard.status}</td>`
+                <td style="text-align: center;">${allBoard.status}</td>
+                <td><button type="button" class="btn btn-outline-danger" onclick="cancelPay(${allBoard.payment.id},'${allBoard.payment.impUid}','${allBoard.payment.merchantUid}',${allBoard.payment.price});" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">결제 취소</button></td>`
             }
         } else {
-            for(const endBoard of res.data){
-                document.getElementById('mentoringRow').innerHTML +=
-                `<th scope="row">${allBoard.id}</th>
-                <td>${allBoard.nickname}</td>
-                <td>${allBoard.title}</td>
-                <td style="text-align: center;">${allBoard.status}</td>`
-            }
+            document.getElementById('mentoringRow').innerHTML = '<td colspan="5">신청한 게시글이 존재하지 않습니다.</td>';
         }
     })
+    document.getElementById('mentoringRow').innerHTML ='';
 }
+
+//아임포트 결제 취소
+function cancelPay(paymentId,impUid,merchantUid,price) {
+    $.ajax({
+        url:"http://localhost:8000/mentors/api/import/cancel",
+        headers: { 
+            "Content-Type": "application/json;",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        },
+        type: "POST",
+        data: JSON.stringify({
+            imp_uid:impUid,
+            merchant_uid: merchantUid,
+            cancel_request_amount: price
+        }),
+        dataType: "json"
+    }).done(function(result){
+        console.log(result);    
+    });
+}
+
+
+    // $.ajax({
+    //     url: "http://localhost:8000/mentors/payment/cancel/"+paymentId,
+    //     headers: { 
+    //         "Content-Type": "application/json;",
+    //         Authorization:localStorage.getItem('authorization'),
+    //         RefreshToken:localStorage.getItem('refreshToken')
+    //     },
+    //     type: "POST",
+    //     data: JSON.stringify({
+            
+    //         merchant_uid: merchantUid,
+    //         cancel_request_amount: price
+    //     }),
+    //     dataType: "json"
+    // }).done(function(result){
+    //     alert('백단갔다옴');
+    // }).fail(function(error){
+    //     alert('환불실패');
+    // });
+// }
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
 document.getElementById('myPage').addEventListener('click', function(){

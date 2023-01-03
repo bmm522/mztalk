@@ -1,10 +1,10 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.MentorDto;
+import com.mztalk.mentor.domain.dto.MentorResDto;
+import com.mztalk.mentor.domain.dto.MentorReqDto;
 import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Mentor;
-import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.MentorNotFoundException;
 import com.mztalk.mentor.repository.ApplicationRepository;
 import com.mztalk.mentor.repository.MentorRepository;
@@ -26,24 +26,23 @@ public class MentorServiceImpl implements MentorService {
 
     @Override
     @Transactional
-    public Long save(MentorDto mentorDto) {
-        Long userId = mentorDto.getUserId();
-        Application application = applicationRepository.findApplicationByUserId(userId);
+    public Long save(MentorReqDto mentorReqDto) {
+        Application application = applicationRepository.findApplicationByUserId(mentorReqDto.getUserId());
         application.changeAuthStatus();
-        Mentor mentor = Mentor.builder().
-                userId(userId).
-                status(Status.YES).build();
 
+        Mentor mentor = mentorReqDto.toEntity();
         mentor.addApplication(application);
-        return mentorRepository.save(mentor).getUserId();
+        Mentor savedMentor = mentorRepository.save(mentor);
+
+        return savedMentor.getUserId();
     }
 
     @Override
-    public MentorDto findById(Long id) {
+    public MentorResDto findById(Long id) {
         Mentor mentor = mentorRepository.findById(id)
                 .orElseThrow(() -> new MentorNotFoundException("해당 멘토가 존재하지 않습니다."));
-        MentorDto mentorDto = new MentorDto(mentor);
-        return mentorDto;
+        MentorResDto mentorResDto = new MentorResDto(mentor);
+        return mentorResDto;
     }
 
     @Override
@@ -54,18 +53,10 @@ public class MentorServiceImpl implements MentorService {
     }
 
     @Override
-    public Result findAll() {
+    public List<MentorResDto> findAll() {
         List<Mentor> mentors = mentorRepository.findAll();
-        List<MentorDto> collect = mentors.stream().map(MentorDto::new).collect(Collectors.toList());
-        return new Result(collect);
-    }
-
-    @Override
-    @Transactional
-    public Long delete(Long id) {
-        Mentor findMentor = mentorRepository.findById(id).orElseThrow(() -> new MentorNotFoundException("해당 멘토가 존재하지 않습니다."));
-        findMentor.changeStatus();
-        return findMentor.getUserId();
+        List<MentorResDto> collect = mentors.stream().map(MentorResDto::new).collect(Collectors.toList());
+        return collect;
     }
 
 }

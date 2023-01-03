@@ -49,6 +49,7 @@
                     <button type="button" id = "deleteBtn">삭제</button>
                     -->
                 </div>
+                <div id="homeArea" style="float:left;"></div>
                 <div id="slideShow">
                     <ul id="slides">
                         <!-- <li><img src="img/auction/book1.jpeg" width="300px" height="300px"></li>
@@ -103,12 +104,17 @@
                             <span id="startPrice"
                                 style="font-size: 25px; font-weight: bold;background-color:burlywood;">45,000</span>
                                 <span style="font-size: 25px; font-weight: bold;background-color:burlywood;">won</span>
+                                <div id = "alert" style="display:inline-block;"></div>
                         </div>
                         <div class="col-3" style="display:inline">
                             <span id="time" style="margin-right: 10px;">07:31</span>
                             <!-- ModalButton -->
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#priceModal"
-                                id="priceBtn">입찰</button>
+                            <div id = "modalBtn" style="display: inline-block;">
+                                <!--
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#priceModal"
+                                    id="priceBtn">입찰</button>
+                                -->
+                            </div>
                             <!-- Modal -->
                             <div class="modal fade bd-example-modal-sm" tabindex="-10" role="dialog"
                                 aria-labelledby="mySmallModalLabel" aria-hidden="true" id = "priceModal">
@@ -134,22 +140,25 @@
                         <span style="font-weight: bold;">댓글</span>
                         <input type = "text" id = "commInput"/>
                         <button type = "button" id="commBtn">작성</button>
-                        <div id="commentArea" class = "row">
-                            <!-- cId -->
-                            <input type = "hidden" id = "hidden-cId"/>
-                                <div class = "col-1" id = "nicknameArea">
-                                    <!-- <span id = "commNickname">{닉네임}</span> -->
+                        <div id = "commentArea">
+                            <!--
+                            <div class = "row">
+                                <input type = "hidden" id = "hidden-cId"/>
+                                    <div class = "col-1" id = "nicknameArea">
+                                        <span id = "commNickname">{닉네임}</span>
+                                    </div>
+                                    <div class = "col-7" id = "contentArea">
+                                        <span id = "commContent" style="margin-right: 10px;">{댓글 내용}</span>
+                                    </div>
+                                    <div class = "col-2" id = "createDateArea">
+                                        <span id = "commCreateDate" style="color:gray;font-size: smaller;margin-right:10px;">{2022-12-19}</span>
+                                    </div>
+                                    <div class = "col-2" id = "commBtnArea">
+                                        <span id = "commUpdate" style="color:gray;font-size: small; margin-right: 20px;" onclick = "updateComment();">수정</span>
+                                        <span id = "commDelete" style="color:gray;font-size: small;" onclick = "deleteComment();">삭제</span>
+                                    </div>
                                 </div>
-                                <div class = "col-7" id = "contentArea">
-                                    <!-- <span id = "commContent" style="margin-right: 10px;">{댓글 내용}</span> -->
-                                </div>
-                                <div class = "col-2" id = "createDateArea">
-                                    <!-- <span id = "commCreateDate" style="color:gray;font-size: smaller;margin-right:10px;">{2022-12-19}</span> -->
-                                </div>
-                                <div class = "col-2" id = "commBtnArea">
-                                    <!-- <span id = "commUpdate" style="color:gray;font-size: small; margin-right: 20px;" onclick = "updateComment();">수정</span>
-                                    <span id = "commDelete" style="color:gray;font-size: small;" onclick = "deleteComment();">삭제</span> -->
-                                </div>
+                            -->
                         </div>
                     </div>
 

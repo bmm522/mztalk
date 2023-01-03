@@ -41,16 +41,4 @@ public class SearchCondition {
         this.salary = salary;
         this.now = now;
     }
-
-    @Override
-    public String toString() {
-        return "SearchCondition{" +
-                "category='" + category + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", salary=" + salary +
-                ", now=" + now +
-                '}';
-    }
 }

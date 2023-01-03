@@ -1,14 +1,16 @@
 package com.mztalk.mentor.service;
 
-import com.mztalk.mentor.domain.dto.MenteeDto;
-import com.mztalk.mentor.domain.entity.Result;
+import com.mztalk.mentor.domain.dto.MenteeReqDto;
+import com.mztalk.mentor.domain.dto.MenteeResDto;
+
+import java.util.List;
 
 public interface MenteeService {
 
-    Long saveClient(MenteeDto menteeDto);
+    Long saveClient(MenteeReqDto menteeReqDto);
 
-    MenteeDto findClient(Long id);
+    MenteeResDto findClient(Long id);
 
-    Result findAll();
+    List<MenteeResDto> findAll();
 
 }

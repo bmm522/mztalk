@@ -1,17 +1,14 @@
 package com.mztalk.mentor.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.BoardDto;
+import com.mztalk.mentor.domain.dto.BoardResDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -27,7 +24,6 @@ public class Board extends BaseTimeEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mentor_id")
-    @JsonIgnore
     private Mentor mentor;
 
     @NotNull
@@ -52,8 +48,7 @@ public class Board extends BaseTimeEntity{
     @NotNull
     private int salary; //시급
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "board")
     private Score score;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
@@ -61,12 +56,10 @@ public class Board extends BaseTimeEntity{
     private LocalDateTime mentoringDate;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "board")
-    @JsonIgnore
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Participant participant;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "board")
-    @JsonIgnore
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Payment payment;
 
@@ -97,13 +90,13 @@ public class Board extends BaseTimeEntity{
         this.status = Status.NO;
     }
 
-    public void updateBoard(BoardDto boardDto){
-        this.title = boardDto.getTitle();
-        this.introduction = boardDto.getIntroduction();
-        this.career = boardDto.getCareer();
-        this.salary = boardDto.getSalary();
-        this.content = boardDto.getContent();
-        this.mentoringDate = boardDto.getMentoringDate();
+    public void updateBoard(BoardResDto boardResDto){
+        this.title = boardResDto.getTitle();
+        this.introduction = boardResDto.getIntroduction();
+        this.career = boardResDto.getCareer();
+        this.salary = boardResDto.getSalary();
+        this.content = boardResDto.getContent();
+        this.mentoringDate = boardResDto.getMentoringDate();
     }
 
     //== 연관관계 편의 메소드==//
@@ -124,23 +117,4 @@ public class Board extends BaseTimeEntity{
         this.score = score;
     }
 
-    @Override
-    public String toString() {
-        return "Board{" +
-                "id=" + id +
-                ", mentor=" + mentor +
-                ", category='" + category + '\'' +
-                ", title='" + title + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", content='" + content + '\'' +
-                ", introduction='" + introduction + '\'' +
-                ", career='" + career + '\'' +
-                ", salary=" + salary +
-                ", score=" + score +
-                ", mentoringDate=" + mentoringDate +
-                ", participant=" + participant +
-                ", payment=" + payment +
-                ", status=" + status +
-                '}';
-    }
 }

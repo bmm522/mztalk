@@ -1,11 +1,10 @@
 package com.mztalk.mentor.service.impl;
 
-import com.mztalk.mentor.domain.AuthStatus;
-import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.ApplicationDto;
+import com.mztalk.mentor.domain.dto.ApplicationResDto;
+import com.mztalk.mentor.domain.dto.ApplicationReqDto;
+import com.mztalk.mentor.domain.dto.MenteeTransferDto;
 import com.mztalk.mentor.domain.entity.Application;
 import com.mztalk.mentor.domain.entity.Mentee;
-import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.ApplicationNotFoundException;
 import com.mztalk.mentor.exception.DuplicateException;
 import com.mztalk.mentor.exception.MentorNotFoundException;
@@ -17,8 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,22 +28,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     @Transactional
-    public Long save(ConcurrentHashMap<String, String> applicationMap) {
-        Long userId = Long.parseLong(applicationMap.get("userId"));
-        Mentee mentee = menteeRepository.findById(userId).orElseThrow(() -> new MentorNotFoundException("해당 번호의 유저가 존재하지 않습니다."));
-        if(isExist(userId)){
-            throw new DuplicateException("이미 지원하신 서류가 존재합니다.");
-        }
-        Application application = Application.builder().
-                name(applicationMap.get("name")).
-                phone(applicationMap.get("phone")).
-                email(applicationMap.get("email")).
-                job(applicationMap.get("job")).
-                bank(applicationMap.get("bank")).
-                account(applicationMap.get("account")).
-                authStatus(AuthStatus.NO).
-                status(Status.YES).
-                build();
+    public Long save(ApplicationReqDto applicationReqDto) {
+        Mentee mentee = menteeRepository.findById(applicationReqDto.getUserId()).orElseThrow(() -> new MentorNotFoundException("해당 번호의 유저가 존재하지 않습니다."));
+        if(isExist(applicationReqDto.getUserId())) {throw new DuplicateException("이미 지원하신 서류가 존재합니다.");}
+        Application application = applicationReqDto.toEntity();
         application.addMentee(mentee);
         return applicationRepository.save(application).getId();
     }
@@ -58,34 +43,33 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationDto findById(Long id) {
-        Optional<Application> findApplication = applicationRepository.findById(id);
-        Application application = findApplication.orElseThrow(()->new ApplicationNotFoundException("해당 지원서가 존재하지 않습니다."));
-        ApplicationDto applicationDto = new ApplicationDto(application);
-        return applicationDto;
+    public ApplicationResDto findById(Long id) {
+        Application application = applicationRepository.findById(id).orElseThrow(()->new ApplicationNotFoundException("해당 지원서가 존재하지 않습니다."));
+        Mentee mentee = menteeRepository.findMenteeByApplicationId(id);
+        ApplicationResDto applicationResDto = new ApplicationResDto(application,new MenteeTransferDto(mentee));
+        return applicationResDto;
     }
 
     @Override
-    public Result findAll() {
+    public List<ApplicationResDto> findAll() {
         List<Application> applications = applicationRepository.fetchMenteeApplication();
-        List<ApplicationDto> result = applications.stream().map(ApplicationDto::new).collect(Collectors.toList());
-        return new Result(result);
+        List<ApplicationResDto> result = applications.stream().map(a->new ApplicationResDto(a,new MenteeTransferDto(a.getMentee()))).collect(Collectors.toList());
+        return result;
     }
 
     @Override
     @Transactional
     public Long delete(Long id) {
-        Optional<Application> storedApplication = applicationRepository.findById(id);
-        Application application = storedApplication.orElseThrow(()->new ApplicationNotFoundException("해당 지원서가 존재하지 않습니다."));
+        Application application = applicationRepository.findById(id).orElseThrow(()->new ApplicationNotFoundException("해당 지원서가 존재하지 않습니다."));
         applicationRepository.delete(application);
         return application.getId();
     }
 
     @Override
     @Transactional
-    public Long updateApplication(Long id,ApplicationDto applicationDto) {
-        Application savedApplication = applicationRepository.findById(id).orElseThrow(ApplicationNotFoundException::new);
-        savedApplication.updateApplication(applicationDto);
+    public Long updateApplication(Long id, ApplicationResDto applicationResDto) {
+        Application savedApplication = applicationRepository.findById(id).orElseThrow(() -> new ApplicationNotFoundException("해당 지원서가 존재하지 않습니다."));
+        savedApplication.updateApplication(applicationResDto);
         return savedApplication.getId();
     }
 }

@@ -25,9 +25,9 @@ window.onload = function(){
                 let category = board.category;
                 let content = board.content;
                 let writer = board.writer;
-                let nowGroup = board.nowGroup;
                 let fullGroup = board.fullGroup;
                 let deadlineDate = board.deadlineDate;
+                let createDate = board.createDate;
                 let boardId = board.boardId;
 
                 document.getElementById('output-div').innerHTML +=
@@ -50,7 +50,7 @@ window.onload = function(){
                              ${writer}
                          </div>
                          <div id="groupTotal">
-                             ${nowGroup} / ${fullGroup}
+
                          </div>
                      </div>
                  </div> 
@@ -63,11 +63,26 @@ window.onload = function(){
               category = '';
              content = '';
               writer = '';
-             nowGroup ='';
              fullGroup = '';
               deadlineDate ='';
             }
         }
+        getNowGroup(fullGroup);
+    })
+}
+const getNowGroup = (fullGroup) =>{
+    fetch("http://localhost:8000/bung/bungBoardNowGroup/"+localStorage.getItem('bId'),{
+        method:"GET",
+        headers:{
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        }
+    })
+    .then((res)=>res.json())
+    .then(res=>{
+        let nowGroup = res;
+        document.getElementById('groupTotal').innerHTML=nowGroup+" / "+fullGroup;
+        localStorage.setItem('group', group);
     })
 }
 document.getElementById('write-btn').addEventListener('click',function(){
@@ -83,7 +98,7 @@ document.getElementById('write-btn').addEventListener('click',function(){
     .then(res=>{
         console.log(res.bId);
         localStorage.setItem("bId", res.bId);
-        location.href="bung-Service-writer.html";
+        location.href="bung-service-writer.html";
     })
 });
 

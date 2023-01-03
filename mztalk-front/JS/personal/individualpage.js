@@ -10,11 +10,8 @@ window.onload = function(){
   BoardCount();
   FollowCount();
   FollowingCount();
-  //FollowingButton();
   followButtonStatus();
-  
-  //storySecretLoad(); 
- //writeboard();
+
 }
 
 
@@ -222,10 +219,10 @@ function BoardCount(){
     //console.log("통신 성공");
     
     let board = res.data;
-    //console.log(board);
+    //console.log(board+"ㅎㅇ");
     document.querySelector('.board_count').innerHTML +=
     `
-    ${board.boardCount}
+    ${board}
     `
     })
   }
@@ -255,7 +252,7 @@ function FollowingCount(){
     if(document.querySelector('.following_count') != null){
       document.querySelector('.following_count').innerHTML +=
     `
-    ${following.followingCount}
+    ${following}
     ` 
    }
 
@@ -287,13 +284,10 @@ function FollowCount(){
    // console.log(follower);
     document.querySelector('.follower_count').innerHTML +=
     `
-    ${follower.followerCount}
+    ${follower}
     `
     })
   }
-
-
-
 
 
 
@@ -315,11 +309,11 @@ function storyLoad() {
         for(let board of res.data){
 
           let boardId = board.id;
-          let nickname = board.nickname;
+          let writer = board.writer;
           let privacy = board.privacy;
           let title = board.title;
           let content = board.content;
-          let date = board.lastModifiedDate.substr(0,10);
+          let date = board.lastModifiedDate;
           
           if(privacy.includes("PUBLIC")){
           document.querySelector("#contentList").innerHTML += 
@@ -472,118 +466,6 @@ function storyLoad() {
     }
           
 
-
-
-//비밀글
-// function storySecretLoad() {
-
-//   if(own=loginUser){
-//     //console.log('실행되니?');
-    
-
-//     fetch("http://localhost:8000/story/"+own,{
-//         method:"POST",
-//         headers:{
-//             "Content-Type":"application/json",
-//             Authorization:localStorage.getItem('authorization'),
-//             RefreshToken:localStorage.getItem('refreshToken'),
-//         },
-//       })
-//       .then((res)=> res.json())
-//       .then(res=>{     
-
-//         //console.log("hi"+res.data);
-
-//         for(let board of res.data){
-
-//           let boardId = board.id;
-//           let nickname = board.nickname;
-//           let privacy = board.privacy;
-//           let title = board.title;
-//           let content = board.content;
-//           let date = board.lastModifiedDate.substr(0,10);
-
-//           if(privacy==='SECRET'){
-//             document.querySelector("#contentList").innerHTML += 
-//             `<div id="post-div-${boardId}" class="post-div">
-//                 <table id="post-table">
-//                     <tr>
-//                         <td>
-//                             <div id="category-div">${privacy}
-//                             </div>
-//                         </td>
-//                         <td>
-//                             <div id="post-title-div">${title}</div>
-//                         </td>
-//                         <td>
-//                             <div id="post-date-div"><br>${date}</div>
-//                         </td>
-//                     </tr>
-//                     <tr>
-//                         <td colspan="3"><br><br>
-//                             <div id="edit-delete-div">
-                                   
-//                                 <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
-//                                 data-bs-toggle="modal" type="button">수정</button>
-//                                 <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
-//                             </div>
-//                             <div id=post-hr>
-//                                 <hr>
-//                             </div>
-//                         </td>
-//                     </tr>
-//                     <tr>
-//                         <td colspan="3">
-//                             <div id="post-content">
-//                                 <div id="post-content-input">${content}</div>
-//                             </div>
-//                         </td>
-//                     </tr>
-//                 </table>
-//                 <div id="reply-div" class="reply-div-${boardId}">
-//                   <div>
-
-//                   </div>
-//                   </div>
-//                   <div id="reply-write-div">
-//                       <table>
-//                           <tr>
-//                               <td>
-//                                   <div id="reply-write-box"><input type="text" class="reply-write-input-${boardId}" id="reply-write-input"></div>
-//                   </div>
-//                   </td>
-//                   <td>  
-//                       <div id="reply-write-btn"><button onClick="addReply(${boardId})" id="replyButton" style="cursor:pointer;" type="button">등록</button></div>
-//                   </td>
-//                   </tr>
-//                   </table>
-//                 </div>
-//                </div>
-//                 `;
-                
-//                  board.replyList.forEach((reply)=>{
-//                  document.querySelector(`.reply-div-${boardId}`).innerHTML +=
-//                      `
-//                        <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
-//                        <div id="reply-content">${reply.replyContent}</div>
-//                        <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
-//                        <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
-//                        <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
-//                        </div>
-//                      `;
-//                   }
-//                  )
-//                } //else
-//               }
-
-//           })
-//      }
-
-//   }
-
-
-
-
 //글쓰기
 
 const write_board = document.getElementById('write-board');
@@ -609,7 +491,7 @@ write_board.addEventListener('click', function(){
                 RefreshToken:localStorage.getItem('refreshToken'),
             },
             body:JSON.stringify({
-                nickname: localStorage.getItem('userNickname'),
+                writer: localStorage.getItem('userNickname'),
                 title: document.getElementById('title-input-text').value,
                 content: document.getElementById("content-input-text").value,
                 own: localStorage.getItem('own'),
@@ -687,7 +569,7 @@ write_board.addEventListener('click', function(){
                })
                   
           }   
-          location.href="individualpage.html";   
+          // location.href="individualpage.html";   
       });
      
 
@@ -775,7 +657,6 @@ const privacyBound = document.getElementById('privacyBound');
     //document.querySelector('.modal-content').innerHTML='';
     
 }
-
 
 
 
@@ -915,7 +796,26 @@ function profileImageUpload(){
       }
       reader.readAsDataURL(f); 
 
+    //   let profileImage = res.data;
+    //   //console.log(profileImage);
+    //   if(!res.data){
+    //     document.querySelector('.profile-img-wrap').innerHTML +=
+    //     `
+    //     <img class="profile-image" src='https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png' onerror="this.src='duck.jpg'" id="userProfileImage">
+    //     <input type="hidden" class="imageName" value="profileName"/>
+    //     <input type="hidden" name="bNo" id="bNo" value="own"/>
+    //     `  
+    //  }else{
+    //   let profileUrl = profileImage.postImageUrl;
+    //   let profileName = profileImage.profileImageName;
+    //   let own = profileImage.own
 
+    //   document.querySelector('.profile-img-wrap').innerHTML +=
+    //   `
+    //   <img class="profile-image" src='${profileUrl}' onerror="this.src='duck.jpg'" id="userProfileImage">
+    //   <input type="hidden" class="imageName" value="${profileName}"/>
+    //   <input type="hidden" name="bNo" id="bNo" value="${own}"/>
+    //   `
       
       })
       closePopup('.modal-image');
@@ -970,7 +870,7 @@ function addReply(boardId){
               </div>
             </div>`;
           })
-          location.href="individualpage.html";   
+          // location.href="individualpage.html";   
         }   
     }
  // )}
@@ -1034,16 +934,12 @@ document.querySelector("#subscribeBtn1").onclick = (e) => {
 
       let follower = res.data;
       document.querySelector(".modal-follow").style.display = "flex";
-
       document.querySelector(".follower-list").innerHTML  = '';
-
- 
-
       console.log(follower);
 
 
       for(let i = 0; i < follower.length; i++){
-        // console.log("길이"+follower.length );
+        console.log("길이"+follower.length );
         // console.log("follower" + follower);
         //console.log("뜨니?"+ follower[0].followStatus);
         //console.log(document.querySelectorAll('.follower__btn'));
@@ -1187,8 +1083,6 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
   //팔로우리스트에서의 버튼
   function clickFollow(e) {
 
-    
-
     console.log(e);
     let _btn = e;
     console.log(_btn.textContent);
@@ -1211,7 +1105,7 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     .then((res)=>res.json())
     .then(res =>{
              
-      console.log(res);
+      //console.log(res);
       
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
@@ -1262,6 +1156,8 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
       _btn.style.color = "#fff";
       _btn.style.border = "1px solid #ddd";
+
+
     })
 
     } else {
@@ -1278,7 +1174,8 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       })
     .then((res)=>res.json())
     .then(res =>{
-             
+      // FollowCount();
+      // FollowingCount();
       //console.log(res);
 
       _btn.textContent = "팔로우";
@@ -1286,8 +1183,11 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       _btn.style.color = "#fff";
       _btn.style.border = "0";
 
+   
     })
+    
     }
+
   }
 
 

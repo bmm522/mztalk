@@ -1,18 +1,18 @@
 package com.mztalk.mentor.service;
 
-import com.mztalk.mentor.domain.dto.MentorDto;
-import com.mztalk.mentor.domain.entity.Result;
+import com.mztalk.mentor.domain.dto.MentorResDto;
+import com.mztalk.mentor.domain.dto.MentorReqDto;
+
+import java.util.List;
 
 
 public interface MentorService {
 
-    Long save(MentorDto mentorDto);
+    Long save(MentorReqDto mentorReqDto);
 
-    MentorDto findById(Long id);
+    MentorResDto findById(Long id);
 
-    Result findAll();
-
-    Long delete(Long id);
+    List<MentorResDto> findAll();
 
     boolean isExist(Long userId);
 }

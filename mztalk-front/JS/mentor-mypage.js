@@ -25,7 +25,7 @@ document.getElementById('mentor-write-btn').addEventListener('click',function(){
     })    
     .then((res)=>res.json())
     .then(res =>{
-        if(res > 0){
+        if(res != null){
             window.alert('게시글이 작성 되었습니다.');
             location.href="mentor-main.html";
         } else {
@@ -61,7 +61,7 @@ const deleteBoard = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        if(res>0){
+        if(res != null){
             window.alert('글이 삭제되었습니다.');
             location.href="mentor-main.html";
         } else{
@@ -72,7 +72,7 @@ const deleteBoard = () =>{
 }
 
 
-// 작성한 글에 대한 멘토 신청 현황
+// 멘토가 작성한 글에 대한 신청 현황
 const myMentees = () =>{
     const mentorId = localStorage.getItem('userNo');
     fetch("http://localhost:8000/mentors/participant?mentorId="+mentorId,{
@@ -87,7 +87,7 @@ const myMentees = () =>{
     .then(res =>{
         if(res!=null){
             for(const data of res.data){
-            document.getElementById('myBoardList').innerHTML =
+            document.getElementById('myBoardList').innerHTML +=
                 `<td>${data.board.id}</td>
                 <td>${data.mentee.nickname}</td>
                 <td>${data.phone}</td>
@@ -96,7 +96,8 @@ const myMentees = () =>{
         } else{
             console.log('값없음');
         }
-    }) 
+    })
+    document.getElementById('myBoardList').innerHTML ='';
 }
 
 

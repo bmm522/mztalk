@@ -1,14 +1,9 @@
 package com.mztalk.mentor.service.impl;
 
 import com.mztalk.mentor.domain.SearchCondition;
-import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.BoardDto;
-import com.mztalk.mentor.domain.dto.MyBoardDto;
+import com.mztalk.mentor.domain.dto.*;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentor;
-import com.mztalk.mentor.domain.entity.Result;
-import com.mztalk.mentor.exception.BoardNotFoundException;
-import com.mztalk.mentor.exception.DuplicateException;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.service.BoardService;
@@ -16,10 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,70 +25,68 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public Long saveBoard(ConcurrentHashMap<String,String> boardMap) {
-        Long userId = Long.parseLong(boardMap.get("userId"));
-        Mentor mentor = mentorRepository.findMentorByUserId(userId);
-        Board board = Board.builder().
-                category(boardMap.get("category")).
-                title(boardMap.get("title")).
-                nickname(boardMap.get("nickname")).
-                content(boardMap.get("content")).
-                introduction(boardMap.get("introduction")).
-                career(boardMap.get("career")).
-                salary(Integer.parseInt(boardMap.get("salary"))).
-                mentoringDate(LocalDateTime.parse(boardMap.get("mentoringDate"))).
-                status(Status.YES).
-                build();
+    public Long saveBoard(BoardReqDto boardReqDto) {
+        Mentor mentor = mentorRepository.findMentorByUserId(boardReqDto.getUserId());
+        Board board = boardReqDto.toEntity();
         board.addMentor(mentor);
         return boardRepository.save(board).getId();
     }
 
     // 메인페이지 출력 메소드, 결제가 안되고 멘토링 전 글만 출력된다.
     @Override
-    public Result findNullPaymentWithBeforeMentoringDate() {
+    public List<BoardResDto> findNullPaymentWithBeforeMentoringDate() {
         LocalDateTime now = LocalDateTime.now();
         List<Board> boards = boardRepository.findNullPaymentWithBeforeMentoringDate(now);
-        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<BoardResDto> collect = boards.stream()
+                .map(b->new BoardResDto(b,new MentorTransferDto(b.getMentor()))).collect(Collectors.toList());
+        return collect;
+    }
+
+    // 멘티가 본인이 신청한 글에 대한 정보만 가져온다.
+    @Override
+    public List<BoardResDto> findBoardByMenteeId(Long menteeId) {
+        List<Board> boards = boardRepository.findBoardByMenteeId(menteeId);
+        List<BoardResDto> collect = boards.stream().map(b->new BoardResDto(b,new PaymentResDto(b.getPayment()))).collect(Collectors.toList());
+        return collect;
     }
 
     @Override
-    public BoardDto findBoardByBoardId(Long id) {
+    public BoardResDto findBoardByBoardId(Long id) {
         Board board = boardRepository.findBoardByBoardId(id);
-        BoardDto boardDto = new BoardDto(board);
-        return boardDto;
+        BoardResDto boardResDto = new BoardResDto(board,new MentorTransferDto(board.getMentor()));
+        return boardResDto;
     }
 
-    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드.
+    //멘티가 본인이 신청한 멘토링 글에 대해 보는 메소드 멘토링 이후의 글만 출력되게 한다.
     @Override
-    public Result findBoardByUserId(Long userId) {
+    public List<BoardTransferDto> findBoardByUserId(Long userId) {
         LocalDateTime now = LocalDateTime.now();
         List<Board> boardList = boardRepository.findBoardByUserId(userId,now);
-        List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<BoardTransferDto> collect = boardList.stream().map(BoardTransferDto::new).collect(Collectors.toList());
+        return collect;
     }
 
     @Override
-    public Result latestBoard() {
+    public List<BoardResDto> latestBoard() {
         List<Board> boards = boardRepository.latestBoard();
-        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<BoardResDto> collect = boards.stream().map(BoardResDto::new).collect(Collectors.toList());
+        return collect;
     }
 
     // 멘티가 멘토링 신청 후 멘토링 시간이 지난 후에 리뷰창에 나타난다.
     @Override
-    public Result findByMentoringDateBefore() {
+    public List<BoardResDto> findByMentoringDateBefore() {
         LocalDateTime now = LocalDateTime.now();
         List<Board> boards = boardRepository.findByMentoringDateBefore(now);
-        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<BoardResDto> collect = boards.stream().map(BoardResDto::new).collect(Collectors.toList());
+        return collect;
     }
 
     @Override
-    public Result findBoardByMentorId(Long mentorId) {
+    public List<BoardResDto> findBoardByMentorId(Long mentorId) {
         List<Board> boards = boardRepository.findBoardByMentorId(mentorId);
-        List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<BoardResDto> collect = boards.stream().map(BoardResDto::new).collect(Collectors.toList());
+        return collect;
     }
 
     @Override
@@ -108,18 +99,16 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public Long updateBoard(Long id, BoardDto boardDto) {
+    public Long updateBoard(Long id, BoardResDto boardResDto) {
         Board savedBoard = boardRepository.findBoardByBoardId(id);
-        savedBoard.updateBoard(boardDto);
+        savedBoard.updateBoard(boardResDto);
         return savedBoard.getId();
     }
 
     @Override
-    public Result searchWithCondition(SearchCondition searchCondition) {
-        System.out.println(searchCondition.toString());
+    public List<BoardResDto> searchWithCondition(SearchCondition searchCondition) {
         List<Board> boardList = boardRepository.searchWithCondition(searchCondition);
-        System.out.println("boardList = " + boardList.toString());
-        List<BoardDto> collect = boardList.stream().map(BoardDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<BoardResDto> collect = boardList.stream().map(BoardResDto::new).collect(Collectors.toList());
+        return collect;
     }
 }

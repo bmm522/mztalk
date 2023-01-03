@@ -1,20 +1,20 @@
 package com.mztalk.mentor.service;
 
-import com.mztalk.mentor.domain.dto.ParticipantDto;
-import com.mztalk.mentor.domain.entity.Result;
+import com.mztalk.mentor.domain.dto.ParticipantResDto;
+import com.mztalk.mentor.domain.dto.ParticipantReqDto;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 
 public interface ParticipantService {
-    Long save(ConcurrentHashMap<String,String> participantMap);
+    Long save(ParticipantReqDto participantReqDto);
 
-    ParticipantDto findById(Long id);
+    ParticipantResDto findById(Long id);
 
-    Result findAll();
+    List<ParticipantResDto> findAll();
 
     //신청 취소
     Long cancelParticipate(Long id);
 
-    Result findParticipantsByMentorId(Long mentorId);
+    List<ParticipantResDto> findParticipantsByMentorId(Long mentorId);
 
 }

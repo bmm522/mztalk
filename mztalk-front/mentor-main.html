@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-
-    </script>
 
     <link href="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
@@ -21,7 +17,6 @@
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-
 <body>
     <nav>
         <div class="navContainer">
@@ -35,7 +30,7 @@
             </article> -->
             <article class="pictogramWrap">
 
-                <i class="fa-solid fa-comments" style=""></i>
+                <i class="fa-solid fa-comments"></i>
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필" id="move-story-service">
             </article>
         </div>
@@ -338,6 +333,7 @@
             },
         function (rsp) {
             if (rsp.success) {
+                console.log(rsp);
                 $.ajax({
                     url: "http://localhost:8000/mentors/participant",
                     method: "POST",
@@ -368,15 +364,17 @@
                         data: JSON.stringify({
                             userId : localStorage.getItem('userNo'),
                             boardId : document.getElementById('boardId-modal').value,
-                            price : rsp.paid_amount
+                            price : rsp.paid_amount,
+                            impUid : rsp.imp_uid,
+                            merchantUid: rsp.merchant_uid
                         })
                     })
                     alert('멘토링 신청이 완료되었습니다.');
-                    location.href="mentor-main.html";
+                    location.href='mentor-main.html';
                 })
             } else {
                 alert('멘토링 결제를 실패하셨습니다');
-                location.href="mentor-main.html";
+                location.href='mentor-main.html';
             }
         });
     }

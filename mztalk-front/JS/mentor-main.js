@@ -85,8 +85,8 @@ const reportBoard = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        const userId = res.mentor.userId;
-        const bId = res.id;
+        const userId = res.data.mentor.userId;
+        const bId = res.data.id;
         fetch("http://localhost:8000/login/report",{
             method:"POST",
             headers:{
@@ -121,12 +121,12 @@ const getBoardDetail = (bId) =>{
     .then((res)=>res.json())
     .then(res =>{
         if(res != null){
-            document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
-            document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
-            document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.mentoringDate.substr(0,10) +"&nbsp&nbsp"+ res.mentoringDate.substr(11,5);
-            document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.salary + "원";
+            document.getElementById('modal-body').innerHTML = "자기소개 : " + res.data.introduction + "<br/>";
+            document.getElementById('modal-body').innerHTML += res.data.content;
+            document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.data.mentoringDate.substr(0,10) +"&nbsp"+ res.data.mentoringDate.substr(11,5);
+            document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.data.salary + "원";
             // 결제 하기 위한 금액 설정
-            document.getElementById('board-price').value = res.salary;
+            document.getElementById('board-price').value = res.data.salary;
         } else {
             console.log('실패');
         }
@@ -146,16 +146,15 @@ const watchReview = (nickname) =>{
     .then((res)=>res.json())
     .then(res =>{
         if(res != null){
-            let star ='';
             for(const score of res.data){
-                switch(score.count){
-                    case 5 : star ='★★★★★'; break;
-                    case 4 : star ='★★★★'; break; 
-                    case 3 : star ='★★★'; break; 
-                    case 2 : star ='★★'; break; 
-                    case 1 : star ='★'; break; 
+                let star = '';
+                const content = score.content;
+                const count = score.count;
+                
+                for(let i = 0; i<count; i++){
+                    star += "<img src='https://cdn-icons-png.flaticon.com/512/7656/7656139.png' style='width:30px; height:30px;'/>";
                 }
-                document.getElementById('reviewBody').innerHTML +=  '<br/>' + star + '<br/>' + '<br/>' + score.content + '<br/>';
+                document.getElementById('reviewBody').innerHTML += star + '<br/>' + content + '<br/>' + '<br/>';
             }
         } else {
             console.log('실패');
@@ -171,8 +170,6 @@ document.getElementById('sendSearch').addEventListener('click', function(){
     const selected = document.getElementById('type').value;
     const searchValue = document.getElementById('searchValue').value;
 
-    console.log("category=" + categoryValue + "&salary=" + salaryValue + "&" + selected + "=" + searchValue);
-
     fetch("http://localhost:8000/mentors/board/search?category=" + categoryValue + "&salary=" + salaryValue + "&" + selected + "=" + searchValue,{
         method:"GET",
         headers:{
@@ -183,7 +180,6 @@ document.getElementById('sendSearch').addEventListener('click', function(){
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log(res.data);
         if(res.data.length != 0){
             let cnt = 1;
             document.getElementById('board-list-div').innerHTML = '<div class="row" style="padding:20px;" id="row-div">';
@@ -238,7 +234,6 @@ document.getElementById('myPage').addEventListener('click', function(){
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log("res : " + res);
         if(res){
             location.href="mentor-mypage.html";
         } else {

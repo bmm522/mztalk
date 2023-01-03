@@ -7,8 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface MenteeRepository extends JpaRepository<Mentee,Long>,MenteeRepositoryCustom {
 
-    @Query("select m from Mentee m where m.id=:userId")
-    Mentee findMenteeByUserId(@Param("userId") Long userId);
+    @Query("select m from Mentee m where m.application.id =: id")
+    Mentee findMenteeByApplicationId(@Param("id")Long id);
 
 
 }

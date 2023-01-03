@@ -2,7 +2,8 @@
 
 window.onload = function(){
     console.log('실행');
-    document.getElementById('card-header-div').innerHTML += '각 서비스 별 트래픽 수&nbsp&nbsp<small style="font-size: 1px;">&nbsp&nbsp오늘날짜 : '+nowDay+'&nbsp&nbsp(10초마다 업데이트 됩니다) </small> <input id="input-date"  value="'+nowDay+'" type="date"  style="width: 250px; margin-left:200px ; border-radius: 10px; border: 0.1px solid gainsboro;"/><input type="hidden" id="hidden-time"/>';
+    console.log(nowDay);
+    document.getElementById('card-header-div').innerHTML += '각 서비스 별 트래픽 수&nbsp&nbsp<small style="font-size: 1px;">&nbsp&nbsp오늘날짜 : '+nowDay+'&nbsp&nbsp(10초마다 업데이트 됩니다) </small> <input id="input-date"  value="'+nowDay+'" type="date"  style="width: 250px; margin-left:200px; border-radius: 10px; border: 0.1px solid gainsboro;"/><input type="hidden" id="hidden-time"/>';
     
      
   
@@ -191,9 +192,9 @@ const getBoardDetail = (bId, userId,serviceName, path) =>{
         .then(res =>{
             if(res != null){
                 document.getElementById('exampleModalToggleLabel').innerHTML = '멘토-멘티 서비스'
-                document.getElementById('modal-body').innerHTML = "자기소개 : " + res.introduction + "<br/>";
-                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.content;
-                document.getElementById('modal-salary').innerHTML = '1회 멘토링 : 1시간 / '+res.salary+'원';
+                document.getElementById('modal-body').innerHTML = "자기소개 : " + res.data.introduction + "<br/>";
+                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.data.content;
+                document.getElementById('modal-salary').innerHTML = '1회 멘토링 : 1시간 / '+res.data.salary+'원';
                 // document.getElementById('board-price').innerHTML = res.salary;
                 document.getElementById('btn-div').innerHTML = ` <button type="button" id="rep-btn" onclick="postReport(${bId},${userId},'${serviceName}');">신고 받기</button>`;
             } else {

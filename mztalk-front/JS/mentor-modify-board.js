@@ -26,7 +26,7 @@ document.getElementById('mentor-write-btn').addEventListener('click',function(){
     })    
     .then((res)=>res.json())
     .then(res =>{
-        if(res > 0){
+        if(res != null){
             window.alert('게시글이 작성 되었습니다.');
             location.href="mentor-main.html";
         } else {
@@ -102,14 +102,13 @@ const showBoard = (boardId) =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        document.getElementById('modifyBoardId').value = res.id;
-        document.getElementById('modifyTitle').value = res.title;
-        document.getElementById('modifyIntroduction').value = res.introduction;
-        document.getElementById('modifyCareer').value = res.career;
-        document.getElementById('modifySalary').value = res.salary;
-        document.getElementById('modifyMentoringDate').value = res.mentoringDate;
-        document.getElementById('modifyContent').value = res.content;
-        console.log(res.id);
+        document.getElementById('modifyBoardId').value = res.data.id;
+        document.getElementById('modifyTitle').value = res.data.title;
+        document.getElementById('modifyIntroduction').value = res.data.introduction;
+        document.getElementById('modifyCareer').value = res.data.career;
+        document.getElementById('modifySalary').value = res.data.salary;
+        document.getElementById('modifyMentoringDate').value = res.data.mentoringDate;
+        document.getElementById('modifyContent').value = res.data.content;
     }) 
 }
 
@@ -134,7 +133,7 @@ const modifyBoard = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        if(res>0){
+        if(res != null){
             window.alert('글이 수정되었습니다.');
             location.href="mentor-modify-board.html";
         } else{
@@ -170,11 +169,12 @@ const deleteBoard = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        if(res>0){
+        console.log(res.status);
+        if(res.status != 500){
             window.alert('글이 삭제되었습니다.');
             location.href="mentor-main.html";
         } else{
-            window.alert('글 삭제 실패');
+            window.alert('작성되어있는 리뷰가 존재하여 삭제할 수 없습니다.');
             location.href="mentor-main.html";
             return false;
         }
@@ -197,7 +197,7 @@ const myMentees = () =>{
     .then(res =>{
         if(res!=null){
             for(const data of res.data){
-            document.getElementById('myBoardList').innerHTML =
+            document.getElementById('myBoardList').innerHTML +=
                 `<td>${data.board.id}</td>
                 <td>${data.mentee.nickname}</td>
                 <td>${data.phone}</td>
@@ -206,7 +206,8 @@ const myMentees = () =>{
         } else{
             console.log('값없음');
         }
-    }) 
+    })
+    document.getElementById('myBoardList').innerHTML = '';
 }
 
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지

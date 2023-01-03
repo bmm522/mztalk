@@ -173,3 +173,12 @@ input {
     font-size: 15px;
     cursor: pointer;
 }
+
+#priceBtnDisabled {
+    background-color: lightgray;
+    border: none;
+    color: white;
+    padding: 7px 30px;
+    text-align: center;  
+    font-size: 16px;
+}

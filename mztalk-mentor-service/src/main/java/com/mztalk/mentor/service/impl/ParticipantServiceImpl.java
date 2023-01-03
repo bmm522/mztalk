@@ -1,10 +1,12 @@
 package com.mztalk.mentor.service.impl;
 
-import com.mztalk.mentor.domain.dto.ParticipantDto;
+import com.mztalk.mentor.domain.dto.BoardTransferDto;
+import com.mztalk.mentor.domain.dto.MenteeTransferDto;
+import com.mztalk.mentor.domain.dto.ParticipantResDto;
+import com.mztalk.mentor.domain.dto.ParticipantReqDto;
 import com.mztalk.mentor.domain.entity.Board;
 import com.mztalk.mentor.domain.entity.Mentee;
 import com.mztalk.mentor.domain.entity.Participant;
-import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.exception.ParticipantNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
@@ -15,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,34 +30,41 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     @Transactional
-    public Long save(ConcurrentHashMap<String,String> participantMap) {
-        Long boardId = Long.parseLong(participantMap.get("boardId"));
-        Long userId = Long.parseLong(participantMap.get("userId"));
-        Board board = boardRepository.findBoardByBoardId(boardId);
-        Mentee mentee = menteeRepository.findMenteeByUserId(userId);
-        Participant participant = Participant.createParticipant(participantMap, mentee, board);
-        return participantRepository.save(participant).getId();
+    public Long save(ParticipantReqDto participantReqDto) {
+        Board board = boardRepository.findBoardByBoardId(participantReqDto.getBoardId());
+        Mentee mentee = menteeRepository.findMenteeByUserId(participantReqDto.getUserId());
+
+        Participant participant = participantReqDto.toEntity();
+        participant.addBoard(board);
+        participant.addMentee(mentee);
+
+        Participant savedParticipant = participantRepository.save(participant);
+        return savedParticipant.getId();
     }
 
     @Override
-    public ParticipantDto findById(Long id) {
+    public ParticipantResDto findById(Long id) {
         Participant participant = participantRepository.findById(id).orElseThrow(() -> new ParticipantNotFoundException("해당하는 참가자는 존재하지 않습니다."));
-        ParticipantDto participantDto = new ParticipantDto(participant);
-        return participantDto;
+        ParticipantResDto participantResDto = new ParticipantResDto(participant,new MenteeTransferDto(participant.getMentee()),new BoardTransferDto(participant.getBoard()));
+        return participantResDto;
     }
 
     @Override
-    public Result findParticipantsByMentorId(Long boardId) {
+    public List<ParticipantResDto> findParticipantsByMentorId(Long boardId) {
         List<Participant> participants = participantRepository.findParticipantsByMentorId(boardId);
-        List<ParticipantDto> collect = participants.stream().map(ParticipantDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<ParticipantResDto> collect = participants.stream()
+                .map(p->new ParticipantResDto(p,new MenteeTransferDto(p.getMentee()),new BoardTransferDto(p.getBoard())))
+                .collect(Collectors.toList());
+        return collect;
     }
 
     @Override
-    public Result findAll() {
+    public List<ParticipantResDto> findAll() {
         List<Participant> participantList = participantRepository.findAll();
-        List<ParticipantDto> collect = participantList.stream().map(ParticipantDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<ParticipantResDto> collect = participantList.stream()
+                .map(p->new ParticipantResDto(p,new MenteeTransferDto(p.getMentee()),new BoardTransferDto(p.getBoard())))
+                .collect(Collectors.toList());
+        return collect;
     }
 
     @Override

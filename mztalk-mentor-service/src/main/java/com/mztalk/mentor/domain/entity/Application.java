@@ -1,16 +1,14 @@
 package com.mztalk.mentor.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.AuthStatus;
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.ApplicationDto;
+import com.mztalk.mentor.domain.dto.ApplicationResDto;
 import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -21,19 +19,15 @@ public class Application extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name ="application_id")
+    @ApiModelProperty(value="지원서 고유 번호", example = "1", required = false)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mentee_id")
-    @JsonIgnore
     private Mentee mentee;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "application")
-    @JsonIgnore
     private Mentor mentor;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "application")
-    private List<File> files = new ArrayList<>();
 
     @NotNull
     private String name;
@@ -47,6 +41,8 @@ public class Application extends BaseTimeEntity {
     private String bank;
     @NotNull
     private String account;
+    @NotNull
+    private String birthday;
 
     @Enumerated(EnumType.STRING)
     private AuthStatus authStatus;
@@ -55,40 +51,33 @@ public class Application extends BaseTimeEntity {
     private Status status;
 
     @Builder
-    public Application(Long id, Mentee mentee, Mentor mentor, List<File> files, String name, String phone,
-                       String email, String job, String bank, String account,
+    public Application(Long id, Mentee mentee, Mentor mentor, String name, String phone,
+                       String email, String job, String bank, String account, String birthday,
                        AuthStatus authStatus, Status status) {
         this.id = id;
         this.mentee = mentee;
         this.mentor = mentor;
-        this.files = files;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.job = job;
         this.bank = bank;
         this.account = account;
+        this.birthday = birthday;
         this.authStatus = authStatus;
         this.status = status;
     }
 
-    public void updateApplication(ApplicationDto applicationDto){
-        this.files = applicationDto.getFiles();
-        this.name = applicationDto.getName();
-        this.phone = applicationDto.getPhone();
-        this.email = applicationDto.getEmail();
-        this.job = applicationDto.getJob();
-        this.bank = applicationDto.getBank();
-        this.account = applicationDto.getAccount();
+    public void updateApplication(ApplicationResDto applicationResDto){
+        this.name = applicationResDto.getName();
+        this.phone = applicationResDto.getPhone();
+        this.email = applicationResDto.getEmail();
+        this.job = applicationResDto.getJob();
+        this.bank = applicationResDto.getBank();
+        this.account = applicationResDto.getAccount();
     }
 
     //== 연관관계 편의 메소드 ==//
-    public void addFile(File file){
-        this.files.add(file);
-        if(file.getApplication() != this){
-            file.addApplication(this);
-        }
-    }
 
     public void addMentee(Mentee mentee){
         this.mentee = mentee;

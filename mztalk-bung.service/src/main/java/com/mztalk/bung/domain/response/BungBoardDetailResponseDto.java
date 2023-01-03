@@ -26,6 +26,7 @@ public class BungBoardDetailResponseDto {
     private String fullGroup;
     private String category;
     private String deadlineDate;
+    private String address;
 
     public BungBoardDetailResponseDto(BungBoard bungBoard, List<ConcurrentHashMap<String, String>> mapList) {
         this.boardId = String.valueOf(bungBoard.getBoardId());
@@ -38,6 +39,6 @@ public class BungBoardDetailResponseDto {
         this.fullGroup = String.valueOf(bungBoard.getFullGroup());
         this.category = bungBoard.getCategory();
         this.deadlineDate = String.valueOf(bungBoard.getDeadlineDate());
-
+        this.address = bungBoard.getAddress();
     }
 }

@@ -23,11 +23,9 @@ public class Mentor extends BaseTimeEntity{
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="application_id")
-    @JsonIgnore
     private Application application;
 
     @OneToMany(mappedBy = "mentor")
-    @JsonIgnore
     private List<Board> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "mentor")
@@ -73,7 +71,4 @@ public class Mentor extends BaseTimeEntity{
         }
     }
 
-    public void changeStatus() {
-        this.status = Status.NO;
-    }
 }

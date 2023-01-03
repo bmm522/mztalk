@@ -44,10 +44,10 @@
             </div>
              <br>
              <div id="writer" style="float: left; width: 50%; text-align: left;">
-                &nbsp;&nbsp;&nbsp;{작성자}
+               
              </div>
              <div id="date" style="float: left; width: 50%;">
-                {작성일}
+                
              </div>
      
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -72,13 +72,16 @@
      
              <div class="infomationBtn" style="height: 200px; float: left; width: 33%;">
                  <br>
-                 <div id="group" style="height: 66.66px;">
+                 <div id="group" style="height: 50px;">
                     
                  </div>
-                 <div id="category" style="height: 66.66px;">
+                 <div id="category" style="height: 50px;">
                     
                  </div>
-                 <div id="closeRead" style="height: 66.66px;">
+                 <div id="closeRead" style="height: 50px;">
+                    
+                 </div>
+                 <div id="address" style="height: 50px;">
                     
                  </div>
              </div>
@@ -100,9 +103,24 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="groupUser">{참여자 정보}</div>
-                                        <br>
-                                    <div class="groupUser">{참여자 정보}</div>
+                                    <div class="groupUserBox">
+                                        <div class="groupUser" style="height: 50px; float: left; width: 70%; font-size: x-large;">
+                                            {참여자 정보}
+                                        </div>
+                                        <div class="groupUserDrop" style="height: 50px; float: left; width: 30%;">
+                                            <button type="button" class="btn btn-outline-danger btn-sm" id="drop-btn" style="width: 35px; height: 35px; font-size: small;">X</button>
+                                        </div>
+                                        <div class="groupUser" style="height: 50px; float: left; width: 70%; font-size: x-large;">
+                                            {참여자 정보}
+                                        </div>
+                                        <div class="groupUserDrop" style="height: 50px; float: left; width: 30%;">
+                                            <button type="button" class="btn btn-outline-danger btn-sm" id="drop-btn" style="width: 35px; height: 35px; font-size: small;">X</button>
+                                        </div>
+                                    </div>
+                                        <!-- <br>
+                                        <div class="groupUser" style="height: 200px; float: left; width: 50%;">
+                                            {참여자 정보}
+                                        </div> -->     
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -146,7 +164,7 @@
                         </div>
                     </div>
                  <div id="category" style="height: 66.66px;">
-                     <button type="button" class="btn btn-outline-warning">문의하기</button>
+                     <button type="button" class="btn btn-outline-warning" onclick="chatOpen();">문의하기</button>
                  </div>
                  <div id="closeRead" style="height: 66.66px;">
                      <button type="button" class="btn btn-outline-warning">신청하기</button>

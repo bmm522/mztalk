@@ -1,16 +1,17 @@
 package com.mztalk.mentor.service;
 
-import com.mztalk.mentor.domain.dto.PaymentDto;
-import com.mztalk.mentor.domain.entity.Result;
+import com.mztalk.mentor.domain.dto.PaymentResDto;
+import com.mztalk.mentor.domain.dto.PaymentReqDto;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 
 public interface PaymentService {
-    Long save(ConcurrentHashMap<String,String> paymentMap);
 
-    PaymentDto findById(Long id);
+    Long save(PaymentReqDto paymentReqDto);
 
-    Result findAll();
+    PaymentResDto findById(Long id);
+
+    List<PaymentResDto> findAll();
 
     Long cancel(Long id);
 }

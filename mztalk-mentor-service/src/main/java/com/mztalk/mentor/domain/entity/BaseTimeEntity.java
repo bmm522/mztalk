@@ -32,4 +32,6 @@ public class BaseTimeEntity {
         createdDate = now;
         lastModifiedDate = now;
     }
+
+
 }

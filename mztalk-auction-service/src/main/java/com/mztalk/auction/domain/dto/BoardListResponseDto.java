@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 @Setter
@@ -20,23 +21,33 @@ import java.util.Date;
 public class BoardListResponseDto {
 
     private String boardId;
+    private String bookTitle;
     private String title;
-    private String timeLimit;
+    private String writer;
+
+    private ConcurrentHashMap<String, Long> timeLimit;
     private String currentPrice;
-
+    private String isClose;
+    private Integer count;
     private String imageUrl;
-
     private String imageName;
+    private Date createDate;
 
 
-    public BoardListResponseDto(Board board, String duration,String imageUrl, String imageName) throws ParseException {
+
+    public BoardListResponseDto(Board board, ConcurrentHashMap<String, Long> duration, String imageUrl, String imageName) throws ParseException {
 
         this.boardId = String.valueOf(board.getBoardId());
+        this.bookTitle = board.getBookTitle();
         this.title = board.getTitle();
-        this.timeLimit = duration.substring(3,5);
+        this.writer = board.getWriter();
+        this.timeLimit = duration;
         this.currentPrice = String.valueOf(board.getCurrentPrice());
+        this.count = board.getCount();
         this.imageUrl = imageUrl;
         this.imageName = imageName;
+        this.isClose = board.getIsClose();
+        this.createDate = board.getCreateDate();
 
 //        if(Long.parseLong(board.getTimeLimit()) < 24){
 //            currentTime = 24;
@@ -46,5 +57,16 @@ public class BoardListResponseDto {
 //            currentTime = 72;
 //        }
         //this.timeLimit = String.valueOf(Long.parseLong((new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(board.getTimeLimit())))-Long.parseLong(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime())));
+    }
+
+    public BoardListResponseDto(Board board) {
+        this.boardId = String.valueOf(board.getBoardId());
+        this.bookTitle = board.getBookTitle();
+        this.title = board.getTitle();
+        this.currentPrice = String.valueOf(board.getCurrentPrice());
+        this.imageUrl = imageUrl;
+        this.imageName = imageName;
+        this.isClose = board.getIsClose();
+        this.createDate = board.getCreateDate();
     }
 }

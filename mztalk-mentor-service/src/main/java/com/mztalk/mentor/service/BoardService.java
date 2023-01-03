@@ -1,31 +1,33 @@
 package com.mztalk.mentor.service;
 
 import com.mztalk.mentor.domain.SearchCondition;
-import com.mztalk.mentor.domain.dto.BoardDto;
-import com.mztalk.mentor.domain.dto.MyBoardDto;
-import com.mztalk.mentor.domain.entity.Result;
+import com.mztalk.mentor.domain.dto.BoardResDto;
+import com.mztalk.mentor.domain.dto.BoardTransferDto;
+import com.mztalk.mentor.domain.dto.BoardReqDto;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 
 public interface BoardService {
-    Long saveBoard(ConcurrentHashMap<String,String> boardMap);
+    Long saveBoard(BoardReqDto boardReqDto);
 
-    BoardDto findBoardByBoardId(Long id);
+    BoardResDto findBoardByBoardId(Long id);
 
     Long delete(Long id);
 
-    Long updateBoard(Long id, BoardDto boardDto);
+    Long updateBoard(Long id, BoardResDto boardResDto);
 
-    Result searchWithCondition(SearchCondition searchCondition);
+    List<BoardResDto> searchWithCondition(SearchCondition searchCondition);
 
     //멘티가 본인이 신청한 멘토링 글을 보는 메소드
-    Result findBoardByUserId(Long userId);
+    List<BoardTransferDto> findBoardByUserId(Long userId);
 
-    Result findBoardByMentorId(Long mentorId);
+    List<BoardResDto> findBoardByMentorId(Long mentorId);
 
-    Result latestBoard();
+    List<BoardResDto> latestBoard();
 
-    Result findByMentoringDateBefore();
+    List<BoardResDto> findByMentoringDateBefore();
 
-    Result findNullPaymentWithBeforeMentoringDate();
+    List<BoardResDto> findNullPaymentWithBeforeMentoringDate();
+
+    List<BoardResDto> findBoardByMenteeId(Long menteeId);
 }

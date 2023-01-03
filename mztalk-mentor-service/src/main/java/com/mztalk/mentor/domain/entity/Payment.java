@@ -2,6 +2,7 @@ package com.mztalk.mentor.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
+import com.mztalk.mentor.domain.dto.PaymentReqDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,6 @@ public class Payment extends BaseTimeEntity{
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
-    @JsonIgnore
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,16 +33,20 @@ public class Payment extends BaseTimeEntity{
     private Mentee mentee;
 
     private int price;
+    private String impUid;
+    private String merchantUid;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @Builder
-    public Payment(Long id, Board board, Mentee mentee, int price, Status status) {
+    public Payment(Long id, Board board, Mentee mentee, int price, String impUid, String merchantUid, Status status) {
         this.id = id;
         this.board = board;
         this.mentee = mentee;
         this.price = price;
+        this.impUid = impUid;
+        this.merchantUid = merchantUid;
         this.status = status;
     }
 
@@ -62,15 +66,5 @@ public class Payment extends BaseTimeEntity{
     public void addBoard(Board board){
         this.board = board;
         board.addPayment(this);
-    }
-
-    //== 결제 생성 메소드 ==//
-    public static Payment createPayment(ConcurrentHashMap<String,String> paymentMap, Mentee mentee, Board board){
-        Payment payment = new Payment();
-        payment.addMentee(mentee);
-        payment.addBoard(board);
-        payment.price = Integer.parseInt(paymentMap.get("price"));
-        payment.status = Status.YES;
-        return payment;
     }
 }

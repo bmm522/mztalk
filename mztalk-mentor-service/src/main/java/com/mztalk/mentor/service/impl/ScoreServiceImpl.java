@@ -1,11 +1,12 @@
 package com.mztalk.mentor.service.impl;
 
-import com.mztalk.mentor.domain.dto.ScoreDto;
+import com.mztalk.mentor.domain.dto.*;
 import com.mztalk.mentor.domain.entity.*;
 import com.mztalk.mentor.exception.BoardNotFoundException;
 import com.mztalk.mentor.exception.ScoreNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
+import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.repository.ScoreRepository;
 import com.mztalk.mentor.service.ScoreService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,34 +23,39 @@ public class ScoreServiceImpl implements ScoreService {
 
     private final ScoreRepository scoreRepository;
     private final MenteeRepository menteeRepository;
+    private final MentorRepository mentorRepository;
     private final BoardRepository boardRepository;
 
     @Override
     @Transactional
-    public Long save(ConcurrentHashMap<String,String> scoreMap) {
-        Long userId = Long.parseLong(scoreMap.get("userId"));
-        Long boardId = Long.parseLong(scoreMap.get("boardId"));
+    public Long save(ScoreReqDto scoreReqDto) {
 
-        Mentee mentee = menteeRepository.findMenteeByUserId(userId);
-        Mentor mentor = boardRepository.findMentorByBoardId(boardId);
-        Board board = boardRepository.findById(boardId).orElseThrow(()-> new BoardNotFoundException("해당 번호의 글이 존재하지 않습니다."));
+        Mentee mentee = menteeRepository.findMenteeByUserId(scoreReqDto.getUserId());
+        Mentor mentor = boardRepository.findMentorByBoardId(scoreReqDto.getBoardId());
+        Board board = boardRepository.findById(scoreReqDto.getBoardId()).orElseThrow(()-> new BoardNotFoundException("해당 번호의 글이 존재하지 않습니다."));
 
-        Score score = Score.createScore(scoreMap, mentee, mentor, board);
-        return scoreRepository.save(score).getId();
+        Score score = scoreReqDto.toEntity();
+        score.addMentee(mentee);
+        score.addMentor(mentor);
+        score.addBoard(board);
+
+        Score savedScore = scoreRepository.save(score);
+        return savedScore.getId();
     }
 
     @Override
-    public ScoreDto findById(Long id) {
+    public ScoreResDto findById(Long id) {
         Score score = scoreRepository.findById(id).orElseThrow(() -> new ScoreNotFoundException("해당 번호의 리뷰가 존재하지 않습니다."));
-        ScoreDto scoreDto = new ScoreDto(score);
-        return scoreDto;
+        ScoreResDto scoreResDto = new ScoreResDto(score,new MenteeTransferDto(score.getMentee()),new MentorTransferDto(score.getMentor()));
+        return scoreResDto;
     }
 
     @Override
-    public Result findScoresByNickname(String nickname) {
+    public List<ScoreResDto> findScoresByNickname(String nickname) {
         List<Score> scores = scoreRepository.findByNickname(nickname);
-        List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<ScoreResDto> collect = scores.stream()
+                .map(s->new ScoreResDto(s,new MenteeTransferDto(s.getMentee()),new MentorTransferDto(s.getMentor()))).collect(Collectors.toList());
+        return collect;
     }
 
     // 멘티가 해당 글에 대해 리뷰를 작성했는지 확인한다.
@@ -62,24 +67,26 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public Result findByUserId(Long userId) {
+    public List<SimpleScoreDto> findByUserId(Long userId) {
         List<Score> scores = scoreRepository.findByUserId(userId);
-        List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<SimpleScoreDto> collect = scores.stream().map(SimpleScoreDto::new).collect(Collectors.toList());
+        return collect;
     }
 
     @Override
-    public Result findByMentorId(Long mentorId) {
+    public List<ScoreResDto> findByMentorId(Long mentorId) {
         List<Score> scores = scoreRepository.findByMentorId(mentorId);
-        List<ScoreDto> collect = scores.stream().map(ScoreDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<ScoreResDto> collect = scores.stream().map(ScoreResDto::new).collect(Collectors.toList());
+        return collect;
     }
 
     @Override
-    public Result findAll() {
+    public List<ScoreResDto> findAll() {
         List<Score> scoreList = scoreRepository.findAll();
-        List<ScoreDto> collect = scoreList.stream().map(ScoreDto::new).collect(Collectors.toList());
-        return new Result(collect);
+        List<ScoreResDto> collect = scoreList.stream()
+                .map(s->new ScoreResDto(s,new MenteeTransferDto(s.getMentee()),new MentorTransferDto(s.getMentor())))
+                .collect(Collectors.toList());
+        return collect;
     }
 
     @Override
@@ -92,9 +99,9 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     @Transactional
-    public Long updateScore(Long id, ScoreDto scoreDto) {
+    public Long updateScore(Long id, ScoreModifyDto scoreModifyDto) {
         Score score = scoreRepository.findById(id).orElseThrow(() -> new ScoreNotFoundException("해당하는 평점이 존재하지 않습니다."));
-        score.updateScore(scoreDto);
+        score.updateScore(scoreModifyDto);
         return score.getId();
     }
 

@@ -18,7 +18,6 @@ public class Mentee extends BaseTimeEntity{
     private Long id;
 
     @OneToOne(mappedBy = "mentee",fetch = FetchType.LAZY)
-    @JsonIgnore
     private Application application;
 
     private String nickname; // 처음 멘토 서비스에 들어올때 들고오는 닉네임

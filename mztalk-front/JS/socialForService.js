@@ -1,11 +1,167 @@
-window.onload = () =>{
-   //newMentorBoard();
-   //scroll();
-   //newAuctionBoard();
-   //latest();
-}
+//let auctionResult = null;
 
-let boardsURL = "main.html";
+
+window.addEventListener('load',  async ()=> {
+    //경매
+    const newAuctionBoard = await fetch("http://localhost:8000/auction/board",{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+    })
+    .then((res)=> res.json())
+    .then(res=>{     
+
+      const A = []
+      
+      for(let auction of res.data){
+          
+        A.push(auction)
+       
+      }
+      //console.log('A:', A)
+      return A
+  })
+  console.log('newAuctionBoard:', newAuctionBoard);
+
+    //팔로우들 글
+    let own = localStorage.getItem('userNo');
+    
+    const newFollowBoard = await fetch("http://localhost:8000/story/main/"+own,{
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken'),
+            },
+        })
+        .then((res)=> res.json())
+        .then(res=>{       
+        const F = []
+
+        for(let follow of res.data){
+            
+         F.push(follow)
+
+        }
+        //console.log('A:', A)
+        return F
+        })
+
+        console.log('newFollowBoard:', newFollowBoard);
+
+    
+
+    //벙
+    const newBungBoard = await fetch("http://localhost:8000/bung/mainBoards",{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+    })
+        .then((res)=> res.json())
+        .then(res=>{     
+
+        const B = []
+        
+        for(let bung of res.data){
+            
+            B.push(bung)
+        
+        }
+        //console.log('A:', A)
+        return B
+    })
+     console.log('newBungBoard:', newBungBoard);
+
+    //멘토newMentorBoard
+    const newMentorBoard = await fetch("http://localhost:8000/mentors/board/latest",{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+    })
+        .then((res)=> res.json())
+        .then(res=>{     
+
+        const M = []
+        
+        for(let mentor of res.data){
+            
+            M.push(mentor)
+        
+        }
+        //console.log('A:', A)
+        return M
+    })
+     console.log('newMentorBoard:', newMentorBoard);
+
+    const all=[];
+    all.push(newMentorBoard);
+    all.push(newBungBoard);
+    all.push(newFollowBoard);
+    all.push(newAuctionBoard);
+
+    console.log(all, "뭐있니?");
+
+    const result = [];
+
+    for (const innerArray of all) {
+        for (const element of innerArray) {
+            result.push(element);
+        }
+    }
+  
+
+    result.sort((a, b) => new Date(a.createDate) - new Date(b.createDate));
+    console.log(result, "ㅎㅎ");
+
+    for(let board of result){
+        //console.log(board+"??");
+        //서비스별
+        let title = board.title;
+        let content = board.content;
+        let boardId = board.id;
+        let imageUrl = board.imageUrl;
+        let writer = board.writer;
+
+        document.querySelector('#storyList').innerHTML +=
+        `
+        <div class="card mb-3" style="width: 750px;" style="height: 150px;">
+            <div class="row g-0" style="height: 150px;"> 
+            <div class="col-md-4" style="overflow: hidden; height:250px">
+              <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage" width: 250px" height="150"> 
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">${content}</h5>
+                <input type="hidden" value="${boardId}">
+                <p class="card-text">${title}</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        `
+    }
+})
+
+{/* <span class="badge text-bg-primary" id="serviceMetors">멘토</span> */}
+
+// array.sort(function(a, b) {
+//     a = new Date(a.dateModified);
+//     b = new Date(b.dateModified);
+//     return a>b ? -1 : a<b ? 1 : 0;
+// });
+
+
+
+
 
 // (2) 스토리 스크롤 페이징하기
 let page =0;
@@ -27,9 +183,32 @@ window.onscroll = function(e){
 
 }
 
+//팔로우한 사람 글 뿌려쥐
+//  const newFollowBoard = async()=>{
+//     // /main/{own}
+    
+//     let own = localStorage.getItem('userNo');
 
+//     await fetch("http://localhost:8000/story/main/"+own,{
+//         method:"GET",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//       })
+//       .then((res)=> res.json())
+//       .then(res=>{       
+        
+//         console.log("팔로우최신글"+res.data);
+//         for(let follow of res.data){
+//             console.log(follow+"뭐있니?");
+//             return follow;
+//         }
+        
+//     })
 
-
+// }
 
 //나중에 불러오기
 //멘토 최신글뽑아오기
@@ -88,65 +267,57 @@ const newMentorBoard = () =>{
 //if(mentor&&bung&&auction){newMentorBoard(); getBungBoard(); getAuctionBoard();}
 
 
+
+
 //경매서비스
 //auction/board
-const newAuctionBoard = () =>{ 
-
+// async function newAuctionBoard(){ 
     
-    fetch("http://localhost:8000/auction/board",{
+//     const response = fetch("http://localhost:8000/auction/board",{
+//         method:"GET",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//     })
+//     .then((res)=> res.json())
+//     .then(res=>{       
+//       const A = []
+      
+//       for(let auction of res.data){
+          
+//         A.push(auction)
+       
+//       }
+//       //console.log('A:', A)
+//       return A
+//   })
+// }
+
+
+//벙서비스
+///mainBoards
+async function newBungBoard(){
+
+    const responses = fetch("http://localhost:8000/bung/mainBoards",{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken'),
         },
-      })
-      .then((res)=> res.json())
-      .then(res=>{       
-        let obj ={}
-        console.log("경매최신글"+res.data);
-        obj.auction = res.data;
-        return fetch(boardsURL)
-      }).then((res)=>res.json())
-      .then((res)=>{
-        auctionB = response
-        return obj;
+    })
+    .then((res)=> res.json())
+    .then(res=>{       
+      
+      console.log("벙최신글"+res.data);
+      for(let bung of res.data){
+      return bung;
+      }
+  })
 
-      })
-        //let cnt = 1;
-        
-        // document.getElementById('storyList').innerHTML += '<div class="card mb-3" style="max-width: 900px;">';
-        // console.log("오니?");
-
-        // for(let board of res.data){
-        //     let boardId = board.id;
-        //     let category = board.category;
-        //     let nickname = board.nickname;
-        //     let title = board.title;
-        //     let content = board.content;
-        //     //let date = board.lastModifiedDate.substr(0,10); // 0~10까지
-
-        //     document.querySelector('.col-md-6').innerHTML +=
-        //     `
-        //     <div class="row g-0">
-        //     <div class="col-md-4">
-        //         <img src="img/instagram_feed.jpg" class="img-fluid rounded-start" alt="...">
-        //     </div>
-        //     <div class="col-md-8">
-        //         <div class="card-body">
-        //         <h5 class="card-title">들어가니?</h5>
-        //         <span class="badge text-bg-info" id="serviceBung">벙</span>
-        //         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        //         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        //         </div>
-        //     </div>
-        //     `;
-           
-            }
-
-  
-
-
+}
 
 // const latest = () =>{
 
@@ -181,3 +352,20 @@ const newAuctionBoard = () =>{
 // }));
  
 // => 최종적으로 남은 하나만 리턴
+
+
+//사진 로테이션
+let slideIndex = 0;
+showSlides();
+function showSlides(){ 
+    let i;
+    let slides = document.getElementsByClassName("advertisement");
+//console.log(slides);
+        for(i = 0; i<slides.length; i++){
+        slides[i].style.display = "none";
+        }  
+        slideIndex ++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        slides[slideIndex-1].style.display = "block";  
+        setTimeout(showSlides, 10000);      
+} 

@@ -2,11 +2,9 @@ package com.mztalk.auction.service;
 
 import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.*;
-import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 
 import java.text.ParseException;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface AuctionService {
@@ -22,19 +20,23 @@ public interface AuctionService {
 
     BoardDetailResponseDto selectBoard(Long bId);
 
-    int updatePrice(Long bId, BoardDto boardDto);
+    BoardPriceDto updatePrice(BoardPriceDto boardPriceDto);
 
-    int updateCount(Long bId);
+    int updateCount(Long bId, String writer);
 
     ConcurrentHashMap<String, String> getRecentBoardNo();
 
-    Comment insertComment(CommentRequestDto commentRequestDto);
+    CommentResponseDto insertComment(CommentRequestDto commentRequestDto);
 
-    int updateComment(Long cId, CommentDto commentDto);
+    CommentResponseDto updateComment(Long cId, CommentUpdateRequestDto commentUpdateRequestDto);
 
-    int deleteComment(Long cId, CommentDto commentDto);
+    int deleteComment(Long cId);
 
     Result<?> searchBoard(String keyword) throws ParseException;
 
-    Result<?> selectCommentList();
+    Result<?> selectCommentList(Long bId);
+
+    CommentResponseDto selectComment(Long cId);
+
+    Result<?> selectCloseBoardList() throws ParseException;
 }

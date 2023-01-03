@@ -1,15 +1,12 @@
 package com.mztalk.mentor.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.mentor.domain.Status;
-import com.mztalk.mentor.domain.dto.ParticipantDto;
+import com.mztalk.mentor.domain.dto.ParticipantReqDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.servlet.http.Part;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
 @Getter
@@ -25,7 +22,6 @@ public class Participant extends BaseTimeEntity{
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
-    @JsonIgnore
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -79,16 +75,4 @@ public class Participant extends BaseTimeEntity{
         mentee.getParticipants().add(this);
     }
 
-    // 참가 신청 생성 메소드
-    public static Participant createParticipant(ConcurrentHashMap<String,String> participantMap, Mentee mentee, Board board){
-        Participant participant = new Participant();
-        participant.name = participantMap.get("name");
-        participant.phone = participantMap.get("phone");
-        participant.message = participantMap.get("message");
-        participant.email = participantMap.get("email");
-        participant.status = Status.YES;
-        participant.addMentee(mentee);
-        participant.addBoard(board);
-        return participant;
-    }
 }
