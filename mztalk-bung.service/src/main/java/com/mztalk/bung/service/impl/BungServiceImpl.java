@@ -13,10 +13,8 @@ import com.mztalk.bung.exception.AddBoardException;
 import com.mztalk.bung.exception.BoardException;
 import com.mztalk.bung.repository.BungAddBoardRepository;
 import com.mztalk.bung.repository.BungBoardRepository;
-import com.mztalk.bung.repository.BungBoardRepositoryCustom;
 import com.mztalk.bung.service.BungBoardService;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang.ObjectUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -28,11 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
-import java.awt.geom.RectangularShape;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -287,4 +282,11 @@ public class BungServiceImpl implements BungBoardService {
     public Long bungAddBoardGroupDrop(Long bId, Long aId) {
         return bungAddRepository.bungAddBoardGroupDrop(bId, aId);
     }
+
+    @Override
+    public Long findBungBoard() {
+//        return bungRepository.findById()
+        return null;
+    }
+
 }

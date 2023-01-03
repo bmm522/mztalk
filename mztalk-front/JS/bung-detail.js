@@ -30,9 +30,9 @@ window.onload= function(){
         document.getElementById('writer').innerHTML = writer;
         document.getElementById('date').innerHTML=createDate;
         document.getElementById('bungContent').placeholder = content;
-        document.getElementById('category').innerHTML = category;
-        document.getElementById('closeRead').innerHTML = deadlineDate;
-        document.getElementById('address').innerHTML = address;
+        document.getElementById('category').innerHTML = "카테고리 : " + category;
+        document.getElementById('closeRead').innerHTML = "마감 날짜 : " + deadlineDate;
+        document.getElementById('address').innerHTML = "모임 장소 : " + address;
 
         localStorage.setItem('title', title);
         localStorage.setItem('writer', writer);
@@ -77,7 +77,7 @@ const getNowGroup = (fullGroup) =>{
     .then((res)=>res.json())
     .then(res=>{
         let nowGroup = res;
-        document.getElementById('group').innerHTML=nowGroup+" / "+fullGroup;
+        document.getElementById('group').innerHTML="현재 인원 : " + nowGroup+" 명 / 총 인원 : "+fullGroup+" 명";
         localStorage.setItem('group', group);
     })
 }
@@ -166,3 +166,20 @@ const chatOpen = () =>{
         }
     })
 }
+
+document.getElementById('addBtn').addEventListener('click',function(){
+    fetch('http://localhost:8000/bung/bungAddBoard/'+localStorage.getItem('bId'),{
+            method:"GET",
+            headers:{
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken'),
+            }
+        })
+        .then((res)=>res.json())
+        .then(res=>{
+            console.log(res.bId);
+            localStorage.setItem("bId", res.bId);
+            location.href="bung-service-request.html";
+        })
+    });
+

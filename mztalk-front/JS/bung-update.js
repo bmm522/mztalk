@@ -749,13 +749,13 @@ const editBungData = (checkValue, deadlineDate) =>{
        boardTitle : document.getElementById('bungTitle').value,
        boardContent : document.getElementById('bungContent').value,
        deadlineDate : deadlineDate,
-        fullGroup:document.getElementById('group-select').value,
-       category : checkValue
+       fullGroup:document.getElementById('group-select').value,
+       category : checkValue,
+       address : document.getElementById('addressName').value
    })
    
 })
 .then(res=>{
-   
    location.href="bung-service-main.html";
 })
 }
