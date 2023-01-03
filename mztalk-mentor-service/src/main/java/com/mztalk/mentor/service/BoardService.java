@@ -30,4 +30,6 @@ public interface BoardService {
     List<BoardResDto> findNullPaymentWithBeforeMentoringDate();
 
     List<BoardResDto> findBoardByMenteeId(Long menteeId);
+
+    boolean isOwner(Long userId,Long boardId);
 }

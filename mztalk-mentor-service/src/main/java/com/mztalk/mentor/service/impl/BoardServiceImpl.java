@@ -51,6 +51,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public boolean isOwner(Long userId,Long boardId) {
+        Board board = boardRepository.isOwner(userId,boardId);
+        boolean isOwner = board == null ? false : true;
+        return isOwner;
+    }
+
+    @Override
     public BoardResDto findBoardByBoardId(Long id) {
         Board board = boardRepository.findBoardByBoardId(id);
         BoardResDto boardResDto = new BoardResDto(board,new MentorTransferDto(board.getMentor()));

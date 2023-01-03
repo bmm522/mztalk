@@ -76,6 +76,17 @@ public class BoardApiController {
         return new ResponseEntity<>(new Result<>("해당 멘토에 대한 모든 글", boards), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "사용자 본인의 글인지 확인", notes = "해당번호의 멘토가 작성한 글인지 확인하는 메소드입니다.", response = boolean.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "사용자 식별자", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "boardId", value = "글 식별자", required = true, dataType = "int", paramType = "query")
+    })
+    @GetMapping("/board/mentor")
+    public boolean isOwner(@RequestParam("userId")Long userId,@RequestParam("boardId")Long boardId){
+        boolean isOwner = boardService.isOwner(userId,boardId);
+        return isOwner;
+    }
+
     // 진짜로 삭제한다.
     @ApiOperation(value = "글 삭제", notes = "해당번호의 글을 삭제하는 메소드입니다.", response = Long.class)
     @ApiImplicitParam(name = "id", value = "글 식별자", required = true, dataType = "int", paramType = "path")

@@ -301,59 +301,68 @@ const reportBoard = () =>{
 }
 
 // 글번호에 대해 글 상세 보기
-const getBoardDetail = (bId) =>{
-    document.getElementById('boardId-modal').value = bId;
-    fetch("http://localhost:8000/mentors/board/"+bId,{
-        method:"GET",
-        headers:{
-        "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken')
-        },
+const getBoardDetail = (bId) => {
+    const boardIdModal = document.getElementById('boardId-modal');
+    boardIdModal.value = bId;
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem('authorization'),
+      RefreshToken: localStorage.getItem('refreshToken')
+    };
+    fetch(`http://localhost:8000/mentors/board/${bId}`, {
+      method: "GET",
+      headers
     })
-    .then((res)=>res.json())
-    .then(res =>{
-        if(res != null){
-            document.getElementById('modal-body').innerHTML = "자기소개 : " + res.data.introduction + "<br/>";
-            document.getElementById('modal-body').innerHTML += res.data.content;
-            document.getElementById('modal-salary').innerHTML = "1회 멘토링 : 1시간 /" +  res.data.salary + "원";
-            document.getElementById('modal-mentoringDate').innerHTML = "멘토링 날짜 : " + res.data.mentoringDate.substr(0,10) +"&nbsp"+ res.data.mentoringDate.substr(11,5);
-            document.getElementById('board-price').value = res.data.salary;
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          const modalBody = document.getElementById('modal-body');
+          modalBody.innerHTML = `자기소개: ${res.data.introduction}<br/>`;
+          modalBody.innerHTML += res.data.content;
+          const modalMentoringDate = document.getElementById('modal-mentoringDate');
+          modalMentoringDate.innerHTML = `멘토링 날짜: ${res.data.mentoringDate.substr(0, 10)}&nbsp;${res.data.mentoringDate.substr(11, 5)}`;
+          const modalSalary = document.getElementById('modal-salary');
+          modalSalary.innerHTML = `1회 멘토링: 1시간 / ${res.data.salary}원`;
+          const boardPrice = document.getElementById('board-price');
+          boardPrice.value = res.data.salary;
         } else {
-            console.log('실패');
+          console.log("실패");
         }
-    })
-}
+      });
+  };
 
 // 멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
-const watchReview = (nickname) =>{
-    fetch("http://localhost:8000/mentors/score?nickname="+nickname,{
-        method:"GET",
-        headers:{
-            "Content-Type":"application/json;",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken')
-        },
+const watchReview = (nickname) => {
+    fetch(`http://localhost:8000/mentors/score?nickname=${nickname}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;",
+        Authorization: localStorage.getItem("authorization"),
+        RefreshToken: localStorage.getItem("refreshToken"),
+      },
     })
-    .then((res)=>res.json())
-    .then(res =>{
-        if(res != null){
-            for(const score of res.data){
-                let star = '';
-                const content = score.content;
-                const count = score.count;
-                
-                for(let i = 0; i<count; i++){
-                    star += "<img src='https://cdn-icons-png.flaticon.com/512/7656/7656139.png' style='width:30px; height:30px;'/>";
-                }
-                document.getElementById('reviewBody').innerHTML += star + '<br/>' + content + '<br/>' + '<br/>';
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          const reviewBody = document.getElementById("reviewBody");
+          reviewBody.innerHTML = "";
+  
+          for (const score of res.data) {
+            let star = "";
+            const content = score.content;
+            const count = score.count;
+  
+            for (let i = 0; i < count; i++) {
+              star +=
+                "<img src='https://cdn-icons-png.flaticon.com/512/7656/7656139.png' style='width:30px; height:30px;'/>";
             }
+            reviewBody.innerHTML += `${star}<br/>${content}<br/><br/>`;
+          }
         } else {
-            console.log('실패');
+          console.log("Failed to fetch review");
         }
-    })
-    document.getElementById('reviewBody').innerHTML ='';
-}
+      });
+  };
 
 // 신청한 멘토링 목록
 const allMentoring =()=>{

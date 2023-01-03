@@ -320,8 +320,24 @@
 
     //아임포트 결제
     function requestPay() {
-
-        IMP.request_pay({
+        const userId = localStorage.getItem('userNo');
+        const boardId = document.getElementById('boardId-modal').value;
+        $.ajax({
+            url: "http://localhost:8000/mentors/board/mentor?userId="+userId+"&boardId="+boardId,
+            method: "GET",
+            headers: { 
+                "Content-Type": "application/json;",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken')
+            }
+        })
+        .done(function(data){
+            if(data){
+                alert('본인의 글에는 신청할 수 없습니다.');
+                location.href="mentor-main.html";
+                return false;
+            } else{
+                IMP.request_pay({
                 pg: "html5_inicis",
                 pay_method: "card",
                 merchant_uid: "ORD"+ year + month + date +  "-" + random,
@@ -331,30 +347,11 @@
                 buyer_name: document.getElementById("name").value, 
                 buyer_tel: document.getElementById("phone").value,
             },
-        function (rsp) {
-            if (rsp.success) {
-                console.log(rsp);
-                $.ajax({
-                    url: "http://localhost:8000/mentors/participant",
-                    method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json;",
-                        Authorization:localStorage.getItem('authorization'),
-                        RefreshToken:localStorage.getItem('refreshToken')
-                    },
-                    data: JSON.stringify({
-                        userId : localStorage.getItem('userNo'),
-                        boardId : document.getElementById('boardId-modal').value,
-                        name : rsp.buyer_name,
-                        phone : rsp.buyer_tel,
-                        email : rsp.buyer_email,
-                        price : rsp.paid_amount,
-                        message : document.getElementById("message").value
-                    })
-                })
-                .done(function (data) {
+            function (rsp) {
+                if (rsp.success) {
+                    console.log(rsp);
                     $.ajax({
-                        url: "http://localhost:8000/mentors/payment",
+                        url: "http://localhost:8000/mentors/participant",
                         method: "POST",
                         headers: { 
                             "Content-Type": "application/json;",
@@ -362,22 +359,43 @@
                             RefreshToken:localStorage.getItem('refreshToken')
                         },
                         data: JSON.stringify({
-                            userId : localStorage.getItem('userNo'),
-                            boardId : document.getElementById('boardId-modal').value,
+                            userId : userId,
+                            boardId : boardId,
+                            name : rsp.buyer_name,
+                            phone : rsp.buyer_tel,
+                            email : rsp.buyer_email,
                             price : rsp.paid_amount,
-                            impUid : rsp.imp_uid,
-                            merchantUid: rsp.merchant_uid
+                            message : document.getElementById("message").value
                         })
                     })
-                    alert('멘토링 신청이 완료되었습니다.');
+                    .done(function(data){
+                        $.ajax({
+                            url: "http://localhost:8000/mentors/payment",
+                            method: "POST",
+                            headers: { 
+                                "Content-Type": "application/json;",
+                                Authorization:localStorage.getItem('authorization'),
+                                RefreshToken:localStorage.getItem('refreshToken')
+                            },
+                            data: JSON.stringify({
+                                userId : localStorage.getItem('userNo'),
+                                boardId : document.getElementById('boardId-modal').value,
+                                price : rsp.paid_amount,
+                                impUid : rsp.imp_uid,
+                                merchantUid: rsp.merchant_uid
+                            })
+                        })
+                        alert('멘토링 신청이 완료되었습니다.');
+                        location.href='mentor-main.html';
+                    })
+                } else {
+                    alert('멘토링 결제를 실패하셨습니다');
                     location.href='mentor-main.html';
-                })
-            } else {
-                alert('멘토링 결제를 실패하셨습니다');
-                location.href='mentor-main.html';
-            }
-        });
-    }
+                }
+            });
+        }
+    })
+}
 </script>
 
 
