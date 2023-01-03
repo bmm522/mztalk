@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static com.mztalk.bung.domain.BoardStatus.NO;
 import static com.mztalk.bung.domain.BoardStatus.YES;
 
 @Repository
@@ -85,6 +86,17 @@ public class BungAddBoardRepositoryCustomImpl implements BungAddBoardRepositoryC
                 .setParameter("aId", aId)
                 .setParameter("YES", YES)
                 .executeUpdate();
+    }
+
+    @Override
+    public List<BungAddBoard> getAcceptList(String nickname) {
+        List<Long> boardIdList= entityManager.createQuery("SELECT b.boardId FROM BungBoard b WHERE b.boardWriter = :nickname", Long.class)
+                .setParameter("nickname", nickname)
+                .getResultList();
+        return entityManager.createQuery("SELECT b FROM BungAddBoard b WHERE b.bungBoard.boardId IN :boardId AND b.boardStatus = :NO", BungAddBoard.class)
+                .setParameter("boardId", boardIdList)
+                .setParameter("NO", NO)
+                .getResultList();
     }
 
 //    @Override

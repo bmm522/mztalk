@@ -40,7 +40,7 @@
         <br><br>
         <div class="cardZone" style="height: px; width: 1500px;">
             <div id="pageBtn" style="height: 35px; float: right; width: 33%; text-align: right;">
-                <button type="button" class="btn btn-outline-warning" class="PageBtn">벙 참가 신청 리스트</button>
+                <button type="button" class="btn btn-outline-warning" class="PageBtn" id="bung-request-list-btn">벙 참가 신청 리스트</button>
             </div>
             <div id="pageBtn" style="height: 35px; float: right; width: 33%;">
             
@@ -57,7 +57,7 @@
                     </div>
                     <div class="select" style="float: left; width: 21%;">
                         <select id="type" name="type" class="form-select" style="width: 100px; height: 40px;">
-                            <option value="">검색</option>
+                            <option value="null">검색</option>
                             <option value="boardTitle">제목</option>
                             <option value="boardContent">내용</option>
                             <option value="boardWriter">닉네임</option>
@@ -66,26 +66,26 @@
                     <div class="search" style="float: left; width: 66%;">
                         <input type="text" class="span2" id="searchBox" style="height: 40px;">
                         &nbsp;
-                        <button class="search-btn" type="submit" style="height: 40px; width: 35px;" id="searchBtn"><i class="fas fa-search"  style="width: 30px;"></i></button>
+                        <button class="search-btn" type="button" style="height: 40px; width: 35px;" id="searchBtn"><i class="fas fa-search"  style="width: 30px;"></i></button>
                     </div>
                     <div  class="form-check form-switch form-check-reverse" style="height: 100px;">
                         <br><br><br>
                         <table>
                             <tr>
                                 <th>
-                                    <input class="form-check-input" type="checkbox" id="study">
+                                    <input class="form-check-input" type="checkbox" id="study" value="study">
                                     <label class="form-check-label" for="study">공부</label>
                                 </th>
                                 <th>
-                                    <input class="form-check-input" type="checkbox" id="hobby">
+                                    <input class="form-check-input" type="checkbox" id="hobby" value="hobby">
                                     <label class="form-check-label" for="hobby">취미</label>
                                 </th>
                                 <th>
-                                    <input class="form-check-input" type="checkbox" id="enjoy">
+                                    <input class="form-check-input" type="checkbox" id="enjoy" value="enjoy">
                                     <label class="form-check-label" for="enjoy">놀기</label>
                                 </th>
                                 <th>
-                                    <input class="form-check-input" type="checkbox" id="food">
+                                    <input class="form-check-input" type="checkbox" id="food" value="food">
                                     <label class="form-check-label" for="food">음식</label>
                                 </th>
                             </tr>

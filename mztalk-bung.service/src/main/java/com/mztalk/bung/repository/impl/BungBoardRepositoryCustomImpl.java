@@ -4,6 +4,7 @@ import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.QBungBoard;
+import com.mztalk.bung.domain.response.BungBoardResponseDto;
 import com.mztalk.bung.repository.BungBoardRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -77,10 +79,33 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
                 .getSingleResult();
     }
 
+//    @Override
+//    public List<BungBoard> getSearchList(String[] categories, String type, String searchText) {
+//
+//        return entityManager.createQuery
+//                        ("SELECT b FROM BungBoard b WHERE b.category IN :categories AND CASE :type WHEN 'boardTitle' THEN b.boardTitle LIKE CONCAT('%', :searchText, '%') WHEN 'boardContent' THEN b.boardContent LIKE CONCAT('%', :searchText, '%') ELSE b.boardWriter = :searchText END", BungBoard.class)
+//                .setParameter("categories", Arrays.asList(categories))
+//                .setParameter("type", type)
+//                .setParameter("searchText", searchText)
+//                .getResultList();
+//    }
+
+    @Override
+    public List<BungBoard> getSearchList(String[] categories, String type, String searchText) {
+        return entityManager.createQuery
+                        ("SELECT b FROM BungBoard b WHERE b.category IN :categories AND CASE :type WHEN 'boardTitle' THEN b.boardTitle WHEN 'boardContent' THEN b.boardContent ELSE b.boardWriter END LIKE CONCAT('%', :searchText, '%')", BungBoard.class)
+                .setParameter("categories", Arrays.asList(categories))
+                .setParameter("type", type)
+                .setParameter("searchText", searchText)
+                .getResultList();
+    }
+
     @Override
     public List<BungAddBoardDto> findBungBoardWriterAndBoardStatus(String boardWriter, String boardStatus) {
        return null;
     }
+
+
 
     private BooleanExpression eqCategory(String category) {
         return category != null ? bungBoard.category.contains(category) : null;

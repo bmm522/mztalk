@@ -15,6 +15,7 @@ import com.mztalk.bung.domain.entity.Result;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -121,11 +122,17 @@ public class BungBoardApiController {
 //        return bungBoardService.bungBoardSearch(searchKeyWord);
 //    }
 
-    @GetMapping("/bungBoardSearch")
-    public Result bungBoardSearch(@RequestParam("category")String category, @RequestParam("boardTitle")String boardTitle) {
-//        return bungBoardService.bungBoardSearch(new SearchKeyWord(category, boardTitle));
-        return null;
+    @GetMapping("/search")
+    public Result<?> bungBoardSearch(@RequestParam(value="category")String[] categories, @RequestParam("type")String type, @RequestParam("searchText")String searchText){
+        return bungBoardService.search(categories, type, searchText);
     }
+
+
+//    @GetMapping("/bungBoardSearch")
+//    public Result bungBoardSearch(@RequestParam("category")String category, @RequestParam("boardTitle")String boardTitle) {
+//       return bungBoardService.bungBoardSearch(new SearchKeyWord(category, boardTitle));
+//        return null;
+//    }
 
     // 벙 게시물 현인원 추방 기능
     @DeleteMapping("/bungAddBoardGroupDrop/{boardId}/{addId}")
@@ -137,5 +144,10 @@ public class BungBoardApiController {
     @GetMapping("/recent-board")
     public ConcurrentHashMap<String, String> getRecentBoardNo(){
         return bungBoardService.getRecentBoardNo();
+    }
+
+    @GetMapping("/accept")
+    public Result<?> getAcceptList(@RequestParam("nickname")String nickname){
+        return bungBoardService.getAcceptList(nickname);
     }
 }

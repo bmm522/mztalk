@@ -18,5 +18,7 @@ public interface BungAddBoardRepositoryCustom {
 
     Long bungAddBoardGroupDrop(Long bId, Long aId);
 
+    List<BungAddBoard> getAcceptList(String nickname);
+
 //    String findAddBoardByWriter(Long boardId, addWriter);
 }

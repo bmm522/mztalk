@@ -598,7 +598,7 @@ document.getElementById('bung-write-btn').addEventListener('click', function(){
     for(let i = 0 ; i < document.getElementsByClassName('form-check-input').length ; i++){
         
         if(document.getElementsByClassName('form-check-input')[i].checked){
-            checkValue += document.getElementsByClassName('form-check-input')[i].value+ " ";
+            checkValue += document.getElementsByClassName('form-check-input')[i].value;
             cnt += 1;       
         }
        
@@ -641,6 +641,7 @@ const postBungData = (checkValue) =>{
        RefreshToken:localStorage.getItem('refreshToken'),
    },
    body:JSON.stringify({
+        boardWriterId : localStorage.getItem('userNo'),
        boardWriter : localStorage.getItem("userNickname"),
        boardTitle : document.getElementById('bungTitle').value,
        boardContent : document.getElementById('bungContent').value,
