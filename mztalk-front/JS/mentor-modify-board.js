@@ -174,7 +174,7 @@ const deleteBoard = () =>{
             window.alert('글이 삭제되었습니다.');
             location.href="mentor-main.html";
         } else{
-            window.alert('작성되어있는 리뷰가 존재하여 삭제할 수 없습니다.');
+            window.alert('신청자가 존재하여 삭제할 수 없습니다.');
             location.href="mentor-main.html";
             return false;
         }

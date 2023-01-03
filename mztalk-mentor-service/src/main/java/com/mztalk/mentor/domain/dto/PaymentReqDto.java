@@ -34,14 +34,4 @@ public class PaymentReqDto {
         return payment;
     }
 
-    @Override
-    public String toString() {
-        return "PaymentReqDto{" +
-                "userId=" + userId +
-                ", boardId=" + boardId +
-                ", price=" + price +
-                ", impUid='" + impUid + '\'' +
-                ", merchantUid='" + merchantUid + '\'' +
-                '}';
-    }
 }
