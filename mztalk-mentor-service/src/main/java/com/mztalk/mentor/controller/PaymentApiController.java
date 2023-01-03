@@ -18,7 +18,7 @@ import java.util.List;
         @ApiResponse(code = 400, message = "BAD REQUEST"),
         @ApiResponse(code = 500, message = "SERVER ERROR")
 })
-@Api(tags = {"서비스 이용자가 결제한 정보를 제공하는 Controller"})
+@Api(tags = {"서비스 이용자 결제 정보 제공 Controller"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentors")

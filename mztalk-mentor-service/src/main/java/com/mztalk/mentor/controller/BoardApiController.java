@@ -20,7 +20,7 @@ import java.util.List;
         @ApiResponse(code = 400, message = "BAD REQUEST"),
         @ApiResponse(code = 500, message = "SERVER ERROR")
 })
-@Api(tags = {"멘토링 글에 대한 정보를 제공하는 Controller"})
+@Api(tags = {"멘토링 글 정보 제공 Controller"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentors")
@@ -74,6 +74,17 @@ public class BoardApiController {
     public ResponseEntity<?> findBoardByMentorId(@PathVariable("mentorId")Long mentorId){
         List<BoardResDto> boards = boardService.findBoardByMentorId(mentorId);
         return new ResponseEntity<>(new Result<>("해당 멘토에 대한 모든 글", boards), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "사용자 본인의 글인지 확인", notes = "해당번호의 멘토가 작성한 글인지 확인하는 메소드입니다.", response = boolean.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "사용자 식별자", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "boardId", value = "글 식별자", required = true, dataType = "int", paramType = "query")
+    })
+    @GetMapping("/board/mentor")
+    public boolean isOwner(@RequestParam("userId")Long userId,@RequestParam("boardId")Long boardId){
+        boolean isOwner = boardService.isOwner(userId,boardId);
+        return isOwner;
     }
 
     // 진짜로 삭제한다.

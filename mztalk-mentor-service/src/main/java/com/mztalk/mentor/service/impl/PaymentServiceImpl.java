@@ -6,6 +6,7 @@ import com.mztalk.mentor.domain.entity.*;
 import com.mztalk.mentor.exception.PaymentNotFoundException;
 import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MenteeRepository;
+import com.mztalk.mentor.repository.ParticipantRepository;
 import com.mztalk.mentor.repository.PaymentRepository;
 import com.mztalk.mentor.service.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final MenteeRepository menteeRepository;
     private final BoardRepository boardRepository;
+    private final ParticipantRepository participantRepository;
 
     @Override
     @Transactional
@@ -55,7 +57,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional
     public Long cancel(Long id) {
         Payment payment = paymentRepository.findById(id).orElseThrow(() -> new PaymentNotFoundException("해당하는 결제내역이 존재하지 않습니다."));
-        payment.cancelPayment();
+        Participant participant = participantRepository.findByPaymentId(id);
+        paymentRepository.delete(payment);
+        participantRepository.delete(participant);
         return payment.getId();
     }
 }

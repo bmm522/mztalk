@@ -31,6 +31,8 @@ public class BoardResDto {
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 
+    private String serviceName;
+
     public BoardResDto(Board board){
         this.id = board.getId();
         this.category = board.getCategory();
@@ -44,6 +46,7 @@ public class BoardResDto {
         this.status = board.getStatus();
         this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();
+        this.serviceName ="mentor";
     }
 
     public BoardResDto(Board board, MentorTransferDto mentor){

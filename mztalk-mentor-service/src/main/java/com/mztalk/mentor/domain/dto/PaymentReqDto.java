@@ -21,7 +21,7 @@ public class PaymentReqDto {
     private int price;
     @ApiModelProperty(value="아임포트 결제 고유번호", example = "imp-132132132", required = true)
     private String impUid;
-    @ApiModelProperty(value="가맹정 주문번호", example = "imp656546", required = true)
+    @ApiModelProperty(value="가맹정 주문번호", example = "ORD-656546", required = true)
     private String merchantUid;
 
     public Payment toEntity(){
@@ -34,14 +34,4 @@ public class PaymentReqDto {
         return payment;
     }
 
-    @Override
-    public String toString() {
-        return "PaymentReqDto{" +
-                "userId=" + userId +
-                ", boardId=" + boardId +
-                ", price=" + price +
-                ", impUid='" + impUid + '\'' +
-                ", merchantUid='" + merchantUid + '\'' +
-                '}';
-    }
 }

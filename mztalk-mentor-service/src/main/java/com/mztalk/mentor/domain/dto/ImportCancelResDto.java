@@ -1,56 +1,57 @@
 package com.mztalk.mentor.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import javax.annotation.Generated;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import java.util.HashMap;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "code",
+        "message",
+        "response"
+})
+@Generated("jsonschema2pojo")
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 public class ImportCancelResDto {
 
-    private String code;
+    @JsonProperty("code")
+    private Integer code;
+    @JsonProperty("message")
     private String message;
-    private HashMap<String,String> response;
-    private HashMap<String,String> cancel_history;
-    private String cancel_reason;
-    private HashMap<String,String> cancel_receipt_urls;
-    private String cancelled_at;
-    private String card_code;
-    private String card_name;
-    private String card_number;
-    private String card_quota;
-    private String card_type;
-    private String cash_receipt_issued;
-    private String channel;
-    private String currency;
-    private String custom_data;
-    private String customer_uid;
-    private String customer_uid_usage;
-    private String emb_pg_provider;
-    private String escrow;
-    private String fail_reason;
-    private String failed_at;
-    private String imp_uid;
-    private String merchant_uid;
-    private String name;
-    private String paid_at;
-    private String pay_method;
-    private String pg_id;
-    private String pg_provider;
-    private String pg_tid;
-    private String receipt_url;
-    private String started_at;
-    private String status;
-    private String user_agent;
-    private String vbank_code;
-    private String vbank_date;
-    private String vbank_holder;
-    private String vbank_issued_at;
-    private String vbank_name;
-    private String vbank_num;
+    @JsonProperty("response")
+    private Response response;
+
+    @JsonProperty("code")
+    public Integer getCode() {
+        return code;
+    }
+
+    @JsonProperty("code")
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    @JsonProperty("message")
+    public String getMessage() {
+        return message;
+    }
+
+    @JsonProperty("message")
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @JsonProperty("response")
+    public Response getResponse() {
+        return response;
+    }
+
+    @JsonProperty("response")
+    public void setResponse(Response response) {
+        this.response = response;
+    }
+
 
 
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
         @ApiResponse(code = 400, message = "BAD REQUEST"),
         @ApiResponse(code = 500, message = "SERVER ERROR")
 })
-@Api(tags = {"금융결제원 실명인증 API를 사용하기 위한 Controller"})
+@Api(tags = {"금융결제원 실명인증 API Controller"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentors/openapi")

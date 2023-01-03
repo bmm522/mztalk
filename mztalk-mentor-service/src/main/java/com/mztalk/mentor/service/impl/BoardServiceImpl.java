@@ -51,6 +51,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public boolean isOwner(Long userId,Long boardId) {
+        Board board = boardRepository.isOwner(userId,boardId);
+        boolean isOwner = board == null ? false : true;
+        return isOwner;
+    }
+
+    @Override
     public BoardResDto findBoardByBoardId(Long id) {
         Board board = boardRepository.findBoardByBoardId(id);
         BoardResDto boardResDto = new BoardResDto(board,new MentorTransferDto(board.getMentor()));
@@ -69,7 +76,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardResDto> latestBoard() {
         List<Board> boards = boardRepository.latestBoard();
-        List<BoardResDto> collect = boards.stream().map(BoardResDto::new).collect(Collectors.toList());
+        List<BoardResDto> collect = boards.stream().map(b -> new BoardResDto(b, new MentorTransferDto(b.getMentor()))).collect(Collectors.toList());
         return collect;
     }
 
