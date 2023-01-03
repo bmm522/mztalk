@@ -3,6 +3,7 @@ package com.mztalk.bung.service;
 import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
+import com.mztalk.bung.domain.entity.BungAddRequestDto;
 import com.mztalk.bung.domain.entity.Result;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
 
@@ -24,9 +25,9 @@ public interface BungBoardService {
 
     ConcurrentHashMap<String, String> getRecentBoardNo();
 
-    Long addBungBoard(ConcurrentHashMap<String, String> bungAddBoardDto);
+    BungAddRequestDto addBungBoard(ConcurrentHashMap<String, String> bungAddBoardMap);
 
-    Result addBungBoardsList();
+    Result addBungBoardsList(String boardWriter);
 
     Long addBungBoardUpdate(Long addId, BungAddBoardDto bungAddBoardDto);
 
@@ -44,5 +45,5 @@ public interface BungBoardService {
 
     Long bungAddBoardGroupDrop(Long bId, Long aId);
 
-    Long findBungBoard();
+    Long findBungBoard(Long bId);
 }

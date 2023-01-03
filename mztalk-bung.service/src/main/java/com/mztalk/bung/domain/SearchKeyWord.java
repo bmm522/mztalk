@@ -12,13 +12,10 @@ public class SearchKeyWord {
 
     @Nullable
     private String category;
-
     @Nullable
     private  String boardTitle;
-
     @Nullable
     private  String boardContent;
-
     @Nullable
     private  String boardWriter;
 

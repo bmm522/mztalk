@@ -1,6 +1,7 @@
 package com.mztalk.bung.repository.impl;
 
 import com.mztalk.bung.domain.SearchKeyWord;
+import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.QBungBoard;
 import com.mztalk.bung.repository.BungBoardRepositoryCustom;
@@ -42,13 +43,13 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
                 .getSingleResult();
     }
 
-    @Override
-    @Transactional
-    public String findBungBoardWriter(Long boardId) {
-        return (String) entityManager.createQuery("select b.boardWriter from BungBoard b where b.boardId = :boardId")
-                .setParameter("boardId", boardId)
-                .getSingleResult();
-    }
+//    @Override
+//    @Transactional
+//    public String findBungBoardWriter(Long boardId) {
+//        return (String) entityManager.createQuery("select b.boardWriter from BungBoard b where b.boardId = :boardId", String.class)
+//                .setParameter("boardId", boardId)
+//                .getSingleResult();
+//    }
 
     // 카테고리, 키워드별 검색 기능 로직
     @Override
@@ -67,6 +68,18 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
         return (java.sql.Date) entityManager.createQuery("select b.deadlineDate from BungBoard b where b.boardId = :boardId")
                 .setParameter("boardId", boardId)
                 .getSingleResult();
+    }
+
+    @Override
+    public Long findBungBoard(Long bId) {
+        return entityManager.createQuery("select count(*) from BungBoard b where b.boardId = :bId", Long.class)
+                .setParameter("bId", bId)
+                .getSingleResult();
+    }
+
+    @Override
+    public List<BungAddBoardDto> findBungBoardWriterAndBoardStatus(String boardWriter, String boardStatus) {
+       return null;
     }
 
     private BooleanExpression eqCategory(String category) {

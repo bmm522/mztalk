@@ -40,7 +40,8 @@
             <div class="userName">
                 <br>
                 <span class="form-label">이 름 : &nbsp;</span>
-                <input type="text" class="inputType" id="bungRequestUserName" name="bungRequestUserName" required style="width: 350px;" maxlength="10">
+                <input type="text" class="inputType" id="bungRequestUserName" name="bungRequestUserName" style="width: 350px;" maxlength="10" readonly>
+                <!-- <input type="hidden" class="inputType" id="bungRequestNickName" name="bungRequestNickName" value="" -->
             </div>
     
             <div class="userPhone">
@@ -58,7 +59,8 @@
             <div class="btnGroup">
                 <button type="button" class="btn btn-warning" id="btnbtn">수락하기</button>
                 <button type="button" class="btn btn-warning" id="btnbtn">취소하기</button>
-                <button type="button" class="btn btn-warning" id="btnbtn">신청하기</button>
+                <button type="button" class="btn btn-warning" id="addbtn">신청하기</button>
+                    </span>
             </div>
         </div>
     </main>
@@ -156,4 +158,5 @@ cellPhone.onkeyup = function(event){
 </script>
 </body>
 <script src="JS/main.js"></script>
+<script src="JS/bung-request.js"></script>
 </html>

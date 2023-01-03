@@ -65,6 +65,21 @@ window.onload= function(){
     
     })
 
+    if(localStorage.getItem('writer') != localStorage.getItem('userNickname')) {
+        document.getElementById('boardUpdate').innerHTML = "";
+    }
+
+    if(localStorage.getItem('writer') != localStorage.getItem('userNickname')) {
+        document.getElementById('deleteBtn').innerHTML = "";
+    }
+
+    console.log(localStorage.getItem('writer'));
+    console.log(localStorage.getItem('userNickname'));
+
+    if(localStorage.getItem('writer') == localStorage.getItem('userNickname')) {
+        document.getElementById('addBtn').innerHTML = "";
+    }
+
 }
 const getNowGroup = (fullGroup) =>{
     fetch("http://localhost:8000/bung/bungBoardNowGroup/"+localStorage.getItem('bId'),{
@@ -167,19 +182,27 @@ const chatOpen = () =>{
     })
 }
 
-document.getElementById('addBtn').addEventListener('click',function(){
-    fetch('http://localhost:8000/bung/bungAddBoard/'+localStorage.getItem('bId'),{
-            method:"GET",
-            headers:{
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken'),
-            }
-        })
-        .then((res)=>res.json())
-        .then(res=>{
-            console.log(res.bId);
-            localStorage.setItem("bId", res.bId);
-            location.href="bung-service-request.html";
-        })
-    });
+// document.getElementById('addBtn').addEventListener('click',function(){
+//     fetch('http://localhost:8000/bung/bungAddBoardRequest/'+localStorage.getItem('bId'),{
+//             method:"GET",
+//             headers:{
+//                 Authorization:localStorage.getItem('authorization'),
+//                 RefreshToken:localStorage.getItem('refreshToken'),
+//             }
+//         })
+//         .then((res)=>res.json())
+//         .then(res=>{
+//             console.log(res.bId);
+//             localStorage.setItem("bId", res.bId);
+//             location.href="bung-service-request.html";
+//         })
+// });
+
+console.log("이거나옴?" + localStorage.getItem('bId'));
+const boardId = localStorage.getItem('bId');
+
+document.getElementById('addBtn').addEventListener('click',function(boardId){
+    console.log(localStorage.getItem('bId'));
+    location.href="bung-service-request.html";
+});
 
