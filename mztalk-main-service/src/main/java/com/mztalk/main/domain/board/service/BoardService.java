@@ -19,4 +19,6 @@ public interface BoardService {
     Long deleteBoard(Long id);
 
     Result findAllByBoardStory(Long own);
+
+    //Long findByUserNo(String nickname);
 }

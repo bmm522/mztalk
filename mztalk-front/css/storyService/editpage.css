@@ -11,6 +11,16 @@
     display: flex;
     border-radius: 4px;
   }
+
+  #viptime{
+    text-align:center;
+    margin-left: 45%;
+    color:blue; 
+    font-size:30px; 
+    text-shadow:5px 5px 5px gray
+  }
+
+
   
   /*프로필셋팅 아티클*/
   .setting-container .setting__content {

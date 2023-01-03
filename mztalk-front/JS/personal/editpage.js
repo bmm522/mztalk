@@ -5,7 +5,57 @@ window.onload =() =>{
     console.log("수정페이지 : " + localStorage.getItem('userNickname'));
     profileBox();
     noSocial();
+    checkVipCheck();
 }
+
+
+const checkVipCheck = ()=>{
+
+    let userNo = localStorage.getItem('userNo');
+
+    fetch("http://localhost:8000/story/vip/"+userNo,{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+      })
+    .then((res)=>res.json())
+    .then(res =>{
+      
+      console.log(res,"????");
+      console.log(res.data);
+
+      if(res.data != null){
+        console.log("하이");
+        let VIPCHECK = res.data;
+        let createDate = VIPCHECK.createDate.substr(0,10);
+        let vipDate = VIPCHECK.vipDate.substr(0,10);
+        console.log(createDate);
+        console.log(vipDate);
+        let userNickname = localStorage.getItem('userNickname');
+        document.querySelector('#vipDate').innerHTML =
+        `
+        <div id="viptime">
+        <a id="vipnickname">${userNickname}</a> 
+          회원 기간은<br>
+        <a>${createDate} 부터
+        <br>${vipDate}입니다.</a>
+        </div>
+        `
+
+
+
+      }
+  })
+}
+
+
+
+
+
+
 
 
 
