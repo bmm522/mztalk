@@ -40,7 +40,8 @@ const getMyReview = () =>{
                     <td>${score.id}</td>
                     <td>${score.count}</td>
                     <td>
-                        <button type="button" class="btn btn-outline-success" onclick="myReview(${score.id});" data-bs-toggle="modal" data-bs-target="#myReview">보기</button>
+                        <button type="button"  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                        class="btn btn-outline-success" onclick="myReview(${score.id});" data-bs-toggle="modal" data-bs-target="#myReview">보기</button>
                     </td>
                 </tr> 
                 

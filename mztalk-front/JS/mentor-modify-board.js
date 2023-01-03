@@ -55,7 +55,7 @@ const getMyBoard = () =>{
             `<div>작성하신 글이 존재하지 않습니다.</div>`
         } else{
             document.getElementById("board-list-div").innerHTML +=
-            `<div class="container text-center" style="padding-top:30px;">
+            `<div class="container text-center" style="padding-top:30px; font-size:14px;">
                 <div class="row">
                     <div class="col-4">
                         글번호
@@ -71,7 +71,7 @@ const getMyBoard = () =>{
             `
             for(const board of res.data){
                 document.getElementById("board-list-div").innerHTML +=
-                `<div class="container text-center" style="padding-top:30px;">
+                `<div class="container text-center" style="padding-top:30px; font-size:14px;">
                     <div class="row">
                         <div class="col-4">
                             ${board.id}
@@ -80,7 +80,8 @@ const getMyBoard = () =>{
                             ${board.title}
                         </div>
                         <div class="col-4">
-                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modifyModal" onclick="showBoard(${board.id});">작성한 내용 보기</button>
+                            <button type="button" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                            class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modifyModal" onclick="showBoard(${board.id});">작성한 내용 보기</button>
                         </div>
                     </div>
                 </div>
