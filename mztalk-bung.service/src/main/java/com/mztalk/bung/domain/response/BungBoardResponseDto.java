@@ -24,7 +24,7 @@ public class BungBoardResponseDto {
     private long nowGroup;
     private long fullGroup;
     private String deadlineDate;
-    private String createDate;
+    private String createdDate;
     private String address;
     private String serviceName;
 
@@ -40,7 +40,7 @@ public class BungBoardResponseDto {
 //        this.nowGroup = bungBoard.getNowGroup();
         this.fullGroup = bungBoard.getFullGroup();
         this.deadlineDate = String.valueOf(bungBoard.getDeadlineDate());
-        this.createDate = String.valueOf(bungBoard.getCreateDate());
+        this.createdDate = String.valueOf(bungBoard.getCreateDate());
         this.address = bungBoard.getAddress();
         this.serviceName = "bung";
     }

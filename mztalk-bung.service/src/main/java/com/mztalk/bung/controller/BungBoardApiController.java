@@ -57,6 +57,12 @@ public class BungBoardApiController {
         return bungBoardService.mainBoardSelect(Long.parseLong(bId));
     }
 
+    // 벙 신청 게시글 연결 기능
+    @GetMapping("bungAddBoardRequest/{boardId}")
+    public Long addBoardRequest() {
+        return bungBoardService.findBungBoard();
+    }
+
     // 벙 신청 게시글 작성
     @ResponseBody
     @PostMapping("/bungAddBoard")
@@ -120,6 +126,7 @@ public class BungBoardApiController {
         return bungBoardService.bungAddBoardGroupDrop(bId, aId);
     }
 
+    // 벙 게시글 작성 연결 기능
     @GetMapping("/recent-board")
     public ConcurrentHashMap<String, String> getRecentBoardNo(){
         return bungBoardService.getRecentBoardNo();

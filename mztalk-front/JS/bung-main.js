@@ -27,7 +27,7 @@ window.onload = function(){
                 let writer = board.writer;
                 let fullGroup = board.fullGroup;
                 let deadlineDate = board.deadlineDate;
-                let createDate = board.createDate;
+                let createdDate = board.createdDate;
                 let boardId = board.boardId;
 
                 document.getElementById('output-div').innerHTML +=
