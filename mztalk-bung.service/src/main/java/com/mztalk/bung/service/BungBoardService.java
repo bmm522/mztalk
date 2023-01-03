@@ -6,6 +6,7 @@ import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.entity.BungAddRequestDto;
 import com.mztalk.bung.domain.entity.Result;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
+import com.mztalk.bung.domain.response.ResponseDto;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,7 +32,7 @@ public interface BungBoardService {
 
     Long addBungBoardUpdate(Long addId, BungAddBoardDto bungAddBoardDto);
 
-    Long addBungBoardAccept(Long addId);
+    ResponseDto addBungBoardAccept(Long addId);
 
     BungAddBoardDto bungAddBoardSelect(Long aId);
 

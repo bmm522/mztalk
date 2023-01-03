@@ -199,6 +199,52 @@ const boardId = localStorage.getItem('bId');
 
 document.getElementById('addBtn').addEventListener('click',function(boardId){
     console.log(localStorage.getItem('bId'));
-    location.href="bung-service-request.html";
+    location.href="bung-service-add.html";
 });
+
+document.getElementById('bung-modal-btn').addEventListener('click', function(){
+    fetch('http://localhost:8000/bung/bungRequestList/'+localStorage.getItem('bId'),{
+        method:"GET",
+        headers:{
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        }
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        for(let add of res.data){
+            document.getElementById('modal-div-div').innerHTML += `<div class="groupUser" style="height: 50px; float: left; width: 70%; font-size: x-large;">
+            ${add.addNickName}
+        </div>`;
+
+        if(add.addNickName == add.bungBoard.boardWriter){
+
+        } else if(add.bungBoard.boardWriter != localStorage.getItem('userNickname')){
+
+        } else {
+
+            document.getElementById('modal-div-div').innerHTML +=   `
+        <div class="groupUserDrop" style="height: 50px; float: left; width: 30%;">
+            <button type="button" class="btn btn-outline-danger btn-sm" id="drop-btn" style="width: 35px; height: 35px; font-size: small;" onclick="deleteAdd(${add.addId});">X</button>
+        </div>`;
+        }
+        
+        }
+    })
+    document.getElementById('modal-div-div').innerHTML = '';
+})
+
+const deleteAdd = (addId) => {
+    fetch('http://localhost:8000/bung/bungAddBoardGroupDrop/'+localStorage.getItem('bId')+'/'+addId,{
+        method:"DELETE",
+        headers:{
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        }
+    })
+    .then(res=>{
+        alert('추방되었습니다.');
+        location.href="bung-service-detail.html";
+    })
+}
 

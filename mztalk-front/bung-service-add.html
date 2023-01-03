@@ -40,26 +40,25 @@
             <div class="userName">
                 <br>
                 <span class="form-label" id="add-name"  >이 름 : &nbsp;</span>
-                <input type="text" id="name-box" class="inputType" id="bungRequestUserName" name="bungRequestUserName" style="width: 350px;" maxlength="10" readonly>
+                <input type="text"  class="inputType" id="bungRequestUserName" name="bungRequestUserName" style="width: 350px;" maxlength="10" readonly>
                 <!-- <input type="hidden" class="inputType" id="bungRequestNickName" name="bungRequestNickName" value="" -->
             </div>
     
             <div class="userPhone">
                 <br>
                 <span class="form-label" id="phoneNumber">번 호 : &nbsp;</span>
-                <input type="text"  id="phone-box" class="inputType" id="bungRequestUserPhone" name="bungRequestUserPhone" required style="width: 350px;" maxlength="13" readonly>
+                <input type="text"   class="inputType" id="bungRequestUserPhone" name="bungRequestUserPhone" required style="width: 350px;" maxlength="13" >
             </div>
     
             <div class="userReason">
                 <br>
                 <span class="form-label" id="reason">&nbsp;&nbsp;&nbsp;&nbsp;사 유 : </span>
                 <br>
-                <textarea class="inputType" id="bungRequestuserReason" name="bungRequestuserReason" required rows="5" style="width: 350px; height: 200px; resize: none;"  readonly></textarea>
+                <textarea class="inputType" id="bungRequestuserReason" name="bungRequestuserReason" required rows="5" style="width: 350px; height: 200px; resize: none;" ></textarea>
             </div>
             <div class="btnGroup">
-                <button type="button" class="btn btn-warning" id="request-btnbtn">수락하기</button>
                 <button type="button" class="btn btn-warning" id="btnbtn">취소하기</button>
-
+                <button type="button" class="btn btn-warning" id="addbtn">신청하기</button>
                     </span>
             </div>
         </div>
@@ -158,5 +157,5 @@ cellPhone.onkeyup = function(event){
 </script>
 </body>
 <script src="JS/main.js"></script>
-<script src="JS/bung-request.js"></script>
+<script src="JS/bung-add.js"></script>
 </html>

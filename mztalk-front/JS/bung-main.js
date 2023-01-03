@@ -1,6 +1,5 @@
 window.onload = function(){
-    console.log(localStorage.getItem('authorization'));
-    console.log(localStorage.getItem('refreshToken'));
+
      localStorage.removeItem('bId');
     
     fetch('http://localhost:8000/bung/mainBoards', {

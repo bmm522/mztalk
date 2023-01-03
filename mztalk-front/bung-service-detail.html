@@ -29,7 +29,7 @@
             </article> -->
             <article class="pictogramWrap">
                 
-                <i class="fa-solid fa-comments" style=""></i>
+                <i class="fa-solid fa-comments"></i>
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필">
             </article>
         </div>
@@ -92,7 +92,7 @@
                 </div>
                  <div id="group" style="height: 66.66px;">
                     <!-- modal button -->
-                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#groupList">신청자 현황 보기</button>
+                     <button type="button" id="bung-modal-btn" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#groupList">신청자 현황 보기</button>
                  </div>
                  <!-- modal -->
                     <div class="modal fade" id="groupList" tabindex="-1" aria-labelledby="groupList" aria-hidden="true">
@@ -103,24 +103,16 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="groupUserBox">
-                                        <div class="groupUser" style="height: 50px; float: left; width: 70%; font-size: x-large;">
+                                    <div id="modal-div-div" class="groupUserBox">
+                                        <!-- <div class="groupUser" style="height: 50px; float: left; width: 70%; font-size: x-large;" id="group-info">
                                             {참여자 정보}
                                         </div>
                                         <div class="groupUserDrop" style="height: 50px; float: left; width: 30%;">
                                             <button type="button" class="btn btn-outline-danger btn-sm" id="drop-btn" style="width: 35px; height: 35px; font-size: small;">X</button>
-                                        </div>
-                                        <div class="groupUser" style="height: 50px; float: left; width: 70%; font-size: x-large;">
-                                            {참여자 정보}
-                                        </div>
-                                        <div class="groupUserDrop" style="height: 50px; float: left; width: 30%;">
-                                            <button type="button" class="btn btn-outline-danger btn-sm" id="drop-btn" style="width: 35px; height: 35px; font-size: small;">X</button>
-                                        </div>
+                                        </div> -->
+                                        
                                     </div>
-                                        <!-- <br>
-                                        <div class="groupUser" style="height: 200px; float: left; width: 50%;">
-                                            {참여자 정보}
-                                        </div> -->     
+                                        
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
