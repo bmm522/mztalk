@@ -30,7 +30,7 @@ public class Board extends BaseTimeEntity {
     @Column(name="boardId")
     private Long id;  // 글 번호
 
-    private String nickname;
+    private String writer;
 
     @Column(nullable=false, length= 100)
     private String title; // 글 제목
@@ -55,10 +55,10 @@ public class Board extends BaseTimeEntity {
 
     //글쓰기
     @Builder
-    public Board(Long id, String nickname, String title, String content, Long own, List<Reply> reply,
+    public Board(Long id, String writer, String title, String content, Long own, List<Reply> reply,
                  BoardStatus status, PrivacyStatus privacy){
         this.id = id;
-        this.nickname = nickname;
+        this.writer = writer;
         this.title = title;
         this.content = content;
         this.own = own;
@@ -78,7 +78,7 @@ public class Board extends BaseTimeEntity {
     //글수정
     public void updateBoard(BoardDto boardDto){
         this.id = boardDto.getId();
-        this.nickname = boardDto.getNickname();
+        this.writer = boardDto.getWriter();
         this.title = boardDto.getTitle();
         this.content = boardDto.getContent();
         this.own = boardDto.getOwn();

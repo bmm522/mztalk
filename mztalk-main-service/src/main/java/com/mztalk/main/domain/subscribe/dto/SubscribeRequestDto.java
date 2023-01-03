@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @Getter
 @Setter
@@ -29,11 +30,14 @@ public class SubscribeRequestDto {
 
 
     public Subscribe toEntity(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+       ;
+
         Subscribe subscribe = Subscribe.builder()
                 .id(id)
                 .userNo(userNo)
                 .roleStatus(RoleStatus.VIP)
-                .vipDate(vipDate)
+                .vipDate(simpleDateFormat.format(vipDate))
                 .price(price)
                 .build();
 

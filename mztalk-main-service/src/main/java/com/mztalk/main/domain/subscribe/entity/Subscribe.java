@@ -34,7 +34,7 @@ public class Subscribe  {
     private RoleStatus roleStatus; //vip여부
 
     @Column(nullable = false)
-    private Date vipDate;
+    private String vipDate;
 
     @CreationTimestamp
     private Timestamp createDate;

@@ -124,11 +124,12 @@ window.addEventListener('load',  async ()=> {
 
     for(let board of result){
         //console.log(board+"??");
-
+        //서비스별
         let title = board.title;
         let content = board.content;
         let boardId = board.id;
         let imageUrl = board.imageUrl;
+        let writer = board.writer;
 
         document.querySelector('#storyList').innerHTML +=
         `
@@ -140,25 +141,17 @@ window.addEventListener('load',  async ()=> {
             <div class="col-md-8">
                 <div class="card-body">
                 <h5 class="card-title">${content}</h5>
-                <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
+                <input type="hidden" value="${boardId}">
                 <p class="card-text">${title}</p>
                 </div>
             </div>
             </div>
         </div>
         `
-
-
-
-
-
-
     }
-
-
 })
 
-
+{/* <span class="badge text-bg-primary" id="serviceMetors">멘토</span> */}
 
 // array.sort(function(a, b) {
 //     a = new Date(a.dateModified);
