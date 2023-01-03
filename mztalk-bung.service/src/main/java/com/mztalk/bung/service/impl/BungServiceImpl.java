@@ -53,6 +53,7 @@ public class BungServiceImpl implements BungBoardService {
 
         BungBoard bungBoardEntity = BungBoard.builder().
                 boardId(bungBoardDto.getBoardId()).
+                boardWriterId(bungBoardDto.getBoardWriterId()).
                 boardWriter(bungBoardDto.getBoardWriter()).
                 boardTitle(bungBoardDto.getBoardTitle()).
                 boardContent(bungBoardDto.getBoardContent()).
