@@ -26,7 +26,7 @@ public class BungBoardResponseDto {
     private String deadlineDate;
     private String createDate;
     private String address;
-
+    private String serviceName;
 
     public BungBoardResponseDto(BungBoard bungBoard, String imageUrl, String imageName) {
         this.boardId = String.valueOf(bungBoard.getBoardId());
@@ -42,5 +42,6 @@ public class BungBoardResponseDto {
         this.deadlineDate = String.valueOf(bungBoard.getDeadlineDate());
         this.createDate = String.valueOf(bungBoard.getCreateDate());
         this.address = bungBoard.getAddress();
+        this.serviceName = "bung";
     }
 }

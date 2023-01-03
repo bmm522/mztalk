@@ -633,8 +633,6 @@ document.getElementById('bung-write-btn').addEventListener('click', function(){
 
 
 const postBungData = (checkValue) =>{
-  
-
     fetch('http://localhost:8000/bung/mainInsertBoard', {
         method:"POST",
        headers:{
@@ -647,13 +645,13 @@ const postBungData = (checkValue) =>{
        boardTitle : document.getElementById('bungTitle').value,
        boardContent : document.getElementById('bungContent').value,
        deadlineDate : document.getElementById('calYear').innerHTML+"-"+document.getElementById('calMonth').innerHTML+"-"+document.getElementsByClassName('choiceDay')[0].innerHTML,
-        fullGroup:document.getElementById('full-group').value,
-       category : checkValue
+       fullGroup:document.getElementById('full-group').value,
+       category : checkValue,
+       address : document.getElementById('addressName').value
    })
    
 })
 .then(res=>{
-   
    location.href="bung-service-main.html";
 })
 }
