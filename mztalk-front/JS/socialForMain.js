@@ -5,6 +5,7 @@ window.onload=function(){
     console.log("main : " + localStorage.getItem('userNickname'));
     console.log("main : " + localStorage.getItem('role'));
     ROLEVIP();
+    checkVip();
 
 }
 
@@ -36,3 +37,62 @@ function ROLEVIP(){
         document.querySelector("#advertis").style.display = "none";
     }
   }
+
+
+const checkVip = () =>{
+    
+    let userNo = localStorage.getItem('userNo');
+
+    fetch("http://localhost:8000/story/checkVip/"+userNo,{
+          method:"PUT",
+          headers:{
+              "Content-Type":"application/json",
+              Authorization:localStorage.getItem('authorization'),
+              RefreshToken:localStorage.getItem('refreshToken'),
+          },
+          body:JSON.stringify({
+            userNo : localStorage.getItem('userNo'),
+        })
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        console.log(res.data,"?????????");
+        if(res.data==1){
+            fetch("http://localhost:8000/login/role/user/"+userNo,{
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json;",
+                    Authorization:localStorage.getItem('authorization'),
+                    RefreshToken:localStorage.getItem('refreshToken')
+                },
+                data: JSON.stringify({
+                    userNo : localStorage.getItem('userNo'),
+                })
+            })
+            alert('VIP이용이 종료되었습니다. 감사합니다');
+            localStorage.removeItem('role')
+            localStorage.setItem('role', 'ROLE_USER');
+
+            location.href="main.html";
+        }
+        
+      })
+}
+
+
+// 토큰 만료 시 토큰 재발급
+const getAccessToken = () =>{
+    localStorage.removeItem('authorization');
+    let refreshToken = localStorage.getItem('refreshToken');
+    fetch("http://localhost:8000/login/access-token?refreshToken="+refreshToken,{
+        method:"GET",            
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        localStorage.removeItem('refreshtoken');
+        localStorage.setItem('authorization',res.jwtToken);
+        localStorage.setItem('refreshToken',res.refreshToken);
+    })
+}
+
+ 

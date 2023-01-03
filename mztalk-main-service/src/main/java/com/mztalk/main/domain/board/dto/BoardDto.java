@@ -68,6 +68,8 @@ public class BoardDto {
         this.own = board.getOwn();
         this.privacy = board.getPrivacy();
         this.replyList = board.getReplyList();
+        this.lastModifiedDate = board.getLastModifiedDate();
+        this.createdDate = board.getCreatedDate();
         this.serviceName = "story";
 
     }
