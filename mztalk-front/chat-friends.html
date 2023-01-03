@@ -9,12 +9,28 @@
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
         integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="static/css/chat.css" /> -->
+     <!-- <link rel="stylesheet" href="static/css/chat.css" />  -->
     <style>
         .chat-box,
         .messages-box {
             height: 510px;
             overflow-y: scroll;
+        }
+
+        #chatopen-btn{
+            margin-left: 30px;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(238, 241, 21);
+            color: rgb(12, 11, 11);
+            border-radius: 10px;
+        }
+
+        #chatopen-btn:hover{
+            margin-left: 30px;     
+            background-color: rgb(12, 11, 11);
+            color: rgb(253, 250, 250);
+            border-radius: 10px;
         }
     </style>
 
@@ -105,7 +121,7 @@
             </td>
 
             <td>
-                <div class="bg-white" style="width: 300px;">
+                <div class="bg-white" style="width: 400px;">
 
                     <div class="bg-gray px-4 py-2 bg-light">
                         <p class="h5 mb-0 py-1">친구 목록</p>
@@ -117,12 +133,8 @@
                         
                         
                         
-
                         
-
-
-
-
+                
 
 
                     </div>
@@ -237,6 +249,8 @@
                     chatBoxController.openChat(messageBoxController.selectedUser);
                 });
             }
+
+            
             //#endregion
         }
 
@@ -285,9 +299,9 @@
                     
                     document.getElementById('friendList').innerHTML += `<div id="profile-div" style="display: inline-block;">
 
-<img
-        src="${user.imageUrl}"
-        height="50" width="50" style="margin-left: 30px; margin-top: 10px; border: 1px solid black; border-radius: 30px;" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${user.nickname}
+<img src="${user.imageUrl}" height="50" width="50" style="margin-left: 30px; margin-top: 10px; border: 1px solid black; border-radius: 30px;" >
+&nbsp&nbsp&nbsp${user.nickname}
+<button id="chatopen-btn" onclick="openChatRoom('${user.nickname}')">대화</button>
 
 </div>`
                 }
@@ -496,7 +510,7 @@
          */
         class FollowListRepository {
             async fetch(userId) {
-                const response = await fetch(`http://localhost:8000/story/matpalList/${userId}`, {
+                const response = await fetch(`http://localhost:8000/login/chat/story?userNo=${userId}`, {
                     method: "GET",
                     headers: {
                         "content-type": "application/json"
@@ -555,6 +569,26 @@
             #buildQueryString(query) {
                 return `?${Object.entries(query).map(([key, value]) => `${key}=${value}`).join('&')}`;
             }
+        }
+
+        const openChatRoom = (nickname) =>{
+            fetch('http://localhost:8000/login/chat/front-nickname', {
+                method:"POST",
+                headers:{
+                    "Content-Type" : "application/json"
+                },
+                body:JSON.stringify({
+                    "serviceName" : "story",
+                    "fromUserNickname" : localStorage.getItem('userNickname'),
+                    "toUserNickname" : nickname
+                })
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                if(res.result == 0){
+                    alert('이미 개설된 채팅방 입니다.');
+                }
+            })
         }
 
     </script>
