@@ -76,7 +76,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardResDto> latestBoard() {
         List<Board> boards = boardRepository.latestBoard();
-        List<BoardResDto> collect = boards.stream().map(BoardResDto::new).collect(Collectors.toList());
+        List<BoardResDto> collect = boards.stream().map(b -> new BoardResDto(b, new MentorTransferDto(b.getMentor()))).collect(Collectors.toList());
         return collect;
     }
 
