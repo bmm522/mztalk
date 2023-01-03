@@ -41,9 +41,9 @@ window.addEventListener('load',  async ()=> {
         .then(res=>{       
         const F = []
 
-        for(let auction of res.data){
+        for(let follow of res.data){
             
-         F.push(auction)
+         F.push(follow)
 
         }
         //console.log('A:', A)
@@ -68,9 +68,9 @@ window.addEventListener('load',  async ()=> {
 
         const B = []
         
-        for(let auction of res.data){
+        for(let bung of res.data){
             
-            B.push(auction)
+            B.push(bung)
         
         }
         //console.log('A:', A)
@@ -92,9 +92,9 @@ window.addEventListener('load',  async ()=> {
 
         const M = []
         
-        for(let auction of res.data){
+        for(let mentor of res.data){
             
-            M.push(auction)
+            M.push(mentor)
         
         }
         //console.log('A:', A)
@@ -109,6 +109,52 @@ window.addEventListener('load',  async ()=> {
     all.push(newAuctionBoard);
 
     console.log(all, "뭐있니?");
+
+    const result = [];
+
+    for (const innerArray of all) {
+        for (const element of innerArray) {
+            result.push(element);
+        }
+    }
+  
+
+    result.sort((a, b) => new Date(a.createDate) - new Date(b.createDate));
+    console.log(result, "ㅎㅎ");
+
+    for(let board of result){
+        //console.log(board+"??");
+
+        let title = board.title;
+        let content = board.content;
+        let boardId = board.id;
+        let imageUrl = board.imageUrl;
+
+        document.querySelector('#storyList').innerHTML +=
+        `
+        <div class="card mb-3" style="width: 750px;" style="height: 150px;">
+            <div class="row g-0" style="height: 150px;"> 
+            <div class="col-md-4" style="overflow: hidden; height:250px">
+              <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage" width: 250px" height="150"> 
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">${content}</h5>
+                <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
+                <p class="card-text">${title}</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        `
+
+
+
+
+
+
+    }
+
 
 })
 
@@ -313,3 +359,20 @@ async function newBungBoard(){
 // }));
  
 // => 최종적으로 남은 하나만 리턴
+
+
+//사진 로테이션
+let slideIndex = 0;
+showSlides();
+function showSlides(){ 
+    let i;
+    let slides = document.getElementsByClassName("advertisement");
+//console.log(slides);
+        for(i = 0; i<slides.length; i++){
+        slides[i].style.display = "none";
+        }  
+        slideIndex ++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        slides[slideIndex-1].style.display = "block";  
+        setTimeout(showSlides, 10000);      
+} 

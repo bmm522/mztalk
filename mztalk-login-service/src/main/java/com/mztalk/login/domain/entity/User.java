@@ -46,6 +46,9 @@ public class User {
     @JsonIgnore
     private List<Report> reports;
 
+    @OneToMany(mappedBy = "fromUser")
+    @JsonIgnore
+    private List<Chatroom> fromUsers;
 
     public void changeNickname(String nickname){
         this.nickname = nickname;

@@ -12,9 +12,9 @@ public interface CustomAuctionRepository {
 
     int deleteBoard(Long bId, String writer);
 
-    int updatePrice(BoardPriceDto boardPriceDto);
+    void updatePrice(BoardPriceDto boardPriceDto);
 
-    int updateCount(Long bId);
+    int updateCount(Long bId, String writer);
 
 
 

@@ -8,6 +8,12 @@ import com.mztalk.auction.repository.BoardRepository;
 import com.mztalk.auction.repository.CommentRepository;
 import com.mztalk.auction.service.AuctionService;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -15,9 +21,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -71,33 +82,12 @@ public class AuctionServiceImpl implements AuctionService {
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
 
-            ConcurrentHashMap<String, Long> timeMap = getTimeDuration(board);
-            if(timeMap.get("hour") >= 0 && timeMap.get("minute") >= 0) {
-                timeMap.put("hour", 0L);
-                timeMap.put("minute", 0L);
-                boardRepository.updateIsClose(board.getBoardId());
-            }
-            boardListResponseDtoList.add(new BoardListResponseDto(board, timeMap,imageUrl, imageName));
+
+            boardListResponseDtoList.add(new BoardListResponseDto(board,getTimeDuration(board),imageUrl, imageName));
         }
         return new Result<>(boardListResponseDtoList);
     }
-    private ConcurrentHashMap<String, Long> getTimeDuration(Board board) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        System.out.println("local : " + localDateTime);
-        Duration duration = Duration.between(getLocalDateTime(board.getTimeLimit()), localDateTime);
-        System.out.println("duration : " + duration.getSeconds());
-        long hour = duration.getSeconds() / 3600;
-        long minute = (duration.getSeconds() % 3600)/60 ;
-        System.out.println("hour : " +hour);
-        System.out.println("minute : " + minute);
 
-        ConcurrentHashMap<String, Long> timeMap = new ConcurrentHashMap<>();
-        timeMap.put("hour", hour);
-        timeMap.put("minute", minute);
-        System.out.println(timeMap);
-
-        return timeMap;
-    }
 
     private LocalDateTime getLocalDateTime(String time){
         return LocalDateTime.parse(time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -133,13 +123,8 @@ public class AuctionServiceImpl implements AuctionService {
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
 
-            ConcurrentHashMap<String, Long> timeMap = getTimeDuration(board);
-            if(timeMap.get("hour") >= 0 || timeMap.get("minute") >= 0) {
-                timeMap.put("hour", 0L);
-                timeMap.put("minute", 0L);
-            }
 
-            boardListResponseDtoList.add(new BoardListResponseDto(board, timeMap, imageUrl, imageName));
+            boardListResponseDtoList.add(new BoardListResponseDto(board,getTimeDuration(board), imageUrl, imageName));
 
         }
         return new Result<>(boardListResponseDtoList);
@@ -173,10 +158,10 @@ public class AuctionServiceImpl implements AuctionService {
             imageInfo.add(imageMap);
         }
 
-
-        return new BoardDetailResponseDto(board, imageInfo);
-
+        return new BoardDetailResponseDto(board, imageInfo,getTimeDuration(board));
     }
+
+
 
     //입찰가
     @Override
@@ -187,8 +172,8 @@ public class AuctionServiceImpl implements AuctionService {
 
     //조회수
     @Override
-    public int updateCount(Long bId) {
-        return boardRepository.updateCount(bId);
+    public int updateCount(Long bId, String writer) {
+        return boardRepository.updateCount(bId, writer);
     }
 
     //최신 글 번호 받아오기
@@ -275,15 +260,66 @@ public class AuctionServiceImpl implements AuctionService {
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
 
-            ConcurrentHashMap<String, Long> timeMap = getTimeDuration(board);
-            if (timeMap.get("hour") >= 0 && timeMap.get("minute") >= 0) {
-                timeMap.put("hour", 0L);
-                timeMap.put("minute", 0L);
-                boardRepository.updateIsClose(board.getBoardId());
-            }
-            boardListResponseDtoList.add(new BoardListResponseDto(board, timeMap, imageUrl, imageName));
+            boardListResponseDtoList.add(new BoardListResponseDto(board, getTimeDuration(board), imageUrl, imageName));
         }
         return new Result<>(boardListResponseDtoList);
+    }
+
+    private ConcurrentHashMap<String, Long> getTimeDuration(Board board) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        System.out.println("local : " + localDateTime);
+        Duration duration = Duration.between(getLocalDateTime(board.getTimeLimit()), localDateTime);
+        System.out.println("duration : " + duration.getSeconds());
+        long hour = duration.getSeconds() / 3600;
+        long minute = (duration.getSeconds() % 3600)/60 ;
+        long second = minute / 60;
+        System.out.println("hour : " +hour);
+        System.out.println("minute : " + minute);
+
+        ConcurrentHashMap<String, Long> timeMap = new ConcurrentHashMap<>();
+
+        if(hour >= 0 && minute >= 0 && second >= 0) {
+            timeMap.put("hour", 0L);
+            timeMap.put("minute", 0L);
+            timeMap.put("second", 0L);
+            if(!board.getIsClose().equals("Y")){
+                postChatRoom(board);
+                boardRepository.updateIsClose(board.getBoardId());
+            }
+
+        } else {
+            timeMap.put("hour", hour);
+            timeMap.put("minute", minute);
+            timeMap.put("second", second);
+        }
+
+
+
+        return timeMap;
+    }
+
+    public void postChatRoom(Board board){
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        try {
+            HttpUriRequest httpPost = RequestBuilder.post()
+                    .setUri(new URI("http://localhost:8000/login/chat/nickname"))
+                    .addParameter("serviceName", "auction")
+                    .addParameter("fromUserNickname", board.getWriter())
+                    .addParameter("toUserNickname", board.getBuyerNickname())
+                    .build();
+
+            System.out.println("post 요청들어옴");
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            response.close();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (ClientProtocolException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

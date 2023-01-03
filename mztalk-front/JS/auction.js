@@ -18,7 +18,6 @@ window.onload = function(){
             let i = 1;
             document.getElementById('list-div').innerHTML = '<div class="row " id="auctionCard">';
             for(let board of res.data){
-                console.log("전체 게시글 데이터: " + JSON.stringify(board));
                 let title = board.title;
                 let timeLimitHour = -board.timeLimit.hour;
                 let timeLimitMinute = -board.timeLimit.minute;
@@ -47,13 +46,15 @@ window.onload = function(){
                         <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" id="title">${title}</h2>
                         <ul class="d-flex list-unstyled mt-auto">
                         <li class="d-flex align-items-center me-3">
-                            <small>남은 시간&nbsp:&nbsp&nbsp<span style="color: red;" class = "timeLimitAlert">${timeLimitHour}시간 ${timeLimitMinute}분 전</span></small>
+                            <small>남은 시간:&nbsp<span style="color: red;" class = "timeLimitAlert">${timeLimitHour}시간 ${timeLimitMinute}분 전</span></small>
+                            <input type="hidden" class="timeLimitHour" value="${timeLimitHour}"/>
+                            <input type="hidden" class="timeLimitMinute" value="${timeLimitMinute}"/>
                         </li>
                         <li class="d-flex align-items-center">
                             <svg class="bi me-2" width="1em" height="1em">
                             <use xlink:href="#calendar3" />
                             </svg>
-                            <small style="margin-right: 50px;">${currentPrice}원</small>
+                            <small style="margin-right: 10px;">${currentPrice}원</small>
                             <small>${createDate}</samll>
                         </li>
                         </ul>
@@ -77,14 +78,16 @@ window.onload = function(){
                                 <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" id="title">${title}</h2>
                                 <ul class="d-flex list-unstyled mt-auto">
                                 <li class="d-flex align-items-center me-3">
-                                    <small>남은 시간&nbsp:&nbsp&nbsp<span style="color: red;" class = "timeLimitAlert">${timeLimitHour}시간 ${timeLimitMinute}분 전</span></small>
+                                    <small>남은 시간:&nbsp<span style="color: red;" class = "timeLimitAlert">${timeLimitHour}시간 ${timeLimitMinute}분 전</span></small>
                                 </li>
                                 <li class="d-flex align-items-center">
                                     <svg class="bi me-2" width="1em" height="1em">
                                     <use xlink:href="#calendar3" />
                                     </svg>
-                                    <small style="margin-right: 50px;">${currentPrice}원</small>
+                                    <small style="margin-right: 10px;">${currentPrice}원</small>
                                     <small>${createDate}</samll>
+                                    <input type="hidden" class="timeLimitHour" value="${timeLimitHour}"/>
+                                    <input type="hidden" class="timeLimitMinute" value="${timeLimitMinute}"/>
                                 </li>
                                 </ul>
                             </div>
@@ -93,13 +96,13 @@ window.onload = function(){
                     </div><div class="row " id="auctionCard">`
                     i++;
                 }
-                console.log("for문 맨마지막 hour,minute: " + timeLimitHour +", " + timeLimitMinute);
-                if(timeLimitHour == 0 && timeLimitMinute == 0) {
-                    console.log("for문 안에 hour,minute: " + timeLimitHour +", " + timeLimitMinute);
-                    let timeLimitAlert = document.getElementsByClassName("timeLimitAlert");
-                    for(let i = 0; i < timeLimitAlert.length; i++) {
-                        timeLimitAlert[i].innerHTML = '입찰마감';
-                    }
+                
+            }
+            let timeLimitAlert = document.getElementsByClassName("timeLimitAlert");
+            for(let i = 0; i < timeLimitAlert.length; i++) {
+                if(document.getElementsByClassName('timeLimitHour')[i].value == 0 && document.getElementsByClassName('timeLimitMinute')[i].value == 0) {
+                    console.log('클래스 : ' + timeLimitAlert[i]);
+                    timeLimitAlert[i].innerHTML = '입찰마감';
                 }
             }
         })
@@ -150,6 +153,15 @@ document.getElementById("searchBtn").addEventListener('click', function() {
                 let imageUrl = board.imageUrl;
                 let imageName = board.imageName;
                 let boardId = board.boardId;
+                let timeLimitHour = -board.timeLimit.hour;
+                let timeLimitMinute = -board.timeLimit.minute;
+                let createDate = board.createDate;
+
+                console.log("없어?: " + timeLimitHour);
+                console.log("없어?: " + timeLimitMinute);
+                
+                
+                
                 
                 if(i%2 !== 0){
                 document.getElementById('auctionCard').innerHTML += `
@@ -164,13 +176,16 @@ document.getElementById("searchBtn").addEventListener('click', function() {
                         <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" id="title">${title}</h2>
                         <ul class="d-flex list-unstyled mt-auto">
                         <li class="d-flex align-items-center me-3">
-                            <small>남은 시간&nbsp:&nbsp&nbsp<span style="color: red;">${timeLimit}시간전</span></small>
+                        <small>남은 시간:&nbsp<span style="color: red;" class = "timeLimitAlert">${timeLimitHour}시간 ${timeLimitMinute}분 전</span></small>
+                        <input type="hidden" class="timeLimitHour" value="${timeLimitHour}"/>
+                        <input type="hidden" class="timeLimitMinute" value="${timeLimitMinute}"/>
                         </li>
                         <li class="d-flex align-items-center">
                             <svg class="bi me-2" width="1em" height="1em">
                             <use xlink:href="#calendar3" />
                             </svg>
-                            <small>${currentPrice}원</small>
+                            <small style="margin-right: 10px;">${currentPrice}원</small>
+                            <small>${createDate}</samll>
                         </li>
                         </ul>
                     </div>
@@ -189,13 +204,16 @@ document.getElementById("searchBtn").addEventListener('click', function() {
                         <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" id="title">${title}</h2>
                         <ul class="d-flex list-unstyled mt-auto">
                         <li class="d-flex align-items-center me-3">
-                            <small>남은 시간&nbsp:&nbsp&nbsp<span style="color: red;">${timeLimit}시간전</span></small>
+                        <small>남은 시간:&nbsp<span style="color: red;" class = "timeLimitAlert">${timeLimitHour}시간 ${timeLimitMinute}분 전</span></small>
+                        <input type="hidden" class="timeLimitHour" value="${timeLimitHour}"/>
+                        <input type="hidden" class="timeLimitMinute" value="${timeLimitMinute}"/>
                         </li>
                         <li class="d-flex align-items-center">
                             <svg class="bi me-2" width="1em" height="1em">
                             <use xlink:href="#calendar3" />
                             </svg>
-                            <small>${currentPrice}원</small>
+                            <small style="margin-right: 10px;">${currentPrice}원</small>
+                            <small>${createDate}</samll>
                         </li>
                         </ul>
                     </div>
@@ -205,6 +223,13 @@ document.getElementById("searchBtn").addEventListener('click', function() {
                 
             </div><div class="row " id="auctionCard">`
             i++;
+                }
+            }
+            let timeLimitAlert = document.getElementsByClassName("timeLimitAlert");
+            for(let i = 0; i < timeLimitAlert.length; i++) {
+                if(document.getElementsByClassName('timeLimitHour')[i].value == 0 && document.getElementsByClassName('timeLimitMinute')[i].value == 0) {
+                    console.log('클래스 : ' + timeLimitAlert[i]);
+                    timeLimitAlert[i].innerHTML = '입찰마감';
                 }
             }
         })
@@ -235,6 +260,7 @@ function isClose() {
                 let boardId = board.boardId;
                 let writer = board.writer;
                 let count = board.count;
+                let createDate = board.createDate;
 
                 if(i%2 !== 0){
                 document.getElementById('auctionCard').innerHTML += `
@@ -341,6 +367,8 @@ function isClose() {
                         <ul class="d-flex list-unstyled mt-auto">
                         <li class="d-flex align-items-center me-3">
                             <small>남은 시간&nbsp:&nbsp&nbsp<span style="color: red;" class = "timeLimitAlert">${timeLimitHour}시간 ${timeLimitMinute}분 전</span></small>
+                            <input type="hidden" class="timeLimitHour" value="${timeLimitHour}"/>
+                            <input type="hidden" class="timeLimitMinute" value="${timeLimitMinute}"/>
                         </li>
                         <li class="d-flex align-items-center">
                             <svg class="bi me-2" width="1em" height="1em">
@@ -370,6 +398,8 @@ function isClose() {
                                 <ul class="d-flex list-unstyled mt-auto">
                                 <li class="d-flex align-items-center me-3">
                                     <small>남은 시간&nbsp:&nbsp&nbsp<span style="color: red;" class = "timeLimitAlert">${timeLimitHour}시간 ${timeLimitMinute}분 전</span></small>
+                                    <input type="hidden" class="timeLimitHour" value="${timeLimitHour}"/>
+                                    <input type="hidden" class="timeLimitMinute" value="${timeLimitMinute}"/>
                                 </li>
                                 <li class="d-flex align-items-center">
                                     <svg class="bi me-2" width="1em" height="1em">
@@ -384,18 +414,15 @@ function isClose() {
                     </div><div class="row " id="auctionCard">`
                     i++;
                 }
-                console.log("for문 맨마지막 hour,minute: " + timeLimitHour +", " + timeLimitMinute);
-                if(timeLimitHour == 0 && timeLimitMinute == 0) {
-                    console.log("for문 안에 hour,minute: " + timeLimitHour +", " + timeLimitMinute);
-                    let timeLimitAlert = document.getElementsByClassName("timeLimitAlert");
-                    for(let i = 0; i < timeLimitAlert.length; i++) {
-                        timeLimitAlert[i].innerHTML = '입찰마감';
-                    }
+            }
+            let timeLimitAlert = document.getElementsByClassName("timeLimitAlert");
+            for(let i = 0; i < timeLimitAlert.length; i++) {
+                if(document.getElementsByClassName('timeLimitHour')[i].value == 0 && document.getElementsByClassName('timeLimitMinute')[i].value == 0) {
+                    console.log('클래스 : ' + timeLimitAlert[i]);
+                    timeLimitAlert[i].innerHTML = '입찰마감';
                 }
             }
         })
-
-
     }
 }
 

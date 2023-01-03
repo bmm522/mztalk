@@ -1,5 +1,6 @@
 package com.mztalk.login.repository;
 
+import com.mztalk.login.domain.entity.Chatroom;
 import com.mztalk.login.domain.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -78,6 +79,13 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
                 .setParameter("status", status)
                 .setParameter("id", id)
                 .executeUpdate();
+    }
+
+    @Override
+    public long findToUserIdByToUserNickname(String fromUserNickname) {
+        return entityManager.createQuery("SELECT u.id FROM User u WHERE u.nickname = :fromUserNickname")
+                .setParameter("fromUserNickname", fromUserNickname)
+                .getFirstResult();
     }
 
 

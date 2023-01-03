@@ -108,7 +108,7 @@ window.onload = () => {
     document.getElementById('hidden-bId').value = localStorage.getItem("bId");
     console.log("auctionDetail bId: " + document.getElementById('hidden-bId').value);
 
-    fetch('http://localhost:8000/auction/board/' + localStorage.getItem("bId"), {
+    fetch('http://localhost:8000/auction/board/' + localStorage.getItem("bId") + "/" + localStorage.getItem("userNickname"), {
         method: "GET",
         headers: {
             Authorization:localStorage.getItem('authorization'),
@@ -125,7 +125,8 @@ window.onload = () => {
         let currentPrice = res.currentPrice;
         let writer = res.writer;
         let createDate = res.createDate;
-        let timeLimit = res.timeLimit;
+        let timeLimitHour = -res.timeMap.hour;
+        let timeLimitMinute = -res.timeMap.minute;
         let imageInfo = res.imageInfo;
         let buyer = res.buyer;
         let isClose = res.isClose;
@@ -133,7 +134,7 @@ window.onload = () => {
         //update처리 위한 localStorage 저장
         localStorage.setItem("title", title);
         localStorage.setItem("content", content);
-        localStorage.setItem("timeLimit", timeLimit);
+
         localStorage.setItem("currentPrice", currentPrice);
         localStorage.setItem("bookTitle", bookTitle);
         // localStroage.setItem("createDate", createDate);
@@ -151,22 +152,28 @@ window.onload = () => {
         } else {
             document.getElementById("buttonArea").innerHTML = '<button type="button" id="reportBtn" data-bs-toggle="modal" data-bs-target="#reportModal" onclick="reportBoard();">신고</button';
         }
-        document.getElementById('homeArea').innerHTML = '<span style="margin-left:20px;"s><a style="font-weight: bold; text-decoration: none; color: burlywood;" href = "auction.html">HOME</a></span>'
+        document.getElementById('homeArea').innerHTML = `<span style="margin-left:20px;"s><a style="font-weight: bold; text-decoration: none; color: burlywood;" href = "auction.html">HOME</a></span><input type = "hidden" id = "hidden-writer" value = ${writer}/>`
         document.getElementById('title').innerHTML = title;
         document.getElementById('date').innerHTML = createDate;
         document.getElementById('textContent').innerHTML = content;
         document.getElementById('startPrice').innerHTML = currentPrice;
-        document.getElementById('time').innerHTML = timeLimit.substr(11, 13);
+        let currentPriceForm = currentPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+        if(timeLimitHour == 0 && timeLimitMinute == 0) {
+            document.getElementById('time').innerHTML = "";    
+        } else {
+            document.getElementById('time').innerHTML = timeLimitHour + ":" + timeLimitMinute;
+        }
+
         //alert
         if(buyer == null && writer != localStorage.getItem("userNickname")) {
             document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">입찰에 참여해 보세요.</span>';
         } else if(buyer == null && writer == localStorage.getItem('userNickname')) {
             document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
+        } else if(isClose == 'Y') {
+            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰되었습니다!</span>`;
         } else {
-            let currentPriceForm = currentPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
             document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
         }
-
         
         //사진 처리
         for(let i = 0; i < imageInfo.length; i++) {
@@ -203,9 +210,12 @@ window.onload = () => {
             });
         }
         //입찰 버튼
-        if(localStorage.getItem("userNickname") != writer) {
+        if(localStorage.getItem("userNickname") != writer && isClose == 'N') {
             document.getElementById('modalBtn').innerHTML = '<button type="button" data-bs-toggle="modal" data-bs-target="#priceModal" id="priceBtn">입찰</button>'
+        } else if(localStorage.getItem("userNickname") != writer && isClose == 'Y') {
+            document.getElementById('modalBtn').innerHTML = '<button type="button" id = "priceBtnDisabled" disabled>거래완료</button>'
         }
+        
     })
 
     //입찰가 전달
@@ -232,11 +242,20 @@ window.onload = () => {
         .then(res => {
             console.log("입찰가 통신 성공");
             document.querySelector('.btn-close').click();
+            document.getElementById('inputPrice').value = "";
+            console.log("입찰가 전달 시 response: " + JSON.stringify(res));
 
-            let currentPriceRes = res.currentPrice;
-            let currentPriceForm = currentPriceRes.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
             document.getElementById('startPrice').innerHTML = res.currentPrice;
-            // document.getElementById('alert').innerHTML = `<span style="color:gray; font-size: smaller;">${res.buyer}님이 ${currentPriceForm}원으로 입찰 중입니다!</span>`;
+            //alert
+            let writer = document.getElementById('hidden-writer').value;
+            if(res.buyer == null && writer != localStorage.getItem("userNickname")) {
+                document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">입찰에 참여해 보세요.</span>';
+            } else if(res.buyer == null && writer == localStorage.getItem('userNickname')) {
+                document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
+            } else {
+                let currentPriceForm = res.currentPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+                document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${res.buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
+            }
         });
     });
     
@@ -347,5 +366,5 @@ const postReport=()=>{
                   alert('신고 접수 되었습니다.');
                   location.href="auctionDetail.html";
               })
-} );
-
+    })
+}

@@ -24,6 +24,7 @@ public class BoardListResponseDto {
     private String bookTitle;
     private String title;
     private String writer;
+
     private ConcurrentHashMap<String, Long> timeLimit;
     private String currentPrice;
     private String isClose;

@@ -18,5 +18,5 @@ public interface BoardService {
 
     Long deleteBoard(Long id);
 
-    Result findAllByboardStory(Long own);
+    Result findAllByBoardStory(Long own);
 }
