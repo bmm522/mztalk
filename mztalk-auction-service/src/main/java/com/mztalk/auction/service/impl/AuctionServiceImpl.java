@@ -265,6 +265,7 @@ public class AuctionServiceImpl implements AuctionService {
         return new Result<>(boardListResponseDtoList);
     }
 
+
     private ConcurrentHashMap<String, Long> getTimeDuration(Board board) {
         LocalDateTime localDateTime = LocalDateTime.now();
         System.out.println("local : " + localDateTime);
@@ -320,6 +321,13 @@ public class AuctionServiceImpl implements AuctionService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    //지금 마감시키기
+    @Override
+    public int closeBoard(BoardCloseDto boardCloseDto) {
+        return boardRepository.closeBoard(boardCloseDto.getBoardId());
     }
 
 

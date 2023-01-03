@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
@@ -110,6 +112,17 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
         System.out.println("repository: " + boardId);
         entityManager.createQuery("update Board b set b.isClose = 'Y' where b.boardId = :boardId")
                 .setParameter("boardId", boardId)
+                .executeUpdate();
+    }
+
+    //지금 마감시키기
+    @Transactional
+    @Override
+    public int closeBoard(Long boardId) {
+        String nowDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return entityManager.createQuery("update Board b set b.isClose = 'Y', b.timeLimit = :timeLimit where b.boardId = :boardId")
+                .setParameter("boardId", boardId)
+                .setParameter("timeLimit", nowDateTime)
                 .executeUpdate();
     }
 

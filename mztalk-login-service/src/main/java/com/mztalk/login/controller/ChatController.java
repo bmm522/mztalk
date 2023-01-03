@@ -56,6 +56,11 @@ public class ChatController {
         return selectChatService.getChatRoomListOfBung(userNo);
     }
 
+    @GetMapping("/chat/story")
+    public Result<?> getChatRoomListOfStroy(@RequestParam("userNo")long userNo){
+        return selectChatService.getChatRoomListOfStroy(userNo);
+    }
+
     @PatchMapping("/chat")
     public long deleteChatRoom(@RequestParam("fromUserNo") long fromUserNo, @RequestParam("toUserNo")long toUserNo){
         return updateChatService.deleteChatRoom(fromUserNo, toUserNo);

@@ -149,7 +149,31 @@ const updateData = () =>{
     });
 }
 
-
+//지금 마감시키기
+document.getElementById('closeNow').addEventListener('click', function() {
+    if(confirm('정말 지금 마감시키겠습니까?')) {
+        // let nowDateTime = new Date();
+        // console.log("지금 마감시키기 nowDateTime: " + nowDateTime);
+        fetch("http://localhost:8000/auction/board/close", {
+        method: "PATCH",
+        headers: {
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+        body: JSON.stringify({
+            boardId: document.getElementById('hidden-bId')
+        }),
+    })
+    .then(res => {
+        if(res.status = 200) {
+            alert('마감 완료!');
+            document.getElementById('close-div').innerHTML = '<span style="float: right; margin-top:5px; color:gray" id = "closed">마감 완료</span>';
+        }
+    })
+    }
+    
+});
 
 
 //목록으로
