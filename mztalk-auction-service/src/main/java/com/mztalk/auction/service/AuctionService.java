@@ -39,4 +39,6 @@ public interface AuctionService {
     CommentResponseDto selectComment(Long cId);
 
     Result<?> selectCloseBoardList() throws ParseException;
+
+    int closeBoard(BoardCloseDto boardCloseDto);
 }

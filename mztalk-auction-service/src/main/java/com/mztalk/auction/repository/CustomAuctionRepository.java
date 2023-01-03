@@ -29,4 +29,6 @@ public interface CustomAuctionRepository {
     List<Comment> selectCommentList(Long bId);
 
     void updateIsClose(long boardId);
+
+    int closeBoard(Long boardId);
 }

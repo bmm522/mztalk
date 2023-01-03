@@ -70,3 +70,15 @@ label {
     cursor: pointer;
 }
 
+#closeNow {
+    float: right;
+    margin-top: 5px;
+    color: gray;
+}
+
+#closeNow:hover {
+    cursor: pointer;
+    color: lightgray;
+    text-decoration: underline;
+}
+

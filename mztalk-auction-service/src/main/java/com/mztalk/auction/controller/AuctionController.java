@@ -2,6 +2,7 @@ package com.mztalk.auction.controller;
 
 import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.*;
+import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RequestMapping("/auction")
@@ -119,6 +121,11 @@ public class AuctionController {
         return auctionService.selectComment(cId);
     }
 
+    //지금 마감시키기
+    @PatchMapping("/board/close")
+    public int closeBoard(@RequestBody BoardCloseDto boardCloseDto) {
+        return auctionService.closeBoard(boardCloseDto);
+    }
 
 
 }
