@@ -15,6 +15,22 @@ nav {
     z-index: 99999;
 }
 
+#story_own {
+
+  cursor: pointer;
+
+}
+
+#bung_own {
+
+  cursor: pointer;
+
+}
+
+#auction_own {
+  cursor: pointer;
+}
+
 .navContainer {
     display: flex;
     justify-content: space-between;
@@ -193,7 +209,11 @@ footer .container .copy p{font-size: 13px;padding-top: 2px;}
 
 }
 
+#storyList {
 
+  align-items: center;
+  margin-left: 10%;
+}
 
 
 /*메인*/
