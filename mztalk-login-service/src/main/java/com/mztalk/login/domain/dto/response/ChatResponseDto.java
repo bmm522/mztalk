@@ -12,21 +12,15 @@ import lombok.*;
 @Builder
 public class ChatResponseDto {
 
-    private String serviceName;
-
     private long fromUserId;
     private long toUserId;
 
 
 
-    private String toUserImageUrl;
 
 
-
-    public ChatResponseDto(Chatroom chatroom, String imageUrl) {
-        this.serviceName = chatroom.getServiceName();
+    public ChatResponseDto(Chatroom chatroom) {
         this.fromUserId = chatroom.getFromUser().getId();
         this.toUserId = chatroom.getToUserNo();
-        this.toUserImageUrl = imageUrl;
     }
 }

@@ -3,6 +3,7 @@ package com.mztalk.login.controller;
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.request.ChatOfUserNicknameRequestDto;
 import com.mztalk.login.domain.dto.request.ChatOfUserNoRequestDto;
+import com.mztalk.login.domain.dto.response.ChatResultResponseDto;
 import com.mztalk.login.service.InsertChatService;
 import com.mztalk.login.service.SelectChatService;
 import com.mztalk.login.service.UpdateChatService;
@@ -28,14 +29,20 @@ public class ChatController {
     }
 
     @PostMapping("/chat/nickname")
-    public long requestChatOfUserNickname(ChatOfUserNicknameRequestDto chatOfUserNicknameRequestDto){
+    public ChatResultResponseDto requestChatOfUserNickname(ChatOfUserNicknameRequestDto chatOfUserNicknameRequestDto){
+        return insertChatService.requestChatOfUserNickname(chatOfUserNicknameRequestDto);
+    }
+
+    @ResponseBody
+    @PostMapping("/chat/front-nickname")
+    public ChatResultResponseDto requestChatOfFrontUserNickname(@RequestBody ChatOfUserNicknameRequestDto chatOfUserNicknameRequestDto){
         return insertChatService.requestChatOfUserNickname(chatOfUserNicknameRequestDto);
     }
 
 
 
     @GetMapping("/chat/nickname")
-    public long requestChatOfUserNicknameWhenBack(@RequestParam("serviceName")String serviceName, @RequestParam("fromUserNickname")String fromUserNickname, @RequestParam("toUserNickname")String toUserNickname){
+    public ChatResultResponseDto requestChatOfUserNicknameWhenBack(@RequestParam("serviceName")String serviceName, @RequestParam("fromUserNickname")String fromUserNickname, @RequestParam("toUserNickname")String toUserNickname){
         return insertChatService.requestChatOfUserNickname(new ChatOfUserNicknameRequestDto(serviceName, fromUserNickname, toUserNickname));
     }
 
