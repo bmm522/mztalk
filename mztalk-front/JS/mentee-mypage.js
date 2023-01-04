@@ -1,7 +1,18 @@
+let page=1;
+let isSearchPerformed = false;
+let isMainPerformed = true;
 window.onload = function(){
-    getBoardList();
-    addFile();
+    getBoardList(1);
 }
+
+window.onscroll = () =>{
+    if (window.innerHeight + window.scrollY >= document.getElementById('board-list-div').offsetHeight && isMainPerformed) {
+        console.log('page :' +  page);
+        page++;
+        getBoardList(page);
+    }
+}
+
 
 // 멘토 신청시 첨부파일 추가 버튼 생성
 const addFile = () =>{
@@ -212,8 +223,8 @@ const writeReview = () => {
 }
 
 // 메인페이지 글 뿌려주기
-const getBoardList = () =>{
-    fetch("http://localhost:8000/mentors/boards",{
+const getBoardList = (page) =>{
+    fetch("http://localhost:8000/mentors/boards/"+ page,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -228,15 +239,16 @@ const getBoardList = () =>{
             location.href = "mentor-main.html";
         } else {
             let cnt = 1;
-            document.getElementById('board-list-div').innerHTML += '<div class="row" style="padding:20px;" id="row-div">';
-            for(let board of res.data){
-                let boardId = board.id;
-                let category = board.category;
-                let nickname = board.nickname;
-                let career = board.career;
-                let title = board.title;
+            for(let i = 0 ; i <res.data.length ; i++){
+        
+            let board = res.data[i];
+            let boardId = board.id;
+            let category = board.category;
+            let nickname = board.nickname;
+            let career = board.career;
+            let title = board.title;
                 if(cnt%4 !== 0 ){
-                    document.getElementById('row-div').innerHTML +=  `<div class="col-3">
+                    document.getElementById('row-div1').innerHTML +=  `<div class="col-3">
                     <div class="card" style="width: 13rem; height:14rem;">
                     <div class="card-body" onclick="getBoardDetail(${boardId});"  
                     data-bs-toggle="modal" href="#exampleModalToggle">
@@ -247,7 +259,7 @@ const getBoardList = () =>{
                     type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
                     cnt += 1;
                 } else {
-                    document.getElementById('row-div').innerHTML += 
+                    document.getElementById('row-div1').innerHTML += 
                     `<div class="col-3">
                     <div class="card" style="width: 13rem; height:14rem;">
                     <div class="card-body" onclick="getBoardDetail(${boardId});"
@@ -260,8 +272,8 @@ const getBoardList = () =>{
                     </div><div class="row" style="padding:20px;" id="row-div">`;
                     cnt += 1;
                 }
-            }
-        }        
+            }         
+        }    
     })
 }
 
