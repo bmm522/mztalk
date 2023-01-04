@@ -112,33 +112,37 @@ public class BungServiceImpl implements BungBoardService {
         return new Result(bungBoardResponseDtoList);
     }
 
-    // 메인 서비스 게시글 조회
-//    @Override
-//    public Result mainSelectList() {
-//        List<BungBoard> bungBoards = bungRepository.findByBoardStatus(BoardStatus.YES);
-//        List<BungBoardResponseDto> bungBoardResponseDtoList = new ArrayList<>();
-//        for (BungBoard bungBoard : bungBoards) {
-//            System.out.println(bungBoard.getBoardId());
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.add("Content-Type", "text/html");
-//            ResponseEntity<String> response = new RestTemplate().exchange(
-//                    "http://localhost:8000/resource/main-image?bNo=" + bungBoard.getBoardId() + "&serviceName=bung",
-//                    HttpMethod.GET,
-//                    new HttpEntity<String>(headers),
-//                    String.class
-//            );
-//            JSONObject jsonObject = new JSONObject(response.getBody());
-//            JSONObject jsonData = jsonObject.getJSONObject("data");
-//            String imageUrl = jsonData.getString("imageUrl");
-//            String imageName = jsonData.getString("objectKey");
-//
-//
-//            long nowGroup = bungAddRepository.bungBoardNowGroup(bungBoard.getBoardId());
-//            System.out.println("nowGroup : " + nowGroup);
-//            bungBoardResponseDtoList.add(new BungBoardResponseDto(bungBoard, imageUrl, imageName, nowGroup));
-//        }
-//        return new Result(bungBoardResponseDtoList);
-//    }
+    @Override
+    public Result<?> mainSelectListOfMain(int page) {
+        Pageable pageable = PageRequest.of(page - 1, 3);
+
+        // Find the bung boards with a status of YES, using the Pageable object to paginate the results
+        Page<BungBoard> bungBoards =bungRepository.findByBoardStatus(BoardStatus.YES, pageable);
+        List<BungBoardResponseDto> bungBoardResponseDtoList = new ArrayList<>();
+        for (BungBoard bungBoard : bungBoards) {
+            System.out.println(bungBoard.getBoardId());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "text/html");
+            ResponseEntity<String> response = new RestTemplate().exchange(
+                    "http://localhost:8000/resource/main-image?bNo=" + bungBoard.getBoardId() + "&serviceName=bung",
+                    HttpMethod.GET,
+                    new HttpEntity<String>(headers),
+                    String.class
+            );
+            JSONObject jsonObject = new JSONObject(response.getBody());
+            JSONObject jsonData = jsonObject.getJSONObject("data");
+            String imageUrl = jsonData.getString("imageUrl");
+            String imageName = jsonData.getString("objectKey");
+
+
+            long nowGroup = bungAddRepository.bungBoardNowGroup(bungBoard.getBoardId());
+            System.out.println("nowGroup : " + nowGroup);
+            bungBoardResponseDtoList.add(new BungBoardResponseDto(bungBoard, imageUrl, imageName, nowGroup));
+        }
+        return new Result(bungBoardResponseDtoList);
+    }
+
+
 
 
 
@@ -401,5 +405,7 @@ public class BungServiceImpl implements BungBoardService {
         }
         return new Result<>(AcceptResponseDtoList);
     }
+
+
 
 }

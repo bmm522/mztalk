@@ -51,4 +51,6 @@ public interface BungBoardService {
     Result<?> search(String[] categories, String type, String searchText, int page);
 
     Result<?> getAcceptList(String nickname);
+
+    Result<?> mainSelectListOfMain(int page);
 }
