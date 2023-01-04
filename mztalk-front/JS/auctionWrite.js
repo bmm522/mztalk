@@ -52,6 +52,7 @@ const postData = () =>{
             "startPrice": startPriceTrans,
             "timeLimit":  date.setHours(date.getHours() +  Number(document.getElementById('timeLimit').value)),
             "currentTime" : new Date().getTime(),
+            "userNo": localStorage.getItem("userNo")
         }),
     })
     .then(res => {
