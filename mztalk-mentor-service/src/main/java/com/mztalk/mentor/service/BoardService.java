@@ -4,11 +4,15 @@ import com.mztalk.mentor.domain.SearchCondition;
 import com.mztalk.mentor.domain.dto.BoardResDto;
 import com.mztalk.mentor.domain.dto.BoardTransferDto;
 import com.mztalk.mentor.domain.dto.BoardReqDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface BoardService {
     Long saveBoard(BoardReqDto boardReqDto);
+
+    List<BoardResDto> findNullPaymentWithBeforeMentoringDate(int page);
 
     BoardResDto findBoardByBoardId(Long id);
 
@@ -26,8 +30,6 @@ public interface BoardService {
     List<BoardResDto> latestBoard();
 
     List<BoardResDto> findByMentoringDateBefore();
-
-    List<BoardResDto> findNullPaymentWithBeforeMentoringDate();
 
     List<BoardResDto> findBoardByMenteeId(Long menteeId);
 

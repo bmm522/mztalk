@@ -126,7 +126,7 @@ h5 card-title {
     margin: 0 auto;
     width: 935px;
     margin-top: 55px;
-    height: 10000px;
+    /* height: 10000px; */
     background-color: rgb(242, 244, 226);
 } 
 

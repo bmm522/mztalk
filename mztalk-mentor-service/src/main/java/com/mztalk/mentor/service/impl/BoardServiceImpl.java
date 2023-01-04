@@ -8,6 +8,10 @@ import com.mztalk.mentor.repository.BoardRepository;
 import com.mztalk.mentor.repository.MentorRepository;
 import com.mztalk.mentor.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,11 +38,13 @@ public class BoardServiceImpl implements BoardService {
 
     // 메인페이지 출력 메소드, 결제가 안되고 멘토링 전 글만 출력된다.
     @Override
-    public List<BoardResDto> findNullPaymentWithBeforeMentoringDate() {
+    public List<BoardResDto> findNullPaymentWithBeforeMentoringDate(int page) {
+        System.out.println(page);
+        Pageable pageable = PageRequest.of(page - 1, 20);
         LocalDateTime now = LocalDateTime.now();
-        List<Board> boards = boardRepository.findNullPaymentWithBeforeMentoringDate(now);
-        List<BoardResDto> collect = boards.stream()
-                .map(b->new BoardResDto(b,new MentorTransferDto(b.getMentor()))).collect(Collectors.toList());
+        Page<Board> boards = boardRepository.findNullPaymentWithBeforeMentoringDate(now,pageable);
+        List<BoardResDto> collect = boards.getContent().stream()
+                .map(b -> new BoardResDto(b, new MentorTransferDto(b.getMentor()))).collect(Collectors.toList());
         return collect;
     }
 
@@ -114,6 +120,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardResDto> searchWithCondition(SearchCondition searchCondition) {
+
         List<Board> boardList = boardRepository.searchWithCondition(searchCondition);
         List<BoardResDto> collect = boardList.stream().map(BoardResDto::new).collect(Collectors.toList());
         return collect;
