@@ -94,7 +94,7 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Result<?> selectBoardListOfFront(int page) {
+    public Result<?> selectBoardListOfFront(int page) throws ParseException {
         System.out.println("page : " + page);
         Pageable pageable = PageRequest.of(page - 1, 3);
         Page<Board> boardPage = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);

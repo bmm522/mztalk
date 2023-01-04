@@ -1,4 +1,4 @@
-const movePage = (own) =>{
+const movePages = (own) =>{
      
     localStorage.setItem('own', own);
     location.href="individualpage.html";

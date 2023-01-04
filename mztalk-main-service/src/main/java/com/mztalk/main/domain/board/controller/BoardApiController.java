@@ -24,7 +24,7 @@ public class BoardApiController {
 
     //퍼블릭인 글 목록
     @GetMapping("/{own}/{page}")
-    public Result findAllByOwn(@PathVariable Long own, @PathVariable("page")int page){
+    public Result findAllByOwn(@PathVariable("own") Long own, @PathVariable("page")int page){
         return boardService.findAllByOwn(own, page);
     }
 
