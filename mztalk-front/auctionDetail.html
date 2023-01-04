@@ -132,29 +132,23 @@
                     <div id = "commentContent" class = "m-3">
                         <span style="font-weight: bold;">댓글</span>
                         <input type = "text" id = "commInput"/>
-                        <button type = "button" id="commBtn">작성</button>
+                        <button type = "button" id="commInsertBtn">작성</button>
                         <div id = "commentArea">
-                            <!--
-                            <div class = "row">
-                                <input type = "hidden" id = "hidden-cId"/>
-                                    <div class = "col-1" id = "nicknameArea">
-                                        <span id = "commNickname">{닉네임}</span>
-                                    </div>
-                                    <div class = "col-7" id = "contentArea">
-                                        <span id = "commContent" style="margin-right: 10px;">{댓글 내용}</span>
-                                    </div>
-                                    <div class = "col-2" id = "createDateArea">
-                                        <span id = "commCreateDate" style="color:gray;font-size: smaller;margin-right:10px;">{2022-12-19}</span>
-                                    </div>
-                                    <div class = "col-2" id = "commBtnArea">
-                                        <span id = "commUpdate" style="color:gray;font-size: small; margin-right: 20px;" onclick = "updateComment();">수정</span>
-                                        <span id = "commDelete" style="color:gray;font-size: small;" onclick = "deleteComment();">삭제</span>
-                                    </div>
-                                </div>
-                            -->
+                            <!-- <div id = "commNickname" class = "col-3">
+                                <span class = "${cId}" id = "commNickname"></span>
+                            </div>
+                            <div id = "commContent" class = "col-6">
+                                <span class = "${cId}"></span>
+                            </div>
+                            <div id = "commCreateDate" class = "col-2">
+                                <span class = "${cId}"></span>
+                            </div>
+                            <div id = "commBtn" class = "col-2">
+                                <span class = "${cId}" id = "commUpdate" style = "color:gray;font-size: small; margin-right: 20px;" onclick = "updateComment(${cId});">수정</span>
+                                <span class = "${cId}" id = "commDelete" style = "color: gray; font-size: small;" onclick = "deleteComment(${cId});">삭제</span>
+                            </div> -->
                         </div>
                     </div>
-
                 </div>
             </div>
 

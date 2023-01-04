@@ -284,7 +284,6 @@ public class AuctionServiceImpl implements AuctionService {
             timeMap.put("minute", 0L);
             timeMap.put("second", 0L);
             if(!board.getIsClose().equals("Y")){
-                postChatRoom(board);
                 boardRepository.updateIsClose(board.getBoardId());
             }
 
@@ -328,6 +327,11 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public int closeBoard(BoardCloseDto boardCloseDto) {
         return boardRepository.closeBoard(boardCloseDto.getBoardId());
+    }
+
+    @Override
+    public void postChatRoom(BoardDto boardDto) {
+
     }
 
 

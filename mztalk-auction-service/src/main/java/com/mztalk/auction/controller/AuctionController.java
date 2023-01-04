@@ -127,5 +127,11 @@ public class AuctionController {
         return auctionService.closeBoard(boardCloseDto);
     }
 
+    //입찰자와 채팅
+    @PostMapping("/chat")
+    public void chatConnection(BoardDto boardDto) {
+        auctionService.postChatRoom(boardDto);
+    }
+
 
 }
