@@ -136,6 +136,8 @@ window.addEventListener('load', async () => {
         let boardWriterId = board.boardWriterId;
         let nickname = board.nickname;
         let mentorId = board.mentor.userId;
+        console.log(board+"///");
+        console.log(mentorId,"??");
         if (serviceName.includes('mentor')) {
             document.querySelector("#storyList").innerHTML +=
                 `
@@ -151,7 +153,7 @@ window.addEventListener('load', async () => {
                     <div class="separator"></div>
                      <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
                     <p class="card-text">${content}</p>
-                    <div class="author" onclick="moveAuctionToStory(${mentorId});">${writer}
+                    <div class="author" onclick="movementorToStory(${mentorId});">${writer}
                     <input type="hidden" class="nickname_find" value="${nickname}">
                     <input type="hidden" class="mentorId_find" value="${mentorId}">
                     </div>
@@ -276,8 +278,10 @@ const movementorToStory = (mentorId)=>{
     localStorage.setItem('own', mentorId);
     location.href="individualpage.html";
 
-
 }
+
+
+
 
 //닉네임만 있는 서비스
 // const moveNinameToStory = ()=>{
