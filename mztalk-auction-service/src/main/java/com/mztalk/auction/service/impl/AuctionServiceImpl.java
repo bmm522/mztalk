@@ -247,14 +247,15 @@ public class AuctionServiceImpl implements AuctionService {
 
     //입찰 마감 게시글 제외
     @Override
-    public Result<?> selectCloseBoardList() throws ParseException {
+    public Result<?> selectCloseBoardList(int page) throws ParseException {
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
-        List<Board> boardList = boardRepository.findByIsCloseAndStatusOrderByBoardIdDesc("N", "Y");
+        Pageable pageable = PageRequest.of(page - 1, 6);
+        Page<Board> boardList = boardRepository.findByIsCloseAndStatusOrderByBoardIdDesc("N", "Y", pageable);
 
         for (Board board : boardList) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/html");
-            System.out.println("list 가져오기 : " + board.getBoardId());
+
             ResponseEntity<String> response = new RestTemplate().exchange(
                     "http://localhost:8000/resource/main-image?bNo=" + board.getBoardId() + "&serviceName=auction",
                     HttpMethod.GET,
@@ -274,14 +275,12 @@ public class AuctionServiceImpl implements AuctionService {
 
     private ConcurrentHashMap<String, Long> getTimeDuration(Board board) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        System.out.println("local : " + localDateTime);
+
         Duration duration = Duration.between(getLocalDateTime(board.getTimeLimit()), localDateTime);
-        System.out.println("duration : " + duration.getSeconds());
+
         long hour = duration.getSeconds() / 3600;
         long minute = (duration.getSeconds() % 3600)/60 ;
         long second = minute / 60;
-        System.out.println("hour : " +hour);
-        System.out.println("minute : " + minute);
 
         ConcurrentHashMap<String, Long> timeMap = new ConcurrentHashMap<>();
 

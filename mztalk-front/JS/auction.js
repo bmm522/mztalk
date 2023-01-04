@@ -19,8 +19,8 @@ window.onscroll = () =>{
     // console.log(isSearchPerformed);
    
     if (window.innerHeight + window.scrollY >= document.getElementById('list-div').offsetHeight &&mainForm) {
-        document.getElementById('list-finish-div').innerHTML = '';
-        document.getElementById('search-list-div').innerHTML = '';
+        document.getElementById('auctionCard2').innerHTML = '';
+        document.getElementById('auctionCard3').innerHTML = '';
         page++;
         mainLoad(page);
     }
@@ -32,14 +32,14 @@ window.onscroll = () =>{
 
     if(window.innerHeight + window.scrollY >= document.getElementById('list-finish-div').offsetHeight &&finishForm){
         finishPage++;
-        finishForm(finishPage);
+        closeEvent(finishPage);
     }
 }
 
 //검색, 뿌려주기
 document.getElementById("searchBtn").addEventListener('click', function() {
-    document.getElementById('list-div').innerHTML = '';
-    document.getElementById('list-finish-div').innerHTML = '';
+    document.getElementById('auctionCard1').innerHTML = '';
+    document.getElementById('auctionCard2').innerHTML = '';
     mainForm = false;
     searchForm = true;
     searchLoad(1);
@@ -73,7 +73,7 @@ const mainLoad = (page) =>{
                 let createdDate = board.createdDate.substr(0,10);
 
                 if(i%2 !== 0){
-                document.getElementById('auctionCard').innerHTML += `
+                document.getElementById('auctionCard1').innerHTML += `
                 <div class="col-6" onclick = 'moveDeatils(${boardId});' style="pointer:cursor;">
                     <!-- bId-->
                     <input type="hidden" id="hidden-bId"/>
@@ -106,7 +106,7 @@ const mainLoad = (page) =>{
                 </div>`
                 i++;
                 } else{
-                    document.getElementById('auctionCard').innerHTML += `<div class="col-6" onclick ="moveDeatils(${boardId});" style="pointer:cursor;">
+                    document.getElementById('auctionCard1').innerHTML += `<div class="col-6" onclick ="moveDeatils(${boardId});" style="pointer:cursor;">
                     <!-- bId-->
                     <input type="hidden" id="hidden-bId" />
                     <div class="card card-cover m-1 h-20 overflow-hidden text-white bg-dark rounded-5 shadow-lg" class="titleCard"
@@ -206,7 +206,7 @@ const searchLoad = (searchPage) =>{
                 
                 
                 if(i%2 !== 0){
-                document.getElementById('auctionCard').innerHTML += `
+                document.getElementById('auctionCard3').innerHTML += `
                 <div class="col-6" onclick = 'moveDeatils(${boardId});' style="pointer:cursor;">
                     <!-- bId-->
                     <input type="hidden" id="hidden-bId" />
@@ -235,7 +235,7 @@ const searchLoad = (searchPage) =>{
                 </div>`
                 i++;
                 } else{
-                    document.getElementById('auctionCard').innerHTML += `<div class="col-6" onclick ="moveDeatils(${boardId});" style="pointer:cursor;">
+                    document.getElementById('auctionCard3').innerHTML += `<div class="col-6" onclick ="moveDeatils(${boardId});" style="pointer:cursor;">
                     <!-- bId-->
                     <input type="hidden" id="hidden-bId" />
                     <div class="card card-cover m-1 h-20 overflow-hidden text-white bg-dark rounded-5 shadow-lg" class="titleCard"
@@ -282,7 +282,26 @@ const searchLoad = (searchPage) =>{
 //마감 게시글 제외
 function isClose() {
     if(document.getElementById('flexSwitchCheckChecked2').checked) {
-        fetch("http://localhost:8000/auction/board/close", {
+        document.getElementById('auctionCard1').innerHTML = '';
+        document.getElementById('auctionCard3').innerHTML = '';
+        finishForm = true;
+        mainForm = false;
+        searchForm = false;
+        closeEvent(1);
+    } else {
+        document.getElementById('auctionCard2').innerHTML = '';
+        finishForm = false;
+        mainForm = true;
+        mainLoad(1);
+
+    }
+    
+}
+
+const closeEvent = (finishPage) => {
+
+        
+        fetch("http://localhost:8000/auction/board/close/"+ finishPage, {
             method: "GET",
             headers: {
                 Authorization:localStorage.getItem('authorization'),
@@ -307,7 +326,7 @@ function isClose() {
                 let createDate = board.createDate;
 
                 if(i%2 !== 0){
-                document.getElementById('auctionCard').innerHTML += `
+                document.getElementById('auctionCard2').innerHTML += `
                 <div class="col-6" onclick = 'moveDeatils(${boardId});' style="pointer:cursor;">
                     <!-- bId-->
                     <input type="hidden" id="hidden-bId"/>
@@ -337,7 +356,8 @@ function isClose() {
                 </div>`
                 i++;
                 } else{
-                    document.getElementById('auctionCard').innerHTML += `<div class="col-6" onclick ="moveDeatils(${boardId});" style="pointer:cursor;">
+                    
+                    document.getElementById('auctionCard2').innerHTML += `<div class="col-6" onclick ="moveDeatils(${boardId});" style="pointer:cursor;">
                     <!-- bId-->
                     <input type="hidden" id="hidden-bId" />
                     <div class="card card-cover m-1 h-20 overflow-hidden text-white bg-dark rounded-5 shadow-lg" class="titleCard"
@@ -369,9 +389,7 @@ function isClose() {
                 }
             }
         });
-    } else {
-        mainLoad()
-    }
+  
 }
 
 
