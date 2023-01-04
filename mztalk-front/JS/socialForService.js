@@ -1,128 +1,189 @@
-window.addEventListener('load', async () => {
-    //경매
-    const newAuctionBoard = await fetch("http://localhost:8000/auction/board", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem('authorization'),
-            RefreshToken: localStorage.getItem('refreshToken'),
-        },
-    })
-        .then((res) => res.json())
-        .then(res => {
-            const A = []
-            for (let auction of res.data) {
-                A.push(auction)
-            }
-            return A
-        })
-    console.log('newAuctionBoard:', newAuctionBoard);
+// window.addEventListener('load', async () => {
+//     //경매/board-front/{page}
+//     const newAuctionBoard = await fetch("http://localhost:8000/auction/board-front/"+page, {
+//         method: "GET",
+//         headers: {
+//             "Content-Type": "application/json",
+//             Authorization: localStorage.getItem('authorization'),
+//             RefreshToken: localStorage.getItem('refreshToken'),
+//         },
+//     })
+//         .then((res) => res.json())
+//         .then(res => {
+//             const A = []
+//             for (let auction of res.data) {
+//                 A.push(auction)
+//             }
+//             return A
+//         })
+//     console.log('newAuctionBoard:', newAuctionBoard);
 
-    //팔로우들 글
-    let own = localStorage.getItem('userNo');
+//     //팔로우들 글/main/{own}/{page}
+//     let own = localStorage.getItem('userNo');
 
-    const newFollowBoard = await fetch("http://localhost:8000/story/main/" + own, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem('authorization'),
-            RefreshToken: localStorage.getItem('refreshToken'),
-        },
-    })
-        .then((res) => res.json())
-        .then(res => {
-            const F = []
-            for (let follow of res.data) {
-                F.push(follow)
-            }
-            return F
-        })
-
-    console.log('newFollowBoard:', newFollowBoard);
-
+//     const newFollowBoard = await fetch("http://localhost:8000/story/main/" + own +"/"+page, {
+//         method: "GET",
+//         headers: {
+//             "Content-Type": "application/json",
+//             Authorization: localStorage.getItem('authorization'),
+//             RefreshToken: localStorage.getItem('refreshToken'),
+//         },
+//     })
+//         .then((res) => res.json())
+//         .then(res => {
+//             const F = []
+//             for (let follow of res.data) {
+//                 F.push(follow)
+//             }
+//             return F
+//         })
+//     console.log('newFollowBoard:', newFollowBoard);
 
 
-    //벙
-    const newBungBoard = await fetch("http://localhost:8000/bung/mainBoards", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem('authorization'),
-            RefreshToken: localStorage.getItem('refreshToken'),
-        },
-    })
-        .then((res) => res.json())
-        .then(res => {
 
-            const B = []
+//     //벙/mainBoards-main/{page}
+//     const newBungBoard = await fetch("http://localhost:8000/bung/mainBoards-main/"+page, {
+//         method: "GET",
+//         headers: {
+//             "Content-Type": "application/json",
+//             Authorization: localStorage.getItem('authorization'),
+//             RefreshToken: localStorage.getItem('refreshToken'),
+//         },
+//     })
+//         .then((res) => res.json())
+//         .then(res => {
+//             const B = []
+//             for (let bung of res.data) {
+//                 B.push(bung)
+//             }
+//             return B
+//         })
+//     console.log('newBungBoard:', newBungBoard);
 
-            for (let bung of res.data) {
+//     //멘토newMentorBoard/board/latest/{page}
+//     const newMentorBoard = await fetch("http://localhost:8000/mentors/board/latest/"+page, {
+//         method: "GET",
+//         headers: {
+//             "Content-Type": "application/json",
+//             Authorization: localStorage.getItem('authorization'),
+//             RefreshToken: localStorage.getItem('refreshToken'),
+//         },
+//     })
+//         .then((res) => res.json())
+//         .then(res => {
+//             const M = []
+//             for (let mentor of res.data) {
+//                 M.push(mentor)
+//             }
+//             return M
+//         })
+//     console.log('newMentorBoard:', newMentorBoard);
 
-                B.push(bung)
+//     const all = [];
+//     all.push(newMentorBoard);
+//     all.push(newBungBoard);
+//     all.push(newFollowBoard);
+//     all.push(newAuctionBoard);
 
-            }
+//     const result = [];
 
-            return B
-        })
-    console.log('newBungBoard:', newBungBoard);
+//     for (const innerArray of all) {
+//         for (const element of innerArray) {
+//             result.push(element);
+//         }
+//     }
 
-    //멘토newMentorBoard
-    const newMentorBoard = await fetch("http://localhost:8000/mentors/board/latest", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem('authorization'),
-            RefreshToken: localStorage.getItem('refreshToken'),
-        },
-    })
-        .then((res) => res.json())
-        .then(res => {
+//     let index = 0;
+//     for (const obj of result) {
+//         obj.i = index++;
+//     }
 
-            const M = []
+//     const dateArr = [];
+//     for (const obj of result) {
+//         dateArr.push(obj.createDate);
+//     }
 
-            for (let mentor of res.data) {
+//     const sorted_list = result.sort(function (a, b) {
+//         return new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime();
+//     }).reverse();
 
-                M.push(mentor)
 
-            }
+let page = 1;
 
-            return M
-        })
-    console.log('newMentorBoard:', newMentorBoard);
+window.onload = ()=>{
+    load(1);
+}
 
-    const all = [];
-    all.push(newMentorBoard);
-    all.push(newBungBoard);
-    all.push(newFollowBoard);
-    all.push(newAuctionBoard);
-
-    const result = [];
-
-    for (const innerArray of all) {
-        for (const element of innerArray) {
-            result.push(element);
-        }
+window.onscroll = () => {
+    if (window.innerHeight + window.scrollY >= document.querySelector("#storyList").offsetHeight) {
+      
+        page++;
+      load(page);
     }
+  };
+  
+async function fetchData(endpoint) {
+  const res = await fetch(endpoint, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("authorization"),
+      RefreshToken: localStorage.getItem("refreshToken"),
+    },
+  });
+  const json = await res.json();
+  const data = json.data;
+  return data;
+}
 
-    let index = 0;
-    for (const obj of result) {
-        obj.i = index++;
-    }
-
-    const dateArr = [];
-    for (const obj of result) {
-        dateArr.push(obj.createDate);
-    }
-
-
-    const sorted_list = result.sort(function (a, b) {
-        return new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime();
-    }).reverse();
-
+async function load(page) {
    
+  const newAuctionBoard = await fetchData(
+    "http://localhost:8000/auction/board-front/" + page
+  );
+  const own = localStorage.getItem("userNo");
+  const newFollowBoard = await fetchData(
+    "http://localhost:8000/story/main/" + own + "/" + page
+  );
+  const newBungBoard = await fetchData(
+    "http://localhost:8000/bung/mainBoards-main/" + page
+  );
+  const newMentorBoard = await fetchData(
+    "http://localhost:8000/mentors/board/latest/" + page
+  );
 
+  const all = [];
+  all.push(newMentorBoard);
+  all.push(newBungBoard);
+  all.push(newFollowBoard);
+  all.push(newAuctionBoard);
+
+  const result = [];
+
+  for (const innerArray of all) {
+    for (const element of innerArray) {
+      result.push(element);
+    }
+  }
+
+  let index = 0;
+  for (const obj of result) {
+    obj.i = index++;
+  }
+
+  const dateArr = [];
+  for (const obj of result) {
+    dateArr.push(obj.createDate);
+  }
+
+  const sorted_list = result
+    .sort(function (a, b) {
+      return new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime();
+    })
+    .reverse();
+  
     for (let board of result) {
-        //console.log(board+"??");
+        
         //서비스별
         let title = board.title;
         let content = board.content;
@@ -132,23 +193,22 @@ window.addEventListener('load', async () => {
         let serviceName = board.serviceName;
         let bookTitle = board.bookTitle;
         let own = board.own;
-        let i = board.i;
+        let userNo = board.userNo;
         let boardWriterId = board.boardWriterId;
         let nickname = board.nickname;
         let mentors = board.mentor;
         let bId = board.boardId;
+        let postImageUrl = board.postImageUrl;
+        let mentorUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/eca2a863-533a-4b19-9e98-d716addc5ad1-mentor.jpg";
+        let ima = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
         
-        //let mentorNickname = board.nickname;
-        //console.log(mentorId,"??");
-        //console.log(mentorNickname+"//3333/");
-   
         if (serviceName.includes('mentor')) {
             document.querySelector("#storyList").innerHTML +=
                 `
             <div class="card mb-3" style="width: 750px;" style="height: 250px;">
                 <div class="row g-0" style="height: 250px;"> 
                 <div class="col-md-4" style="overflow: hidden; height:250px">
-                <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
+                <img class="profile-image" src='${mentorUrl}' onerror="this.src='${ima}'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -172,7 +232,7 @@ window.addEventListener('load', async () => {
             <div class="card mb-3" style="width: 750px;" style="height: 250px;">
                 <div class="row g-0" style="height: 250px;">
                     <div class="col-md-4" style="overflow: hidden; height:250px">
-                     <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
+                     <img class="profile-image" src='${imageUrl}' onerror="this.src='${ima}'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
                     </div>
 
                     <div class="col-md-8">
@@ -183,8 +243,8 @@ window.addEventListener('load', async () => {
                                 <span class="badge text-bg-success" id="serviceAuction" value="serviceAuctions">경매</span>
                             <p class="card-text">${title}</p>
                             
-                            <div class="author" id="auction_own" onclick="moveAuctionToStory(${i});">${writer}
-                                <input type="hidden" value="${i}">
+                            <div class="author" id="auction_own" onclick="moveAuctionToStory(${userNo});">${writer}
+                                <input type="hidden" value="${userNo}">
                                 <input type="hidden" id="auctionWriter" value="${writer}">
                             </div>
                         </div>
@@ -199,7 +259,7 @@ window.addEventListener('load', async () => {
                 <div class="card mb-3" style="width: 750px;" style="height: 250px;">
                 <div class="row g-0" style="height: 250px;">
                   <div class="col-md-4" style="overflow: hidden; height:250px">
-                  <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
+                  <img class="profile-image" src='${imageUrl}' onerror="this.src='${ima}'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
                   </div>
                   <div class="col-md-8">
                       <div class="card-body">
@@ -223,7 +283,7 @@ window.addEventListener('load', async () => {
             <div class="card mb-3" style="width: 750px;" style="height: 250px;">
                 <div class="row g-0" style="height: 250px;">
                   <div class="col-md-4" style="overflow: hidden; height:250px">
-                  <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
+                  <img class="profile-image" src='${postImageUrl}' onerror="this.src='${ima}'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
                   </div>
                   <div class="col-md-8">
                       <div class="card-body">
@@ -231,7 +291,7 @@ window.addEventListener('load', async () => {
                       <div class="separator"></div>
                       <span class="badge text-bg-secondary" id="story"">스토리</span>
                       <p class="card-text">${content}</p>
-                      <div class="author" id="story_own" onclick="movePage(${own});">${writer}</div>
+                      <div class="author" id="story_own" onclick="movePages(${own});">${writer}</div>
                         <input type="hidden" value="${own}">            
                       </div>
                   </div>
@@ -239,52 +299,8 @@ window.addEventListener('load', async () => {
             </div>
             `;
         }
-
-
     }
-})
-
-//이름 클릭 시 페이지 넘어가게
-// const goStory = (own) =>{
-
-//     fetch("http://localhost:8000/story/"+own,{
-//         method:"GET",
-//         headers:{
-//             "Content-Type":"application/json",
-//             Authorization:localStorage.getItem('authorization'),
-//             RefreshToken:localStorage.getItem('refreshToken'),
-//         },
-//     })
-//     .then((res)=> res.json())
-//     .then(res=>{
-//         location.href="individualpage.html";
-//     })
-// }
-
-//페이지이동 userNo
-// const movePage = (own) =>{
-     
-//     localStorage.setItem('own', own);
-//     location.href="individualpage.html";
-// }
-// const moveAuctionToStory = (i) =>{
-    
-//     localStorage.setItem('own', i);
-//     location.href="individualpage.html";
-// }
-// const moveBungToStory = (boardWriterId)=>{
-     
-//     localStorage.setItem('own', boardWriterId);
-//     location.href="individualpage.html";
-// }
-
-// const movementorToStory = (mentorId)=>{
-   
-//     localStorage.setItem('own', mentorId);
-//     location.href="individualpage.html";
-
-// }
-
+}
 
 //옥션 @GetMapping("/board/{bId}/{writer}")
 const moveMainToAuction = (bId)=>{
@@ -323,31 +339,7 @@ const moveMainToMentor = (bId)=>{
         })
         document.getElementById('modal-body').innerHTML = '';
 
-    //location.href="bung-service-detail.html";
 }
-
-
-
-
-
-//스토리 스크롤 페이징하기
-let page = 0;
-window.onscroll = function (e) {
-
-    let checkNum = window.scrollY - (document.body.offsetHeight - window.innerHeight);
-
-    if (checkNum < 1 && checkNum > -1) {
-        page++;
-
-
-    }
-
-}
-
-console.log("윈도우 scrollTop :", window.scrollY);
-console.log("문서의 높이 :", document.body.offsetHeight);
-console.log("윈도우 높이(window height):", window.innerHeight);
-
 
 
 //사진 로테이션

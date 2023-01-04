@@ -24,8 +24,8 @@ public class BoardApiController {
 
     //퍼블릭인 글 목록
     @GetMapping("/{own}/{page}")
-    public Result findAllByOwn(@PathVariable("own") Long own, @PathVariable("page")int page){
-        return boardService.findAllByOwn(own, page);
+    public Result findByStatusOrderByBoardIdDesc(@PathVariable("own") Long own, @PathVariable("page")int page){
+        return boardService.findByStatusOrderByBoardIdDesc(own, page);
     }
 
     //글쓰기
@@ -49,15 +49,6 @@ public class BoardApiController {
     public Result findAllByBoardStory(@PathVariable("own") Long own, @PathVariable("page")int page){
         return boardService.findAllByBoardStory(own, page);
     }
-
-
-//    @GetMapping("/nameCheck/{nickname}")
-//    public Long findByUserNo(@PathVariable("nickname") String nickname ){
-//
-//        Long own = boardService.findByUserNo(nickname);
-//
-//        return null;
-//    }
 
 
 
