@@ -17,4 +17,6 @@ public interface BoardRepository extends JpaRepository<Board, Long>, CustomAucti
     List<Board> findByIsCloseAndStatus(String isClose, String status);
 
     void findByWriter(String writer);
+
+    List<Board> findByIsCloseAndStatusOrderByBoardIdDesc(String isClose, String stauts);
 }

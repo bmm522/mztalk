@@ -32,35 +32,39 @@ document.getElementById('commInsertBtn').addEventListener('click', function() {
         let writer = res.writer;
         let createDate = res.createDate;
         //CommentResponseDto 반환받음
-        document.getElementById('commentArea').innerHTML += `<div class="row" id = "comment${cId}Start"><div id = "commNickname" class = "col-3"><span class = "${cId}" id = "commNickname">${writer}</span></div><div id = "commContent" class = "col-5"><span id = "${cId}">${content}</span></div><div id = "commCreateDate" class = "col-2"><span class = "${cId}" style="color: gray; font-size: smaller;">${createDate}</span></div><div id = "comm${cId}Btn" class = "col-2"><span class = "${cId}" id = "commUpdate" style = "color: gray; font-size: small; margin-right: 20px;" onclick = "updateComment(${cId});">수정</span><span class = "${cId}" id = "commDelete" style = "color: gray; font-size: small;" onclick = "deleteComment(${cId});">삭제</span></div></div>`;
+        document.getElementById('commentArea').innerHTML += `<div class="row" id = "comment${cId}Start"><div id = "commNickname" class = "col-3"><span class = "${cId}" id = "commNickname">${writer}</span></div><div id = "commContent" class = "col-5"><span id = "${cId}">${content}</span></div><div id = "comm${cId}Btn" class = "col-2"><span class = "${cId}" id = "commUpdate" style = "color: gray; font-size: small; margin-right: 20px;" onclick = "updateComment(${cId});">수정</span><span class = "${cId}" id = "commDelete" style = "color: gray; font-size: small;" onclick = "deleteComment(${cId});">삭제</span></div><div id = "commCreateDate" class = "col-2"><span class = "${cId}" style="color: gray; font-size: smaller;">${createDate}</span></div></div>`;
         if(writer != localStorage.getItem('userNickname')) {
             document.getElementById('comm' + cId + 'Btn').innerHTML = '';
         }
     })
 });
 
-//댓글 수정 폼으로 변경
+//댓글 수정
 function updateComment(cId) {
     console.log("updateComment cId: " + cId);
     document.getElementById(cId).innerHTML = "<input type = 'text' id = 'commUpdateForm' style = 'width: 250px; margin-right: 5px;'/> <span id = 'updateComplete' style='color:gray; font-size: small; margin-right: 5px; cursor: pointer;'>확인</span><span id = 'updateCancle' style='color:gray; font-size: small; cursor: pointer;'>취소</span>"
     document.getElementById('commUpdateForm').focus();
     document.getElementById('updateComplete').addEventListener('click', function() {
-        // console.log("수정할 content내용: " + document.getElementById('commUpdate').value);
-        fetch("http://localhost:8000/auction/comment/" + cId, {
-        method: "PATCH",
-        headers: {
-            "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken'),
-        },
-        body:JSON.stringify({
-            "content" : document.getElementById("commUpdateForm").value
-        }),
-    })
-    .then((res) => res.json())
-    .then(res => {
-        document.getElementById(cId).innerHTML = `<span>${res.content}</span>`;
-    })
+        console.log("댓글수정확인 눌렀을 시 value값: " + document.getElementById("commUpdateForm").value);
+        if(document.getElementById("commUpdateForm").value != '') {
+            fetch("http://localhost:8000/auction/comment/" + cId, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type":"application/json",
+                    Authorization:localStorage.getItem('authorization'),
+                    RefreshToken:localStorage.getItem('refreshToken'),
+                },
+                body:JSON.stringify({
+                    "content" : document.getElementById("commUpdateForm").value
+                }),
+            })
+            .then((res) => res.json())
+            .then(res => {
+                document.getElementById(cId).innerHTML = `<span>${res.content}</span>`;
+            })
+        } else {
+            alert('수정 내용을 입력해 주세요.');
+        }
     });
 
     document.getElementById('updateCancle').addEventListener('click', function() {
@@ -130,6 +134,10 @@ window.onload = () => {
         let imageInfo = res.imageInfo;
         let buyer = res.buyer;
         let isClose = res.isClose;
+        let isbn = res.isbn;
+
+        //책 정보
+        bookInform(isbn);
         
         //update처리 위한 localStorage 저장
         localStorage.setItem("title", title);
@@ -160,10 +168,11 @@ window.onload = () => {
         if(timeLimitHour == 0 && timeLimitMinute == 0) {
             document.getElementById('time').innerHTML = "";    
         } else {
-            document.getElementById('time').innerHTML = '<span style="margin-left:10px; font-size: small; color: gray;"><span style="color: gray;">마감까지...</span>' + '<span style = "color:black;">' + timeLimitHour + "</span>시간" + '<span style = "color:black;">' + timeLimitMinute + '</span>분 남았습니다.</span>';
+            document.getElementById('time').innerHTML = '<span style="margin-left:5px; font-size: small; color: gray;"><span style="color: gray;">마감까지...</span>' + '<span style = "color:black;">' + timeLimitHour + "</span>시간" + '<span style = "color:black;">' + timeLimitMinute + '</span>분 남았습니다.</span>';
         }
 
         //alert
+        console.log("alert 조건 확인: " + buyer + ", " + writer + ", " + isClose);
         if(buyer == null && writer != localStorage.getItem("userNickname")) {
             document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">입찰에 참여해 보세요.</span>';
         } else if(buyer == null && writer == localStorage.getItem('userNickname') && isClose == 'N') {
@@ -288,10 +297,10 @@ function showCommentList(res) {
         let writer = comment.writer;
         let createDate = comment.createDate;
         
-        document.getElementById('commentArea').innerHTML += `<div class="row" id = "comment${cId}Start"><div id = "comm${cId}Nickname" class = "col-3"><span class = "${cId}" id = "comm${cId}Nickname">${writer}</span></div><div id = "comm${cId}Content" class = "col-5"><span id = "${cId}">${content}</span></div><div id = "comm${cId}CreateDate" class = "col-2"><span class = "${cId}" style="color: gray; font-size: smaller;">${createDate}</span></div><div id = "comm${cId}Btn" class = "col-2"><span class = "${cId}" id = "commUpdate" style = "color: gray; font-size: small; margin-right: 20px;" onclick = "updateComment(${cId});">수정</span><span class = "${cId}" id = "commDelete" style = "color: gray; font-size: small;" onclick = "deleteComment(${cId});">삭제</span></div></div>`;
+        document.getElementById('commentArea').innerHTML += `<div class="row" id = "comment${cId}Start"><div id = "commNickname" class = "col-3"><span class = "${cId}" id = "commNickname">${writer}</span></div><div id = "commContent" class = "col-5"><span id = "${cId}">${content}</span></div><div id = "comm${cId}Btn" class = "col-2"><span class = "${cId}" id = "commUpdate" style = "color: gray; font-size: small; margin-right: 20px;" onclick = "updateComment(${cId});">수정</span><span class = "${cId}" id = "commDelete" style = "color: gray; font-size: small;" onclick = "deleteComment(${cId});">삭제</span></div><div id = "commCreateDate" class = "col-2"><span class = "${cId}" style="color: gray; font-size: smaller;">${createDate}</span></div></div>`;
         if(writer != localStorage.getItem('userNickname')) {
             document.getElementById('comm' + cId + 'Btn').innerHTML = '';
-            document.getElementById('comm' + cId + 'CreateDate').style.marginLeft = "132px";
+            // document.getElementById('comm' + cId + 'CreateDate').style.marginLeft = "132px";
         }
     }
 }
@@ -384,5 +393,33 @@ function chatConnection() {
         if(res.status == 200) {
             console.log("채팅 연결 성공");
         }
+    })
+}
+
+//책 정보
+function bookInform(isbn) {
+    fetch("https://dapi.kakao.com/v3/search/book?target=isbn&query="+isbn, {
+        method: "GET",
+        headers: {
+            Authorization: "KakaoAK d7041cb01ccfe4c12792028ae9cb5fff"
+        }
+    })
+    .then((res) => res.json())
+    .then(res => {
+        for(let book of res.documents) {
+            let title = book.title;
+            let authors = book.authors;
+            let publisher = book.publisher;
+            let thumbnail = "";
+            let contents = book.contents;
+            if(book.thumbnail == "") {
+                thumbnail = "img/auction/noImage.png"
+            } else {
+                thumbnail = book.thumbnail;
+            }
+            document.getElementById('bookImg').innerHTML = `<img src = "${thumbnail}" style = "width: 90%; height: 90%;">`;
+            document.getElementById('bookTitle').innerHTML = `<span style="display:block;font-size:20px;font-weight: bold">${title}</span><span style="color:gray;">저자 | ${authors} 출판 | ${publisher}</span><span style="display: block;"><br>${contents}...</span>`;
+        }
+        
     })
 }

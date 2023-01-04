@@ -22,21 +22,45 @@ input:focus, input:active {
     text-shadow: -1px 0px #503C22, 0px 1px #503C22, 1px 0px #503C22, 0px -1px #503C22;
 }
 
-#serviceTitle {
+#serviceTitle a{
     color:burlywood;
     font-weight: bolder;
     text-shadow: -5px 0px #503C22, 0px 1px #503C22, 1px 0px #503C22, 0px -1px #503C22;
     cursor: pointer;
-}
-
-a {
     text-decoration: none;
-    color: burlywood;
 }
 
-a:hover {
-    color: #503C22;
+#serviceTitle a:hover {
+    color: white;
 }
+
+@-webkit-keyframes circle {
+    0% {
+      opacity: 1;
+    }
+    40% {
+      opacity: 1;
+    }
+    100% {
+      width: 200%;
+      height: 200%;
+      opacity: 0;
+    }
+  }
+  @keyframes circle {
+    0% {
+      opacity: 1;
+    }
+    40% {
+      opacity: 1;
+    }
+    100% {
+      width: 200%;
+      height: 200%;
+      opacity: 0;
+    }
+  }
+
 
 .card-cover {
     position: relative;
@@ -89,4 +113,10 @@ a:hover {
 #flexSwitchCheckChecked2:focus, #flexSwitchCheckChecked2:active {
     outline: none !important;
     box-shadow: none !important;
+}
+
+.currnetPriceArea {
+    font-weight: bolder;
+    text-shadow: -2px 0px #503C22, 0px 2px #503C22, 2px 0px #503C22, 0px -2px #503C22;
+    font-size: 15px;
 }

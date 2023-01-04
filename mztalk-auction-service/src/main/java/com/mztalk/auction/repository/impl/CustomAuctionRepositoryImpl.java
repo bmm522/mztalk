@@ -39,9 +39,11 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     @Transactional
     @Override
     public int boardUpdate(Long bId, BoardEditDto boardEditDto) {
-        return entityManager.createQuery("update Board b set b.title= :title, b.content= :content where b.boardId = :bId")
+        return entityManager.createQuery("update Board b set b.title= :title, b.content= :content, b.bookTitle = :bookTitle, b.isbn = :isbn where b.boardId = :bId")
                 .setParameter("title", boardEditDto.getTitle())
                 .setParameter("content", boardEditDto.getContent())
+                .setParameter("bookTitle", boardEditDto.getBookTitle())
+                .setParameter("isbn", boardEditDto.getIsbn())
                 .setParameter("bId", bId)
                 .executeUpdate();
     }

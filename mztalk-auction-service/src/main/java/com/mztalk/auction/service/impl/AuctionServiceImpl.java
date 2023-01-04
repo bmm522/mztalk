@@ -243,7 +243,7 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public Result<?> selectCloseBoardList() throws ParseException {
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
-        List<Board> boardList = boardRepository.findByIsCloseAndStatus("N", "Y");
+        List<Board> boardList = boardRepository.findByIsCloseAndStatusOrderByBoardIdDesc("N", "Y");
 
         for (Board board : boardList) {
             HttpHeaders headers = new HttpHeaders();
