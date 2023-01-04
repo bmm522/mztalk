@@ -27,9 +27,9 @@ public class BungBoardApiController {
     private final BungBoardService bungBoardService;
 
     // 게시글 전체 조회
-    @GetMapping("/mainBoards")
-    public Result mainSelectList() {
-        return bungBoardService.mainSelectList();
+    @GetMapping("/mainBoards/{page}")
+    public Result<?> mainSelectList(@PathVariable("page")int page) {
+        return bungBoardService.mainSelectList(page);
     }
 
     // 게시글 등록
@@ -124,8 +124,8 @@ public class BungBoardApiController {
 //    }
 
     @GetMapping("/search")
-    public Result<?> bungBoardSearch(@RequestParam(value="category")String[] categories, @RequestParam("type")String type, @RequestParam("searchText")String searchText){
-        return bungBoardService.search(categories, type, searchText);
+    public Result<?> bungBoardSearch(@RequestParam(value="category")String[] categories, @RequestParam("type")String type, @RequestParam("searchText")String searchText, @RequestParam("page")int page){
+        return bungBoardService.search(categories, type, searchText, page);
     }
 
 

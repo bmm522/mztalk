@@ -1,8 +1,33 @@
+let page=1;
+let searchPage = 1;
+let isSearchPerformed = false;
+let isMainPerformed = true;
 window.onload = function(){
-
+    loadMoreContent(1);
      localStorage.removeItem('bId');
-    
-    fetch('http://localhost:8000/bung/mainBoards', {
+    // console.log('innerHeight : ' + window.innerHeight);
+    // console.log('window.scrollY : ' + window.scrollY);
+    // console.log('document.body.offsetHeight : ' + document.body.offsetHeight);
+   
+}
+
+window.onscroll = () =>{
+    console.log(isSearchPerformed);
+    if (window.innerHeight + window.scrollY >= document.getElementById('output-div').offsetHeight && isMainPerformed) {
+        document.getElementById('search-div').innerHTML = '';
+        page++;
+        loadMoreContent(page);
+    }
+    if (window.innerHeight + window.scrollY >= document.getElementById('search-div').offsetHeight && isSearchPerformed) {
+        searchPage++;
+        loadSearch(searchPage);
+    }
+}
+
+
+
+const loadMoreContent =(page) =>{
+    fetch('http://localhost:8000/bung/mainBoards/'+page, {
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -175,6 +200,19 @@ const moveDetails = (boardId) =>{
 // });
 
 document.getElementById('searchBtn').addEventListener('click', function() {
+    document.getElementById('output-div').innerHTML = '';
+    document.getElementById('search-div').innerHTML = '';
+    isSearchPerformed = true;
+    isMainPerformed = false;
+    loadSearch(1);
+    
+  });
+
+document.getElementById('bung-request-list-btn').addEventListener('click', function(){
+    location.href = "bung-service-AcceptPage.html";
+});
+
+const loadSearch = (page) =>{
     const checkedBoxes = ['study', 'hobby', 'enjoy', 'food'].filter(id => document.getElementById(id).checked);
     const arr = checkedBoxes.length ? checkedBoxes : ['study', 'hobby', 'enjoy', 'food'];
    
@@ -183,7 +221,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
     if(type == 'null'){
         alert('제목, 내용, 닉네임을 지정해주세요');
     } else {
-        fetch('http://localhost:8000/bung/search?category='+ arr.join(',')+'&type='+type+'&searchText='+document.getElementById('searchBox').value, {
+        fetch('http://localhost:8000/bung/search?category='+ arr.join(',')+'&type='+type+'&searchText='+document.getElementById('searchBox').value+'&page='+page, {
             method:"GET",
             headers:{
                 Authorization:localStorage.getItem('authorization'),
@@ -207,7 +245,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
                 let createdDate = board.createdDate;
                 let boardId = board.boardId;
 
-                document.getElementById('output-div').innerHTML +=
+                document.getElementById('search-div').innerHTML +=
                 ` <div class="col" onclick='moveDetails(${boardId});' style="cursor:pointer;"><br>
                 <div class="card h-100">            
                      <div class="card shadow-sm h-100">
@@ -245,10 +283,4 @@ document.getElementById('searchBtn').addEventListener('click', function() {
             }
         })
     }
-
-    
-  });
-
-document.getElementById('bung-request-list-btn').addEventListener('click', function(){
-    location.href = "bung-service-AcceptPage.html";
-});
+}

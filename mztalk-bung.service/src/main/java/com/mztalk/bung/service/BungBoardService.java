@@ -14,7 +14,7 @@ public interface BungBoardService {
 
     Long mainInsertBoard(BungBoardDto bungBoardDto);
 
-    Result mainSelectList();
+    Result<?> mainSelectList(int page);
 
     Long mainBoardUpdate(Long bId, BungBoardDto bungBoardDto);
 
@@ -42,13 +42,13 @@ public interface BungBoardService {
 
     Long bungBoardNowGroup(Long bId);
 
-    Result bungBoardSearch(SearchKeyWord searchKeyWord);
+    Result<?> bungBoardSearch(SearchKeyWord searchKeyWord);
 
     Long bungAddBoardGroupDrop(Long bId, Long aId);
 
     Long findBungBoard(Long bId);
 
-    Result<?> search(String[] categories, String type, String searchText);
+    Result<?> search(String[] categories, String type, String searchText, int page);
 
     Result<?> getAcceptList(String nickname);
 }

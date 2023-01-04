@@ -6,6 +6,8 @@ import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.entity.BungAddBoard;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.response.BungListResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,7 +18,7 @@ public interface BungBoardRepository extends JpaRepository<BungBoard, Long>, Bun
 
     BungBoard findBungBoardByBoardId(Long boardId);
 
-    List<BungBoard> findByBoardStatus(BoardStatus yes);
+    Page<BungBoard> findByBoardStatus(BoardStatus yes, Pageable pageable);
 
     List<BungBoardDto> findByBoardWriter(String boardWriter);
 
