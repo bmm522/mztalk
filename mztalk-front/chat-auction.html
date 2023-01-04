@@ -112,14 +112,16 @@ async function main() {
     // 현재 창의 Query string으로부터 '나'의 userId 가져오기
     const meUserId = new URLSearchParams(location.search).get('userId');
 
-    //친구 버튼 클릭시 맞팔 채팅 리스트로 이동
+    const meUserNickname = new URLSearchParams(location.search).get('userNickname');
+
+    //친구 버튼 클릭시 친구 채팅 리스트로 이동
     document.getElementById('friendChat').addEventListener('click', ()=>{
-        location.href=`http://localhost:3000/chat-friends/?userId=${meUserId}`;
+        location.href=`http://localhost:3000/chat-friends/?userId=${meUserId}&userNickname=${meUserNickname}`;
     });
 
-    //벙 버튼 클릭시 친구 채팅 리스트로 이동
+    //벙 버튼 클릭시 벙 채팅 리스트로 이동
     document.getElementById('bungChat').addEventListener('click', ()=>{
-        location.href=`http://localhost:3000/chat-bung/?userId=${meUserId}`;
+        location.href=`http://localhost:3000/chat-bung/?userId=${meUserId}&userNickname=${meUserNickname}`;
     });
 
     // 1:1 채팅에서 상대가 '나'의 소켓으로 메시지를 발송할 수 있도록 하기 위해서
@@ -151,7 +153,7 @@ async function main() {
     messageBoxController.setUserList(users, usersConversations);
     //#endregion
 
-    //#region 로딩 시 읽지 않은 메시지가 있는 유저 보여주기
+    //#region 로딩 시 읽지 않은 메시지가 있는 유저 
     users.forEach((_, index) => {
         const latestConversation = usersConversations[index].at(-1);
 
@@ -182,6 +184,8 @@ async function main() {
         await chatBoxController.onReceiveMessage({ fromUserId, targetUserId, message, sendDate });
 
         messageBoxController.onReceiveMessage({ fromUserId, targetUserId, message, sendDate });
+
+        
     });
 
     // 특정 유저 클릭 시 대화방 열기
@@ -428,7 +432,7 @@ class ChatBoxController {
  */
 class FollowListRepository {
     async fetch(userId) {
-        const response = await fetch(`http://localhost:8000/story/matpalList/${userId}`, {
+        const response = await fetch(`http://localhost:8000/login/chat/auction?userNo=${userId}`, {
             method: "GET",
             headers: {
                 "content-type": "application/json"
