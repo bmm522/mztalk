@@ -6,6 +6,9 @@ import com.mztalk.main.common.Result;
 import com.mztalk.main.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -27,8 +30,9 @@ public class BoardServiceImpl implements BoardService {
     //퍼블릭글 불러오기
     @Override
     @Transactional(readOnly  = true)
-    public Result findAllByOwn(Long own) {
-        List<Board> boards = boardRepository.findAllByOwn(own);
+    public Result findAllByOwn(Long own, int page) {
+        Pageable pageable = PageRequest.of(page - 1, 4);
+        Page<Board> boards = boardRepository.findAllByOwn(own, pageable);
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
     }
@@ -61,37 +65,14 @@ public class BoardServiceImpl implements BoardService {
     //메인화면 뿌려주기
     @Override
     @Transactional(readOnly = true)
-    public Result findAllByBoardStory(Long own) {
-        List<Board> boards = boardRepository.findAllByBoardStory(own);
+    public Result findAllByBoardStory(Long own, int page) {
+
+        Pageable pageable = PageRequest.of(page-1, 4);
+        Page<Board> boards = boardRepository.findAllByBoardStory(own, pageable);
         List<BoardDto> collect = boards.stream().map(BoardDto::new).collect(Collectors.toList());
         return new Result(collect);
+        }
 
-    }
-
-//    @Override
-//    public Long findByUserNo(String nickname) {
-//
-//        HttpHeaders headerName = new HttpHeaders();
-//        headerName.add("Content-type", "text/html");
-//
-//        //유저의이름
-//        HttpHeaders headersNames = new HttpHeaders();
-//        headersNames.add("Content-type", "text/html");
-//
-//        ResponseEntity<String> responseName = new RestTemplate().exchange(
-//                "http://localhost:8000/login/user-info/" + own,
-//                HttpMethod.GET,
-//                new HttpEntity<String>(headerName),
-//                String.class
-//        );
-//
-//        JSONObject ownName = new JSONObject(responseName.getBody());
-//        Long own = ownName.getLong("userNo");
-//
-//        System.out.println(own);
-//
-//        return own;
-//    }
 
 
 }
