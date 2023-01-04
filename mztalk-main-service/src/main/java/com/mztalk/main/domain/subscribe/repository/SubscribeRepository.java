@@ -4,6 +4,7 @@ package com.mztalk.main.domain.subscribe.repository;
 import com.mztalk.main.domain.subscribe.dto.SubscribeRequestDto;
 import com.mztalk.main.domain.subscribe.dto.SubscribeResponseDto;
 import com.mztalk.main.domain.subscribe.entity.Subscribe;
+import com.mztalk.main.status.RoleStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +24,5 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
     @Query(value = "UPDATE Subscribe s SET s.roleStatus = 'USER' WHERE s.vipDate < CURRENT_TIMESTAMP and s.userNo = :userNo and s.roleStatus ='VIP'", nativeQuery = true)
     int updateStatusByUserNo(@Param("userNo") Long userNo);
 
-
+    SubscribeResponseDto findByUserNoAndRoleStatus(Long userNo, RoleStatus roleStatus);
 }

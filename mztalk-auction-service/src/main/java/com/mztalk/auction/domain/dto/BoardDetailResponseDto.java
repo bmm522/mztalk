@@ -1,6 +1,7 @@
 package com.mztalk.auction.domain.dto;
 
 import com.mztalk.auction.domain.entity.Board;
+import com.mztalk.auction.domain.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class BoardDetailResponseDto {
     private ConcurrentHashMap<String, Long> timeMap;
     private String isClose;
     private List<ConcurrentHashMap<String, String>> imageInfo;
+    private List<Comment> commentList;
 
     public BoardDetailResponseDto(Board board, List<ConcurrentHashMap<String, String>> imageInfo, ConcurrentHashMap<String, Long> timeMap) {
         this.boardId = board.getBoardId();
@@ -40,5 +42,6 @@ public class BoardDetailResponseDto {
         this.timeMap = timeMap;
         this.isClose = board.getIsClose();
         this.imageInfo = imageInfo;
+        this.commentList = board.getComment();
     }
 }

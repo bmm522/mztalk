@@ -11,4 +11,6 @@ public interface SubscribeService {
     Subscribe save(SubscribeRequestDto subscribeRequestDto);
 
     int updateStatusByUserNo(Long userNo);
+
+    SubscribeResponseDto findByUserNoAndRoleStatus(Long userNo);
 }

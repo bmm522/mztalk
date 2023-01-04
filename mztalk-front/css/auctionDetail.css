@@ -103,7 +103,7 @@ li {
     outline: solid 3px burlywood;
 }
 
-#priceSubmitBtn {
+#priceSubmitBtn, #chatBtn {
     width: 120px;
     height:50px;
     background-color: burlywood;
@@ -136,7 +136,7 @@ li {
     margin-right: 20px;
 }
 
-#commBtn {
+#commInsertBtn {
     width: 70px;
     height:30px;
     background-color: burlywood;
@@ -181,4 +181,9 @@ input {
     padding: 7px 30px;
     text-align: center;  
     font-size: 16px;
+    display: inline-block;
+}
+
+[id*="Start"]:hover {
+    background-color: #EFE5BB;
 }

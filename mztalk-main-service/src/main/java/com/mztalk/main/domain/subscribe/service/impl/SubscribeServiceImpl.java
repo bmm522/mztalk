@@ -4,10 +4,12 @@ package com.mztalk.main.domain.subscribe.service.impl;
 import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
 import com.mztalk.main.domain.subscribe.dto.SubscribeRequestDto;
+import com.mztalk.main.domain.subscribe.dto.SubscribeResponseDto;
 import com.mztalk.main.domain.subscribe.entity.Subscribe;
 import com.mztalk.main.domain.subscribe.repository.SubscribeRepository;
 import com.mztalk.main.domain.subscribe.service.SubscribeService;
 import com.mztalk.main.handler.exception.CustomApiException;
+import com.mztalk.main.status.RoleStatus;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -76,5 +78,16 @@ public class SubscribeServiceImpl implements SubscribeService {
         }
         return 0;
     }
+
+    @Override
+    public SubscribeResponseDto findByUserNoAndRoleStatus(Long userNo) {
+        try {
+                return subscribeRepository.findByUserNoAndRoleStatus(userNo, RoleStatus.valueOf("VIP"));
+            }catch (Exception e){
+                return null;
+            }
+        }
+
+
 
 }

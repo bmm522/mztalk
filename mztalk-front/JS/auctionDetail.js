@@ -8,7 +8,7 @@ document.getElementById("priceSubmitBtn").addEventListener('click', function() {
 });
 
 //댓글 작성
-document.getElementById('commBtn').addEventListener('click', function() {
+document.getElementById('commInsertBtn').addEventListener('click', function() {
     fetch("http://localhost:8000/auction/comment", {
         method: "POST",
         headers: {
@@ -24,16 +24,17 @@ document.getElementById('commBtn').addEventListener('click', function() {
     })
     .then((res) => res.json())
     .then(res => {
-        let cId = res.cid; 
         document.getElementById('commInput').value = "";
+        console.log("댓글 작성 시 response: " + JSON.stringify(res));
         console.log("댓글 작성 성공");
-        if(document.getElementById('commentStart') == null) { //기존 댓글 없으면
-            document.getElementById('commentArea').innerHTML += `<div id = "commentStart" class = "row"><div class = "col-1" id = "nicknameArea"><div class = "commNickname">${res.writer}</div></div><div class = "col-7" id = "contentArea"><span id = "${cId}" style="margin-right: 10px;">${res.content}</span></div><div class = "col-2" id = "createDateArea"><span id = "commCreateDate" style="color:gray;font-size: smaller;margin-right:10px;">${res.createDate}</span></div><div class = "col-2" id = "commBtnArea"><span id = "commUpdate" style="color:gray;font-size: small; margin-right: 20px; cursor: pointer;" onclick = "updateComment(${cId});">수정</span><span id = "commDelete" style="color:gray;font-size: small;cursor: pointer;" onclick = "deleteComment(${cId});">삭제</span></div></div>`;
-        } else {
-            document.getElementById('nicknameArea').innerHTML += `<div class = "commNickname">${res.writer}</div>`;
-            document.getElementById('contentArea').innerHTML += `<div id = "${cId}" class="commContent">${res.content}</div>`;
-            document.getElementById('createDateArea').innerHTML += `<div class = "commCreateDate" style="color: gray;font-size: smaller;">${res.createDate}</div>`;
-            document.getElementById('commBtnArea').innerHTML += `<div class = "commUpdate"><span style="display: inline-block;color:gray;font-size: small; margin-right: 20px;cursor: pointer;" onclick = "updateComment(${cId});">수정</span><span id = "commDelete" style="color:gray;font-size: small; cursor: pointer;" onclick = "deleteComment(${cId});">삭제</span></div>`;    
+        let cId = res.cid;
+        let content = res.content;
+        let writer = res.writer;
+        let createDate = res.createDate;
+        //CommentResponseDto 반환받음
+        document.getElementById('commentArea').innerHTML += `<div class="row" id = "comment${cId}Start"><div id = "commNickname" class = "col-3"><span class = "${cId}" id = "commNickname">${writer}</span></div><div id = "commContent" class = "col-5"><span id = "${cId}">${content}</span></div><div id = "commCreateDate" class = "col-2"><span class = "${cId}" style="color: gray; font-size: smaller;">${createDate}</span></div><div id = "comm${cId}Btn" class = "col-2"><span class = "${cId}" id = "commUpdate" style = "color: gray; font-size: small; margin-right: 20px;" onclick = "updateComment(${cId});">수정</span><span class = "${cId}" id = "commDelete" style = "color: gray; font-size: small;" onclick = "deleteComment(${cId});">삭제</span></div></div>`;
+        if(writer != localStorage.getItem('userNickname')) {
+            document.getElementById('comm' + cId + 'Btn').innerHTML = '';
         }
     })
 });
@@ -41,8 +42,8 @@ document.getElementById('commBtn').addEventListener('click', function() {
 //댓글 수정 폼으로 변경
 function updateComment(cId) {
     console.log("updateComment cId: " + cId);
-    document.getElementById(cId).innerHTML = "<input type = 'text' id = 'commUpdate' style = 'width: 350px; margin-right: 5px;'/> <span id = 'updateComplete' style='color:gray; font-size: small; margin-right: 5px; cursor: pointer;'>확인</span><span id = 'updateCancle' style='color:gray; font-size: small; cursor: pointer;'>취소</span>"
-    document.getElementById('commUpdate').focus();
+    document.getElementById(cId).innerHTML = "<input type = 'text' id = 'commUpdateForm' style = 'width: 250px; margin-right: 5px;'/> <span id = 'updateComplete' style='color:gray; font-size: small; margin-right: 5px; cursor: pointer;'>확인</span><span id = 'updateCancle' style='color:gray; font-size: small; cursor: pointer;'>취소</span>"
+    document.getElementById('commUpdateForm').focus();
     document.getElementById('updateComplete').addEventListener('click', function() {
         // console.log("수정할 content내용: " + document.getElementById('commUpdate').value);
         fetch("http://localhost:8000/auction/comment/" + cId, {
@@ -53,7 +54,7 @@ function updateComment(cId) {
             RefreshToken:localStorage.getItem('refreshToken'),
         },
         body:JSON.stringify({
-            "content" : document.getElementById("commUpdate").value
+            "content" : document.getElementById("commUpdateForm").value
         }),
     })
     .then((res) => res.json())
@@ -97,8 +98,8 @@ function deleteComment(cId) {
         }),
     })
     .then(res => {
+        document.getElementById('comment' + cId + 'Start').remove();
         console.log('통신 성공');
-        
     })
     }
 }
@@ -117,14 +118,13 @@ window.onload = () => {
     })
     .then((res) => res.json())
     .then(res => {
-        console.log("detail onload res: " + JSON.stringify(res));
         let boardId = res.boardId;
         let title = res.title;
         let bookTitle = res.bookTitle;
         let content = res.content;
         let currentPrice = res.currentPrice;
         let writer = res.writer;
-        let createDate = res.createDate;
+        let createDate = res.createDate.substr(0,10);
         let timeLimitHour = -res.timeMap.hour;
         let timeLimitMinute = -res.timeMap.minute;
         let imageInfo = res.imageInfo;
@@ -139,7 +139,6 @@ window.onload = () => {
         localStorage.setItem("bookTitle", bookTitle);
         // localStroage.setItem("createDate", createDate);
         for(let i = 0; i < imageInfo.length; i++) {
-            console.log("deatil imageInfo: " + JSON.stringify(imageInfo));
             localStorage.setItem("imageInfo", JSON.stringify(imageInfo));
         }
 
@@ -161,7 +160,7 @@ window.onload = () => {
         if(timeLimitHour == 0 && timeLimitMinute == 0) {
             document.getElementById('time').innerHTML = "";    
         } else {
-            document.getElementById('time').innerHTML = '<span style="color: gray; font-size: smaller; margin-right: 10px;">마감까지...</span>' + timeLimitHour + ":" + timeLimitMinute;
+            document.getElementById('time').innerHTML = '<span style="margin-left:10px; font-size: small; color: gray;"><span style="color: gray;">마감까지...</span>' + '<span style = "color:black;">' + timeLimitHour + "</span>시간" + '<span style = "color:black;">' + timeLimitMinute + '</span>분 남았습니다.</span>';
         }
 
         //alert
@@ -179,7 +178,6 @@ window.onload = () => {
         
         //사진 처리
         for(let i = 0; i < imageInfo.length; i++) {
-            console.log("deatil 사진처리: " + imageInfo[i].imageUrl);
             document.getElementById('slides').innerHTML += `<li><img src="${imageInfo[i].imageUrl}" width="300px" height="300px"/><input type="hidden" class="obejctKey" value="${imageInfo[i].objectKey}"/> <input type="hidden" class="imageLevel" value="${imageInfo[i].imageLevel}"/></li>`;
             
             //슬라이드 관련
@@ -211,11 +209,16 @@ window.onload = () => {
                 }
             });
         }
+        console.log("입찰버튼 조건확인: " + buyer);
         //입찰 버튼
         if(localStorage.getItem("userNickname") != writer && isClose == 'N') {
-            document.getElementById('modalBtn').innerHTML = '<button type="button" data-bs-toggle="modal" data-bs-target="#priceModal" id="priceBtn">입찰</button>'
+            document.getElementById('modalBtn').innerHTML = '<button type="button" data-bs-toggle="modal" data-bs-target="#priceModal" id="priceBtn" style="margin-left: 100px;">입찰</button>'
         } else if(localStorage.getItem("userNickname") != writer && isClose == 'Y') {
-            document.getElementById('modalBtn').innerHTML = '<button type="button" id = "priceBtnDisabled" disabled>거래완료</button>'
+            document.getElementById('modalBtn').innerHTML = '<button type="button" id = "priceBtnDisabled" disabled>거래완료</button>';
+        } else if(localStorage.getItem('userNickname') == writer && isClose == 'Y' && buyer == "null") {
+            document.getElementById('modalBtn').innerHTML = '';
+        } else if(localStorage.getItem('userNickname') == writer && isClose == 'Y' && buyer != "null") {
+            document.getElementById('modalBtn').innerHTML = '<button type = "button" id = "chatBtn">입찰자와 채팅</button>';
         }
         
     })
@@ -272,29 +275,25 @@ window.onload = () => {
     })
     .then((res) => res.json())
     .then(res => {
+        //commentResponseDtoList 반환받음
         showCommentList(res);
     }); 
 }
-
 function showCommentList(res) {
-    console.log("댓글작성하고도 window로 뿌려지나");
-    let i = 1;
-        for(let comment of res.data) {
-            console.log("onload cid: " + comment.cid); 
-            let cId = comment.cid;
-            let content = comment.content;
-            let writer = comment.writer;
-            let createDate = comment.createDate;
-            if(i == 1) { //틀 만들어주기
-                document.getElementById('commentArea').innerHTML += `<div id = "commentStart" class = "row"><div class = "col-1" id = "nicknameArea"><span class = "${cId}" id = "commNickname">${writer}</span></div><div class = "col-7" id = "contentArea"><span class = "${cId}" id = "${cId}" style="margin-right: 10px;">${content}</span></div><div class = "col-2" id = "createDateArea"><span class = "${cId}" id = "commCreateDate" style="color:gray;font-size: smaller;margin-right:10px;">${createDate}</span></div><div class = "col-2" id = "commBtnArea"><span class = "${cId}" id = "commUpdate" style="color:gray;font-size: small; margin-right: 20px;" onclick = "updateComment(${cId});">수정</span><span class = "${cId}" id = "commDelete" style="color:gray;font-size: small;" onclick = "deleteComment(${cId});">삭제</span></div></div>`;
-                i++
-            } else {
-                document.getElementById('nicknameArea').innerHTML += `<div class = "commNickname ${cId}">${writer}</div>`;
-                document.getElementById('contentArea').innerHTML += `<div id = "${cId}" class ="commContent"><span class = "${cId}">${content}</span></div>`;
-                document.getElementById('createDateArea').innerHTML += `<div class = "commCreateDate"><span class = "${cId}" style="color:gray;font-size:smaller;">${createDate}</span></div>`;
-                document.getElementById('commBtnArea').innerHTML += `<div class = "commUpdate"><span class = "${cId}" style="display: inline-block;color:gray;font-size: small; margin-right: 20px;cursor: pointer;" onclick = "updateComment(${cId});">수정</span><span id = "commDelete" style="color:gray;font-size: small;cursor: pointer;" onclick = "deleteComment(${cId});">삭제</span></div>`;
-            }
+    console.log("showCommentList실행됨");
+    for(let comment of res.data) {
+        console.log("onload cid: " + comment.cid); 
+        let cId = comment.cid;
+        let content = comment.content;
+        let writer = comment.writer;
+        let createDate = comment.createDate;
+        
+        document.getElementById('commentArea').innerHTML += `<div class="row" id = "comment${cId}Start"><div id = "comm${cId}Nickname" class = "col-3"><span class = "${cId}" id = "comm${cId}Nickname">${writer}</span></div><div id = "comm${cId}Content" class = "col-5"><span id = "${cId}">${content}</span></div><div id = "comm${cId}CreateDate" class = "col-2"><span class = "${cId}" style="color: gray; font-size: smaller;">${createDate}</span></div><div id = "comm${cId}Btn" class = "col-2"><span class = "${cId}" id = "commUpdate" style = "color: gray; font-size: small; margin-right: 20px;" onclick = "updateComment(${cId});">수정</span><span class = "${cId}" id = "commDelete" style = "color: gray; font-size: small;" onclick = "deleteComment(${cId});">삭제</span></div></div>`;
+        if(writer != localStorage.getItem('userNickname')) {
+            document.getElementById('comm' + cId + 'Btn').innerHTML = '';
+            document.getElementById('comm' + cId + 'CreateDate').style.marginLeft = "132px";
         }
+    }
 }
 
 //게시글 수정 페이지로
@@ -322,7 +321,7 @@ function deleteBoard() {
         }),
     })
     .then(res => {
-            deleteFatch();  
+            deleteFatch();
     })
     }
 }
@@ -368,5 +367,22 @@ const postReport=()=>{
                   alert('신고 접수 되었습니다.');
                   location.href="auctionDetail.html";
               })
+    })
+}
+
+//입찰자 채팅
+function chatConnection() {
+    fetch('http://localhost:8000/auction/chat',  {
+        method: "GET",
+        headers: {
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        }
+    })
+    .then(res => {
+        if(res.status == 200) {
+            console.log("채팅 연결 성공");
+        }
     })
 }

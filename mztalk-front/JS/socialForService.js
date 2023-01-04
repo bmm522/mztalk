@@ -134,7 +134,8 @@ window.addEventListener('load', async () => {
         let own = board.own;
         let i = board.i;
         let boardWriterId = board.boardWriterId;
-        
+        let nickname = board.nickname;
+        let mentorId = board.mentor.userId;
         if (serviceName.includes('mentor')) {
             document.querySelector("#storyList").innerHTML +=
                 `
@@ -146,10 +147,13 @@ window.addEventListener('load', async () => {
                 <div class="col-md-8">
                     <div class="card-body">
                     <h5 class="card-title">${title}</h5>
-                    <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
+                    <button>자세히보기</button>
+                    <div class="separator"></div>
+                     <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
                     <p class="card-text">${content}</p>
-                    <div class="userNo">${writer}
-                    <input type="hidden" value="">
+                    <div class="author" onclick="moveAuctionToStory(${mentorId});">${writer}
+                    <input type="hidden" class="nickname_find" value="${nickname}">
+                    <input type="hidden" class="mentorId_find" value="${mentorId}">
                     </div>
                     </div>
                 </div>
@@ -162,26 +166,30 @@ window.addEventListener('load', async () => {
                 `
             <div class="card mb-3" style="width: 750px;" style="height: 250px;">
                 <div class="row g-0" style="height: 250px;">
-                <div class="col-md-4" style="overflow: hidden; height:250px">
-                  <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                    <h5 class="card-title">${bookTitle}</h5>
-                    <span class="badge text-bg-success" id="serviceAuction">경매</span>
-                    <p class="card-text">${title}</p>
-                    <div id="auction_own" onclick="moveAuctionToStory(${i});">${writer}
-                        <input type="hidden" value="${i}">
+                    <div class="col-md-4" style="overflow: hidden; height:250px">
+                     <img class="profile-image" src='${imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"  width="100%;" height="100%;" object-fit="cover;">
                     </div>
+
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">${bookTitle}</h5>
+                            <button>자세히보기</button>
+                            <div class="separator"></div>
+                                <span class="badge text-bg-success" id="serviceAuction" value="serviceAuctions">경매</span>
+                            <p class="card-text">${title}</p>
+                            
+                            <div class="author" id="auction_own" onclick="moveAuctionToStory(${i});">${writer}
+                                <input type="hidden" value="${i}">
+                            </div>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
             `;
         }
         else if (serviceName.includes('bung')) {
             document.querySelector("#storyList").innerHTML +=
-                `
+            `
                 <div class="card mb-3" style="width: 750px;" style="height: 250px;">
                 <div class="row g-0" style="height: 250px;">
                   <div class="col-md-4" style="overflow: hidden; height:250px">
@@ -190,9 +198,10 @@ window.addEventListener('load', async () => {
                   <div class="col-md-8">
                       <div class="card-body">
                       <h5 class="card-title">${title}</h5>
-                      <span class="badge text-bg-secondary" id="story"">스토리</span>
+                      <div class="separator"></div>
+                       <span class="badge text-bg-info" id="serviceBung">벙</span>
                       <p class="card-text">${content}</p>
-                      <div id="bung_own" onclick="moveBungToStory(${boardWriterId});">${writer}</div>
+                      <div class="author" id="bung_own" onclick="moveBungToStory(${boardWriterId});">${writer}</div>
                         <input type="hidden" value="${boardWriterId}">            
                       </div>
                   </div>
@@ -211,9 +220,10 @@ window.addEventListener('load', async () => {
                   <div class="col-md-8">
                       <div class="card-body">
                       <h5 class="card-title">${title}</h5>
+                      <div class="separator"></div>
                       <span class="badge text-bg-secondary" id="story"">스토리</span>
                       <p class="card-text">${content}</p>
-                      <div id="story_own" onclick="movePage(${own});">${writer}</div>
+                      <div class="author" id="story_own" onclick="movePage(${own});">${writer}</div>
                         <input type="hidden" value="${own}">            
                       </div>
                   </div>
@@ -248,21 +258,63 @@ const movePage = (own) =>{
     localStorage.removeItem('own'); 
     localStorage.setItem('own', own);
     location.href="individualpage.html";
-  }
+}
 const moveAuctionToStory = (i) =>{
     localStorage.removeItem('own'); 
     localStorage.setItem('own', i);
     location.href="individualpage.html";
-
 }
 const moveBungToStory = (boardWriterId)=>{
     localStorage.removeItem('own'); 
     localStorage.setItem('own', boardWriterId);
     location.href="individualpage.html";
+}
+
+const movementorToStory = (mentorId)=>{
+
+    localStorage.removeItem('own'); 
+    localStorage.setItem('own', mentorId);
+    location.href="individualpage.html";
+
+
+}
+
+//닉네임만 있는 서비스
+// const moveNinameToStory = ()=>{
+
+//     let nickname = document.querySelector('.nickname_find').value;
+
+//     fetch("http://localhost:8000/story/nameCheck/"+{nickname},{
+//         method:"GET",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//     })
+//     .then((res)=> res.json())
+//     .then(res=>{
+
+//         localStorage.removeItem('own'); 
+//         localStorage.setItem('own', boardWriterId);
+//         location.href="individualpage.html";
+        
+//     })
+// };
+
+//옥션 @GetMapping("/board/{bId}/{writer}")
+const moveMainToAuction = ()=>{
+    let 
+    if(serviceAuction){}
 
 }
 
 
+
+
+// 벙 @GetMapping("/mainBoardSelect/{boardId}")
+
+//멘토 @GetMapping("/board/{id}")
 
 
 
