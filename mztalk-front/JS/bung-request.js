@@ -59,6 +59,10 @@ document.getElementById('refuse-btnbtn').addEventListener('click',function(){
     });
 });
 
+document.getElementById('request-btn').addEventListener('click', function(){
+    location.href = 'bung-service-request.html';
+});
+
 
         
 

@@ -80,7 +80,7 @@ nav {
   margin: 0 auto;
   width: 935px;
   margin-top: 55px;
-  /* height: 0%; */
+  height: 100%;
   background-color: rgb(242, 244, 226);
 } 
 
@@ -236,8 +236,8 @@ table {
 }
 
 #writer{
-  text-align: right;
-  vertical-align: bottom;
+  /* text-align: right;
+  vertical-align: bottom; */
 }
 
 hr {
@@ -271,6 +271,14 @@ hr {
 #count{
   text-align: right;
   vertical-align: bottom;
+}
+
+#cardarea{
+  height: auto;
+}
+
+#cardcard{
+  height: auto;
 }
 
 
