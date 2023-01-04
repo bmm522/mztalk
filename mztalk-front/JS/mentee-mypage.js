@@ -3,6 +3,7 @@ let isSearchPerformed = false;
 let isMainPerformed = true;
 window.onload = function(){
     getBoardList(1);
+    addFile();
 }
 
 window.onscroll = () =>{
@@ -20,7 +21,7 @@ const addFile = () =>{
         if(document.getElementsByName("file").length < 3) {
             const newDiv = document.createElement('div');
             newDiv.classList.add('col-10');
-            newDiv.innerHTML = '<input type = "file" class = "form-control" name = "file">';
+            newDiv.innerHTML = '<input type="file" class = "form-control" name = "file">';
             document.getElementById('file-form').append(newDiv);
         } else {
             alert("파일은 3개까지 첨부 가능합니다.");

@@ -8,7 +8,6 @@ window.onload = function(){
 window.onscroll = () =>{
     if (window.innerHeight + window.scrollY >= document.getElementById('board-list-div').offsetHeight && isMainPerformed) {
         document.getElementById('board-list-search-div').innerHTML = '';
-        console.log('page :' +  page);
         page++;
         getBoardList(page);
     }

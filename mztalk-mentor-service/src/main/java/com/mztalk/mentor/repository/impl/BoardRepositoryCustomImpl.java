@@ -53,7 +53,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
         int pageSize = pageable.getPageSize();
         int pageNumber = pageable.getPageNumber();
-        List<Board> boardList = entityManager.createQuery("select b from Board b join fetch b.mentor m left join b.payment p where p.id IS NULL and b.mentoringDate >:now", Board.class)
+        List<Board> boardList = entityManager.createQuery("select b from Board b join fetch b.mentor m left join b.payment p where p.id IS NULL and b.mentoringDate >:now order by b.lastModifiedDate desc", Board.class)
                 .setParameter("now", now)
                 .setFirstResult(pageNumber * pageSize)
                 .setMaxResults(pageSize)

@@ -134,7 +134,7 @@ const modifyBoard = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        if(res != null){
+        if(res.status != 500){
             window.alert('글이 수정되었습니다.');
             location.href="mentor-modify-board.html";
         } else{
