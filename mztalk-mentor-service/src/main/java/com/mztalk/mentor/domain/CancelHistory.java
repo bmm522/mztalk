@@ -1,4 +1,4 @@
-package com.mztalk.mentor.domain.dto;
+package com.mztalk.mentor.domain;
 
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;

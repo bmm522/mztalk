@@ -27,7 +27,7 @@ public interface BoardService {
 
     List<BoardResDto> findBoardByMentorId(Long mentorId);
 
-    List<BoardResDto> latestBoard();
+    List<BoardResDto> latestBoard(int page);
 
     List<BoardResDto> findByMentoringDateBefore();
 

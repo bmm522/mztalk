@@ -39,7 +39,6 @@ public class BoardServiceImpl implements BoardService {
     // 메인페이지 출력 메소드, 결제가 안되고 멘토링 전 글만 출력된다.
     @Override
     public List<BoardResDto> findNullPaymentWithBeforeMentoringDate(int page) {
-        System.out.println(page);
         Pageable pageable = PageRequest.of(page - 1, 20);
         LocalDateTime now = LocalDateTime.now();
         Page<Board> boards = boardRepository.findNullPaymentWithBeforeMentoringDate(now,pageable);
@@ -80,8 +79,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardResDto> latestBoard() {
-        List<Board> boards = boardRepository.latestBoard();
+    public List<BoardResDto> latestBoard(int page) {
+        Pageable pageable = PageRequest.of(page - 1, 3);
+        Page<Board> boards = boardRepository.latestBoard(pageable);
         List<BoardResDto> collect = boards.stream().map(b -> new BoardResDto(b, new MentorTransferDto(b.getMentor()))).collect(Collectors.toList());
         return collect;
     }

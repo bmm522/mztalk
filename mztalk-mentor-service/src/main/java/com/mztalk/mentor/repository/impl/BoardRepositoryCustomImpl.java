@@ -32,7 +32,6 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
     @Override
     public List<Board> searchWithCondition(SearchCondition searchCondition) {
-
         return queryFactory.selectFrom(board)
                 .leftJoin(payment)
                 .on(board.eq(payment.board))
@@ -48,12 +47,10 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
     @Override
     public Page<Board> findNullPaymentWithBeforeMentoringDate(LocalDateTime now, Pageable pageable) {
-        // First, get the total number of results that match the specified criteria
-        long total = (long) entityManager.createQuery("select count(b) from Board b join b.mentor m left join b.payment p where p.id IS NULL and b.mentoringDate >:now")
+        Long total = entityManager.createQuery("select count(b) from Board b join b.mentor m left join b.payment p where p.id IS NULL and b.mentoringDate >:now", Long.class)
                 .setParameter("now", now)
                 .getSingleResult();
 
-        // Then, retrieve the requested page of results
         int pageSize = pageable.getPageSize();
         int pageNumber = pageable.getPageNumber();
         List<Board> boardList = entityManager.createQuery("select b from Board b join fetch b.mentor m left join b.payment p where p.id IS NULL and b.mentoringDate >:now", Board.class)
@@ -62,7 +59,6 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
                 .setMaxResults(pageSize)
                 .getResultList();
 
-        // Finally, return the results as a Page object
         return new PageImpl<Board>(boardList, pageable, total);
     }
 
@@ -83,9 +79,17 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public List<Board> latestBoard() {
-        return entityManager.createQuery("select b from Board b order by b.lastModifiedDate desc", Board.class)
+    public Page<Board> latestBoard(Pageable pageable) {
+        Long total = entityManager.createQuery("select count(b) from Board b",Long.class).getSingleResult();
+
+        int pageSize = pageable.getPageSize();
+        int pageNumber = pageable.getPageNumber();
+
+        List<Board> boardList = entityManager.createQuery("select b from Board b order by b.lastModifiedDate desc", Board.class)
+                .setFirstResult(pageNumber * pageSize)
+                .setMaxResults(pageSize)
                 .getResultList();
+        return new PageImpl<Board>(boardList, pageable, total);
     }
 
     @Override
