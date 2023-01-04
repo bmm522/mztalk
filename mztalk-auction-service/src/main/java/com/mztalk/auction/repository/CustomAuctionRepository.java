@@ -3,6 +3,8 @@ package com.mztalk.auction.repository;
 import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public interface CustomAuctionRepository {
 
     List<Board> selectBoardList();
 
-    List<Board> searchBoard(String keyword);
+    Page<Board> searchBoard(String keyword, Pageable pageable);
 
     List<Comment> selectCommentList(Long bId);
 
