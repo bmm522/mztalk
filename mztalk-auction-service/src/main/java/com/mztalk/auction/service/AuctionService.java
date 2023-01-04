@@ -44,4 +44,6 @@ public interface AuctionService {
     int closeBoard(BoardCloseDto boardCloseDto);
 
     void postChatRoom(BoardDto boardDto);
+
+    Result<?> selectBoardListOfFront(int page);
 }

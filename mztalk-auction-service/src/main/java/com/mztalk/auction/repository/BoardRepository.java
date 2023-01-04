@@ -22,5 +22,5 @@ public interface BoardRepository extends JpaRepository<Board, Long>, CustomAucti
 
     Page<Board> findByIsCloseAndStatusOrderByBoardIdDesc(String isClose, String stauts, Pageable pageable);
 
-    Page<Board> findAllByOrderByBoardIdDesc(Pageable pageable);
+    Page<Board> findByStatusOrderByBoardIdDesc(String status, Pageable pageable);
 }
