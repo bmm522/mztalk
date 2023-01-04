@@ -9,6 +9,9 @@ import com.mztalk.mentor.repository.BoardRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
@@ -44,10 +47,23 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public List<Board> findNullPaymentWithBeforeMentoringDate(LocalDateTime now) {
-        return entityManager.createQuery("select b from Board b join fetch b.mentor m left join b.payment p where p.id IS NULL and b.mentoringDate >:now", Board.class)
-                .setParameter("now",now)
+    public Page<Board> findNullPaymentWithBeforeMentoringDate(LocalDateTime now, Pageable pageable) {
+        // First, get the total number of results that match the specified criteria
+        long total = (long) entityManager.createQuery("select count(b) from Board b join b.mentor m left join b.payment p where p.id IS NULL and b.mentoringDate >:now")
+                .setParameter("now", now)
+                .getSingleResult();
+
+        // Then, retrieve the requested page of results
+        int pageSize = pageable.getPageSize();
+        int pageNumber = pageable.getPageNumber();
+        List<Board> boardList = entityManager.createQuery("select b from Board b join fetch b.mentor m left join b.payment p where p.id IS NULL and b.mentoringDate >:now", Board.class)
+                .setParameter("now", now)
+                .setFirstResult(pageNumber * pageSize)
+                .setMaxResults(pageSize)
                 .getResultList();
+
+        // Finally, return the results as a Page object
+        return new PageImpl<Board>(boardList, pageable, total);
     }
 
     @Override

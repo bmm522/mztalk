@@ -8,6 +8,7 @@ import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.BoardService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +30,9 @@ public class BoardApiController {
     private final BoardService boardService;
 
     @ApiOperation(value = "모든 글 리턴", notes = "결제정보가 없고, 멘토링 시작 전인 모든 글을 리턴하는 메소드입니다.", response = Result.class)
-    @GetMapping("/boards")
-    public ResponseEntity<?> findNullPaymentWithBeforeMentoringDate(){
-        List<BoardResDto> boards = boardService.findNullPaymentWithBeforeMentoringDate();
+    @GetMapping("/boards/{page}")
+    public ResponseEntity<?> findNullPaymentWithBeforeMentoringDate(@PathVariable("page") int page){
+        List<BoardResDto> boards = boardService.findNullPaymentWithBeforeMentoringDate(page);
         return new ResponseEntity<>(new Result<>("모든 글 목록", boards), HttpStatus.OK);
     }
 
