@@ -20,5 +20,7 @@ public interface BungAddBoardRepositoryCustom {
 
     List<BungAddBoard> getAcceptList(String nickname);
 
+    Long addBungRefuse(Long addId, long boardId);
+
 //    String findAddBoardByWriter(Long boardId, addWriter);
 }

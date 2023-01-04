@@ -142,8 +142,21 @@ public class BungServiceImpl implements BungBoardService {
         return new Result(bungBoardResponseDtoList);
     }
 
+    @Override
+    public BungAddRequestDto addBungRefuse(Long addId) {
+        BungAddBoard addBungBoardAccept = bungAddRepository.findById(addId).orElseThrow(() ->new AddBoardException("해당하는 신청글이 존재하지 않습니다."));
+        long boardId = addBungBoardAccept.getBungBoard().getBoardId();
+        BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
+        Long result = bungAddRepository.addBungRefuse(addId, boardId);
 
-
+        if(result > 0) {
+            String message = "거절 요청이 완료되었습니다.";
+            return new BungAddRequestDto(message);
+        } else {
+            String message = "거절 요청이 실패하였습니다.";
+            return new BungAddRequestDto(message);
+        }
+    }
 
 
     // 메인 게시글 수정

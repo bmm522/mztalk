@@ -53,4 +53,6 @@ public interface BungBoardService {
     Result<?> getAcceptList(String nickname);
 
     Result<?> mainSelectListOfMain(int page);
+
+    BungAddRequestDto addBungRefuse(Long addId);
 }
