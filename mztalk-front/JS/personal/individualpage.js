@@ -1,10 +1,12 @@
-let page = 0;
+let page = 1;
+
 let loginUser = localStorage.getItem('userNo');
 let own = localStorage.getItem("own");
 
+
 window.onload = function(){
   writeOwn();
-  storyLoad();
+  storyLoad(1);
   profileBox();
   profileName();
   BoardCount();
@@ -13,6 +15,19 @@ window.onload = function(){
   followButtonStatus();
 
 }
+
+window.onscroll = () =>{
+  // console.log(isSearchPerformed);
+  if (window.innerHeight + window.scrollY >= document.querySelector("#contentList").offsetHeight) {
+      
+      page++;
+      storyLoad(page);
+  }
+
+}
+
+
+
 
 
 function writeOwn(){
@@ -292,9 +307,9 @@ function FollowCount(){
 
 
 // 퍼블릭인 글 목록들 DIV
-function storyLoad() {
+function storyLoad(page) {
   
-  fetch("http://localhost:8000/story/"+own,{
+  fetch("http://localhost:8000/story/"+own +"/"+page,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",

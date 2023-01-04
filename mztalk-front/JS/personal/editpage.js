@@ -44,9 +44,9 @@ const checkVipCheck = ()=>{
         <br>${vipDate}입니다.</a>
         </div>
         `
+      }else{
 
-
-
+        
       }
   })
 }
