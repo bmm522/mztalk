@@ -56,31 +56,33 @@ const loadMoreContent =(page) =>{
                 let boardId = board.boardId;
 
                 document.getElementById('output-div').innerHTML +=
-                ` <div class="col" onclick='moveDetails(${boardId});' style="cursor:pointer;"><br>
-                <div class="card h-100">            
-                     <div class="card shadow-sm h-100">
+          ` <div class="col" onclick='moveDetails(${boardId});' style="cursor:pointer;"><br>
+                <div class="card" id="cardarea">            
+                     <div class="card shadow-sm">
                          <div class="card-header">
                             ${title}
                          </div>                      
-                         <img src="${imageUrl}" style="height: 250px;">
+                         <img src="${imageUrl}" style="height: 200px;">
                          <input type="hidden" name="imageName" value="${imageName}"/>
                          <div class="card-body">
                              <h5 class="card-title">${category}</h5>
                              <p class="card-text">${content}</p>
-                         </div>
-                         <hr>
-                         
-                         <div id="count">${count}</div>
-                         <div id="writer">마감일 : ${deadlineDate}</div>
-                         <div id="writer">
-                             ${writer}
-                         </div>
-                         <div id="groupTotal">
-                            ${nowGroup}/${fullGroup}
-                         </div>
-                     </div>
-                 </div> 
-             </div>`
+                             <div style="float: left; width: 50%;">
+                                <span id="writer">마감일 : ${deadlineDate}</span>
+                                <span id="count">${count}</span>
+                             </div>
+                             <div style="float: left; width: 50%;">
+                                <span id="writer">
+                                    ${writer}
+                                </span>
+                                <span id="groupTotal">
+                                    ${nowGroup}/${fullGroup}
+                                </span>
+                            </div>                        
+                          </div> 
+                      </div>
+                  </div>
+              </div>`
 
               imageUrl = '';
              imageName = '';
