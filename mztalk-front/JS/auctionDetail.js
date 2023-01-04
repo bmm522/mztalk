@@ -227,7 +227,7 @@ window.onload = () => {
         } else if(localStorage.getItem('userNickname') == writer && isClose == 'Y' && buyer == null) {
             document.getElementById('modalBtn').innerHTML = '';
         } else if(localStorage.getItem('userNickname') == writer && isClose == 'Y' && buyer != null) {
-            document.getElementById('modalBtn').innerHTML = '<button type = "button" id = "chatBtn">입찰자와 채팅</button>';
+            document.getElementById('modalBtn').innerHTML = '<button type = "button" id = "chatBtn" onclick="chatConnection();">입찰자와 채팅</button>';
         }
         
     })
@@ -392,6 +392,7 @@ function chatConnection() {
     .then(res => {
         if(res.status == 200) {
             console.log("채팅 연결 성공");
+            window.open('http://localhost:3000/chat-auction/?userId='+localStorage.getItem('userNo')+'&userNickname='+localStorage.getItem('userNickname'), '_blank');
         }
     })
 }

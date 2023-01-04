@@ -1,6 +1,8 @@
 package com.mztalk.auction.repository;
 
 import com.mztalk.auction.domain.entity.Board;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -18,5 +20,5 @@ public interface BoardRepository extends JpaRepository<Board, Long>, CustomAucti
 
     void findByWriter(String writer);
 
-    List<Board> findByIsCloseAndStatusOrderByBoardIdDesc(String isClose, String stauts);
+    Page<Board> findByIsCloseAndStatusOrderByBoardIdDesc(String isClose, String stauts, Pageable pageable);
 }

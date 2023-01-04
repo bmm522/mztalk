@@ -52,9 +52,9 @@ public class AuctionController {
     }
 
     //입찰 마감 게시물 제외
-    @GetMapping("/board/close")
-    public Result<?> selectCloseBoardList() throws ParseException {
-        return auctionService.selectCloseBoardList();
+    @GetMapping("/board/close/{page}")
+    public Result<?> selectCloseBoardList(@PathVariable int page) throws ParseException {
+        return auctionService.selectCloseBoardList(page);
     }
 
     //게시물 디테일

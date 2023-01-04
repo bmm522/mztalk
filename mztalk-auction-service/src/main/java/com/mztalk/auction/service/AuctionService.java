@@ -39,7 +39,7 @@ public interface AuctionService {
 
     CommentResponseDto selectComment(Long cId);
 
-    Result<?> selectCloseBoardList() throws ParseException;
+    Result<?> selectCloseBoardList(int page) throws ParseException;
 
     int closeBoard(BoardCloseDto boardCloseDto);
 
