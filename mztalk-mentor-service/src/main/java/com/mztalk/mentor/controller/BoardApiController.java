@@ -112,9 +112,9 @@ public class BoardApiController {
     }
 
     @ApiOperation(value = "최신 글 리턴", notes = "작성된 글을 최신순으로 리턴하는 메소드입니다.", response = Result.class)
-    @GetMapping("/board/latest")
-    public ResponseEntity<?> latestBoard(){
-        List<BoardResDto> boards = boardService.latestBoard();
+    @GetMapping("/board/latest/{page}")
+    public ResponseEntity<?> latestBoard(@PathVariable("page") int page){
+        List<BoardResDto> boards = boardService.latestBoard(page);
         return new ResponseEntity<>(new Result<>("최신 글 목록", boards), HttpStatus.OK);
     }
 

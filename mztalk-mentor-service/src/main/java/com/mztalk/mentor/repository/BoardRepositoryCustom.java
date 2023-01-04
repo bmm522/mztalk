@@ -17,7 +17,7 @@ public interface BoardRepositoryCustom {
     // 멘티가 신청한 글 가져오기
     List<Board> findBoardByUserId(Long userId, LocalDateTime now);
 
-    List<Board> latestBoard();
+    Page<Board> latestBoard(Pageable pageable);
 
     List<Board> findBoardByMentorId(Long mentorId);
 
