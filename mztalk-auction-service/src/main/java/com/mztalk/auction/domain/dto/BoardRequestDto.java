@@ -30,6 +30,8 @@ public class BoardRequestDto {
 
     private Long userNo;
 
+    private Long isbn;
+
     public Board toEntity() {
         long timestamp = Long.parseLong(timeLimit);
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
@@ -57,6 +59,7 @@ public class BoardRequestDto {
                 .timeLimit(Datetime)
                 .currentTime(Datetime2)
                 .userNo(userNo)
+                .isbn(isbn)
                 .build();
 
 

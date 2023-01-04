@@ -37,6 +37,8 @@ const postData = () =>{
     const startPriceTrans = Number(startPriceSplit[0].concat(startPriceSplit[1]));
     let date = new Date();
 
+    console.log("글작성시 isbn값 확인: " + document.getElementById('hidden-isbn').value);
+
     fetch("http://localhost:8000/auction/board", {
         method: "POST",
         headers: {
@@ -52,7 +54,8 @@ const postData = () =>{
             "startPrice": startPriceTrans,
             "timeLimit":  date.setHours(date.getHours() +  Number(document.getElementById('timeLimit').value)),
             "currentTime" : new Date().getTime(),
-            "userNo": localStorage.getItem("userNo")
+            "userNo": localStorage.getItem("userNo"),
+            "isbn": document.getElementById('hidden-isbn').value
         }),
     })
     .then(res => {
@@ -110,13 +113,14 @@ document.getElementById('searchBtn').addEventListener('click', function() {
             let title = book.title;
             let authors = book.authors;
             let publisher = book.publisher;
+            let isbn = book.isbn;
             let thumbnail = "";
             if(book.thumbnail == "") {
                 thumbnail = "img/auction/noImage.png"
             } else {
                 thumbnail = book.thumbnail;
             }
-            document.getElementById('bookSearchArea').innerHTML += `<div class = "col-4" id = "bookImg"><img src = "${thumbnail}" class = "bookThumbnail" style = "width: 50%; height: 80%;"></div><div class = "col-8 mt-3 bookContent"><span id = "${bookId}" class = "bookTitle" style="display:block;" onclick = "selectBook(${bookId});">${title}</span><span class = "bookInform" style="color:gray;">저자 | ${authors} 출판 | ${publisher}</div>`;
+            document.getElementById('bookSearchArea').innerHTML += `<div class = "col-4" id = "bookImg"><img src = "${thumbnail}" class = "bookThumbnail" style = "width: 50%; height: 80%;"></div><div class = "col-8 mt-3 bookContent"><span id = "${bookId}" class = "bookTitle" style="display:block;" onclick = "selectBook(${bookId});">${title}</span><span class = "bookInform" style="color:gray;">저자 | ${authors} 출판 | ${publisher}<input type = "hidden" id = "isbn${bookId}" value = "${isbn}"/></div>`;
             bookId++;
         }
         
@@ -127,8 +131,13 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 //책 선택
 function selectBook(bookId) {
     bookTitle = document.getElementById(bookId).textContent;
+    isbnData = document.getElementById('isbn' + bookId).value;
+    isbnArr = isbnData.split(" ");
+    isbn = isbnArr[1];
     console.log("타이틀 클릭 시 책title: " + bookTitle);
+    console.log("타이틀 클릭 시 isbn값: " + isbn);
     document.getElementById('searchBook').value = bookTitle;
+    document.getElementById('hidden-isbn').value = isbn;
 
     document.querySelector('.btn-close').click();
     document.getElementById('bookSearchArea').innerHTML = "";

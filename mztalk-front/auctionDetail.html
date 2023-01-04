@@ -69,12 +69,21 @@
                         <div class = "modal-header">
                             <h6>신고</h6>
                         </div>
-                        <div class = "modal-body row" style="text-align: center; display: flex;float: center;">
-                            <label for = "reportTitle"></label>
-                            <input type = "text" id = "reportTitle" placeholder = "신고 제목을 입력해 주세요" style="width:300px; height:50px;"/>
-                            <label for = "reportContent"></label>
-                            <input type = "text" id = "reportContent" placeholder = "신고 내용을 입력해 주세요" style = "width: 300px; height: 200px;"/>
-                            <button type = "button" id="report-btn">신고하기</button>
+                        <div class = "modal-body" style="margin-left: 50px;">
+                            <div class = "row">
+                                <div class = "col-12">
+                                    <label for = "reportTitle"></label>
+                                    <input type = "text" id = "reportTitle" placeholder = "신고 제목을 입력해 주세요" style="width:300px; height:50px;margin: 20px;"/>
+                                </div>
+                                <div class = "col-12">
+                                    <label for = "reportContent"></label>
+                                    <input type = "text" id = "reportContent" placeholder = "신고 내용을 입력해 주세요" style = "width: 300px; height: 200px;margin: 20px;"/>
+                                </div>
+                                <div class = "col-12">
+                                    <button type = "button" id="report-btn" style="width: 100px; height: 50px; background-color: burlywood; border-style: none; color: white;margin-left: 90px;">신고하기</button>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,8 +98,19 @@
                     <input type = "hidden" id = "hidden-bId"/>
                     <span id="title">BoardTitle</span>
                     <span id="date" style="float: right;padding-right:30px;color: gray;">2022-12-8</span>
-                    <span id="textContent" style="display:inline-block; border-style:dotted; border-color: burlywood; padding: 10px; display: block;" class="mt-5 mb-5">Lorem ipsum dolor sit amet,
-                    </span>
+                    <span id="textContent" style="display:inline-block; border-style:dotted; border-color: burlywood; padding: 10px; display: block;" class="mt-5 mb-5"></span>
+                    <!-- 책 정보 -->
+                    <h4 style="margin-bottom: 20px;">어떤 책인가요?</h4>
+                    <div class = "row" style = "margin-bottom: 80px;">
+                        <div class = "col-4" id = "bookImg">
+                            <img src = "img/auction/book1.jpeg" style = "width: 90%; height: 90%;">
+                        </div>
+                        <div class = "col-8 mt-3" id = "bookTitle">                     
+                            <span style="display:block;font-size:20px;font-weight: bold">자바의 정석</span>
+                            <span style="color:gray;">저자 | 남궁성 출판 | 도우출판 2019.12.31.</span>
+                            <span style="display: block;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod nesciunt cupiditate commodi! Architecto vero commodi accusantium nobis ab saepe iure quasi voluptatibus maiores, a eius dolores deserunt delectus consequuntur illum?</span>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-9">
                             <!--시작가-->

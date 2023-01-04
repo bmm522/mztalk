@@ -28,6 +28,7 @@ public class AuctionController {
     public ConcurrentHashMap<String, String> insertBoard(@RequestBody BoardRequestDto boardRequestDto) throws ParseException {
         ConcurrentHashMap<String, String> map=new ConcurrentHashMap<>();
         map.put("bId", String.valueOf(auctionService.insertBoard(boardRequestDto)));
+        System.out.println(boardRequestDto.getIsbn());
         return map;
     }
 

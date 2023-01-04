@@ -30,6 +30,7 @@ public class BoardDetailResponseDto {
     private List<ConcurrentHashMap<String, String>> imageInfo;
     private List<Comment> commentList;
     private Long userNo;
+    private Long isbn;
 
     public BoardDetailResponseDto(Board board, List<ConcurrentHashMap<String, String>> imageInfo, ConcurrentHashMap<String, Long> timeMap) {
         this.boardId = board.getBoardId();
@@ -45,5 +46,6 @@ public class BoardDetailResponseDto {
         this.imageInfo = imageInfo;
         this.commentList = board.getComment();
         this.userNo = board.getUserNo();
+        this.isbn = board.getIsbn();
     }
 }

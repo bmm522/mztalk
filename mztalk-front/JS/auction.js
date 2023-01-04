@@ -54,8 +54,8 @@ window.onload = function(){
                             <svg class="bi me-2" width="1em" height="1em">
                             <use xlink:href="#calendar3" />
                             </svg>
-                            <small style="margin-right: 10px;">${currentPrice}원</small>
                             <small>${createdDate}</samll>
+                            <span class = "currnetPriceArea" style="font-weight: bold; margin-left: 5px;">${currentPrice}원</span>
                         </li>
                         </ul>
                     </div>
@@ -84,8 +84,8 @@ window.onload = function(){
                                     <svg class="bi me-2" width="1em" height="1em">
                                     <use xlink:href="#calendar3" />
                                     </svg>
-                                    <small style="margin-right: 10px;">${currentPrice}원</small>
                                     <small>${createdDate}</samll>
+                                    <span class = "currnetPriceArea" style="font-weight: bold; margin-left: 5px;">${currentPrice}원</span>
                                     <input type="hidden" class="timeLimitHour" value="${timeLimitHour}"/>
                                     <input type="hidden" class="timeLimitMinute" value="${timeLimitMinute}"/>
                                 </li>
@@ -184,8 +184,8 @@ document.getElementById("searchBtn").addEventListener('click', function() {
                             <svg class="bi me-2" width="1em" height="1em">
                             <use xlink:href="#calendar3" />
                             </svg>
-                            <small style="margin-right: 10px;">${currentPrice}원</small>
                             <small>${createDate}</samll>
+                            <span style="font-weight: bold;">${currentPrice}원</span>
                         </li>
                         </ul>
                     </div>
@@ -212,8 +212,8 @@ document.getElementById("searchBtn").addEventListener('click', function() {
                             <svg class="bi me-2" width="1em" height="1em">
                             <use xlink:href="#calendar3" />
                             </svg>
-                            <small style="margin-right: 10px;">${currentPrice}원</small>
                             <small>${createDate}</samll>
+                            <span style="font-weight: bold;">${currentPrice}원</span>
                         </li>
                         </ul>
                     </div>

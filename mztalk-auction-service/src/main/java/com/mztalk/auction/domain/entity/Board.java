@@ -64,12 +64,14 @@ public class Board {
 
     private Long userNo;
 
+    private Long isbn;
+
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy("commentId desc")
     @JsonBackReference
     private List<Comment> comment;
 
-    public Board(Long boardId, String title, String content, String writer, Integer count, Integer startPrice, Integer timeLimit, Integer CurrentPrice, String buyerNickname, Long userNo) {
+    public Board(Long boardId, String title, String content, String writer, Integer count, Integer startPrice, Integer timeLimit, Integer CurrentPrice, String buyerNickname, Long userNo, Long isbn) {
         this.boardId = boardId;
         this.title = title;
         this.content = content;
@@ -79,6 +81,7 @@ public class Board {
         this.timeLimit = String.valueOf(timeLimit);
         this.buyerNickname = buyerNickname;
         this.userNo = userNo;
+        this.isbn = isbn;
     }
 
 

@@ -34,6 +34,7 @@ public class BoardListResponseDto {
     private String serviceName;
     private String content;
     private Long userNo;
+    private Long isbn;
 
     public BoardListResponseDto(Board board, ConcurrentHashMap<String, Long> duration, String imageUrl, String imageName) throws ParseException {
 
@@ -51,6 +52,7 @@ public class BoardListResponseDto {
         this.serviceName = "auction";
         this.content = board.getContent();
         this.userNo = board.getUserNo();
+        this.isbn = board.getIsbn();
 //        this.sortDate = board.getCurrentTime();
 
 //        if(Long.parseLong(board.getTimeLimit()) < 24){

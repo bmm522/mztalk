@@ -14,9 +14,11 @@ public class BoardEditDto {
     private String title;
     private String bookTitle;
     private String content;
+    private Long isbn;
 
     public BoardEditDto(Board board) {
         this.title = board.getTitle();
         this.content = board.getContent();
+        this.isbn = board.getIsbn();
     }
 }

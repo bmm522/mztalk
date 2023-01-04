@@ -20,6 +20,7 @@ public class BoardDto {
     private Integer currentPrice;
     private List<CommentResponseDto> comments;
     private Long userNo;
+    private Long isbn;
 
     public Board toEntity() {
         return Board.builder()
@@ -34,6 +35,7 @@ public class BoardDto {
                 .status("Y")
                 .isClose("N")
                 .userNo(userNo)
+                .isbn(isbn)
                 .build();
     }
 }

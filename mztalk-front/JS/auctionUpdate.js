@@ -137,7 +137,9 @@ const updateData = () =>{
         },
         body:JSON.stringify({
             "title" : document.getElementById('title').value,
-            "content": document.getElementById('content').value
+            "content": document.getElementById('content').value,
+            "bookTitle": document.getElementById('searchBook').value,
+            "isbn": document.getElementById('hidden-isbn').value
         }),
     })
     .then(res => {
@@ -189,12 +191,13 @@ document.getElementById('searchBtn').addEventListener('click', function() {
             let authors = book.authors;
             let publisher = book.publisher;
             let thumbnail = "";
+            let isbn = book.isbn;
             if(book.thumbnail == "") {
                 thumbnail = "img/auction/noImage.png"
             } else {
                 thumbnail = book.thumbnail;
             }
-            document.getElementById('bookSearchArea').innerHTML += `<div class = "col-4" id = "bookImg"><img src = "${thumbnail}" class = "bookThumbnail" style = "width: 50%; height: 80%;"></div><div class = "col-8 mt-3 bookContent"><span id = "${bookId}" class = "bookTitle" style="display:block;" onclick = "selectBook(${bookId});">${title}</span><span class = "bookInform" style="color:gray;">저자 | ${authors} 출판 | ${publisher}</div>`;
+            document.getElementById('bookSearchArea').innerHTML += `<div class = "col-4" id = "bookImg"><img src = "${thumbnail}" class = "bookThumbnail" style = "width: 50%; height: 80%;"></div><div class = "col-8 mt-3 bookContent"><span id = "${bookId}" class = "bookTitle" style="display:block;" onclick = "selectBook(${bookId});">${title}</span><span class = "bookInform" style="color:gray;">저자 | ${authors} 출판 | ${publisher}<input type = "hidden" id = "isbn${bookId}" value = "${isbn}"/></div>`;
             bookId++;
         }
         
@@ -205,8 +208,13 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 //책 선택
 function selectBook(bookId) {
     bookTitle = document.getElementById(bookId).textContent;
+    isbnData = document.getElementById('isbn' + bookId).value;
+    isbnArr = isbnData.split(" ");
+    isbn = isbnArr[1];
     console.log("타이틀 클릭 시 책title: " + bookTitle);
+    console.log("타이틀 클릭 시 isbn값: " + isbn);
     document.getElementById('searchBook').value = bookTitle;
+    document.getElementById('hidden-isbn').value = isbn;
 
     document.querySelector('.btn-close').click();
     document.getElementById('bookSearchArea').innerHTML = "";
