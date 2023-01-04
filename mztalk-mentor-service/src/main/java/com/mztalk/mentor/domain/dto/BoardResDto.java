@@ -63,6 +63,7 @@ public class BoardResDto {
         this.status = board.getStatus();
         this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();
+        this.serviceName ="mentor";
     }
 
     public BoardResDto(Board board, PaymentResDto payment){
