@@ -209,15 +209,15 @@ window.onload = () => {
                 }
             });
         }
-        console.log("입찰버튼 조건확인: " + buyer);
+        console.log("입찰버튼 buyer조건확인: " + buyer);
         //입찰 버튼
         if(localStorage.getItem("userNickname") != writer && isClose == 'N') {
             document.getElementById('modalBtn').innerHTML = '<button type="button" data-bs-toggle="modal" data-bs-target="#priceModal" id="priceBtn" style="margin-left: 100px;">입찰</button>'
         } else if(localStorage.getItem("userNickname") != writer && isClose == 'Y') {
             document.getElementById('modalBtn').innerHTML = '<button type="button" id = "priceBtnDisabled" disabled>거래완료</button>';
-        } else if(localStorage.getItem('userNickname') == writer && isClose == 'Y' && buyer == "null") {
+        } else if(localStorage.getItem('userNickname') == writer && isClose == 'Y' && buyer == null) {
             document.getElementById('modalBtn').innerHTML = '';
-        } else if(localStorage.getItem('userNickname') == writer && isClose == 'Y' && buyer != "null") {
+        } else if(localStorage.getItem('userNickname') == writer && isClose == 'Y' && buyer != null) {
             document.getElementById('modalBtn').innerHTML = '<button type = "button" id = "chatBtn">입찰자와 채팅</button>';
         }
         

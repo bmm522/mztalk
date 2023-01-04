@@ -112,12 +112,10 @@ async function main() {
         read: false,
       });
 
-      const targetSocket = userSocketMap.get(targetUserId);
-
+      const targetSocket = userSocketMap.get(targetUserId)
       if (!targetSocket) {
         return;
-      }
-
+      } 
       // 메시지를 받은 즉시 상대 소켓에 이벤트 발행
       socket.to(targetSocket.id).emit('receiveMessage', {
         fromUserId,

@@ -29,6 +29,7 @@ public class BoardDetailResponseDto {
     private String isClose;
     private List<ConcurrentHashMap<String, String>> imageInfo;
     private List<Comment> commentList;
+    private Long userNo;
 
     public BoardDetailResponseDto(Board board, List<ConcurrentHashMap<String, String>> imageInfo, ConcurrentHashMap<String, Long> timeMap) {
         this.boardId = board.getBoardId();
@@ -43,5 +44,6 @@ public class BoardDetailResponseDto {
         this.isClose = board.getIsClose();
         this.imageInfo = imageInfo;
         this.commentList = board.getComment();
+        this.userNo = board.getUserNo();
     }
 }
