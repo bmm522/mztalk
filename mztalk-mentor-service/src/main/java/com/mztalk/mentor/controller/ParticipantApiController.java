@@ -63,4 +63,11 @@ public class ParticipantApiController {
     public Long cancel(@PathVariable("id") Long id){
         return participantService.cancelParticipate(id);
     }
+
+    @ApiOperation(value = "참석자 여부 확인", notes = "참석자여부를 리턴하는 메소드입니다.", response = boolean.class)
+    @ApiImplicitParam(name = "boardId", value = "글 번호", required = true, dataType = "int", paramType = "path")
+    @GetMapping("/participant/board/{boardId}")
+    public boolean existParticipant(@PathVariable("boardId")Long boardId){
+        return participantService.existParticipant(boardId);
+    }
 }

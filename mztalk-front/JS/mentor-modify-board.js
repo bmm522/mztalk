@@ -37,7 +37,7 @@ document.getElementById('mentor-write-btn').addEventListener('click',function(){
 });
 
 
-// 내가 작성한 글상세 보기 후 수정, 삭제 구현하기 // 작성한 글 없으면 없다 띄워주기
+// 내가 작성한 글상세 보기 후 수정, 삭제
 const getMyBoard = () =>{
    const mentorId = localStorage.getItem('userNo');
     fetch("http://localhost:8000/mentors/board/mentor/"+mentorId,{
@@ -51,7 +51,7 @@ const getMyBoard = () =>{
     .then((res)=>res.json())
     .then(res =>{
         if(res == null){
-            document.getElementById("board-list-div").innerHTML = 
+            document.getElementById("board-list-div").innerHTML += 
             `<div>작성하신 글이 존재하지 않습니다.</div>`
         } else{
             document.getElementById("board-list-div").innerHTML +=
@@ -116,36 +116,54 @@ const showBoard = (boardId) =>{
 // 글 수정하기
 const modifyBoard = () =>{
     const boardId = document.getElementById('modifyBoardId').value;
-    fetch("http://localhost:8000/mentors/board/edit/"+boardId,{
-        method:"PATCH",
+    fetch("http://localhost:8000/mentors/participant/board/"+boardId,{
+        method:"GET",
         headers:{
             "Content-Type":"application/json",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken'),
         },
-        body:JSON.stringify({
-            title : document.getElementById('modifyTitle').value,
-            introduction : document.getElementById('modifyIntroduction').value,
-            career : document.getElementById('modifyCareer').value,
-            salary : document.getElementById('modifySalary').value,
-            mentoringDate : document.getElementById('modifyMentoringDate').value,
-            content : document.getElementById('modifyContent').value
-        })    
     })
     .then((res)=>res.json())
-    .then(res =>{
-        if(res.status != 500){
-            window.alert('글이 수정되었습니다.');
+    .then(res=>{
+        if(res){
+            alert('신청자가 존재하여 수정할 수 없습니다.');
             location.href="mentor-modify-board.html";
+            return false;
         } else{
-            window.alert('글 수정 실패.');
-            location.href="mentor-modify-board.html";
+            fetch("http://localhost:8000/mentors/board/edit/"+boardId,{
+                method:"PATCH",
+                headers:{
+                    "Content-Type":"application/json",
+                    Authorization:localStorage.getItem('authorization'),
+                    RefreshToken:localStorage.getItem('refreshToken'),
+                },
+                body:JSON.stringify({
+                    title : document.getElementById('modifyTitle').value,
+                    introduction : document.getElementById('modifyIntroduction').value,
+                    career : document.getElementById('modifyCareer').value,
+                    salary : document.getElementById('modifySalary').value,
+                    mentoringDate : document.getElementById('modifyMentoringDate').value,
+                    content : document.getElementById('modifyContent').value
+                })    
+            })
+            .then((res)=>res.json())
+            .then(res =>{
+                if(res.status != 500){
+                    window.alert('글이 수정되었습니다.');
+                    location.href="mentor-modify-board.html";
+                } else{
+                    window.alert('글 수정 실패.');
+                    location.href="mentor-modify-board.html";
+                }
+            }) 
         }
-    })  
+    })     
 }
 
 // 글 작성시 최소 날짜 설정.
 const dateControl = document.getElementById('mentoringDate');
+const modifyControl = document.getElementById('modifyMentoringDate');
 const date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -5);
 dateControl.value = date;
 dateControl.setAttribute("min",date);
@@ -154,6 +172,13 @@ function setMinValue() {
     if(dateControl.value < date) {
         alert('현재 시간보다 이전의 날짜는 설정할 수 없습니다.');
         dateControl.value = date;
+    }
+}
+
+function setMinValue2() {
+    if(modifyControl.value < date) {
+        alert('현재 시간보다 이전의 날짜는 설정할 수 없습니다.');
+        modifyControl.value = date;
     }
 }
 
@@ -170,13 +195,12 @@ const deleteBoard = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log(res.status);
         if(res.status != 500){
             window.alert('글이 삭제되었습니다.');
-            location.href="mentor-main.html";
+            location.href="mentor-modify-board.html";
         } else{
             window.alert('신청자가 존재하여 삭제할 수 없습니다.');
-            location.href="mentor-main.html";
+            location.href="mentor-modify-board.html";
             return false;
         }
     })  

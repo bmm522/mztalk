@@ -59,6 +59,13 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
+    public boolean existParticipant(Long boardId) {
+        Participant participant = participantRepository.existParticipant(boardId);
+        boolean existParticipant = participant == null ? false : true;
+        return existParticipant;
+    }
+
+    @Override
     public List<ParticipantResDto> findAll() {
         List<Participant> participantList = participantRepository.findAll();
         List<ParticipantResDto> collect = participantList.stream()

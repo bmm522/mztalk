@@ -17,4 +17,5 @@ public interface ParticipantService {
 
     List<ParticipantResDto> findParticipantsByMentorId(Long mentorId);
 
+    boolean existParticipant(Long boardId);
 }

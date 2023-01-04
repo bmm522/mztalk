@@ -19,9 +19,9 @@
     <nav>
         <div class="navContainer">
             <article class="logoWrap">
-                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" alt="로고">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" alt="로고" onclick='location.href="main.html"'>
                 <div class="columnLine"></div>
-                <h1 class="logo">MZTALK</h1>
+                <h1 class="logo" onclick='location.href="main.html"'>MZTALK</h1>
             </article>
             <!-- <article class="search">
                 <input type="text" placeholder="검색" >
@@ -82,7 +82,7 @@
                 </div>
                 <div class="modal-body">
                     <label class="form-label">신청자 명단</label>
-                    <table class="table table-hover mentors-table">
+                    <table class="table table-hover mentors-table" style="text-align:center;">
                         <thead>
                           <tr>
                             <th scope="col">글번호</th>
@@ -136,7 +136,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="modifyMentoringDate" class="form-label">날짜</label>
-                        <input type="datetime-local" onchange="setMinValue();" class="form-control form-control-sm" id="modifyMentoringDate" style="margin-top: 0.4rem;">
+                        <input type="datetime-local" onchange="setMinValue2();" class="form-control form-control-sm" id="modifyMentoringDate" style="margin-top: 0.4rem;">
                     </div>
                     <div class="mb-3">
                         <label for="modifyContent">내용</label>

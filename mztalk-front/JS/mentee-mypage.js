@@ -218,6 +218,9 @@ const writeReview = () => {
                     window.alert('리뷰 작성 완료');
                     location.href="mentee-mypage.html";
                 }
+                if(res.status == 500){
+                    window.alert('리뷰 작성 실패');
+                }
             })
         }
     });

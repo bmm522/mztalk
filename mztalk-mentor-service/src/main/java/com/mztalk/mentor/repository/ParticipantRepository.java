@@ -14,4 +14,7 @@ public interface ParticipantRepository extends JpaRepository<Participant,Long> {
 
     @Query("select p from Participant p join fetch p.board b join fetch b.payment pay where pay.id =:paymentId")
     Participant findByPaymentId(@Param("paymentId")Long paymentId);
+
+    @Query("select p from Participant p join fetch p.board b where b.id=:boardId")
+    Participant existParticipant(@Param("boardId") Long boardId);
 }
