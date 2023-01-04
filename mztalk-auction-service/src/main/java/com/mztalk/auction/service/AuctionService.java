@@ -2,6 +2,7 @@ package com.mztalk.auction.service;
 
 import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.*;
+import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 
 import java.text.ParseException;
@@ -41,4 +42,6 @@ public interface AuctionService {
     Result<?> selectCloseBoardList() throws ParseException;
 
     int closeBoard(BoardCloseDto boardCloseDto);
+
+    void postChatRoom(BoardDto boardDto);
 }
