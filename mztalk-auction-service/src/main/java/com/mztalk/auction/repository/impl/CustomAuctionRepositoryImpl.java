@@ -4,6 +4,9 @@ import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 import com.mztalk.auction.repository.CustomAuctionRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -28,12 +31,17 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
 
     //게시글 검색
     @Override
-    public List<Board> searchBoard(String keyword) {
-        return entityManager.createQuery("select b from Board b where b.status = 'Y' and b.title like concat('%', :keyword, '%') or b.content like concat('%', :keyword, '%') order by b.boardId desc")
+    public Page<Board> searchBoard(String keyword, Pageable pageable) {
+        List boards = entityManager.createQuery("select b from Board b where b.status = 'Y' and b.title like concat('%', :keyword, '%') or b.content like concat('%', :keyword, '%') order by b.boardId desc")
                 .setParameter("keyword", keyword)
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
                 .getResultList();
+        int total = entityManager.createQuery("select count(b) from Board b where b.status = 'Y' and b.title like concat('%', :keyword, '%') or b.content like concat('%', :keyword, '%')")
+                .setParameter("keyword", keyword)
+                .getFirstResult();
+        return new PageImpl<>(boards, pageable, total);
     }
-
 
     //게시글 수정
     @Transactional
