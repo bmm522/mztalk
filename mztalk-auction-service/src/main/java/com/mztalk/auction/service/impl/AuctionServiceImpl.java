@@ -16,6 +16,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -63,19 +66,21 @@ public class AuctionServiceImpl implements AuctionService {
 
     //전체 게시글 조회
     @Override
-    public Result<?> selectBoardList() throws ParseException {
+    public Result<?> selectBoardList(int page) throws ParseException {
+        System.out.println("page : " + page);
+        Pageable pageable = PageRequest.of(page - 1, 6);
+        Page<Board> boardPage = boardRepository.findAll(pageable);
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
-        List<Board> boardList =  boardRepository.selectBoardList();
 
-        for(Board board : boardList){
+        for (Board board : boardPage) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/html");
-            System.out.println("list 가져오기 : " + board.getBoardId());
+//            System.out.println("list 가져오기 : " + board.getBoardId());
             ResponseEntity<String> response = new RestTemplate().exchange(
-              "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
-              HttpMethod.GET,
-              new HttpEntity<String>(headers),
-              String.class
+                    "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
+                    HttpMethod.GET,
+                    new HttpEntity<String>(headers),
+                    String.class
             );
             JSONObject jsonObject = new JSONObject(response.getBody());
             JSONObject jsonData = jsonObject.getJSONObject("data");
@@ -103,9 +108,10 @@ public class AuctionServiceImpl implements AuctionService {
 
     //게시글 검색
     @Override
-    public Result<?> searchBoard(String keyword) throws ParseException {
+    public Result<?> searchBoard(String keyword, int page) throws ParseException {
+        Pageable pageable = PageRequest.of(page - 1, 6);
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
-        List<Board> boardList =  boardRepository.searchBoard(keyword);
+        Page<Board> boardList =  boardRepository.searchBoard(keyword, pageable);
         System.out.println("service 검색 리스트: " + boardList);
 
         for(Board board : boardList){
@@ -243,7 +249,7 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public Result<?> selectCloseBoardList() throws ParseException {
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
-        List<Board> boardList = boardRepository.findByIsCloseAndStatus("N", "Y");
+        List<Board> boardList = boardRepository.findByIsCloseAndStatusOrderByBoardIdDesc("N", "Y");
 
         for (Board board : boardList) {
             HttpHeaders headers = new HttpHeaders();

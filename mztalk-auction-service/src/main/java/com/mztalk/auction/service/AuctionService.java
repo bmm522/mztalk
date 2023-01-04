@@ -15,7 +15,7 @@ public interface AuctionService {
 
     int updateBoard(Long bId, BoardEditDto boardEditDtoDto);
 
-    Result<?> selectBoardList() throws ParseException;
+    Result<?> selectBoardList(int page) throws ParseException;
 
     int deleteBoard(Long bId, String writer);
 
@@ -33,7 +33,7 @@ public interface AuctionService {
 
     int deleteComment(Long cId);
 
-    Result<?> searchBoard(String keyword) throws ParseException;
+    Result<?> searchBoard(String keyword, int page) throws ParseException;
 
     Result<?> selectCommentList(Long bId);
 

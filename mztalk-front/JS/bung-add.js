@@ -20,20 +20,23 @@ document.getElementById('addbtn').addEventListener('click', function(){
         boardId : localStorage.getItem("bId")
     }),
 })
-.then((res) => res.json())
-.then(res => {
-    console.log("신청 시 RESPONSE:" + JSON.stringify(res));
+    .then((res) => res.json())
+    .then(res => {
+        console.log("신청 시 RESPONSE:" + JSON.stringify(res));
 
-    if(res.message == "신청이 완료되었습니다.") {
-        alert(res.message);
-        location.href="bung-service-main.html";
-    } else if(res.message == "마감시간이 종료되었습니다.") {
-        alert(res.message);
-        location.href="bung-service-main.html";
-    } else if(res.message == "이미 신청한 게시글입니다.") {
-        alert(res.message);
-        location.href="bung-service-main.html";
-    }
+        if(res.message == "신청이 완료되었습니다.") {
+            alert(res.message);
+            location.href="bung-service-main.html";
+        } else if(res.message == "마감시간이 종료되었습니다.") {
+            alert(res.message);
+            location.href="bung-service-main.html";
+        } else if(res.message == "이미 신청한 게시글입니다.") {
+            alert(res.message);
+            location.href="bung-service-main.html";
+        }
+    });
 });
 
+document.getElementById('request-btn').addEventListener('click', function(){
+    location.href = 'bung-service-detail.html';
 });

@@ -142,8 +142,21 @@ public class BungServiceImpl implements BungBoardService {
         return new Result(bungBoardResponseDtoList);
     }
 
+    @Override
+    public BungAddRequestDto addBungRefuse(Long addId) {
+        BungAddBoard addBungBoardAccept = bungAddRepository.findById(addId).orElseThrow(() ->new AddBoardException("해당하는 신청글이 존재하지 않습니다."));
+        long boardId = addBungBoardAccept.getBungBoard().getBoardId();
+//        BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
+        Long result = bungAddRepository.addBungRefuse(addId, boardId);
 
-
+        if(result > 0) {
+            String message = "거절 요청이 완료되었습니다.";
+            return new BungAddRequestDto(message);
+        } else {
+            String message = "거절 요청이 실패하였습니다.";
+            return new BungAddRequestDto(message);
+        }
+    }
 
 
     // 메인 게시글 수정
@@ -229,18 +242,24 @@ public class BungServiceImpl implements BungBoardService {
         BungBoard bungBoard = bungRepository.findBungBoardByBoardId(boardId);
         String message = null;
 
-        // 마감제한 시 신청 방지 로직
-        message = TimeLimit(boardId);
+        String addWriter = bungAddBoardMap.get("addNickName");
         // 벙 게시글 작성자 신청 방지 로직
 //         String bungWriter = bungAddBoardMap.get("addNickName");
 //       message = bungBoardWriterPrevention(boardId, bungWriter);
-        // 벙 게시글 신청자 중복 신청 방지 로직
-        String addWriter = bungAddBoardMap.get("addNickName");
-        message = duplicationPrevention(boardId, addWriter);
+        if(duplicationPrevention(boardId, addWriter).equals(TimeLimit(boardId))) {
+            message = TimeLimit(boardId);
+            message = duplicationPrevention(boardId, addWriter);
 
-        if (message.equals("신청이 완료되었습니다.")) {
             BungAddBoard bungAddBoard = BungAddBoard.createBungAddBoard(bungAddBoardMap, bungBoard);
             bungAddRepository.save(bungAddBoard).getAddId();
+            return new BungAddRequestDto(message);
+        } else if (duplicationPrevention(boardId, addWriter).equals("이미 신청한 게시글입니다.")) {
+            // 마감제한 시 신청 방지 로직
+            message = duplicationPrevention(boardId, addWriter);
+            return new BungAddRequestDto(message);
+        } else if (TimeLimit(boardId).equals("마감시간이 종료되었습니다.")) {
+            // 벙 게시글 신청자 중복 신청 방지 로직
+            message = TimeLimit(boardId);
             return new BungAddRequestDto(message);
         } else {
             return new BungAddRequestDto(message);

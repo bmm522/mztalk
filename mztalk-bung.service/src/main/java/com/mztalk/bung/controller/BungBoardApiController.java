@@ -127,7 +127,7 @@ public class BungBoardApiController {
 //    public Result bungBoardSearch(@ModelAttribute("searchKeyWord") SearchKeyWord searchKeyWord) {
 //        return bungBoardService.bungBoardSearch(searchKeyWord);
 //    }
-
+    // 벙 게시물 카테고리, 검색어 검색기능2
     @GetMapping("/search")
     public Result<?> bungBoardSearch(@RequestParam(value="category")String[] categories, @RequestParam("type")String type, @RequestParam("searchText")String searchText, @RequestParam("page")int page){
         return bungBoardService.search(categories, type, searchText, page);
@@ -150,6 +150,12 @@ public class BungBoardApiController {
     @GetMapping("/recent-board")
     public ConcurrentHashMap<String, String> getRecentBoardNo(){
         return bungBoardService.getRecentBoardNo();
+    }
+
+    // 벙 신청 게시글 거절 기능
+    @DeleteMapping("/addBungRefuse/{addId}")
+    public BungAddRequestDto addBungRefuse(@PathVariable("addId") Long addId) {
+        return bungBoardService.addBungRefuse(addId);
     }
 
     @GetMapping("/accept")

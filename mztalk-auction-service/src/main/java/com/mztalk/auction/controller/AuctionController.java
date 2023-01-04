@@ -28,6 +28,7 @@ public class AuctionController {
     public ConcurrentHashMap<String, String> insertBoard(@RequestBody BoardRequestDto boardRequestDto) throws ParseException {
         ConcurrentHashMap<String, String> map=new ConcurrentHashMap<>();
         map.put("bId", String.valueOf(auctionService.insertBoard(boardRequestDto)));
+        System.out.println(boardRequestDto.getIsbn());
         return map;
     }
 
@@ -38,16 +39,16 @@ public class AuctionController {
     }
 
     //게시글 검색
-    @GetMapping("/board/keyword/{keyword}")
-    public Result<?> searchBoard(@PathVariable String keyword) throws ParseException, UnsupportedEncodingException {
-        System.out.println(keyword);
-        return auctionService.searchBoard(keyword);
+    @GetMapping("/board/keyword/{keyword}/{page}")
+    public Result<?> searchBoard(@PathVariable("keyword") String keyword,@PathVariable("page")int page) throws ParseException, UnsupportedEncodingException {
+
+        return auctionService.searchBoard(keyword, page);
     }
 
     //전체 게시글 목록
-    @GetMapping("/board")
-    public Result<?> selectBoardList() throws ParseException {
-        return auctionService.selectBoardList();
+    @GetMapping("/board/{page}")
+    public Result<?> selectBoardList(@PathVariable("page") int page) throws ParseException {
+        return auctionService.selectBoardList(page);
     }
 
     //입찰 마감 게시물 제외
