@@ -392,7 +392,7 @@ function chatConnection() {
     .then(res => {
         if(res.status == 200) {
             console.log("채팅 연결 성공");
-            window.open('http://localhost:3000/chat-auction/?userId='+localStorage.getItem('userNo')+'&userNickname='+localStorage.getItem('userNickname'), '_blank');
+            window.open('http://localhost:3000/chat-auction?userId='+localStorage.getItem('userNo')+'&userNickname='+localStorage.getItem('userNickname'), '_blank');
         }
     })
 }

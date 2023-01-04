@@ -1,4 +1,4 @@
-
+let writerId = 1;
 window.onload= function(){
     
 
@@ -16,6 +16,7 @@ window.onload= function(){
         let boardId = res.boardId;
         let title = res.title;
         let writer = res.writer;
+        writerId = res.boardWriterId;
         let createDate = res.createDate;
         let imageInfo = res.imageInfo;
         let content = res.content;
@@ -248,3 +249,7 @@ const deleteAdd = (addId) => {
     })
 }
 
+document.getElementById('writer').addEventListener('click', function(){
+    console.log('writerId : ' + writerId);
+    moveBungToStory(writerId);
+})

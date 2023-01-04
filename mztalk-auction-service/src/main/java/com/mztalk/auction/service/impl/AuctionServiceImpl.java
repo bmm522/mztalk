@@ -69,7 +69,7 @@ public class AuctionServiceImpl implements AuctionService {
     public Result<?> selectBoardList(int page) throws ParseException {
         System.out.println("page : " + page);
         Pageable pageable = PageRequest.of(page - 1, 6);
-        Page<Board> boardPage = boardRepository.findAllByOrderByBoardIdDesc(pageable);
+        Page<Board> boardPage = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
 
         for (Board board : boardPage) {
