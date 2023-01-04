@@ -3,11 +3,14 @@ window.onload =() =>{
     console.log("수정페이지 : " + localStorage.getItem('refreshToken'));
     console.log("수정페이지 : " + localStorage.getItem('userNo'));
     console.log("수정페이지 : " + localStorage.getItem('userNickname'));
+    console.log("수정페이지 : " + localStorage.getItem('role'));
     profileBox();
     noSocial();
     checkVipCheck();
+    console.log(role);
 }
 
+    
 
 const checkVipCheck = ()=>{
 
@@ -28,8 +31,8 @@ const checkVipCheck = ()=>{
         let VIPCHECK = res.data;
         let createDate = VIPCHECK.createDate.substr(0,10);
         let vipDate = VIPCHECK.vipDate.substr(0,10);
-        console.log(createDate);
-        console.log(vipDate);
+        // console.log(createDate);
+        // console.log(vipDate);
         let userNickname = localStorage.getItem('userNickname');
         document.querySelector('#vipDate').innerHTML =
         `

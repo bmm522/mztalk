@@ -1,122 +1,19 @@
-// window.addEventListener('load', async () => {
-//     //경매/board-front/{page}
-//     const newAuctionBoard = await fetch("http://localhost:8000/auction/board-front/"+page, {
-//         method: "GET",
-//         headers: {
-//             "Content-Type": "application/json",
-//             Authorization: localStorage.getItem('authorization'),
-//             RefreshToken: localStorage.getItem('refreshToken'),
-//         },
-//     })
-//         .then((res) => res.json())
-//         .then(res => {
-//             const A = []
-//             for (let auction of res.data) {
-//                 A.push(auction)
-//             }
-//             return A
-//         })
-//     console.log('newAuctionBoard:', newAuctionBoard);
-
-//     //팔로우들 글/main/{own}/{page}
-//     let own = localStorage.getItem('userNo');
-
-//     const newFollowBoard = await fetch("http://localhost:8000/story/main/" + own +"/"+page, {
-//         method: "GET",
-//         headers: {
-//             "Content-Type": "application/json",
-//             Authorization: localStorage.getItem('authorization'),
-//             RefreshToken: localStorage.getItem('refreshToken'),
-//         },
-//     })
-//         .then((res) => res.json())
-//         .then(res => {
-//             const F = []
-//             for (let follow of res.data) {
-//                 F.push(follow)
-//             }
-//             return F
-//         })
-//     console.log('newFollowBoard:', newFollowBoard);
-
-
-
-//     //벙/mainBoards-main/{page}
-//     const newBungBoard = await fetch("http://localhost:8000/bung/mainBoards-main/"+page, {
-//         method: "GET",
-//         headers: {
-//             "Content-Type": "application/json",
-//             Authorization: localStorage.getItem('authorization'),
-//             RefreshToken: localStorage.getItem('refreshToken'),
-//         },
-//     })
-//         .then((res) => res.json())
-//         .then(res => {
-//             const B = []
-//             for (let bung of res.data) {
-//                 B.push(bung)
-//             }
-//             return B
-//         })
-//     console.log('newBungBoard:', newBungBoard);
-
-//     //멘토newMentorBoard/board/latest/{page}
-//     const newMentorBoard = await fetch("http://localhost:8000/mentors/board/latest/"+page, {
-//         method: "GET",
-//         headers: {
-//             "Content-Type": "application/json",
-//             Authorization: localStorage.getItem('authorization'),
-//             RefreshToken: localStorage.getItem('refreshToken'),
-//         },
-//     })
-//         .then((res) => res.json())
-//         .then(res => {
-//             const M = []
-//             for (let mentor of res.data) {
-//                 M.push(mentor)
-//             }
-//             return M
-//         })
-//     console.log('newMentorBoard:', newMentorBoard);
-
-//     const all = [];
-//     all.push(newMentorBoard);
-//     all.push(newBungBoard);
-//     all.push(newFollowBoard);
-//     all.push(newAuctionBoard);
-
-//     const result = [];
-
-//     for (const innerArray of all) {
-//         for (const element of innerArray) {
-//             result.push(element);
-//         }
-//     }
-
-//     let index = 0;
-//     for (const obj of result) {
-//         obj.i = index++;
-//     }
-
-//     const dateArr = [];
-//     for (const obj of result) {
-//         dateArr.push(obj.createDate);
-//     }
-
-//     const sorted_list = result.sort(function (a, b) {
-//         return new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime();
-//     }).reverse();
-
-
 let page = 1;
-
 window.onload = ()=>{
     load(1);
+    ROLEVIP();
+    checkVip();
+
+
+    console.log("main : " + localStorage.getItem('authorization'));
+    console.log("main : " + localStorage.getItem('refreshToken'));
+    console.log("main : " + localStorage.getItem('userNo'));
+    console.log("main : " + localStorage.getItem('userNickname'));
+    console.log("main : " + localStorage.getItem('role'));
 }
 
 window.onscroll = () => {
-    if (window.innerHeight + window.scrollY >= document.querySelector("#storyList").offsetHeight) {
-      
+    if (window.innerHeight + window.scrollY >= document.querySelector("#storyList").offsetHeight) {      
         page++;
       load(page);
     }
@@ -201,7 +98,7 @@ async function load(page) {
         let postImageUrl = board.postImageUrl;
         let mentorUrl = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/eca2a863-533a-4b19-9e98-d716addc5ad1-mentor.jpg";
         let ima = "https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png";
-        
+
         if (serviceName.includes('mentor')) {
             document.querySelector("#storyList").innerHTML +=
                 `
@@ -357,3 +254,63 @@ function showSlides() {
     slides[slideIndex - 1].style.display = "block";
     setTimeout(showSlides, 10000);
 } 
+
+
+// ROLE_VIP
+function ROLEVIP(){
+    
+    console.log("main ??: " + localStorage.getItem('role'));
+    //console.log("v-pills-profile-tab");
+    let ROLE_VIP = localStorage.getItem('role');
+    
+    //let buttonz = `<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
+    if(ROLE_VIP.includes("ROLE_USER")){
+        document.querySelector("#advertis");
+    }
+    if(ROLE_VIP.includes('ROLE_VIP')){
+        document.querySelector("#advertis").style.display = "none";
+    }
+  }
+
+
+const checkVip = () =>{
+    
+    let userNo = localStorage.getItem('userNo');
+
+    fetch("http://localhost:8000/story/checkVip/"+userNo,{
+          method:"PUT",
+          headers:{
+              "Content-Type":"application/json",
+              Authorization:localStorage.getItem('authorization'),
+              RefreshToken:localStorage.getItem('refreshToken'),
+          },
+          body:JSON.stringify({
+            userNo : localStorage.getItem('userNo'),
+        })
+    })
+    .then((res)=>res.json())
+    .then(res =>{
+        console.log(res.data,"?????????");
+        if(res.data==1){
+            fetch("http://localhost:8000/login/role/user/"+userNo,{
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json;",
+                    Authorization:localStorage.getItem('authorization'),
+                    RefreshToken:localStorage.getItem('refreshToken')
+                },
+                data: JSON.stringify({
+                    userNo : localStorage.getItem('userNo'),
+                })
+            })
+            
+            alert('VIP이용이 종료되었습니다. 감사합니다');
+
+            localStorage.removeItem('role')
+            localStorage.setItem('role', 'ROLE_USER');
+
+            location.href="main.html";
+        }
+        
+      })
+}
