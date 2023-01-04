@@ -19,6 +19,7 @@ public class BoardDto {
     private Integer timeLimit;
     private Integer currentPrice;
     private List<CommentResponseDto> comments;
+    private Long userNo;
 
     public Board toEntity() {
         return Board.builder()
@@ -32,6 +33,7 @@ public class BoardDto {
                 .currentPrice(currentPrice)
                 .status("Y")
                 .isClose("N")
+                .userNo(userNo)
                 .build();
     }
 }

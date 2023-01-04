@@ -28,6 +28,8 @@ public class BoardRequestDto {
 
     private String currentTime;
 
+    private Long userNo;
+
     public Board toEntity() {
         long timestamp = Long.parseLong(timeLimit);
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
@@ -54,6 +56,7 @@ public class BoardRequestDto {
                 .currentPrice(startPrice)
                 .timeLimit(Datetime)
                 .currentTime(Datetime2)
+                .userNo(userNo)
                 .build();
 
 
