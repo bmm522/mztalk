@@ -32,6 +32,11 @@ public class BungBoardApiController {
         return bungBoardService.mainSelectList(page);
     }
 
+    @GetMapping("/mainBoards-main/{page}")
+    public Result<?> mainSelectListOfMain(@PathVariable("page")int page) {
+        return bungBoardService.mainSelectListOfMain(page);
+    }
+
     // 게시글 등록
     @ResponseBody
     @PostMapping("/mainInsertBoard")
