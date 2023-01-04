@@ -2,6 +2,7 @@ package com.mztalk.main.domain.board.dto;
 
 
 import com.mztalk.main.domain.board.Board;
+import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.status.BoardStatus;
 import com.mztalk.main.status.PrivacyStatus;
@@ -10,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,8 @@ public class BoardDto {
     private String serviceName;
     private List<Reply> replyList = new ArrayList<>();
 
+    private String postImageUrl;
+
     private String writer;
 
     //레포지토리에 넣기위해
@@ -59,7 +61,7 @@ public class BoardDto {
 
     // view에 뿌려줄때
     // entity ㅡ> dto
-    public BoardDto(Board board){
+    public BoardDto(Board board, ProfileResponseDto profileResponseDto){
         this.id = board.getId();
         this.writer = board.getWriter();
         this.title = board.getTitle();
@@ -68,6 +70,7 @@ public class BoardDto {
         this.own = board.getOwn();
         this.privacy = board.getPrivacy();
         this.replyList = board.getReplyList();
+        this.postImageUrl = profileResponseDto.getPostImageUrl();
         this.lastModifiedDate = board.getLastModifiedDate();
         this.createdDate = board.getCreatedDate();
         this.serviceName = "story";

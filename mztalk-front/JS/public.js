@@ -3,9 +3,9 @@ const movePages = (own) =>{
     localStorage.setItem('own', own);
     location.href="individualpage.html";
 }
-const moveAuctionToStory = (i) =>{
+const moveAuctionToStory = (userNo) =>{
     
-    localStorage.setItem('own', i);
+    localStorage.setItem('own', userNo);
     location.href="individualpage.html";
 }
 const moveBungToStory = (boardWriterId)=>{

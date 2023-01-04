@@ -28,7 +28,7 @@
             </article> -->
             <article class="pictogramWrap">
                 
-                <i class="fa-solid fa-comments" style=""></i>
+                <i id="move-chat-service" class="fa-solid fa-comments" style=""></i>
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필" id="move-story-service">
             </article>
         </div>
@@ -141,32 +141,7 @@
                         &nbsp;<!--공백-->
                     </div> 
 
-                    <form id="alarmsEdit">
-                        <div class="alarms">
-                        <div class="content-item_01">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" checked>
-                                <div class="item__title">멘토/멘티</div>
-                            </div>
-                        </div>
-                        
-                        <div class="content-item_02">
-                            
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch"checked>
-                                <div class="item__title">벙</div>
-                            </div>
-                        </div>
-
-                        <div class="content-item_03">
-                            
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch"checked>
-                                <div class="item__title">경매</div>
-                            </div>
-                        </div>
-                        
-                        </div>
+                    
                         
                         <!--제출버튼end-->
                     </form>
@@ -464,7 +439,7 @@
             </div>
          </div>
       
-         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
+        
        </footer>
    
      <!--프로필사진 바꾸기 모달-->
@@ -525,7 +500,6 @@
             return;
         }
         
-
         IMP.request_pay({
                 pg: "html5_inicis",
                 pay_method: "card",
@@ -574,8 +548,6 @@
             }
         });
     }
-
-
 
 //로그아웃
 function logout(){

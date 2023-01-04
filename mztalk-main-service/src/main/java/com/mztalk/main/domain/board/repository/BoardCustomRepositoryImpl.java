@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -21,19 +22,18 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
     EntityManager entityManager;
 
     @Override
-    public Page<Board> findAllByOwn(Long own, Pageable pageable) {
-        int offset = pageable.getPageNumber() * pageable.getPageSize();
-        int limit = pageable.getPageSize();
+    public Page<Board> findByStatusOrderByBoardIdDesc(Long own, Pageable pageable) {
+        String queryString = "SELECT b FROM Board b WHERE b.own = :own and b.status = 'YES' ORDER BY b.id DESC";
+        TypedQuery<Board> query = entityManager.createQuery(queryString, Board.class);
+        query.setParameter("own", own);
+        query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        query.setMaxResults(pageable.getPageSize());
+        List<Board> boards = query.getResultList();
 
-        List<Board> boards = entityManager.createQuery("SELECT b FROM Board b WHERE b.own = :own and b.status= 'YES' ORDER BY b.id DESC", Board.class)
-                .setParameter("own", own)
-                .setFirstResult(offset)
-                .setMaxResults(limit)
-                .getResultList();
-
-        long total = entityManager.createQuery("SELECT COUNT(b) FROM Board b WHERE b.own = :own and b.status= 'YES'", Long.class)
-                .setParameter("own", own)
-                .getSingleResult();
+        String countQueryString = "SELECT COUNT(b) FROM Board b WHERE b.own = :own and b.status = 'YES' and b.privacy = 'PUBLIC'";
+        TypedQuery<Long> countQuery = entityManager.createQuery(countQueryString, Long.class);
+        countQuery.setParameter("own", own);
+        long total = countQuery.getSingleResult();
 
         return new PageImpl<>(boards, pageable, total);
     }

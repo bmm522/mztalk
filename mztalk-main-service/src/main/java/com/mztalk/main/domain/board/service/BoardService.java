@@ -10,7 +10,7 @@ public interface BoardService {
 
     //객체 간의 결합도를 낮추기 위해 interface를 만듬
 
-    Result findAllByOwn(Long own, int page);
+    Result findByStatusOrderByBoardIdDesc(Long own, int page);
 
     Board save(BoardDto boardDto);
 

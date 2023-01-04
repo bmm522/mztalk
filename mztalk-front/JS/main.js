@@ -1,7 +1,9 @@
+
+
 //개인페이지
 document.getElementById('move-story-service').addEventListener('click',function(){
      const own = localStorage.getItem("userNo");
-  
+     let page = 1;
      localStorage.setItem("own", own);
     
     //이 구조는 그냥 버튼에 자기페이지 가는 로직
@@ -9,7 +11,7 @@ document.getElementById('move-story-service').addEventListener('click',function(
     //개인페이지에서 다른 페이지 넘어가면 own을 초기화 삭제 해줘야한다
     //친구페이지 갈때는 set하면 안될듯
     
-    fetch("http://localhost:8000/story/"+own,{
+    fetch("http://localhost:8000/story/"+own+"/"+page,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
