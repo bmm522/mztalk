@@ -99,12 +99,14 @@ public class BungAddBoardRepositoryCustomImpl implements BungAddBoardRepositoryC
                 .getResultList();
     }
 
+    @Transactional
+    @Modifying
     @Override
     public Long addBungRefuse(Long addId, long boardId) {
-        return (Long) entityManager.createQuery("delete from BungAddBoard a where a.boardId = :boardId and a.addId = :addId")
+        return (long) entityManager.createQuery("delete from BungAddBoard a where a.bungBoard.boardId = :boardId and a.addId = :addId")
                 .setParameter("addId", addId)
                 .setParameter("boardId", boardId)
-                .getSingleResult();
+                .executeUpdate();
     }
 
 //    @Override
