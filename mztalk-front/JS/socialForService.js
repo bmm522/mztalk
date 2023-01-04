@@ -119,7 +119,7 @@ window.addEventListener('load', async () => {
         return new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime();
     }).reverse();
 
-    console.log(sorted_list, "?");
+   
 
     for (let board of result) {
         //console.log(board+"??");
@@ -135,9 +135,13 @@ window.addEventListener('load', async () => {
         let i = board.i;
         let boardWriterId = board.boardWriterId;
         let nickname = board.nickname;
-        let mentorId = board.mentor.userId;
-        console.log(board+"///");
-        console.log(mentorId,"??");
+        let mentors = board.mentor;
+        let bId = board.boardId;
+        
+        //let mentorNickname = board.nickname;
+        //console.log(mentorId,"??");
+        //console.log(mentorNickname+"//3333/");
+   
         if (serviceName.includes('mentor')) {
             document.querySelector("#storyList").innerHTML +=
                 `
@@ -149,13 +153,12 @@ window.addEventListener('load', async () => {
                 <div class="col-md-8">
                     <div class="card-body">
                     <h5 class="card-title">${title}</h5>
-                    <button>자세히보기</button>
+                    <button data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="moveMainToMentor(${boardId});">자세히보기</button>
                     <div class="separator"></div>
                      <span class="badge text-bg-primary" id="serviceMetors">멘토</span>
                     <p class="card-text">${content}</p>
-                    <div class="author" onclick="movementorToStory(${mentorId});">${writer}
-                    <input type="hidden" class="nickname_find" value="${nickname}">
-                    <input type="hidden" class="mentorId_find" value="${mentorId}">
+                    <div class="author" onclick="movementorToStory(${mentors.userId});">${nickname}
+                        <input type="hidden" class="mentorId_find" value="${mentors.userId}">
                     </div>
                     </div>
                 </div>
@@ -175,13 +178,14 @@ window.addEventListener('load', async () => {
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">${bookTitle}</h5>
-                            <button>자세히보기</button>
+                            <button onclick="moveMainToAuction(${bId});">자세히보기</button>
                             <div class="separator"></div>
                                 <span class="badge text-bg-success" id="serviceAuction" value="serviceAuctions">경매</span>
                             <p class="card-text">${title}</p>
                             
                             <div class="author" id="auction_own" onclick="moveAuctionToStory(${i});">${writer}
                                 <input type="hidden" value="${i}">
+                                <input type="hidden" id="auctionWriter" value="${writer}">
                             </div>
                         </div>
                     </div>
@@ -200,11 +204,13 @@ window.addEventListener('load', async () => {
                   <div class="col-md-8">
                       <div class="card-body">
                       <h5 class="card-title">${title}</h5>
+                      <button onclick="moveMainToBung(${bId});">자세히보기</button>
                       <div class="separator"></div>
                        <span class="badge text-bg-info" id="serviceBung">벙</span>
                       <p class="card-text">${content}</p>
                       <div class="author" id="bung_own" onclick="moveBungToStory(${boardWriterId});">${writer}</div>
-                        <input type="hidden" value="${boardWriterId}">            
+                        <input type="hidden" value="${boardWriterId}"> 
+                        <input type="hidden" id="bungService" value="${serviceName}">           
                       </div>
                   </div>
                 </div>
@@ -257,68 +263,70 @@ window.addEventListener('load', async () => {
 
 //페이지이동 userNo
 const movePage = (own) =>{
-    localStorage.removeItem('own'); 
+     
     localStorage.setItem('own', own);
     location.href="individualpage.html";
 }
 const moveAuctionToStory = (i) =>{
-    localStorage.removeItem('own'); 
+    
     localStorage.setItem('own', i);
     location.href="individualpage.html";
 }
 const moveBungToStory = (boardWriterId)=>{
-    localStorage.removeItem('own'); 
+     
     localStorage.setItem('own', boardWriterId);
     location.href="individualpage.html";
 }
 
 const movementorToStory = (mentorId)=>{
-
-    localStorage.removeItem('own'); 
+   
     localStorage.setItem('own', mentorId);
     location.href="individualpage.html";
 
 }
 
 
-
-
-//닉네임만 있는 서비스
-// const moveNinameToStory = ()=>{
-
-//     let nickname = document.querySelector('.nickname_find').value;
-
-//     fetch("http://localhost:8000/story/nameCheck/"+{nickname},{
-//         method:"GET",
-//         headers:{
-//             "Content-Type":"application/json",
-//             Authorization:localStorage.getItem('authorization'),
-//             RefreshToken:localStorage.getItem('refreshToken'),
-//         },
-//     })
-//     .then((res)=> res.json())
-//     .then(res=>{
-
-//         localStorage.removeItem('own'); 
-//         localStorage.setItem('own', boardWriterId);
-//         location.href="individualpage.html";
-        
-//     })
-// };
-
 //옥션 @GetMapping("/board/{bId}/{writer}")
-const moveMainToAuction = ()=>{
-    let 
-    if(serviceAuction){}
+const moveMainToAuction = (bId)=>{
+    localStorage.setItem('bId', bId);
+    location.href="auctionDetail.html";
+}
 
+// 벙 @GetMapping("/mainBoardSelect/{boardId}")
+const moveMainToBung = (bId)=>{
+    localStorage.setItem('bId', bId);
+    location.href="bung-service-detail.html";
+}
+//멘토 @GetMapping("/board/{id}")
+const moveMainToMentor = (bId)=>{
+    localStorage.setItem('bId', bId);
+    fetch("http://localhost:8000/mentors/board/"+bId,{
+            method:"GET",
+            headers:{
+            "Content-Type":"application/json",
+                Authorization:localStorage.getItem('authorization'),
+                RefreshToken:localStorage.getItem('refreshToken')
+            },
+        })
+        .then((res)=>res.json())
+        .then(res =>{
+            if(res != null){
+                document.getElementById('exampleModalToggleLabel').innerHTML = '멘토-멘티 서비스'
+                document.getElementById('modal-body').innerHTML = "자기소개 : " + res.data.introduction + "<br/>";
+                document.getElementById('modal-body').innerHTML += "글 내용 : " + res.data.content;
+                const modalMentoringDate = document.getElementById('modal-mentoringDate');
+                modalMentoringDate.innerHTML = `멘토링 날짜: ${res.data.mentoringDate.substr(0, 10)}&nbsp;${res.data.mentoringDate.substr(11, 5)}`;
+                document.getElementById('modal-salary').innerHTML = '1회 멘토링 : 1시간 / '+res.data.salary+'원';
+            } else {
+                console.log('실패');
+            }
+        })
+        document.getElementById('modal-body').innerHTML = '';
+
+    //location.href="bung-service-detail.html";
 }
 
 
-
-
-// 벙 @GetMapping("/mainBoardSelect/{boardId}")
-
-//멘토 @GetMapping("/board/{id}")
 
 
 
