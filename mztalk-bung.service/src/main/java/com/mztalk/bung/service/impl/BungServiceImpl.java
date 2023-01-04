@@ -17,6 +17,9 @@ import com.mztalk.bung.service.BungBoardService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -78,10 +81,13 @@ public class BungServiceImpl implements BungBoardService {
         return bungAddRepository.save(bungAddBoardEntity).getAddId();
     }
 
-    // 메인 서비스 게시글 조회
     @Override
-    public Result mainSelectList() {
-        List<BungBoard> bungBoards = bungRepository.findByBoardStatus(BoardStatus.YES);
+    public Result<?> mainSelectList(int page) {
+        // Create a Pageable object with a page size of 10 and the specified page number
+        Pageable pageable = PageRequest.of(page - 1, 9);
+
+        // Find the bung boards with a status of YES, using the Pageable object to paginate the results
+        Page<BungBoard> bungBoards =bungRepository.findByBoardStatus(BoardStatus.YES, pageable);
         List<BungBoardResponseDto> bungBoardResponseDtoList = new ArrayList<>();
         for (BungBoard bungBoard : bungBoards) {
             System.out.println(bungBoard.getBoardId());
@@ -105,6 +111,36 @@ public class BungServiceImpl implements BungBoardService {
         }
         return new Result(bungBoardResponseDtoList);
     }
+
+    // 메인 서비스 게시글 조회
+//    @Override
+//    public Result mainSelectList() {
+//        List<BungBoard> bungBoards = bungRepository.findByBoardStatus(BoardStatus.YES);
+//        List<BungBoardResponseDto> bungBoardResponseDtoList = new ArrayList<>();
+//        for (BungBoard bungBoard : bungBoards) {
+//            System.out.println(bungBoard.getBoardId());
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.add("Content-Type", "text/html");
+//            ResponseEntity<String> response = new RestTemplate().exchange(
+//                    "http://localhost:8000/resource/main-image?bNo=" + bungBoard.getBoardId() + "&serviceName=bung",
+//                    HttpMethod.GET,
+//                    new HttpEntity<String>(headers),
+//                    String.class
+//            );
+//            JSONObject jsonObject = new JSONObject(response.getBody());
+//            JSONObject jsonData = jsonObject.getJSONObject("data");
+//            String imageUrl = jsonData.getString("imageUrl");
+//            String imageName = jsonData.getString("objectKey");
+//
+//
+//            long nowGroup = bungAddRepository.bungBoardNowGroup(bungBoard.getBoardId());
+//            System.out.println("nowGroup : " + nowGroup);
+//            bungBoardResponseDtoList.add(new BungBoardResponseDto(bungBoard, imageUrl, imageName, nowGroup));
+//        }
+//        return new Result(bungBoardResponseDtoList);
+//    }
+
+
 
     // 메인 게시글 수정
     @Override
@@ -327,9 +363,10 @@ public class BungServiceImpl implements BungBoardService {
     }
 
     @Override
-    public Result<?> search(String[] categories, String type, String searchText) {
+    public Result<?> search(String[] categories, String type, String searchText, int page) {
+        Pageable pageable = PageRequest.of(page - 1, 9);
         List<BungBoardResponseDto> bungBoardResponseDtoList = new ArrayList<>();
-        List<BungBoard> bungBoardList = bungRepository.getSearchList(categories, type, searchText);
+        Page<BungBoard> bungBoardList = bungRepository.getSearchList(categories, type, searchText, pageable);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "text/html");
         for(BungBoard bungBoard : bungBoardList){

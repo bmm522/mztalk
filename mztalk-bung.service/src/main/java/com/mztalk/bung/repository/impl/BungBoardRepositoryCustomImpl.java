@@ -4,14 +4,17 @@ import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.entity.QBungBoard;
-import com.mztalk.bung.domain.response.BungBoardResponseDto;
 import com.mztalk.bung.repository.BungBoardRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Date;
@@ -79,6 +82,8 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
                 .getSingleResult();
     }
 
+
+
 //    @Override
 //    public List<BungBoard> getSearchList(String[] categories, String type, String searchText) {
 //
@@ -91,19 +96,31 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
 //    }
 
     @Override
-    public List<BungBoard> getSearchList(String[] categories, String type, String searchText) {
-        return entityManager.createQuery
+    public Page<BungBoard> getSearchList(String[] categories, String type, String searchText, Pageable pageable) {
+        long totalSearchResults = entityManager.createQuery
+                        ("SELECT COUNT(b) FROM BungBoard b WHERE b.category IN :categories AND CASE :type WHEN 'boardTitle' THEN b.boardTitle WHEN 'boardContent' THEN b.boardContent ELSE b.boardWriter END LIKE CONCAT('%', :searchText, '%')", Long.class)
+                .setParameter("categories", Arrays.asList(categories))
+                .setParameter("type", type)
+                .setParameter("searchText", searchText)
+                .getSingleResult();
+
+        List<BungBoard> searchResults = entityManager.createQuery
                         ("SELECT b FROM BungBoard b WHERE b.category IN :categories AND CASE :type WHEN 'boardTitle' THEN b.boardTitle WHEN 'boardContent' THEN b.boardContent ELSE b.boardWriter END LIKE CONCAT('%', :searchText, '%')", BungBoard.class)
                 .setParameter("categories", Arrays.asList(categories))
                 .setParameter("type", type)
                 .setParameter("searchText", searchText)
+                .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+                .setMaxResults(pageable.getPageSize())
                 .getResultList();
+
+        return new PageImpl<>(searchResults, pageable, totalSearchResults);
     }
 
     @Override
     public List<BungAddBoardDto> findBungBoardWriterAndBoardStatus(String boardWriter, String boardStatus) {
        return null;
     }
+
 
 
 

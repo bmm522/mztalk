@@ -5,6 +5,8 @@ import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.entity.BungBoard;
 import com.mztalk.bung.domain.response.BungBoardResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 import java.util.List;
@@ -21,9 +23,11 @@ public interface BungBoardRepositoryCustom {
 
     Long findBungBoard(Long bId);
 
+   // List<BungBoard> getSearchList(String[] categories, String type, String searchText, java.awt.print.Pageable pageable);
+
     List<BungAddBoardDto> findBungBoardWriterAndBoardStatus(String boardWriter, String boardStatus);
 
-    List<BungBoard> getSearchList(String[] categories, String type, String searchText);
+    Page<BungBoard> getSearchList(String[] categories, String type, String searchText, Pageable pageable);
 
 //    long getRecentBoardNo();
 
