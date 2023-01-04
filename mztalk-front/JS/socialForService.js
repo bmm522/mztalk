@@ -262,28 +262,28 @@ window.addEventListener('load', async () => {
 // }
 
 //페이지이동 userNo
-const movePage = (own) =>{
+// const movePage = (own) =>{
      
-    localStorage.setItem('own', own);
-    location.href="individualpage.html";
-}
-const moveAuctionToStory = (i) =>{
+//     localStorage.setItem('own', own);
+//     location.href="individualpage.html";
+// }
+// const moveAuctionToStory = (i) =>{
     
-    localStorage.setItem('own', i);
-    location.href="individualpage.html";
-}
-const moveBungToStory = (boardWriterId)=>{
+//     localStorage.setItem('own', i);
+//     location.href="individualpage.html";
+// }
+// const moveBungToStory = (boardWriterId)=>{
      
-    localStorage.setItem('own', boardWriterId);
-    location.href="individualpage.html";
-}
+//     localStorage.setItem('own', boardWriterId);
+//     location.href="individualpage.html";
+// }
 
-const movementorToStory = (mentorId)=>{
+// const movementorToStory = (mentorId)=>{
    
-    localStorage.setItem('own', mentorId);
-    location.href="individualpage.html";
+//     localStorage.setItem('own', mentorId);
+//     location.href="individualpage.html";
 
-}
+// }
 
 
 //옥션 @GetMapping("/board/{bId}/{writer}")

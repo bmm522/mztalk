@@ -69,7 +69,35 @@ public class AuctionServiceImpl implements AuctionService {
     public Result<?> selectBoardList(int page) throws ParseException {
         System.out.println("page : " + page);
         Pageable pageable = PageRequest.of(page - 1, 6);
-        Page<Board> boardPage = boardRepository.findAll(pageable);
+        Page<Board> boardPage = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
+        List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
+
+        for (Board board : boardPage) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "text/html");
+//            System.out.println("list 가져오기 : " + board.getBoardId());
+            ResponseEntity<String> response = new RestTemplate().exchange(
+                    "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
+                    HttpMethod.GET,
+                    new HttpEntity<String>(headers),
+                    String.class
+            );
+            JSONObject jsonObject = new JSONObject(response.getBody());
+            JSONObject jsonData = jsonObject.getJSONObject("data");
+            String imageUrl = jsonData.getString("imageUrl");
+            String imageName = jsonData.getString("objectKey");
+
+
+            boardListResponseDtoList.add(new BoardListResponseDto(board,getTimeDuration(board),imageUrl, imageName));
+        }
+        return new Result<>(boardListResponseDtoList);
+    }
+
+    @Override
+    public Result<?> selectBoardListOfFront(int page) throws ParseException {
+        System.out.println("page : " + page);
+        Pageable pageable = PageRequest.of(page - 1, 3);
+        Page<Board> boardPage = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
 
         for (Board board : boardPage) {
@@ -338,6 +366,8 @@ public class AuctionServiceImpl implements AuctionService {
     public void postChatRoom(BoardDto boardDto) {
 
     }
+
+
 
 
 }

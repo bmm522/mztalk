@@ -51,6 +51,11 @@ public class AuctionController {
         return auctionService.selectBoardList(page);
     }
 
+    @GetMapping("/board-front/{page}")
+    public Result<?> selectBoardListOfFront(@PathVariable("page") int page) throws ParseException {
+        return auctionService.selectBoardListOfFront(page);
+    }
+
     //입찰 마감 게시물 제외
     @GetMapping("/board/close/{page}")
     public Result<?> selectCloseBoardList(@PathVariable int page) throws ParseException {

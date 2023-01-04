@@ -23,9 +23,9 @@ public class BoardApiController {
 
 
     //퍼블릭인 글 목록
-    @GetMapping("/{own}")
-    public Result findAllByOwn(@PathVariable Long own){
-        return boardService.findAllByOwn(own);
+    @GetMapping("/{own}/{page}")
+    public Result findAllByOwn(@PathVariable("own") Long own, @PathVariable("page")int page){
+        return boardService.findAllByOwn(own, page);
     }
 
     //글쓰기
@@ -45,9 +45,9 @@ public class BoardApiController {
     public Long deleteForm(@PathVariable("id") Long id){return boardService.deleteBoard(id);}
 
     //메인페이지 뿌리기?
-    @GetMapping("/main/{own}")
-    public Result findAllByBoardStory(@PathVariable("own") Long own){
-        return boardService.findAllByBoardStory(own);
+    @GetMapping("/main/{own}/{page}")
+    public Result findAllByBoardStory(@PathVariable("own") Long own, @PathVariable("page")int page){
+        return boardService.findAllByBoardStory(own, page);
     }
 
 

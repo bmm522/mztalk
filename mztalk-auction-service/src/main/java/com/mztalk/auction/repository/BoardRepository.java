@@ -21,4 +21,6 @@ public interface BoardRepository extends JpaRepository<Board, Long>, CustomAucti
     void findByWriter(String writer);
 
     Page<Board> findByIsCloseAndStatusOrderByBoardIdDesc(String isClose, String stauts, Pageable pageable);
+
+    Page<Board> findByStatusOrderByBoardIdDesc(String status, Pageable pageable);
 }

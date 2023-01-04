@@ -277,7 +277,9 @@ const searchLoad = (searchPage) =>{
         })
 }
 
+// document.getElementById('flexSwitchCheckChecked2').addEventListener('click', function(){
 
+// })
 
 //마감 게시글 제외
 function isClose() {
@@ -289,6 +291,7 @@ function isClose() {
         searchForm = false;
         closeEvent(1);
     } else {
+        location.href="auction.html";
         document.getElementById('auctionCard2').innerHTML = '';
         finishForm = false;
         mainForm = true;

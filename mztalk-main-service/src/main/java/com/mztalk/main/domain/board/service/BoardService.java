@@ -10,7 +10,7 @@ public interface BoardService {
 
     //객체 간의 결합도를 낮추기 위해 interface를 만듬
 
-    Result findAllByOwn(Long own);
+    Result findAllByOwn(Long own, int page);
 
     Board save(BoardDto boardDto);
 
@@ -18,7 +18,7 @@ public interface BoardService {
 
     Long deleteBoard(Long id);
 
-    Result findAllByBoardStory(Long own);
+    Result findAllByBoardStory(Long own, int page);
 
     //Long findByUserNo(String nickname);
 }

@@ -20,4 +20,6 @@ public interface ImageCustomRepository {
     List<Images> getSubImages(long bNo, String serviceName);
 
     String getObjectKey(String imageName);
+
+    int updateStatus(String objectKey);
 }

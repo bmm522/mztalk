@@ -574,7 +574,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
         localStorage.setItem("userNickname", decodeURIComponent(response.headers.get('UserNickname')));
         localStorage.setItem('path', 'LOCAL');
         localStorage.setItem('role',  response.headers.get('UserRole'));
-        window.open('main-test.html', '_self');
+        window.open('main.html', '_self');
       }
      
     });
