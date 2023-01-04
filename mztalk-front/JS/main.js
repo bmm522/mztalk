@@ -98,6 +98,11 @@ document.getElementById('move-auction-service').addEventListener('click',functio
 
 });
 
+//채팅창 띄우기
+document.getElementById('move-chat-service').addEventListener('click', function(){
+    window.open(`http://localhost:3000/chat-friends/?userId=${localStorage.getItem('userNo')}&userNickname=${localStorage.getItem('userNickname')}`, 'width=150', 'height=150');
+})
+
 
 //페이지이동
 const moveMainPage = () =>{
