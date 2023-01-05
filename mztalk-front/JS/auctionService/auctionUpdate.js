@@ -67,7 +67,7 @@ function deleteFile(objectKey) {
     document.getElementById(objectKey).remove();
     if(confirm('정말 삭제하시겠습니까?')) {
         console.log("삭제시objectKey: " + objectKey);
-        fetch('http://localhost:8000/resource/image-detail?imageName=' + objectKey, {
+        fetch(`${LOCALHOST_URL}/resource/image-detail?imageName=${objectKey}`, {
             method: 'DELETE',
             headers: {
                 "Content-Type": "text/html",
@@ -92,7 +92,7 @@ function updateBoard() {
         const form = document.getElementById('update-form');
         const payload = new FormData(form);
 
-       fetch('http://localhost:8000/resource/update-image',{
+       fetch(`${LOCALHOST_URL}/resource/update-image`,{
           method: 'POST',
           body: payload
          })
@@ -106,7 +106,7 @@ function updateBoard() {
 
 const updateData = () =>{
     console.log("수정하기 버튼 눌렀을 시 bId: " + document.getElementById("hidden-bId").value);
-    fetch("http://localhost:8000/auction/board/" + document.getElementById('hidden-bId').value, {
+    fetch(`${LOCALHOST_URL}/auction/board/` + document.getElementById('hidden-bId').value, {
         method: "PATCH",
         headers: {
             "Content-Type":"application/json",
@@ -131,7 +131,7 @@ const updateData = () =>{
 //지금 마감시키기
 document.getElementById('closeNow').addEventListener('click', function() {
     if(confirm('정말 지금 마감시키겠습니까?')) {
-        fetch("http://localhost:8000/auction/board/close", {
+        fetch(`${LOCALHOST_URL}/auction/board/close`, {
         method: "PATCH",
         headers: {
             "Content-Type":"application/json",

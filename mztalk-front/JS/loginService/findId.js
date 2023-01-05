@@ -4,7 +4,7 @@ const moveMain = ()=>{
 }
 
 const move =() =>{
-    fetch("http://localhost:8000/login/username/"+document.getElementById('searchEmail').value,{
+    fetch(`${LOCALHOST_URL}/login/username/`+document.getElementById('searchEmail').value,{
       method:"GET",
     })
     .then((res) => res.json())

@@ -122,7 +122,7 @@ let emailAuthCode = '';
 let userId = '';
 document.getElementById('checkEmailButton').addEventListener('click', function(){
 	userId = document.getElementById('userId').value;
-	fetch("http://localhost:8000/login/auth-code/?email="+document.getElementById('userEmail').value+"&username="+document.getElementById('userId').value, {
+	fetch(`${LOCALHOST_URL}/login/auth-code/?email=`+document.getElementById('userEmail').value+"&username="+document.getElementById('userId').value, {
     method:"GET",
      })
     .then((res)=> res.json())
@@ -146,7 +146,7 @@ const updatePwd = () =>{
 	} else if(document.getElementById('checkRePasswordResult').value == 'fail'){
 		alert('비밀번호가 일치하지 않습니다.');
 	} else {
-		fetch("http://localhost:8000/login/password", {
+		fetch(`${LOCALHOST_URL}/login/password`, {
 			method:"PATCH",
 			headers:{
 				"Content-Type":"application/json"

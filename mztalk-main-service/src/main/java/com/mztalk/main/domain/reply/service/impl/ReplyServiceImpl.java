@@ -1,5 +1,6 @@
 package com.mztalk.main.domain.reply.service.impl;
 
+import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.domain.reply.dto.ReplyResponseDto;
 import com.mztalk.main.domain.reply.repository.ReplyRepository;
@@ -40,11 +41,8 @@ public class ReplyServiceImpl implements ReplyService {
 
         return reply.getId();
     }
-
+    //닉네임 요청시 변경
     @Override
     @Transactional
-    public int changeNickname(Map<String, String> body) {
-
-        return replyRepository.updateNickname(Long.parseLong(body.get("userNo")),body.get("nickname"));
-    }
+    public int changeNickname(Map<String, String> body) {return replyRepository.updateNickname(Long.parseLong(body.get("userNo")),body.get("nickname"));}
 }

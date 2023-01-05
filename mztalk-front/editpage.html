@@ -513,7 +513,7 @@
         function (rsp) {
             if (rsp.success) {
                $.ajax({
-                    url: "http://localhost:8000/story/subscribe",
+                    url: `${LOCALHOST_URL}/story/subscribe`,
                     method:"POST",
                     headers: {
                         "Content-Type": "application/json;",
@@ -528,7 +528,7 @@
                })    
                .done(function(data){
                     $.ajax({
-                        url: "http://localhost:8000/login/role/vip/"+userNo,
+                        url: `${LOCALHOST_URL}/login/role/vip/${userNo}`,
                         method: "PATCH",
                         headers: {
                             "Content-Type": "application/json;",
@@ -552,17 +552,17 @@
 //로그아웃
 function logout(){
 
-localStorage.clear();
+    localStorage.clear();
 
-deleteCookie('Authorization');
-deleteCookie('RefreshToken');
+    deleteCookie('Authorization');
+    deleteCookie('RefreshToken');
 
-location.href="loginpage.html";
+    location.href="loginpage.html";
 }
 
 //쿠키삭제
 function deleteCookie(name) {
-document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
 </script>
