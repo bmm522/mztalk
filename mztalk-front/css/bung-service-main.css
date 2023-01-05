@@ -274,14 +274,24 @@ hr {
 }
 
 #cardarea{
-  height: auto;
+  height: 50px;
+  padding-bottom: 30px;
+  background: none;
+  border :none;
+
 }
 
 #cardcard{
   height: auto;
 }
 
+#cardBody{
+  /* height: 100%; */
+}
 
+.card-title{
+  color: red;
+}
 
 
 

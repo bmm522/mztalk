@@ -13,7 +13,7 @@ import java.util.List;
 
 
 public interface BungBoardRepositoryCustom {
-    int increaseCount(Long bId);
+    int increaseCount(Long bId, String boardWriter);
 
     BungBoard findBungBoardByWriterBoardId(Long boardId);
 
