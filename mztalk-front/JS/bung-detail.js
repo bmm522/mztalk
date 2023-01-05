@@ -26,13 +26,13 @@ window.onload= function(){
         let address = res.address;
 
 
-        document.getElementById('header').innerHTML = '<strong>'+title+'</strong>';
+        document.getElementById('bungTitle').value = title;
         document.getElementById('writer').innerHTML = writer;
         document.getElementById('date').innerHTML=createDate;
         document.getElementById('bungContent').placeholder = content;
-        document.getElementById('category').innerHTML = "카테고리 : " + category;
-        document.getElementById('closeRead').innerHTML = "마감 날짜 : " + deadlineDate;
-        document.getElementById('address').innerHTML = "모임 장소 : " + address;
+        document.getElementById('categoryInput').value = "카테고리 : " + category;
+        document.getElementById('closeReadInput').value = "마감 날짜 : " + deadlineDate;
+        document.getElementById('addressInput').value = "모임 장소 : " + address;
 
         localStorage.setItem('title', title);
         localStorage.setItem('writer', writer);
@@ -93,7 +93,7 @@ const getNowGroup = (fullGroup) =>{
     .then((res)=>res.json())
     .then(res=>{
         let nowGroup = res;
-        document.getElementById('group').innerHTML="현재 인원 : " + nowGroup+" 명 / 총 인원 : "+fullGroup+" 명";
+        document.getElementById('groupInput').value="현재 인원 : " + nowGroup+" 명 / 총 인원 : "+fullGroup+" 명";
         localStorage.setItem('group', group);
     })
 }
