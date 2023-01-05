@@ -155,6 +155,25 @@ h5 card-title {
     align-items: stretch;
 }
 
+.pictogramWrap #profile-own {
+  width: 50px;
+  height: 50px;
+  padding: 6px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+.pictogramWrap #profile-own img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+#profile-own img {
+  border: 2px solid #8a3ab8;
+}
+
+
 
 
 .remocon figure:hover img {

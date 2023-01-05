@@ -664,7 +664,9 @@ function profileImageUpload(){
       let objectKey = profile.profileImageName;
       reader.onload=(e)=>{
         let userProfileImg = document.getElementById('userProfileImage');
-        userProfileImg.src = e.target.result;        
+        let image = document.getElementById('profile-own');
+        userProfileImg.src = e.target.result;
+        image.src = e.target.result;        
       }
       reader.readAsDataURL(f); 
       })
