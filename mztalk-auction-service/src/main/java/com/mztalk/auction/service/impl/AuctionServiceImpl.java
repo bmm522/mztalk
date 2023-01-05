@@ -77,7 +77,7 @@ public class AuctionServiceImpl implements AuctionService {
             headers.add("Content-Type", "text/html");
 //            System.out.println("list 가져오기 : " + board.getBoardId());
             ResponseEntity<String> response = new RestTemplate().exchange(
-                    "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
+                    "http://43.200.113.144:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
                     HttpMethod.GET,
                     new HttpEntity<String>(headers),
                     String.class
@@ -105,7 +105,7 @@ public class AuctionServiceImpl implements AuctionService {
             headers.add("Content-Type", "text/html");
 //            System.out.println("list 가져오기 : " + board.getBoardId());
             ResponseEntity<String> response = new RestTemplate().exchange(
-                    "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
+                    "http://43.200.113.144:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
                     HttpMethod.GET,
                     new HttpEntity<String>(headers),
                     String.class
@@ -152,7 +152,7 @@ public class AuctionServiceImpl implements AuctionService {
             headers.add("Content-Type", "text/html");
             System.out.println("검색 list 가져오기 : " + board.getBoardId());
             ResponseEntity<String> response = new RestTemplate().exchange(
-                    "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
+                    "http://43.200.113.144:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
                     HttpMethod.GET,
                     new HttpEntity<String>(headers),
                     String.class
@@ -179,7 +179,7 @@ public class AuctionServiceImpl implements AuctionService {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "text/html");
         ResponseEntity<String> response = new RestTemplate().exchange(
-                "http://localhost:8000/resource/images?bNo="+bId+"&serviceName=auction",
+                "http://43.200.113.144:8000/resource/images?bNo="+bId+"&serviceName=auction",
                 HttpMethod.GET,
                 new HttpEntity<String>(headers),
                 String.class
@@ -290,7 +290,7 @@ public class AuctionServiceImpl implements AuctionService {
             headers.add("Content-Type", "text/html");
 
             ResponseEntity<String> response = new RestTemplate().exchange(
-                    "http://localhost:8000/resource/main-image?bNo=" + board.getBoardId() + "&serviceName=auction",
+                    "http://43.200.113.144:8000/resource/main-image?bNo=" + board.getBoardId() + "&serviceName=auction",
                     HttpMethod.GET,
                     new HttpEntity<String>(headers),
                     String.class
@@ -324,15 +324,11 @@ public class AuctionServiceImpl implements AuctionService {
             if(!board.getIsClose().equals("Y")){
                 boardRepository.updateIsClose(board.getBoardId());
             }
-
         } else {
             timeMap.put("hour", hour);
             timeMap.put("minute", minute);
             timeMap.put("second", second);
         }
-
-
-
         return timeMap;
     }
 
@@ -342,7 +338,7 @@ public class AuctionServiceImpl implements AuctionService {
 
         try {
             HttpUriRequest httpPost = RequestBuilder.post()
-                    .setUri(new URI("http://localhost:8000/login/chat/nickname"))
+                    .setUri(new URI("http://43.200.113.144:8000/login/chat/nickname"))
                     .addParameter("serviceName", "auction")
                     .addParameter("fromUserNickname", board.getWriter())
                     .addParameter("toUserNickname", board.getBuyerNickname())
