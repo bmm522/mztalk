@@ -8,6 +8,7 @@ import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.status.BoardStatus;
 import com.mztalk.main.status.PrivacyStatus;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
