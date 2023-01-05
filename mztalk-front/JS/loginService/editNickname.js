@@ -32,7 +32,7 @@ const nicknameBlurText = () => {
 document.getElementById('nickname-box').addEventListener('keyup',function(){
 	let nickname = document.getElementById('nickname-box').value;
   
-	fetch("http://localhost:8000/login/register/nickname/"+nickname, {
+	fetch(`${LOCALHOST_URL}/login/register/nickname/${nickname}`, {
 		method:"GET",
 	})
 	.then((res)=> res.json())
@@ -56,7 +56,7 @@ document.getElementById('nickname-box').addEventListener('keyup',function(){
 
   document.getElementById('editBtn').addEventListener('click',function(){
 
-	fetch("http://localhost:8000/login/social/nickname",{
+	fetch(`${LOCALHOST_URL}/login/social/nickname`,{
 		method:"PATCH",
 		headers:{
 			"Content-Type":"application/json"

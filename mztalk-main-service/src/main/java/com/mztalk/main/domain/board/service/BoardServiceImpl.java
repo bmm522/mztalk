@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -107,6 +108,11 @@ public class BoardServiceImpl implements BoardService {
         return new Result(boardDtos);
     }
 
+    @Override
+    @Transactional
+    public int changeNickname(Map<String, String> body) {
+        return boardRepository.updateNickname(Long.parseLong(body.get("userNo")),body.get("nickname"));
+    }
 
 
 }

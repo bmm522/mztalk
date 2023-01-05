@@ -22,7 +22,7 @@ function boardWrite() {
     const form = document.getElementById('image-form-form');
     const payload = new FormData(form);
 
-    fetch('http://localhost:8000/resource/images',{
+    fetch(`${LOCALHOST_URL}/resource/images`,{
         method: 'POST',
         body: payload,
     })
@@ -39,7 +39,7 @@ const postData = () =>{
 
     console.log("글작성시 isbn값 확인: " + document.getElementById('hidden-isbn').value);
 
-    fetch("http://localhost:8000/auction/board", {
+    fetch(`${LOCALHOST_URL}/auction/board`, {
         method: "POST",
         headers: {
             "Content-Type":"application/json",

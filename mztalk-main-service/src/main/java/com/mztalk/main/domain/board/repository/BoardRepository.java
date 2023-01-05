@@ -5,9 +5,11 @@ import com.mztalk.main.domain.board.dto.BoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface BoardRepository extends JpaRepository<Board, Long>, BoardCustomRepository {
@@ -16,6 +18,8 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardCustom
     long countByOwn(long own);
 
 
-
+    @Modifying
+    @Query("UPDATE Board b SET b.writer = :nickname WHERE b.own = :userNo")
+    int updateNickname(long userNo, String nickname);
 
 }

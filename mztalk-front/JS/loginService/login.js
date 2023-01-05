@@ -218,7 +218,7 @@ document.getElementById('sign-up-btn').addEventListener('click',function(e){
 	
   } else {
 
-    fetch("http://localhost:8000/login/register/user",{
+    fetch(`${LOCALHOST_URL}/login/register/user`,{
         method: "POST",
         headers:{
             "Content-Type":"application/json",            
@@ -251,7 +251,7 @@ document.getElementById('sign-up-btn').addEventListener('click',function(e){
 document.getElementById('username').addEventListener('keyup',function(){
   let userId = document.getElementById('username').value;
 
-  fetch("http://localhost:8000/login/register/username/"+userId, {
+  fetch(`${LOCALHOST_URL}/login/register/username/${userId}`, {
     method:"GET",
   })
   .then((res)=> res.json())
@@ -360,7 +360,7 @@ const rePasswordBlurText = () => {
 document.getElementById('nickname').addEventListener('keyup',function(){
   let nickname = document.getElementById('nickname').value;
 
-  fetch("http://localhost:8000/login/register/nickname/"+nickname, {
+  fetch(`${LOCALHOST_URL}/login/register/nickname/${nickname}`, {
     method:"GET",
   })
   .then((res)=> res.json())
@@ -437,7 +437,7 @@ const isVaildEmail =  () => {
 		
     } else{
       console.log("email : " + email);
-          fetch('http://localhost:8000/login/register/email/'+email,{
+          fetch(`${LOCALHOST_URL}/login/register/email/${email}`,{
             method:"GET"
           })
           .then((res)=>res.json())
@@ -470,7 +470,7 @@ document.getElementById('email_check').addEventListener('click', function(){
     document.getElementById('email-box').focus();
   
   } else{
-    fetch("http://localhost:8000/login/register/auth-code/"+document.getElementById('email-box').value, {
+    fetch(`${LOCALHOST_URL}/login/register/auth-code/`+document.getElementById('email-box').value, {
     method:"GET",
      })
     .then((res)=> res.json())
@@ -530,7 +530,7 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
   if(userId == "" || password == ""){
     alert('아이디 또는 비밀번호를 입력해주세요');
   } else {
-    fetch("http://localhost:8000/login",{
+    fetch(`${LOCALHOST_URL}/login`,{
         method: "POST",
         headers:{
             "Content-Type":"application/json",
@@ -588,15 +588,15 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
 });
 
 document.getElementById('googleBtn').addEventListener('click',function(){
-       location.href="http://localhost:8000/login/social/google";
+       location.href=`${LOCALHOST_URL}/login/social/google`;
    });
 
 document.getElementById('naverBtn').addEventListener('click',function(){
-  location.href="http://localhost:8000/login/social/naver";
+  location.href=`${LOCALHOST_URL}/login/social/naver`;
 });
 
 document.getElementById('kakaoBtn').addEventListener('click',function(){
-  location.href="http://localhost:8000/login/social/kakao";
+  location.href=`${LOCALHOST_URL}/login/social/kakao`;
 });
 
 

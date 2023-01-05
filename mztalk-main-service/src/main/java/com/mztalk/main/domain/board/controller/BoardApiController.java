@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 
 
 @RestController
@@ -48,6 +49,9 @@ public class BoardApiController {
         return boardService.findAllByBoardStory(own, page);
     }
 
-
+    @PatchMapping("/board/nickname")
+    public ResponseEntity<?> changeNickname(@RequestBody Map<String, String> body){
+        return new ResponseEntity<>(new CMRespDto<>(1,"이름변경성공", boardService.changeNickname(body)), HttpStatus.OK);
+    }
 
 }

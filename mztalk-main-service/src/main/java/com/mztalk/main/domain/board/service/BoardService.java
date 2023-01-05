@@ -6,6 +6,8 @@ import com.mztalk.main.common.Result;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Map;
+
 public interface BoardService {
 
     //객체 간의 결합도를 낮추기 위해 interface를 만듬
@@ -19,6 +21,8 @@ public interface BoardService {
     Long deleteBoard(Long id);
 
     Result findAllByBoardStory(Long own, int page);
+
+    int changeNickname(Map<String, String> body);
 
     //Long findByUserNo(String nickname);
 }

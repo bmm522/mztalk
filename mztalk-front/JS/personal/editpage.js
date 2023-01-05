@@ -92,37 +92,61 @@ function profileBox(){
     })
   }
 
-async function ch_nickName() {
-  const nickname = document.getElementById('nickname').value;
-  const userNo = localStorage.getItem('userNo');
-  if (!confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')) {
-    return;
-  }
-  try {
-    await fetch(`${LOCALHOST_URL}/login/user/nickname`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem('authorization'),
-        RefreshToken: localStorage.getItem('refreshToken'),
-      },
-      body: JSON.stringify({
-        nickname,
-        userNo,
-      }),
-    });
-    await fetch(`${LOCALHOST_URL}/story/nickname`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem('authorization'),
-        RefreshToken: localStorage.getItem('refreshToken'),
-      },
-      body: JSON.stringify({
-        nickname,
-        userNo,
-      }),
-    });
+// async function ch_nickName() {
+//   const nickname = document.getElementById('nickname').value;
+//   const userNo = localStorage.getItem('userNo');
+//   if (!confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')) {
+//     return;
+//   }
+//   try {
+//     await fetch(`${LOCALHOST_URL}/login/user/nickname`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: localStorage.getItem('authorization'),
+//         RefreshToken: localStorage.getItem('refreshToken'),
+//       },
+//       body: JSON.stringify({
+//         nickname,
+//         userNo,
+//       }),
+//     });
+//     await fetch(`${LOCALHOST_URL}/story/nickname`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: localStorage.getItem('authorization'),
+//         RefreshToken: localStorage.getItem('refreshToken'),
+//       },
+//       body: JSON.stringify({
+//         nickname,
+//         userNo,
+//       }),
+//     });  
+//     await fetch(`${LOCALHOST_URL}/story/board/nickname`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: localStorage.getItem('authorization'),
+//         RefreshToken: localStorage.getItem('refreshToken'),
+//       },
+//       body: JSON.stringify({
+//         nickname,
+//         userNo,
+//       }),
+//     });
+//     await fetch(`${LOCALHOST_URL}/mentee/{id} `, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: localStorage.getItem('authorization'),
+//         RefreshToken: localStorage.getItem('refreshToken'),
+//       },
+//       body: JSON.stringify({
+//         nickname,
+//         userNo,
+//       }),
+//     });
     // await fetch(`${LOCALHOST_URL}/auction/nickname`, {
     //   method: "PATCH",
     //   headers: {
@@ -148,16 +172,54 @@ async function ch_nickName() {
     //   }),
     // });
 
+//     alert('닉네임변경완료');
+//     localStorage.clear();
+//     deleteCookie('Authorization');
+//     deleteCookie('RefreshToken');
+
+//     location.href = "loginpage.html";
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
+async function ch_nickName() {
+  const nickname = document.getElementById('nickname').value;
+  const userNo = localStorage.getItem('userNo');
+  if (!confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')) {
+    return;
+  }
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: localStorage.getItem('authorization'),
+    RefreshToken: localStorage.getItem('refreshToken'),
+  };
+  const body = JSON.stringify({ nickname, userNo });
+
+  try {
+    const endpoints = [
+      `${LOCALHOST_URL}/login/user/nickname`,
+      `${LOCALHOST_URL}/story/nickname`,
+      `${LOCALHOST_URL}/story/board/nickname`,
+      `${LOCALHOST_URL}/mentee/{id}`,
+    ];
+    for (const endpoint of endpoints) {
+      await fetch(endpoint, { method: "PATCH", headers, body });
+    }
+
     alert('닉네임변경완료');
     localStorage.clear();
     deleteCookie('Authorization');
     deleteCookie('RefreshToken');
-
     location.href = "loginpage.html";
   } catch (error) {
     console.error(error);
+    alert('닉네임변경실패');
   }
 }
+
+
 
 
 //비밀번호변경

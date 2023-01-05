@@ -9,7 +9,7 @@ document.getElementById("priceSubmitBtn").addEventListener('click', function() {
 
 //댓글 작성
 document.getElementById('commInsertBtn').addEventListener('click', function() {
-    fetch("http://localhost:8000/auction/comment", {
+    fetch(`${LOCALHOST_URL}/auction/comment`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -47,7 +47,7 @@ function updateComment(cId) {
     document.getElementById('updateComplete').addEventListener('click', function() {
         console.log("댓글수정확인 눌렀을 시 value값: " + document.getElementById("commUpdateForm").value);
         if(document.getElementById("commUpdateForm").value != '') {
-            fetch("http://localhost:8000/auction/comment/" + cId, {
+            fetch(`${LOCALHOST_URL}/auction/comment/${cId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type":"application/json",
@@ -68,7 +68,7 @@ function updateComment(cId) {
     });
 
     document.getElementById('updateCancle').addEventListener('click', function() {
-        fetch("http://localhost:8000/auction/selectComment/" + cId, {
+        fetch(`${LOCALHOST_URL}/auction/selectComment/${cId}`, {
             method: "GET",
             headers: {
                 "Content-Type":"application/json",
@@ -89,7 +89,7 @@ function updateComment(cId) {
 function deleteComment(cId) {
     console.log("댓글삭제cId: " + cId);
     if(window.confirm("정말 삭제하시겠습니까?")) {
-        fetch("http://localhost:8000/auction/deleteComment/" + cId, {
+        fetch(`${LOCALHOST_URL}/auction/deleteComment/${cId}`, {
         method: "PATCH",
         headers: {
             "Content-Type":"application/json",
@@ -113,7 +113,7 @@ window.onload = () => {
     document.getElementById('hidden-bId').value = localStorage.getItem("bId");
     console.log("auctionDetail bId: " + document.getElementById('hidden-bId').value);
 
-    fetch('http://localhost:8000/auction/board/' + localStorage.getItem("bId") + "/" + localStorage.getItem("userNickname"), {
+    fetch(`${LOCALHOST_URL}/auction/board/` + localStorage.getItem("bId") + "/" + localStorage.getItem("userNickname"), {
         method: "GET",
         headers: {
             Authorization:localStorage.getItem('authorization'),
@@ -240,7 +240,7 @@ window.onload = () => {
         console.log("입찰버튼 눌렀을 시 buyer: " + localStorage.getItem("userNickname"));
         
         
-        fetch("http://localhost:8000/auction/board/price", {
+        fetch(`${LOCALHOST_URL}/auction/board/price`, {
             method: "PATCH",
             headers: {
                 "Content-Type":"application/json",
@@ -276,7 +276,7 @@ window.onload = () => {
     
 
     //댓글 뿌려주기
-    fetch('http://localhost:8000/auction/comment/' + document.getElementById('hidden-bId').value, {
+    fetch(`${LOCALHOST_URL}/auction/comment/` + document.getElementById('hidden-bId').value, {
         method: "GET",
         headers: {
             Authorization:localStorage.getItem('authorization'),
@@ -317,7 +317,7 @@ function deleteBoard() {
     console.log("게시글 삭제 bId" + localStorage.getItem("bId"));
     console.log("게시글 삭제 writer: " + localStorage.getItem("userNickname"));
     if(confirm("정말 삭제하시겠습니까?")) {
-        fetch("http://localhost:8000/auction/boardDelete/" + localStorage.getItem("bId") + "/" + localStorage.getItem("userNickname"), {
+        fetch(`${LOCALHOST_URL}/auction/boardDelete/` + localStorage.getItem("bId") + "/" + localStorage.getItem("userNickname"), {
         method: "PATCH",
         headers: {
             "Content-Type":"application/json",
@@ -336,7 +336,7 @@ function deleteBoard() {
 }
 
 const deleteFatch = () =>{
-    fetch('http://localhost:8000/resource/images?bNo='+document.getElementById("hidden-bId").value+'&serviceName=auction',{
+    fetch(`${LOCALHOST_URL}/resource/images?bNo=`+document.getElementById("hidden-bId").value+'&serviceName=auction',{
         method:"DELETE",
         headers:{
             "Content-Type" : "text/html"
@@ -359,7 +359,7 @@ const postReport=()=>{
       console.log('content : ' + document.getElementById('reportContent').value);
       console.log('bId : ' + bId);
       console.log('userNo : ' + localStorage.getItem('userNo'));
-      fetch("http://localhost:8000/login/report",{
+      fetch(`${LOCALHOST_URL}/login/report`,{
               method:"POST",
               headers:{
                   "Content-Type":"application/json",
@@ -381,7 +381,7 @@ const postReport=()=>{
 
 //입찰자 채팅
 function chatConnection() {
-    fetch('http://localhost:8000/auction/chat',  {
+    fetch(`${LOCALHOST_URL}/auction/chat`,  {
         method: "GET",
         headers: {
             "Content-Type":"application/json",
@@ -392,7 +392,7 @@ function chatConnection() {
     .then(res => {
         if(res.status == 200) {
             console.log("채팅 연결 성공");
-            window.open('http://localhost:3000/chat-auction?userId='+localStorage.getItem('userNo')+'&userNickname='+localStorage.getItem('userNickname'), '_blank');
+            window.open(`${CHAT_URL}/chat-auction?userId=`+localStorage.getItem('userNo')+'&userNickname='+localStorage.getItem('userNickname'), '_blank');
         }
     })
 }
