@@ -6,7 +6,7 @@ window.onload = function(){
 const getAccessToken = () =>{
     localStorage.removeItem('authorization');
     let refreshToken = localStorage.getItem('refreshToken');
-    fetch("http://localhost:8000/login/access-token?refreshToken="+refreshToken,{
+    fetch(`${LOCALHOST_URL}/login/access-token?refreshToken=${refreshToken}`,{
         method:"GET",            
     })
     .then((res)=>res.json())
@@ -19,7 +19,7 @@ const getAccessToken = () =>{
 
 const getMyReview = () =>{
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/score/mentor/"+userId,{
+    fetch(`${LOCALHOST_URL}/mentors/score/mentor/${userId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -76,7 +76,7 @@ const getMyReview = () =>{
 
 // 내가 작성한 리뷰 얻기
 const myReview = (scoreId) =>{
-    fetch("http://localhost:8000/mentors/score/"+scoreId,{
+    fetch(`${LOCALHOST_URL}/mentors/score/${scoreId}`,{
         method:"GET",
         headers:{
         "Content-Type":"application/json",
@@ -98,7 +98,7 @@ const myReview = (scoreId) =>{
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
 document.getElementById('myPage').addEventListener('click', function(){
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/member?userId="+userId,{
+    fetch(`${LOCALHOST_URL}/mentors/member?userId=${userId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",

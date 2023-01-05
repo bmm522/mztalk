@@ -4,7 +4,7 @@ window.onload = () =>{
 
 // 멘토 글 작성하기
 document.getElementById('mentor-write-btn').addEventListener('click',function(){
-    fetch("http://localhost:8000/mentors/board",{
+    fetch(`${LOCALHOST_URL}/mentors/board`,{
         method:"POST",
         headers:{
             "Content-Type":"application/json;",
@@ -51,7 +51,7 @@ function setMinValue() {
 // 글삭제 하기
 const deleteBoard = () =>{
     const mentorId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board/"+mentorId,{
+    fetch(`${LOCALHOST_URL}/mentors/board/${mentorId}`,{
         method:"DELETE",
         headers:{
             "Content-Type":"application/json",
@@ -75,7 +75,7 @@ const deleteBoard = () =>{
 // 멘토가 작성한 글에 대한 신청 현황
 const myMentees = () =>{
     const mentorId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/participant?mentorId="+mentorId,{
+    fetch(`${LOCALHOST_URL}/mentors/participant?mentorId=${mentorId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -104,7 +104,7 @@ const myMentees = () =>{
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
 document.getElementById('myPage').addEventListener('click', function(){
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/member?userId="+userId,{
+    fetch(`${LOCALHOST_URL}/mentors/member?userId=${userId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",

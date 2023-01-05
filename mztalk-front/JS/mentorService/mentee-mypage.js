@@ -33,7 +33,7 @@ const addFile = () =>{
 const getAccessToken = () =>{
     localStorage.removeItem('authorization');
     let refreshToken = localStorage.getItem('refreshToken');
-    fetch("http://localhost:8000/login/access-token?refreshToken="+refreshToken,{
+    fetch(`${LOCALHOST_URL}/login/access-token?refreshToken=${refreshToken}`,{
         method:"GET",            
     })
     .then((res)=>res.json())
@@ -49,7 +49,7 @@ let isAccount = false;
 document.getElementById('sendResume').addEventListener('click', function(){
     if(isAccount){
         const userId = localStorage.getItem('userNo');
-        fetch("http://localhost:8000/mentors/application?userId="+userId,{
+        fetch(`${LOCALHOST_URL}/mentors/application?userId=${userId}`,{
             method:"GET",
             headers:{
                 "Content-Type":"application/json;",
@@ -66,7 +66,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
             } else {
                 document.getElementById('id-hidden').value = userId;
                 document.getElementById('file-form').submit();
-                fetch("http://localhost:8000/mentors/application",{
+                fetch(`${LOCALHOST_URL}/mentors/application`,{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json;",
@@ -105,7 +105,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
 
 //토큰 + 계좌번호, 생년월일, 은행 토큰+정보로 보내기(실명인증)
 document.getElementById('accountButton').addEventListener('click', function(){
-    fetch("http://localhost:8000/mentors/openapi/realname",{
+    fetch(`${LOCALHOST_URL}/mentors/openapi/realname`,{
         method:"POST",
         headers:{
             "Content-Type":"application/json; charset=UTF-8",
@@ -147,7 +147,7 @@ document.getElementById('accountButton').addEventListener('click', function(){
 // 완료된 멘토링 목록 >> 리뷰 버튼 클릭시 리뷰 작성 페이지
 const endMentoring = ()=>{
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board?userId="+userId,{
+    fetch(`${LOCALHOST_URL}/mentors/board?userId=${userId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",
@@ -183,7 +183,7 @@ const showBoardId = (boardId)=>{
 const writeReview = () => {
     const userId = localStorage.getItem('userNo');
     const boardId = document.getElementById('boardId').value;
-    fetch("http://localhost:8000/mentors/score/mentee?userId=" + userId + "&boardId=" + boardId,{
+    fetch(`${LOCALHOST_URL}/mentors/score/mentee?userId=${userId}&boardId=${boardId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",
@@ -198,7 +198,7 @@ const writeReview = () => {
             location.href="mentee-myPage.html";
             return false;
         } else{
-            fetch("http://localhost:8000/mentors/score",{
+            fetch(`${LOCALHOST_URL}/mentors/score`,{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json;",
@@ -228,7 +228,7 @@ const writeReview = () => {
 
 // 메인페이지 글 뿌려주기
 const getBoardList = (page) =>{
-    fetch("http://localhost:8000/mentors/boards/"+ page,{
+    fetch(`${LOCALHOST_URL}/mentors/boards/${page}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -284,7 +284,7 @@ const getBoardList = (page) =>{
 // 글 신고하기
 const reportBoard = () =>{
     const id = document.getElementById('boardId-modal').value;
-    fetch("http://localhost:8000/mentors/board/"+id,{
+    fetch(`${LOCALHOST_URL}/mentors/board/${id}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -296,7 +296,7 @@ const reportBoard = () =>{
     .then(res =>{
         const userId = res.mentor.userId;
         const bId = res.id;
-        fetch("http://localhost:8000/login/report",{
+        fetch(`${LOCALHOST_URL}/login/report`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -325,7 +325,7 @@ const getBoardDetail = (bId) => {
       Authorization: localStorage.getItem('authorization'),
       RefreshToken: localStorage.getItem('refreshToken')
     };
-    fetch(`http://localhost:8000/mentors/board/${bId}`, {
+    fetch(`${LOCALHOST_URL}/mentors/board/${bId}`, {
       method: "GET",
       headers
     })
@@ -349,7 +349,7 @@ const getBoardDetail = (bId) => {
 
 // 멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
 const watchReview = (nickname) => {
-    fetch(`http://localhost:8000/mentors/score?nickname=${nickname}`, {
+    fetch(`${LOCALHOST_URL}/mentors/score?nickname=${nickname}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;",
@@ -383,7 +383,7 @@ const watchReview = (nickname) => {
 // 신청한 멘토링 목록
 const allMentoring =()=>{
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/board/mentee/"+userId,{
+    fetch(`${LOCALHOST_URL}/mentors/board/mentee/${userId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",
@@ -418,7 +418,7 @@ function cancelPay(paymentId,impUid,merchantUid,price,mentoringDate) {
         return false;
     } else{
         $.ajax({
-            url:"http://localhost:8000/mentors/api/import/cancel",
+            url:`${LOCALHOST_URL}/mentors/api/import/cancel`,
             headers: { 
                 "Content-Type": "application/json;",
                 Authorization:localStorage.getItem('authorization'),
@@ -435,7 +435,7 @@ function cancelPay(paymentId,impUid,merchantUid,price,mentoringDate) {
             console.log(result);
             if(result.code =="0"){
                 $.ajax({
-                    url: "http://localhost:8000/mentors/payment/cancel/"+paymentId,
+                    url: `${LOCALHOST_URL}/mentors/payment/cancel/${paymentId}`,
                     headers: { 
                         "Content-Type": "application/json;",
                         Authorization:localStorage.getItem('authorization'),
@@ -463,7 +463,7 @@ function cancelPay(paymentId,impUid,merchantUid,price,mentoringDate) {
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
 document.getElementById('myPage').addEventListener('click', function(){
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/member?userId="+userId,{
+    fetch(`${LOCALHOST_URL}/mentors/member?userId=${userId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",

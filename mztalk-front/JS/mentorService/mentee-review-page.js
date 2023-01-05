@@ -6,7 +6,7 @@ window.onload = function(){
 const getAccessToken = () =>{
     localStorage.removeItem('authorization');
     let refreshToken = localStorage.getItem('refreshToken');
-    fetch("http://localhost:8000/login/access-token?refreshToken="+refreshToken,{
+    fetch(`${LOCALHOST_URL}/login/access-token?refreshToken=${refreshToken}`,{
         method:"GET",            
     })
     .then((res)=>res.json())
@@ -20,7 +20,7 @@ const getAccessToken = () =>{
 // 내가 작성한 리뷰 얻기
 const getMyReview = () =>{
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/score/mentee/"+userId,{
+    fetch(`${LOCALHOST_URL}/mentors/score/mentee/${userId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -92,7 +92,7 @@ const getMyReview = () =>{
 // 리뷰 디테일
 const myReview = (scoreId) =>{
     document.getElementById('scoreModifyId').value = scoreId;
-    fetch("http://localhost:8000/mentors/score/"+scoreId,{
+    fetch(`${LOCALHOST_URL}/mentors/score/${scoreId}`,{
         method:"GET",
         headers:{
         "Content-Type":"application/json",
@@ -114,7 +114,7 @@ const myReview = (scoreId) =>{
 // 리뷰 수정하기
 const modifyReview = () => {
     const modifyId= document.getElementById('scoreModifyId').value;
-    fetch("http://localhost:8000/mentors/score/"+modifyId,{
+    fetch(`${LOCALHOST_URL}/mentors/score/${modifyId}`,{
          method:"PATCH",
          headers:{
             "Content-Type":"application/json;",
@@ -140,7 +140,7 @@ const modifyReview = () => {
 
 // 리뷰 삭제 메소드
 const deleteReview = (deleteId) => {
-    fetch("http://localhost:8000/mentors/score/"+deleteId,{
+    fetch(`${LOCALHOST_URL}/mentors/score/${deleteId}`,{
         method:"DELETE",
         headers:{
             "Content-Type":"application/json;",
@@ -168,7 +168,7 @@ const showBoardId = (boardId)=>{
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
 document.getElementById('myPage').addEventListener('click', function(){
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/member?userId="+userId,{
+    fetch(`${LOCALHOST_URL}/mentors/member?userId=${userId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",

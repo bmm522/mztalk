@@ -203,7 +203,7 @@
                         <button class="btn btn-outline-success" type="button" id="accountButton">실명인증하기</button>
                     </div>
                     <div class="mb-3" id = "fileArea">
-                        <form action="http://localhost:8000/resource/files" method="POST" enctype="multipart/form-data" id="file-form">
+                        <form action="${LOCALHOST_URL}/resource/files" method="POST" enctype="multipart/form-data" id="file-form">
                             <label for="file-box" class="form-label">인증서류</label>
                             <button type = "button" id = "addFile" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
                             class="btn btn-outline-success">+</button>
@@ -449,6 +449,7 @@
 
 <!-- 아임포트 결제 스크립트-->
 <script type="text/javascript">
+    const LOCALHOST_URL = "http://localhost:8000";
     const random = Math.ceil(Math.random()*100000000);
 
     const today = new Date();
@@ -456,7 +457,7 @@
     const month = today.getMonth()+1;
     const date = today.getDate();
 
-    const IMP = window.IMP; 
+    const IMP = window.IMP;
     IMP.init("imp43500426");
 
     //아임포트 결제
@@ -464,7 +465,7 @@
         const userId = localStorage.getItem('userNo');
         const boardId = document.getElementById('boardId-modal').value;
         $.ajax({
-            url: "http://localhost:8000/mentors/board/mentor?userId="+userId+"&boardId="+boardId,
+            url: `${LOCALHOST_URL}/mentors/board/mentor?userId=${userId}&boardId=${boardId}`,
             method: "GET",
             headers: { 
                 "Content-Type": "application/json;",
@@ -492,7 +493,7 @@
                 if (rsp.success) {
                     console.log(rsp);
                     $.ajax({
-                        url: "http://localhost:8000/mentors/participant",
+                        url: `${LOCALHOST_URL}/mentors/participant`,
                         method: "POST",
                         headers: { 
                             "Content-Type": "application/json;",
@@ -511,7 +512,7 @@
                     })
                     .done(function(data){
                         $.ajax({
-                            url: "http://localhost:8000/mentors/payment",
+                            url: `${LOCALHOST_URL}/mentors/payment`,
                             method: "POST",
                             headers: { 
                                 "Content-Type": "application/json;",

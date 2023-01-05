@@ -23,7 +23,7 @@ window.onscroll = () =>{
 const getAccessToken = () =>{
     localStorage.removeItem('authorization');
     let refreshToken = localStorage.getItem('refreshToken');
-    fetch("http://localhost:8000/login/access-token?refreshToken="+refreshToken,{
+    fetch(`${LOCALHOST_URL}/login/access-token?refreshToken=${refreshToken}`,{
         method:"GET",            
     })
     .then((res)=>res.json())
@@ -36,7 +36,7 @@ const getAccessToken = () =>{
 
 // 메인페이지 글 뿌려주기
 const getBoardList = (page) =>{
-    fetch("http://localhost:8000/mentors/boards/"+ page,{
+    fetch(`${LOCALHOST_URL}/mentors/boards/${page}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -101,7 +101,7 @@ document.getElementById('sendSearch').addEventListener('click', function(){
 // 글 신고하기
 const reportBoard = () =>{
     const id = document.getElementById('boardId-modal').value;
-    fetch("http://localhost:8000/mentors/board/"+id,{
+    fetch(`${LOCALHOST_URL}/mentors/board/${id}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -113,7 +113,7 @@ const reportBoard = () =>{
     .then(res =>{
         const userId = res.data.mentor.userId;
         const bId = res.data.id;
-        fetch("http://localhost:8000/login/report",{
+        fetch(`${LOCALHOST_URL}/login/report`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -142,7 +142,7 @@ const getBoardDetail = (bId) => {
       Authorization: localStorage.getItem('authorization'),
       RefreshToken: localStorage.getItem('refreshToken')
     };
-    fetch(`http://localhost:8000/mentors/board/${bId}`, {
+    fetch(`${LOCALHOST_URL}/mentors/board/${bId}`, {
       method: "GET",
       headers
     })
@@ -166,7 +166,7 @@ const getBoardDetail = (bId) => {
 
 // 멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
 const watchReview = (nickname) => {
-    fetch(`http://localhost:8000/mentors/score?nickname=${nickname}`, {
+    fetch(`${LOCALHOST_URL}/mentors/score?nickname=${nickname}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;",
@@ -205,7 +205,7 @@ const searchEvent = () =>{
     const selected = document.getElementById('type').value;
     const searchValue = document.getElementById('searchValue').value;
 
-    fetch("http://localhost:8000/mentors/board/search?category=" + categoryValue + "&salary=" + salaryValue + "&" + selected + "=" + searchValue,{
+    fetch(`${LOCALHOST_URL}/mentors/board/search?category=${categoryValue}&salary=${salaryValue}&${selected}=${searchValue}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json; charset=UTF-8",
@@ -261,7 +261,7 @@ const searchEvent = () =>{
 //마이 페이지 이동, 권한 확인 후 true면 멘토 > 멘토페이지 false면 멘티 > 멘티페이지
 document.getElementById('myPage').addEventListener('click', function(){
     const userId = localStorage.getItem('userNo');
-    fetch("http://localhost:8000/mentors/member?userId="+userId,{
+    fetch(`${LOCALHOST_URL}/mentors/member?userId=${userId}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json;",

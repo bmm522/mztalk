@@ -312,6 +312,7 @@
 
 <!-- 아임포트 결제 스크립트-->
 <script type="text/javascript">
+    const LOCALHOST_URL = "http://localhost:8000";
     const random = Math.ceil(Math.random()*100000000);
 
     const today = new Date();
@@ -327,7 +328,7 @@
         const userId = localStorage.getItem('userNo');
         const boardId = document.getElementById('boardId-modal').value;
         $.ajax({
-            url: "http://localhost:8000/mentors/board/mentor?userId="+userId+"&boardId="+boardId,
+            url: `${LOCALHOST_URL}/mentors/board/mentor?userId=${userId}&boardId=${boardId}`,
             method: "GET",
             headers: { 
                 "Content-Type": "application/json;",
@@ -355,7 +356,7 @@
                 if (rsp.success) {
                     console.log(rsp);
                     $.ajax({
-                        url: "http://localhost:8000/mentors/participant",
+                        url: `${LOCALHOST_URL}/mentors/participant`,
                         method: "POST",
                         headers: { 
                             "Content-Type": "application/json;",
@@ -374,7 +375,7 @@
                     })
                     .done(function(data){
                         $.ajax({
-                            url: "http://localhost:8000/mentors/payment",
+                            url: `${LOCALHOST_URL}/mentors/payment`,
                             method: "POST",
                             headers: { 
                                 "Content-Type": "application/json;",
