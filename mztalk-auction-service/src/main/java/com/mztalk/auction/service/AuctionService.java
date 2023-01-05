@@ -46,4 +46,6 @@ public interface AuctionService {
     void postChatRoom(BoardDto boardDto);
 
     Result<?> selectBoardListOfFront(int page) throws ParseException;
+
+    int changedNickname(ChangedNicknameDto changedNicknameDto);
 }

@@ -33,4 +33,6 @@ public interface CustomAuctionRepository {
     void updateIsClose(long boardId);
 
     int closeBoard(Long boardId);
+
+    int changedNickname(ChangedNicknameDto changedNicknameDto);
 }

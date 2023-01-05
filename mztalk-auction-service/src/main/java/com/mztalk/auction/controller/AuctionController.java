@@ -140,5 +140,11 @@ public class AuctionController {
         auctionService.postChatRoom(boardDto);
     }
 
+    //닉네임 변경했을 시
+    @PatchMapping("/nickname")
+    public int changedNickname(ChangedNicknameDto changedNicknameDto){
+        return auctionService.changedNickname(changedNicknameDto);
+    }
+
 
 }
