@@ -19,7 +19,6 @@ public class Application extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name ="application_id")
-    @ApiModelProperty(value="지원서 고유 번호", example = "1", required = false)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
