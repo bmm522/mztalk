@@ -85,15 +85,15 @@ function profileBox(){
 
       document.querySelector('.profile-img-wrap').innerHTML +=
       `
-      <img class="profile-image" src='${profileUrl}' onerror="this.src='duck.jpg'" id="userProfileImage">
+      <img class="profile-image" src='${profileUrl}' onerror="this.src='https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png'" id="userProfileImage">
       <input type="hidden" class="imageName" value="${profileName}"/>
       <input type="hidden" name="bNo" id="bNo" value="${own}"/>
       `
      }
-      })
-    }
+    })
+  }
   
-//팔로우 버튼테스트
+//팔로우 버튼
 function followButtonStatus(){
   let toUserId = localStorage.getItem("own");
   let fromUserId = localStorage.getItem('userNo');
@@ -108,7 +108,6 @@ function followButtonStatus(){
     .then((res)=>res.json())
     .then(res =>{
       let follow = res.data;
-
        if(follow>=1){  
         document.getElementById('followStatus').innerHTML ='';
         document.getElementById('followStatus').innerHTML ='<button class="profile_follow_btn" onclick="profilecFollow(this);" style="background-color: rgba(128, 128, 128, 0.973); color: rgb(255, 255, 255); border: 1px solid rgb(221, 221, 221);">팔로잉</button>';
@@ -508,7 +507,6 @@ const write_board = document.getElementById('write-board');
 const privacyBound = document.getElementById('privacyBound');
 
     if(privacy==='PUBLIC'){
-      
       document.querySelector('.modal-content').innerHTML +=
     `
     <div class="modal-header">
@@ -709,11 +707,9 @@ function addReply(boardId){
               </div>
             </div>`;
           })
-           location.href="individualpage.html";   
+          //  location.href="individualpage.html";   
         }   
     }
- 
-
     
 //댓글삭제    
 function deleteReply(Id){
@@ -738,60 +734,6 @@ function deleteReply(Id){
       location.href="individualpage.html";   
     })
 }
-
-//팔로워리스트
-// document.querySelector("#subscribeBtn1").onclick = (e) => {
-//   e.preventDefault();
-  
-//   let toUserId = localStorage.getItem("own");
- 
-//   fetch("http://localhost:8000/story/followList/"+toUserId,{
-//         method:"GET",
-//         headers:{
-//             "Content-Type":"application/json",
-//             Authorization:localStorage.getItem('authorization'),
-//             RefreshToken:localStorage.getItem('refreshToken'),
-//         },
-//       })
-//     .then((res)=>res.json())
-//     .then(res =>{
-
-//       let follower = res.data;
-//       document.querySelector(".modal-follow").style.display = "flex";
-//       document.querySelector(".follower-list").innerHTML  = '';
-//       console.log(follower);
-
-
-//       for(let i = 0; i < follower.length; i++){
-//         console.log("길이"+follower.length );
-//         // console.log("follower" + follower);
-//         //console.log("뜨니?"+ follower[0].followStatus);
-//         //console.log(document.querySelectorAll('.follower__btn'));
-
-//         let followbutton = document.querySelectorAll('.follower__btn');
-//         //console.log(follower[i].userNo);
-
-//       document.querySelector(".follower-list").innerHTML +=
-//       `
-//       <div class="follower__item">
-//           <div class="follower__img"><img class="profile-image" src='${follower[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"></div>
-//           <input type="hidden" class="imageName" value="${follower[i].imageName}"/>
-//           <input type="hidden" name="bNo" id="bNo" value="${follower[i].userNo}"/>
-//           <div class="follower__text">
-//               <h2>${follower[i].userNickname}</h2>
-//               <input type="hidden" name="userNo" value="${follower[i].userNo}"/>
-//           </div>
-//           <div class="follower__btn">
-//             <button onclick="movePage(${follower[i].userNo});">페이지이동</button>
-//           </div>
-//       </div> 
-//       `;
-      
-        
-//     } 
-//     })
-
-// };
 
 //팔로워리스트
 document.querySelector("#subscribeBtn1").addEventListener("click", (e) => {
@@ -860,17 +802,15 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       })
     .then((res)=>res.json())
     .then(res =>{
-      let following = res.data;
-      
+      let following = res.data;   
       document.querySelector(".modal-following").style.display = "flex";
-
       document.querySelector(".following-list").innerHTML  = '';
       for(let i = 0; i < following.length; i++){
 
       document.querySelector(".following-list").innerHTML +=
       `
       <div class="following__item">
-          <div class="following__img"><img class="profile-image" src='${following[i].imageUrl}' onerror="this.src='duck.jpg'" id="userProfileImage"></div>
+          <div class="following__img"><img class="profile-image" src='${following[i].imageUrl}' onerror="this.src='https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png'" id="userProfileImage"></div>
           <input type="hidden" class="imageName"  value="${following[i].imageName}"/>
           <input type="hidden" name="bNo" id="bNo" value="${following[i].userNo}"/>
           <div class="following__text">
@@ -952,6 +892,8 @@ document.querySelector(".modal-following").addEventListener("click", (e) => {
       _btn.style.border = "0";
     }
   }
+  
+
   
 //다른사람 피드 팔로우 기능구현
   function profilecFollow(e) {
