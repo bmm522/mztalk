@@ -1,9 +1,9 @@
-let page = 1;
-const LOCALHOST_URL = "http://localhost:8000";
-const AUCTION_URL = LOCALHOST_URL + "/auction/board-front/";
-const FOLLOW_URL = LOCALHOST_URL + "/story/main/";
-const BUNG_URL = LOCALHOST_URL + "/bung/mainBoards-main/";
-const MENTOR_URL = LOCALHOST_URL + "/mentors/board/latest/";
+// let page = 1;
+// const LOCALHOST_URL = "http://localhost:8000";
+// const AUCTION_URL = LOCALHOST_URL + "/auction/board-front/";
+// const FOLLOW_URL = LOCALHOST_URL + "/story/main/";
+// const BUNG_URL = LOCALHOST_URL + "/bung/mainBoards-main/";
+// const MENTOR_URL = LOCALHOST_URL + "/mentors/board/latest/";
 
 window.onload = ()=>{
     load(1);
@@ -22,7 +22,7 @@ window.onscroll = () => {
       load(page);
     }
   };
-  
+
 async function fetchData(endpoint) {
   const res = await fetch(endpoint, {
     method: "GET",
@@ -231,9 +231,7 @@ const moveMainToMentor = (bId)=>{
             }
         })
         document.getElementById('modal-body').innerHTML = '';
-
 }
-
 
 //사진 로테이션
 let slideIndex = 0;
@@ -251,15 +249,11 @@ function showSlides() {
     setTimeout(showSlides, 10000);
 } 
 
-
 // ROLE_VIP
 function ROLEVIP(){
-    
     console.log("main ??: " + localStorage.getItem('role'));
-    //console.log("v-pills-profile-tab");
     let ROLE_VIP = localStorage.getItem('role');
-    
-    //let buttonz = `<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false" >비밀번호 변경</button>`;
+
     if(ROLE_VIP.includes("ROLE_USER")){
         document.querySelector("#advertis");
     }
@@ -269,44 +263,82 @@ function ROLEVIP(){
   }
 
 
-const checkVip = () =>{
-    
-    let userNo = localStorage.getItem('userNo');
-
-    fetch("http://localhost:8000/story/checkVip/"+userNo,{
-          method:"PUT",
-          headers:{
-              "Content-Type":"application/json",
-              Authorization:localStorage.getItem('authorization'),
-              RefreshToken:localStorage.getItem('refreshToken'),
-          },
-          body:JSON.stringify({
-            userNo : localStorage.getItem('userNo'),
-        })
+const checkVip = () => {
+  const userNo = localStorage.getItem('userNo');
+  fetch(`${LOCALHOST_URL}/story/checkVip/${userNo}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem('authorization'),
+      RefreshToken: localStorage.getItem('refreshToken')
+    },
+    body: JSON.stringify({
+      userNo: localStorage.getItem('userNo')
     })
-    .then((res)=>res.json())
-    .then(res =>{
-        console.log(res.data,"?????????");
-        if(res.data==1){
-            fetch("http://localhost:8000/login/role/user/"+userNo,{
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json;",
-                    Authorization:localStorage.getItem('authorization'),
-                    RefreshToken:localStorage.getItem('refreshToken')
-                },
-                data: JSON.stringify({
-                    userNo : localStorage.getItem('userNo'),
-                })
-            })
+  })
+    .then(res => res.json())
+    .then(res => {
+      if (res.data === 1) {
+        fetch(`${LOCALHOST_URL}/login/role/user/${userNo}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json;",
+            Authorization: localStorage.getItem('authorization'),
+            RefreshToken: localStorage.getItem('refreshToken')
+          },
+          body: JSON.stringify({
+            userNo: localStorage.getItem('userNo')
+          })
+        });
+        alert('VIP이용이 종료되었습니다. 감사합니다');
+        localStorage.removeItem('role');
+        localStorage.setItem('role', 'ROLE_USER');
+
+        location.href = "main.html";
+      }
+    });
+};
+
+
+
+
+
+
+// const checkVip = () =>{
+//     let userNo = localStorage.getItem('userNo');
+//     fetch("http://localhost:8000/story/checkVip/"+userNo,{
+//           method:"PUT",
+//           headers:{
+//               "Content-Type":"application/json",
+//               Authorization:localStorage.getItem('authorization'),
+//               RefreshToken:localStorage.getItem('refreshToken'),
+//           },
+//           body:JSON.stringify({
+//             userNo : localStorage.getItem('userNo'),
+//         })
+//     })
+//     .then((res)=>res.json())
+//     .then(res =>{
+//         if(res.data==1){
+//             fetch("http://localhost:8000/login/role/user/"+userNo,{
+//                 method: "PATCH",
+//                 headers: {
+//                     "Content-Type": "application/json;",
+//                     Authorization:localStorage.getItem('authorization'),
+//                     RefreshToken:localStorage.getItem('refreshToken')
+//                 },
+//                 data: JSON.stringify({
+//                     userNo : localStorage.getItem('userNo'),
+//                 })
+//             })
             
-            alert('VIP이용이 종료되었습니다. 감사합니다');
+//             alert('VIP이용이 종료되었습니다. 감사합니다');
 
-            localStorage.removeItem('role')
-            localStorage.setItem('role', 'ROLE_USER');
+//             localStorage.removeItem('role')
+//             localStorage.setItem('role', 'ROLE_USER');
 
-            location.href="main.html";
-        }
+//             location.href="main.html";
+//         }
         
-      })
-}
+//       })
+// }

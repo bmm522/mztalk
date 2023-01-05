@@ -4,6 +4,7 @@ package com.mztalk.main.domain.reply.controller;
 import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.domain.reply.dto.ReplyResponseDto;
+import com.mztalk.main.domain.reply.repository.ReplyRepository;
 import com.mztalk.main.domain.reply.service.ReplyService;
 import com.mztalk.main.domain.reply.dto.ReplyRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/story")
 public class ReplyApiController {
 
     private final ReplyService replyService;
-
 
     //댓글쓰기
     @ResponseBody
@@ -34,6 +36,8 @@ public class ReplyApiController {
         return new ResponseEntity<>(new CMRespDto<>(1, "댓글삭제성공", null), HttpStatus.OK);
     }
 
-
-
-}
+    @PatchMapping("/nickname")
+    public ResponseEntity<?> changeNickname(@RequestBody Map<String, String> body){
+        return new ResponseEntity<>(new CMRespDto<>(1,"이름변경성공", replyService.changeNickname(body)), HttpStatus.OK);
+     }
+    }

@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -37,5 +39,12 @@ public class ReplyServiceImpl implements ReplyService {
         replyRepository.delete(reply);
 
         return reply.getId();
+    }
+
+    @Override
+    @Transactional
+    public int changeNickname(Map<String, String> body) {
+
+        return replyRepository.updateNickname(Long.parseLong(body.get("userNo")),body.get("nickname"));
     }
 }

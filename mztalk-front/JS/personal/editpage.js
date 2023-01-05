@@ -10,13 +10,11 @@ window.onload =() =>{
     console.log(role);
 }
 
-    
-
 const checkVipCheck = ()=>{
 
     let userNo = localStorage.getItem('userNo');
-
-    fetch("http://localhost:8000/story/vip/"+userNo,{
+    
+    fetch(`${LOCALHOST_URL}/story/vip/${userNo}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -60,12 +58,8 @@ function popup(image) {
 }
   //프로필 사진
 function profileBox(){
-
     let own = localStorage.getItem("own");
-
-    console.log("실행?");
-
-      fetch("http://localhost:8000/story/profile/"+own,{
+      fetch(`${LOCALHOST_URL}/story/profile/${own}`,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -75,9 +69,7 @@ function profileBox(){
       })
     .then((res)=>res.json())
     .then(res =>{
-
       let profileImage = res.data;
-
       if(!res.data){
         document.querySelector('.profile-img-wrap').innerHTML +=
         `
@@ -100,44 +92,73 @@ function profileBox(){
     })
   }
 
-
-//닉네임변경
-function ch_nickName(){
-  
-  let nickname = document.getElementById('nickname').value;
-
-  let userNo = localStorage.getItem('userNo');
-  
-  if(confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')){
-
-  fetch("http://localhost:8000/login/user/nickname",{
-        method:"PATCH",
-          headers:{
-              "Content-Type":"application/json",
-              Authorization:localStorage.getItem('authorization'),
-              RefreshToken:localStorage.getItem('refreshToken'),
-          },
-          body:JSON.stringify({
-            nickname: document.getElementById('nickname').value,
-            userNo: localStorage.getItem('userNo'),
-        })
-    })
-    .then((res)=>res.json())
-    .then(res =>{
-
-      alert('닉네임변경완료');
-
-      localStorage.clear();
-      
-      deleteCookie('Authorization');
-      
-      deleteCookie('RefreshToken');
-
-      location.href="loginpage.html";
-
-    })
+async function ch_nickName() {
+  const nickname = document.getElementById('nickname').value;
+  const userNo = localStorage.getItem('userNo');
+  if (!confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')) {
+    return;
   }
-};
+  try {
+    await fetch(`${LOCALHOST_URL}/login/user/nickname`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem('authorization'),
+        RefreshToken: localStorage.getItem('refreshToken'),
+      },
+      body: JSON.stringify({
+        nickname,
+        userNo,
+      }),
+    });
+    await fetch(`${LOCALHOST_URL}/story/nickname`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem('authorization'),
+        RefreshToken: localStorage.getItem('refreshToken'),
+      },
+      body: JSON.stringify({
+        nickname,
+        userNo,
+      }),
+    });
+    // await fetch(`${LOCALHOST_URL}/auction/nickname`, {
+    //   method: "PATCH",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: localStorage.getItem('authorization'),
+    //     RefreshToken: localStorage.getItem('refreshToken'),
+    //   },
+    //   body: JSON.stringify({
+    //     nickname,
+    //     userNo,
+    //   }),
+    // });
+    // await fetch(`${LOCALHOST_URL}/bung/nickname`, {
+    //   method: "PATCH",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: localStorage.getItem('authorization'),
+    //     RefreshToken: localStorage.getItem('refreshToken'),
+    //   },
+    //   body: JSON.stringify({
+    //     nickname,
+    //     userNo,
+    //   }),
+    // });
+
+    alert('닉네임변경완료');
+    localStorage.clear();
+    deleteCookie('Authorization');
+    deleteCookie('RefreshToken');
+
+    location.href = "loginpage.html";
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
 //비밀번호변경
 document.getElementById('password').addEventListener('keyup',function(){
@@ -231,8 +252,8 @@ function ch_Password(){
   let id = localStorage.getItem('userNo');
   
   if(confirm('비밀번호 변경시 로그아웃됩니다. 바꾸시겠습니까?')){
-
-  fetch("http://localhost:8000/login/new-password",{
+  
+  fetch(`${LOCALHOST_URL}/login/new-password`,{
         method:"PATCH",
           headers:{
               "Content-Type":"application/json",
@@ -290,15 +311,12 @@ const isVaildEmail =  () => {
   const exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
   let checkEmail = document.getElementById('checkEmail');
     
-  if(exptext.test(email)==false){
-      
+  if(exptext.test(email)==false){  
       checkEmail.innerHTML= '이메일 형식이 올바르지 않습니다.';
       checkEmail.style.color='red';
       document.getElementById('checkEmailResult').value = "fail";
-    
     } else{
-    
-      fetch('http://localhost:8000/login/register/email/'+email,{
+      fetch(`${LOCALHOST_URL}/login/register/email/${email}`,{
         method:"GET"
       })
       .then((res)=>res.json())
@@ -331,7 +349,7 @@ document.getElementById('email_check').addEventListener('click', function(){
     document.getElementById('email-box').focus();
   
   } else{
-    fetch("http://localhost:8000/login/register/auth-code/"+document.getElementById('email-box').value, {
+    fetch(`${LOCALHOST_URL}/login/register/auth-code/`+document.getElementById('email-box').value, {
     method:"GET",
      })
     .then((res)=> res.json())
@@ -383,7 +401,7 @@ const authBlurText = () =>{
 //이메일 변경
 function ch_email(){ 
 
-    fetch("http://localhost:8000/login/user/email",{
+    fetch(`${LOCALHOST_URL}/login/user/email`,{
           method:"PATCH",
             headers:{
                 "Content-Type":"application/json",
@@ -421,7 +439,7 @@ document.getElementById('nickname').value = localStorage.getItem('userNickname')
 document.getElementById('nickname').addEventListener('keyup',function(){
     let nickname = document.getElementById('nickname').value;
   
-    fetch("http://localhost:8000/login/register/nickname/"+nickname, {
+    fetch(`${LOCALHOST_URL}/login/register/nickname/${nickname}`, {
       method:"GET",
     })
     .then((res)=> res.json())
@@ -496,9 +514,7 @@ function noSocial(){
 function myReport(){
   let userNo = localStorage.getItem('userNo')
 
-  //console.log("여기 찍히니???");
-  
-  fetch("http://localhost:8000/login/report/"+userNo,{
+  fetch(`${LOCALHOST_URL}/login/report/${userNo}`,{
     method:"GET",
     headers:{
       "Content-Type":"application/json",
