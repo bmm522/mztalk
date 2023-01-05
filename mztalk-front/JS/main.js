@@ -1,7 +1,7 @@
 let page = 1;
 //로그인js도 LOCALHOST_URL 바꿔주기
-const LOCALHOST_URL = "http://43.200.113.144:8000";
-const CHAT_URL = "http://52.197.180.192:3000";
+const LOCALHOST_URL = "http://localhost:8000";
+const CHAT_URL = "http://localhost:3000";
 
 
 const AUCTION_URL = `${LOCALHOST_URL}/auction/board-front/`;
@@ -169,41 +169,3 @@ function showSlides() {
     slides[slideIndex - 1].style.display = "block";
     setTimeout(showSlides, 10000);
 } 
-
-
-
-//프로필 사진
-// function profileBoxs(){
-//   let own = localStorage.getItem("own");
-//     fetch(`${LOCALHOST_URL}/story/profile/${own}`,{
-//       method:"GET",
-//       headers:{
-//           "Content-Type":"application/json",
-//           Authorization:localStorage.getItem('authorization'),
-//           RefreshToken:localStorage.getItem('refreshToken'),
-//       },
-//     })
-//   .then((res)=>res.json())
-//   .then(res =>{
-//     let profileImage = res.data;
-//     if(!res.data){
-//       document.querySelector('#profile-own').innerHTML +=
-//       `
-//       <img class="profile-image" onclick="moveStory_Service();" src='https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png' onerror="this.src='duck.jpg'" id="userProfileImage">
-//       <input type="hidden" class="imageName" value="profileName"/>
-//       <input type="hidden" name="bNo" id="bNo" value="own"/>
-//       `  
-//    }else{
-//     let profileUrl = profileImage.postImageUrl;
-//     let profileName = profileImage.profileImageName;
-//     let own = profileImage.own
-    
-//     document.querySelector('#profile-own').innerHTML +=
-//     `
-//     <img class="profile-image" onclick="moveStory_Service();" src='${profileUrl}' onerror="this.src='duck.jpg'" id="userProfileImage">
-//     <input type="hidden" class="imageName" value="${profileName}"/>
-//     <input type="hidden" name="bNo" id="bNo" value="${own}"/>
-//     `
-//     }
-//   })
-// }

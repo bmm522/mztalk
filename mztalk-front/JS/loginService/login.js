@@ -201,13 +201,15 @@ document.getElementById('sign-up-btn').addEventListener('click',function(e){
     document.getElementById('re_password').focus();
    
 	
-  } else if(document.getElementById('checkNicknameResult').value=="fail"){
+  } 
+  // else if(document.getElementById('checkNicknameResult').value=="fail"){
 		
-    alert("닉네임 확인 바랍니다.");
-    showSign(e, 'signup');
-    document.getElementById('nickname').focus();
+  //   alert("닉네임 확인 바랍니다.");
+  //   showSign(e, 'signup');
+  //   document.getElementById('nickname').focus();
 	
-  } else if(document.getElementById('checkEmailResult').value=="fail"){
+  // }
+   else if(document.getElementById('checkEmailResult').value=="fail"){
 		
     alert("이메일 확인 바랍니다.");
     showSign(e, 'signup');
@@ -362,7 +364,7 @@ const rePasswordBlurText = () => {
 
 document.getElementById('nickname').addEventListener('keyup',function(){
   let nickname = document.getElementById('nickname').value;
-
+  console.log("닉네임왜 없어?"+nickname);
   fetch(`${LOCALHOST_URL}/login/register/nickname/${nickname}`, {
     method:"GET",
   })
