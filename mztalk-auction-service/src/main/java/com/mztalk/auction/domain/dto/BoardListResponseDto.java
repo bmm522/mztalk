@@ -53,16 +53,6 @@ public class BoardListResponseDto {
         this.content = board.getContent();
         this.userNo = board.getUserNo();
         this.isbn = board.getIsbn();
-//        this.sortDate = board.getCurrentTime();
-
-//        if(Long.parseLong(board.getTimeLimit()) < 24){
-//            currentTime = 24;
-//        } else if(Long.parseLong(board.getTimeLimit()) < 48){
-//            currentTime = 48;
-//        } else if(Long.parseLong(board.getTimeLimit()) < 72){
-//            currentTime = 72;
-//        }
-        //this.timeLimit = String.valueOf(Long.parseLong((new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(board.getTimeLimit())))-Long.parseLong(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime())));
     }
 
     public BoardListResponseDto(Board board) {
