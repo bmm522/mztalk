@@ -1,27 +1,6 @@
 
 //디테일값 그대로 받아오기
-window.onload = () => {
-    // fetch("http://localhost:8000/auction/board/" + localStorage.getItem("bId"), {
-    //     method: "GET",
-    //     headers: {
-    //         "Content-Type":"application/json",
-    //         Authorization:localStorage.getItem('authorization'),
-    //         RefreshToken:localStorage.getItem('refreshToken'),
-    //     }
-    // })
-    // .then((res)=>res.json())
-    // .then(res=>{
-    //     console.log("detail 받아온 res JSON: " + JSON.stringify(res));
-        
-    //         console.log("deatil 받아온 값: " + res.boardId);
-    //         document.getElementById('title').value = res.title;
-    //         document.getElementById('searchBook').value = res.bookTitle;
-    //         document.getElementById('content').value = res.content;
-
-
-        
-
-    // })
+window.onload = () => {  
     const imageInfo = JSON.parse(localStorage.getItem("imageInfo"));
     console.log("update imageInfo: " + imageInfo);
     document.getElementById("title").innerHTML = localStorage.getItem("title");
@@ -32,7 +11,7 @@ window.onload = () => {
         let objectKey = imageInfo[i].objectKey;
         let imageName = imageInfo[i].imageName;
         console.log("찍히니 ? : " + objectKey);
-        document.getElementById("fileList").innerHTML += `<div id="${objectKey}"><span class = "imageName">${imageInfo[i].imageName}</span><span id = "fileDelete" style="color: gray;margin-left: 5px; cursor: pointer;" onclick="deleteFile('${objectKey}');">X<br></span></div>`;
+        document.getElementById("fileList").innerHTML += `<div id="${objectKey}"><span class = "imageName">${imageInfo[i].imageName}</span><span class = "fileDelete" style="color: gray;margin-left: 5px; cursor: pointer;" onclick="deleteFile('${objectKey}');">X<br></span></div>`;
 
     }
     // console.log(document.getElementsByClassName('imageName')[0].innerHTML);
@@ -41,8 +20,7 @@ window.onload = () => {
     document.getElementById("searchBook").value = localStorage.getItem("bookTitle");
     document.getElementById("content").value = localStorage.getItem("content");
     document.getElementById("hidden-bId").value = localStorage.getItem("bId");
-
-
+    document.getElementById("hidden-isbn").value = localStorage.getItem("isbn");
 
     document.getElementById("currentPrice").addEventListener('click', function() {
         alert("시작가는 변경할 수 없습니다.");
@@ -50,16 +28,19 @@ window.onload = () => {
     document.getElementById("timeLimit").addEventListener('click', function() {
         alert("남은 시간은 변경할 수 없습니다.");
     });
-
-
+    
     //첨부 파일 개수 체크
     checkFile();
 }
 
 function checkFile() {
+    console.log("checkFile 들어옴");
     if(Number(document.getElementsByClassName('imageName').length) == 3) {
-        document.getElementById('count').innerHTML = '<span style="color:gray;">사진은 최대 3장까지 첨부 가능합니다.</span>';
+        document.getElementById('count').innerHTML = '<input type="hidden" id = "inputFiles"/><span style="color:gray; size:smaller; margin-top: 500px;">사진은 3장까지 첨부 가능합니다.</span>';
+        document.getElementById('addFileArea').innerHTML = '';
     } else {
+        document.getElementById('count').innerHTML = '<input type="file" class="form-control" id="inputFiles" name = "image" accept="image/*">';
+        document.getElementById('addFileArea').innerHTML = '<button type = "button" id = "addFile" style = "margin-top: 20px;margin-left: 10px;">+</button>';
         //파일 추가 버튼
         document.getElementById("addFile").addEventListener('click', function () {
             const fileArea = document.getElementById("fileArea");
@@ -84,8 +65,6 @@ function checkFile() {
 //파일 삭제
 function deleteFile(objectKey) {
     document.getElementById(objectKey).remove();
-    console.log(objectKey);
-   // console.log("파일삭제 시 hidden-objectKey: " + document.getElementById("hidden-objectKey").value);
     if(confirm('정말 삭제하시겠습니까?')) {
         console.log("삭제시objectKey: " + objectKey);
         fetch('http://localhost:8000/resource/image-detail?imageName=' + objectKey, {
@@ -109,7 +88,6 @@ function deleteFile(objectKey) {
 
 //*******수정하기
 function updateBoard() {
-
     if(document.getElementById('inputFiles').value){
         const form = document.getElementById('update-form');
         const payload = new FormData(form);
@@ -145,7 +123,6 @@ const updateData = () =>{
     .then(res => {
         if(res.status = 200) {
             console.log("수정 완료");
-    
         }
         location.href="auctionDetail.html";
     });

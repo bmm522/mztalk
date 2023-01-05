@@ -48,7 +48,7 @@ document.getElementById("searchBtn").addEventListener('click', function() {
 // 메인 리스트 뽑아오기
 const mainLoad = (page) =>{
 
-    fetch('http://localhost:8000/auction/board/'+ page, {
+    fetch('http://localhost:8000/auction/board/page/'+ page, {
         method:"GET",
         headers:{
             // "Content-Type":"application/json",
@@ -144,7 +144,6 @@ const mainLoad = (page) =>{
             let timeLimitAlert = document.getElementsByClassName("timeLimitAlert");
             for(let i = 0; i < timeLimitAlert.length; i++) {
                 if(document.getElementsByClassName('timeLimitHour')[i].value == 0 && document.getElementsByClassName('timeLimitMinute')[i].value == 0) {
-                    console.log('클래스 : ' + timeLimitAlert[i]);
                     timeLimitAlert[i].innerHTML = '입찰마감';
                 }
             }
@@ -197,13 +196,7 @@ const searchLoad = (searchPage) =>{
                 let boardId = board.boardId;
                 let timeLimitHour = -board.timeLimit.hour;
                 let timeLimitMinute = -board.timeLimit.minute;
-                let createDate = board.createDate;
-
-                console.log("없어?: " + timeLimitHour);
-                console.log("없어?: " + timeLimitMinute);
-                
-                
-                
+                let createdDate = board.createdDate.substr(0, 10);
                 
                 if(i%2 !== 0){
                 document.getElementById('auctionCard3').innerHTML += `
@@ -226,7 +219,7 @@ const searchLoad = (searchPage) =>{
                             <svg class="bi me-2" width="1em" height="1em">
                             <use xlink:href="#calendar3" />
                             </svg>
-                            <small>${createDate}</samll>
+                            <small>${createdDate}</samll>
                             <span style="font-weight: bold;">${currentPrice}원</span>
                         </li>
                         </ul>
@@ -254,7 +247,7 @@ const searchLoad = (searchPage) =>{
                             <svg class="bi me-2" width="1em" height="1em">
                             <use xlink:href="#calendar3" />
                             </svg>
-                            <small>${createDate}</samll>
+                            <small>${createdDate}</samll>
                             <span style="font-weight: bold;">${currentPrice}원</span>
                         </li>
                         </ul>

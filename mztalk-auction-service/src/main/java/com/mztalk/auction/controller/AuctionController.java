@@ -46,7 +46,7 @@ public class AuctionController {
     }
 
     //전체 게시글 목록
-    @GetMapping("/board/{page}")
+    @GetMapping("/board/page/{page}")
     public Result<?> selectBoardList(@PathVariable("page") int page) throws ParseException {
         return auctionService.selectBoardList(page);
     }
@@ -130,6 +130,7 @@ public class AuctionController {
     //지금 마감시키기
     @PatchMapping("/board/close")
     public int closeBoard(@RequestBody BoardCloseDto boardCloseDto) {
+        System.out.println("close요청들어옴");
         return auctionService.closeBoard(boardCloseDto);
     }
 

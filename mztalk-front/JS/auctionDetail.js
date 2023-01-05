@@ -135,6 +135,7 @@ window.onload = () => {
         let buyer = res.buyer;
         let isClose = res.isClose;
         let isbn = res.isbn;
+        writerId = res.userNo;
 
         //책 정보
         bookInform(isbn);
@@ -142,7 +143,7 @@ window.onload = () => {
         //update처리 위한 localStorage 저장
         localStorage.setItem("title", title);
         localStorage.setItem("content", content);
-
+        localStorage.setItem("isbn", isbn);
         localStorage.setItem("currentPrice", currentPrice);
         localStorage.setItem("bookTitle", bookTitle);
         // localStroage.setItem("createDate", createDate);
@@ -161,7 +162,8 @@ window.onload = () => {
         }
         document.getElementById('homeArea').innerHTML = `<span style="margin-left:20px;"s><a style="font-weight: bold; text-decoration: none; color: burlywood;" href = "auction.html">HOME</a></span><input type = "hidden" id = "hidden-writer" value = ${writer}/>`
         document.getElementById('title').innerHTML = title;
-        document.getElementById('date').innerHTML = createDate;
+        document.getElementById('writer').innerHTML = writer;
+        document.getElementById('date').innerHTML = "&nbsp&nbsp•&nbsp&nbsp" + createDate;
         document.getElementById('textContent').innerHTML = content;
         document.getElementById('startPrice').innerHTML = currentPrice;
         let currentPriceForm = currentPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
@@ -172,7 +174,7 @@ window.onload = () => {
         }
 
         //alert
-        console.log("alert 조건 확인: " + buyer + ", " + writer + ", " + isClose);
+        console.log("alert 조건 확인 buyer: " + buyer + ", writer: " + writer + ", isClose: " + isClose);
         if(buyer == null && writer != localStorage.getItem("userNickname")) {
             document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">입찰에 참여해 보세요.</span>';
         } else if(buyer == null && writer == localStorage.getItem('userNickname') && isClose == 'N') {
@@ -218,16 +220,15 @@ window.onload = () => {
                 }
             });
         }
-        console.log("입찰버튼 buyer조건확인: " + buyer);
         //입찰 버튼
         if(localStorage.getItem("userNickname") != writer && isClose == 'N') {
             document.getElementById('modalBtn').innerHTML = '<button type="button" data-bs-toggle="modal" data-bs-target="#priceModal" id="priceBtn" style="margin-left: 100px;">입찰</button>'
         } else if(localStorage.getItem("userNickname") != writer && isClose == 'Y') {
-            document.getElementById('modalBtn').innerHTML = '<button type="button" id = "priceBtnDisabled" disabled>거래완료</button>';
+            document.getElementById('modalBtn').innerHTML = '<button type="button" id = "priceBtnDisabled" style="margin-left: 65px;"disabled>거래완료</button>';
         } else if(localStorage.getItem('userNickname') == writer && isClose == 'Y' && buyer == null) {
             document.getElementById('modalBtn').innerHTML = '';
         } else if(localStorage.getItem('userNickname') == writer && isClose == 'Y' && buyer != null) {
-            document.getElementById('modalBtn').innerHTML = '<button type = "button" id = "chatBtn" onclick="chatConnection();">입찰자와 채팅</button>';
+            document.getElementById('modalBtn').innerHTML = '<button type = "button" id = "chatBtn" onclick="chatConnection();" style="margin-left: 60px;">입찰자와 채팅</button>';
         }
         
     })
@@ -289,7 +290,6 @@ window.onload = () => {
     }); 
 }
 function showCommentList(res) {
-    console.log("showCommentList실행됨");
     for(let comment of res.data) {
         console.log("onload cid: " + comment.cid); 
         let cId = comment.cid;
@@ -424,3 +424,7 @@ function bookInform(isbn) {
         
     })
 }
+
+document.getElementById('writer').addEventListener('click', function() {
+    moveBungToStory(writerId);
+});

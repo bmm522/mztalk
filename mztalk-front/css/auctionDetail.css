@@ -187,3 +187,11 @@ input {
 [id*="Start"]:hover {
     background-color: #EFE5BB;
 }
+
+#writer {
+    cursor: pointer;
+}
+
+#writer:hover {
+    text-decoration: underline;
+}
