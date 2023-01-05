@@ -18,11 +18,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
+
     @Autowired
     private EntityManager entityManager;
-
     private final JPAQueryFactory queryFactory;
-
     public BoardRepositoryCustomImpl(EntityManager entityManager){
         this.queryFactory = new JPAQueryFactory(entityManager);
     }

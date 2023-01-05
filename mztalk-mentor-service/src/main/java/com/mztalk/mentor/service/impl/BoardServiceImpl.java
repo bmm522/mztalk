@@ -106,7 +106,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    @Transactional //상태만 수정한다. // 수정 후 Status = No여서보이면 안된다.
+    @Transactional
     public Long delete(Long id) {
         Board findBoard = boardRepository.findBoardByBoardId(id);
         boardRepository.delete(findBoard);
