@@ -27,8 +27,8 @@ window.onload= function(){
 
 
         document.getElementById('bungTitle').value = title;
-        document.getElementById('writer').innerHTML = writer;
-        document.getElementById('date').innerHTML=createDate;
+        document.getElementById('nameDiv').value = writer;
+        document.getElementById('dateDiv').value= createDate;
         document.getElementById('bungContent').placeholder = content;
         document.getElementById('categoryInput').value = "카테고리 : " + category;
         document.getElementById('closeReadInput').value = "마감 날짜 : " + deadlineDate;
@@ -47,9 +47,9 @@ window.onload= function(){
         for(let i = 0 ; i < imageInfo.length ;  i++){
             console.log(imageInfo[i]);
             if(i == 0){
-                document.getElementById('image-div-div').innerHTML +=  ' <div class="carousel-item active"><img class="d-block w-100" src="'+imageInfo[i].imageUrl+'" alt="사진이 없습니다" /></div>';
+                document.getElementById('image-div-div').innerHTML +=  ' <div class="carousel-item active"><img class="d-block" style="width: 654.5px; height: 400px; object-fit: cover;" src="'+imageInfo[i].imageUrl+'" alt="사진이 없습니다" /></div>';
             } else {
-                document.getElementById('image-div-div').innerHTML +=  ' <div class="carousel-item"><img class="d-block w-100" src="'+imageInfo[i].imageUrl+'" alt="사진이 없습니다" /></div>';
+                document.getElementById('image-div-div').innerHTML +=  ' <div class="carousel-item"><img class="d-block" style="width: 654.5px; height: 400px; object-fit: cover;" src="'+imageInfo[i].imageUrl+'" alt="사진이 없습니다" /></div>';
             }
            
            

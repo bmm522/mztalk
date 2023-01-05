@@ -257,7 +257,6 @@ hr {
   height: 110px;
   width: 750px;
   margin: 0 auto;
-  background-color: #c09a70;
 }
 
 .requestUserBtn {
@@ -273,8 +272,6 @@ hr {
   bottom: 40px;
   height: 38px;
   width: 200px;
-  background-color: rgb(255, 193, 7);
-  border-radius: 50%;
   text-align: center;
   line-height:38px;
 }
