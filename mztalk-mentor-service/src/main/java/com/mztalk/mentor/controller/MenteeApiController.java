@@ -2,6 +2,7 @@ package com.mztalk.mentor.controller;
 
 import com.mztalk.mentor.domain.dto.MenteeReqDto;
 import com.mztalk.mentor.domain.dto.MenteeResDto;
+import com.mztalk.mentor.domain.dto.NicknameModifyDto;
 import com.mztalk.mentor.domain.entity.Result;
 import com.mztalk.mentor.service.MenteeService;
 import io.swagger.annotations.*;
@@ -38,6 +39,14 @@ public class MenteeApiController {
     public ResponseEntity<?> findClient(@PathVariable("id") Long id){
         MenteeResDto mentee = menteeService.findClient(id);
         return new ResponseEntity<>(new Result<>("멘티에 관한 정보",mentee),HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "사용자 닉네임 변경", notes = "해당번호의 사용자의 닉네임을 변경하는 메소드입니다.", response = Result.class)
+    @ApiImplicitParam(name = "id", value = "사용자 식별자", required = true, dataType = "int", paramType = "path")
+    @PatchMapping("/mentee/{id}")
+    public ResponseEntity<?> modifyNickname(@PathVariable("id") Long id, @RequestBody NicknameModifyDto nicknameModifyDto){
+        Long userId = menteeService.modifyNickname(nicknameModifyDto);
+        return new ResponseEntity<>(new Result<>("멘티에 관한 정보",userId),HttpStatus.OK);
     }
 
     @ApiOperation(value = "모든 사용자 정보 리턴", notes = "모든 서비스 사용자 정보를 리턴하는 메소드입니다.", response = Result.class)

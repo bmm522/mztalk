@@ -90,6 +90,10 @@ public class Board extends BaseTimeEntity{
         this.status = Status.NO;
     }
 
+    public void modifyNickname(String nickname){
+        this.nickname = nickname;
+    }
+
     public void updateBoard(BoardResDto boardResDto){
         this.title = boardResDto.getTitle();
         this.introduction = boardResDto.getIntroduction();

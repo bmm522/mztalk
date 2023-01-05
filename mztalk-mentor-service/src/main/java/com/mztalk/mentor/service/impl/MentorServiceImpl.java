@@ -1,6 +1,5 @@
 package com.mztalk.mentor.service.impl;
 
-import com.mztalk.mentor.domain.Status;
 import com.mztalk.mentor.domain.dto.MentorResDto;
 import com.mztalk.mentor.domain.dto.MentorReqDto;
 import com.mztalk.mentor.domain.entity.Application;

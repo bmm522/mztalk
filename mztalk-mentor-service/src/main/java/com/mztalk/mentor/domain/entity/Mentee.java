@@ -46,6 +46,10 @@ public class Mentee extends BaseTimeEntity{
         this.mentors = mentors;
     }
 
+    public void modifyNickname(String nickname){
+        this.nickname = nickname;
+    }
+
     //==연관관계 편의 메소드==//
     public void addApplication(Application application){
         this.application = application;
