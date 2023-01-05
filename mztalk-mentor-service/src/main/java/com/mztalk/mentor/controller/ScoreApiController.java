@@ -42,15 +42,6 @@ public class ScoreApiController {
         return new ResponseEntity<>(new Result<>("해당 번호에 대한 리뷰 정보 입니다.", score), HttpStatus.OK);
     }
 
-    //nickname으로 모든 리뷰 가져오기
-    @ApiOperation(value = "멘토의 모든 리뷰 리턴", notes = "해당 닉네임에 해당하는 모든 리뷰 정보를 리턴하는 메소드입니다.", response = Result.class)
-    @ApiImplicitParam(name = "nickname", value = "멘토 닉네임", required = true, dataType = "string", paramType = "query")
-    @GetMapping("/score")
-    public ResponseEntity<?> findByNickname(@RequestParam("nickname")String nickname){
-        List<ScoreResDto> scores = scoreService.findScoresByNickname(nickname);
-        return new ResponseEntity<>(new Result<>("멘토의 닉네임으로 검색한 리뷰 목록입니다.", scores), HttpStatus.OK);
-    }
-
     //mentee의 userId로 작성한 리뷰 가져오기
     @ApiOperation(value = "사용자가 작성한 리뷰 리턴", notes = "해당 번호에 해당하는 참가자가 작성한 모든 리뷰를 리턴하는 메소드입니다.", response = Result.class)
     @ApiImplicitParam(name = "userId", value = "사용자 식별자", required = true, dataType = "int", paramType = "path")
@@ -60,7 +51,7 @@ public class ScoreApiController {
         return new ResponseEntity<>(new Result<>("해당 멘티가 작성한 모든 리뷰 목록 입니다.", scores), HttpStatus.OK);
     }
 
-    //mentor의 userId로 작성된 리뷰 가져오기
+    //멘토의 식별자로 리뷰 가져오기
     @ApiOperation(value = "멘토의 모든 리뷰 리턴", notes = "해당 번호에 해당하는 멘토의 모든리뷰를 리턴하는 메소드입니다.", response = Result.class)
     @ApiImplicitParam(name = "mentorId", value = "멘토 식별자", required = true, dataType = "int", paramType = "path")
     @GetMapping("/score/mentor/{mentorId}")

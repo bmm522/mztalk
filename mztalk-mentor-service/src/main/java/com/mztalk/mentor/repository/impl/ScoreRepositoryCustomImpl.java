@@ -20,14 +20,6 @@ public class ScoreRepositoryCustomImpl implements ScoreRepositoryCustom {
     }
 
     @Override
-    public List<Score> findByNickname(String nickname) {
-        List<Score> scores = entityManager.createQuery("select s from Score s join fetch s.mentor m join fetch s.board b where b.nickname =:nickname", Score.class)
-                .setParameter("nickname", nickname)
-                .getResultList();
-        return scores;
-    }
-
-    @Override
     public List<Score> findByUserId(Long userId) {
         List<Score> scores = entityManager.createQuery("select s from Score s join fetch s.mentee mentee join fetch s.mentor mentor where mentee.id =: userId", Score.class)
                 .setParameter("userId", userId)

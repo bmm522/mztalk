@@ -50,14 +50,6 @@ public class ScoreServiceImpl implements ScoreService {
         return scoreResDto;
     }
 
-    @Override
-    public List<ScoreResDto> findScoresByNickname(String nickname) {
-        List<Score> scores = scoreRepository.findByNickname(nickname);
-        List<ScoreResDto> collect = scores.stream()
-                .map(s->new ScoreResDto(s,new MenteeTransferDto(s.getMentee()),new MentorTransferDto(s.getMentor()))).collect(Collectors.toList());
-        return collect;
-    }
-
     // 멘티가 해당 글에 대해 리뷰를 작성했는지 확인한다.
     @Override
     public boolean isExist(Long userId, Long boardId) {

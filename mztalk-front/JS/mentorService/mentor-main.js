@@ -50,8 +50,9 @@ const getBoardList = (page) =>{
             location.href = "mentor-main.html";
         } else {
             let cnt = 1;
-            for(let i = 0 ; i <res.data.length ; i++){
+            for(let i = 0 ; i <res.data.length ; i++){    
             let board = res.data[i];
+            let mentorId = board.mentor.userId;
             let boardId = board.id;
             let category = board.category;
             let nickname = board.nickname;
@@ -65,7 +66,7 @@ const getBoardList = (page) =>{
                     <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
                     ${career}</h6><p class="card-text">제목:${title}</p>
-                    </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview('${nickname}');" 
+                    </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview(${mentorId});" 
                     type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
                     cnt += 1;
                 } else {
@@ -77,7 +78,7 @@ const getBoardList = (page) =>{
                     <h5 class="card-title">${category}</h5><h6 class="card-subtitle mb-2 text-muted">
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
                     ${career}</h6><p class="card-text">제목:${title}</p>
-                    </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview('${nickname}');"
+                    </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview(${mentorId});"
                     type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
                     </div><div class="row" style="padding:20px;" id="row-div">`;
                     cnt += 1;
@@ -164,8 +165,8 @@ const getBoardDetail = (bId) => {
   };
 
 // 멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
-const watchReview = (nickname) => {
-    fetch(`${LOCALHOST_URL}/mentors/score?nickname=${nickname}`, {
+const watchReview = (mentorId) => {
+    fetch(`${LOCALHOST_URL}/mentors/score/mentor/${mentorId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;",
@@ -178,12 +179,10 @@ const watchReview = (nickname) => {
         if (res) {
           const reviewBody = document.getElementById("reviewBody");
           reviewBody.innerHTML = "";
-  
           for (const score of res.data) {
             let star = "";
             const content = score.content;
             const count = score.count;
-  
             for (let i = 0; i < count; i++) {
               star +=
                 "<img src='https://cdn-icons-png.flaticon.com/512/7656/7656139.png' style='width:30px; height:30px;'/>";

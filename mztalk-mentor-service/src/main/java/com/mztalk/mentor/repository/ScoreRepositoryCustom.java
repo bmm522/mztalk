@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface ScoreRepositoryCustom {
 
-    List<Score> findByNickname(String nickname);
-
     List<Score> findByUserId(Long userId);
 
     List<Score> findByMentorId(Long mentorId);

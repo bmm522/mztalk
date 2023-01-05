@@ -18,8 +18,6 @@ public interface ScoreService {
 
     Long updateScore(Long id, ScoreModifyDto scoreModifyDto);
 
-    List<ScoreResDto> findScoresByNickname(String nickname);
-
     boolean isExist(Long userId, Long boardId);
 
     List<SimpleScoreDto> findByUserId(Long userId);
