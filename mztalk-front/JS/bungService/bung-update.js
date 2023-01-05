@@ -588,9 +588,9 @@ window.onload = function(){
     for(let i = 0 ; i < imageInfo.length ;  i++){
         let objectData = imageInfo[i].objectKey;
         if(i == 0){
-            document.getElementById('image-div-div').innerHTML +=  '<div class="'+objectData+'"><div class="imageDiv" id="imageDiv"> <div class="carousel-item active"><img class="d-block w-100" src="'+imageInfo[i].imageUrl+'" alt="사진이 없습니다" /></div></div></div>';
+            document.getElementById('image-div-div').innerHTML +=  '<div class="'+objectData+'"><div class="imageDiv" id="imageDiv"> <div class="carousel-item active"><img class="d-block" style="width: 654.5px; height: 400px; object-fit: cover;" src="'+imageInfo[i].imageUrl+'" alt="사진이 없습니다" /></div></div></div>';
         } else {
-            document.getElementById('image-div-div').innerHTML +=  '<div class="'+objectData+'"><div class="imageDiv" id="imageDiv"> <div class="carousel-item"><img class="d-block w-100" src="'+imageInfo[i].imageUrl+'" alt="사진이 없습니다" /></div></div></div>';
+            document.getElementById('image-div-div').innerHTML +=  '<div class="'+objectData+'"><div class="imageDiv" id="imageDiv"> <div class="carousel-item"><img class="d-block" style="width: 654.5px; height: 400px; object-fit: cover;" src="'+imageInfo[i].imageUrl+'" alt="사진이 없습니다" /></div></div></div>';
         }
         
         

@@ -13,15 +13,16 @@ window.onload = function(){
             ` <br><br>
 
             <div class="listArea" style="width: 935px;">
-                <div class="requestList">
-                    <div class="d-grid gap-2 col-6 requestUserBtn">
-                        <button type="button" class="btn btn-warning" onclick="moveAcceptDetail(${accept.addId})">상세 보기</button>
-                    </div>
-                    <div class="requestUserId">
-                        ${accept.addNickname}
-                    </div>
+            <div class="requestList">
+                <div class="d-grid gap-2 col-6 requestUserBtn">
+                <button type="button" class="btn btn-outline-warning" onclick="moveAcceptDetail(${accept.addId})">상세 보기</button>
                 </div>
-            </div>`;
+                <div class="requestUserId">
+                    <input type="text" style="text-align: center; width: 150px; border-radius: 50px; border-style: none;" id="groupInput" value="${accept.addNickname}" class="InputGroup" readonly>
+                </div>
+            </div>
+        </div>`;
+            
         }
     })
 }

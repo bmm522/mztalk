@@ -1,4 +1,4 @@
-let page=1;
+
 let searchPage = 1;
 let isSearchPerformed = false;
 let isMainPerformed = true;
@@ -249,9 +249,9 @@ const loadSearch = (page) =>{
                 let boardId = board.boardId;
 
                 document.getElementById('search-div').innerHTML +=
-                ` 
+                `     
                 <div class="card h-50 col" id="cardarea" onclick='moveDetails(${boardId});' style="cursor:pointer;">            
-                <br><br>
+                    <br><br>
                     <div class="card shadow-sm">
                          <div class="card-header">
                             ${title}
@@ -259,16 +259,20 @@ const loadSearch = (page) =>{
                          <img src="${imageUrl}" style="height: 200px;">
                          <input type="hidden" name="imageName" value="${imageName}"/>
                          <div class="card-body" id="cardBody">
-                             <h5 class="card-title">마감일 : ${deadlineDate}</h5>
-                             <p class="card-text">${content}</p>
-                                <span id="writer">${category}</span>
-                                <span id="count">${count}</span>
+                             <div class="card-title">마감일 : ${deadlineDate}</div>
+                             <p class="card-text">내용 : ${content}</p>
+                             <div>   
+                                <span id="writer">카테고리 : ${category}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span id="count">조회수 : ${count}</span>
+                            </div> 
+                            <div>   
                                 <span id="writer">
-                                    ${writer}
+                                    ${writer}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </span>
                                 <span id="groupTotal">
-                                    ${nowGroup}/${fullGroup}
-                                </span>                      
+                                    ${nowGroup} / ${fullGroup}
+                                </span>
+                            </div>                      
                           </div> 
                       </div>
                   </div>
