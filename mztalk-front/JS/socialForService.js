@@ -1,10 +1,14 @@
 let page = 1;
+const LOCALHOST_URL = "http://localhost:8000";
+const AUCTION_URL = LOCALHOST_URL + "/auction/board-front/";
+const FOLLOW_URL = LOCALHOST_URL + "/story/main/";
+const BUNG_URL = LOCALHOST_URL + "/bung/mainBoards-main/";
+const MENTOR_URL = LOCALHOST_URL + "/mentors/board/latest/";
+
 window.onload = ()=>{
     load(1);
     ROLEVIP();
     checkVip();
-
-
     console.log("main : " + localStorage.getItem('authorization'));
     console.log("main : " + localStorage.getItem('refreshToken'));
     console.log("main : " + localStorage.getItem('userNo'));
@@ -35,19 +39,11 @@ async function fetchData(endpoint) {
 
 async function load(page) {
    
-  const newAuctionBoard = await fetchData(
-    "http://localhost:8000/auction/board-front/" + page
-  );
   const own = localStorage.getItem("userNo");
-  const newFollowBoard = await fetchData(
-    "http://localhost:8000/story/main/" + own + "/" + page
-  );
-  const newBungBoard = await fetchData(
-    "http://localhost:8000/bung/mainBoards-main/" + page
-  );
-  const newMentorBoard = await fetchData(
-    "http://localhost:8000/mentors/board/latest/" + page
-  );
+  const newAuctionBoard = await fetchData(AUCTION_URL + page);
+  const newFollowBoard = await fetchData(FOLLOW_URL + own + "/" + page);
+  const newBungBoard = await fetchData(BUNG_URL + page);
+  const newMentorBoard = await fetchData(MENTOR_URL + page);
 
   const all = [];
   all.push(newMentorBoard);
@@ -213,7 +209,7 @@ const moveMainToBung = (bId)=>{
 //멘토 @GetMapping("/board/{id}")
 const moveMainToMentor = (bId)=>{
     localStorage.setItem('bId', bId);
-    fetch("http://localhost:8000/mentors/board/"+bId,{
+    fetch(`${LOCALHOST_URL}/mentors/board/${bId}`,{
             method:"GET",
             headers:{
             "Content-Type":"application/json",
