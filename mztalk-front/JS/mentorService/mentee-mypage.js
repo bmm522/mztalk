@@ -1,4 +1,3 @@
-let page=1;
 let isSearchPerformed = false;
 let isMainPerformed = true;
 window.onload = function(){
@@ -65,6 +64,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
                 return false;
             } else {
                 document.getElementById('id-hidden').value = userId;
+                document.getElementById('file-form').action =`${LOCALHOST_URL}/resource/files`;
                 document.getElementById('file-form').submit();
                 fetch(`${LOCALHOST_URL}/mentors/application`,{
                 method:"POST",
@@ -433,7 +433,7 @@ function cancelPay(paymentId,impUid,merchantUid,price,mentoringDate) {
             dataType: "json"
         }).done(function(result){
             console.log(result);
-            if(result.code =="0"){
+            if(result.code == "0"){
                 $.ajax({
                     url: `${LOCALHOST_URL}/mentors/payment/cancel/${paymentId}`,
                     headers: { 
@@ -450,7 +450,8 @@ function cancelPay(paymentId,impUid,merchantUid,price,mentoringDate) {
                     return false;
                 })
             }
-            if(result.code =="1"){
+
+            if(result.code != "0"){
                 alert(result.message);
                 location.href="mentee-myPage.html";
                 return false;

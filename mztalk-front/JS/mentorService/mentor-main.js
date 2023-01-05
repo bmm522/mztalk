@@ -1,4 +1,3 @@
-let page=1;
 let isSearchPerformed = false;
 let isMainPerformed = true;
 window.onload = function(){
