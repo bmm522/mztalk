@@ -164,7 +164,7 @@ const getBoardDetail = (bId) => {
       });
   };
 
-// 멘토 닉네임을 이용해서 멘토에 대한 모든 리뷰 가져오기.
+// 멘토 식별자 이용해서 멘토에 대한 모든 리뷰 가져오기.
 const watchReview = (mentorId) => {
     fetch(`${LOCALHOST_URL}/mentors/score/mentor/${mentorId}`, {
       method: "GET",

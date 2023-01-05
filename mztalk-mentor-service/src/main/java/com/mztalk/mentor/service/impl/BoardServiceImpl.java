@@ -30,6 +30,9 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long saveBoard(BoardReqDto boardReqDto) {
+        if(boardReqDto.getSalary()<0){
+            throw new IllegalStateException("금액은 음수일 수 없습니다.");
+        }
         Mentor mentor = mentorRepository.findMentorByUserId(boardReqDto.getUserId());
         Board board = boardReqDto.toEntity();
         board.addMentor(mentor);
@@ -113,6 +116,9 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long updateBoard(Long id, BoardResDto boardResDto) {
+        if(boardResDto.getSalary()<0){
+            throw new IllegalStateException("금액은 음수일 수 없습니다.");
+        }
         Board savedBoard = boardRepository.findBoardByBoardId(id);
         savedBoard.updateBoard(boardResDto);
         return savedBoard.getId();
@@ -120,7 +126,6 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardResDto> searchWithCondition(SearchCondition searchCondition) {
-
         List<Board> boardList = boardRepository.searchWithCondition(searchCondition);
         List<BoardResDto> collect = boardList.stream().map(BoardResDto::new).collect(Collectors.toList());
         return collect;

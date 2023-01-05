@@ -4,6 +4,11 @@ window.onload = () =>{
 
 // 멘토 글 작성하기
 document.getElementById('mentor-write-btn').addEventListener('click',function(){
+    let salary = document.getElementById('salary').value;
+    if(salary<0){
+        alert('0원이하의 금액은 설정할 수 없습니다.');
+        return false;
+    }
     fetch(`${LOCALHOST_URL}/mentors/board`,{
         method:"POST",
         headers:{
@@ -19,7 +24,7 @@ document.getElementById('mentor-write-btn').addEventListener('click',function(){
             content : document.getElementById('content').value,
             introduction : document.getElementById('introduction').value,
             career : document.getElementById('career').value,
-            salary : document.getElementById('salary').value,
+            salary : salary,
             mentoringDate : document.getElementById('mentoringDate').value
         })
     })    

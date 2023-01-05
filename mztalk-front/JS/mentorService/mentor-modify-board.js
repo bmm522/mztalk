@@ -116,6 +116,11 @@ const showBoard = (boardId) =>{
 // 글 수정하기
 const modifyBoard = () =>{
     const boardId = document.getElementById('modifyBoardId').value;
+    let salary = document.getElementById('salary').value;
+    if(salary<0){
+        alert('0원 이하의 금액은 설정할 수 없습니다.');
+        return false;
+    }
     fetch(`${LOCALHOST_URL}/mentors/participant/board/${boardId}`,{
         method:"GET",
         headers:{
@@ -142,7 +147,7 @@ const modifyBoard = () =>{
                     title : document.getElementById('modifyTitle').value,
                     introduction : document.getElementById('modifyIntroduction').value,
                     career : document.getElementById('modifyCareer').value,
-                    salary : document.getElementById('modifySalary').value,
+                    salary : salary,
                     mentoringDate : document.getElementById('modifyMentoringDate').value,
                     content : document.getElementById('modifyContent').value
                 })    
