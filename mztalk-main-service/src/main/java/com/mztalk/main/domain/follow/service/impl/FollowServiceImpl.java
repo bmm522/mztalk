@@ -24,10 +24,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class FollowServiceImpl implements FollowService {
-
     private final FollowRepository followRepository;
-    private final ProfileCustomRepository profileCustomRepository;
-
     //팔로우
     @Override
     @Transactional
@@ -69,7 +66,7 @@ public class FollowServiceImpl implements FollowService {
             HttpHeaders headersName = new HttpHeaders();
             headersName.add("Content-type", "text/html");
             ResponseEntity<String> responseName = new RestTemplate().exchange(
-                    "http://localhost:8000/login/user-info/" + follow.getFromUserId(),
+                    "http://43.200.113.144:8000/login/user-info/" + follow.getFromUserId(),
                     HttpMethod.GET,
                     new HttpEntity<String>(headersName),
                     String.class
@@ -84,7 +81,7 @@ public class FollowServiceImpl implements FollowService {
 
             try {
             ResponseEntity<String> responseImg = new RestTemplate().exchange(
-                    "http://localhost:8000/resource/main-image?bNo=" + follow.getFromUserId() + "&serviceName=story",
+                    "http://43.200.113.144:8000/resource/main-image?bNo=" + follow.getFromUserId() + "&serviceName=story",
                     HttpMethod.GET,
                     new HttpEntity<String>(headersImg),
                     String.class
@@ -120,7 +117,7 @@ public class FollowServiceImpl implements FollowService {
             headersName.add("Content-type", "text/html");
 
             ResponseEntity<String> responseName = new RestTemplate().exchange(
-                    "http://localhost:8000/login/user-info/" + follow.getToUserId(),
+                    "http://43.200.113.144:8000/login/user-info/" + follow.getToUserId(),
                     HttpMethod.GET,
                     new HttpEntity<String>(headersName),
                     String.class
@@ -133,7 +130,7 @@ public class FollowServiceImpl implements FollowService {
             headersImg.add("Content-type", "text/html");
             try{
                 ResponseEntity<String> responseImg = new RestTemplate().exchange(
-                        "http://localhost:8000/resource/main-image?bNo=" + follow.getToUserId() + "&serviceName=story",
+                        "http://43.200.113.144:8000/resource/main-image?bNo=" + follow.getToUserId() + "&serviceName=story",
                         HttpMethod.GET,
                         new HttpEntity<String>(headersImg),
                         String.class
@@ -167,7 +164,7 @@ public class FollowServiceImpl implements FollowService {
             String imageName = "";
             try{
                 ResponseEntity<String> response = new RestTemplate().exchange(
-                        "http://localhost:8000/resource/main-image?bNo=" + matpalGroup.getToUserId() + "&serviceName=story",
+                        "http://43.200.113.144:8000/resource/main-image?bNo=" + matpalGroup.getToUserId() + "&serviceName=story",
                         HttpMethod.GET,
                         new HttpEntity<String>(headers),
                         String.class

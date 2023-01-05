@@ -1,6 +1,6 @@
 let page = 1;
 //로그인js도 LOCALHOST_URL 바꿔주기
-const LOCALHOST_URL = "http://localhost:8000";
+const LOCALHOST_URL = "http://43.200.113.144:8000";
 const CHAT_URL = "http://52.197.180.192:3000";
 
 
