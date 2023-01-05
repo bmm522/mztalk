@@ -1,7 +1,7 @@
 let page = 1;
 //로그인js도 LOCALHOST_URL 바꿔주기
 const LOCALHOST_URL = "http://localhost:8000";
-const CHAT_URL = "http://localhost:3000";
+const CHAT_URL = "http://52.197.180.192:3000";
 
 
 const AUCTION_URL = `${LOCALHOST_URL}/auction/board-front/`;
