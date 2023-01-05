@@ -46,10 +46,10 @@
              <br>
              
              <div id="writer" style="float: left; width: 50%; text-align: left; cursor:pointer;" >
-               
+                <input type="text" style="width: 250px;" id="nameDiv" class="InputGroup" readonly> 
              </div>
              <div id="date" style="float: left; width: 50%;">
-                
+                <input type="text" style="width: 250px;" id="dateDiv" class="InputGroup" readonly>
              </div>
      
              <br><br>
@@ -76,27 +76,27 @@
      
              <div class="infomationBtn" style="height: 200px; float: left; width: 33%;">
                  <br>
-                 <div id="group" style="height: 50px;">
-                    
+                 <div id="group" style="height: 50px; ">
+                    <input type="text" style="width: 250px;" id="groupInput" class="InputGroup" readonly>
                  </div>
                  <div id="category" style="height: 50px;">
-                    
+                    <input type="text" style="width: 250px;" id="categoryInput" class="InputGroup" readonly>
                  </div>
                  <div id="closeRead" style="height: 50px;">
-                    
+                    <input type="text" style="width: 250px;" id="closeReadInput" class="InputGroup" readonly>
                  </div>
                  <div id="address" style="height: 50px;">
-                    
+                    <input type="text" style="width: 250px;" id="addressInput" class="InputGroup" readonly>
                  </div>
              </div>
              <div class="writerBtn" style="height: 200px; float: left; width: 33%;">
                  <br>
                  <div id="boardUpdate" style="height: 66.66px;">
-                    <button type="button" class="btn btn-outline-warning" onclick="updateMove();">게시글 수정</button>
+                    <button type="button" class="btn btn-outline-warning" style="width: 150px;" onclick="updateMove();">게시글 수정</button>
                 </div>
                  <div id="group" style="height: 66.66px;">
                     <!-- modal button -->
-                     <button type="button" id="bung-modal-btn" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#groupList">신청자 현황 보기</button>
+                     <button type="button" id="bung-modal-btn" class="btn btn-outline-warning" data-bs-toggle="modal" style="width: 150px;" data-bs-target="#groupList">신청자 현황 보기</button>
                  </div>
                  <!-- modal -->
                     <div class="modal fade" id="groupList" tabindex="-1" aria-labelledby="groupList" aria-hidden="true">
@@ -125,14 +125,14 @@
                         </div>
                     </div>                
                  <div id="deleteBtn" style="height: 66.66px;">
-                     <button type="button" class="btn btn-outline-warning" id="delete-btn" onclick="deleteEvent();">게시글 삭제</button>
+                     <button type="button" class="btn btn-outline-warning" id="delete-btn" style="width: 150px;" style="width: 150px;" onclick="deleteEvent();">게시글 삭제</button>
                  </div>
              </div>
              <div class="actionBtn" style="height: 200px; float: left; width: 33%;">
                  <br>
                  <!-- model button -->
                  <div id="group" style="height: 66.66px;">
-                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#reportModal" data-whatever="신고">신고하기</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#reportModal" style="width: 150px;" data-whatever="신고">신고하기</button>
                  </div>
                  <!-- model -->
                     <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                  <div id="category" style="height: 66.66px;">
-                     <button type="button" class="btn btn-outline-warning" onclick="chatOpen();">문의하기</button>
+                     <button type="button" class="btn btn-outline-warning" style="width: 150px;" onclick="chatOpen();">문의하기</button>
                  </div>
                  <div id="addBtn" style="height: 66.66px;">
                      <button type="button" class="btn btn-outline-warning">신청하기</button>

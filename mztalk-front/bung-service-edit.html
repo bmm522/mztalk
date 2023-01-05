@@ -103,7 +103,7 @@
             <div class="infomationBtn" style="height: 200px; float: left; width: 50%;">
                 
             
-            기존 날짜 :  <input type="text" id="deadlineDate" style="width:200px; border: 0.1px solid gray; border-radius: 10px; " readonly>       
+            기존 날짜 :  <input type="text" id="deadlineDate" style="width:280px; border: 0.1px solid gray; border-radius: 10px; " readonly>       
             <br>
                 <table class="scriptCalendar">
                     <thead>
@@ -123,18 +123,19 @@
                 </table>
             </div>
             <div class="writerBtn" style="height: 400px; float: left; width: 50%;">
-                기존 장소 :  <input type="text" id="bungAddress" style="width:200px; border: 0.1px solid gray; border-radius: 10px; " readonly>
+                기존 장소 :  <input type="text" id="bungAddress" style="width:300px; border: 0.1px solid gray; border-radius: 10px; " readonly>
                 <br><br><br>
                 
-                <div id="addressNameArea" style="height: 50px;">
-                    <span style="vertical-align: middle;">모임 장소 : </span>
-                    <textarea id="addressName" name="addressName" rows="4" style="resize: none; height: 50px;"></textarea>
+                <div id="addressNameArea" style="height: 20px;">
+                    <span style="vertical-align: middle; line-height: 20px;">모임 장소 : </span>
+                    <textarea id="addressName" name="addressName" rows="4" style="resize: none; height: 50px; width: 300px; vertical-align: middle; line-height: 20px;"></textarea>
                 </div>
 
-                <br><br>
+                <br><br><br>
 
                 <div id="group" style="height: 50px;">
-                    <select id="group-select">
+                    <span>모집 인원 : </span>
+                    <select id="group-select" style=" width: 300px; text-align: center;">
                         <option value="2">2명</option>
                         <option value="3">3명</option>
                         <option value="4">4명</option>
@@ -170,7 +171,7 @@
                 </div>
                 <br>
                 <div id="group" style="height: 66.66px;">
-                    <button type="button" id="edit-btn" class="btn btn-outline-warning">수정 하기</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="edit-btn" class="btn btn-outline-warning" style="width: 300px;">수정 하기</button>
                 </div>
             </div>
         </div>

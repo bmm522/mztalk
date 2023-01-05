@@ -325,6 +325,12 @@ img {vertical-align: middle;}
   border: none;
 }
 
+.InputGroup {
+  border-radius: 30px;
+  border-style: none;
+  border-color: #f2dfb4;
+}
+
 
 
 
