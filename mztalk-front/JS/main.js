@@ -10,50 +10,27 @@ const BUNG_URL = `${LOCALHOST_URL}/bung/mainBoards-main/`;
 const MENTOR_URL = `${LOCALHOST_URL}/mentors/board/latest/`;
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  profileBoxs();
-});
+
 
 
 //개인페이지
-// document.getElementById('move-story-service').addEventListener('click', () => {
-//     const own = localStorage.getItem("userNo");
-//     localStorage.setItem("own", own);
+document.getElementById('move-story-service').addEventListener('click', () => {
+    const own = localStorage.getItem("userNo");
+    localStorage.setItem("own", own);
   
-//     fetch(`${LOCALHOST_URL}/story/${own}/${page}`, {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: localStorage.getItem('authorization'),
-//         RefreshToken: localStorage.getItem('refreshToken'),
-//       },
-//     })
-//     .then((res) => res.json())
-//     .then((res) => {
-//       location.href = "individualpage.html";
-//     });
-//   });
-function moveStory_Service() {
-  // get the user number from local storage
-  const own = localStorage.getItem("userNo");
-  // set the user number in local storage
-  localStorage.setItem("own", own);
-
-  // make a GET request to the server using the fetch API
-  fetch(`${LOCALHOST_URL}/story/${own}/${page}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: localStorage.getItem('authorization'),
-      RefreshToken: localStorage.getItem('refreshToken'),
-    },
-  })
-  .then((res) => res.json())
-  .then((res) => {
-    // redirect the user to the individualpage.html page
-    location.href = "individualpage.html";
+    fetch(`${LOCALHOST_URL}/story/${own}/${page}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem('authorization'),
+        RefreshToken: localStorage.getItem('refreshToken'),
+      },
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      location.href = "individualpage.html";
+    });
   });
-}
 
 //멘토서비스보내기
 document.getElementById('move-mentor-service').addEventListener('click', () => {
