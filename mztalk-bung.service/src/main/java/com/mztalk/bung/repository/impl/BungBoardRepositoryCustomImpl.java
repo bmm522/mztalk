@@ -34,9 +34,11 @@ public class BungBoardRepositoryCustomImpl implements BungBoardRepositoryCustom 
 
     @Override
     @Transactional
-    public int increaseCount(Long bId) {
+    public int increaseCount(Long bId, String boardWriter) {
+        System.out.println("boardWriter : " + boardWriter);
         return entityManager.createQuery("update BungBoard b set b.boardCount = b.boardCount + 1 where b.boardId = :bId")
                 .setParameter("bId", bId)
+//                .setParameter("boardWriter", boardWriter)
                 .executeUpdate();
     }
 

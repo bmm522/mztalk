@@ -4,6 +4,7 @@ package com.mztalk.main.domain.board;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mztalk.main.common.BaseTimeEntity;
 import com.mztalk.main.domain.board.dto.BoardDto;
+import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.status.BoardStatus;
 import com.mztalk.main.status.PrivacyStatus;
@@ -50,13 +51,18 @@ public class Board extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private BoardStatus status; // 글 status
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id")
+    private Profile postImageUrl;
+
     @Enumerated(EnumType.STRING)
     private PrivacyStatus privacy;
 
     //글쓰기
     @Builder
     public Board(Long id, String writer, String title, String content, Long own, List<Reply> reply,
-                 BoardStatus status, PrivacyStatus privacy){
+                 BoardStatus status, Profile postImageUrl, PrivacyStatus privacy){
         this.id = id;
         this.writer = writer;
         this.title = title;
@@ -64,6 +70,7 @@ public class Board extends BaseTimeEntity {
         this.own = own;
         this.replyList = reply;
         this.status = status;
+        this.postImageUrl = postImageUrl;
         this.privacy = privacy;
 
     }

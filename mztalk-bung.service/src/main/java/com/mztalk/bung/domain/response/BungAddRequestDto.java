@@ -1,4 +1,4 @@
-package com.mztalk.bung.domain.entity;
+package com.mztalk.bung.domain.response;
 
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import lombok.AllArgsConstructor;

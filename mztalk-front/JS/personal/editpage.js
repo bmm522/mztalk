@@ -3,11 +3,14 @@ window.onload =() =>{
     console.log("수정페이지 : " + localStorage.getItem('refreshToken'));
     console.log("수정페이지 : " + localStorage.getItem('userNo'));
     console.log("수정페이지 : " + localStorage.getItem('userNickname'));
+    console.log("수정페이지 : " + localStorage.getItem('role'));
     profileBox();
     noSocial();
     checkVipCheck();
+    console.log(role);
 }
 
+    
 
 const checkVipCheck = ()=>{
 
@@ -23,17 +26,13 @@ const checkVipCheck = ()=>{
       })
     .then((res)=>res.json())
     .then(res =>{
-      
-      console.log(res,"????");
-      console.log(res.data);
 
       if(res.data != null){
-        console.log("하이");
         let VIPCHECK = res.data;
         let createDate = VIPCHECK.createDate.substr(0,10);
         let vipDate = VIPCHECK.vipDate.substr(0,10);
-        console.log(createDate);
-        console.log(vipDate);
+        // console.log(createDate);
+        // console.log(vipDate);
         let userNickname = localStorage.getItem('userNickname');
         document.querySelector('#vipDate').innerHTML =
         `
@@ -50,15 +49,6 @@ const checkVipCheck = ()=>{
       }
   })
 }
-
-
-
-
-
-
-
-
-
 
 const image = document.querySelector(".modal-image");
 
@@ -85,11 +75,9 @@ function profileBox(){
       })
     .then((res)=>res.json())
     .then(res =>{
-      
-     // console.log("통신 성공");
-      
+
       let profileImage = res.data;
-      console.log("없니?"+profileImage);
+
       if(!res.data){
         document.querySelector('.profile-img-wrap').innerHTML +=
         `
@@ -117,7 +105,7 @@ function profileBox(){
 function ch_nickName(){
   
   let nickname = document.getElementById('nickname').value;
-  //console.log(nickname);
+
   let userNo = localStorage.getItem('userNo');
   
   if(confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')){
@@ -150,18 +138,6 @@ function ch_nickName(){
     })
   }
 };
-
-
-
-//비밀번호확인
-
-// document.getElementById('passwd').addEventListener('keyup',function(){
-//   isExValidPassword();
-// });
-
-// document.getElementById('passwd').addEventListener('blur',function(){
-//   ExpasswordBlurText();
-// });
 
 //비밀번호변경
 document.getElementById('password').addEventListener('keyup',function(){
@@ -234,6 +210,7 @@ const isValidCheckPassword = () =>{
 		checkRePw.innerHTML="일치하지 않습니다.";
 		checkRePw.style.color = "red";
 		document.getElementById('checkRePasswordResult').value = "fail";
+    document.querySelector('#password_button_check').disabled = true;
 	}
 }
 
@@ -250,7 +227,7 @@ const rePasswordBlurText = () => {
 function ch_Password(){
   let prePassword = document.getElementById('passwd').value;
   let newPassword= document.getElementById('re_password').value;
-  //console.log(nickname);
+
   let id = localStorage.getItem('userNo');
   
   if(confirm('비밀번호 변경시 로그아웃됩니다. 바꾸시겠습니까?')){
@@ -270,8 +247,6 @@ function ch_Password(){
     })
     .then((res)=>res.json())
     .then(res =>{
-      
-      console.log(res);
       if(res==1){
       alert('비밀번호 변경완료');
 
@@ -323,9 +298,6 @@ const isVaildEmail =  () => {
     
     } else{
     
-      // checkEmail.innerHTML= '올바른 형식입니다.';
-      // checkEmail.style.color='green';
-      // document.getElementById('checkEmailResult').value = "success";
       fetch('http://localhost:8000/login/register/email/'+email,{
         method:"GET"
       })
@@ -410,8 +382,6 @@ const authBlurText = () =>{
 }
 //이메일 변경
 function ch_email(){ 
-
-  // let email = document.getElementById('#email-box').value;
 
     fetch("http://localhost:8000/login/user/email",{
           method:"PATCH",

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BoardCustomRepository {
 
-    Page<Board> findAllByOwn(Long own, Pageable pageable);
+    Page<Board> findByStatusOrderByBoardIdDesc(Long own, Pageable pageable);
 
     Page<Board> findAllByBoardStory(Long own, Pageable pageable);
 }

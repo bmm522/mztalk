@@ -56,33 +56,34 @@ const loadMoreContent =(page) =>{
                 let boardId = board.boardId;
 
                 document.getElementById('output-div').innerHTML +=
-          ` <div class="col" onclick='moveDetails(${boardId});' style="cursor:pointer;"><br>
-                <div class="card" id="cardarea">            
-                     <div class="card shadow-sm">
+          `     
+                <div class="card h-50 col" id="cardarea" onclick='moveDetails(${boardId});' style="cursor:pointer;">            
+                    <br>
+                    <div class="card shadow-sm">
                          <div class="card-header">
                             ${title}
                          </div>                      
                          <img src="${imageUrl}" style="height: 200px;">
                          <input type="hidden" name="imageName" value="${imageName}"/>
-                         <div class="card-body">
-                             <h5 class="card-title">${category}</h5>
-                             <p class="card-text">${content}</p>
-                             <div style="float: left; width: 50%;">
-                                <span id="writer">마감일 : ${deadlineDate}</span>
-                                <span id="count">${count}</span>
-                             </div>
-                             <div style="float: left; width: 50%;">
+                         <div class="card-body" id="cardBody">
+                             <div class="card-title">마감일 : ${deadlineDate}</div>
+                             <p class="card-text">내용 : ${content}</p>
+                             <div>   
+                                <span id="writer">카테고리 : ${category}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span id="count">조회수 : ${count}</span>
+                            </div> 
+                            <div>   
                                 <span id="writer">
-                                    ${writer}
+                                    ${writer}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </span>
                                 <span id="groupTotal">
-                                    ${nowGroup}/${fullGroup}
+                                    ${nowGroup} / ${fullGroup}
                                 </span>
-                            </div>                        
+                            </div>                      
                           </div> 
                       </div>
                   </div>
-              </div>`
+              `
 
               imageUrl = '';
              imageName = '';
@@ -248,30 +249,30 @@ const loadSearch = (page) =>{
                 let boardId = board.boardId;
 
                 document.getElementById('search-div').innerHTML +=
-                ` <div class="col" onclick='moveDetails(${boardId});' style="cursor:pointer;"><br>
-                <div class="card h-100">            
-                     <div class="card shadow-sm h-100">
+                ` 
+                <div class="card h-50 col" id="cardarea" onclick='moveDetails(${boardId});' style="cursor:pointer;">            
+                <br><br>
+                    <div class="card shadow-sm">
                          <div class="card-header">
                             ${title}
                          </div>                      
-                         <img src="${imageUrl}" style="height: 250px;">
+                         <img src="${imageUrl}" style="height: 200px;">
                          <input type="hidden" name="imageName" value="${imageName}"/>
-                         <div class="card-body">
-                             <h5 class="card-title">${category}</h5>
+                         <div class="card-body" id="cardBody">
+                             <h5 class="card-title">마감일 : ${deadlineDate}</h5>
                              <p class="card-text">${content}</p>
-                         </div>
-                         <hr>
-                         <div id="count">${count}</div>
-                         <div id="writer">마감일 : ${deadlineDate}</div>
-                         <div id="writer">
-                             ${writer}
-                         </div>
-                         <div id="groupTotal">
-                         ${nowGroup}/${fullGroup}
-                         </div>
-                     </div>
-                 </div> 
-             </div>`
+                                <span id="writer">${category}</span>
+                                <span id="count">${count}</span>
+                                <span id="writer">
+                                    ${writer}
+                                </span>
+                                <span id="groupTotal">
+                                    ${nowGroup}/${fullGroup}
+                                </span>                      
+                          </div> 
+                      </div>
+                  </div>
+              `
 
               imageUrl = '';
              imageName = '';
@@ -286,3 +287,67 @@ const loadSearch = (page) =>{
         })
     }
 }
+
+//멘토서비스보내기
+document.getElementById('move-mentor-service').addEventListener('click',function(){
+    
+    fetch("http://localhost:8000/mentors",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+        },
+        body:JSON.stringify({
+            nickname : localStorage.getItem('userNickname'),
+            id : localStorage.getItem('userNo')
+        })
+    })
+    .then(res =>{
+        location.href="mentor-main.html";
+    })             
+});
+
+
+//벙서비스보내기
+document.getElementById('move-bung-service').addEventListener('click',function(){
+   
+    fetch("http://localhost:8000/bung/mainBoards",{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+            
+        },
+    })
+    .then((res)=> res.json())
+    .then(res=>{
+
+        location.href="bung-service-main.html";
+    })
+
+});
+
+
+
+//경매서비스 보내기
+document.getElementById('move-auction-service').addEventListener('click',function(){
+    
+    fetch("http://localhost:8000/auction/",{
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
+            
+        },
+    })
+    .then((res)=> res.json())
+    .then(res=>{
+
+        location.href="auction.html";
+
+    })
+
+});

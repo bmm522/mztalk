@@ -3,7 +3,7 @@ package com.mztalk.bung.service;
 import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
 import com.mztalk.bung.domain.dto.BungBoardDto;
-import com.mztalk.bung.domain.entity.BungAddRequestDto;
+import com.mztalk.bung.domain.response.BungAddRequestDto;
 import com.mztalk.bung.domain.entity.Result;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
 import com.mztalk.bung.domain.response.ResponseDto;
@@ -32,7 +32,7 @@ public interface BungBoardService {
 
     Long addBungBoardUpdate(Long addId, BungAddBoardDto bungAddBoardDto);
 
-    ResponseDto addBungBoardAccept(Long addId);
+    BungAddRequestDto addBungBoardAccept(Long addId);
 
     BungAddBoardDto bungAddBoardSelect(Long aId);
 

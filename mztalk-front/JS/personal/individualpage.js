@@ -13,78 +13,70 @@ window.onload = function(){
   FollowCount();
   FollowingCount();
   followButtonStatus();
-
+  ChangeInform();
 }
 
 window.onscroll = () =>{
-  // console.log(isSearchPerformed);
-  if (window.innerHeight + window.scrollY >= document.querySelector("#contentList").offsetHeight) {
-      
+  if (window.innerHeight + window.scrollY >= document.querySelector("#contentList").offsetHeight) {      
       page++;
       storyLoad(page);
   }
-
 }
 
-
-
-
-
 function writeOwn(){
-
   let own = localStorage.getItem("own");
   let userNo = localStorage.getItem('userNo');
-
   if(own==userNo){
-    
     document.getElementById('ownWrite').innerHTML='<button type="button" style="cursor:pointer;" onclick="writeboard();" id="write_board" class="write_board">글쓰기</button>';
-
-
   }else{
     document.getElementById('ownWrite').innerHTML = '';
   }
-
-
 }
 
 
-
+// function writeboard() {
+//     const open = document.querySelector("#ownWrite button"); 
+//     const modal = document.querySelector(".textmodal");  
+//     const close = document.querySelector(".btn-closee");  
+//     open.addEventListener("click", function(){        
+//         modal.classList.remove("hidden");
+//         open.classList.add("hidden");
+//     });
+//     close.addEventListener("click", function(){
+//       modal.classList.add("hidden");
+//       open.classList.remove("hidden");
+//   });
+// }
 //글쓰기버튼
 function writeboard() {
-
-    const open = document.querySelector("#ownWrite button"); //글쓰기버튼
-    const modal = document.querySelector(".textmodal");  //글쓸수 있는곳
-    const close = document.querySelector(".btn-closee");  //닫기버튼
-
-    //console.log(open);
-   console.log("첫번쨰클릭");
+  const open = document.querySelector("#ownWrite button"); 
+  const modal = document.querySelector(".textmodal");  
+  const close = document.querySelector(".btn-closee");  
   
-    open.addEventListener("click", function(){
-        console.log("두번쨰클릭");
-        
-        modal.classList.remove("hidden");
-        open.classList.add("hidden");
+  let isModalVisible = false;
 
-    });
-    close.addEventListener("click", function(){
-      modal.classList.add("hidden");
-      open.classList.remove("hidden");
+  open.addEventListener("click", function(){        
+   
+    modal.classList.remove("hidden");
+    open.classList.add("hidden");
+    isModalVisible = true;
   });
+  close.addEventListener("click", function(){
     
+    modal.classList.add("hidden");
+    open.classList.remove("hidden");
+    isModalVisible = false;
+  });
 }
-
 
 //정보 수정
 document.getElementById('profile-edit-btn').addEventListener('click',function(){
-    
   location.href="editpage.html";
 });
 
 //사진박스
 function profileBox(){
-
     let own = localStorage.getItem("own");
-
       fetch("http://localhost:8000/story/profile/"+own,{
         method:"GET",
         headers:{
@@ -95,11 +87,7 @@ function profileBox(){
       })
     .then((res)=>res.json())
     .then(res =>{
-      
-      //console.log("통신 성공");
-      
       let profileImage = res.data;
-      //console.log(profileImage);
       if(!res.data){
         document.querySelector('.profile-img-wrap').innerHTML +=
         `
@@ -122,9 +110,7 @@ function profileBox(){
       })
     }
   
-    
-
-
+  
 //팔로우 버튼테스트
 function followButtonStatus(){
   
@@ -141,17 +127,11 @@ function followButtonStatus(){
       })
     .then((res)=>res.json())
     .then(res =>{
-  
       let follow = res.data;
 
-      //console.log(follow);
-
-       if(follow>=1){
-        
+       if(follow>=1){  
         document.getElementById('followStatus').innerHTML ='';
-        //document.getElementById('followStatus').innerHTML ='<button class="cta" onclick="profilecFollow(this);">팔로워</button>';
         document.getElementById('followStatus').innerHTML ='<button class="profile_follow_btn" onclick="profilecFollow(this);" style="background-color: rgba(128, 128, 128, 0.973); color: rgb(255, 255, 255); border: 1px solid rgb(221, 221, 221);">팔로잉</button>';
-
       } else if(loginUser==own){
         document.getElementById('followStatus').innerHTML = '';
       }else{
@@ -162,7 +142,6 @@ function followButtonStatus(){
         </button>
         `
       }
-
       //document.getElementById('followStatus').innerHTML='';
     })
     
@@ -170,7 +149,6 @@ function followButtonStatus(){
 
 //페이지주인은 팔로우 버튼 비활성화
 function FollowingButton(){
-
   if(loginUser!=own){
     document.querySelector('#followStatus').innerHTML =
     `
@@ -181,10 +159,13 @@ function FollowingButton(){
    }
  }
 
+//다른사람 계정에서는 환경설정 비활성화
+function ChangeInform(){
+  if(loginUser !=own){
+    document.querySelector('.modi').innerHTML='';
+  }
+}
 
-
-
-    
 //이름박스
 function profileName(){
 
@@ -200,11 +181,8 @@ function profileName(){
       })
     .then((res)=>res.json())
     .then(res =>{
-      
-      //console.log("통신 성공");
-      
       let profileName = res.data;
-      //console.log(profileName);
+
       let nickname = profileName.nickname;
       document.querySelector('.own_name').innerHTML +=
       `
@@ -219,7 +197,6 @@ function profileName(){
 function BoardCount(){
 
   let own = localStorage.getItem("own");
-
     fetch("http://localhost:8000/story/profile/boardCount/"+own,{
       method:"GET",
       headers:{
@@ -230,11 +207,7 @@ function BoardCount(){
     })
   .then((res)=>res.json())
   .then(res =>{
-    
-    //console.log("통신 성공");
-    
     let board = res.data;
-    //console.log(board+"ㅎㅇ");
     document.querySelector('.board_count').innerHTML +=
     `
     ${board}
@@ -258,11 +231,7 @@ function FollowingCount(){
     })
   .then((res)=>res.json())
   .then(res =>{
-    
-    //console.log("통신 성공");
-    
     let following = res.data;
-    
 
     if(document.querySelector('.following_count') != null){
       document.querySelector('.following_count').innerHTML +=
@@ -273,9 +242,6 @@ function FollowingCount(){
 
     })
   }
-
-
-
 
 //팔로워 명수
 function FollowCount(){
@@ -292,11 +258,7 @@ function FollowCount(){
     })
   .then((res)=>res.json())
   .then(res =>{
-    
-    //console.log("통신 성공");
-    
     let follower = res.data;
-   // console.log(follower);
     document.querySelector('.follower_count').innerHTML +=
     `
     ${follower}
@@ -309,7 +271,7 @@ function FollowCount(){
 // 퍼블릭인 글 목록들 DIV
 function storyLoad(page) {
   
-  fetch("http://localhost:8000/story/"+own +"/"+page,{
+  fetch("http://localhost:8000/story/"+own+"/"+page,{
         method:"GET",
         headers:{
             "Content-Type":"application/json",
@@ -319,17 +281,16 @@ function storyLoad(page) {
       })
       .then((res)=> res.json())
       .then(res=>{       
-        //console.log(res.data);
-
         for(let board of res.data){
-
+          let userNo = localStorage.getItem('userNo');
           let boardId = board.id;
           let writer = board.writer;
           let privacy = board.privacy;
           let title = board.title;
           let content = board.content;
+          let own = board.own;
           let date = board.lastModifiedDate.substr(0,10);
-          
+
           if(privacy.includes("PUBLIC")){
           document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
@@ -349,8 +310,7 @@ function storyLoad(page) {
                         <tr>
                             <td colspan="3"><br><br>
                                 <div id="edit-delete-div">
-                                       
-                                    <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
+                                    <button style="cursor:pointer;"  onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
                                     data-bs-toggle="modal" type="button">수정</button>
                                     <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
                                 </div>
@@ -387,7 +347,6 @@ function storyLoad(page) {
                     </div>
                    </div>
                     `;
-                    
                      board.replyList.forEach((reply)=>{
                      document.querySelector(`.reply-div-${boardId}`).innerHTML +=
                          `
@@ -400,9 +359,8 @@ function storyLoad(page) {
                          `;
                       }
                      )
-                   }else if(privacy.includes('SECRET')) {
-                      //비밀글 
-                      //console.log("되니?");
+                   }else if(privacy.includes('SECRET') && own==userNo) {
+
                       document.querySelector("#contentList").innerHTML += 
                       `<div id="post-div-${boardId}" class="post-div">
                           <table id="post-table">
@@ -471,29 +429,18 @@ function storyLoad(page) {
                                  </div>
                                `;
                             })
-
-
-
-                   }
-                  }
-
-        })
+                       }
+                    }
+               })
     }
           
 
-//글쓰기
 
+//글쓰기
 const write_board = document.getElementById('write-board');
 const privacyBounds = document.getElementById('privacyBounds');
 
-  //console.log("개인 : " + localStorage.getItem('authorization'));
-  //console.log("개인 : " + localStorage.getItem('refreshToken'));
-  //console.log("개인 : " + localStorage.getItem('userNo'));
-  //console.log("개인 : " + localStorage.getItem('userNickname'));
-  //console.log("페이지주인: " + localStorage.getItem('own'));
-
 write_board.addEventListener('click', function(){
-    //console.log("클릭됨??");
    
     if(privacyBounds.options[privacyBounds.selectedIndex].value === 'no'){
         alert("공개범위를 설정하세요");
@@ -512,12 +459,9 @@ write_board.addEventListener('click', function(){
                 own: localStorage.getItem('own'),
                 privacy: privacyBounds.options[privacyBounds.selectedIndex].value,
             })
-        })
+          })
             .then((res)=>res.json())
             .then(res =>{
-                //console.log("res : " + res);
-                    // console.log("res.data :" +res.data);
-                    // console.log('통신성공');
                     //글썻을떄
                     const open = document.querySelector(".write_board"); //글쓰기버튼
                     const modal = document.querySelector(".textmodal");
@@ -582,33 +526,24 @@ write_board.addEventListener('click', function(){
                           </div>
                       </div>`;
                })
-                  
           }   
-          // location.href="individualpage.html";   
+           location.href="individualpage.html";   
       });
      
-
-
-
 //수정창상세보기
 function getBoardDetail(boardId){
-
-
+    if (own != loginUser) {
+      alert("본인만 수정 할 수 있습니다.");
+      location.reload();
+      return;
+    }
+   
   let title = document.querySelector('#post-title-div').innerText;
   let content = document.getElementById("post-content-input").innerText;
   let privacy = document.getElementById('category-div').innerText;
   
-  
-
 const write_board = document.getElementById('write-board');
 const privacyBound = document.getElementById('privacyBound');
-
-
-  console.log(boardId);
-  console.log(title);
-  console.log(content);
-  console.log(privacy);
-     
 
     if(privacy==='PUBLIC'){
       
@@ -639,7 +574,6 @@ const privacyBound = document.getElementById('privacyBound');
     </div>
     `
     }
-
     if(privacy==='SECRET'){
       document.querySelector('.modal-content').innerHTML +=
     `
@@ -668,33 +602,17 @@ const privacyBound = document.getElementById('privacyBound');
 
     </div>
     `
-    }
-    //document.querySelector('.modal-content').innerHTML='';
-    
+    }   
 }
-
-
 
 //글수정      
 function modification(boardId){
-    //console.log(localStorage.getItem('authorization'));
-
-    if(own != loginUser){
-      alert("본인만 수정할 수 있습니다.");
-      return;
-    }
-
-      
+  if(own != loginUser){
+    alert("본인만 수정할 수 있습니다.");
+    return;
+  }
     let id = boardId;
     const privacyBound = document.getElementById('privacyBound');
-
-
-    // console.log(localStorage.getItem('userNickname'));
-    // console.log(document.querySelector('.title-input-text').value);
-    // console.log(document.getElementById("contents").value);
-    // console.log(localStorage.getItem('own'));
-    // console.log(privacyBound.options[privacyBound.selectedIndex].value);
-    // console.log(boardId);
 
       fetch("http://localhost:8000/story/update/"+id,{
         method:"PATCH",
@@ -710,28 +628,22 @@ function modification(boardId){
           own: localStorage.getItem('own'),
           privacy: privacyBound.options[privacyBound.selectedIndex].value,
           id : boardId,
+          writer: localStorage.getItem('userNickname'),
         })
     })
     .then((res)=>res.json())
     .then(res =>{
-
-        console.log(res);
-
         location.href="individualpage.html";   
-    }    
-)}  
+    })
+  }  
 
 
 //글삭제
 function deleteBoard(boardId){
-   
     if(own != loginUser){
       alert("본인만 삭제 할 수 있습니다.");
       return;
     }
-
-    console.log(boardId);
-  
       fetch("http://localhost:8000/story/delete/"+boardId,{
           method:"PATCH",
           headers:{
@@ -742,18 +654,9 @@ function deleteBoard(boardId){
         })
       .then((res)=>res.json())
       .then(res =>{
-      
-
       })
       location.href="individualpage.html";  
     }
-
-
-
-
-
-
-
 
 //프로필 이미지 바꾸기
 function profileImageUpload(){
@@ -765,7 +668,6 @@ function profileImageUpload(){
 	}
   userProfileImage.click();
 
-  
   userProfileImage.addEventListener("change",(e)=>{
     let f = e.target.files[0];
 
@@ -773,9 +675,7 @@ function profileImageUpload(){
       alert("이미지를 등록해야합니다.");
       return;
     }
-
   const form = document.getElementById('image-form');
-
   const payload = new FormData(form);
 
     fetch('http://localhost:8000/resource/main-image',{
@@ -798,9 +698,7 @@ function profileImageUpload(){
       })
     .then((res)=>res.json())
     .then(res =>{
-      // console.log("통신 성공");
-      // console.log("res :" +res.data);
-      //console.log("profileDtos" + profileDtos);
+
       let profile = res.data;
       let reader = new FileReader();
       let imageUrl = profile.profileUrl;
@@ -810,28 +708,6 @@ function profileImageUpload(){
         userProfileImg.src = e.target.result;        
       }
       reader.readAsDataURL(f); 
-
-    //   let profileImage = res.data;
-    //   //console.log(profileImage);
-    //   if(!res.data){
-    //     document.querySelector('.profile-img-wrap').innerHTML +=
-    //     `
-    //     <img class="profile-image" src='https://mztalk-resource-server.s3.ap-northeast-2.amazonaws.com/7276284f-daed-4b0d-9ca3-7a7bb1930138-profile.png' onerror="this.src='duck.jpg'" id="userProfileImage">
-    //     <input type="hidden" class="imageName" value="profileName"/>
-    //     <input type="hidden" name="bNo" id="bNo" value="own"/>
-    //     `  
-    //  }else{
-    //   let profileUrl = profileImage.postImageUrl;
-    //   let profileName = profileImage.profileImageName;
-    //   let own = profileImage.own
-
-    //   document.querySelector('.profile-img-wrap').innerHTML +=
-    //   `
-    //   <img class="profile-image" src='${profileUrl}' onerror="this.src='duck.jpg'" id="userProfileImage">
-    //   <input type="hidden" class="imageName" value="${profileName}"/>
-    //   <input type="hidden" name="bNo" id="bNo" value="${own}"/>
-    //   `
-      
       })
       closePopup('.modal-image');
       
@@ -840,11 +716,8 @@ function profileImageUpload(){
   })
 };
 
-
-
 //댓글쓰기
 function addReply(boardId){
-  //let replyContent = document.querySelector();
   let replyContent = document.querySelector(`.reply-write-input-${boardId}`);
   let replyButton = document.querySelector('#replyButton');
 
@@ -866,15 +739,7 @@ function addReply(boardId){
             })
           .then((res)=>res.json())
           .then(res =>{
-
-            console.log("통신성공?");
-            
-            //console.log("res.data: "+ res.data);
-
             let reply = res.data;
-            console.log(reply.replyUserNo);
-            
-            // let lastModifiedDate = reply.lastModifiedDate;
             document.querySelector(`.reply-div-${boardId}`).innerHTML +=
             `<div>
               <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
@@ -885,29 +750,22 @@ function addReply(boardId){
               </div>
             </div>`;
           })
-          // location.href="individualpage.html";   
+           location.href="individualpage.html";   
         }   
     }
- // )}
+ 
 
     
 //댓글삭제    
 function deleteReply(Id){
-
       let replyUserNo = document.querySelector('.replyDelete').value;
       let loginUser = localStorage.getItem('userNo');
-     
-      console.log(replyUserNo);
-      console.log(loginUser);
 
-     
       if(replyUserNo != loginUser){
       alert('댓글 쓴 유저만 지울 수 있습니다.');
       return;
      }
      
-
-
     fetch("http://localhost:8000/story/board/"+Id+"/reply",{
         method:"delete",
         headers:{
@@ -923,12 +781,6 @@ function deleteReply(Id){
     })
    
   }
-
-
-
-  
-
-
 
 //팔로워리스트
 // document.querySelector("#subscribeBtn1").onclick = (e) => {
@@ -1025,10 +877,6 @@ document.querySelector("#subscribeBtn1").addEventListener("click", (e) => {
     });
 });
 
-
-
-
-
 function closeFollow() {
   document.querySelector(".modal-follow").style.display = "none";
 }
@@ -1037,12 +885,6 @@ document.querySelector(".modal-follow").addEventListener("click", (e) => {
     document.querySelector(".modal-follow").style.display = "none";
   }
 });
-
-
-
-
-
-
 
 //팔로잉리스트
 document.querySelector("#subscribeBtn").onclick = (e) => {
@@ -1124,20 +966,12 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     }
   });
 
-
-
-
   //팔로우리스트에서의 버튼
   function clickFollow(e) {
-
-    console.log(e);
     let _btn = e;
-    console.log(_btn.textContent);
     let userButton = document.querySelector('.following_button');
-    console.log("버튼"+ _btn.value);
-
+ 
     if (_btn.textContent === "팔로잉") {
-
       let fromUserId = localStorage.getItem('userNo');
       let toUserId = _btn.value;
 
@@ -1152,15 +986,11 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     .then((res)=>res.json())
     .then(res =>{
              
-      //console.log(res);
-      
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
       _btn.style.color = "#fff";
       _btn.style.border = "1px solid #ddd";
     }) 
-    
-    
     } else {
       _btn.textContent = "팔로잉";
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
@@ -1169,20 +999,9 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
     }
   }
   
-// console.log("로칼:(2)"+localStorage.getItem("own"));
-// console.log("로칼조현재:(1)"+localStorage.getItem('userNo'));
-
-
 //다른사람 피드 팔로우 기능구현
   function profilecFollow(e) {
-
-    //console.log("배한성:(2)"+localStorage.getItem("own"));
-    //console.log("조현재:(1)"+localStorage.getItem('userNo'));
-
-    //console.log(e);
-    let _btn = e;
-    //console.log(_btn.textContent);
-
+       let _btn = e;
     if (_btn.textContent.includes("팔로우")) {
       
       let fromUserId = localStorage.getItem('userNo');
@@ -1203,10 +1022,8 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       _btn.style.backgroundColor = "rgba(128, 128, 128, 0.973)";
       _btn.style.color = "#fff";
       _btn.style.border = "1px solid #ddd";
-
-
-    })
-
+      location.reload();
+     })
     } else {
       let toUserId = localStorage.getItem("own");
       let fromUserId = localStorage.getItem('userNo');
@@ -1221,42 +1038,28 @@ document.querySelector("#subscribeBtn").onclick = (e) => {
       })
     .then((res)=>res.json())
     .then(res =>{
-      // FollowCount();
-      // FollowingCount();
-      //console.log(res);
-
       _btn.textContent = "팔로우";
       _btn.style.backgroundColor = "#0095f6";
       _btn.style.color = "#fff";
       _btn.style.border = "0";
 
-   
+      location.reload();
     })
-    
     }
-
   }
-
-
-
 
 //로그아웃
 function logout(){
-
   localStorage.clear();
-  
   deleteCookie('Authorization');
   deleteCookie('RefreshToken');
-
   location.href="loginpage.html";
-
-
 }
+
 //쿠키삭제
 function deleteCookie(name) {
   document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
-
 
 //페이지이동 userNo
 const movePage = (userNo) =>{
@@ -1264,13 +1067,3 @@ const movePage = (userNo) =>{
   localStorage.setItem('own', userNo);
   location.href="individualpage.html";
 }
-
-
-
-
-
-
-
-
-
-
