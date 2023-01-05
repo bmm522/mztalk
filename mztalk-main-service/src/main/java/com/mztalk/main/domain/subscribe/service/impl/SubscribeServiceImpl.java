@@ -47,7 +47,7 @@ public class SubscribeServiceImpl implements SubscribeService {
         headersNames.add("Content-type", "text/html");
 
         ResponseEntity<String> responseName = new RestTemplate().exchange(
-                "http://localhost:8000/login/user-info/" + subscribeRequestDto.getUserNo(),
+                "http://43.200.113.144:8000/login/user-info/" + subscribeRequestDto.getUserNo(),
                 HttpMethod.GET,
                 new HttpEntity<String>(headerName),
                 String.class

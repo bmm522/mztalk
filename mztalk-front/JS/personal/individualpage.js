@@ -897,11 +897,9 @@ document.querySelector(".modal-following").addEventListener("click", (e) => {
 //다른사람 피드 팔로우 기능구현
   function profilecFollow(e) {
        let _btn = e;
-    if (_btn.textContent.includes("팔로우")) {
-      
+    if (_btn.textContent.includes("팔로우")) { 
       let fromUserId = localStorage.getItem('userNo');
       let toUserId = localStorage.getItem("own");
-      
       fetch(`${LOCALHOST_URL}/story/follow/${toUserId}/${fromUserId}`,{
         method:"POST",
         headers:{
@@ -921,7 +919,6 @@ document.querySelector(".modal-following").addEventListener("click", (e) => {
     } else {
       let toUserId = localStorage.getItem("own");
       let fromUserId = localStorage.getItem('userNo');
-      
       fetch(`${LOCALHOST_URL}/story/follow/${toUserId}/${fromUserId}`,{
         method:"delete",
         headers:{
@@ -936,9 +933,8 @@ document.querySelector(".modal-following").addEventListener("click", (e) => {
       _btn.style.backgroundColor = "#0095f6";
       _btn.style.color = "#fff";
       _btn.style.border = "0";
-
       location.reload();
-    })
+     })
     }
   }
 
