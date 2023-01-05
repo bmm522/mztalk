@@ -18,6 +18,7 @@ public class CommentResponseDto {
     private String content;
     private String writer;
     private Date createDate;
+    private Long userNo;
 
 
 
@@ -37,6 +38,7 @@ public class CommentResponseDto {
         this.content = comment.getContent();
         this.writer = comment.getWriter();
         this.createDate = comment.getCreateDate();
+        this.userNo = comment.getUserNo();
     }
 
 
