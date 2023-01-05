@@ -123,7 +123,7 @@ public class ProfileServiceImpl implements ProfileService {
         headerImage.add("Content-type", "text/html");
 
         ResponseEntity<String> responseProImg = new RestTemplate().exchange(
-                "http://43.200.113.144:8000/resource/main-image?bNo=" + own + "&serviceName=story",
+                "http://localhost:8000/resource/main-image?bNo=" + own + "&serviceName=story",
                 HttpMethod.GET,
                 new HttpEntity<String>(headerImage),
                 String.class

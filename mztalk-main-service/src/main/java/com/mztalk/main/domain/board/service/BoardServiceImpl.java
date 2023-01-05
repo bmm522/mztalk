@@ -81,7 +81,7 @@ public class BoardServiceImpl implements BoardService {
                         headersImg.add("Content-type", "text/html");
 
                         ResponseEntity<String> responseImg = new RestTemplate().exchange(
-                                "http://43.200.113.144:8000/resource/main-image?bNo=" + own + "&serviceName=story",    //첫번째: url
+                                "http://localhost:8000/resource/main-image?bNo=" + own + "&serviceName=story",    //첫번째: url
                                 HttpMethod.GET,
                                 new HttpEntity<String>(headersImg),     //바디, 헤더 다 담기 가능/엔티티
                                 String.class
