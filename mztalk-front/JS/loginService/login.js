@@ -1,3 +1,6 @@
+const LOCALHOST_URL = "http://localhost:8000";
+
+
 // Elements
 const el = {
     signUpHome: document.getElementById('sign-up'),
