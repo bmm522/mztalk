@@ -23,7 +23,7 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Modifying
     @Query(value="DELETE FROM FOLLOW WHERE fromUserId = :fromUserId AND toUserId = :toUserId", nativeQuery=true)
     void mUnFollow(@Param("fromUserId") Long fromUserId, @Param("toUserId") Long toUserId);
-    //1(변경된 행의 개수가 리턴됨) , -1(오류),  0(insert가 안됨)
+
 
     @Query(value = "SELECT * from Follow f  where f.fromUserId = :fromUserId and followStatus != 'ONSELF'", nativeQuery = true)
     List<Follow> getListByFromUserId(Long fromUserId);

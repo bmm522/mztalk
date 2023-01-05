@@ -32,6 +32,13 @@ public class FollowApiController {
         return new ResponseEntity<>(new CMRespDto<>(1, "팔로우취소성공", "ok"), HttpStatus.OK);
     }
 
+    //팔로우상태
+    @GetMapping("/followStatus/{fromUserId}/{toUserId}")
+    public ResponseEntity<?> followStatus(@PathVariable Long fromUserId, @PathVariable Long toUserId){
+        Long result = followService.followStatus(fromUserId, toUserId);
+        return new ResponseEntity<>(new CMRespDto<>(1, "팔로잉리스트", result), HttpStatus.OK);
+    }
+
     //팔로워 리스트(팔로워쪽)
     @GetMapping("/followList/{toUserId}")
     public ResponseEntity<?> followList(@PathVariable Long toUserId){
@@ -47,12 +54,6 @@ public class FollowApiController {
     }
 
 
-    //팔로우상태
-    @GetMapping("/followStatus/{fromUserId}/{toUserId}")
-    public ResponseEntity<?> followStatus(@PathVariable Long fromUserId, @PathVariable Long toUserId){
-        Long result = followService.followStatus(fromUserId, toUserId);
-        return new ResponseEntity<>(new CMRespDto<>(1, "팔로잉리스트", result), HttpStatus.OK);
-    }
 
     @GetMapping("/matpalList/{fromUserId}")
     public ResponseEntity<?> matpalList(@PathVariable Long fromUserId){

@@ -46,6 +46,13 @@ public class FollowServiceImpl implements FollowService {
         followRepository.mUnFollow(fromUserId, toUserId);
     }
 
+    //팔로우=1/ 언팔=0
+    @Override
+    @Transactional
+    public Long followStatus(Long fromUserId, Long toUserId) {return followRepository.followStatus(fromUserId, toUserId);}
+
+
+
     //팔로워리스트
     @Override
     @Transactional
@@ -144,10 +151,7 @@ public class FollowServiceImpl implements FollowService {
         return followDtoList;
     }
 
-    //팔로우=1/ 언팔=0
-    @Override
-    @Transactional
-    public Long followStatus(Long fromUserId, Long toUserId) {return followRepository.followStatus(fromUserId, toUserId);}
+
 
 
     //맞팔 리스트
