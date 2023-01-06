@@ -1,4 +1,6 @@
 
+const LOCALHOST_URL = "http://localhost:8000";
+
 const moveMain = ()=>{
     window.open('loginpage.html', 'MZTALK').opener.close();
 }

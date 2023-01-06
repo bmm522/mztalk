@@ -1,5 +1,6 @@
 window.resizeTo(200,200); // 지정한 크기로 변한다.(가로,세로)
 
+const LOCALHOST_URL = "http://localhost:8000";
 
 const isNicknameVaildText = () =>{
 	 let checkNicknameDiv = document.getElementById('checkNickname');

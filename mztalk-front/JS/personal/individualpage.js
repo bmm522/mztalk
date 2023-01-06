@@ -488,7 +488,7 @@ write_board.addEventListener('click', function(){
                       </div>`;
                })
           }   
-           location.href="individualpage.html";   
+      
       });
      
 //수정창상세보기

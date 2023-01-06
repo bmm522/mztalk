@@ -33,7 +33,7 @@ async function main() {
   }
 
   const db = client.db('testdata');
-  const chatCollection = db.collection('chatTest');
+  const chatCollection = db.collection('chatting');
 
   app.get('/chat-friends', function(req, res) {
     res.sendFile(path.join(__dirname, '../', 'mztalk-front/chatService', 'chat-friends.html'));

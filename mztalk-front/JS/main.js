@@ -10,7 +10,10 @@ const BUNG_URL = `${LOCALHOST_URL}/bung/mainBoards-main/`;
 const MENTOR_URL = `${LOCALHOST_URL}/mentors/board/latest/`;
 
 
-
+document.addEventListener('DOMContentLoaded', function() {
+  ROLEVIP();
+  checkVip();
+});
 
 
 //개인페이지
