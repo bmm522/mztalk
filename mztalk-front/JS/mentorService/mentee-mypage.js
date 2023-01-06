@@ -441,10 +441,8 @@ function cancelPay(paymentId,impUid,merchantUid,price,mentoringDate) {
                     },type: "POST"
                 }).done(function(result){
                     alert('결제가 취소되었습니다.');
-                    location.href="mentee-myPage.html";
                 }).fail(function(result){
                     alert('결제취소에 실패하셨습니다.');
-                    location.href="mentee-myPage.html";
                     return false;
                 })
             }

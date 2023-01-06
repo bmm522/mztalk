@@ -77,7 +77,6 @@ public class Application extends BaseTimeEntity {
     }
 
     //== 연관관계 편의 메소드 ==//
-
     public void addMentee(Mentee mentee){
         this.mentee = mentee;
         mentee.addApplication(this);

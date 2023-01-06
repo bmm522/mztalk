@@ -24,17 +24,16 @@
     <nav>
         <div class="navContainer">
             <article class="logoWrap">
-                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" alt="로고">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" onclick="moveMainPage();" class="logoMain" alt="로고">
                 <div class="columnLine"></div>
-                <h1 class="logo">MZTALK</h1>
+                <h1 class="logo" onclick="moveMainPage();">MZTALK</h1>
             </article>
             <!-- <article class="search">
                 <input type="text" placeholder="검색" >
             </article> -->
             <article class="pictogramWrap">
-
-                <i class="fa-solid fa-comments" style=""></i>
-                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필">
+                <i id="move-chat-service" class="fa-solid fa-comments"></i>               
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필" id="move-story-service" >
             </article>
         </div>
     </nav>

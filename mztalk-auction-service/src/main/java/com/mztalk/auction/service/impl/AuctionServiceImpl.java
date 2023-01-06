@@ -121,6 +121,11 @@ public class AuctionServiceImpl implements AuctionService {
         return new Result<>(boardListResponseDtoList);
     }
 
+    @Override
+    public int changedNickname(ChangedNicknameDto changedNicknameDto) {
+        return boardRepository.changedNickname(changedNicknameDto);
+    }
+
 
     private LocalDateTime getLocalDateTime(String time){
         return LocalDateTime.parse(time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -319,15 +324,11 @@ public class AuctionServiceImpl implements AuctionService {
             if(!board.getIsClose().equals("Y")){
                 boardRepository.updateIsClose(board.getBoardId());
             }
-
         } else {
             timeMap.put("hour", hour);
             timeMap.put("minute", minute);
             timeMap.put("second", second);
         }
-
-
-
         return timeMap;
     }
 

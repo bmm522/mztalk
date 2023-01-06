@@ -1,9 +1,8 @@
 
 window.onload = ()=>{
     load(1);
-    ROLEVIP();
-    checkVip();
-    profileBoxs();
+    // ROLEVIP();
+    // checkVip();
     console.log("main : " + localStorage.getItem('authorization'));
     console.log("main : " + localStorage.getItem('refreshToken'));
     console.log("main : " + localStorage.getItem('userNo'));

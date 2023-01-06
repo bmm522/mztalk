@@ -33,18 +33,18 @@ async function main() {
   }
 
   const db = client.db('testdata');
-  const chatCollection = db.collection('chatTest');
+  const chatCollection = db.collection('chatting');
 
   app.get('/chat-friends', function(req, res) {
-    res.sendFile(path.join(__dirname, '../', 'mztalk-front', 'chat-friends.html'));
+    res.sendFile(path.join(__dirname, '../', 'mztalk-front/chatService', 'chat-friends.html'));
   });
 
   app.get('/chat-auction', function(req, res) {
-    res.sendFile(path.join(__dirname, '../', 'mztalk-front', 'chat-auction.html'));
+    res.sendFile(path.join(__dirname, '../', 'mztalk-front/chatService', 'chat-auction.html'));
   });
 
   app.get('/chat-bung', function(req, res) {
-    res.sendFile(path.join(__dirname, '../', 'mztalk-front', 'chat-bung.html'));
+    res.sendFile(path.join(__dirname, '../', 'mztalk-front/chatService', 'chat-bung.html'));
   });
 
   app.get('/conversations', async (req, res) => {
