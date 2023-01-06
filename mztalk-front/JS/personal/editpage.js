@@ -36,7 +36,7 @@ const checkVipCheck = ()=>{
         `
         <div id="viptime">
         <a id="vipnickname">${userNickname}</a> 
-          회원 기간은<br>
+          구독 기간은<br>
         <a>${createDate} 부터
         <br>${vipDate}입니다.</a>
         </div>
