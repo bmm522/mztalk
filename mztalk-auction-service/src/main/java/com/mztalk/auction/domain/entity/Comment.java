@@ -33,7 +33,7 @@ public class Comment {
 
     private String writer;
 
-    private Long userNo;
+    //private Long userNo;
 
 
 //    public Comment(Long cId, String content, Date createDate, Board board, String status, String writer) {

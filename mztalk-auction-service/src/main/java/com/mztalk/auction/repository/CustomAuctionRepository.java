@@ -34,5 +34,5 @@ public interface CustomAuctionRepository {
 
     int closeBoard(Long boardId);
 
-    int changedNickname(ChangedNicknameDto changedNicknameDto);
+ //   int changedNickname(ChangedNicknameDto changedNicknameDto);
 }
