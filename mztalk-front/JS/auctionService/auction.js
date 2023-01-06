@@ -42,7 +42,7 @@ document.getElementById("searchBtn").addEventListener('click', function() {
 // 메인 리스트 뽑아오기
 const mainLoad = (page) =>{
 
-    fetch(`${LOCALHOST_URL}/auction/board/page/${page}`, {
+    fetch('http://localhost:8000/auction/board/page/'+page, {
         method:"GET",
         headers:{
             // "Content-Type":"application/json",
@@ -153,7 +153,7 @@ const moveDeatils = (boardId) => {
 
 //글쓰기 이동
 document.getElementById('writeBoard').addEventListener('click', function(){
-    fetch(`${LOCALHOST_URL}/auction/recent-board`,{
+    fetch('http://localhost:8000/auction/recent-board',{
         method:"GET",
         headers:{
             Authorization:localStorage.getItem('authorization'),
@@ -170,7 +170,7 @@ document.getElementById('writeBoard').addEventListener('click', function(){
 
 // 검색 리스트
 const searchLoad = (searchPage) =>{
-    fetch(`${LOCALHOST_URL}/auction/board/keyword/` + document.getElementById('searchBoard').value+'/'+searchPage, {
+    fetch('http://localhost:8000/auction/board/keyword/' + document.getElementById('searchBoard').value+'/'+searchPage, {
         method: "GET",
         headers: {
             Authorization:localStorage.getItem('authorization'),
@@ -291,7 +291,7 @@ function isClose() {
 const closeEvent = (finishPage) => {
 
         
-        fetch(`${LOCALHOST_URL}/auction/board/close/${finishPage}`, {
+        fetch('http://localhost:8000/auction/board/close/' + finishPage, {
             method: "GET",
             headers: {
                 Authorization:localStorage.getItem('authorization'),
