@@ -95,6 +95,13 @@ nav {
  
 }
 
+.advertisement {
+  position: fixed;
+  margin-left: 72%;
+ 
+}
+
+
 .remocon{
   
   border : 3px solid black;
