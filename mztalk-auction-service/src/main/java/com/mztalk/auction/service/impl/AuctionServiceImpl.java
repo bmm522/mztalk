@@ -120,11 +120,12 @@ public class AuctionServiceImpl implements AuctionService {
         }
         return new Result<>(boardListResponseDtoList);
     }
-//
-//    @Override
-//    public int changedNickname(ChangedNicknameDto changedNicknameDto) {
-//        return boardRepository.changedNickname(changedNicknameDto);
-//    }
+
+    //닉네임 변경
+    @Override
+    public int changedNickname(ChangedNicknameDto changedNicknameDto) {
+        return boardRepository.changedNickname(changedNicknameDto);
+    }
 
 
     private LocalDateTime getLocalDateTime(String time){

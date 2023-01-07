@@ -14,6 +14,6 @@ public class CommentRequestDto {
     private String content;
     private String writer;
     private Date createDate;
-//    private Long userNo;
+    private Long userNo;
 
 }

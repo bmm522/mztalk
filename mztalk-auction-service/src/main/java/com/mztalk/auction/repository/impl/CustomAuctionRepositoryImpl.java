@@ -136,14 +136,14 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
                 .executeUpdate();
     }
 
-//    @Transactional
-//    @Override
-//    public int changedNickname(ChangedNicknameDto changedNicknameDto) {
-//        return entityManager. createQuery("update Board b set b.writer = :nickname where b.userNo = :userNo")
-//                .setParameter("nickname", changedNicknameDto.getNickname())
-//                .setParameter("userNo", changedNicknameDto.getUserNo())
-//                .executeUpdate();
-//    }
+    @Transactional
+    @Override
+    public int changedNickname(ChangedNicknameDto changedNicknameDto) {
+        return entityManager. createQuery("update Board b set b.writer = :nickname where b.userNo = :userNo")
+                .setParameter("nickname", changedNicknameDto.getNickname())
+                .setParameter("userNo", changedNicknameDto.getUserNo())
+                .executeUpdate();
+    }
 
 
 }
