@@ -148,31 +148,18 @@ async function ch_nickName() {
         id,
       }),
     });
-    // await fetch(`${LOCALHOST_URL}/auction/nickname`, {
-    //   method: "PATCH",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: localStorage.getItem('authorization'),
-    //     RefreshToken: localStorage.getItem('refreshToken'),
-    //   },
-    //   body: JSON.stringify({
-    //     nickname,
-    //     userNo,
-    //   }),
-    // });
-    // await fetch(`${LOCALHOST_URL}/bung/nickname`, {
-    //   method: "PATCH",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: localStorage.getItem('authorization'),
-    //     RefreshToken: localStorage.getItem('refreshToken'),
-    //   },
-    //   body: JSON.stringify({
-    //     nickname,
-    //     userNo,
-    //   }),
-    // });
-
+    await fetch(`${LOCALHOST_URL}/auction/nickname`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem('authorization'),
+        RefreshToken: localStorage.getItem('refreshToken'),
+      },
+      body: JSON.stringify({
+        nickname,
+        userNo,
+      }),
+    });
     alert('닉네임변경완료');
     localStorage.clear();
     deleteCookie('Authorization');
