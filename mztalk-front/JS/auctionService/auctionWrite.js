@@ -70,7 +70,7 @@ window.onload = () => {
     document.getElementById('listBtn').addEventListener('click', function() {
         location.href="auction.html";
     })
-    console.log(document.getElementById('image-form-form'));
+    console.log(document.getElementById('image-form-form-form'));
     document.getElementById('hidden-bId').value = localStorage.getItem('bId');
     console.log('bId : ' + document.getElementById('hidden-bId').value);
     const fileArea = document.getElementById("fileArea");
