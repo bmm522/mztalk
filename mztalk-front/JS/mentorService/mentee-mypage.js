@@ -1,3 +1,5 @@
+//const { main } = require("@popperjs/core");
+
 let isSearchPerformed = false;
 let isMainPerformed = true;
 window.onload = function(){
@@ -88,6 +90,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
                 if(res != null){
                     window.alert('멘토 신청 완료');
                     location.href="mentor-main.html";
+                    
                 } else {
                     window.alert('멘토 신청 실패');
                     return false;

@@ -304,6 +304,7 @@ const outUser = (userNo) =>{
 }
 
 const moveDetail = (bId, serviceName, path) =>{
+    console.log('admin : ' + bId);
     localStorage.setItem('bId', bId);
     location.href = path;
 }
