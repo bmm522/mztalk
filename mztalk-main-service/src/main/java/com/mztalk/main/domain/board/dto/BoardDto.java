@@ -1,6 +1,7 @@
 package com.mztalk.main.domain.board.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
 import com.mztalk.main.domain.reply.Reply;
@@ -36,8 +37,10 @@ public class BoardDto {
     @ApiModelProperty(value="글 공개범위", example = "PUBLIC", required = true)
     private PrivacyStatus privacy; //글공개범위
     @ApiModelProperty(value="글생성 날짜", example = "2023-01-01'T'12:00:00", required = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
     @ApiModelProperty(value="글수정 날짜", example = "2023-01-01'T'12:00:00", required = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime lastModifiedDate;
 
     @ApiModelProperty(value="서비스 이름", example = "STORY", required = true)
