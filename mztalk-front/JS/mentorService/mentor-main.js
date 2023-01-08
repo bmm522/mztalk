@@ -100,37 +100,55 @@ document.getElementById('sendSearch').addEventListener('click', function(){
 
 // 글 신고하기
 const reportBoard = () =>{
-    const id = document.getElementById('boardId-modal').value;
-    fetch(`${LOCALHOST_URL}/mentors/board/${id}`,{
-        method:"GET",
-        headers:{
-            "Content-Type":"application/json",
+    const userId = localStorage.getItem('userNo');
+    const boardId = document.getElementById('boardId-modal').value;
+    fetch(`${LOCALHOST_URL}/mentors/board/mentor?userId=${userId}&boardId=${boardId}`,{
+        method: "GET",
+        headers: { 
+            "Content-Type": "application/json;",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken')
-        },
+        }
     })
     .then((res)=>res.json())
     .then(res =>{
-        const userId = res.data.mentor.userId;
-        const bId = res.data.id;
-        fetch(`${LOCALHOST_URL}/login/report`,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                reportTitle : document.getElementById('reportTitle').value,
-                reportContent : document.getElementById('reportContent').value,
-                boardId : bId,
-                serviceName : "mentor",
-                userNo : userId
+        if(res){
+            alert('본인의 글을 신고할 수 없습니다.');
+            location.href="mentor-main.html";
+            return false;
+        } else{
+            fetch(`${LOCALHOST_URL}/mentors/board/${boardId}`,{
+                method:"GET",
+                headers:{
+                    "Content-Type":"application/json",
+                    Authorization:localStorage.getItem('authorization'),
+                    RefreshToken:localStorage.getItem('refreshToken')
+                },
             })
-        })
-    })
-    .then(res =>{
-        alert('신고가 접수되었습니다.');
-        location.href="mentor-main.html";
-    })
+            .then((res)=>res.json())
+            .then(res =>{
+                const userId = res.data.mentor.userId;
+                const bId = res.data.id;
+                fetch(`${LOCALHOST_URL}/login/report`,{
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({
+                        reportTitle : document.getElementById('reportTitle').value,
+                        reportContent : document.getElementById('reportContent').value,
+                        boardId : bId,
+                        serviceName : "mentor",
+                        userNo : userId
+                    })
+                })
+            })
+            .then(res =>{
+                alert('신고가 접수되었습니다.');
+                location.href="mentor-main.html";
+            })
+        }
+    })    
 }
 
 // 글번호에 대해 글 상세 보기
@@ -194,7 +212,6 @@ const watchReview = (mentorId) => {
         }
       });
   };
-
 
 
 const searchEvent = () =>{
