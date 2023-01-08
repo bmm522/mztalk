@@ -16,7 +16,7 @@ public interface CustomAuctionRepository {
 
     void updatePrice(BoardPriceDto boardPriceDto);
 
-    int updateCount(Long bId, String writer);
+    int updateCount(Long bId, Long writer);
 
 
 

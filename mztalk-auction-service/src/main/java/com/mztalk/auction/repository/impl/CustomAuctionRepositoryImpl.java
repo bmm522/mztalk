@@ -80,10 +80,10 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     //조회수 증가
     @Transactional
     @Override
-    public int updateCount(Long bId, String writer) {
-        return entityManager.createQuery("update Board b set b.count = b.count + 1 where b.boardId = :bId and b.writer != :writer")
+    public int updateCount(Long bId, Long writerId) {
+        return entityManager.createQuery("update Board b set b.count = b.count + 1 where b.boardId = :bId and b.userNo != :writerId")
                 .setParameter("bId", bId)
-                .setParameter("writer", writer)
+                .setParameter("writerId", writerId)
                 .executeUpdate();
     }
 
