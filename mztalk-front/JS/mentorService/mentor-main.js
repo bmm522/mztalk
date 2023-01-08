@@ -159,7 +159,7 @@ const getBoardDetail = (bId) => {
           const boardPrice = document.getElementById('board-price');
           boardPrice.value = res.data.salary;
         } else {
-          console.log("실패");
+          window.alert("실패");
         }
       });
   };
@@ -190,7 +190,7 @@ const watchReview = (mentorId) => {
             reviewBody.innerHTML += `${star}<br/>${content}<br/><br/>`;
           }
         } else {
-          console.log("Failed to fetch review");
+          window.alert("Failed to fetch review");
         }
       });
   };
@@ -213,7 +213,6 @@ const searchEvent = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log(document.querySelector('#board-list-search-div'));
         if(res.data.length != 0){
             let cnt = 1;
             document.querySelector('#board-list-search-div').innerHTML = '<div class="row" style="padding:20px;" id="row-div2">';

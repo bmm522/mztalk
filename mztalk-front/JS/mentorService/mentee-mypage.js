@@ -7,7 +7,6 @@ window.onload = function(){
 
 window.onscroll = () =>{
     if (window.innerHeight + window.scrollY >= document.getElementById('board-list-div').offsetHeight && isMainPerformed) {
-        console.log('page :' +  page);
         page++;
         getBoardList(page);
     }
@@ -120,7 +119,6 @@ document.getElementById('accountButton').addEventListener('click', function(){
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log(res);
         if(res.rsp_code =='A0321'){
             alert('생년월일이 형식에 부적합 합니다');
             isAccount = false;
@@ -342,7 +340,7 @@ const getBoardDetail = (bId) => {
           const boardPrice = document.getElementById('board-price');
           boardPrice.value = res.data.salary;
         } else {
-          console.log("실패");
+          alert('상세보기 실패');
         }
       });
   };
@@ -373,7 +371,7 @@ const watchReview = (mentorId) => {
             reviewBody.innerHTML += `${star}<br/>${content}<br/><br/>`;
           }
         } else {
-          console.log("Failed to fetch review");
+          window.alert("Failed to fetch review");
         }
       });
   };
@@ -430,7 +428,6 @@ function cancelPay(paymentId,impUid,merchantUid,price,mentoringDate) {
             }),
             dataType: "json"
         }).done(function(result){
-            console.log(result);
             if(result.code == "0"){
                 $.ajax({
                     url: `${LOCALHOST_URL}/mentors/payment/cancel/${paymentId}`,
