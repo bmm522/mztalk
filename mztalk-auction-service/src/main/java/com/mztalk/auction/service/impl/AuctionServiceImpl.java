@@ -4,8 +4,10 @@ import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
+import com.mztalk.auction.domain.entity.Price;
 import com.mztalk.auction.repository.BoardRepository;
 import com.mztalk.auction.repository.CommentRepository;
+import com.mztalk.auction.repository.PriceRepository;
 import com.mztalk.auction.service.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.client.ClientProtocolException;
@@ -48,6 +50,7 @@ public class AuctionServiceImpl implements AuctionService {
 
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
+    private final PriceRepository priceRepository;
 
     //게시글 작성
     @Transactional
@@ -126,6 +129,7 @@ public class AuctionServiceImpl implements AuctionService {
     public int changedNickname(ChangedNicknameDto changedNicknameDto) {
         return boardRepository.changedNickname(changedNicknameDto);
     }
+
 
 
     private LocalDateTime getLocalDateTime(String time){
@@ -207,6 +211,14 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public BoardPriceDto updatePrice(BoardPriceDto boardPriceDto) {
         boardRepository.updatePrice(boardPriceDto);
+
+        Board board = boardRepository.findByBoardId(boardPriceDto.getBoardId());
+        Price price = Price.builder()
+                .board(board)
+                .buyer(boardPriceDto.getBuyer())
+                .currentPrice(boardPriceDto.getCurrentPrice())
+                .build();
+        priceRepository.save(price);
         return boardPriceDto;
     }
 
@@ -279,7 +291,7 @@ public class AuctionServiceImpl implements AuctionService {
         return new CommentResponseDto(comment);
     }
 
-    //입찰 마감 게시글 제외
+    //마감 게시글 제외
     @Override
     public Result<?> selectCloseBoardList(int page) throws ParseException {
         List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
@@ -368,6 +380,19 @@ public class AuctionServiceImpl implements AuctionService {
     public void postChatRoom(BoardDto boardDto) {
 
     }
+
+//    //입찰가 현황 받아오기
+//    @Override
+//    public Result<?> getCurrentPrice(Long bId) {
+//        Price price = priceRepository.findByBoardId(bId);
+//        List<PriceDto> priceDtoList = new ArrayList<>();
+//
+//
+//    }
+//@Override
+//public Result<?> getCurrentPrice(Long bId) {
+//    return null;
+//}
 
 
 

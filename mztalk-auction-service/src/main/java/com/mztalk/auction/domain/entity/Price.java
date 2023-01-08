@@ -1,5 +1,6 @@
 package com.mztalk.auction.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,25 +13,17 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Images {
-
+public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long iId;
+    private Long priceId;
 
     @ManyToOne
-    @JoinColumn(name ="bId")
+    @JoinColumn(name = "boardId", nullable=false)
+    @JsonManagedReference
     private Board board;
 
-    @Column(nullable = false)
-    private String imageName;
+    private String buyer;
 
-    @Column(nullable = false)
-    private String imagePath;
-
-    @Column(nullable = false)
-    private Integer level;
-
-
-
+    private Integer currentPrice;
 }
