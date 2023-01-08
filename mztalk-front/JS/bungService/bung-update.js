@@ -567,9 +567,8 @@ while (el.hasChildNodes()) {
 
 window.onload = function(){
     document.getElementById('bungTitle').value = localStorage.getItem('title');
-    document.getElementById('bungContent').value = localStorage.getItem('content');
+    document.getElementById('bungContent').value = localStorage.getItem('bungContent');
     document.getElementById('bungAddress').value = localStorage.getItem('address');
-    console.log(localStorage.getItem('address'));
     document.getElementById('bId-hidden').value = localStorage.getItem('bId');
     
     const imageInfo = JSON.parse(localStorage.getItem("imageInfo"));

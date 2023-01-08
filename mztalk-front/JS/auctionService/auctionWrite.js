@@ -19,10 +19,10 @@ function timeStandard(time) {
 
 //글쓰기 insert
 function boardWrite() {
-    const form = document.getElementById('image-form-form');
+    const form = document.getElementById('image-form-form-form');
     const payload = new FormData(form);
 
-    fetch(`${LOCALHOST_URL}/resource/images`,{
+    fetch('http://localhost:8000/resource/images',{
         method: 'POST',
         body: payload,
     })
@@ -39,7 +39,7 @@ const postData = () =>{
 
     console.log("글작성시 isbn값 확인: " + document.getElementById('hidden-isbn').value);
 
-    fetch(`${LOCALHOST_URL}/auction/board`, {
+    fetch('http://localhost:8000/auction/board', {
         method: "POST",
         headers: {
             "Content-Type":"application/json",
@@ -70,7 +70,7 @@ window.onload = () => {
     document.getElementById('listBtn').addEventListener('click', function() {
         location.href="auction.html";
     })
-    console.log(document.getElementById('image-form-form'));
+    console.log(document.getElementById('image-form-form-form'));
     document.getElementById('hidden-bId').value = localStorage.getItem('bId');
     console.log('bId : ' + document.getElementById('hidden-bId').value);
     const fileArea = document.getElementById("fileArea");

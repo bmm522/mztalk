@@ -363,7 +363,6 @@
             },
             function (rsp) {
                 if (rsp.success) {
-                    console.log(rsp);
                     $.ajax({
                         url: `${LOCALHOST_URL}/mentors/participant`,
                         method: "POST",

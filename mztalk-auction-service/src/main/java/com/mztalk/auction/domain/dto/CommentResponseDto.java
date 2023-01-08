@@ -38,7 +38,7 @@ public class CommentResponseDto {
         this.content = comment.getContent();
         this.writer = comment.getWriter();
         this.createDate = comment.getCreateDate();
-        this.userNo = comment.getUserNo();
+//        this.userNo = comment.getUserNo();
     }
 
 

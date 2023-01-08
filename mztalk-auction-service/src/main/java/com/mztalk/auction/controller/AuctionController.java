@@ -140,11 +140,17 @@ public class AuctionController {
         auctionService.postChatRoom(boardDto);
     }
 
-    //닉네임 변경했을 시
+    //닉네임 변경 시
     @PatchMapping("/nickname")
-    public int changedNickname(ChangedNicknameDto changedNicknameDto){
+    public int changedNickname(@RequestBody ChangedNicknameDto changedNicknameDto){
         return auctionService.changedNickname(changedNicknameDto);
     }
+//
+//    //입찰 현황 데이터 받아오기
+//    @GetMapping("/currnetPrice/{bId}")
+//    public Result<?> getCurrentPrice(@PathVariable("bId") Long bId) {
+//        return auctionService.getCurrentPrice(bId);
+//    }
 
 
 }

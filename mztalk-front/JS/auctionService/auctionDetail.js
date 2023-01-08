@@ -425,6 +425,39 @@ function bookInform(isbn) {
     })
 }
 
+//개인 페이지 이동
 document.getElementById('writer').addEventListener('click', function() {
     moveBungToStory(writerId);
 });
+
+//입찰 차트
+// Load the Visualization API and the corechart package.
+google.load('visualization', '1.1', {packages:['line']});
+
+// Set a callback to run when the Google Visualization API is loaded.
+google.setOnLoadCallback(drawChart);
+
+// Callback that creates and populates a data table,
+// instantiates the pie chart, passes in the data and
+// draws it.
+function drawChart() {
+
+  // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', '닉네임');
+    data.addColumn('number', '입찰가');
+    data.addRows([
+    ['테스트1', 1000],
+    ['테스트2', 1500],
+    ['테스트3', 1600],
+    ]);
+
+  // Set chart options
+    var options = {'title':'입찰현황',
+                'width':500,
+                'height':300};
+
+  // Instantiate and draw our chart, passing in some options.
+    var chart = new google.charts.Line(document.getElementById('chart_div'));
+    chart.draw(data, options);
+}

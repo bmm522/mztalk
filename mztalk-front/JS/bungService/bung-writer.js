@@ -203,7 +203,9 @@ mapOption = {
 };  
 
 // 지도를 생성합니다    
-var map = new window.kakao.maps.Map(mapContainer, mapOption); 
+var map = new window.kakao.maps.Map(mapContainer, mapOption);
+
+
 
 // var geocoder = new kakao.maps.services.Geocoder();
 
@@ -225,8 +227,6 @@ var map = new window.kakao.maps.Map(mapContainer, mapOption);
 //     map.setCenter(coords);
 //     } 
 //     }); 
-
-var map = new kakao.maps.Map(mapContainer, mapOption); 
 
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
@@ -332,7 +332,7 @@ function searchPlaces() {
 const keyword = document.getElementById('keyword').value;
 
 if (!keyword.replace(/^\s+|\s+$/g, '')) {
-    alert('키워드를 입력해주세요!');
+    // alert('키워드를 입력해주세요!');
     return false;
 }
 
@@ -422,48 +422,6 @@ menuEl.scrollTop = 0;
 map.setBounds(bounds);
 }
 
-// function displayAddress(places) {
-//     let div = document.getElementById('addressName')
-//     let address = HTMLElement.innerHTML;
-//     HTMLElement.innerHTML = places.address_name;
-//     // let address = places.address_name
-//     // let = document.getElementById('addressName');
-
-//     // address.value;
-// }
-
-// 지도에 클릭 이벤트를 등록합니다
-// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-    // let el = document.getElementById('placesList')
-    // kakao.maps.event.addListener(el, 'click', function(mouseEvent) {        
-        
-    //     function displayAddress(places) {
-
-    //     // 클릭한 주소 정보를 가져옵니다 
-    //     let address = places.address_name;
-
-    //     console.log(places.address_name)
-    //     let message = '클릭한 위치의 주소는 ' + address.getLat + ' 입니다. ';       
-
-    //     var resultDiv = document.getElementById('addressName'); 
-    //     resultDiv.innerHTML = message;
-    //     }
-    // });
-    // kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-
-    //     // 클릭한 위도, 경도 정보를 가져옵니다 
-    //     var latlng = mouseEvent.latLng; 
-
-    //     // 마커 위치를 클릭한 위치로 옮깁니다
-    //     marker.setPosition(latlng);
-
-    //     var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-    //     message += '경도는 ' + latlng.getLng() + ' 입니다';
-
-    //     var resultDiv = document.getElementById('clickLatlng'); 
-    //     resultDiv.innerHTML = message;
-
-    // });
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
@@ -564,6 +522,7 @@ while (el.hasChildNodes()) {
     el.removeChild (el.lastChild);
 }
 }
+
 
 
 
