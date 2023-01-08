@@ -9,6 +9,7 @@ document.getElementById("priceSubmitBtn").addEventListener('click', function() {
 
 //댓글 작성
 document.getElementById('commInsertBtn').addEventListener('click', function() {
+    console.log("댓글작성시 userNo: " + localStorage.getItem("userNo"));
     fetch(`${LOCALHOST_URL}/auction/comment`, {
         method: "POST",
         headers: {
@@ -19,13 +20,13 @@ document.getElementById('commInsertBtn').addEventListener('click', function() {
         body:JSON.stringify({
             "boardId" : document.getElementById("hidden-bId").value,
             "content" : document.getElementById("commInput").value,
-            "writer": localStorage.getItem("userNickname")
+            "writer": localStorage.getItem("userNickname"),
+            "userNo": localStorage.getItem("userNo")
         }),
     })
     .then((res) => res.json())
     .then(res => {
         document.getElementById('commInput').value = "";
-        console.log("댓글 작성 시 response: " + JSON.stringify(res));
         console.log("댓글 작성 성공");
         let cId = res.cid;
         let content = res.content;
@@ -158,7 +159,7 @@ window.onload = () => {
         if(localStorage.getItem("userNickname") == writer) {
             document.getElementById("buttonArea").innerHTML = '<button type="button" id="updateBtn" style="margin-right:5px; cursor: pointer;" onclick="updateBoard();">수정</button><button type="button" id="deleteBtn" style="margin-right:5px; cursor: pointer;" onclick="deleteBoard();">삭제</button><div class = "modal-header" style = "display: inline-block;"></div>';
         } else {
-            document.getElementById("buttonArea").innerHTML = '<button type="button" id="reportBtn" data-bs-toggle="modal" data-bs-target="#reportModal" onclick="reportBoard();">신고</button';
+            document.getElementById("buttonArea").innerHTML = '<button type="button" id="reportBtn" data-bs-toggle="modal" data-bs-target="#reportModal" onclick="postReport();">신고</button';
         }
         document.getElementById('homeArea').innerHTML = `<span style="margin-left:20px;"s><a style="font-weight: bold; text-decoration: none; color: burlywood;" href = "auction.html">HOME</a></span><input type = "hidden" id = "hidden-writer" value = ${writer}/>`
         document.getElementById('title').innerHTML = title;
@@ -353,29 +354,29 @@ const deleteFatch = () =>{
 const postReport=()=>{
     const bId = document.getElementById('hidden-bId').value;
     document.getElementById('report-btn').addEventListener('click', function(){
-      const bId = document.getElementById('hidden-bId').value;
-      console.log('신고 클릭됨');
-      console.log('title : ' +document.getElementById('reportTitle').value);
-      console.log('content : ' + document.getElementById('reportContent').value);
-      console.log('bId : ' + bId);
-      console.log('userNo : ' + localStorage.getItem('userNo'));
-      fetch(`${LOCALHOST_URL}/login/report`,{
-              method:"POST",
-              headers:{
-                  "Content-Type":"application/json",
-              },
-              body:JSON.stringify({
-                  reportTitle : document.getElementById('reportTitle').value,
-                  reportContent : document.getElementById('reportContent').value,
-                  boardId : bId,
-                  serviceName : "auction",
-                  userNo : localStorage.getItem('userNo'),                   
-                  })
-              })
-              .then(res =>{
-                  alert('신고 접수 되었습니다.');
-                  location.href="auctionDetail.html";
-              })
+        const bId = document.getElementById('hidden-bId').value;
+        console.log('신고 클릭됨');
+        console.log('title : ' +document.getElementById('reportTitle').value);
+        console.log('content : ' + document.getElementById('reportContent').value);
+        console.log('bId : ' + bId);
+        console.log('userNo : ' + localStorage.getItem('userNo'));
+        fetch(`${LOCALHOST_URL}/login/report`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify({
+                reportTitle : document.getElementById('reportTitle').value,
+                reportContent : document.getElementById('reportContent').value,
+                boardId : bId,
+                serviceName : "auction",
+                userNo : localStorage.getItem('userNo')
+                })
+        })
+        .then(res =>{
+            alert('신고 접수 되었습니다.');
+            location.href="auctionDetail.html";
+        })
     })
 }
 

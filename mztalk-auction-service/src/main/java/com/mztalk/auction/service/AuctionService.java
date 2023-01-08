@@ -47,7 +47,7 @@ public interface AuctionService {
 
     Result<?> selectBoardListOfFront(int page) throws ParseException;
 
-    int changedNickname(ChangedNicknameDto changedNicknameDto);
+    void changedNickname(ChangedNicknameDto changedNicknameDto);
 
 //    Result<?> getCurrentPrice(Long bId);
 }

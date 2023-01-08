@@ -126,8 +126,8 @@ public class AuctionServiceImpl implements AuctionService {
 
     //닉네임 변경
     @Override
-    public int changedNickname(ChangedNicknameDto changedNicknameDto) {
-        return boardRepository.changedNickname(changedNicknameDto);
+    public void changedNickname(ChangedNicknameDto changedNicknameDto) {
+        boardRepository.changedNickname(changedNicknameDto);
     }
 
 
@@ -254,6 +254,7 @@ public class AuctionServiceImpl implements AuctionService {
                 .writer(commentRequestDto.getWriter())
                 .createDate(commentRequestDto.getCreateDate())
                 .status("Y")
+                .userNo(commentRequestDto.getUserNo())
                 .build();
         return new CommentResponseDto(commentRepository.save(comment));
     }
