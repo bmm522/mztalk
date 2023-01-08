@@ -68,6 +68,14 @@ window.onload= function(){
         if(localStorage.getItem('writer') != localStorage.getItem('userNickname')) {
             document.getElementById('deleteBtn').innerHTML = "";
         }
+
+        if(localStorage.getItem('writer') == localStorage.getItem('userNickname')) {
+            document.getElementById('report').innerHTML = "";
+        }
+
+        if(localStorage.getItem('writer') == localStorage.getItem('userNickname')) {
+            document.getElementById('question').innerHTML = "";
+        }
     
         console.log("글쓴이 : " +localStorage.getItem('writer'));
         console.log("접속 유저 닉네임 : " + localStorage.getItem('userNickname'));
