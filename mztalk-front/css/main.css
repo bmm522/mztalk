@@ -113,11 +113,13 @@ h5 card-title {
     align-items: center;
     width: 70px;
     cursor: pointer;
+    
 }
 
 .pictogramWrap img{
     width: 23px;
     cursor: pointer;
+    margin: 10px;
 }
 
  .mainContainer {

@@ -16,6 +16,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+//로그아웃
+function logouts(){
+  localStorage.clear();
+  deleteCookie('Authorization');
+  deleteCookie('RefreshToken');
+  location.href="loginpage.html";
+}
+
+//쿠키삭제
+function deleteCookie(name) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+
+
 //개인페이지
 document.getElementById('move-story-service').addEventListener('click', () => {
     const own = localStorage.getItem("userNo");

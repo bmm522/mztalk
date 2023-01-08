@@ -232,6 +232,7 @@ function FollowCount(){
 
 // 퍼블릭인 글 목록들 DIV
 function storyLoad(page) {
+
     fetch(`${LOCALHOST_URL}/story/${own}/${page}`,{
         method:"GET",
         headers:{
@@ -243,6 +244,7 @@ function storyLoad(page) {
       .then((res)=> res.json())
       .then(res=>{       
         for(let board of res.data){
+          console.log(board.lastModifiedDate+"?");
           let userNo = localStorage.getItem('userNo');
           let boardId = board.id;
           let writer = board.writer;
@@ -251,7 +253,7 @@ function storyLoad(page) {
           let content = board.content;
           let own = board.own;
           let date = board.lastModifiedDate.substr(0,10);
-
+     
           if(privacy.includes("PUBLIC")){
           document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
@@ -432,7 +434,8 @@ write_board.addEventListener('click', function(){
                     let boardId = board.id;
                     let title = board.title;
                     let content = board.content;
-                    let date = board.createDate;
+                    let date = board.lastModifiedDate;
+                    
                   document.querySelector("#contentList").innerHTML += 
                           `<div id="post-div-${boardId}" class="post-div">
                               <table id="post-table">
@@ -445,7 +448,7 @@ write_board.addEventListener('click', function(){
                                           <div id="post-title-div">${board.title}</div>
                                       </td>
                                       <td>
-                                          <div id="post-date-div"><br>${board.date}</div>
+                                          <div id="post-date-div"><br>${date}</div>
                                       </td>
                                   </tr>
                                   <tr>
