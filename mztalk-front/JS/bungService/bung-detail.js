@@ -155,6 +155,8 @@ document.getElementById('report-btn').addEventListener('click', function(){
 } );
 
 const chatOpen = () =>{
+    console.log('writer : ' + document.getElementById('nameDiv').value);
+    console.log('localstorage : ' + localStorage.getItem('userNickname'));
     
     fetch('http://localhost:8000/login/chat/front-nickname', {
         method:"POST",
@@ -163,7 +165,7 @@ const chatOpen = () =>{
         },
         body:JSON.stringify({
             "serviceName" : "bung",
-            "fromUserNickname" :document.getElementById('writer').innerHTML,
+            "fromUserNickname" : document.getElementById('nameDiv').value,
             "toUserNickname" :  localStorage.getItem('userNickname'),
             
         })

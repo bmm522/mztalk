@@ -204,7 +204,7 @@ public class InsertImageServiceImpl implements InsertImageService {
     private void saveImages(MultipartFile multipartFile, ImagesRequestDto imagesRequestDto, Role role) throws IOException {
         String imageName = multipartFile.getOriginalFilename();
         Images images =null;
-
+        System.out.println(role);
             switch (role){
                 case UPLOAD_MAIN:
                     images = imagesRequestDto.toImagesWhenMain(imageName, s3Factory.uploadImageToAwsS3(multipartFile));

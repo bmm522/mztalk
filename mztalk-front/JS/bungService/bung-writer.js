@@ -569,7 +569,7 @@ document.getElementById('bung-write-btn').addEventListener('click', function(){
         alert('카테고리를 선택해주세요');
     } else {
        
-        const form = document.getElementById('image-form');
+        const form = document.getElementById('image-form-bung');
         const payload = new FormData(form);
     
         fetch('http://localhost:8000/resource/images',{
