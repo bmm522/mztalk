@@ -224,7 +224,7 @@ public class AuctionServiceImpl implements AuctionService {
 
     //조회수
     @Override
-    public int updateCount(Long bId, String writer) {
+    public int updateCount(Long bId, Long writer) {
         return boardRepository.updateCount(bId, writer);
     }
 

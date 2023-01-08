@@ -204,7 +204,7 @@ const getBoardDetail = (bId, userId,serviceName, path) =>{
         document.getElementById('modal-body').innerHTML = '';
 
     } else if(serviceName == 'auction'){
-        fetch('http://localhost:8000/auction/board/' + bId, {
+        fetch('http://localhost:8000/auction/board/' + bId +'/'+userId, {
             method: "GET",
             headers: {
                 Authorization:localStorage.getItem('authorization'),
@@ -226,7 +226,7 @@ const getBoardDetail = (bId, userId,serviceName, path) =>{
                 console.log('실패');
             }
         })
-        ocument.getElementById('modal-body').innerHTML = '';
+        document.getElementById('modal-body').innerHTML = '';
     } else if(serviceName == 'bung'){
         fetch('http://localhost:8000/bung/mainBoardSelect/'+bId, {
             method:"GET",

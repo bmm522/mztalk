@@ -63,9 +63,9 @@ public class AuctionController {
     }
 
     //게시물 디테일
-    @GetMapping("/board/{bId}/{writer}")
-    public BoardDetailResponseDto selectBoard(@PathVariable Long bId, @PathVariable String writer) {
-        auctionService.updateCount(bId, writer); //조회수 증가
+    @GetMapping("/board/{bId}/{writerId}")
+    public BoardDetailResponseDto selectBoard(@PathVariable Long bId, @PathVariable Long writerId) {
+        auctionService.updateCount(bId, writerId); //조회수 증가
         return auctionService.selectBoard(bId);
     }
 

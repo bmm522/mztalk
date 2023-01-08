@@ -114,7 +114,7 @@ window.onload = () => {
     document.getElementById('hidden-bId').value = localStorage.getItem("bId");
     console.log("auctionDetail bId: " + document.getElementById('hidden-bId').value);
 
-    fetch(`${LOCALHOST_URL}/auction/board/` + localStorage.getItem("bId") + "/" + localStorage.getItem("userNickname"), {
+    fetch(`${LOCALHOST_URL}/auction/board/` + localStorage.getItem("bId") + "/" + localStorage.getItem("userNo"), {
         method: "GET",
         headers: {
             Authorization:localStorage.getItem('authorization'),
@@ -181,11 +181,11 @@ window.onload = () => {
         } else if(buyer == null && writer == localStorage.getItem('userNickname') && isClose == 'N') {
             document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
         } else if(buyer != null && isClose == 'Y') {
-            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰되었습니다!</span>`;
+            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span" style="display: inline-block;">${buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰되었습니다!</span>`;
         } else if(buyer == null && writer == localStorage.getItem('userNickname') && isClose == 'Y') {
             document.getElementById('alert').innerHTML = '<span style = "color:gray; font-size: smaller;"><a href = "auctionWrite.html" style="text-decoration: none; color: gray;">입찰한 사용자가 없이 종료되었습니다. 글을 다시 올려 보세요.</a></span>';
         } else {
-            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
+            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span" <div id="buyer-span">${res.buyer}</div>>${buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
         }
         
         //사진 처리
@@ -270,7 +270,7 @@ window.onload = () => {
                 document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
             } else {
                 let currentPriceForm = res.currentPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-                document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${res.buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
+                document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span">${res.buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
             }
         });
     });
@@ -382,18 +382,23 @@ const postReport=()=>{
 
 //입찰자 채팅
 function chatConnection() {
-    fetch(`${LOCALHOST_URL}/auction/chat`,  {
-        method: "GET",
+    console.log('buyer :' +document.getElementById('buyer-span').innerHTML);
+    console.log('local : ' + localStorage.getItem('userNickname'));
+    fetch(`${LOCALHOST_URL}/login/chat/front-nickname`,  {
+        method: "POST",
         headers: {
             "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken')
-        }
+        },
+        body:JSON.stringify({
+            "serviceName" : "auction",
+            "fromUserNickname" : document.getElementById('buyer-span').innerHTML,
+            "toUserNickname" : localStorage.getItem('userNickname'),
+        })
     })
     .then(res => {
         if(res.status == 200) {
             console.log("채팅 연결 성공");
-            window.open(`${CHAT_URL}/chat-auction?userId=`+localStorage.getItem('userNo')+'&userNickname='+localStorage.getItem('userNickname'), '_blank');
+            window.open(`${CHAT_URL}/chat-auction/?userId=`+localStorage.getItem('userNo')+'&userNickname='+localStorage.getItem('userNickname'), '_blank');
         }
     })
 }
