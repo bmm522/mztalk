@@ -142,8 +142,8 @@ public class AuctionController {
 
     //닉네임 변경 시
     @PatchMapping("/nickname")
-    public int changedNickname(@RequestBody ChangedNicknameDto changedNicknameDto){
-        return auctionService.changedNickname(changedNicknameDto);
+    public void changedNickname(@RequestBody ChangedNicknameDto changedNicknameDto){
+        auctionService.changedNickname(changedNicknameDto);
     }
 //
 //    //입찰 현황 데이터 받아오기
