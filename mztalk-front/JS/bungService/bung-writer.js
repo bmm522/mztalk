@@ -592,12 +592,21 @@ document.getElementById('bung-write-btn').addEventListener('click', function(){
 
 
 const postBungData = (checkValue) =>{
-    fetch('http://localhost:8000/bung/mainInsertBoard', {
+    if(document.getElementById('bungTitle').value === '') {
+        alert('제목을 작성해주세요!');
+    } else if(document.getElementById('bungContent').value === '') {
+        alert('내용을 작성해주세요!');
+    } else if(document.getElementById('full-group').value === '') {
+        alert('모집 인원을 지정해주세요!');
+    } else if(document.getElementById('addressName').value === '') {
+        alert('모임 장소 지정해주세요!');
+    } else {
+        fetch('http://localhost:8000/bung/mainInsertBoard', {
         method:"POST",
-       headers:{
-       "Content-Type" : "application/json",
-       Authorization:localStorage.getItem('authorization'),
-       RefreshToken:localStorage.getItem('refreshToken'),
+        headers:{
+        "Content-Type" : "application/json",
+        Authorization:localStorage.getItem('authorization'),
+        RefreshToken:localStorage.getItem('refreshToken'),
    },
    body:JSON.stringify({
         boardWriterId : localStorage.getItem('userNo'),
@@ -608,12 +617,12 @@ const postBungData = (checkValue) =>{
        fullGroup:document.getElementById('full-group').value,
        category : checkValue,
        address : document.getElementById('addressName').value
-   })
-   
-})
-.then(res=>{
+        })
+        })
+    .then(res=>{
    location.href="bung-service-main.html";
-})
+    })
+}       
 }
 
 //멘토서비스보내기
