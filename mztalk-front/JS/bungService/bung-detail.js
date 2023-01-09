@@ -260,6 +260,26 @@ const deleteAdd = (addId) => {
     })
 }
 
+// const deleteSelfAdd = (addId) => {
+//     fetch('http://localhost:8000/bung/bungAddBoardGroupSelfDrop/',{
+//         method:"DELETE",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//         body:JSON.stringify({
+//             boardId : localStorage.getItem('bId'),
+//             userNo : localStorage.getItem('userNo'),
+//             addId : addId
+//         })
+//     })
+//     .then(res=>{
+//         alert('탈퇴되었습니다.');
+//         location.href="bung-service-detail.html";
+//     })
+// }
+
 document.getElementById('writer').addEventListener('click', function(){
     console.log('writerId : ' + writerId);
     moveBungToStory(writerId);

@@ -1,5 +1,6 @@
 package com.mztalk.bung.repository;
 
+import com.mztalk.bung.domain.dto.BungAddBoardGroupSelfDropRequest;
 import com.mztalk.bung.domain.entity.BungAddBoard;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public interface BungAddBoardRepositoryCustom {
     List<BungAddBoard> getAcceptList(String nickname);
 
     Long addBungRefuse(Long addId, long boardId);
+
+    Long bungAddBoardGroupSelfDrop(BungAddBoardGroupSelfDropRequest bungAddBoardGroupSelfDropRequest);
 
 //    String findAddBoardByWriter(Long boardId, addWriter);
 }
