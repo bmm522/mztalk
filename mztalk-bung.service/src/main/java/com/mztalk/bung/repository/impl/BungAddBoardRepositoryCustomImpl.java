@@ -1,5 +1,6 @@
 package com.mztalk.bung.repository.impl;
 
+import com.mztalk.bung.domain.dto.BungAddBoardGroupSelfDropRequest;
 import com.mztalk.bung.domain.entity.BungAddBoard;
 import com.mztalk.bung.domain.entity.QBungAddBoard;
 import com.mztalk.bung.repository.BungAddBoardRepositoryCustom;
@@ -106,6 +107,20 @@ public class BungAddBoardRepositoryCustomImpl implements BungAddBoardRepositoryC
         return (long) entityManager.createQuery("delete from BungAddBoard a where a.bungBoard.boardId = :boardId and a.addId = :addId")
                 .setParameter("addId", addId)
                 .setParameter("boardId", boardId)
+                .executeUpdate();
+    }
+
+    @Transactional
+    @Modifying
+    @Override
+    public Long bungAddBoardGroupSelfDrop(BungAddBoardGroupSelfDropRequest bungAddBoardGroupSelfDropRequest) {
+        long userNo = bungAddBoardGroupSelfDropRequest.getUserNo();
+        long addId = bungAddBoardGroupSelfDropRequest.getAddId();
+        long boardId = bungAddBoardGroupSelfDropRequest.getBoardId();
+        return (long) entityManager.createQuery("delete from BungAddBoard a where a.bungBoard.boardId = :boardId and addId = :addId and userNo = :userNo")
+                .setParameter("boardId", boardId)
+                .setParameter("addId", addId)
+                .setParameter("userNo", userNo)
                 .executeUpdate();
     }
 

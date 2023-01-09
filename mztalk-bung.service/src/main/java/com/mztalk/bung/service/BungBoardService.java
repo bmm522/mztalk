@@ -2,6 +2,7 @@ package com.mztalk.bung.service;
 
 import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
+import com.mztalk.bung.domain.dto.BungAddBoardGroupSelfDropRequest;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.response.BungAddRequestDto;
 import com.mztalk.bung.domain.entity.Result;
@@ -55,4 +56,6 @@ public interface BungBoardService {
     Result<?> mainSelectListOfMain(int page);
 
     BungAddRequestDto addBungRefuse(Long addId);
+
+    Long bungAddBoardGroupSelfDrop(BungAddBoardGroupSelfDropRequest bungAddBoardGroupSelfDropRequest);
 }
