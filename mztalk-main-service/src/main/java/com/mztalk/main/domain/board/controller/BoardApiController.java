@@ -4,6 +4,8 @@ import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
+import com.mztalk.main.domain.board.dto.BoardRequestDto;
+import com.mztalk.main.domain.board.dto.BoardResponseDto;
 import com.mztalk.main.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,16 +25,16 @@ public class BoardApiController {
 
     //퍼블릭인 글 목록
     @GetMapping("/{own}/{page}")
-    public Result findByStatusOrderByBoardIdDesc(@PathVariable("own") Long own, @PathVariable("page")int page){
+    public Result<?> findByStatusOrderByBoardIdDesc(@PathVariable("own") Long own, @PathVariable("page")int page){
         return boardService.findByStatusOrderByBoardIdDesc(own, page);
     }
 
     //글쓰기
     @ResponseBody
     @PostMapping ("/saveForm")
-    public ResponseEntity<?> saveForm(@RequestBody BoardDto boardDto){
-        Board board = boardService.save(boardDto);
-        return new ResponseEntity<>(new CMRespDto<>(1, "글쓰기성공", board), HttpStatus.CREATED);
+    public ResponseEntity<?> saveForm(@RequestBody BoardRequestDto boardRequestDto){
+        Long savedId =  boardService.save(boardRequestDto);
+        return new ResponseEntity<>(new CMRespDto<>(1, "글쓰기성공", savedId), HttpStatus.CREATED);
     }
 
     //글수정

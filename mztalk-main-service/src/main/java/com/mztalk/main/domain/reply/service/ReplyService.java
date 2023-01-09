@@ -10,7 +10,7 @@ import java.util.Map;
 public interface ReplyService {
 
 
-    Reply replySave(Long id, ReplyRequestDto replyRequestDto);
+    ReplyResponseDto replySave(Long id, ReplyRequestDto replyRequestDto);
 
     Long deleteReply(Long id);
 

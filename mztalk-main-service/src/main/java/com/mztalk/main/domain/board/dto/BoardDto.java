@@ -82,7 +82,7 @@ public class BoardDto {
         this.status = board.getStatus();
         this.own = board.getOwn();
         this.privacy = board.getPrivacy();
-        this.replyList = board.getReplyList();
+        this.replyList = board.getReply();
         this.postImageUrl = profileResponseDto.getPostImageUrl();
         this.lastModifiedDate = board.getLastModifiedDate();
         this.createdDate = board.getCreatedDate();

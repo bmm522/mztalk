@@ -1,6 +1,6 @@
 package com.mztalk.main.domain.reply.service.impl;
 
-import com.mztalk.main.domain.board.dto.BoardDto;
+import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.domain.reply.dto.ReplyResponseDto;
 import com.mztalk.main.domain.reply.repository.ReplyRepository;
@@ -24,11 +24,15 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     @Transactional
-    public Reply replySave(Long id, ReplyRequestDto replyRequestDto) {
+    public ReplyResponseDto replySave(Long id, ReplyRequestDto replyRequestDto) {
 
-        boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
+        //boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+//        ReplyResponseDto replyResponseDto = replyRepository.save(replyRequestDto.toEntity(id));
+        Reply reply = replyRepository.save(replyRequestDto.toEntity(board));
+        ReplyResponseDto replyResponseDto = new ReplyResponseDto(reply);
 
-        return replyRepository.save(replyRequestDto.toEntity(id));
+        return replyResponseDto;
     }
 
     @Override
