@@ -244,7 +244,7 @@ function storyLoad(page) {
       .then((res)=> res.json())
       .then(res=>{       
         for(let board of res.data){
-          console.log(board.lastModifiedDate+"?");
+          
           let userNo = localStorage.getItem('userNo');
           let boardId = board.id;
           let writer = board.writer;
@@ -253,7 +253,8 @@ function storyLoad(page) {
           let content = board.content;
           let own = board.own;
           let date = board.lastModifiedDate.substr(0,10);
-          
+          let reply = board.replyResponseDto;
+          console.log(board.lastModifiedDate+"?");
           if(privacy.includes("PUBLIC")){
           document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
@@ -310,13 +311,13 @@ function storyLoad(page) {
                     </div>
                    </div>
                     `;
-                     board.replyList.forEach((reply)=>{
+                    reply.forEach((reply)=>{
 
                      document.querySelector(`.reply-div-${boardId}`).innerHTML +=
                          `
                            <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
                            <div id="reply-content">${reply.replyContent}</div>
-                           <div id="reply-date">${lastModifiedDate}</div>
+                           <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
                            <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
                            <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
                            </div>
@@ -382,13 +383,13 @@ function storyLoad(page) {
                          </div>
                           `;
                         
-                           board.replyList.forEach((reply)=>{
+                          reply.forEach((reply)=>{
 
                            document.querySelector(`.reply-div-${boardId}`).innerHTML +=
                                `
                                  <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
                                  <div id="reply-content">${reply.replyContent}</div>
-                                 <div id="reply-date">${lastModifiedDate}</div>
+                                 <div id="reply-date">${reply.lastModifiedDate.substr(5,5)}</div>
                                  <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
                                  <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
                                  </div>
@@ -710,21 +711,29 @@ function addReply(boardId){
             })
           .then((res)=>res.json())
           .then(res =>{
-            let reply = res;
-            let replyUserNo = reply.replyUserNo;
-            let replyNickname = reply.replyNickname;
-            let replyContent = reply.replyContent;
-            let lastModifiedDate = reply.lastModifiedDate.substr(0,10);
-            let id = reply.id;
-            document.querySelector(`.reply-div-${boardId}`).innerHTML +=
-            `<div>
-              <div id="reply-nickname" onclick="movePage(${replyUserNo});">${replyNickname}</div>
-              <div id="reply-content">${replyContent}</div>
-              <div id="reply-date">${lastModifiedDate}</div>
-              <div id="reply-edit-btn"><button onClick="deleteReply(${id})" style="cursor:pointer;" type="button">X</button>
-              <input type="hidden" class='replyDelete' value="${replyUserNo}">
-              </div>
-            </div>`;
+            if(res != null){
+              window.alert('댓글이 작성 되었습니다.');
+              location.href="individualpage.html";
+                } else {
+                    window.alert('댓글쓰기 실패');
+                    return false;
+                }
+            // let reply = res;
+            // let replyUserNo = reply.replyUserNo;
+            // let replyNickname = reply.replyNickname;
+            // let replyContent = reply.replyContent;
+            // let lastModifiedDate = reply.lastModifiedDate.substr(5,5);
+            // let id = reply.id;
+            // document.querySelector(`.reply-div-${boardId}`).innerHTML +=
+            // `<div>
+            //   <div id="reply-nickname" onclick="movePage(${replyUserNo});">${replyNickname}</div>
+            //   <div id="reply-content">${replyContent}</div>
+            //   <div id="reply-date">${lastModifiedDate}</div>
+            //   <div id="reply-edit-btn"><button onClick="deleteReply(${id})" style="cursor:pointer;" type="button">X</button>
+            //   <input type="hidden" class='replyDelete' value="${replyUserNo}">
+            //   </div>
+            // </div>`;
+            // document.querySelector(`.reply-div-${boardId}`).prepend(content)
           })
          
         }   
