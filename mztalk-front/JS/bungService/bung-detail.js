@@ -184,7 +184,8 @@ const chatOpen = () =>{
             alert('이미 문의가 완료된 요청입니다.');
         } else {
         alert('문의가 완료되었습니다.');
-        location.href = 'bung-service-detail.html';
+        window.open(`http://localhost:3000/chat-bung/?userId=${localStorage.getItem('userNo')}&userNickname=${localStorage.getItem('userNickname')}`)
+        // location.href = 'bung-service-detail.html';
         }
     })
 }
