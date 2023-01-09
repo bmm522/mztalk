@@ -3,6 +3,7 @@ package com.mztalk.auction.repository;
 import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
+import com.mztalk.auction.domain.entity.Price;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -35,4 +36,6 @@ public interface CustomAuctionRepository {
     int closeBoard(Long boardId);
 
     void changedNickname(ChangedNicknameDto changedNicknameDto);
+
+    List<Price> getCurrentPrice(Long bId);
 }

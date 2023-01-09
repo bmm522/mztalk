@@ -171,7 +171,7 @@ window.onload = () => {
         if(timeLimitHour == 0 && timeLimitMinute == 0) {
             document.getElementById('time').innerHTML = "";    
         } else {
-            document.getElementById('time').innerHTML = '<span style="margin-left:5px; font-size: small; color: gray;"><span style="color: gray;">마감까지...</span>' + '<span style = "color:black;">' + timeLimitHour + "</span>시간" + '<span style = "color:black;">' + timeLimitMinute + '</span>분 남았습니다.</span>';
+            document.getElementById('time').innerHTML = '<span style="font-size: small; color: gray;"><span style="color: gray;">마감까지...</span>' + '<span style = "color:black;">' + timeLimitHour + "</span>시간" + '<span style = "color:black;">' + timeLimitMinute + '</span>분 남았습니다.</span>';
         }
 
         //alert
@@ -185,7 +185,7 @@ window.onload = () => {
         } else if(buyer == null && writer == localStorage.getItem('userNickname') && isClose == 'Y') {
             document.getElementById('alert').innerHTML = '<span style = "color:gray; font-size: smaller;"><a href = "auctionWrite.html" style="text-decoration: none; color: gray;">입찰한 사용자가 없이 종료되었습니다. 글을 다시 올려 보세요.</a></span>';
         } else {
-            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span" <div id="buyer-span">${res.buyer}</div>>${buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
+            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span" style="display: inline-block">${res.buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
         }
         
         //사진 처리
@@ -270,7 +270,7 @@ window.onload = () => {
                 document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
             } else {
                 let currentPriceForm = res.currentPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-                document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span">${res.buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
+                document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span" style="display: inline-block;">${res.buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
             }
         });
     });
@@ -439,7 +439,6 @@ document.getElementById('writer').addEventListener('click', function() {
 //입찰 차트
 // Load the Visualization API and the corechart package.
 google.load('visualization', '1.1', {packages:['line']});
-
 // Set a callback to run when the Google Visualization API is loaded.
 google.setOnLoadCallback(drawChart);
 
@@ -447,23 +446,45 @@ google.setOnLoadCallback(drawChart);
 // instantiates the pie chart, passes in the data and
 // draws it.
 function drawChart() {
+    fetch(`${LOCALHOST_URL}/auction/currentPrice/` + document.getElementById("hidden-bId").value, {
+        method: "GET",
+        headers: {
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        }
+    })
+    .then((res) => res.json())
+    .then(res => {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '닉네임');
+        data.addColumn('number', '입찰가');
+        for(let price of res.data) {
+            console.log("currentPrice:" + price.currentPrice);
+            data.addRows([
+                [price.buyer, price.currentPrice] 
+            ]);
+        }
+        
+        // Set chart options
+        var options = {'title':'',
+                'width':600,
+                'height':500,
+                vAxis: {
+                    format: 'decimal'
+                },
+                series: {
+                    0: { color: 'burlywood' }
+                } 
+            };
 
-  // Create the data table.
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', '닉네임');
-    data.addColumn('number', '입찰가');
-    data.addRows([
-    ['테스트1', 1000],
-    ['테스트2', 1500],
-    ['테스트3', 1600],
-    ]);
+        //Set formatter
+        // var formatter = new google.visualization.NumberFormat({pattern: '#,###'});
+        // formatter.format(data, 1);
 
-  // Set chart options
-    var options = {'title':'입찰현황',
-                'width':500,
-                'height':300};
-
-  // Instantiate and draw our chart, passing in some options.
-    var chart = new google.charts.Line(document.getElementById('chart_div'));
-    chart.draw(data, options);
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.charts.Line(document.getElementById('chart_div'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
+    })
 }

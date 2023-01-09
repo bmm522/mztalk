@@ -145,12 +145,12 @@ public class AuctionController {
     public void changedNickname(@RequestBody ChangedNicknameDto changedNicknameDto){
         auctionService.changedNickname(changedNicknameDto);
     }
-//
-//    //입찰 현황 데이터 받아오기
-//    @GetMapping("/currnetPrice/{bId}")
-//    public Result<?> getCurrentPrice(@PathVariable("bId") Long bId) {
-//        return auctionService.getCurrentPrice(bId);
-//    }
+
+    //입찰 현황 데이터 받아오기
+    @GetMapping("/currentPrice/{bId}")
+    public Result<?> getCurrentPrice(@PathVariable("bId") Long bId) {
+        return auctionService.getCurrentPrice(bId);
+    }
 
 
 }

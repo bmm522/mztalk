@@ -3,6 +3,7 @@ package com.mztalk.auction.repository.impl;
 import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
+import com.mztalk.auction.domain.entity.Price;
 import com.mztalk.auction.repository.CustomAuctionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -149,6 +150,12 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
                 .executeUpdate();
     }
 
+    @Override
+    public List<Price> getCurrentPrice(Long bId) {
+        return entityManager.createQuery("select p from Price p where p.board.boardId = :bId")
+                .setParameter("bId", bId)
+                .getResultList();
+    }
 
 
 

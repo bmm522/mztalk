@@ -49,5 +49,5 @@ public interface AuctionService {
 
     void changedNickname(ChangedNicknameDto changedNicknameDto);
 
-//    Result<?> getCurrentPrice(Long bId);
+    Result<?> getCurrentPrice(Long bId);
 }
