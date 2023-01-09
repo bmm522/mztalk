@@ -1,6 +1,7 @@
 package com.mztalk.main.domain.board;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mztalk.main.common.BaseTimeEntity;
 import com.mztalk.main.domain.board.dto.BoardDto;
@@ -10,6 +11,7 @@ import com.mztalk.main.status.BoardStatus;
 import com.mztalk.main.status.PrivacyStatus;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,6 +26,7 @@ import static javax.persistence.CascadeType.ALL;
 @Getter
 @Entity
 @Table(name="board")
+@EntityListeners(AuditingEntityListener.class)
 public class Board extends BaseTimeEntity {
 
 
@@ -44,10 +47,10 @@ public class Board extends BaseTimeEntity {
     @Column(nullable = false)
     private Long own; //글에 주인
 
-    @OrderBy("id desc ")
-    @OneToMany(mappedBy = "boardId", fetch= FetchType.EAGER, cascade = ALL, orphanRemoval = true) //mappedBy 연관관계의 주인 아님을 표시하기 위해(컬럼만들지않기위해)
+    @OrderBy("id desc")
+    @OneToMany(mappedBy = "board", fetch= FetchType.EAGER, cascade = ALL, orphanRemoval = true) //mappedBy 연관관계의 주인 아님을 표시하기 위해(컬럼만들지않기위해)
     @JsonIgnoreProperties({"board"})
-    private List<Reply> replyList = new ArrayList<>(); // 글에 대한 댓글리스트
+    private List<Reply> reply; // 글에 대한 댓글리스트
 
     @Enumerated(EnumType.STRING)
     private BoardStatus status; // 글 status
@@ -69,7 +72,7 @@ public class Board extends BaseTimeEntity {
         this.title = title;
         this.content = content;
         this.own = own;
-        this.replyList = reply;
+        this.reply = reply;
         this.status = status;
         this.postImageUrl = postImageUrl;
         this.privacy = privacy;
@@ -79,9 +82,7 @@ public class Board extends BaseTimeEntity {
     //연관관계 편의 메서드
 
 
-    public void addReply(Reply reply){
-        replyList.add(reply);
-    }
+
 
     //글수정
     public void updateBoard(BoardDto boardDto){

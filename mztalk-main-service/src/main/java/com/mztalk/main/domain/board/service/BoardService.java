@@ -3,9 +3,12 @@ package com.mztalk.main.domain.board.service;
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
+import com.mztalk.main.domain.board.dto.BoardRequestDto;
+import com.mztalk.main.domain.board.dto.BoardResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Map;
 
 public interface BoardService {
@@ -14,7 +17,7 @@ public interface BoardService {
 
     Result findByStatusOrderByBoardIdDesc(Long own, int page);
 
-    Board save(BoardDto boardDto);
+    Long save(BoardRequestDto boardRequestDto);
 
     Long updateBoard(Long id, BoardDto boardDto);
 

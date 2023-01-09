@@ -24,7 +24,7 @@ public class ReplyApiController {
     //댓글쓰기
     @ResponseBody
     @PostMapping("/board/{id}/reply")
-    public Reply replySave(@PathVariable("id") Long id, @RequestBody ReplyRequestDto replyRequestDto){
+    public ReplyResponseDto replySave(@PathVariable("id") Long id, @RequestBody ReplyRequestDto replyRequestDto){
        return replyService.replySave(id, replyRequestDto);
 //        return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기성공", result), HttpStatus.CREATED);
     }

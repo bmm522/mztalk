@@ -3,9 +3,12 @@ package com.mztalk.main.domain.board.service;
 import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.common.Result;
+import com.mztalk.main.domain.board.dto.BoardRequestDto;
+import com.mztalk.main.domain.board.dto.BoardResponseDto;
 import com.mztalk.main.domain.board.repository.BoardRepository;
 import com.mztalk.main.domain.profile.dto.ProfileImageResponseDto;
 import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
+import com.mztalk.main.domain.reply.dto.ReplyResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
@@ -37,16 +40,21 @@ public class BoardServiceImpl implements BoardService {
 
         Pageable pageable = PageRequest.of(page - 1, 4);
         Page<Board> boards = boardRepository.findByStatusOrderByBoardIdDesc(own, pageable);
-        List<BoardDto> boardDtos = boards.stream().map(b->new BoardDto(b, new ProfileResponseDto())).collect(Collectors.toList());
-
+        List<BoardResponseDto> boardDtos = boards.stream().map(b->new BoardResponseDto(b, new ProfileResponseDto())).collect(Collectors.toList());
+//        List<BoardResponseDto> boardDtos = boards.stream()
+//                .map(board -> new BoardResponseDto(board, new ReplyResponseDto(board)))
+//                .collect(Collectors.toList());
         return new Result(boardDtos);
     }
 
     //글쓰기
     @Override
     @Transactional
-    public Board save(BoardDto boardDto) {return boardRepository.save(boardDto.toEntity());}
+    public Long save(BoardRequestDto boardRequestDto) {
+        Board board = boardRequestDto.toEntity();
 
+        return boardRepository.save(board).getId();
+    }
     //글수정
     @Override
     @Transactional

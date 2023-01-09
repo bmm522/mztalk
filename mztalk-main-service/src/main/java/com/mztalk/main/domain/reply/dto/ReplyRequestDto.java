@@ -1,5 +1,6 @@
 package com.mztalk.main.domain.reply.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.status.ReplyStatus;
@@ -23,16 +24,22 @@ public class ReplyRequestDto {
     private String replyNickname;
     @NotNull
     private ReplyStatus replyStatus;
-
     private Long replyUserNo;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime createdDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime lastModifiedDate;
 
+    private Board board;
+
+
     //Dto -> Entity
-    public Reply toEntity(Long boardId){
+    public Reply toEntity(Board board){
         return Reply.builder()
                 .replyNickname(replyNickname)
-                .boardId(boardId)
+                .board(board)
                 .status(replyStatus.YES)
                 .replyUserNo(replyUserNo)
                 .replyContent(replyContent)
