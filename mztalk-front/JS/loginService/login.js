@@ -253,7 +253,7 @@ document.getElementById('sign-up-btn').addEventListener('click',function(e){
 });
 
 
-document.getElementById('check-id-btn').addEventListener('click',function(){
+const checkIdEvent = () =>{
   let userId = document.getElementById('username').value;
 
   fetch(`${LOCALHOST_URL}/login/register/username/${userId}`, {
@@ -275,8 +275,8 @@ document.getElementById('check-id-btn').addEventListener('click',function(){
     }
 
   })
+}
 
-});
 document.getElementById('username').addEventListener('blur',function(){
   idBlurText(); 
 });
@@ -473,7 +473,7 @@ let emailAuthCode = '';
 document.getElementById('email_check').addEventListener('click', function(){
   if(document.getElementById('checkEmailResult').value == "fail" || document.getElementById('checkEmailResult').value =='none'){
   
-    alert('이메일을 제대로 입력 후에 눌러주세요');
+    alert('이메일 체크 후 눌러주세요.');
     document.getElementById('email-box').focus();
   
   } else{

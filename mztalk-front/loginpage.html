@@ -65,7 +65,7 @@
               <input type="text" id="username"/>
               <div id="checkId" class="vaild-div" style="margin-bottom: 10px;"></div>
               <input type="hidden" id="checkIdResult" value="fail"/>
-              <button class="check-btn" style="cursor:pointer;" id="check-id-btn">아이디 검사</button>
+              <button class="check-btn" style="cursor:pointer;" id="check-id-btn" onclick="checkIdEvent();">아이디 검사</button>
             </div>
 
             <div class="form-field">
@@ -96,18 +96,22 @@
               <!-- <div id="checkEmail"  class="vaild-div"></div> -->
               <input type="hidden" id="checkEmailResult" value="fail"/>
               <button class="check-btn" style="cursor:pointer;" id="check-email-btn">이메일 검사</button>
-              <!-- <br> -->
+             
+             
+              <br>
 
               <button type="button" id="email_check">인증번호 전송</button>
-            </div>
-
-
+            
             <div class="form-field" id="auth_div">
               <label for="auth-box">Auth Number</label>
               <input type="text" id="auth-box" />
               <div id="checkAuth"  class="vaild-div"></div>
               <input type="hidden" id="checkAuthResult" value="fail"/>
             </div>
+            </div>
+
+
+            
 
             <button class="btn-sign btn-up" id="sign-up-btn" type="button" >Sign Up</button>
        </form> 
