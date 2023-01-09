@@ -4,6 +4,7 @@ import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.service.AuctionService;
+import com.mztalk.auction.service.impl.AuctionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
