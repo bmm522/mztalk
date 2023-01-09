@@ -63,8 +63,9 @@
             <div class="form-field">
               <label for="username">Id</label>
               <input type="text" id="username"/>
-              <div id="checkId" class="vaild-div"></div>
+              <div id="checkId" class="vaild-div" style="margin-bottom: 10px;"></div>
               <input type="hidden" id="checkIdResult" value="fail"/>
+              <button class="check-btn" style="cursor:pointer;" id="check-id-btn">아이디 검사</button>
             </div>
 
             <div class="form-field">
@@ -84,15 +85,17 @@
             <div class="form-field">
               <label for="nickname">Nickname</label>
               <input type="text" id="nickname"/>
-              <div id="checkNickname" class="vaild-div"></div>
-              <input type="hidden" id="checkNicknameResult" value="fail"/>
+              <div id="checkNickname" class="vaild-div" style="margin-bottom: 10px;"></div>
+              <input type="hidden" id="checkNicknameResult" value="fail" />
+              <button class="check-btn" style="cursor:pointer;" id="check-nickname-btn">닉네임 검사</button>
             </div>
 
             <div class="form-field">
               <label for="email-box">Email</label>
               <input type="text" id="email-box" />
-              <div id="checkEmail"  class="vaild-div"></div>
+              <!-- <div id="checkEmail"  class="vaild-div"></div> -->
               <input type="hidden" id="checkEmailResult" value="fail"/>
+              <button class="check-btn" style="cursor:pointer;" id="check-email-btn">이메일 검사</button>
               <!-- <br> -->
 
               <button type="button" id="email_check">인증번호 전송</button>
