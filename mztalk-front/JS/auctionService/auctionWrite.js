@@ -7,6 +7,7 @@ function priceStandard(text) {
 
 }
 
+//마감 시간 제한
 function timeStandard(time) {
     const timeLimit = document.getElementById("timeLimit").value;
     if(timeLimit > 72) {
@@ -37,8 +38,23 @@ const postData = () =>{
     const startPriceTrans = Number(startPriceSplit[0].concat(startPriceSplit[1]));
     let date = new Date();
 
-    console.log("글작성시 isbn값 확인: " + document.getElementById('hidden-isbn').value);
-
+    if(document.getElementById('title').value == '') {
+        alert('제목을 입력해 주세요.');
+        return false;
+    } else if(document.getElementById('searchBook').value == '') {
+        alert('책 제목을 입력해 주세요.');
+        return false;
+    } else if(document.getElementById('content').value == '') {
+        alert('내용을 입력해 주세요.');
+        return false;
+    } else if(document.getElementById('startPrice').value == '') {
+        alert('시작가를 입력해 주세요.');
+        return false;
+    } else if(document.getElementById('timeLimit').value == '') {
+        alert('마감 시간을 입력해 주세요.');
+        return false;
+    }
+    
     fetch('http://localhost:8000/auction/board', {
         method: "POST",
         headers: {

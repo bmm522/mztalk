@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @ToString(exclude = "board")
 @Entity
@@ -35,6 +37,12 @@ public class Comment {
 
     private Long userNo;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "parent_id")
+//    private Comment parent;
+//
+//    @OneToMany(mappedBy = "parent")
+//    private List<Comment> children = new ArrayList<>();
 
 //    public Comment(Long cId, String content, Date createDate, Board board, String status, String writer) {
 //        this.cId = cId;
