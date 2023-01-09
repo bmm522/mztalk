@@ -7,6 +7,7 @@ import com.mztalk.resource.service.DeleteImageService;
 import com.mztalk.resource.service.InsertImageService;
 import com.mztalk.resource.service.SelectImageService;
 import com.mztalk.resource.service.UpdateImageService;
+import com.mztalk.resource.service.impl.InsertImageServiceImpl;
 import io.swagger.annotations.*;
 import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;

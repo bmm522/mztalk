@@ -253,7 +253,7 @@ document.getElementById('sign-up-btn').addEventListener('click',function(e){
 });
 
 
-document.getElementById('username').addEventListener('keyup',function(){
+document.getElementById('check-id-btn').addEventListener('click',function(){
   let userId = document.getElementById('username').value;
 
   fetch(`${LOCALHOST_URL}/login/register/username/${userId}`, {
@@ -362,7 +362,7 @@ const rePasswordBlurText = () => {
 }
 
 
-document.getElementById('nickname').addEventListener('keyup',function(){
+document.getElementById('check-nickname-btn').addEventListener('click',function(){
   let nickname = document.getElementById('nickname').value;
   console.log("닉네임왜 없어?"+nickname);
   fetch(`${LOCALHOST_URL}/login/register/nickname/${nickname}`, {
@@ -421,7 +421,7 @@ const nicknameBlurText = () => {
 
 
 
-document.getElementById('email-box').addEventListener('keyup', function(){
+document.getElementById('check-email-btn').addEventListener('click', function(){
   isVaildEmail();
 });
 
@@ -432,12 +432,12 @@ document.getElementById('email-box').addEventListener('blur', function(){
 const isVaildEmail =  () => {
   let email = document.getElementById('email-box').value;
   const exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-	let checkEmail = document.getElementById('checkEmail');
+	// let checkEmail = document.getElementById('checkEmail');
 	console.log(email);
   if(exptext.test(email)==false){
-			
-      checkEmail.innerHTML= '이메일 형식에 맞게 입력해주세요.';
-			checkEmail.style.color='red';
+			alert('이메일 형식에 맞게 입력해주세요');
+      // checkEmail.innerHTML= '이메일 형식에 맞게 입력해주세요.';
+			// checkEmail.style.color='red';
 			document.getElementById('checkEmailResult').value = "fail";
 		
     } else{
@@ -449,12 +449,14 @@ const isVaildEmail =  () => {
           .then(res=>{
             console.log(res.checkResult);
             if(res.checkResult == 'available'){
-              checkEmail.innerHTML= '사용가능한 이메일 입니다.';
-			        checkEmail.style.color='green';
+              // checkEmail.innerHTML= '사용가능한 이메일 입니다.';
+			        // checkEmail.style.color='green';
+              alert('사용가능한 이메일 입니다');
 			        document.getElementById('checkEmailResult').value = "success";
             } else{
-              checkEmail.innerHTML= '중복된 이메일 입니다.';
-			        checkEmail.style.color='red';
+              // checkEmail.innerHTML= '중복된 이메일 입니다.';
+			        // checkEmail.style.color='red';
+              alert('중복된 이메일 입니다');
 			        document.getElementById('checkEmailResult').value = "fail";
             }
           })
@@ -463,7 +465,7 @@ const isVaildEmail =  () => {
 }
 
 const emailBlurText = () =>{
-	document.getElementById('checkEmail').innerHTML = '';
+	// document.getElementById('checkEmail').innerHTML = '';
 }
 
 let emailAuthCode = '';
