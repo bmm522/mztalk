@@ -72,7 +72,7 @@ public class Board {
     @JsonBackReference
     private List<Comment> comment;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     @OrderBy("priceId desc")
     @JsonBackReference
     private List<Price> price;

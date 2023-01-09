@@ -382,20 +382,15 @@ public class AuctionServiceImpl implements AuctionService {
 
     }
 
-//    //입찰가 현황 받아오기
-//    @Override
-//    public Result<?> getCurrentPrice(Long bId) {
-//        Price price = priceRepository.findByBoardId(bId);
-//        List<PriceDto> priceDtoList = new ArrayList<>();
-//
-//
-//    }
-//@Override
-//public Result<?> getCurrentPrice(Long bId) {
-//    return null;
-//}
-
-
-
+    //입찰가 현황 받아오기
+    @Override
+    public Result<?> getCurrentPrice(Long bId) {
+        List<Price> priceList = priceRepository.getCurrentPrice(bId);
+        List<PriceDto> priceDtoList = new ArrayList<>();
+        for(Price price : priceList) {
+            priceDtoList.add(new PriceDto(price));
+        }
+        return new Result<>(priceDtoList);
+    }
 
 }
