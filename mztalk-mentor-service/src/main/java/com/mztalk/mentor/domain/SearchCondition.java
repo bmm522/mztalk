@@ -2,18 +2,20 @@ package com.mztalk.mentor.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 import java.time.LocalDateTime;
 
 @Getter
+@ToString
 public class SearchCondition {
 
     @Nullable
-    private String category;
-    @Nullable
     private String nickname;
+    @Nullable
+    private String category;
     @Nullable
     private String title;
     @Nullable

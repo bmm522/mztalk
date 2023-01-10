@@ -107,6 +107,7 @@ public class BoardApiController {
     @ApiOperation(value = "글 검색", notes = "검색조건에 맞는 글을 리턴하는 메소드입니다.", response = Result.class)
     @GetMapping("/board/search")
     public ResponseEntity<?> searchWithCondition(@ModelAttribute("SearchCondition")SearchCondition searchCondition){
+        System.out.println("searchCondition = " + searchCondition);
         List<BoardResDto> boards = boardService.searchWithCondition(searchCondition);
         return new ResponseEntity<>(new Result<>("글 검색 결과", boards), HttpStatus.OK);
     }
