@@ -220,11 +220,10 @@ const searchEvent = () =>{
     const selected = document.getElementById('type').value;
     const searchValue = document.getElementById('searchValue').value;
 
-    console.log(`${LOCALHOST_URL}/mentors/board/search?category=${categoryValue}&salary=${salaryValue}&${selected}=${searchValue}`);    
     fetch(`${LOCALHOST_URL}/mentors/board/search?category=${categoryValue}&salary=${salaryValue}&${selected}=${searchValue}`,{
         method:"GET",
         headers:{
-            "Content-Type":"application/json;charset=UTF-8",
+            "Content-Type":"application/json; charset=UTF-8",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken')
         },

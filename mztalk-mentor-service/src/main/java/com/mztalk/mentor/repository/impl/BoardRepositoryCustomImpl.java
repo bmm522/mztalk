@@ -98,12 +98,12 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
                 .getResultList();
     }
 
-    private BooleanExpression afterNow(LocalDateTime now){
-        return now != null ? board.mentoringDate.after(now) : null;
-    }
-
     private BooleanExpression eqCategory(String category){
         return category != null ? board.category.contains(category) : null;
+    }
+
+    private BooleanExpression afterNow(LocalDateTime now){
+        return now != null ? board.mentoringDate.after(now) : null;
     }
 
     private BooleanExpression lePrice(Integer salary){
