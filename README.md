@@ -1,8 +1,9 @@
 <h1>MZTALK</h1>
 
-<h3> :book: Skills </h3>
+<h3> :book: Stacks </h3>
 
-![image](https://user-images.githubusercontent.com/102157839/211439390-a174069a-e26d-44ce-88d4-d7988f7e229c.png)
+<img width="454" alt="image" src="https://user-images.githubusercontent.com/102157839/211439509-926a9090-68be-4b8a-897f-7e07ffe22931.png">
+
 
 
 
