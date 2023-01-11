@@ -3,6 +3,7 @@ package com.mztalk.login.service.impl;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.mztalk.login.domain.dto.response.JwtResponseDto;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.exception.UserNoNotFoundException;
 import com.mztalk.login.properties.JwtProperties;
@@ -15,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstance;
 
@@ -27,7 +27,7 @@ public class NewAccessTokenServiceImpl implements NewAccessTokenService {
 
     private final UserRepository userRepository;
     @Override
-    public ConcurrentHashMap<String, String> getNewAccessToken(String refreshToken) {
+    public JwtResponseDto getNewAccessToken(String refreshToken) {
 
 
         User user = userRepository.findById(Long.parseLong(asString(getAllClaims(refreshToken.substring(13)),"id")))

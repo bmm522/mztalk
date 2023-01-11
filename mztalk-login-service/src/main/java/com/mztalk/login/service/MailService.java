@@ -1,7 +1,9 @@
 package com.mztalk.login.service;
 
+import com.mztalk.login.domain.dto.response.EmailAuthResponseDto;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface MailService {
-    ConcurrentHashMap<String, Object> getAuthCodeOfEmail(String email);
+    EmailAuthResponseDto getAuthCodeOfEmail(String email);
 }

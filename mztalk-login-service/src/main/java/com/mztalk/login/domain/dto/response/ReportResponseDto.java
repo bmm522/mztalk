@@ -1,5 +1,6 @@
-package com.mztalk.login.domain.dto;
+package com.mztalk.login.domain.dto.response;
 
+import com.mztalk.login.domain.dto.UserInfoDto;
 import com.mztalk.login.domain.entity.Report;
 import com.mztalk.login.domain.entity.User;
 import lombok.AllArgsConstructor;

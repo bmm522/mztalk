@@ -1,9 +1,12 @@
 package com.mztalk.login.service;
 
+import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
+import org.hibernate.sql.Update;
+
 import java.util.Map;
 
 public interface UpdateUserInfoService {
-    int updatePassword(String username, String password);
+    int updatePassword(UpdatePasswordRequestDto updatePasswordRequestDto);
 
 //    int updateMentorStatus(String nickname);
 

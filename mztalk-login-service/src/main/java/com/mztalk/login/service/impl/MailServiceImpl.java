@@ -1,5 +1,6 @@
 package com.mztalk.login.service.impl;
 
+import com.mztalk.login.domain.dto.response.EmailAuthResponseDto;
 import com.mztalk.login.service.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,8 +29,7 @@ public class MailServiceImpl implements MailService {
     @Value("${mail.mailPw}")
     private String mailPw;
     @Override
-    public ConcurrentHashMap<String, Object> getAuthCodeOfEmail(String email) {
-        ConcurrentHashMap<String, Object> map =new ConcurrentHashMap<String, Object>();
+    public EmailAuthResponseDto getAuthCodeOfEmail(String email) {
 
         String authCode = makeRandomNumber();
 
@@ -37,11 +37,10 @@ public class MailServiceImpl implements MailService {
 
         if(isValidEmail(email)) {
             sendMail("Your EmailAuthCode.",contents, email);
-            map.put("authCode", authCode);
-            return map;
+            return new EmailAuthResponseDto(authCode);
         }
-        map.put("authCode",  "It`s not an appropriate email format");
-        return map;
+
+        return new EmailAuthResponseDto("It`s not an appropriate email format");
     }
 
     public void sendMail(String subejct, String body, Object obj) {

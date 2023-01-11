@@ -1,7 +1,9 @@
 package com.mztalk.login.service;
 
+import com.mztalk.login.domain.dto.response.JwtResponseDto;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface NewAccessTokenService {
-    ConcurrentHashMap<String, String> getNewAccessToken(String refreshToken);
+    JwtResponseDto getNewAccessToken(String refreshToken);
 }
