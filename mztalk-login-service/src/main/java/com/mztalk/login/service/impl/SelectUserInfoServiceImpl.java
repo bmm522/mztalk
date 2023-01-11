@@ -1,8 +1,9 @@
 package com.mztalk.login.service.impl;
 
-import com.mztalk.login.domain.dto.MaliciousUserResponseDto;
+import com.mztalk.login.domain.dto.response.MaliciousUserResponseDto;
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.UserInfoDto;
+import com.mztalk.login.domain.dto.response.SearchUsernameResponseDto;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.exception.UserNoNotFoundException;
 import com.mztalk.login.repository.UserRepository;
@@ -27,16 +28,15 @@ public class SelectUserInfoServiceImpl implements SelectUserInfoService {
 
     private final UserRepository userRepository;
     @Override
-    public ConcurrentHashMap<String, Object> searchUsername(String email) {
+    public SearchUsernameResponseDto searchUsername(String email) {
+
         User user = userRepository.findByEmail(email);
-        ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>();
 
         if(user == null){
-            map.put("result", "notExist");
-            return map;
+            return new SearchUsernameResponseDto("notExist");
         }
-        map.put("result", user.getUsername());
-        return map;
+
+        return new SearchUsernameResponseDto(user.getUsername());
     }
 
 

@@ -2,6 +2,8 @@ package com.mztalk.login.controller;
 
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.UserInfoDto;
+import com.mztalk.login.domain.dto.response.EmailAuthResponseDto;
+import com.mztalk.login.domain.dto.response.SearchUsernameResponseDto;
 import com.mztalk.login.service.NewAccessTokenService;
 import com.mztalk.login.service.SelectUserInfoService;
 import com.mztalk.login.service.UpdateUserInfoService;
@@ -32,7 +34,7 @@ public class LoginApiController {
 
     @GetMapping("/auth-code")
     @ApiIgnore
-    public ConcurrentHashMap<String, Object> getEmailAuthCodeByFindPwd(@RequestParam("email")String email, @RequestParam("username")String username){
+    public EmailAuthResponseDto getEmailAuthCodeByFindPwd(@RequestParam("email")String email, @RequestParam("username")String username){
         return mailServiceByFindPwdService.getEmailAuthCodeByFindPwd(email, username);
     }
 
@@ -41,11 +43,6 @@ public class LoginApiController {
     public int updatePassword(@RequestBody Map<String, String> body){
         return updateUserInfoService.updatePassword(body.get("username"), body.get("password"));
     }
-
-//    @PatchMapping("/mentor-status/{nickname}")
-//    public int updateMentorStatus(@PathVariable("nickname")String nickname){
-//        return updateUserInfoService.updateMentorStatus(nickname);
-//    }
 
     @ApiOperation(value = "닉네임으로 상태값 변경", notes = "해당 닉네임의 유저의 status를 N으로 변경합니다.")
     @PatchMapping("/status/{nickname}")
@@ -70,23 +67,16 @@ public class LoginApiController {
     public UserInfoDto getUserInfoByUserNo(@PathVariable("id")String id){
         return selectUserInfoService.getUserInfoByUserNo(id);
     }
-//    @GetMapping("user-info/{nickname}")
-//    public UserInfoDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
-//        return selectUserInfoService.getUserInfoByNickname(nickname);
-//    }
-
-
 
     @GetMapping("/username/{email}")
     @ApiIgnore
-    public ConcurrentHashMap<String, Object> searchUsername(@PathVariable("email") String email){
+    public SearchUsernameResponseDto searchUsername(@PathVariable("email") String email){
         return selectUserInfoService.searchUsername(email);
     }
 
     @GetMapping("/access-token")
     @ApiIgnore
     public ConcurrentHashMap<String, String> getNewAccessToken(@RequestParam("refreshToken")String refreshToken){
-        System.out.println("newAccess : " + refreshToken);
         return newAccessTokenService.getNewAccessToken(refreshToken);
     }
 

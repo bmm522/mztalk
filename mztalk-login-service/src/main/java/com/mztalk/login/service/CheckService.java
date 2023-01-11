@@ -1,11 +1,13 @@
 package com.mztalk.login.service;
 
+import com.mztalk.login.domain.dto.response.CheckDuplicateResponse;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface CheckService {
-    ConcurrentHashMap<String, Object> checkUsername(String username);
+    CheckDuplicateResponse checkUsername(String username);
 
-    ConcurrentHashMap<String,Object> checkNickname(String nickname);
+    CheckDuplicateResponse checkNickname(String nickname);
 
-    ConcurrentHashMap<String, Object> checkEmail(String email);
+    CheckDuplicateResponse checkEmail(String email);
 }

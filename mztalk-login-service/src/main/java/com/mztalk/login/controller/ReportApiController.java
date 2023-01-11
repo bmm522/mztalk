@@ -1,8 +1,6 @@
 package com.mztalk.login.controller;
 
-import com.mztalk.login.domain.dto.EditReponseDto;
-import com.mztalk.login.domain.dto.ReportRequestDto;
-import com.mztalk.login.domain.dto.ReportResponseDto;
+import com.mztalk.login.domain.dto.request.ReportRequestDto;
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.service.InsertReportService;
 import com.mztalk.login.service.SelectReportService;

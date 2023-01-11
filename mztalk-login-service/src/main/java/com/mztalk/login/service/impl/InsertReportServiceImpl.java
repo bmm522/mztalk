@@ -1,6 +1,6 @@
 package com.mztalk.login.service.impl;
 
-import com.mztalk.login.domain.dto.ReportRequestDto;
+import com.mztalk.login.domain.dto.request.ReportRequestDto;
 import com.mztalk.login.domain.entity.Report;
 import com.mztalk.login.repository.ReportRepository;
 import com.mztalk.login.repository.UserRepository;

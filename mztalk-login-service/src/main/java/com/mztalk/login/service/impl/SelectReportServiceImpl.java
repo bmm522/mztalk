@@ -1,20 +1,16 @@
 package com.mztalk.login.service.impl;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.mztalk.login.domain.dto.EditReponseDto;
-import com.mztalk.login.domain.dto.ReportResponseDto;
+import com.mztalk.login.domain.dto.response.EditReponseDto;
+import com.mztalk.login.domain.dto.response.ReportResponseDto;
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.UserInfoDto;
 import com.mztalk.login.domain.entity.Report;
-import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.repository.ReportRepository;
 import com.mztalk.login.service.SelectReportService;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 
 import org.json.JSONObject;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
