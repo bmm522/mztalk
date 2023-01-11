@@ -33,7 +33,7 @@ public class DeleteFileServiceImpl implements DeleteFileService {
         System.out.println("요청여기까지옴");
         for(String objectKey : objectKeyList ){
             try{
-                s3Factory.deleteImage(objectKey);
+       //         s3Factory.deleteImage(objectKey);
                fileRepository.deleteByObjectKey(objectKey);
             }
             catch (AmazonServiceException e){

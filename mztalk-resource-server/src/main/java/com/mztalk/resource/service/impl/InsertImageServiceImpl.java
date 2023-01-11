@@ -213,6 +213,7 @@ public class InsertImageServiceImpl implements InsertImageService {
                     images = imagesRequestDto.toImagesWhenSub(imageName,s3Factory.uploadImageToAwsS3(multipartFile));
                     break;
             }
+
             imageRepository.save(images);
     }
 

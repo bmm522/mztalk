@@ -40,7 +40,7 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
 
     @Override
     public Page<Board> findAllByBoardStory(Long own, Pageable pageable) {
-        List<Board> boards = entityManager.createQuery("select distinct b from Board b left join Follow f on(b.own = f.fromUserId) where b.status='YES' and b.privacy='PUBLIC' and f.fromUserId = :own ORDER BY  b.id desc", Board.class)
+        List<Board> boards = entityManager.createQuery("select distinct b from Board b left join Follow f on(b.own = f.fromUserId) where b.status='YES' and b.privacy='PUBLIC' and f.toUserId = :own ORDER BY  b.id desc", Board.class)
                 .setParameter("own", own)
                 .setFirstResult((int) pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())

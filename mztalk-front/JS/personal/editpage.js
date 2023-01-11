@@ -30,7 +30,7 @@ const checkVipCheck = ()=>{
         let createDate = VIPCHECK.createDate.substr(0,10);
         let vipDate = VIPCHECK.vipDate.substr(0,10);
         // console.log(createDate);
-        // console.log(vipDate);
+         console.log(vipDate);
         let userNickname = localStorage.getItem('userNickname');
         document.querySelector('#vipDate').innerHTML =
         `

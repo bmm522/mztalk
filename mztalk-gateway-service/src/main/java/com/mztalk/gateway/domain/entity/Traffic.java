@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="traffic")
 public class Traffic {
 
     @Id

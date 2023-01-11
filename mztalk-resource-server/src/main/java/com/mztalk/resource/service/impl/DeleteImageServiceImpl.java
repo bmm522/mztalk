@@ -54,7 +54,7 @@ public class DeleteImageServiceImpl implements DeleteImageService {
     @Override
     public ResponseEntity deleteImageDetail(String objectKey) {
         try{
-            s3Factory.deleteImage(objectKey);
+//            s3Factory.deleteImage(objectKey);
             imageRepository.updateStatus(objectKey);
         } catch (AmazonServiceException e){
             log.error("Fail Image Delete");

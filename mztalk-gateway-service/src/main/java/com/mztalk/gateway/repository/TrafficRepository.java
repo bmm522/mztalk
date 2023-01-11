@@ -13,22 +13,22 @@ import java.util.List;
 public interface TrafficRepository extends JpaRepository<Traffic, Long>, TrafficCustomRepository {
 
 
-    @Query(value = "SELECT count(*) as count, t.requestTime as requestTime " +
+    @Query(value = "SELECT count(*) as count, t.request_Time as requestTime " +
             "FROM traffic t " +
-            "GROUP BY t.requestTime", nativeQuery = true)
+            "GROUP BY t.request_Time", nativeQuery = true)
     List<TrafficCountDto> getTotalCountOfRequestTime();
 
-    @Query(value = "SELECT COUNT(*) AS count, t.requestTime As requestTime " +
-            "FROM Traffic t " +
-            "WHERE t.serviceName = :serviceName " +
-            "GROUP BY t.requestTime", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) AS count, t.request_Time As requestTime " +
+            "FROM traffic t " +
+            "WHERE t.service_Name = :serviceName " +
+            "GROUP BY t.request_Time", nativeQuery = true)
     List<TrafficCountDto> getCountOfRequestTime(@RequestParam("serviceName") String serviceName);
 
 
-    @Query(value = "SELECT COUNT(*) as count, t.requestTime as requestTime , t.serviceName as serviceName " +
+    @Query(value = "SELECT COUNT(*) as count, t.request_Time as requestTime , t.service_Name as serviceName " +
             "FROM traffic t " +
-            "WHERE requestTime = :requestTime " +
-            "GROUP BY t.requestTime, t.serviceName", nativeQuery = true)
+            "WHERE request_Time = :requestTime " +
+            "GROUP BY t.request_Time, t.service_Name", nativeQuery = true)
     List<TrafficOfRequestTimeDto> getCountOfServiceNameAndRequestTime(@RequestParam("requestTime") String requestTime);
 
 
