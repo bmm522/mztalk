@@ -39,12 +39,15 @@ public class S3Factory {
         map.put("key",amazonS3.getObject(bucket,s3FileName).getKey());
         map.put("url",amazonS3.getUrl(bucket, s3FileName).toString());
 
+
         return map;
     }
 
     public void deleteImage(String objectKey){
 
         final AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard().withRegion(Regions.AP_NORTHEAST_2).build();
+
+
 
         amazonS3.deleteObject(bucket, objectKey);
 

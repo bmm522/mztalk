@@ -67,7 +67,7 @@ const getBoardList = (page) =>{
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
                     ${career}</h6><p class="card-text">제목:${title}</p>
                     </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview(${mentorId});" 
-                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">리뷰보기</button></div></div>`;
                     cnt += 1;
                 } else {
                     document.getElementById('row-div1').innerHTML += 
@@ -79,7 +79,7 @@ const getBoardList = (page) =>{
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
                     ${career}</h6><p class="card-text">제목:${title}</p>
                     </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview(${mentorId});"
-                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">리뷰보기</button></div></div>
                     </div><div class="row" style="padding:20px;" id="row-div">`;
                     cnt += 1;
                 }
@@ -213,7 +213,7 @@ const watchReview = (mentorId) => {
       });
   };
 
-
+//글 검색
 const searchEvent = () =>{
     const categoryValue = document.getElementById('category').value;
     const salaryValue = document.getElementById('salary').value;

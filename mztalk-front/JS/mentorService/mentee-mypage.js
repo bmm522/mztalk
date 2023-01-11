@@ -65,7 +65,6 @@ document.getElementById('sendResume').addEventListener('click', function(){
                 return false;
             } else {
                 document.getElementById('id-hidden').value = userId;
-                document.getElementById('file-form').action =`${LOCALHOST_URL}/resource/files`;
                 document.getElementById('file-form').submit();
                 fetch(`${LOCALHOST_URL}/mentors/application`,{
                 method:"POST",
@@ -261,7 +260,7 @@ const getBoardList = (page) =>{
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
                     ${career}</h6><p class="card-text">제목:${title}</p>
                     </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview(${mentorId});" 
-                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">리뷰보기</button></div></div>`;
                     cnt += 1;
                 } else {
                     document.getElementById('row-div1').innerHTML += 
@@ -273,7 +272,7 @@ const getBoardList = (page) =>{
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
                     ${career}</h6><p class="card-text">제목:${title}</p>
                     </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview(${mentorId});"
-                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">리뷰보기</button></div></div>
                     </div><div class="row" style="padding:20px;" id="row-div">`;
                     cnt += 1;
                 }

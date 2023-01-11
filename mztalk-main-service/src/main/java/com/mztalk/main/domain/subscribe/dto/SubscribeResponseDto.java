@@ -1,5 +1,6 @@
 package com.mztalk.main.domain.subscribe.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mztalk.main.domain.subscribe.entity.Subscribe;
 import com.mztalk.main.status.RoleStatus;
 import lombok.AllArgsConstructor;
@@ -25,9 +26,9 @@ public class SubscribeResponseDto {
     private int price;
 
     private RoleStatus roleStatus;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private String vipDate;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Timestamp createDate;
 
     public SubscribeResponseDto(Subscribe subscribe){

@@ -4,12 +4,56 @@ document.getElementById("priceSubmitBtn").addEventListener('click', function() {
     console.log(document.getElementById('inputPrice').value);
     if(Number(document.getElementById('startPrice').innerHTML) >= Number(document.getElementById('inputPrice').value)) {
         alert('현재 금액보다 큰 금액을 입력해 주세요');
+        return false;
+    } else { //입찰가 전달
+        
+            console.log("입찰버튼 눌렀을 시 bId: " + document.getElementById('hidden-bId').value);
+            console.log("입찰버튼 눌렀을 시 currentPrice: " + document.getElementById('inputPrice').value);
+            console.log("입찰버튼 눌렀을 시 buyer: " + localStorage.getItem("userNickname"));
+            
+            
+            fetch(`${LOCALHOST_URL}/auction/board/price`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type":"application/json",
+                    Authorization:localStorage.getItem('authorization'),
+                    RefreshToken:localStorage.getItem('refreshToken'),
+                },
+                body:JSON.stringify({
+                    "boardId": document.getElementById('hidden-bId').value,
+                    "buyer": localStorage.getItem("userNickname"),
+                    "currentPrice": document.getElementById('inputPrice').value
+                }),
+            })
+            .then((res) => res.json())
+            .then(res => {
+                console.log("입찰가 통신 성공");
+                document.querySelector('.btn-close').click();
+                document.getElementById('inputPrice').value = "";
+                console.log("입찰가 전달 시 response: " + JSON.stringify(res));
+    
+                document.getElementById('startPrice').innerHTML = res.currentPrice;
+                //alert
+                let writer = document.getElementById('hidden-writer').value;
+                if(res.buyer == null && writer != localStorage.getItem("userNickname")) {
+                    document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">입찰에 참여해 보세요.</span>';
+                } else if(res.buyer == null && writer == localStorage.getItem('userNickname')) {
+                    document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
+                } else {
+                    let currentPriceForm = res.currentPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+                    document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span" style="display: inline-block;">${res.buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
+                }
+            });
+          
     }
 });
 
 //댓글 작성
 document.getElementById('commInsertBtn').addEventListener('click', function() {
-    console.log("댓글작성시 userNo: " + localStorage.getItem("userNo"));
+    if(document.getElementById('commInput').value == '') {
+        alert('댓글 내용을 입력해 주세요.');
+        return false;
+    }
     fetch(`${LOCALHOST_URL}/auction/comment`, {
         method: "POST",
         headers: {
@@ -233,47 +277,6 @@ window.onload = () => {
         }
         
     })
-
-    //입찰가 전달
-    document.getElementById("priceSubmitBtn").addEventListener('click', function() {
-        console.log("입찰버튼 눌렀을 시 bId: " + document.getElementById('hidden-bId').value);
-        console.log("입찰버튼 눌렀을 시 currentPrice: " + document.getElementById('inputPrice').value);
-        console.log("입찰버튼 눌렀을 시 buyer: " + localStorage.getItem("userNickname"));
-        
-        
-        fetch(`${LOCALHOST_URL}/auction/board/price`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type":"application/json",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken'),
-            },
-            body:JSON.stringify({
-                "boardId": document.getElementById('hidden-bId').value,
-                "buyer": localStorage.getItem("userNickname"),
-                "currentPrice": document.getElementById('inputPrice').value
-            }),
-        })
-        .then((res) => res.json())
-        .then(res => {
-            console.log("입찰가 통신 성공");
-            document.querySelector('.btn-close').click();
-            document.getElementById('inputPrice').value = "";
-            console.log("입찰가 전달 시 response: " + JSON.stringify(res));
-
-            document.getElementById('startPrice').innerHTML = res.currentPrice;
-            //alert
-            let writer = document.getElementById('hidden-writer').value;
-            if(res.buyer == null && writer != localStorage.getItem("userNickname")) {
-                document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">입찰에 참여해 보세요.</span>';
-            } else if(res.buyer == null && writer == localStorage.getItem('userNickname')) {
-                document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
-            } else {
-                let currentPriceForm = res.currentPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-                document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span" style="display: inline-block;">${res.buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
-            }
-        });
-    });
     
 
     //댓글 뿌려주기
@@ -437,14 +440,9 @@ document.getElementById('writer').addEventListener('click', function() {
 });
 
 //입찰 차트
-// Load the Visualization API and the corechart package.
 google.load('visualization', '1.1', {packages:['line']});
-// Set a callback to run when the Google Visualization API is loaded.
 google.setOnLoadCallback(drawChart);
 
-// Callback that creates and populates a data table,
-// instantiates the pie chart, passes in the data and
-// draws it.
 function drawChart() {
     fetch(`${LOCALHOST_URL}/auction/currentPrice/` + document.getElementById("hidden-bId").value, {
         method: "GET",
@@ -456,7 +454,10 @@ function drawChart() {
     })
     .then((res) => res.json())
     .then(res => {
-        // Create the data table.
+        if(res.data == '') {
+            document.getElementById('chart_div').innerHTML = '아직 입찰한 사용자가 없습니다.';
+        } else {
+            // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', '닉네임');
         data.addColumn('number', '입찰가');
@@ -486,5 +487,6 @@ function drawChart() {
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.charts.Line(document.getElementById('chart_div'));
         chart.draw(data, google.charts.Line.convertOptions(options));
+    }
     })
 }
