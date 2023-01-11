@@ -1,5 +1,7 @@
 package com.mztalk.login.controller;
 
+import com.mztalk.login.domain.dto.request.FirstSocialRequestDto;
+import com.mztalk.login.domain.dto.response.JwtFirstSocialResponseDto;
 import com.mztalk.login.oauth.UpdateNicknameSocialLoginService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.sql.Update;
@@ -33,8 +35,8 @@ public class SocialController {
 
     @ResponseBody
     @PatchMapping("/nickname")
-    public ConcurrentHashMap<String, String> setFirstLoginForSocialLoginUser(@RequestBody Map<String, String> body) throws IOException {
-        return updateNicknameSocialLoginService.setFirstLoginForSocialLoginUser(body);
+    public JwtFirstSocialResponseDto setFirstLoginForSocialLoginUser(@RequestBody FirstSocialRequestDto firstSocialRequestDto) throws IOException {
+        return updateNicknameSocialLoginService.setFirstLoginForSocialLoginUser(firstSocialRequestDto);
     }
 
 

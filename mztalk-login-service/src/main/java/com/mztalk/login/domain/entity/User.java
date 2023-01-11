@@ -3,6 +3,7 @@ package com.mztalk.login.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mztalk.login.domain.cookie.MztalkCookie;
 import com.mztalk.login.domain.dto.UserInfoDto;
+import com.mztalk.login.domain.dto.response.JwtResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -89,8 +90,8 @@ public class User {
         return new MztalkCookie(username);
     }
 
-    public MztalkCookie toMztalkCookieWithExistsUser(ConcurrentHashMap<String, String> jwtMap) throws UnsupportedEncodingException {
-        return new MztalkCookie(jwtMap, id, nickname, status, role);
+    public MztalkCookie toMztalkCookieWithExistsUser(JwtResponseDto jwtResponseDto) throws UnsupportedEncodingException {
+        return new MztalkCookie(jwtResponseDto, id, nickname, status, role);
     }
 
 }
