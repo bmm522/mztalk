@@ -2,7 +2,9 @@ package com.mztalk.login.controller;
 
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.UserInfoDto;
+import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
 import com.mztalk.login.domain.dto.response.EmailAuthResponseDto;
+import com.mztalk.login.domain.dto.response.JwtResponseDto;
 import com.mztalk.login.domain.dto.response.SearchUsernameResponseDto;
 import com.mztalk.login.service.NewAccessTokenService;
 import com.mztalk.login.service.SelectUserInfoService;
@@ -40,8 +42,8 @@ public class LoginApiController {
 
     @PatchMapping("/password")
     @ApiIgnore
-    public int updatePassword(@RequestBody Map<String, String> body){
-        return updateUserInfoService.updatePassword(body.get("username"), body.get("password"));
+    public int updatePassword(@RequestBody UpdatePasswordRequestDto updatePasswordRequestDto){
+        return updateUserInfoService.updatePassword(updatePasswordRequestDto);
     }
 
     @ApiOperation(value = "닉네임으로 상태값 변경", notes = "해당 닉네임의 유저의 status를 N으로 변경합니다.")
@@ -76,7 +78,7 @@ public class LoginApiController {
 
     @GetMapping("/access-token")
     @ApiIgnore
-    public ConcurrentHashMap<String, String> getNewAccessToken(@RequestParam("refreshToken")String refreshToken){
+    public JwtResponseDto getNewAccessToken(@RequestParam("refreshToken")String refreshToken){
         return newAccessTokenService.getNewAccessToken(refreshToken);
     }
 

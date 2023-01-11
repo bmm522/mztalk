@@ -1,5 +1,6 @@
 package com.mztalk.login.service.impl;
 
+import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.exception.ChangeFailException;
 import com.mztalk.login.repository.UserRepository;
@@ -20,14 +21,9 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public int updatePassword(String username, String password) {
-       return userRepository.updatePassword(username, bCryptPasswordEncoder.encode(password));
+    public int updatePassword(UpdatePasswordRequestDto updatePasswordRequestDto) {
+       return userRepository.updatePassword(updatePasswordRequestDto.getUsername(), bCryptPasswordEncoder.encode(updatePasswordRequestDto.getPassword()));
     }
-
-//    @Override
-//    public int updateMentorStatus(String nickname) {
-//        return userRepository.updateMentorStatus(nickname);
-//    }
 
     @Override
     public int updateStatus(String nickname) {
