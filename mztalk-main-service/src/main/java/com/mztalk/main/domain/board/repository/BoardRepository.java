@@ -22,4 +22,6 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardCustom
     @Query("UPDATE Board b SET b.writer = :nickname WHERE b.own = :userNo")
     int updateNickname(long userNo, String nickname);
 
+
+    Board findByOwn(Long own);
 }

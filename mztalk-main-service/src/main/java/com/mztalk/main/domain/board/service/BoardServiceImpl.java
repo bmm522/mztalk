@@ -3,7 +3,7 @@ package com.mztalk.main.domain.board.service;
 import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.common.Result;
-import com.mztalk.main.domain.board.dto.BoardModiDto;
+import com.mztalk.main.domain.board.dto.BoardNicknameModifyDto;
 import com.mztalk.main.domain.board.dto.BoardRequestDto;
 import com.mztalk.main.domain.board.dto.BoardResponseDto;
 import com.mztalk.main.domain.board.repository.BoardRepository;
@@ -64,11 +64,9 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long deleteBoard(Long id) {
-
         Board board = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다."));
         board.changeStatus();
         return board.getId();
-
     }
 
     //메인화면 뿌려주기
@@ -114,8 +112,13 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public int changeNickname(Map<String, String> body) {
-        return boardRepository.updateNickname(Long.parseLong(body.get("userNo")),body.get("nickname"));
+    public Long modifyNickname(BoardNicknameModifyDto boardNicknameModifyDto) {
+
+        Board board = boardRepository.findByOwn(boardNicknameModifyDto.getOwn());
+        board.modifyNickname(boardNicknameModifyDto.getWriter());
+
+        return board.getOwn();
+
     }
 
 

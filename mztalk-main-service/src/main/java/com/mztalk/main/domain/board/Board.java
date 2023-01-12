@@ -3,7 +3,6 @@ package com.mztalk.main.domain.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mztalk.main.common.BaseTimeEntity;
-import com.mztalk.main.domain.board.dto.BoardModiDto;
 import com.mztalk.main.domain.board.dto.BoardResponseDto;
 import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.reply.Reply;
@@ -95,5 +94,8 @@ public class Board extends BaseTimeEntity {
         this.status = BoardStatus.NO;
     }
 
-
+    //닉네임 변경
+    public void modifyNickname(String writer){
+        this.writer = writer;
+    }
 }

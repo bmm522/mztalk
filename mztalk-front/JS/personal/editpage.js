@@ -96,6 +96,8 @@ async function ch_nickName() {
   const nickname = document.getElementById('nickname').value;
   const userNo = localStorage.getItem('userNo');
   const id = localStorage.getItem('userNo');
+  const writer = document.getElementById('nickname').value;
+  const own = localStorage.getItem('userNo');
   if (!confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')) {
     return;
   }
@@ -124,7 +126,7 @@ async function ch_nickName() {
         userNo,
       }),
     });  
-    await fetch(`${LOCALHOST_URL}/story/board/nickname`, {
+    await fetch(`${LOCALHOST_URL}/auction/nickname`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -136,7 +138,7 @@ async function ch_nickName() {
         userNo,
       }),
     });
-    await fetch(`${LOCALHOST_URL}/auction/nickname`, {
+    await fetch(`${LOCALHOST_URL}/story/board/nickname`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -144,8 +146,8 @@ async function ch_nickName() {
         RefreshToken: localStorage.getItem('refreshToken'),
       },
       body: JSON.stringify({
-        nickname,
-        userNo,
+        writer,
+        own,
       }),
     });
     await fetch(`${LOCALHOST_URL}/mentors/mentee/${id}`, {

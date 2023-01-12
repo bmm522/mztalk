@@ -1,10 +1,8 @@
 package com.mztalk.main.domain.board.controller;
 
 import com.mztalk.main.common.CMRespDto;
-import com.mztalk.main.domain.board.Board;
-import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
-import com.mztalk.main.domain.board.dto.BoardModiDto;
+import com.mztalk.main.domain.board.dto.BoardNicknameModifyDto;
 import com.mztalk.main.domain.board.dto.BoardRequestDto;
 import com.mztalk.main.domain.board.dto.BoardResponseDto;
 import com.mztalk.main.domain.board.service.BoardService;
@@ -53,8 +51,8 @@ public class BoardApiController {
     }
 
     @PatchMapping("/board/nickname")
-    public ResponseEntity<?> changeNickname(@RequestBody Map<String, String> body){
-        return new ResponseEntity<>(new CMRespDto<>(1,"이름변경성공", boardService.changeNickname(body)), HttpStatus.OK);
+    public ResponseEntity<?> modifyNickname(@RequestBody BoardNicknameModifyDto boardNicknameModifyDto){
+        return new ResponseEntity<>(new CMRespDto<>(1,"이름변경성공", boardService.modifyNickname(boardNicknameModifyDto)), HttpStatus.OK);
     }
 
 }
