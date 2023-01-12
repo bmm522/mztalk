@@ -4,6 +4,7 @@ import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
+import com.mztalk.main.domain.board.dto.BoardModiDto;
 import com.mztalk.main.domain.board.dto.BoardRequestDto;
 import com.mztalk.main.domain.board.dto.BoardResponseDto;
 import com.mztalk.main.domain.board.service.BoardService;
@@ -39,7 +40,7 @@ public class BoardApiController {
 
     //글수정
     @PatchMapping("/update/{id}")
-    public Long updateForm(@PathVariable("id") Long id, @RequestBody BoardDto boardDto) {return boardService.updateBoard(id, boardDto);}
+    public Long updateForm(@PathVariable("id") Long id, @RequestBody BoardResponseDto boardResponseDto) {return boardService.updateBoard(id, boardResponseDto);}
 
     //글삭제
     @PatchMapping("/delete/{id}")

@@ -3,6 +3,7 @@ package com.mztalk.main.domain.board.service;
 import com.mztalk.main.domain.board.Board;
 import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
+import com.mztalk.main.domain.board.dto.BoardModiDto;
 import com.mztalk.main.domain.board.dto.BoardRequestDto;
 import com.mztalk.main.domain.board.dto.BoardResponseDto;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,7 @@ public interface BoardService {
 
     Long save(BoardRequestDto boardRequestDto);
 
-    Long updateBoard(Long id, BoardDto boardDto);
+    Long updateBoard(Long id, BoardResponseDto boardResponseDto);
 
     Long deleteBoard(Long id);
 
