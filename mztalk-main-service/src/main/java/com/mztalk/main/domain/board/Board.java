@@ -1,21 +1,18 @@
 package com.mztalk.main.domain.board;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mztalk.main.common.BaseTimeEntity;
-import com.mztalk.main.domain.board.dto.BoardDto;
+import com.mztalk.main.domain.board.dto.BoardModiDto;
+import com.mztalk.main.domain.board.dto.BoardResponseDto;
 import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.status.BoardStatus;
 import com.mztalk.main.status.PrivacyStatus;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
@@ -81,19 +78,15 @@ public class Board extends BaseTimeEntity {
 
     //연관관계 편의 메서드
 
-
-
-
     //글수정
-    public void updateBoard(BoardDto boardDto){
-        this.id = boardDto.getId();
-        this.writer = boardDto.getWriter();
-        this.title = boardDto.getTitle();
-        this.content = boardDto.getContent();
-        this.own = boardDto.getOwn();
-        //this.replyList = boardDto.getReplyList();
+    public void updateBoard(BoardResponseDto boardResponseDto){
+        this.id = boardResponseDto.getId();
+        this.writer = boardResponseDto.getWriter();
+        this.title = boardResponseDto.getTitle();
+        this.content = boardResponseDto.getContent();
+        this.own = boardResponseDto.getOwn();
         this.status = BoardStatus.YES;
-        this.privacy = boardDto.getPrivacy();
+        this.privacy = boardResponseDto.getPrivacy();
 
     }
 
