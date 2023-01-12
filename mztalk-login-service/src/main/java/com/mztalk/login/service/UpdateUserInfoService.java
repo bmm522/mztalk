@@ -1,5 +1,6 @@
 package com.mztalk.login.service;
 
+import com.mztalk.login.domain.dto.request.ChangeNewPasswordReqeustDto;
 import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
 import org.hibernate.sql.Update;
 
@@ -16,7 +17,7 @@ public interface UpdateUserInfoService {
 
     int updateRoleChangeToUser(Long id);
 
-    int changeNewPassword(Map<String, String> body);
+    int changeNewPassword(ChangeNewPasswordReqeustDto changeNewPasswordReqeustDto);
 
     int changeNewNickname(Map<String, String> body);
 

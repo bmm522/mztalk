@@ -1,5 +1,6 @@
 package com.mztalk.login.service.impl;
 
+import com.mztalk.login.domain.dto.request.ChangeNewPasswordReqeustDto;
 import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.exception.ChangeFailException;
@@ -41,11 +42,11 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     }
 
     @Override
-    public int changeNewPassword(Map<String, String> body) {
+    public int changeNewPassword(ChangeNewPasswordReqeustDto changeNewPasswordReqeustDto) {
 
-        if(bCryptPasswordEncoder.matches(body.get("prePassword"),userRepository.findByPasswordWithId(Long.parseLong(body.get("id"))))){
+        if(bCryptPasswordEncoder.matches(changeNewPasswordReqeustDto.getPrePassword(),userRepository.findByPasswordWithId(Long.parseLong(changeNewPasswordReqeustDto.getNewPassword())))){
             try {
-                return userRepository.changedPassword(bCryptPasswordEncoder.encode(body.get("newPassword")),Long.parseLong(body.get("id")));
+                return userRepository.changedPassword(bCryptPasswordEncoder.encode(changeNewPasswordReqeustDto.getNewPassword()),Long.parseLong(changeNewPasswordReqeustDto.getId()));
             } catch (RuntimeException e){
                 new ChangeFailException("기존 비밀번호 정보가 일치하지 않습니다.");
                 return 0;
