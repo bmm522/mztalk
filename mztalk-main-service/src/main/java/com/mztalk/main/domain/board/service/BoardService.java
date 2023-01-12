@@ -1,15 +1,10 @@
 package com.mztalk.main.domain.board.service;
 
-import com.mztalk.main.domain.board.Board;
-import com.mztalk.main.domain.board.dto.BoardDto;
 import com.mztalk.main.common.Result;
-import com.mztalk.main.domain.board.dto.BoardModiDto;
+import com.mztalk.main.domain.board.dto.BoardNicknameModifyDto;
 import com.mztalk.main.domain.board.dto.BoardRequestDto;
 import com.mztalk.main.domain.board.dto.BoardResponseDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Map;
 
 public interface BoardService {
@@ -26,7 +21,7 @@ public interface BoardService {
 
     Result findAllByBoardStory(Long own, int page);
 
-    int changeNickname(Map<String, String> body);
+    Long modifyNickname(BoardNicknameModifyDto boardNicknameModifyDto);
 
     //Long findByUserNo(String nickname);
 }
