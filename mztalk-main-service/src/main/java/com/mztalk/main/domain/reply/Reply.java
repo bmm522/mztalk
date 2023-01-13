@@ -57,9 +57,10 @@ public class Reply {
     private LocalDateTime lastModifiedDate;
 
 
-    //댓글삭제(status = N)
-    public void changeReplyStatus(){
-        this.status = ReplyStatus.NO;
-    }
+   //닉네임 변경
+   public void modifyNickname(String replyNickname){
+       this.replyNickname = replyNickname;
+   }
+
 
 }
