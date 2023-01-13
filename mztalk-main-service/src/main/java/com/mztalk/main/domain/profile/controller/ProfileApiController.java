@@ -30,8 +30,8 @@ public class ProfileApiController {
     //이름불러오기
     @GetMapping("/profile/name/{own}")
     public ResponseEntity<?> profileName(@PathVariable long own){
-             ProfileResponseDto profile = profileService.profileName(own);
-             return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
+         ProfileResponseDto profile = profileService.profileName(own);
+         return new ResponseEntity<>(new CMRespDto<>(1, "성공", profile), HttpStatus.OK);
     }
 
     //게시판 갯수 불러오기

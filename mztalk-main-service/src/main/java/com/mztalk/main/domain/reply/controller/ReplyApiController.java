@@ -3,6 +3,7 @@ package com.mztalk.main.domain.reply.controller;
 
 import com.mztalk.main.common.CMRespDto;
 import com.mztalk.main.domain.reply.Reply;
+import com.mztalk.main.domain.reply.dto.ReplyNicknameModifyDto;
 import com.mztalk.main.domain.reply.dto.ReplyResponseDto;
 import com.mztalk.main.domain.reply.repository.ReplyRepository;
 import com.mztalk.main.domain.reply.service.ReplyService;
@@ -37,7 +38,7 @@ public class ReplyApiController {
     }
 
     @PatchMapping("/nickname")
-    public ResponseEntity<?> changeNickname(@RequestBody Map<String, String> body){
-        return new ResponseEntity<>(new CMRespDto<>(1,"이름변경성공", replyService.changeNickname(body)), HttpStatus.OK);
-     }
+    public ResponseEntity<?> changeNickname(@RequestBody ReplyNicknameModifyDto replyNicknameModifyDto){
+        return new ResponseEntity<>(new CMRespDto<>(1,"이름변경성공", replyService.changeNickname(replyNicknameModifyDto)), HttpStatus.OK);
+        }
     }

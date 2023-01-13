@@ -11,9 +11,10 @@ import java.util.Map;
 
 @Repository
 public interface ReplyRepository extends JpaRepository <Reply, Long> {
+    Reply findByReplyUserNo(Long replyUserNo);
 
 
-    @Modifying
-    @Query("UPDATE Reply r SET r.replyNickname = :nickname WHERE r.replyUserNo = :userNo")
-    int updateNickname(@Param("userNo") Long userNo, @Param("nickname") String nickname);
+//    @Modifying
+//    @Query("UPDATE Reply r SET r.replyNickname = :nickname WHERE r.replyUserNo = :userNo")
+//    int updateNickname(@Param("userNo") Long userNo, @Param("nickname") String nickname);
 }

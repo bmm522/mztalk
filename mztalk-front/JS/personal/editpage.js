@@ -98,6 +98,8 @@ async function ch_nickName() {
   const id = localStorage.getItem('userNo');
   const writer = document.getElementById('nickname').value;
   const own = localStorage.getItem('userNo');
+  const replyNickname = document.getElementById('nickname').value;
+  const replyUserNo = localStorage.getItem('userNo');
   if (!confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')) {
     return;
   }
@@ -122,8 +124,8 @@ async function ch_nickName() {
         RefreshToken: localStorage.getItem('refreshToken'),
       },
       body: JSON.stringify({
-        nickname,
-        userNo,
+        replyNickname,
+        replyUserNo,
       }),
     });  
     await fetch(`${LOCALHOST_URL}/auction/nickname`, {
