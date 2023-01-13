@@ -25,9 +25,9 @@ public class SubscribeApiController {
     @PostMapping("/subscribe")
     public ResponseEntity<?> savePayment(@RequestBody SubscribeRequestDto subscribeRequestDto){
 
-        Subscribe subscribe = subscribeService.save(subscribeRequestDto);
+        Long userNo =  subscribeService.save(subscribeRequestDto);
 
-        return new ResponseEntity<>(new CMRespDto<>(1, "결제성공",subscribe), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CMRespDto<>(1, "결제성공",userNo), HttpStatus.CREATED);
     }
 
     @PutMapping("/checkVip/{userNo}")

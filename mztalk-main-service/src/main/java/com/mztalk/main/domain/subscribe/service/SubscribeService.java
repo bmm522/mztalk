@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface SubscribeService {
-    Subscribe save(SubscribeRequestDto subscribeRequestDto);
+    Long save(SubscribeRequestDto subscribeRequestDto);
 
     int updateStatusByUserNo(Long userNo);
 

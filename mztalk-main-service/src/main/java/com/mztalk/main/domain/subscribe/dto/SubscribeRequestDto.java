@@ -1,6 +1,7 @@
 package com.mztalk.main.domain.subscribe.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mztalk.main.domain.subscribe.entity.Subscribe;
 import com.mztalk.main.status.RoleStatus;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -25,8 +27,8 @@ public class SubscribeRequestDto {
     private int price;
 
     private RoleStatus roleStatus;
-
-    private Date vipDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime vipDate;
 
 
     public Subscribe toEntity(){
@@ -37,7 +39,7 @@ public class SubscribeRequestDto {
                 .id(id)
                 .userNo(userNo)
                 .roleStatus(RoleStatus.VIP)
-                .vipDate(simpleDateFormat.format(vipDate))
+                .vipDate(vipDate)
                 .price(price)
                 .build();
 
