@@ -12,10 +12,7 @@ import com.mztalk.main.handler.exception.CustomApiException;
 import com.mztalk.main.status.RoleStatus;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -32,40 +29,28 @@ public class SubscribeServiceImpl implements SubscribeService {
 
 
     @Override
-    public Subscribe save(SubscribeRequestDto subscribeRequestDto) {
+    public Long save(SubscribeRequestDto subscribeRequestDto) {
 
-        Long own = subscribeRequestDto.getUserNo();
+        Long userNo = subscribeRequestDto.getUserNo();
 
-        System.out.println(own);
-
-        //그 사람이 vip인지
-        HttpHeaders headerName = new HttpHeaders();
-        headerName.add("Content-type", "text/html");
-
-        //유저의이름
-        HttpHeaders headersNames = new HttpHeaders();
-        headersNames.add("Content-type", "text/html");
-
-        ResponseEntity<String> responseName = new RestTemplate().exchange(
-                "http://localhost:8000/login/user-info/" + subscribeRequestDto.getUserNo(),
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                "http://localhost:8000/login/user-info/" + userNo,
                 HttpMethod.GET,
-                new HttpEntity<String>(headerName),
+                entity,
                 String.class
         );
+        JSONObject json = new JSONObject(response.getBody());
+        String role = json.getString("role");
 
-        JSONObject ownName = new JSONObject(responseName.getBody());
-        System.out.println(ownName);
-        String role = ownName.getString("role");
-
-        if(role.matches("ROLE_VIP")){
-            System.out.println("?");
-            new IllegalArgumentException("이미 VIP회원입니다.");
+        if (role.equals("ROLE_VIP")) {
+            throw new IllegalArgumentException("이미 VIP회원입니다.");
         }
-        System.out.println(subscribeRequestDto.toEntity());
-        System.out.println(subscribeRequestDto.toEntity().getUserNo()+"d");
-        System.out.println(subscribeRequestDto.toEntity().getVipDate()+"f");
 
-        return subscribeRepository.save(subscribeRequestDto.toEntity());
+        return subscribeRepository.save(subscribeRequestDto.toEntity()).getUserNo();
     }
 
     @Override
@@ -82,11 +67,11 @@ public class SubscribeServiceImpl implements SubscribeService {
     @Override
     public SubscribeResponseDto findByUserNoAndRoleStatus(Long userNo) {
         try {
-                return subscribeRepository.findByUserNoAndRoleStatus(userNo, RoleStatus.valueOf("VIP"));
-            }catch (Exception e){
-                return null;
-            }
+            return subscribeRepository.findByUserNoAndRoleStatus(userNo, RoleStatus.valueOf("VIP"));
+        }catch (Exception e){
+            return null;
         }
+    }
 
 
 

@@ -5,10 +5,12 @@ import com.mztalk.main.status.RoleStatus;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
@@ -34,7 +36,8 @@ public class Subscribe  {
     private RoleStatus roleStatus; //vip여부
 
     @Column(nullable = false)
-    private String vipDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime vipDate;
 
     @CreationTimestamp
     private Timestamp createDate;
