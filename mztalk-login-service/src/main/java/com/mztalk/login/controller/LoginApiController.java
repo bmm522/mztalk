@@ -2,6 +2,7 @@ package com.mztalk.login.controller;
 
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.UserInfoDto;
+import com.mztalk.login.domain.dto.request.ChangeNewNicknameRequestDto;
 import com.mztalk.login.domain.dto.request.ChangeNewPasswordReqeustDto;
 import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
 import com.mztalk.login.domain.dto.response.EmailAuthResponseDto;
@@ -92,8 +93,8 @@ public class LoginApiController {
     }
 
     @PatchMapping("/user/nickname")
-    public int changeNewNickname(@RequestBody Map<String, String> body){
-        return updateUserInfoService.changeNewNickname(body);
+    public int changeNewNickname(@RequestBody ChangeNewNicknameRequestDto changeNewNicknameRequestDto){
+        return updateUserInfoService.changeNewNickname(changeNewNicknameRequestDto);
     }
 
     @PatchMapping("/user/email")

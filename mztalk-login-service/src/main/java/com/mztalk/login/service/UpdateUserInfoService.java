@@ -1,5 +1,6 @@
 package com.mztalk.login.service;
 
+import com.mztalk.login.domain.dto.request.ChangeNewNicknameRequestDto;
 import com.mztalk.login.domain.dto.request.ChangeNewPasswordReqeustDto;
 import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
 import org.hibernate.sql.Update;
@@ -19,7 +20,7 @@ public interface UpdateUserInfoService {
 
     int changeNewPassword(ChangeNewPasswordReqeustDto changeNewPasswordReqeustDto);
 
-    int changeNewNickname(Map<String, String> body);
+    int changeNewNickname(ChangeNewNicknameRequestDto changeNewNicknameRequestDto);
 
     int changeNewEmail(String userNo, String email);
 

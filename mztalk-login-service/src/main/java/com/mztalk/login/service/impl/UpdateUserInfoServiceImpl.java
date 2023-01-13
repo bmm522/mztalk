@@ -1,5 +1,6 @@
 package com.mztalk.login.service.impl;
 
+import com.mztalk.login.domain.dto.request.ChangeNewNicknameRequestDto;
 import com.mztalk.login.domain.dto.request.ChangeNewPasswordReqeustDto;
 import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
 import com.mztalk.login.domain.entity.User;
@@ -57,8 +58,8 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     }
 
     @Override
-    public int changeNewNickname(Map<String, String> body) {
-        return userRepository.updateNickname(Long.parseLong(body.get("userNo")),body.get("nickname"));
+    public int changeNewNickname(ChangeNewNicknameRequestDto changeNewNicknameRequestDto) {
+        return userRepository.updateNickname(Long.parseLong(changeNewNicknameRequestDto.getUserNo()),changeNewNicknameRequestDto.getNickname());
     }
 
     @Override
