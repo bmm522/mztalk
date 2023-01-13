@@ -2,6 +2,8 @@ package com.mztalk.login.controller;
 
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.UserInfoDto;
+import com.mztalk.login.domain.dto.request.ChangeNewNicknameRequestDto;
+import com.mztalk.login.domain.dto.request.ChangeNewPasswordReqeustDto;
 import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
 import com.mztalk.login.domain.dto.response.EmailAuthResponseDto;
 import com.mztalk.login.domain.dto.response.JwtResponseDto;
@@ -86,13 +88,13 @@ public class LoginApiController {
     // 비밀번호 변경, body : prePassword, newPassword, id
     @ApiOperation(value = "새로운 비밀번호로 변경", notes = "기존의 비밀번호를 새로운 비밀번호로 변경합니다.")
     @PatchMapping("/new-password")
-    public int changeNewPassword(@RequestBody Map<String, String> body){
-        return updateUserInfoService.changeNewPassword(body);
+    public int changeNewPassword(@RequestBody ChangeNewPasswordReqeustDto changeNewPasswordReqeustDto){
+        return updateUserInfoService.changeNewPassword(changeNewPasswordReqeustDto);
     }
 
     @PatchMapping("/user/nickname")
-    public int changeNewNickname(@RequestBody Map<String, String> body){
-        return updateUserInfoService.changeNewNickname(body);
+    public int changeNewNickname(@RequestBody ChangeNewNicknameRequestDto changeNewNicknameRequestDto){
+        return updateUserInfoService.changeNewNickname(changeNewNicknameRequestDto);
     }
 
     @PatchMapping("/user/email")
