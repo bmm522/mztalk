@@ -2,6 +2,7 @@ package com.mztalk.login.controller;
 
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.UserInfoDto;
+import com.mztalk.login.domain.dto.request.ChangeNewEmailRequestDto;
 import com.mztalk.login.domain.dto.request.ChangeNewNicknameRequestDto;
 import com.mztalk.login.domain.dto.request.ChangeNewPasswordReqeustDto;
 import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
@@ -98,8 +99,8 @@ public class LoginApiController {
     }
 
     @PatchMapping("/user/email")
-    public int changeNewEmail(@RequestBody Map<String, String> body){
-        return updateUserInfoService.changeNewEmail(body.get("userNo"), body.get("email"));
+    public int changeNewEmail(@RequestBody ChangeNewEmailRequestDto changeNewEmailRequestDto){
+        return updateUserInfoService.changeNewEmail(changeNewEmailRequestDto.getUserNo(),changeNewEmailRequestDto.getEmail());
     }
 
     @GetMapping("/malicious-user")
