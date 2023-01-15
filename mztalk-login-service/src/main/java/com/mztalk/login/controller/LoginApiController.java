@@ -73,12 +73,13 @@ public class LoginApiController {
         return selectUserInfoService.getUserInfoByUserNo(id);
     }
 
+    @ApiOperation(value = "이메일로 아이디 찾기", notes = "해당 이메일로 등록된 유저의 아이디를 가져옵니다.")
     @GetMapping("/username/{email}")
-    @ApiIgnore
     public SearchUsernameResponseDto searchUsername(@PathVariable("email") String email){
         return selectUserInfoService.searchUsername(email);
     }
 
+    @ApiOperation(value = "토큰 재발급", notes = "토큰 유효시간이 끝났을 시, 리프레시 토큰을 이용해서 재발급해줍니다.")
     @GetMapping("/access-token")
     @ApiIgnore
     public JwtResponseDto getNewAccessToken(@RequestParam("refreshToken")String refreshToken){
