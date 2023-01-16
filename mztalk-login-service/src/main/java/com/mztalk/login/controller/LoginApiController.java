@@ -94,22 +94,25 @@ public class LoginApiController {
         return updateUserInfoService.changeNewPassword(changeNewPasswordReqeustDto);
     }
 
+    @ApiOperation(value = "닉네임 변경", notes = "해당 유저 번호의 유저의 닉네임을 변경합니다.")
     @PatchMapping("/user/nickname")
     public int changeNewNickname(@RequestBody ChangeNewNicknameRequestDto changeNewNicknameRequestDto){
         return updateUserInfoService.changeNewNickname(changeNewNicknameRequestDto);
     }
 
+    @ApiOperation(value = "이메일 변경", notes = "해당 유저 번호의 유저 이메일을 변경합니다.")
     @PatchMapping("/user/email")
     public int changeNewEmail(@RequestBody ChangeNewEmailRequestDto changeNewEmailRequestDto){
         return updateUserInfoService.changeNewEmail(changeNewEmailRequestDto.getUserNo(),changeNewEmailRequestDto.getEmail());
     }
 
+    @ApiOperation(value = "악성 유저 리스트 가져오기", notes = "신고 횟수가 3회 이상인 악성 유저의 리스트를 가져옵니다.")
     @GetMapping("/malicious-user")
-    @ApiIgnore
     public Result<?> getMaliciousUser(){
         return selectUserInfoService.getMaliciousUser();
     }
 
+    @ApiOperation(value = "유저 상태 변경", notes = "해당 유저의 status를 변경합니다.")
     @PatchMapping("/user/status")
     public long updateUserStatus(@RequestParam("status")String status, @RequestParam("userNo")long id){
         return updateUserInfoService.updateUserStatus(status, id);
