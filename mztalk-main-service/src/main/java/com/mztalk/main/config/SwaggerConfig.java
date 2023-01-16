@@ -3,8 +3,10 @@ package com.mztalk.main.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -19,22 +21,20 @@ import java.util.Set;
 
 
 
-@EnableWebMvc
+
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig implements WebMvcConfigurer {
-
+public class SwaggerConfig {
 
     @Bean
     public Docket swagger(){
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .ignoredParameterTypes(java.sql.Date.class)
                 .consumes(getConsumeContentTypes())
                 .produces(getProduceContentTypes())
                 .forCodeGeneration(true)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.mztalk.story.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.mztalk.main.domain.follow.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
@@ -46,6 +46,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .title("MZTALK STORY SERVICE API")
                 .description("STORY SERVICE 소개")
                 .contact(new Contact("Ssanto", "Ssanto.tistory.com", "nowing0108@gmail.com"))
+                .version("1.0")
                 .build();
     }
 
@@ -64,23 +65,6 @@ public class SwaggerConfig implements WebMvcConfigurer {
         produces.add("multipart/form-data");
         return produces;
     }
-
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-        // -- Static resources
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css");
-        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
-        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
-    }
-
-
 
 
 }
