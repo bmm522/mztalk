@@ -52,6 +52,9 @@ public class AuctionServiceImpl implements AuctionService {
     private final CommentRepository commentRepository;
     private final PriceRepository priceRepository;
 
+    private HttpHeaders httpHeaders;
+
+
     //게시글 작성
     @Transactional
     @Override
@@ -73,27 +76,8 @@ public class AuctionServiceImpl implements AuctionService {
         System.out.println("page : " + page);
         Pageable pageable = PageRequest.of(page - 1, 6);
         Page<Board> boardPage = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
-        List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
 
-        for (Board board : boardPage) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", "text/html");
-//            System.out.println("list 가져오기 : " + board.getBoardId());
-            ResponseEntity<String> response = new RestTemplate().exchange(
-                    "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
-                    HttpMethod.GET,
-                    new HttpEntity<String>(headers),
-                    String.class
-            );
-            JSONObject jsonObject = new JSONObject(response.getBody());
-            JSONObject jsonData = jsonObject.getJSONObject("data");
-            String imageUrl = jsonData.getString("imageUrl");
-            String imageName = jsonData.getString("objectKey");
-
-
-            boardListResponseDtoList.add(new BoardListResponseDto(board,getTimeDuration(board),imageUrl, imageName));
-        }
-        return new Result<>(boardListResponseDtoList);
+        return new Result<>(new ListOfBoardListResponseDto(boardPage, getTimeDuration(boardPage),getImageInfoList(boardPage)));
     }
 
     @Override
@@ -101,27 +85,8 @@ public class AuctionServiceImpl implements AuctionService {
         System.out.println("page : " + page);
         Pageable pageable = PageRequest.of(page - 1, 3);
         Page<Board> boardPage = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
-        List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
 
-        for (Board board : boardPage) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", "text/html");
-//            System.out.println("list 가져오기 : " + board.getBoardId());
-            ResponseEntity<String> response = new RestTemplate().exchange(
-                    "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
-                    HttpMethod.GET,
-                    new HttpEntity<String>(headers),
-                    String.class
-            );
-            JSONObject jsonObject = new JSONObject(response.getBody());
-            JSONObject jsonData = jsonObject.getJSONObject("data");
-            String imageUrl = jsonData.getString("imageUrl");
-            String imageName = jsonData.getString("objectKey");
-
-
-            boardListResponseDtoList.add(new BoardListResponseDto(board,getTimeDuration(board),imageUrl, imageName));
-        }
-        return new Result<>(boardListResponseDtoList);
+        return new Result<>(new ListOfBoardListResponseDto(boardPage, getTimeDuration(boardPage),getImageInfoList(boardPage)));
     }
 
     //닉네임 변경
@@ -148,30 +113,10 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public Result<?> searchBoard(String keyword, int page) throws ParseException {
         Pageable pageable = PageRequest.of(page - 1, 6);
-        List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
+
         Page<Board> boardList =  boardRepository.searchBoard(keyword, pageable);
-        System.out.println("service 검색 리스트: " + boardList);
-
-        for(Board board : boardList){
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", "text/html");
-            System.out.println("검색 list 가져오기 : " + board.getBoardId());
-            ResponseEntity<String> response = new RestTemplate().exchange(
-                    "http://localhost:8000/resource/main-image?bNo="+board.getBoardId()+"&serviceName=auction",
-                    HttpMethod.GET,
-                    new HttpEntity<String>(headers),
-                    String.class
-            );
-            JSONObject jsonObject = new JSONObject(response.getBody());
-            JSONObject jsonData = jsonObject.getJSONObject("data");
-            String imageUrl = jsonData.getString("imageUrl");
-            String imageName = jsonData.getString("objectKey");
-
-
-            boardListResponseDtoList.add(new BoardListResponseDto(board,getTimeDuration(board), imageUrl, imageName));
-
-        }
-        return new Result<>(boardListResponseDtoList);
+//        return new Result<>(new ListOfBoardListResponseDto(boardList, getTimeDuration(boardList),getImageInfo(boardList)));
+        return null;
     }
 
 
@@ -189,21 +134,24 @@ public class AuctionServiceImpl implements AuctionService {
                 new HttpEntity<String>(headers),
                 String.class
         );
+//        return new BoardDetailResponseDto(board, imageInfo,getTimeDuration(board));
+        return null;
+    }
 
-        JSONObject jsonObject = new JSONObject(response.getBody());
-        JSONArray jsonArray = jsonObject.getJSONArray("data");
-        for(int i = 0; i < jsonArray.length(); i++) {
-            ConcurrentHashMap<String, String> imageMap = new ConcurrentHashMap<>();
-            imageMap.put("imageUrl", jsonArray.getJSONObject(i).getString("imageUrl"));
-            imageMap.put("objectKey", jsonArray.getJSONObject(i).getString("objectKey"));
-            imageMap.put("imageName", jsonArray.getJSONObject(i).getString("imageName"));
-            imageMap.put("imageLevel", jsonArray.getJSONObject(i).getString("imageLevel"));
+    //게시물 리스트 이미지 정보 호출
+    private List<ImageRestDto> getImageInfoList(Page<Board> boards){
+        ArrayList<ImageRestDto> imageRestDtoArrayList = new ArrayList<>();
 
-            imageInfo.add(imageMap);
+        for(Board board : boards){
+            imageRestDtoArrayList.add(getImageRestDto(board));
         }
 
-        return new BoardDetailResponseDto(board, imageInfo,getTimeDuration(board));
+        return imageRestDtoArrayList;
+
     }
+
+    //단일 게시물 이미지 정보 호츨
+//    private ImageRestDto getImageInfo()
 
 
 
@@ -314,36 +262,42 @@ public class AuctionServiceImpl implements AuctionService {
             String imageUrl = jsonData.getString("imageUrl");
             String imageName = jsonData.getString("objectKey");
 
-            boardListResponseDtoList.add(new BoardListResponseDto(board, getTimeDuration(board), imageUrl, imageName));
+//            boardListResponseDtoList.add(new BoardListResponseDto(board, getTimeDuration(board), imageUrl, imageName));
         }
         return new Result<>(boardListResponseDtoList);
     }
 
 
-    private ConcurrentHashMap<String, Long> getTimeDuration(Board board) {
+    private List<ConcurrentHashMap<String, Long>> getTimeDuration(Page<Board> boardList) {
         LocalDateTime localDateTime = LocalDateTime.now();
+        ArrayList<ConcurrentHashMap<String,Long>> timeList = new ArrayList<>();
+        for(Board board : boardList){
+            Duration duration = Duration.between(getLocalDateTime(board.getTimeLimit()), localDateTime);
 
-        Duration duration = Duration.between(getLocalDateTime(board.getTimeLimit()), localDateTime);
+            long hour = duration.getSeconds() / 3600;
+            long minute = (duration.getSeconds() % 3600)/60 ;
+            long second = minute / 60;
 
-        long hour = duration.getSeconds() / 3600;
-        long minute = (duration.getSeconds() % 3600)/60 ;
-        long second = minute / 60;
+            ConcurrentHashMap<String, Long> timeMap = new ConcurrentHashMap<>();
 
-        ConcurrentHashMap<String, Long> timeMap = new ConcurrentHashMap<>();
-
-        if(hour >= 0 && minute >= 0 && second >= 0) {
-            timeMap.put("hour", 0L);
-            timeMap.put("minute", 0L);
-            timeMap.put("second", 0L);
-            if(!board.getIsClose().equals("Y")){
-                boardRepository.updateIsClose(board.getBoardId());
+            if(hour >= 0 && minute >= 0 && second >= 0) {
+                timeMap.put("hour", 0L);
+                timeMap.put("minute", 0L);
+                timeMap.put("second", 0L);
+                if(!board.getIsClose().equals("Y")){
+                    boardRepository.updateIsClose(board.getBoardId());
+                }
+            } else {
+                timeMap.put("hour", hour);
+                timeMap.put("minute", minute);
+                timeMap.put("second", second);
             }
-        } else {
-            timeMap.put("hour", hour);
-            timeMap.put("minute", minute);
-            timeMap.put("second", second);
+
+            timeList.add(timeMap);
         }
-        return timeMap;
+
+
+        return timeList;
     }
 
     public void postChatRoom(Board board){
@@ -393,4 +347,16 @@ public class AuctionServiceImpl implements AuctionService {
         return new Result<>(priceDtoList);
     }
 
+
+
+
+    private ImageRestDto getImageRestDto(Board board){
+        httpHeaders.add("Content-Type", "text/html");
+        return new ImageRestDto(new RestTemplate().exchange(
+                "http://localhost:8000/resource/main-image?bNo=" + board.getBoardId() + "&serviceName=auction",
+                HttpMethod.GET,
+                new HttpEntity<String>(httpHeaders),
+                String.class
+        ));
+    }
 }
