@@ -6,6 +6,9 @@ import com.mztalk.main.domain.board.dto.BoardNicknameModifyDto;
 import com.mztalk.main.domain.board.dto.BoardRequestDto;
 import com.mztalk.main.domain.board.dto.BoardResponseDto;
 import com.mztalk.main.domain.board.service.BoardService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-
+@ApiResponses({
+        @ApiResponse(code = 200, message = "OK"),
+        @ApiResponse(code = 201, message = "CREATED"),
+        @ApiResponse(code = 400, message = "BAD REQUEST"),
+        @ApiResponse(code = 500, message = "SERVER ERROR")
+})
+@Api(tags = {"글쓰는 정보를 제공하는 Controller"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/story")

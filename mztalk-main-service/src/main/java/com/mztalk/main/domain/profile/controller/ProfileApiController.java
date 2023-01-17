@@ -6,6 +6,9 @@ import com.mztalk.main.domain.profile.dto.ProfileImageResponseDto;
 import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
 import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.profile.service.ProfileService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@ApiResponses({
+        @ApiResponse(code = 200, message = "OK"),
+        @ApiResponse(code = 201, message = "CREATED"),
+        @ApiResponse(code = 400, message = "BAD REQUEST"),
+        @ApiResponse(code = 500, message = "SERVER ERROR")
+})
+@Api(tags = {"프로필 정보를 제공하는 Controller"})
 @RestController
 @RequestMapping("/story")
 @RequiredArgsConstructor
