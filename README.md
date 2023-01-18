@@ -51,7 +51,8 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
 <img width="650"  alt="image" src="https://user-images.githubusercontent.com/102157839/213105086-2ec90c96-68c6-4214-8557-b0bf6e21639b.png">
 
 <div>
- 
+  * <small>메인페이지(글 목록, 글 검색)</small><br>
+  * <small>카카오 맵 API를 이용한 장소 검색 / 글 작성,수정,삭제 / 모임 신청, 강퇴, 마감 제한</small>
  </div>
  
  <h4> :incoming_envelope: ChatService </h4>
