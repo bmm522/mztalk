@@ -67,7 +67,7 @@ const getBoardList = (page) =>{
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
                     ${career}</h6><p class="card-text">제목:${title}</p>
                     </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview(${mentorId});" 
-                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">리뷰보기</button></div></div>`;
                     cnt += 1;
                 } else {
                     document.getElementById('row-div1').innerHTML += 
@@ -79,7 +79,7 @@ const getBoardList = (page) =>{
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
                     ${career}</h6><p class="card-text">제목:${title}</p>
                     </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview(${mentorId});"
-                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">리뷰보기</button></div></div>
                     </div><div class="row" style="padding:20px;" id="row-div">`;
                     cnt += 1;
                 }
@@ -100,37 +100,55 @@ document.getElementById('sendSearch').addEventListener('click', function(){
 
 // 글 신고하기
 const reportBoard = () =>{
-    const id = document.getElementById('boardId-modal').value;
-    fetch(`${LOCALHOST_URL}/mentors/board/${id}`,{
-        method:"GET",
-        headers:{
-            "Content-Type":"application/json",
+    const userId = localStorage.getItem('userNo');
+    const boardId = document.getElementById('boardId-modal').value;
+    fetch(`${LOCALHOST_URL}/mentors/board/mentor?userId=${userId}&boardId=${boardId}`,{
+        method: "GET",
+        headers: { 
+            "Content-Type": "application/json;",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken')
-        },
+        }
     })
     .then((res)=>res.json())
     .then(res =>{
-        const userId = res.data.mentor.userId;
-        const bId = res.data.id;
-        fetch(`${LOCALHOST_URL}/login/report`,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                reportTitle : document.getElementById('reportTitle').value,
-                reportContent : document.getElementById('reportContent').value,
-                boardId : bId,
-                serviceName : "mentor",
-                userNo : userId
+        if(res){
+            alert('본인의 글을 신고할 수 없습니다.');
+            location.href="mentor-main.html";
+            return false;
+        } else{
+            fetch(`${LOCALHOST_URL}/mentors/board/${boardId}`,{
+                method:"GET",
+                headers:{
+                    "Content-Type":"application/json",
+                    Authorization:localStorage.getItem('authorization'),
+                    RefreshToken:localStorage.getItem('refreshToken')
+                },
             })
-        })
-    })
-    .then(res =>{
-        alert('신고가 접수되었습니다.');
-        location.href="mentor-main.html";
-    })
+            .then((res)=>res.json())
+            .then(res =>{
+                const userId = res.data.mentor.userId;
+                const bId = res.data.id;
+                fetch(`${LOCALHOST_URL}/login/report`,{
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({
+                        reportTitle : document.getElementById('reportTitle').value,
+                        reportContent : document.getElementById('reportContent').value,
+                        boardId : bId,
+                        serviceName : "mentor",
+                        userNo : userId
+                    })
+                })
+            })
+            .then(res =>{
+                alert('신고가 접수되었습니다.');
+                location.href="mentor-main.html";
+            })
+        }
+    })    
 }
 
 // 글번호에 대해 글 상세 보기
@@ -159,7 +177,7 @@ const getBoardDetail = (bId) => {
           const boardPrice = document.getElementById('board-price');
           boardPrice.value = res.data.salary;
         } else {
-          console.log("실패");
+          window.alert("실패");
         }
       });
   };
@@ -190,13 +208,12 @@ const watchReview = (mentorId) => {
             reviewBody.innerHTML += `${star}<br/>${content}<br/><br/>`;
           }
         } else {
-          console.log("Failed to fetch review");
+          window.alert("Failed to fetch review");
         }
       });
   };
 
-
-
+//글 검색
 const searchEvent = () =>{
     const categoryValue = document.getElementById('category').value;
     const salaryValue = document.getElementById('salary').value;
@@ -213,7 +230,6 @@ const searchEvent = () =>{
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log(document.querySelector('#board-list-search-div'));
         if(res.data.length != 0){
             let cnt = 1;
             document.querySelector('#board-list-search-div').innerHTML = '<div class="row" style="padding:20px;" id="row-div2">';

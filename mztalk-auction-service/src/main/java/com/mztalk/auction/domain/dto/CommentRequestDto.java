@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Date;
 
 @Getter
-@Setter
 public class CommentRequestDto {
     private long boardId;
     private String content;

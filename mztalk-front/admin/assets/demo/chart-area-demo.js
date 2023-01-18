@@ -2,6 +2,27 @@
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
+// let today = new Date();
+
+// let year = today.getFullYear(); // 년도
+// let month = today.getMonth() + 1;  // 월
+// let date = today.getDate();  // 날짜
+// let day = today.getDay();  // 요일
+
+// let oneBeforeDate = today.getDate() - 1;
+// let twoBeforeDate = today.getDate() - 2;
+// let threeBeforeDate = today.getDate() - 3;
+
+// let fourBeforeDate = today.getDate() - 4;
+// let fiveBeforeDate = today.getDate() - 5;
+// let sixBeforeDate = today.getDate() - 6;
+
+// let nowDay = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+date:date);
+// let oneBefore = year + '-' + (month<9?"0"+month:month) + '-' +  (date<9?"0"+oneBeforeDate:oneBeforeDate);
+// let twoBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+twoBeforeDate:twoBeforeDate);
+// let threeBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+threeBeforeDate:threeBeforeDate);
+// let fourBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+fourBeforeDate:fourBeforeDate);
+// let fiveBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+fiveBeforeDate:fiveBeforeDate);
 let today = new Date();
 
 let year = today.getFullYear(); // 년도
@@ -9,21 +30,28 @@ let month = today.getMonth() + 1;  // 월
 let date = today.getDate();  // 날짜
 let day = today.getDay();  // 요일
 
-let oneBeforeDate = today.getDate() - 1;
-let twoBeforeDate = today.getDate() - 2;
-let threeBeforeDate = today.getDate() - 3;
+let oneBeforeDate = new Date();
+oneBeforeDate.setDate(oneBeforeDate.getDate() - 1);
+let twoBeforeDate = new Date();
+twoBeforeDate.setDate(twoBeforeDate.getDate() - 2);
+let threeBeforeDate = new Date();
+threeBeforeDate.setDate(threeBeforeDate.getDate() - 3);
+let fourBeforeDate = new Date();
+fourBeforeDate.setDate(fourBeforeDate.getDate() - 4);
+let fiveBeforeDate = new Date();
+fiveBeforeDate.setDate(fiveBeforeDate.getDate() - 5);
+let sixBeforeDate = new Date();
+sixBeforeDate.setDate(sixBeforeDate.getDate() - 6);
 
-let fourBeforeDate = today.getDate() - 4;
-let fiveBeforeDate = today.getDate() - 5;
-let sixBeforeDate = today.getDate() - 6;
+let nowDay = `${year}-${month<9?"0"+month:month}-${date<9?"0"+date:date}`;
+let oneBefore = `${oneBeforeDate.getFullYear()}-${oneBeforeDate.getMonth()<9?"0"+(oneBeforeDate.getMonth()+1):oneBeforeDate.getMonth()+1}-${oneBeforeDate.getDate()<10?"0"+oneBeforeDate.getDate():oneBeforeDate.getDate()}`;
+let twoBefore = `${twoBeforeDate.getFullYear()}-${twoBeforeDate.getMonth()<9?"0"+(twoBeforeDate.getMonth()+1):twoBeforeDate.getMonth()+1}-${twoBeforeDate.getDate()<9?"0"+twoBeforeDate.getDate():twoBeforeDate.getDate()}`;
+let threeBefore = `${threeBeforeDate.getFullYear()}-${threeBeforeDate.getMonth()<9?"0"+(threeBeforeDate.getMonth()+1):threeBeforeDate.getMonth()+1}-${threeBeforeDate.getDate()<9?"0"+threeBeforeDate.getDate():threeBeforeDate.getDate()}`;
+let fourBefore = `${fourBeforeDate.getFullYear()}-${fourBeforeDate.getMonth()<9?"0"+(fourBeforeDate.getMonth()+1):fourBeforeDate.getMonth()+1}-${fourBeforeDate.getDate()<9?"0"+fourBeforeDate.getDate():fourBeforeDate.getDate()}`;
+let fiveBefore = `${fiveBeforeDate.getFullYear()}-${fiveBeforeDate.getMonth()<9?"0"+(fiveBeforeDate.getMonth()+1):fiveBeforeDate.getMonth()+1}-${fiveBeforeDate.getDate()<9?"0"+fiveBeforeDate.getDate():fiveBeforeDate.getDate()}`;
+let sixBefore = `${sixBeforeDate.getFullYear()}-${sixBeforeDate.getMonth()<9?"0"+(sixBeforeDate.getMonth()+1):sixBeforeDate.getMonth()+1}-${sixBeforeDate.getDate()<9?"0"+sixBeforeDate.getDate():sixBeforeDate.getDate()}`;
 
-let nowDay = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+date:date);
-let oneBefore = year + '-' + (month<9?"0"+month:month) + '-' +  (date<9?"0"+oneBeforeDate:oneBeforeDate);
-let twoBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+twoBeforeDate:twoBeforeDate);
-let threeBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+threeBeforeDate:threeBeforeDate);
-let fourBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+fourBeforeDate:fourBeforeDate);
-let fiveBefore = year + '-' + (month<9?"0"+month:month) + '-' + (date<9?"0"+fiveBeforeDate:fiveBeforeDate);
-let sixBefore = year + '-' + (month<9?"0"+month:month) + '-' +  (date<9?"0"+sixBeforeDate:sixBeforeDate);
+console.log("oneBefore : " + oneBefore);
 
 
 let todayData ='';
@@ -33,6 +61,8 @@ let threeBeforeData = '';
 let fourBeforeData = '';
 let fiveBeforeData = '';
 let sixBeforeData = '';
+
+
 
 // let auctionData = '';
 // let bungData = '';
@@ -55,7 +85,7 @@ function getDailyServiceTraffic() {
   .then(res =>{
 
     for(let i = 0; i < res.data.length ; i++){
-
+      console.log("res : " + res.data);
 
       if(res.data[i].serviceName == 'auction'){
         auctionData = res.data[i].count;
@@ -83,7 +113,49 @@ function getDailyServiceTraffic() {
       // mentorData = res.data[3].count;
       // myLineChart.remove();
  // console.log('모두 끝난 후 : ' + document.getElementById('input-date').value);
-  getBarChar();
+ document.getElementById('card-bar-div').innerHTML = '';
+ document.getElementById('card-bar-div').innerHTML = '<canvas id="myBarChart" width="100%" height="40"></canvas>';
+ var ctx = document.getElementById("myBarChart");
+ var myLineChart = new Chart(ctx, {
+   type: 'bar',
+   data: {
+     labels: ["Mentor", "Bung", "Auction", "Stroy"],
+     datasets: [{
+       label: "일일 트래픽 수",
+       backgroundColor: "rgba(2,117,216,1)",
+       borderColor: "rgba(2,117,216,1)",
+       data: [mentorData, bungData, auctionData, storyData],
+     }],
+   },
+   options: {
+     scales: {
+       xAxes: [{
+         time: {
+           unit: 'date'
+         },
+         gridLines: {
+           display: false
+         },
+         ticks: {
+           maxTicksLimit: 6
+         }
+       }],
+       yAxes: [{
+         ticks: {
+           min: 0,
+           max: 4000,
+           maxTicksLimit: 24
+         },
+         gridLines: {
+           display: true
+         }
+       }],
+     },
+     legend: {
+       display: false
+     }
+   }
+ });
   
   })
   // console.log('----------------------------------');
@@ -120,49 +192,7 @@ function getDailyServiceTraffic() {
 
 
 const getBarChar = () =>{
-  document.getElementById('card-bar-div').innerHTML = '';
-  document.getElementById('card-bar-div').innerHTML = '<canvas id="myBarChart" width="100%" height="40"></canvas>';
-  var ctx = document.getElementById("myBarChart");
-  var myLineChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ["Mentor", "Bung", "Auction", "Stroy"],
-      datasets: [{
-        label: "일일 트래픽 수",
-        backgroundColor: "rgba(2,117,216,1)",
-        borderColor: "rgba(2,117,216,1)",
-        data: [mentorData, bungData, auctionData, storyData],
-      }],
-    },
-    options: {
-      scales: {
-        xAxes: [{
-          time: {
-            unit: 'date'
-          },
-          gridLines: {
-            display: false
-          },
-          ticks: {
-            maxTicksLimit: 6
-          }
-        }],
-        yAxes: [{
-          ticks: {
-            min: 0,
-            max: 1000,
-            maxTicksLimit: 24
-          },
-          gridLines: {
-            display: true
-          }
-        }],
-      },
-      legend: {
-        display: false
-      }
-    }
-  });
+  
   // console.log(myLineChart.data.datasets);
 }
 
@@ -249,7 +279,7 @@ const getDailyTraffic = () =>{
         yAxes: [{
           ticks: {
             min: 0,
-            max: 1000,
+            max: 4000,
             maxTicksLimit: 20
           },
           gridLines: {

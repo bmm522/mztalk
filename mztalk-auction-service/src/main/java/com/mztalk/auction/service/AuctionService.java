@@ -23,7 +23,7 @@ public interface AuctionService {
 
     BoardPriceDto updatePrice(BoardPriceDto boardPriceDto);
 
-    int updateCount(Long bId, String writer);
+    int updateCount(Long bId, Long writer);
 
     ConcurrentHashMap<String, String> getRecentBoardNo();
 
@@ -47,5 +47,7 @@ public interface AuctionService {
 
     Result<?> selectBoardListOfFront(int page) throws ParseException;
 
-    int changedNickname(ChangedNicknameDto changedNicknameDto);
+    void changedNickname(ChangedNicknameDto changedNicknameDto);
+
+    Result<?> getCurrentPrice(Long bId);
 }

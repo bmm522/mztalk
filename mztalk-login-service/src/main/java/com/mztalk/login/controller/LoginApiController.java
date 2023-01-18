@@ -2,6 +2,13 @@ package com.mztalk.login.controller;
 
 import com.mztalk.login.domain.dto.Result;
 import com.mztalk.login.domain.dto.UserInfoDto;
+import com.mztalk.login.domain.dto.request.ChangeNewEmailRequestDto;
+import com.mztalk.login.domain.dto.request.ChangeNewNicknameRequestDto;
+import com.mztalk.login.domain.dto.request.ChangeNewPasswordReqeustDto;
+import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
+import com.mztalk.login.domain.dto.response.EmailAuthResponseDto;
+import com.mztalk.login.domain.dto.response.JwtResponseDto;
+import com.mztalk.login.domain.dto.response.SearchUsernameResponseDto;
 import com.mztalk.login.service.NewAccessTokenService;
 import com.mztalk.login.service.SelectUserInfoService;
 import com.mztalk.login.service.UpdateUserInfoService;
@@ -32,20 +39,15 @@ public class LoginApiController {
 
     @GetMapping("/auth-code")
     @ApiIgnore
-    public ConcurrentHashMap<String, Object> getEmailAuthCodeByFindPwd(@RequestParam("email")String email, @RequestParam("username")String username){
+    public EmailAuthResponseDto getEmailAuthCodeByFindPwd(@RequestParam("email")String email, @RequestParam("username")String username){
         return mailServiceByFindPwdService.getEmailAuthCodeByFindPwd(email, username);
     }
 
     @PatchMapping("/password")
     @ApiIgnore
-    public int updatePassword(@RequestBody Map<String, String> body){
-        return updateUserInfoService.updatePassword(body.get("username"), body.get("password"));
+    public int updatePassword(@RequestBody UpdatePasswordRequestDto updatePasswordRequestDto){
+        return updateUserInfoService.updatePassword(updatePasswordRequestDto);
     }
-
-//    @PatchMapping("/mentor-status/{nickname}")
-//    public int updateMentorStatus(@PathVariable("nickname")String nickname){
-//        return updateUserInfoService.updateMentorStatus(nickname);
-//    }
 
     @ApiOperation(value = "닉네임으로 상태값 변경", notes = "해당 닉네임의 유저의 status를 N으로 변경합니다.")
     @PatchMapping("/status/{nickname}")
@@ -70,23 +72,17 @@ public class LoginApiController {
     public UserInfoDto getUserInfoByUserNo(@PathVariable("id")String id){
         return selectUserInfoService.getUserInfoByUserNo(id);
     }
-//    @GetMapping("user-info/{nickname}")
-//    public UserInfoDto getUserInfoBynickname(@PathVariable("nickname")String nickname){
-//        return selectUserInfoService.getUserInfoByNickname(nickname);
-//    }
 
-
-
+    @ApiOperation(value = "이메일로 아이디 찾기", notes = "해당 이메일로 등록된 유저의 아이디를 가져옵니다.")
     @GetMapping("/username/{email}")
-    @ApiIgnore
-    public ConcurrentHashMap<String, Object> searchUsername(@PathVariable("email") String email){
+    public SearchUsernameResponseDto searchUsername(@PathVariable("email") String email){
         return selectUserInfoService.searchUsername(email);
     }
 
+    @ApiOperation(value = "토큰 재발급", notes = "토큰 유효시간이 끝났을 시, 리프레시 토큰을 이용해서 재발급해줍니다.")
     @GetMapping("/access-token")
     @ApiIgnore
-    public ConcurrentHashMap<String, String> getNewAccessToken(@RequestParam("refreshToken")String refreshToken){
-        System.out.println("newAccess : " + refreshToken);
+    public JwtResponseDto getNewAccessToken(@RequestParam("refreshToken")String refreshToken){
         return newAccessTokenService.getNewAccessToken(refreshToken);
     }
 
@@ -94,26 +90,29 @@ public class LoginApiController {
     // 비밀번호 변경, body : prePassword, newPassword, id
     @ApiOperation(value = "새로운 비밀번호로 변경", notes = "기존의 비밀번호를 새로운 비밀번호로 변경합니다.")
     @PatchMapping("/new-password")
-    public int changeNewPassword(@RequestBody Map<String, String> body){
-        return updateUserInfoService.changeNewPassword(body);
+    public int changeNewPassword(@RequestBody ChangeNewPasswordReqeustDto changeNewPasswordReqeustDto){
+        return updateUserInfoService.changeNewPassword(changeNewPasswordReqeustDto);
     }
 
+    @ApiOperation(value = "닉네임 변경", notes = "해당 유저 번호의 유저의 닉네임을 변경합니다.")
     @PatchMapping("/user/nickname")
-    public int changeNewNickname(@RequestBody Map<String, String> body){
-        return updateUserInfoService.changeNewNickname(body);
+    public int changeNewNickname(@RequestBody ChangeNewNicknameRequestDto changeNewNicknameRequestDto){
+        return updateUserInfoService.changeNewNickname(changeNewNicknameRequestDto);
     }
 
+    @ApiOperation(value = "이메일 변경", notes = "해당 유저 번호의 유저 이메일을 변경합니다.")
     @PatchMapping("/user/email")
-    public int changeNewEmail(@RequestBody Map<String, String> body){
-        return updateUserInfoService.changeNewEmail(body.get("userNo"), body.get("email"));
+    public int changeNewEmail(@RequestBody ChangeNewEmailRequestDto changeNewEmailRequestDto){
+        return updateUserInfoService.changeNewEmail(changeNewEmailRequestDto.getUserNo(),changeNewEmailRequestDto.getEmail());
     }
 
+    @ApiOperation(value = "악성 유저 리스트 가져오기", notes = "신고 횟수가 3회 이상인 악성 유저의 리스트를 가져옵니다.")
     @GetMapping("/malicious-user")
-    @ApiIgnore
     public Result<?> getMaliciousUser(){
         return selectUserInfoService.getMaliciousUser();
     }
 
+    @ApiOperation(value = "유저 상태 변경", notes = "해당 유저의 status를 변경합니다.")
     @PatchMapping("/user/status")
     public long updateUserStatus(@RequestParam("status")String status, @RequestParam("userNo")long id){
         return updateUserInfoService.updateUserStatus(status, id);

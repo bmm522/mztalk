@@ -3,6 +3,7 @@ package com.mztalk.bung.service.impl;
 import com.mztalk.bung.domain.BoardStatus;
 import com.mztalk.bung.domain.SearchKeyWord;
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
+import com.mztalk.bung.domain.dto.BungAddBoardGroupSelfDropRequest;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.entity.BungAddBoard;
 import com.mztalk.bung.domain.response.BungAddRequestDto;
@@ -158,6 +159,11 @@ public class BungServiceImpl implements BungBoardService {
         }
     }
 
+    @Override
+    public Long bungAddBoardGroupSelfDrop(BungAddBoardGroupSelfDropRequest bungAddBoardGroupSelfDropRequest) {
+        System.out.println(bungAddBoardGroupSelfDropRequest.getUserNo());
+        return bungAddRepository.bungAddBoardGroupSelfDrop(bungAddBoardGroupSelfDropRequest);
+    }
 
     // 메인 게시글 수정
     @Override

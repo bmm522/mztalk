@@ -195,3 +195,14 @@ input {
 #writer:hover {
     text-decoration: underline;
 }
+
+#currentPriceButton {
+    width: 120px;
+    height: 30px;
+    background-color: burlywood;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+}

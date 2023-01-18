@@ -1,5 +1,6 @@
 package com.mztalk.login.domain.cookie;
 
+import com.mztalk.login.domain.dto.response.JwtResponseDto;
 import com.mztalk.login.domain.entity.User;
 import lombok.*;
 
@@ -30,9 +31,9 @@ public class MztalkCookie {
         this.usernameCookie =  getCookie("username", URLEncoder.encode(username, "UTF-8"));
     }
 
-    public MztalkCookie(ConcurrentHashMap<String, String>jwtMap, long userNo, String nickname, String status, String role) throws UnsupportedEncodingException {
-        this.authorizationCookie = getCookie("Authorization", URLEncoder.encode(jwtMap.get("jwtToken"), "UTF-8"));
-        this.refreshTokenCookie =getCookie("RefreshToken", URLEncoder.encode(jwtMap.get("refreshToken"), "UTF-8"));
+    public MztalkCookie(JwtResponseDto jwtResponseDto, long userNo, String nickname, String status, String role) throws UnsupportedEncodingException {
+        this.authorizationCookie = getCookie("Authorization", URLEncoder.encode(jwtResponseDto.getJwtToken(), "UTF-8"));
+        this.refreshTokenCookie =getCookie("RefreshToken", URLEncoder.encode(jwtResponseDto.getRefreshToken(), "UTF-8"));
         this.userNoCookie = getCookie("UserNo", String.valueOf(userNo));
         this.userNicknameCookie = getCookie("UserNickname", nickname);
         this.userRoleCookie = getCookie("UserRole", role);

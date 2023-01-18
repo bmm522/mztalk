@@ -7,6 +7,7 @@ function priceStandard(text) {
 
 }
 
+//마감 시간 제한
 function timeStandard(time) {
     const timeLimit = document.getElementById("timeLimit").value;
     if(timeLimit > 72) {
@@ -19,10 +20,10 @@ function timeStandard(time) {
 
 //글쓰기 insert
 function boardWrite() {
-    const form = document.getElementById('image-form-form');
+    const form = document.getElementById('image-form-form-form');
     const payload = new FormData(form);
 
-    fetch(`${LOCALHOST_URL}/resource/images`,{
+    fetch('http://localhost:8000/resource/images',{
         method: 'POST',
         body: payload,
     })
@@ -37,9 +38,24 @@ const postData = () =>{
     const startPriceTrans = Number(startPriceSplit[0].concat(startPriceSplit[1]));
     let date = new Date();
 
-    console.log("글작성시 isbn값 확인: " + document.getElementById('hidden-isbn').value);
-
-    fetch(`${LOCALHOST_URL}/auction/board`, {
+    if(document.getElementById('title').value == '') {
+        alert('제목을 입력해 주세요.');
+        return false;
+    } else if(document.getElementById('searchBook').value == '') {
+        alert('책 제목을 입력해 주세요.');
+        return false;
+    } else if(document.getElementById('content').value == '') {
+        alert('내용을 입력해 주세요.');
+        return false;
+    } else if(document.getElementById('startPrice').value == '') {
+        alert('시작가를 입력해 주세요.');
+        return false;
+    } else if(document.getElementById('timeLimit').value == '') {
+        alert('마감 시간을 입력해 주세요.');
+        return false;
+    }
+    
+    fetch('http://localhost:8000/auction/board', {
         method: "POST",
         headers: {
             "Content-Type":"application/json",
@@ -70,7 +86,7 @@ window.onload = () => {
     document.getElementById('listBtn').addEventListener('click', function() {
         location.href="auction.html";
     })
-    console.log(document.getElementById('image-form-form'));
+    console.log(document.getElementById('image-form-form-form'));
     document.getElementById('hidden-bId').value = localStorage.getItem('bId');
     console.log('bId : ' + document.getElementById('hidden-bId').value);
     const fileArea = document.getElementById("fileArea");

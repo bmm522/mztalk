@@ -1,11 +1,10 @@
 package com.mztalk.login.service.impl;
 
+import com.mztalk.login.domain.dto.response.CheckDuplicateResponseDto;
 import com.mztalk.login.repository.UserRepository;
 import com.mztalk.login.service.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class CheckServiceImpl implements CheckService {
@@ -13,29 +12,27 @@ public class CheckServiceImpl implements CheckService {
     @Autowired
     private UserRepository userRepository;
 
-    public ConcurrentHashMap<String, Object> checkUsername(String username) {
+    public CheckDuplicateResponseDto checkUsername(String username) {
         return getResultMap(userRepository.existsByUsername(username));
     }
 
-    public ConcurrentHashMap<String,Object> checkNickname(String nickname){
+    public CheckDuplicateResponseDto checkNickname(String nickname){
         return getResultMap(userRepository.existsByNickname(nickname));
     }
 
     @Override
-    public ConcurrentHashMap<String, Object> checkEmail(String email) {
+    public CheckDuplicateResponseDto checkEmail(String email) {
         return getResultMap(userRepository.existsByEmail(email));
     }
 
-    private ConcurrentHashMap<String, Object> getResultMap(boolean checkResult){
-
-        ConcurrentHashMap<String, Object> checkUsernameMap = new ConcurrentHashMap<String, Object>();
+    private CheckDuplicateResponseDto getResultMap(boolean checkResult){
 
         if(!checkResult){
-            checkUsernameMap.put("checkResult", "available");
-            return checkUsernameMap;
+
+            return  new CheckDuplicateResponseDto("available");
         }
-        checkUsernameMap.put("checkResult", "unavailable");
-        return checkUsernameMap;
+
+        return  new CheckDuplicateResponseDto("unavailable");
     }
 }
 

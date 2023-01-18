@@ -234,7 +234,7 @@ const myMentees = () =>{
                 <td>${data.email}</td>`
              }
         } else{
-            console.log('값없음');
+            window.alert('읽어오기 실패');
         }
     })
     document.getElementById('myBoardList').innerHTML = '';

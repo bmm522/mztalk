@@ -58,6 +58,8 @@ async function main() {
  *        schema:
  *          type: string
  */
+  const chatCollection = db.collection('chatting');
+
   app.get('/chat-friends', function(req, res) {
     res.sendFile(path.join(__dirname, '../', 'mztalk-front/chatService', 'chat-friends.html'));
   });

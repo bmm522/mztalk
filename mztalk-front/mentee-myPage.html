@@ -27,7 +27,7 @@
                 <input type="text" placeholder="검색" >
             </article> -->
             <article class="pictogramWrap">
-                
+                <img onclick="logouts();" src="https://cdn-icons-png.flaticon.com/512/1629/1629082.png">
                 <i id="move-chat-service" class="fa-solid fa-comments"></i>               
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필" id="move-story-service" >
             
@@ -204,7 +204,7 @@
                         <button class="btn btn-outline-success" type="button" id="accountButton">실명인증하기</button>
                     </div>
                     <div class="mb-3" id = "fileArea">
-                        <form method="POST" enctype="multipart/form-data" id="file-form">
+                        <form action="http://localhost:8000/resource/files" method="POST" enctype="multipart/form-data" id="file-form">
                             <label for="file-box" class="form-label">인증서류</label>
                             <button type = "button" id = "addFile" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
                             class="btn btn-outline-success">+</button>
@@ -500,7 +500,6 @@
             },
             function (rsp) {
                 if (rsp.success) {
-                    console.log(rsp);
                     $.ajax({
                         url: `${LOCALHOST_URL}/mentors/participant`,
                         method: "POST",

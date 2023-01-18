@@ -1,8 +1,8 @@
 
 window.onload = ()=>{
     load(1);
-    ROLEVIP();
-    checkVip();
+    // ROLEVIP();
+    // checkVip();
     console.log("main : " + localStorage.getItem('authorization'));
     console.log("main : " + localStorage.getItem('refreshToken'));
     console.log("main : " + localStorage.getItem('userNo'));
@@ -34,6 +34,9 @@ async function fetchData(endpoint) {
 async function load(page) {
    
   const own = localStorage.getItem("userNo");
+
+  console.log(FOLLOW_URL + own + "/" + page ,"???");
+
   const newAuctionBoard = await fetchData(AUCTION_URL + page);
   const newFollowBoard = await fetchData(FOLLOW_URL + own + "/" + page);
   const newBungBoard = await fetchData(BUNG_URL + page);

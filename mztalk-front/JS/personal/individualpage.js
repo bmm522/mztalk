@@ -232,6 +232,7 @@ function FollowCount(){
 
 // 퍼블릭인 글 목록들 DIV
 function storyLoad(page) {
+
     fetch(`${LOCALHOST_URL}/story/${own}/${page}`,{
         method:"GET",
         headers:{
@@ -243,6 +244,7 @@ function storyLoad(page) {
       .then((res)=> res.json())
       .then(res=>{       
         for(let board of res.data){
+          
           let userNo = localStorage.getItem('userNo');
           let boardId = board.id;
           let writer = board.writer;
@@ -251,7 +253,8 @@ function storyLoad(page) {
           let content = board.content;
           let own = board.own;
           let date = board.lastModifiedDate.substr(0,10);
-
+          let reply = board.replyResponseDto;
+          console.log(board.lastModifiedDate+"?");
           if(privacy.includes("PUBLIC")){
           document.querySelector("#contentList").innerHTML += 
                 `<div id="post-div-${boardId}" class="post-div">
@@ -308,7 +311,8 @@ function storyLoad(page) {
                     </div>
                    </div>
                     `;
-                     board.replyList.forEach((reply)=>{
+                    reply.forEach((reply)=>{
+
                      document.querySelector(`.reply-div-${boardId}`).innerHTML +=
                          `
                            <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
@@ -379,7 +383,8 @@ function storyLoad(page) {
                          </div>
                           `;
                         
-                           board.replyList.forEach((reply)=>{
+                          reply.forEach((reply)=>{
+
                            document.querySelector(`.reply-div-${boardId}`).innerHTML +=
                                `
                                  <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
@@ -423,73 +428,84 @@ write_board.addEventListener('click', function(){
           })
             .then((res)=>res.json())
             .then(res =>{
-                    //글썻을떄
-                    const open = document.querySelector(".write_board"); //글쓰기버튼
-                    const modal = document.querySelector(".textmodal");
-                    modal.classList.add("hidden");
-                    open.classList.remove("hidden");
-                    let board = res.data;
-                    let boardId = board.id;
-                    let title = board.title;
-                    let content = board.content;
-                    let date = board.createDate;
-                  document.querySelector("#contentList").innerHTML += 
-                          `<div id="post-div-${boardId}" class="post-div">
-                              <table id="post-table">
-                                  <tr>
-                                      <td>
-                                          <div id="category-div">${board.privacy}
-                                          </div>
-                                      </td>
-                                      <td>
-                                          <div id="post-title-div">${board.title}</div>
-                                      </td>
-                                      <td>
-                                          <div id="post-date-div"><br>${board.date}</div>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td colspan="3"><br><br>
-                                          <div id="edit-delete-div">
+              if(res != null){
+                window.alert('게시글이 작성 되었습니다.');
+                location.href="individualpage.html";
+                  } else {
+                      window.alert('글쓰기 실패');
+                      return false;
+                  }
+                })
+              }
+            });
+          //           //글썻을떄
+          //           const open = document.querySelector(".write_board"); //글쓰기버튼
+          //           const modal = document.querySelector(".textmodal");
+          //           modal.classList.add("hidden");
+          //           open.classList.remove("hidden");
+          //           let board = res.data;
+          //           let boardId = board.id;
+          //           let title = board.title;
+          //           let content = board.content;
+          //           let date = board.lastModifiedDate;
+                    
+          //         document.querySelector("#contentList").innerHTML += 
+          //                 `<div id="post-div-${boardId}" class="post-div">
+          //                     <table id="post-table">
+          //                         <tr>
+          //                             <td>
+          //                                 <div id="category-div">${board.privacy}
+          //                                 </div>
+          //                             </td>
+          //                             <td>
+          //                                 <div id="post-title-div">${board.title}</div>
+          //                             </td>
+          //                             <td>
+          //                                 <div id="post-date-div"><br>${date}</div>
+          //                             </td>
+          //                         </tr>
+          //                         <tr>
+          //                             <td colspan="3"><br><br>
+          //                                 <div id="edit-delete-div">
                                               
-                                          <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
-                                          data-bs-toggle="modal" type="button">수정</button>
-                                              <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
-                                          </div>
-                                          <div id=post-hr>
-                                              <hr>
-                                          </div>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td colspan="3">
-                                          <div id="post-content">
-                                              <div id="post-content-input">${board.content}</div>
-                                          </div>
-                                      </td>
-                                  </tr>
-                              </table>
-                              <div id="reply-div" class="reply-div-${boardId}">
+          //                                 <button style="cursor:pointer;" onclick="getBoardDetail(${boardId});" data-bs-target="#exampleModalToggle"
+          //                                 data-bs-toggle="modal" type="button">수정</button>
+          //                                     <button style="cursor:pointer;" onClick="deleteBoard(${boardId})" type="button">삭제</button>
+          //                                 </div>
+          //                                 <div id=post-hr>
+          //                                     <hr>
+          //                                 </div>
+          //                             </td>
+          //                         </tr>
+          //                         <tr>
+          //                             <td colspan="3">
+          //                                 <div id="post-content">
+          //                                     <div id="post-content-input">${board.content}</div>
+          //                                 </div>
+          //                             </td>
+          //                         </tr>
+          //                     </table>
+          //                     <div id="reply-div" class="reply-div-${boardId}">
                                   
-                              </div>
-                              <div id="reply-write-div">
-                                  <table>
-                                      <tr>
-                                          <td>
-                                              <div id="reply-write-box"><input type="text" class="reply-write-input-${boardId}" id="reply-write-input"></div>
-                              </div>
-                              </td>
-                              <td>
-                                  <div id="reply-write-btn"><button id="replyButton" onClick="addReply(${boardId})" style="cursor:pointer;" type="button">등록</button></div>
-                              </td>
-                              </tr>
-                              </table>
-                          </div>
-                      </div>`;
-               })
-          }   
-           location.href="individualpage.html";   
-      });
+          //                     </div>
+          //                     <div id="reply-write-div">
+          //                         <table>
+          //                             <tr>
+          //                                 <td>
+          //                                     <div id="reply-write-box"><input type="text" class="reply-write-input-${boardId}" id="reply-write-input"></div>
+          //                     </div>
+          //                     </td>
+          //                     <td>
+          //                         <div id="reply-write-btn"><button id="replyButton" onClick="addReply(${boardId})" style="cursor:pointer;" type="button">등록</button></div>
+          //                     </td>
+          //                     </tr>
+          //                     </table>
+          //                 </div>
+          //             </div>`;
+          //      })
+          // }   
+      
+      
      
 //수정창상세보기
 function getBoardDetail(boardId){
@@ -676,7 +692,7 @@ function profileImageUpload(){
 function addReply(boardId){
   let replyContent = document.querySelector(`.reply-write-input-${boardId}`);
   let replyButton = document.querySelector('#replyButton');
-
+  
         if(replyContent.value === ''){
           alert("댓글을 작성해주세요!");
         }else{
@@ -695,18 +711,31 @@ function addReply(boardId){
             })
           .then((res)=>res.json())
           .then(res =>{
-            let reply = res.data;
-            document.querySelector(`.reply-div-${boardId}`).innerHTML +=
-            `<div>
-              <div id="reply-nickname" onclick="movePage(${reply.replyUserNo});">${reply.replyNickname}</div>
-              <div id="reply-content">${reply.replyContent}</div>
-              <div id="reply-date">${reply.lastModifiedDate}</div>
-              <div id="reply-edit-btn"><button onClick="deleteReply(${reply.id})" style="cursor:pointer;" type="button">X</button>
-              <input type="hidden" class='replyDelete' value="${reply.replyUserNo}">
-              </div>
-            </div>`;
+            if(res != null){
+              window.alert('댓글이 작성 되었습니다.');
+              location.href="individualpage.html";
+                } else {
+                    window.alert('댓글쓰기 실패');
+                    return false;
+                }
+            // let reply = res;
+            // let replyUserNo = reply.replyUserNo;
+            // let replyNickname = reply.replyNickname;
+            // let replyContent = reply.replyContent;
+            // let lastModifiedDate = reply.lastModifiedDate.substr(5,5);
+            // let id = reply.id;
+            // document.querySelector(`.reply-div-${boardId}`).innerHTML +=
+            // `<div>
+            //   <div id="reply-nickname" onclick="movePage(${replyUserNo});">${replyNickname}</div>
+            //   <div id="reply-content">${replyContent}</div>
+            //   <div id="reply-date">${lastModifiedDate}</div>
+            //   <div id="reply-edit-btn"><button onClick="deleteReply(${id})" style="cursor:pointer;" type="button">X</button>
+            //   <input type="hidden" class='replyDelete' value="${replyUserNo}">
+            //   </div>
+            // </div>`;
+            // document.querySelector(`.reply-div-${boardId}`).prepend(content)
           })
-          //  location.href="individualpage.html";   
+         
         }   
     }
     

@@ -12,20 +12,15 @@ import java.time.LocalDateTime;
 public class SearchCondition {
 
     @Nullable
-    private String category; // 카테고리
-
+    private String category;
     @Nullable
-    private String nickname; // 글 작성자 (멘토 닉네임)
-
+    private String nickname;
     @Nullable
-    private String title; // 글 제목
-
+    private String title;
     @Nullable
-    private String content; // 글 내용
-
+    private String content;
     @Nullable
-    private Integer salary; // 시급
-
+    private Integer salary;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime now = LocalDateTime.now();

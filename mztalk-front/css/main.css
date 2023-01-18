@@ -28,7 +28,7 @@ h5 card-title {
 
 #storyList .card {
 
-  border: 10px solid rebeccapurple;
+  border: 10px solid burlywood;
   border-radius: 1em;
   border-top-right-radius: 10% 30%;
   
@@ -113,11 +113,13 @@ h5 card-title {
     align-items: center;
     width: 70px;
     cursor: pointer;
+    
 }
 
 .pictogramWrap img{
     width: 23px;
     cursor: pointer;
+    margin: 10px;
 }
 
  .mainContainer {
@@ -253,7 +255,7 @@ footer .container .copy p{font-size: 13px;padding-top: 2px;}
 
 .advertisement {
   position: fixed;
-  margin-left: 65%;
+  margin-left: 45%;
  
 
 }

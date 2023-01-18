@@ -4,11 +4,56 @@ document.getElementById("priceSubmitBtn").addEventListener('click', function() {
     console.log(document.getElementById('inputPrice').value);
     if(Number(document.getElementById('startPrice').innerHTML) >= Number(document.getElementById('inputPrice').value)) {
         alert('현재 금액보다 큰 금액을 입력해 주세요');
+        return false;
+    } else { //입찰가 전달
+        
+            console.log("입찰버튼 눌렀을 시 bId: " + document.getElementById('hidden-bId').value);
+            console.log("입찰버튼 눌렀을 시 currentPrice: " + document.getElementById('inputPrice').value);
+            console.log("입찰버튼 눌렀을 시 buyer: " + localStorage.getItem("userNickname"));
+            
+            
+            fetch(`${LOCALHOST_URL}/auction/board/price`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type":"application/json",
+                    Authorization:localStorage.getItem('authorization'),
+                    RefreshToken:localStorage.getItem('refreshToken'),
+                },
+                body:JSON.stringify({
+                    "boardId": document.getElementById('hidden-bId').value,
+                    "buyer": localStorage.getItem("userNickname"),
+                    "currentPrice": document.getElementById('inputPrice').value
+                }),
+            })
+            .then((res) => res.json())
+            .then(res => {
+                console.log("입찰가 통신 성공");
+                document.querySelector('.btn-close').click();
+                document.getElementById('inputPrice').value = "";
+                console.log("입찰가 전달 시 response: " + JSON.stringify(res));
+    
+                document.getElementById('startPrice').innerHTML = res.currentPrice;
+                //alert
+                let writer = document.getElementById('hidden-writer').value;
+                if(res.buyer == null && writer != localStorage.getItem("userNickname")) {
+                    document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">입찰에 참여해 보세요.</span>';
+                } else if(res.buyer == null && writer == localStorage.getItem('userNickname')) {
+                    document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
+                } else {
+                    let currentPriceForm = res.currentPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+                    document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span" style="display: inline-block;">${res.buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
+                }
+            });
+          
     }
 });
 
 //댓글 작성
 document.getElementById('commInsertBtn').addEventListener('click', function() {
+    if(document.getElementById('commInput').value == '') {
+        alert('댓글 내용을 입력해 주세요.');
+        return false;
+    }
     fetch(`${LOCALHOST_URL}/auction/comment`, {
         method: "POST",
         headers: {
@@ -19,13 +64,13 @@ document.getElementById('commInsertBtn').addEventListener('click', function() {
         body:JSON.stringify({
             "boardId" : document.getElementById("hidden-bId").value,
             "content" : document.getElementById("commInput").value,
-            "writer": localStorage.getItem("userNickname")
+            "writer": localStorage.getItem("userNickname"),
+            "userNo": localStorage.getItem("userNo")
         }),
     })
     .then((res) => res.json())
     .then(res => {
         document.getElementById('commInput').value = "";
-        console.log("댓글 작성 시 response: " + JSON.stringify(res));
         console.log("댓글 작성 성공");
         let cId = res.cid;
         let content = res.content;
@@ -113,7 +158,7 @@ window.onload = () => {
     document.getElementById('hidden-bId').value = localStorage.getItem("bId");
     console.log("auctionDetail bId: " + document.getElementById('hidden-bId').value);
 
-    fetch(`${LOCALHOST_URL}/auction/board/` + localStorage.getItem("bId") + "/" + localStorage.getItem("userNickname"), {
+    fetch(`${LOCALHOST_URL}/auction/board/` + localStorage.getItem("bId") + "/" + localStorage.getItem("userNo"), {
         method: "GET",
         headers: {
             Authorization:localStorage.getItem('authorization'),
@@ -158,7 +203,7 @@ window.onload = () => {
         if(localStorage.getItem("userNickname") == writer) {
             document.getElementById("buttonArea").innerHTML = '<button type="button" id="updateBtn" style="margin-right:5px; cursor: pointer;" onclick="updateBoard();">수정</button><button type="button" id="deleteBtn" style="margin-right:5px; cursor: pointer;" onclick="deleteBoard();">삭제</button><div class = "modal-header" style = "display: inline-block;"></div>';
         } else {
-            document.getElementById("buttonArea").innerHTML = '<button type="button" id="reportBtn" data-bs-toggle="modal" data-bs-target="#reportModal" onclick="reportBoard();">신고</button';
+            document.getElementById("buttonArea").innerHTML = '<button type="button" id="reportBtn" data-bs-toggle="modal" data-bs-target="#reportModal" onclick="postReport();">신고</button';
         }
         document.getElementById('homeArea').innerHTML = `<span style="margin-left:20px;"s><a style="font-weight: bold; text-decoration: none; color: burlywood;" href = "auction.html">HOME</a></span><input type = "hidden" id = "hidden-writer" value = ${writer}/>`
         document.getElementById('title').innerHTML = title;
@@ -170,7 +215,7 @@ window.onload = () => {
         if(timeLimitHour == 0 && timeLimitMinute == 0) {
             document.getElementById('time').innerHTML = "";    
         } else {
-            document.getElementById('time').innerHTML = '<span style="margin-left:5px; font-size: small; color: gray;"><span style="color: gray;">마감까지...</span>' + '<span style = "color:black;">' + timeLimitHour + "</span>시간" + '<span style = "color:black;">' + timeLimitMinute + '</span>분 남았습니다.</span>';
+            document.getElementById('time').innerHTML = '<span style="font-size: small; color: gray;"><span style="color: gray;">마감까지...</span>' + '<span style = "color:black;">' + timeLimitHour + "</span>시간" + '<span style = "color:black;">' + timeLimitMinute + '</span>분 남았습니다.</span>';
         }
 
         //alert
@@ -180,11 +225,11 @@ window.onload = () => {
         } else if(buyer == null && writer == localStorage.getItem('userNickname') && isClose == 'N') {
             document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
         } else if(buyer != null && isClose == 'Y') {
-            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰되었습니다!</span>`;
+            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span" style="display: inline-block;">${buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰되었습니다!</span>`;
         } else if(buyer == null && writer == localStorage.getItem('userNickname') && isClose == 'Y') {
             document.getElementById('alert').innerHTML = '<span style = "color:gray; font-size: smaller;"><a href = "auctionWrite.html" style="text-decoration: none; color: gray;">입찰한 사용자가 없이 종료되었습니다. 글을 다시 올려 보세요.</a></span>';
         } else {
-            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
+            document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;"><div id="buyer-span" style="display: inline-block">${res.buyer}</div></span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
         }
         
         //사진 처리
@@ -232,47 +277,6 @@ window.onload = () => {
         }
         
     })
-
-    //입찰가 전달
-    document.getElementById("priceSubmitBtn").addEventListener('click', function() {
-        console.log("입찰버튼 눌렀을 시 bId: " + document.getElementById('hidden-bId').value);
-        console.log("입찰버튼 눌렀을 시 currentPrice: " + document.getElementById('inputPrice').value);
-        console.log("입찰버튼 눌렀을 시 buyer: " + localStorage.getItem("userNickname"));
-        
-        
-        fetch(`${LOCALHOST_URL}/auction/board/price`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type":"application/json",
-                Authorization:localStorage.getItem('authorization'),
-                RefreshToken:localStorage.getItem('refreshToken'),
-            },
-            body:JSON.stringify({
-                "boardId": document.getElementById('hidden-bId').value,
-                "buyer": localStorage.getItem("userNickname"),
-                "currentPrice": document.getElementById('inputPrice').value
-            }),
-        })
-        .then((res) => res.json())
-        .then(res => {
-            console.log("입찰가 통신 성공");
-            document.querySelector('.btn-close').click();
-            document.getElementById('inputPrice').value = "";
-            console.log("입찰가 전달 시 response: " + JSON.stringify(res));
-
-            document.getElementById('startPrice').innerHTML = res.currentPrice;
-            //alert
-            let writer = document.getElementById('hidden-writer').value;
-            if(res.buyer == null && writer != localStorage.getItem("userNickname")) {
-                document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">입찰에 참여해 보세요.</span>';
-            } else if(res.buyer == null && writer == localStorage.getItem('userNickname')) {
-                document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">아직 입찰한 사용자가 없습니다.</span>';
-            } else {
-                let currentPriceForm = res.currentPrice.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-                document.getElementById('alert').innerHTML = `<span style = "color:gray; font-size: smaller;"><span style="color:gray; font-weight: bold;">${res.buyer}</span>님이 <span style = "color:gray; font-weight: bold;">${currentPriceForm}원</span>으로 입찰 중입니다!</span>`;
-            }
-        });
-    });
     
 
     //댓글 뿌려주기
@@ -353,46 +357,51 @@ const deleteFatch = () =>{
 const postReport=()=>{
     const bId = document.getElementById('hidden-bId').value;
     document.getElementById('report-btn').addEventListener('click', function(){
-      const bId = document.getElementById('hidden-bId').value;
-      console.log('신고 클릭됨');
-      console.log('title : ' +document.getElementById('reportTitle').value);
-      console.log('content : ' + document.getElementById('reportContent').value);
-      console.log('bId : ' + bId);
-      console.log('userNo : ' + localStorage.getItem('userNo'));
-      fetch(`${LOCALHOST_URL}/login/report`,{
-              method:"POST",
-              headers:{
-                  "Content-Type":"application/json",
-              },
-              body:JSON.stringify({
-                  reportTitle : document.getElementById('reportTitle').value,
-                  reportContent : document.getElementById('reportContent').value,
-                  boardId : bId,
-                  serviceName : "auction",
-                  userNo : localStorage.getItem('userNo'),                   
-                  })
-              })
-              .then(res =>{
-                  alert('신고 접수 되었습니다.');
-                  location.href="auctionDetail.html";
-              })
+        const bId = document.getElementById('hidden-bId').value;
+        console.log('신고 클릭됨');
+        console.log('title : ' +document.getElementById('reportTitle').value);
+        console.log('content : ' + document.getElementById('reportContent').value);
+        console.log('bId : ' + bId);
+        console.log('userNo : ' + localStorage.getItem('userNo'));
+        fetch(`${LOCALHOST_URL}/login/report`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify({
+                reportTitle : document.getElementById('reportTitle').value,
+                reportContent : document.getElementById('reportContent').value,
+                boardId : bId,
+                serviceName : "auction",
+                userNo : localStorage.getItem('userNo')
+                })
+        })
+        .then(res =>{
+            alert('신고 접수 되었습니다.');
+            location.href="auctionDetail.html";
+        })
     })
 }
 
 //입찰자 채팅
 function chatConnection() {
-    fetch(`${LOCALHOST_URL}/auction/chat`,  {
-        method: "GET",
+    console.log('buyer :' +document.getElementById('buyer-span').innerHTML);
+    console.log('local : ' + localStorage.getItem('userNickname'));
+    fetch(`${LOCALHOST_URL}/login/chat/front-nickname`,  {
+        method: "POST",
         headers: {
             "Content-Type":"application/json",
-            Authorization:localStorage.getItem('authorization'),
-            RefreshToken:localStorage.getItem('refreshToken')
-        }
+        },
+        body:JSON.stringify({
+            "serviceName" : "auction",
+            "fromUserNickname" : document.getElementById('buyer-span').innerHTML,
+            "toUserNickname" : localStorage.getItem('userNickname'),
+        })
     })
     .then(res => {
         if(res.status == 200) {
             console.log("채팅 연결 성공");
-            window.open(`${CHAT_URL}/chat-auction?userId=`+localStorage.getItem('userNo')+'&userNickname='+localStorage.getItem('userNickname'), '_blank');
+            window.open(`${CHAT_URL}/chat-auction/?userId=`+localStorage.getItem('userNo')+'&userNickname='+localStorage.getItem('userNickname'), '_blank');
         }
     })
 }
@@ -425,6 +434,59 @@ function bookInform(isbn) {
     })
 }
 
+//개인 페이지 이동
 document.getElementById('writer').addEventListener('click', function() {
     moveBungToStory(writerId);
 });
+
+//입찰 차트
+google.load('visualization', '1.1', {packages:['line']});
+google.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    fetch(`${LOCALHOST_URL}/auction/currentPrice/` + document.getElementById("hidden-bId").value, {
+        method: "GET",
+        headers: {
+            "Content-Type":"application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken')
+        }
+    })
+    .then((res) => res.json())
+    .then(res => {
+        if(res.data == '') {
+            document.getElementById('chart_div').innerHTML = '아직 입찰한 사용자가 없습니다.';
+        } else {
+            // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '닉네임');
+        data.addColumn('number', '입찰가');
+        for(let price of res.data) {
+            console.log("currentPrice:" + price.currentPrice);
+            data.addRows([
+                [price.buyer, price.currentPrice] 
+            ]);
+        }
+        
+        // Set chart options
+        var options = {'title':'',
+                'width':600,
+                'height':500,
+                vAxis: {
+                    format: 'decimal'
+                },
+                series: {
+                    0: { color: 'burlywood' }
+                } 
+            };
+
+        //Set formatter
+        // var formatter = new google.visualization.NumberFormat({pattern: '#,###'});
+        // formatter.format(data, 1);
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.charts.Line(document.getElementById('chart_div'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+    })
+}

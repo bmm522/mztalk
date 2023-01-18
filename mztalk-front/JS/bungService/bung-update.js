@@ -332,7 +332,7 @@ function searchPlaces() {
 const keyword = document.getElementById('keyword').value;
 
 if (!keyword.replace(/^\s+|\s+$/g, '')) {
-    alert('키워드를 입력해주세요!');
+    // alert('키워드를 입력해주세요!');
     return false;
 }
 
@@ -567,9 +567,8 @@ while (el.hasChildNodes()) {
 
 window.onload = function(){
     document.getElementById('bungTitle').value = localStorage.getItem('title');
-    document.getElementById('bungContent').value = localStorage.getItem('content');
+    document.getElementById('bungContent').value = localStorage.getItem('bungContent');
     document.getElementById('bungAddress').value = localStorage.getItem('address');
-    console.log(localStorage.getItem('address'));
     document.getElementById('bId-hidden').value = localStorage.getItem('bId');
     
     const imageInfo = JSON.parse(localStorage.getItem("imageInfo"));
@@ -737,27 +736,37 @@ document.getElementById('edit-btn').addEventListener('click', function(){
 })
 
 const editBungData = (checkValue, deadlineDate) =>{
-    fetch('http://localhost:8000/bung/mainBoardUpdate/'+localStorage.getItem('bId'), {
-        method:"PATCH",
-       headers:{
-       "Content-Type" : "application/json",
-       Authorization:localStorage.getItem('authorization'),
-       RefreshToken:localStorage.getItem('refreshToken'),
+    if(document.getElementById('bungTitle').value === '') {
+        alert('제목을 작성해주세요!');
+    } else if(document.getElementById('bungContent').value === '') {
+        alert('내용을 작성해주세요!');
+    } else if(document.getElementById('group-select').value === '') {
+        alert('모집 인원을 지정해주세요!');
+    } else if(document.getElementById('addressName').value === '') {
+        alert('모임 장소 지정해주세요!');
+    } else {
+            fetch('http://localhost:8000/bung/mainBoardUpdate/'+localStorage.getItem('bId'), {
+            method:"PATCH",
+            headers:{
+            "Content-Type" : "application/json",
+            Authorization:localStorage.getItem('authorization'),
+            RefreshToken:localStorage.getItem('refreshToken'),
    },
-   body:JSON.stringify({
-       boardWriter : localStorage.getItem("userNickname"),
-       boardTitle : document.getElementById('bungTitle').value,
-       boardContent : document.getElementById('bungContent').value,
-       deadlineDate : deadlineDate,
-       fullGroup:document.getElementById('group-select').value,
-       category : checkValue,
-       address : document.getElementById('addressName').value
-   })
+        body:JSON.stringify({
+        boardWriter : localStorage.getItem("userNickname"),
+        boardTitle : document.getElementById('bungTitle').value,
+        boardContent : document.getElementById('bungContent').value,
+        deadlineDate : deadlineDate,
+        fullGroup:document.getElementById('group-select').value,
+        category : checkValue,
+        address : document.getElementById('addressName').value
+        })
    
-})
-.then(res=>{
-   location.href="bung-service-main.html";
-})
+        })
+        .then(res=>{
+            location.href="bung-service-main.html";
+        })
+    }
 }
 
 //멘토서비스보내기

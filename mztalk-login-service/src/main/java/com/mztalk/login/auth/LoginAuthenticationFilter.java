@@ -1,6 +1,7 @@
 package com.mztalk.login.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mztalk.login.domain.dto.response.JwtResponseDto;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.properties.JwtProperties;
 import com.mztalk.login.properties.LoginStatus;
@@ -89,12 +90,10 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
-        ConcurrentHashMap<String,String> jwtTokenAndRefreshToken =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
-        JwtTokenFactory jwtTokenFactory = getJwtTokenFactoryInstance();
+        JwtResponseDto jwtResponseDto =getJwtTokenFactoryInstance().getJwtToken(principalDetails.getUser());
 
-        System.out.println("일반로그인 : " + principalDetails.getUser().getRole());
-        response.addHeader(JwtProperties.HEADER_STRING, jwtTokenAndRefreshToken.get("jwtToken"));
-        response.addHeader("RefreshToken", jwtTokenAndRefreshToken.get("refreshToken"));
+        response.addHeader(JwtProperties.HEADER_STRING, jwtResponseDto.getJwtToken());
+        response.addHeader("RefreshToken", jwtResponseDto.getRefreshToken());
         response.addHeader("UserRole", principalDetails.getUser().getRole());
         response.addHeader("UserNo", String.valueOf(principalDetails.getUser().getId()));
         response.addHeader("UserNickname", URLEncoder.encode(principalDetails.getUser().getNickname(),"UTF-8"));

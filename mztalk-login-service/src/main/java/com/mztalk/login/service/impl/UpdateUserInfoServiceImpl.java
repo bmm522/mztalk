@@ -1,5 +1,8 @@
 package com.mztalk.login.service.impl;
 
+import com.mztalk.login.domain.dto.request.ChangeNewNicknameRequestDto;
+import com.mztalk.login.domain.dto.request.ChangeNewPasswordReqeustDto;
+import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.exception.ChangeFailException;
 import com.mztalk.login.repository.UserRepository;
@@ -20,14 +23,9 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public int updatePassword(String username, String password) {
-       return userRepository.updatePassword(username, bCryptPasswordEncoder.encode(password));
+    public int updatePassword(UpdatePasswordRequestDto updatePasswordRequestDto) {
+       return userRepository.updatePassword(updatePasswordRequestDto.getUsername(), bCryptPasswordEncoder.encode(updatePasswordRequestDto.getPassword()));
     }
-
-//    @Override
-//    public int updateMentorStatus(String nickname) {
-//        return userRepository.updateMentorStatus(nickname);
-//    }
 
     @Override
     public int updateStatus(String nickname) {
@@ -45,11 +43,11 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     }
 
     @Override
-    public int changeNewPassword(Map<String, String> body) {
+    public int changeNewPassword(ChangeNewPasswordReqeustDto changeNewPasswordReqeustDto) {
 
-        if(bCryptPasswordEncoder.matches(body.get("prePassword"),userRepository.findByPasswordWithId(Long.parseLong(body.get("id"))))){
+        if(bCryptPasswordEncoder.matches(changeNewPasswordReqeustDto.getPrePassword(),userRepository.findByPasswordWithId(Long.parseLong(changeNewPasswordReqeustDto.getNewPassword())))){
             try {
-                return userRepository.changedPassword(bCryptPasswordEncoder.encode(body.get("newPassword")),Long.parseLong(body.get("id")));
+                return userRepository.changedPassword(bCryptPasswordEncoder.encode(changeNewPasswordReqeustDto.getNewPassword()),Long.parseLong(changeNewPasswordReqeustDto.getId()));
             } catch (RuntimeException e){
                 new ChangeFailException("기존 비밀번호 정보가 일치하지 않습니다.");
                 return 0;
@@ -60,8 +58,8 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     }
 
     @Override
-    public int changeNewNickname(Map<String, String> body) {
-        return userRepository.updateNickname(Long.parseLong(body.get("userNo")),body.get("nickname"));
+    public int changeNewNickname(ChangeNewNicknameRequestDto changeNewNicknameRequestDto) {
+        return userRepository.updateNickname(Long.parseLong(changeNewNicknameRequestDto.getUserNo()),changeNewNicknameRequestDto.getNickname());
     }
 
     @Override

@@ -10,6 +10,24 @@ const BUNG_URL = `${LOCALHOST_URL}/bung/mainBoards-main/`;
 const MENTOR_URL = `${LOCALHOST_URL}/mentors/board/latest/`;
 
 
+document.addEventListener('DOMContentLoaded', function() {
+  ROLEVIP();
+  checkVip();
+});
+
+
+//로그아웃
+function logouts(){
+  localStorage.clear();
+  deleteCookie('Authorization');
+  deleteCookie('RefreshToken');
+  location.href="loginpage.html";
+}
+
+//쿠키삭제
+function deleteCookie(name) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
 
 
 

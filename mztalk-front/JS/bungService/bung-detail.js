@@ -68,6 +68,14 @@ window.onload= function(){
         if(localStorage.getItem('writer') != localStorage.getItem('userNickname')) {
             document.getElementById('deleteBtn').innerHTML = "";
         }
+
+        if(localStorage.getItem('writer') == localStorage.getItem('userNickname')) {
+            document.getElementById('report').innerHTML = "";
+        }
+
+        if(localStorage.getItem('writer') == localStorage.getItem('userNickname')) {
+            document.getElementById('question').innerHTML = "";
+        }
     
         console.log("글쓴이 : " +localStorage.getItem('writer'));
         console.log("접속 유저 닉네임 : " + localStorage.getItem('userNickname'));
@@ -155,6 +163,8 @@ document.getElementById('report-btn').addEventListener('click', function(){
 } );
 
 const chatOpen = () =>{
+    console.log('writer : ' + document.getElementById('nameDiv').value);
+    console.log('localstorage : ' + localStorage.getItem('userNickname'));
     
     fetch('http://localhost:8000/login/chat/front-nickname', {
         method:"POST",
@@ -163,7 +173,7 @@ const chatOpen = () =>{
         },
         body:JSON.stringify({
             "serviceName" : "bung",
-            "fromUserNickname" :document.getElementById('writer').innerHTML,
+            "fromUserNickname" : document.getElementById('nameDiv').value,
             "toUserNickname" :  localStorage.getItem('userNickname'),
             
         })
@@ -174,7 +184,8 @@ const chatOpen = () =>{
             alert('이미 문의가 완료된 요청입니다.');
         } else {
         alert('문의가 완료되었습니다.');
-        location.href = 'bung-service-detail.html';
+        window.open(`http://localhost:3000/chat-bung/?userId=${localStorage.getItem('userNo')}&userNickname=${localStorage.getItem('userNickname')}`)
+        // location.href = 'bung-service-detail.html';
         }
     })
 }
@@ -248,6 +259,26 @@ const deleteAdd = (addId) => {
         location.href="bung-service-detail.html";
     })
 }
+
+// const deleteSelfAdd = (addId) => {
+//     fetch('http://localhost:8000/bung/bungAddBoardGroupSelfDrop/',{
+//         method:"DELETE",
+//         headers:{
+//             "Content-Type":"application/json",
+//             Authorization:localStorage.getItem('authorization'),
+//             RefreshToken:localStorage.getItem('refreshToken'),
+//         },
+//         body:JSON.stringify({
+//             boardId : localStorage.getItem('bId'),
+//             userNo : localStorage.getItem('userNo'),
+//             addId : addId
+//         })
+//     })
+//     .then(res=>{
+//         alert('탈퇴되었습니다.');
+//         location.href="bung-service-detail.html";
+//     })
+// }
 
 document.getElementById('writer').addEventListener('click', function(){
     console.log('writerId : ' + writerId);

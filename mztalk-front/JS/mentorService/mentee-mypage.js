@@ -1,3 +1,5 @@
+//const { main } = require("@popperjs/core");
+
 let isSearchPerformed = false;
 let isMainPerformed = true;
 window.onload = function(){
@@ -7,7 +9,6 @@ window.onload = function(){
 
 window.onscroll = () =>{
     if (window.innerHeight + window.scrollY >= document.getElementById('board-list-div').offsetHeight && isMainPerformed) {
-        console.log('page :' +  page);
         page++;
         getBoardList(page);
     }
@@ -64,7 +65,6 @@ document.getElementById('sendResume').addEventListener('click', function(){
                 return false;
             } else {
                 document.getElementById('id-hidden').value = userId;
-                document.getElementById('file-form').action =`${LOCALHOST_URL}/resource/files`;
                 document.getElementById('file-form').submit();
                 fetch(`${LOCALHOST_URL}/mentors/application`,{
                 method:"POST",
@@ -89,6 +89,7 @@ document.getElementById('sendResume').addEventListener('click', function(){
                 if(res != null){
                     window.alert('멘토 신청 완료');
                     location.href="mentor-main.html";
+                    
                 } else {
                     window.alert('멘토 신청 실패');
                     return false;
@@ -120,7 +121,6 @@ document.getElementById('accountButton').addEventListener('click', function(){
     })
     .then((res)=>res.json())
     .then(res =>{
-        console.log(res);
         if(res.rsp_code =='A0321'){
             alert('생년월일이 형식에 부적합 합니다');
             isAccount = false;
@@ -260,7 +260,7 @@ const getBoardList = (page) =>{
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
                     ${career}</h6><p class="card-text">제목:${title}</p>
                     </div><input class="hidden-board-id" id=${boardId} type="hidden" value=board.id><button class="btn btn-outline-success" onclick="watchReview(${mentorId});" 
-                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>`;
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">리뷰보기</button></div></div>`;
                     cnt += 1;
                 } else {
                     document.getElementById('row-div1').innerHTML += 
@@ -272,7 +272,7 @@ const getBoardList = (page) =>{
                     ${nickname}</h6><h6 class="card-subtitle mb-2 text-muted">
                     ${career}</h6><p class="card-text">제목:${title}</p>
                     </div><input class="hidden-board-id" id=${boardId} type="hidden" value='+board.id+'><button class="btn btn-outline-success" onclick="watchReview(${mentorId});"
-                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">평점보기</button></div></div>
+                    type="button" data-bs-toggle="modal" data-bs-target="#showReview">리뷰보기</button></div></div>
                     </div><div class="row" style="padding:20px;" id="row-div">`;
                     cnt += 1;
                 }
@@ -342,7 +342,7 @@ const getBoardDetail = (bId) => {
           const boardPrice = document.getElementById('board-price');
           boardPrice.value = res.data.salary;
         } else {
-          console.log("실패");
+          alert('상세보기 실패');
         }
       });
   };
@@ -373,7 +373,7 @@ const watchReview = (mentorId) => {
             reviewBody.innerHTML += `${star}<br/>${content}<br/><br/>`;
           }
         } else {
-          console.log("Failed to fetch review");
+          window.alert("Failed to fetch review");
         }
       });
   };
@@ -430,7 +430,6 @@ function cancelPay(paymentId,impUid,merchantUid,price,mentoringDate) {
             }),
             dataType: "json"
         }).done(function(result){
-            console.log(result);
             if(result.code == "0"){
                 $.ajax({
                     url: `${LOCALHOST_URL}/mentors/payment/cancel/${paymentId}`,
@@ -441,10 +440,8 @@ function cancelPay(paymentId,impUid,merchantUid,price,mentoringDate) {
                     },type: "POST"
                 }).done(function(result){
                     alert('결제가 취소되었습니다.');
-                    location.href="mentee-myPage.html";
                 }).fail(function(result){
                     alert('결제취소에 실패하셨습니다.');
-                    location.href="mentee-myPage.html";
                     return false;
                 })
             }

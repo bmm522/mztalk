@@ -103,8 +103,6 @@ public class InsertImageServiceImpl implements InsertImageService {
     public ResponseEntity<?> updateImage(List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto) {
         List<Images> imagesList = imageRepository.findBybNo(imagesRequestDto.getBNo());
         int cnt = 0;
-        System.out.println("asdfadsfasdfsadfasdf");
-        System.out.println(multipartFileList.size());
         for(Images images : imagesList){
             if(images.getImageLevel() == 0){
                 cnt++;
@@ -204,7 +202,6 @@ public class InsertImageServiceImpl implements InsertImageService {
     private void saveImages(MultipartFile multipartFile, ImagesRequestDto imagesRequestDto, Role role) throws IOException {
         String imageName = multipartFile.getOriginalFilename();
         Images images =null;
-
             switch (role){
                 case UPLOAD_MAIN:
                     images = imagesRequestDto.toImagesWhenMain(imageName, s3Factory.uploadImageToAwsS3(multipartFile));
@@ -213,6 +210,7 @@ public class InsertImageServiceImpl implements InsertImageService {
                     images = imagesRequestDto.toImagesWhenSub(imageName,s3Factory.uploadImageToAwsS3(multipartFile));
                     break;
             }
+
             imageRepository.save(images);
     }
 

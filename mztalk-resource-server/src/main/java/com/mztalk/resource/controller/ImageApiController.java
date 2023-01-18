@@ -7,6 +7,7 @@ import com.mztalk.resource.service.DeleteImageService;
 import com.mztalk.resource.service.InsertImageService;
 import com.mztalk.resource.service.SelectImageService;
 import com.mztalk.resource.service.UpdateImageService;
+import com.mztalk.resource.service.impl.InsertImageServiceImpl;
 import io.swagger.annotations.*;
 import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
@@ -51,11 +52,6 @@ public class ImageApiController {
     @ApiOperation(value="이미지 다중 업로드", notes = "이미지를 여러장 보냅니다. 맨 첫번째 사진은 자동으로 레벨이 0으로 지정됩니다.", response = ResponseData.class)
     @PostMapping(value = "/images",  consumes = "multipart/form-data",  produces = "application/json")
     public ResponseEntity<?> insertImages(@RequestParam("image") List<MultipartFile> multipartFileList, ImagesRequestDto imagesRequestDto){
-        System.out.println("controller : " + multipartFileList);
-        System.out.println("controller : " + imagesRequestDto.getBNo());
-        System.out.println("controller : " + imagesRequestDto.getServiceName());
-
-
         return insertImageService.insertImages(multipartFileList, imagesRequestDto);
     }
 

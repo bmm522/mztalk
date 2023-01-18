@@ -1,9 +1,14 @@
 package com.mztalk.login.service;
 
+import com.mztalk.login.domain.dto.request.ChangeNewNicknameRequestDto;
+import com.mztalk.login.domain.dto.request.ChangeNewPasswordReqeustDto;
+import com.mztalk.login.domain.dto.request.UpdatePasswordRequestDto;
+import org.hibernate.sql.Update;
+
 import java.util.Map;
 
 public interface UpdateUserInfoService {
-    int updatePassword(String username, String password);
+    int updatePassword(UpdatePasswordRequestDto updatePasswordRequestDto);
 
 //    int updateMentorStatus(String nickname);
 
@@ -13,9 +18,9 @@ public interface UpdateUserInfoService {
 
     int updateRoleChangeToUser(Long id);
 
-    int changeNewPassword(Map<String, String> body);
+    int changeNewPassword(ChangeNewPasswordReqeustDto changeNewPasswordReqeustDto);
 
-    int changeNewNickname(Map<String, String> body);
+    int changeNewNickname(ChangeNewNicknameRequestDto changeNewNicknameRequestDto);
 
     int changeNewEmail(String userNo, String email);
 

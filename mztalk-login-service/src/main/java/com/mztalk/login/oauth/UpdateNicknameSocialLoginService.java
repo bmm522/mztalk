@@ -1,5 +1,8 @@
 package com.mztalk.login.oauth;
 
+import com.mztalk.login.domain.dto.request.FirstSocialRequestDto;
+import com.mztalk.login.domain.dto.response.JwtFirstSocialResponseDto;
+import com.mztalk.login.domain.dto.response.JwtResponseDto;
 import com.mztalk.login.domain.entity.User;
 import com.mztalk.login.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,18 +21,16 @@ import static com.mztalk.login.service.JwtTokenFactory.getJwtTokenFactoryInstanc
 public class UpdateNicknameSocialLoginService {
 
     private final UserRepository userRepository;
-    public ConcurrentHashMap<String, String> setFirstLoginForSocialLoginUser(Map<String, String> body) throws IOException {
+    public JwtFirstSocialResponseDto setFirstLoginForSocialLoginUser(FirstSocialRequestDto firstSocialRequestDto) throws IOException {
 
-        User preUser = userRepository.findByUsername(body.get("username"));
-        preUser.changeNickname(body.get("newNickname"));
+        User preUser = userRepository.findByUsername(firstSocialRequestDto.getUsername());
+        preUser.changeNickname(firstSocialRequestDto.getNewNickname());
         userRepository.commit();
 
-        User newUser = userRepository.findByUsername(body.get("username"));
-        ConcurrentHashMap<String, String> map =  getJwtTokenFactoryInstance().getJwtToken(newUser);
-        map.put("userNo", String.valueOf(newUser.getId()));
-        map.put("userNickname", newUser.getNickname());
-        map.put("role", newUser.getRole());
-        return map;
+        User newUser = userRepository.findByUsername(firstSocialRequestDto.getUsername());
+
+        return new JwtFirstSocialResponseDto(getJwtTokenFactoryInstance().getJwtToken(newUser),String.valueOf(newUser.getId()),newUser.getNickname(),newUser.getRole());
+
 
 
 

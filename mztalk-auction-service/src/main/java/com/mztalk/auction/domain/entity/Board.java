@@ -1,6 +1,7 @@
 package com.mztalk.auction.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -70,6 +71,11 @@ public class Board {
     @OrderBy("commentId desc")
     @JsonBackReference
     private List<Comment> comment;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OrderBy("priceId desc")
+    @JsonBackReference
+    private List<Price> price;
 
     public Board(Long boardId, String title, String content, String writer, Integer count, Integer startPrice, Integer timeLimit, Integer CurrentPrice, String buyerNickname, Long userNo, Long isbn) {
         this.boardId = boardId;

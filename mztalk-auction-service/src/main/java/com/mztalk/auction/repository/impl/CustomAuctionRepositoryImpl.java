@@ -3,6 +3,7 @@ package com.mztalk.auction.repository.impl;
 import com.mztalk.auction.domain.dto.*;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
+import com.mztalk.auction.domain.entity.Price;
 import com.mztalk.auction.repository.CustomAuctionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -80,10 +81,10 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
     //조회수 증가
     @Transactional
     @Override
-    public int updateCount(Long bId, String writer) {
-        return entityManager.createQuery("update Board b set b.count = b.count + 1 where b.boardId = :bId and b.writer != :writer")
+    public int updateCount(Long bId, Long writerId) {
+        return entityManager.createQuery("update Board b set b.count = b.count + 1 where b.boardId = :bId and b.userNo != :writerId")
                 .setParameter("bId", bId)
-                .setParameter("writer", writer)
+                .setParameter("writerId", writerId)
                 .executeUpdate();
     }
 
@@ -138,12 +139,24 @@ public class CustomAuctionRepositoryImpl implements CustomAuctionRepository {
 
     @Transactional
     @Override
-    public int changedNickname(ChangedNicknameDto changedNicknameDto) {
-        return entityManager. createQuery("update Board b set b.writer = :nickname where b.userNo = :userNo")
+    public void changedNickname(ChangedNicknameDto changedNicknameDto) {
+        entityManager.createQuery("update Comment c set c.writer = :nickname where c.userNo = :userNo")
+                .setParameter("nickname", changedNicknameDto.getNickname())
+                .setParameter("userNo", changedNicknameDto.getUserNo())
+                .executeUpdate();
+        entityManager.createQuery("update Board b set b.writer = :nickname where b.userNo = :userNo")
                 .setParameter("nickname", changedNicknameDto.getNickname())
                 .setParameter("userNo", changedNicknameDto.getUserNo())
                 .executeUpdate();
     }
+
+    @Override
+    public List<Price> getCurrentPrice(Long bId) {
+        return entityManager.createQuery("select p from Price p where p.board.boardId = :bId")
+                .setParameter("bId", bId)
+                .getResultList();
+    }
+
 
 
 }

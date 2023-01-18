@@ -90,7 +90,7 @@ public class TrafficServiceImpl implements TrafficService {
 
     @Override
     public Result<?> getTrafficOfServiceNameAndRequestTime(String requestTime) {
-
+        System.out.println("requestTime : " + requestTime);
         List<TrafficOfRequestTimeDto> list = trafficRepository.getCountOfServiceNameAndRequestTime(requestTime);
         List<ConcurrentHashMap<String, String>> mapList = new ArrayList<>();
         for(TrafficOfRequestTimeDto trafficOfRequestTimeDto : list){

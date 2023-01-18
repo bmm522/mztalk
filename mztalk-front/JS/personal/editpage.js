@@ -30,13 +30,13 @@ const checkVipCheck = ()=>{
         let createDate = VIPCHECK.createDate.substr(0,10);
         let vipDate = VIPCHECK.vipDate.substr(0,10);
         // console.log(createDate);
-        // console.log(vipDate);
+         console.log(vipDate);
         let userNickname = localStorage.getItem('userNickname');
         document.querySelector('#vipDate').innerHTML =
         `
         <div id="viptime">
         <a id="vipnickname">${userNickname}</a> 
-          회원 기간은<br>
+          구독 기간은<br>
         <a>${createDate} 부터
         <br>${vipDate}입니다.</a>
         </div>
@@ -96,6 +96,10 @@ async function ch_nickName() {
   const nickname = document.getElementById('nickname').value;
   const userNo = localStorage.getItem('userNo');
   const id = localStorage.getItem('userNo');
+  const writer = document.getElementById('nickname').value;
+  const own = localStorage.getItem('userNo');
+  const replyNickname = document.getElementById('nickname').value;
+  const replyUserNo = localStorage.getItem('userNo');
   if (!confirm('닉네임 변경시 로그아웃됩니다. 바꾸시겠습니까?')) {
     return;
   }
@@ -120,11 +124,11 @@ async function ch_nickName() {
         RefreshToken: localStorage.getItem('refreshToken'),
       },
       body: JSON.stringify({
-        nickname,
-        userNo,
+        replyNickname,
+        replyUserNo,
       }),
     });  
-    await fetch(`${LOCALHOST_URL}/story/board/nickname`, {
+    await fetch(`${LOCALHOST_URL}/auction/nickname`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -134,6 +138,18 @@ async function ch_nickName() {
       body: JSON.stringify({
         nickname,
         userNo,
+      }),
+    });
+    await fetch(`${LOCALHOST_URL}/story/board/nickname`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem('authorization'),
+        RefreshToken: localStorage.getItem('refreshToken'),
+      },
+      body: JSON.stringify({
+        writer,
+        own,
       }),
     });
     await fetch(`${LOCALHOST_URL}/mentors/mentee/${id}`, {
@@ -148,31 +164,6 @@ async function ch_nickName() {
         id,
       }),
     });
-    // await fetch(`${LOCALHOST_URL}/auction/nickname`, {
-    //   method: "PATCH",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: localStorage.getItem('authorization'),
-    //     RefreshToken: localStorage.getItem('refreshToken'),
-    //   },
-    //   body: JSON.stringify({
-    //     nickname,
-    //     userNo,
-    //   }),
-    // });
-    // await fetch(`${LOCALHOST_URL}/bung/nickname`, {
-    //   method: "PATCH",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: localStorage.getItem('authorization'),
-    //     RefreshToken: localStorage.getItem('refreshToken'),
-    //   },
-    //   body: JSON.stringify({
-    //     nickname,
-    //     userNo,
-    //   }),
-    // });
-
     alert('닉네임변경완료');
     localStorage.clear();
     deleteCookie('Authorization');

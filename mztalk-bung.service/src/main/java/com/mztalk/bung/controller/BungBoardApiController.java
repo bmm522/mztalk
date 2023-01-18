@@ -1,6 +1,7 @@
 package com.mztalk.bung.controller;
 
 import com.mztalk.bung.domain.dto.BungAddBoardDto;
+import com.mztalk.bung.domain.dto.BungAddBoardGroupSelfDropRequest;
 import com.mztalk.bung.domain.dto.BungBoardDto;
 import com.mztalk.bung.domain.response.BungAddRequestDto;
 import com.mztalk.bung.domain.response.BungBoardDetailResponseDto;
@@ -138,6 +139,12 @@ public class BungBoardApiController {
     @DeleteMapping("/bungAddBoardGroupDrop/{boardId}/{addId}")
     public Long bungAddBoardGroupDrop(@PathVariable("boardId") Long bId, @PathVariable("addId") Long aId) {
         return bungBoardService.bungAddBoardGroupDrop(bId, aId);
+    }
+
+    // 벙 게시물 그룹 탈퇴 기능
+    @DeleteMapping("bungAddBoardGroupSelfDrop")
+    public Long bungAddBoardGroupSelfDrop(BungAddBoardGroupSelfDropRequest bungAddBoardGroupSelfDropRequest) {
+        return bungBoardService.bungAddBoardGroupSelfDrop(bungAddBoardGroupSelfDropRequest);
     }
 
     // 벙 게시글 작성 연결 기능

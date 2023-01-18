@@ -7,6 +7,5 @@ public interface SocialUserInfo {
     String getProviderId();
     String getProvider();
     String getEmail();
-
     User toUserEntity();
 }

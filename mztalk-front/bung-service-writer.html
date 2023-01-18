@@ -28,7 +28,7 @@
                 <input type="text" placeholder="검색" >
             </article> -->
             <article class="pictogramWrap">
-                
+                <img onclick="logouts();" src="https://cdn-icons-png.flaticon.com/512/1629/1629082.png">
                 <i id="move-chat-service" class="fa-solid fa-comments"></i>               
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/profile.png" alt="프로필" id="move-story-service" >
             </article>
@@ -45,7 +45,7 @@
                 <input type="text" class="form-control" id="bungTitle" name="bungTitle" style="width: 700px; margin: auto;"> -->
             </div>
         
-            <form action="http://localhost:8000/resource/images" enctype="multipart/form-data" method="POST" id="image-form">
+            <form action="http://localhost:8000/resource/images" enctype="multipart/form-data" method="POST" id="image-form-bung">
             <div id="fileArea">
                 
                 <input type="hidden" name="serviceName" value="bung"/>
