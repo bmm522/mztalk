@@ -40,7 +40,7 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
 </div>
 
 <h4> :two_men_holding_hands: StoryService </h4>
-<img width="650"  height="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213104260-5f8d2217-4f5c-45d5-a26e-8dfb7100d9df.png">
+<img width="650"   alt="image" src="https://user-images.githubusercontent.com/102157839/213104260-5f8d2217-4f5c-45d5-a26e-8dfb7100d9df.png">
 
 <div>
  
@@ -48,7 +48,7 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
 
 <h4> :running: BungService </h4>
 
-<img width="650" height="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213105086-2ec90c96-68c6-4214-8557-b0bf6e21639b.png">
+<img width="650"  alt="image" src="https://user-images.githubusercontent.com/102157839/213105086-2ec90c96-68c6-4214-8557-b0bf6e21639b.png">
 
 <div>
  
@@ -57,7 +57,7 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
  <h4> :incoming_envelope: ChatService </h4>
  
 
- <img width="650" height="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213106460-f72ed95d-4dcb-448e-9686-03ae1ca0d507.png">
+ <img width="650" alt="image" src="https://user-images.githubusercontent.com/102157839/213106460-f72ed95d-4dcb-448e-9686-03ae1ca0d507.png">
  
  <div>
   * <small>채팅 / 각 서비스 이용자간 채팅 연결</small>
@@ -65,13 +65,13 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
 
 <h4> :chart_with_upwards_trend: AuctionService</h4>
 
- <img width="650" height="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213106848-4e8adb4a-977c-4c0e-a057-d646170ceb18.png">
+ <img width="650"  alt="image" src="https://user-images.githubusercontent.com/102157839/213106848-4e8adb4a-977c-4c0e-a057-d646170ceb18.png">
 <div>
  </div>
  
  <h4> :green_book: MentorService</h4>
  
- <img width="650" height="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213112240-6cafc55b-e1a9-4187-ba6e-b8967e5f2755.png">
+ <img width="650"  alt="image" src="https://user-images.githubusercontent.com/102157839/213112240-6cafc55b-e1a9-4187-ba6e-b8967e5f2755.png">
 <div>
 
 </div>
