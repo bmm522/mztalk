@@ -73,7 +73,8 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
  
  <img width="650"  height="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213112240-6cafc55b-e1a9-4187-ba6e-b8967e5f2755.png">
 <div>
-
+  * <small>메인페이지(글 목록, 리뷰보기) / 글 검색(Querydsl)</small><br>
+  * <small>금융결제원API를 이용한 실명인증 / 글 작성</small><br>
 </div>
  
  
