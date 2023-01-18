@@ -66,7 +66,8 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
 <h4> :chart_with_upwards_trend: AuctionService</h4>
 
  <img width="650" height="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213106848-4e8adb4a-977c-4c0e-a057-d646170ceb18.png">
-<div>
+ <div>
+  * <small>게시글 등록・수정・삭제 / 댓글 등록・수정・삭제 / 경매 입찰 기능 / 책 검색</small><br>
  </div>
  
  <h4> :green_book: MentorService</h4>
