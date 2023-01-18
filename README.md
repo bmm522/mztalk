@@ -73,6 +73,6 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
  ---
  <h3>:whale2: Docker </h3>
  
- <img width="962" alt="image" src="https://user-images.githubusercontent.com/102157839/213107605-b0c15b05-3b78-43e2-8663-302842fc22b2.png">
+ <img width="600" heigth="500" alt="image" src="https://user-images.githubusercontent.com/102157839/213107605-b0c15b05-3b78-43e2-8663-302842fc22b2.png">
 
  
