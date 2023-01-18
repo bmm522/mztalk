@@ -60,14 +60,14 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
  <img width="650" alt="image" src="https://user-images.githubusercontent.com/102157839/213106460-f72ed95d-4dcb-448e-9686-03ae1ca0d507.png">
  
  <div>
-  * <small>채팅 / 각 서비스 이용자간 채팅 연결</small>
+  * <small>각 서비스 이용자간 채팅 연결</small><br>
+  * <small>맞팔 상태인 회원과의 채팅방 개설</small>
  </div>
 
 <h4> :chart_with_upwards_trend: AuctionService</h4>
 
  <img width="650" height="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213106848-4e8adb4a-977c-4c0e-a057-d646170ceb18.png">
- <div>
-  * <small>게시글 등록・수정・삭제 / 댓글 등록・수정・삭제 / 경매 입찰 기능 / 책 검색</small><br>
+<div>
  </div>
  
  <h4> :green_book: MentorService</h4>
