@@ -35,8 +35,8 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
 <img width="750" heigth="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213100943-fce709c7-d2a6-4259-9b44-f03e55633785.png">
 
 <div>
-  <small>로그인(구글, 카카오, 네이버 소셜 로그인) / 회원가입</small><br>
-  <small>트래픽 모니터링</small><br>
+  * <small>로그인(구글, 카카오, 네이버 소셜 로그인) / 회원가입</small><br>
+  * <small>트래픽 모니터링</small><br>
 </div>
 
 
