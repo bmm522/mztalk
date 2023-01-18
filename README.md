@@ -63,4 +63,16 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
  
  </div>
 
+<h4> :chart_with_upwards_trend: AuctionService</h4>
+
+ <img width="750" heigth="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213106848-4e8adb4a-977c-4c0e-a057-d646170ceb18.png">
+<div>
+ </div>
+ 
+ 
+ ---
+ <h3>:docker: Docker </h3>
+ 
+ <img width="962" alt="image" src="https://user-images.githubusercontent.com/102157839/213107605-b0c15b05-3b78-43e2-8663-302842fc22b2.png">
+
  
