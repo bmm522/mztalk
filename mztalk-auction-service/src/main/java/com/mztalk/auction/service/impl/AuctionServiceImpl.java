@@ -60,7 +60,6 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public Long insertBoard(BoardRequestDto boardRequestDto) {
        long bId = boardRepository.save(boardRequestDto.toEntity()).getBoardId();
-        System.out.println("post : " + bId);
         return bId;
     }
 
@@ -77,16 +76,17 @@ public class AuctionServiceImpl implements AuctionService {
         Pageable pageable = PageRequest.of(page - 1, 6);
         Page<Board> boardPage = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
 
-        return new Result<>(new ListOfBoardListResponseDto(boardPage, getTimeDuration(boardPage),getImageInfoList(boardPage)));
+        return new Result<>(new ListOfBoardListResponseDto(boardPage, getTimeDurationList(boardPage),getImageInfoList(boardPage)));
     }
 
+    //페이징
     @Override
     public Result<?> selectBoardListOfFront(int page) throws ParseException {
         System.out.println("page : " + page);
         Pageable pageable = PageRequest.of(page - 1, 3);
         Page<Board> boardPage = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
 
-        return new Result<>(new ListOfBoardListResponseDto(boardPage, getTimeDuration(boardPage),getImageInfoList(boardPage)));
+        return new Result<>(new ListOfBoardListResponseDto(boardPage, getTimeDurationList(boardPage),getImageInfoList(boardPage)));
     }
 
     //닉네임 변경
@@ -104,7 +104,6 @@ public class AuctionServiceImpl implements AuctionService {
     //게시물 삭제
     @Override
     public int deleteBoard(Long bId, String writer) {
-        System.out.println("service단 bId, writer 확인: " + bId + ", " + writer);
         return boardRepository.deleteBoard(bId, writer);
     }
 
@@ -113,10 +112,8 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public Result<?> searchBoard(String keyword, int page) throws ParseException {
         Pageable pageable = PageRequest.of(page - 1, 6);
-
         Page<Board> boardList =  boardRepository.searchBoard(keyword, pageable);
-//        return new Result<>(new ListOfBoardListResponseDto(boardList, getTimeDuration(boardList),getImageInfo(boardList)));
-        return null;
+        return new Result<>(new ListOfBoardListResponseDto(boardList, getTimeDurationList(boardList),getImageInfoList(boardList)));
     }
 
 
@@ -124,6 +121,7 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public BoardDetailResponseDto selectBoard(Long bId) {
         Board board = boardRepository.findByBoardId(bId);
+//        ImageRestDto imageInfo = getImageRestDto(board);
         List<ConcurrentHashMap<String, String>> imageInfo = new ArrayList<>();
 
         HttpHeaders headers = new HttpHeaders();
@@ -149,11 +147,6 @@ public class AuctionServiceImpl implements AuctionService {
         return imageRestDtoArrayList;
 
     }
-
-    //단일 게시물 이미지 정보 호츨
-//    private ImageRestDto getImageInfo()
-
-
 
     //입찰가
     @Override
@@ -268,7 +261,8 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
 
-    private List<ConcurrentHashMap<String, Long>> getTimeDuration(Page<Board> boardList) {
+    //리스트 시간 계산
+    private List<ConcurrentHashMap<String, Long>> getTimeDurationList(Page<Board> boardList) {
         LocalDateTime localDateTime = LocalDateTime.now();
         ArrayList<ConcurrentHashMap<String,Long>> timeList = new ArrayList<>();
         for(Board board : boardList){
@@ -295,10 +289,44 @@ public class AuctionServiceImpl implements AuctionService {
 
             timeList.add(timeMap);
         }
-
-
         return timeList;
     }
+
+    //단일 시간 계산
+//    private TimeDto getTimeDuration(Board board) {
+//
+//
+//
+//    }
+
+    //시간 계산
+    private TimeDto getTimeDurationDto(Board board) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Duration duration = Duration.between(getLocalDateTime(board.getTimeLimit()), localDateTime);
+
+        long hour = duration.getSeconds() / 3600;
+        long minute = (duration.getSeconds() % 3600)/60 ;
+        long second = minute / 60;
+
+        ConcurrentHashMap<String, Long> timeMap = new ConcurrentHashMap<>();
+
+        if(hour >= 0 && minute >= 0 && second >= 0) {
+            timeMap.put("hour", 0L);
+            timeMap.put("minute", 0L);
+            timeMap.put("second", 0L);
+            if(!board.getIsClose().equals("Y")){
+                boardRepository.updateIsClose(board.getBoardId());
+            }
+        } else {
+            timeMap.put("hour", hour);
+            timeMap.put("minute", minute);
+            timeMap.put("second", second);
+        }
+
+        return(new TimeDto(hour, minute, second));
+    }
+
+
 
     public void postChatRoom(Board board){
 
