@@ -1,0 +1,21 @@
+{
+  "name": "mztalk-chat-service2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^4.13.0",
+    "request": "^2.88.2",
+    "socket.io": "^4.5.4"
+  },
+  "devDependencies": {
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.0"
+  }
+}

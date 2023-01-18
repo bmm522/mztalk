@@ -8,6 +8,10 @@ import com.mztalk.main.domain.profile.entity.Profile;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.status.BoardStatus;
 import com.mztalk.main.status.PrivacyStatus;
+<<<<<<< HEAD:mztalk-main-service/src/main/java/com/mztalk/main/domain/board/Board.java
+//import io.swagger.annotations.ApiModelProperty;
+=======
+>>>>>>> b53526adcaf0c689cba694d78d99beb8a39d6ffa:mztalk-story-service/src/main/java/com/mztalk/main/domain/board/Board.java
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
