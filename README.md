@@ -39,4 +39,27 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
   * <small>트래픽 모니터링</small><br>
 </div>
 
+<h4> :two_men_holding_hands: StoryService </h4>
+<img width="750" heigth="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213104260-5f8d2217-4f5c-45d5-a26e-8dfb7100d9df.png">
 
+<div>
+ 
+</div>
+
+<h4> :running: BungService </h4>
+
+<img width="750" heigth="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213105086-2ec90c96-68c6-4214-8557-b0bf6e21639b.png">
+
+<div>
+ 
+ </div>
+ 
+ <h4> :incoming_envelope: ChatService </h4>
+ 
+ <img width="750" heigth="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213105754-fb762b5f-64e3-4ac1-9f97-68b58eb26917.png">
+ 
+ <div>
+ 
+ </div>
+
+ 
