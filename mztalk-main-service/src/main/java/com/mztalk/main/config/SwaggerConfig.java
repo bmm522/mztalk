@@ -50,6 +50,7 @@ public class SwaggerConfig {
                 .contact(new Contact("Ssanto", "Ssanto.tistory.com", "nowing0108@gmail.com"))
                 .version("1.0")
                 .build();
+
     }
 
     private Set<String> getConsumeContentTypes(){

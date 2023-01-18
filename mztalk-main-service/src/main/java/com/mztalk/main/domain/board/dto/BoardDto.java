@@ -6,7 +6,7 @@ import com.mztalk.main.domain.profile.dto.ProfileResponseDto;
 import com.mztalk.main.domain.reply.Reply;
 import com.mztalk.main.status.BoardStatus;
 import com.mztalk.main.status.PrivacyStatus;
-import io.swagger.annotations.ApiModelProperty;
+//import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

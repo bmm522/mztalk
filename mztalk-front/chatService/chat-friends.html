@@ -42,6 +42,7 @@
         <button type="button" class="btn btn-outline-dark" id="friendChat">친구</button>
         <button type="button" class="btn btn-outline-dark" id="auctionChat">경매</button>
         <button type="button" class="btn btn-outline-dark" id="bungChat">벙</button>
+        <button type="button" class="btn btn-outline-dark" id="metoringChat">멘토링</button>
     </div>
 
     <table>
@@ -158,8 +159,7 @@
         // window가 로드 완료된 후 최초 진입
         async function main() {
             // 현재 창의 Query string으로부터 '나'의 userId 가져오기
-            const meUserId = new URLSearchParams(location.search).get('userId');
-
+            
             // 현재 창의 Query string으로 부터 '나'의 userNickname 가져오기
             const meUserNickname = new URLSearchParams(location.search).get('userNickname');
             
@@ -211,6 +211,8 @@
             //#region 각 유저별 이전 대화 가져오기
             const conversationRepository = new ConversationRepository(meUserId);
             const usersConversations = await Promise.all(users.map((user) => conversationRepository.fetch(user.userId)));
+
+            console.log(usersConversations);
 
             const conversationRepository2 = new ConversationRepository(meUserId);
             const usersConversations2 = await Promise.all(users2.map((user) => conversationRepository.fetch(user.userId)));
@@ -630,7 +632,10 @@
                 if(res.result == 0){
                     alert('이미 개설된 채팅방 입니다.');
                 } else {
-                    location.href=`http://localhost:3000/chat-friends/?userId=${meUserId}&userNickname=${meUserNickname}` 
+                    $.ajax({
+                        url : `http://localhost:3000/chat-friends/?userId=${meUserId}&userNickname=${meUserNickname}`
+                    })
+                    // location.href=`http://localhost:3000/chat-friends/?userId=${meUserId}&userNickname=${meUserNickname}` 
                     
 
                 }
