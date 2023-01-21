@@ -69,7 +69,7 @@ test : 테스트 코드 수정에 대한 커밋 <br/>
 
  <img width="650" height="400" alt="image" src="https://user-images.githubusercontent.com/102157839/213106848-4e8adb4a-977c-4c0e-a057-d646170ceb18.png">
 <div>
- * <small>게시글 등록, 수정, 삭제, 검색 / 댓글 수정, 삭제</small>
+ * <small>게시글 등록, 수정, 삭제, 검색 / 댓글 수정, 삭제</small><br>
  * <small>책 검색 / 입찰 기능 / 입찰 현황</small>
  
  </div>
