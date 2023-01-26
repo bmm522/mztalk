@@ -143,7 +143,7 @@ function getDailyServiceTraffic() {
        yAxes: [{
          ticks: {
            min: 0,
-           max: 10000,
+           max: 4000,
            maxTicksLimit: 24
          },
          gridLines: {
@@ -279,7 +279,7 @@ const getDailyTraffic = () =>{
         yAxes: [{
           ticks: {
             min: 0,
-            max: 15000,
+            max: 4000,
             maxTicksLimit: 20
           },
           gridLines: {

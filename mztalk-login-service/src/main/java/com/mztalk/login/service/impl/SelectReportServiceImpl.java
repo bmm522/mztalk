@@ -45,12 +45,9 @@ public class SelectReportServiceImpl implements SelectReportService {
         List<Report> reportList = reportRepository.getEditListOfUserNo(userNo);
         List<EditReponseDto> editReponseDtoList = new ArrayList<>();
         JsonParser parser = new JsonParser();
-        System.out.println("for문돌아?");
         for(Report report : reportList){
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/html");
-            System.out.println("boardId : " + report.getBoardId());
-            System.out.println("serviceName : " + report.getServiceName());
             try {
                 ResponseEntity<String> response = new RestTemplate().exchange(
                         "http://localhost:8000/resource/main-image?bNo=" + report.getBoardId() + "&serviceName=" + report.getServiceName(),

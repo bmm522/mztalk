@@ -65,19 +65,19 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
                 logger.error("Fail Login");
                 return authentication;
             }
-            if(principalDetails.getUser().getRole().equals("ROLE_ADMIN")){
-                response.addHeader(LoginStatus.STATUS, "Admin Login");
-            }
-            else if(principalDetails.getUser().getStatus().equals("out")){
-                response.addHeader(LoginStatus.STATUS, "Out User");
-            }
-            else if(principalDetails.getUser().getStatus().equals("N")){
-                response.addHeader(LoginStatus.STATUS, "Fail Login");
+
+            switch (principalDetails.getUser().getRole()){
+
+                case "ROLE_ADMIN": response.addHeader(LoginStatus.STATUS, "Admin Login"); break;
+
+                case "out" : response.addHeader(LoginStatus.STATUS, "Out User"); break;
+
+                case "N" : response.addHeader(LoginStatus.STATUS, "Fail Login"); break;
+
+                default: response.addHeader(LoginStatus.STATUS, "Login Success"); break;
+
             }
 
-            else {
-                response.addHeader(LoginStatus.STATUS, "Login Success");
-            }
             return authentication;
         } catch (IOException e) {
             e.printStackTrace();
