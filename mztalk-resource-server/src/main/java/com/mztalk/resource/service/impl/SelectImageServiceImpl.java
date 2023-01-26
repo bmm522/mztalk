@@ -62,8 +62,6 @@ public class SelectImageServiceImpl implements SelectImageService {
     @Override
     public ResponseEntity<?> getMainImage(long bNo, String serviceName) {
 
-        System.out.println("main : " + bNo);
-        System.out.println("main : " + serviceName);
         ImagesResponseDto imagesResponseDto = null;
         try{
 
