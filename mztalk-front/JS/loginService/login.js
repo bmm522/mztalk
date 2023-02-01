@@ -540,48 +540,36 @@ document.getElementById('sign-in-btn').addEventListener('click', function(){
     fetch(`${LOCALHOST_URL}/login`,{
         method: "POST",
         headers:{
-            "Content-Type":"application/json",
-                       
+            "Content-Type":"application/json",                      
         },
         body:JSON.stringify({
             username : userId,
             password : password
         }),
     })
-    // .then((res)=>res.json())
     .then(response => {
-      // localStorage.removeItem("Authorization");
-      // localStorage.removeItem("RefreshToken");
-      console.log("헤더값 : " + response.headers);
        let result =   response.headers.get('LoginResult');
-      console.log('result : ' + result);
       if(result =='Not found userId or userPassword'){
         alert('아이디 또는 비밀번호가 틀렸습니다.');
         document.getElementById('userId').value = "";
-        document.getElementById('password-in').value ="";
-      } else if(result =='Fail Login'){
+        document.getElementById('password-in').value ="";  
+      }
+       else if(result =='Fail Login'){
         alert('로그인을 실패하였습니다.');
         document.getElementById('userId').value = "";
-        document.getElementById('password-in').value ="";
+        document.getElementById('password-in').value ="";     
       } else if(result == 'Admin Login'){
-        console.log('어드민로그인');
-        localStorage.setItem("authorization", response.headers.get('Authorization'));
-        localStorage.setItem("refreshToken", response.headers.get('RefreshToken'));
-        localStorage.setItem("userNo", response.headers.get("UserNo"));
-        localStorage.setItem("userNickname", decodeURIComponent(response.headers.get('UserNickname')));
-        window.open('admin/index.html', '_self');
+        window.open('admin/index.html', '_self');   
       } else if(result == 'Out User'){
         window.open('loginpage.html', '_self');
       } else {
-        console.log(response.headers);
-        console.log('헤더 : ' + response.headers.get('UserRole'));
         localStorage.setItem("authorization", response.headers.get('Authorization'));
         localStorage.setItem("refreshToken", response.headers.get('RefreshToken'));
         localStorage.setItem("userNo", response.headers.get("UserNo"));
         localStorage.setItem("userNickname", decodeURIComponent(response.headers.get('UserNickname')));
         localStorage.setItem('path', 'LOCAL');
         localStorage.setItem('role',  response.headers.get('UserRole'));
-        window.open('main.html', '_self');
+        window.open('main.html', '_self');  
       }
      
     });
@@ -610,12 +598,6 @@ document.getElementById('kakaoBtn').addEventListener('click',function(){
    
    window.onload = function(){
 
-  console.log(getCookieValue('Authorization'));
-  console.log(getCookieValue('RefreshToken'));
-  console.log(getCookieValue('LoginResult'));
-  console.log(getCookieValue('UserStatus'));
-  
-
       if(!getCookieValue('Authorization') == ''){
     
         if(getCookieValue('UserStatus') == 'Y'){
@@ -625,11 +607,6 @@ document.getElementById('kakaoBtn').addEventListener('click',function(){
           localStorage.setItem('userNickname',getCookieValue('UserNickname'));
           localStorage.setItem('path', 'SOCIAL');
           localStorage.setItem('role', getCookieValue('UserRole'));
-          console.log("소셜로그인 : " + localStorage.getItem('authorization'));
-          console.log("소셜로그인 : " + localStorage.getItem('refreshToken'));
-          console.log("소셜로그인 : " + localStorage.getItem('userNo'));
-          console.log("소셜로그인 : " + localStorage.getItem('userNickname'));
-          console.log('소셜로그인쪽 실행됨');
           window.open('main.html', '_self');
         } else if(getCookieValue('UserStatus') == 'out'){
           alert('이용이 정지된 회원입니다. (신고 누적)');
