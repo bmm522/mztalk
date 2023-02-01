@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ListOfBoardListResponseDto {
     private List<BoardListResponseDto> boardListResponseDtoList = new ArrayList<>();
 
-    public ListOfBoardListResponseDto(Page<Board> boardList, List<ConcurrentHashMap<String, Long>> duration, List<ImageRestDto> imageRestDtoList) throws ParseException {
+    public ListOfBoardListResponseDto(Page<Board> boardList, List<TimeDto> duration, List<ImageRestDto> imageRestDtoList) throws ParseException {
 
         for (int i = 0; i < boardList.getSize(); i++) {
             this.boardListResponseDtoList.add(new BoardListResponseDto(boardList.getContent().get(i), duration.get(i), imageRestDtoList.get(i).getImageUrl(), imageRestDtoList.get(i).getObjectKey()));

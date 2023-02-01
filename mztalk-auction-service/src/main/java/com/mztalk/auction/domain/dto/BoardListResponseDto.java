@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
@@ -24,7 +26,7 @@ public class BoardListResponseDto {
     private String bookTitle;
     private String title;
     private String writer;
-    private ConcurrentHashMap<String, Long> timeLimit;
+    private TimeDto timeLimit;
     private String currentPrice;
     private String isClose;
     private Integer count;
@@ -36,7 +38,7 @@ public class BoardListResponseDto {
     private Long userNo;
     private Long isbn;
 
-    public BoardListResponseDto(Board board, ConcurrentHashMap<String, Long> duration, String imageUrl, String imageName) throws ParseException {
+    public BoardListResponseDto(Board board, TimeDto duration, String imageUrl, String imageName) throws ParseException {
 
         this.boardId = String.valueOf(board.getBoardId());
         this.bookTitle = board.getBookTitle();
