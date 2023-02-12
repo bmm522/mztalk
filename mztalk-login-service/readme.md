@@ -1,8 +1,10 @@
 # MZTALK-LoginAPIServer
 
-### 각 서비스의 인증과 인가 절차를 위한 Spring Security + JWT 기반의 로그인 API 서버
-
 ## Description
+
+- 🔊프로젝트 소개
+  - MZTALK의 서비스 요청 인증과 인가 절차를 위한 Spring Security + JWT 기반의 로그인 API 서버
+  - MZTALK 프로젝트 : https://github.com/bmm522/mztalk
 
 - 🏗️개발 기간 : 2022.08 ~ 2022.10
 
