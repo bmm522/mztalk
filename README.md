@@ -93,6 +93,10 @@
 
 <img width="650"   alt="image" src="https://user-images.githubusercontent.com/102157839/213104260-5f8d2217-4f5c-45d5-a26e-8dfb7100d9df.png">
 
+  - <small>메인 페이지에서 각 서비스 별 최신 글 가져와 솔팅 / 각 게시글로 이동</small><br>
+  - <small>유저 별 게시글 등록, 수정, 삭제 / 댓글 수정, 삭제</small><br>
+  - <small>유저 별 팔로우 팔로잉 리스트</small><br>
+  - <small>유저 별 회원정보 수정 </small><br>
  
  
  ---
