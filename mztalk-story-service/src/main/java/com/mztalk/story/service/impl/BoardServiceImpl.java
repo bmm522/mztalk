@@ -1,5 +1,6 @@
 package com.mztalk.story.service.impl;
 
+import com.mztalk.story.client.ResourceServerClient;
 import com.mztalk.story.domain.board.dto.BoardDto;
 import com.mztalk.story.domain.board.Board;
 import com.mztalk.story.common.Result;
@@ -21,7 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
+import org.springframework.core.env.Environment;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,10 @@ public class BoardServiceImpl implements BoardService {
 
     private final RestTemplate restTemplate;
 
+
+    private final ResourceServerClient resourceServerClient;
+
+    private final Environment env;
 
     //퍼블릭글 불러오기
     @Override
@@ -78,15 +83,18 @@ public class BoardServiceImpl implements BoardService {
     public Result findAllByBoardStory(Long own, int page) {
         Pageable pageable = PageRequest.of(page-1, 4);
         Page<Board> boards = boardRepository.findAllByBoardStory(own, pageable);
+
+        String url = String.format(env.getProperty("resource_server.url"), own);
+
         List<BoardDto> boardDtos = boards.stream()
                 .map(board -> {
-                    ProfileResponseDto profileResponseDto = new ProfileResponseDto();
+                    ProfileResponseDto profileResponseDto;
                     try {
                         HttpHeaders headersImg = new HttpHeaders();
                         headersImg.add("Content-type", "text/html");
 
-                        ResponseEntity<String> responseImg = new RestTemplate().exchange(
-                                "http://localhost:8000/resource/main-image?bNo=" + own + "&serviceName=story",    //첫번째: url
+                        ResponseEntity<String> responseImg = restTemplate.exchange(
+                                url,    //첫번째: url
                                 HttpMethod.GET,
                                 new HttpEntity<String>(headersImg),     //바디, 헤더 다 담기 가능/엔티티
                                 String.class

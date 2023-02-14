@@ -8,6 +8,7 @@ import com.mztalk.story.domain.reply.Reply;
 import com.mztalk.story.status.BoardStatus;
 import com.mztalk.story.status.PrivacyStatus;
 //import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

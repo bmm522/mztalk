@@ -2,6 +2,7 @@ package com.mztalk.story.service.impl;
 
 
 
+import com.mztalk.story.client.ResourceServerClient;
 import com.mztalk.story.domain.follow.dto.*;
 import com.mztalk.story.domain.follow.Follow;
 import com.mztalk.story.repository.FollowRepository;
@@ -9,6 +10,7 @@ import com.mztalk.story.service.FollowService;
 import com.mztalk.story.handler.exception.CustomApiException;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,6 +25,15 @@ import java.util.*;
 @Transactional(readOnly = true)
 public class FollowServiceImpl implements FollowService {
     private final FollowRepository followRepository;
+
+    private final RestTemplate restTemplate;
+
+
+    private final ResourceServerClient resourceServerClient;
+
+    private final Environment env;
+
+
     //팔로우
     @Override
     @Transactional
@@ -63,7 +74,7 @@ public class FollowServiceImpl implements FollowService {
             //유저 정보
             HttpHeaders headersName = new HttpHeaders();
             headersName.add("Content-type", "text/html");
-            ResponseEntity<String> responseName = new RestTemplate().exchange(
+            ResponseEntity<String> responseName = restTemplate.exchange(
                     "http://localhost:8000/login/user-info/" + follow.getFromUserId(),
                     HttpMethod.GET,
                     new HttpEntity<String>(headersName),
@@ -78,7 +89,7 @@ public class FollowServiceImpl implements FollowService {
             headersImg.add("Content-type", "text/html");
 
             try {
-            ResponseEntity<String> responseImg = new RestTemplate().exchange(
+            ResponseEntity<String> responseImg = restTemplate.exchange(
                     "http://localhost:8000/resource/main-image?bNo=" + follow.getFromUserId() + "&serviceName=story",
                     HttpMethod.GET,
                     new HttpEntity<String>(headersImg),
@@ -114,7 +125,7 @@ public class FollowServiceImpl implements FollowService {
             HttpHeaders headersName = new HttpHeaders();
             headersName.add("Content-type", "text/html");
 
-            ResponseEntity<String> responseName = new RestTemplate().exchange(
+            ResponseEntity<String> responseName = restTemplate.exchange(
                     "http://localhost:8000/login/user-info/" + follow.getToUserId(),
                     HttpMethod.GET,
                     new HttpEntity<String>(headersName),
@@ -127,7 +138,7 @@ public class FollowServiceImpl implements FollowService {
             HttpHeaders headersImg = new HttpHeaders();
             headersImg.add("Content-type", "text/html");
             try{
-                ResponseEntity<String> responseImg = new RestTemplate().exchange(
+                ResponseEntity<String> responseImg = restTemplate.exchange(
                         "http://localhost:8000/resource/main-image?bNo=" + follow.getToUserId() + "&serviceName=story",
                         HttpMethod.GET,
                         new HttpEntity<String>(headersImg),
@@ -161,7 +172,7 @@ public class FollowServiceImpl implements FollowService {
             String imageUrl = "";
             String imageName = "";
             try{
-                ResponseEntity<String> response = new RestTemplate().exchange(
+                ResponseEntity<String> response = restTemplate.exchange(
                         "http://localhost:8000/resource/main-image?bNo=" + matpalGroup.getToUserId() + "&serviceName=story",
                         HttpMethod.GET,
                         new HttpEntity<String>(headers),
