@@ -4,6 +4,9 @@
 
 - 🔊프로젝트 소개
   - MZTALK의 각 서비스 요청 인증과 인가 절차를 위한 Spring Security + JWT 기반의 로그인 API 서버
+  - 총 3개의 소셜로그인을 자체적으로 커스텀하여 Token을 발급하도록 구현
+  - `localStorage`에 로그인 `Token` 정보를 저장하고 `RefreshToekn`을 서버측과 통신하여 로그인 유지 기능을 구현
+  - 유저와 관련된 신고, 채팅방 관련 CRUD 로직 구현
   - MZTALK 프로젝트 : https://github.com/bmm522/mztalk
 
 - 🏗️개발 기간 : 2022.08 ~ 2022.10
