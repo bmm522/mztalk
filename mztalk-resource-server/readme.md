@@ -3,7 +3,9 @@
 ## Description
 
 - 🔊 프로젝트 소개
-  - MZTALK의 각 서비스와 AWS S3의 중간다리를 해주는 저장 API 서버
+  - 각 서비스들의 첨부 파일과 관련된 프로세스를 통일하기 위해 개발된 API 서버
+  - 첨부파일과 관련된 CRUD 로직 개발
+  - `swagger`를 통해 API 문서 작성
   - MZTALK 프로젝트 : https://github.com/bmm522/mztalk
  
 - 🏗️ 개발 기간 : 2022.12.10 ~ 2022.12.23

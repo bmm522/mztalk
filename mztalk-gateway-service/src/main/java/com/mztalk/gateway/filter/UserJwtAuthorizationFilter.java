@@ -45,7 +45,7 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
             String serverHeader = null;
 
 
-            System.out.println("1111111111111111111111111111");
+
             //헤더에 토큰이 있는지 없는지 화인
             try {
                 jwtHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
@@ -53,12 +53,12 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
             } catch(NullPointerException e) {
                 return notiStatus(exchange, "Not Found your token", HttpStatus.BAD_REQUEST);
             }
-            System.out.println("22222222222222222222222");
+
             //JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
             if(jwtHeader == null || !jwtHeader.startsWith(JwtProperties.JWT_PREFIX)) {
                 return notiStatus(exchange, "Not found authorization header", HttpStatus.BAD_REQUEST);
             }
-            System.out.println("33333333333333333");
+
             //정상적인 로그인서버에서 접근한 사용자인지 확인
             if(serverHeader == null || !serverHeader.startsWith(JwtProperties.REFRESHTOKEN_PREFIX)) {
                 return notiStatus(exchange, "Not found refreshToken header", HttpStatus.BAD_REQUEST);
@@ -67,9 +67,6 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
             //JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
             String jwtToken = jwtHeader.replace(JwtProperties.JWT_PREFIX, "");
             String refreshToken = serverHeader.replace(JwtProperties.REFRESHTOKEN_PREFIX, "");
-
-
-            System.out.println("44444444444444444444444");
 
 
             try {
@@ -81,7 +78,7 @@ public class UserJwtAuthorizationFilter extends AbstractGatewayFilterFactory<Use
                 return notiStatus(exchange, "Token Error", HttpStatus.UNAUTHORIZED);
             }
             // 서명이 정상적으로 됨
-            System.out.println("55555555555555555555555");
+
 
 
             return chain.filter(exchange);
