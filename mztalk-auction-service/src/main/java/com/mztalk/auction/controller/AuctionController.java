@@ -82,7 +82,6 @@ public class AuctionController {
     @ApiOperation(value = "게시글 삭제")
     @PatchMapping("/boardDelete/{bId}/{writer}")
     public int deleteBoard(@PathVariable Long bId, @PathVariable String writer) {
-
         return auctionService.deleteBoard(bId, writer);
     }
 
@@ -147,7 +146,6 @@ public class AuctionController {
     @ApiOperation(value = "사용자가 게시글을 마감")
     @PatchMapping("/board/close")
     public int closeBoard(@RequestBody BoardCloseDto boardCloseDto) {
-        System.out.println("close요청들어옴");
         return auctionService.closeBoard(boardCloseDto);
     }
 
