@@ -1,17 +1,21 @@
-package com.mztalk.auction.domain.dto;
+package com.mztalk.auction.domain.dto.board;
 
+import com.mztalk.auction.domain.dto.ImageRestDto;
+import com.mztalk.auction.domain.dto.TimeDto;
 import com.mztalk.auction.domain.entity.Board;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
@@ -20,11 +24,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @NoArgsConstructor
 public class BoardListResponseDto {
 
-    private String boardId;
+    private Long boardId;
     private String bookTitle;
     private String title;
     private String writer;
-    private ConcurrentHashMap<String, Long> timeLimit;
+    private TimeDto timeLimit;
     private String currentPrice;
     private String isClose;
     private Integer count;
@@ -36,17 +40,17 @@ public class BoardListResponseDto {
     private Long userNo;
     private Long isbn;
 
-    public BoardListResponseDto(Board board, ConcurrentHashMap<String, Long> duration, String imageUrl, String imageName) throws ParseException {
+    public BoardListResponseDto(Board board, TimeDto duration, ImageRestDto imageDto) throws ParseException {
 
-        this.boardId = String.valueOf(board.getBoardId());
+        this.boardId = board.getBoardId();
         this.bookTitle = board.getBookTitle();
         this.title = board.getTitle();
         this.writer = board.getWriter();
         this.timeLimit = duration;
         this.currentPrice = String.valueOf(board.getCurrentPrice());
         this.count = board.getCount();
-        this.imageUrl = imageUrl;
-        this.imageName = imageName;
+        this.imageUrl = imageDto.getImageUrl();
+        this.imageName = imageDto.getImageUrl();
         this.isClose = board.getIsClose();
         this.createdDate = board.getCreateDate();
         this.serviceName = "auction";
@@ -56,7 +60,7 @@ public class BoardListResponseDto {
     }
 
     public BoardListResponseDto(Board board) {
-        this.boardId = String.valueOf(board.getBoardId());
+        this.boardId = board.getBoardId();
         this.bookTitle = board.getBookTitle();
         this.title = board.getTitle();
         this.currentPrice = String.valueOf(board.getCurrentPrice());

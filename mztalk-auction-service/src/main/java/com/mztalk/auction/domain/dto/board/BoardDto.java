@@ -1,7 +1,7 @@
-package com.mztalk.auction.domain.dto;
+package com.mztalk.auction.domain.dto.board;
 
+import com.mztalk.auction.domain.dto.comment.CommentResponseDto;
 import com.mztalk.auction.domain.entity.Board;
-import com.mztalk.auction.domain.entity.Comment;
 import lombok.*;
 
 import java.util.List;

@@ -2,6 +2,7 @@ package com.mztalk.auction.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mztalk.auction.domain.dto.comment.CommentRequestDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -27,7 +28,7 @@ public class Comment {
     private Date createDate;
 
     @ManyToOne
-    @JoinColumn(name = "boardId", nullable=false)
+    @JoinColumn(name = "boardId")
     @JsonManagedReference
     private Board board;
 
@@ -37,20 +38,15 @@ public class Comment {
 
     private Long userNo;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "parent_id")
-//    private Comment parent;
-//
-//    @OneToMany(mappedBy = "parent")
-//    private List<Comment> children = new ArrayList<>();
 
-//    public Comment(Long cId, String content, Date createDate, Board board, String status, String writer) {
-//        this.cId = cId;
-//        this.content = content;
-//        this.createDate = createDate;
-//        this.board = board;
-//        this.status = status;
-//        this.writer = writer;
-//    }
+    public Comment addBoard(Board board){
+        this.board = board;
+        board.addComment(this);
+
+        return this;
+    }
+
+
+
 
 }

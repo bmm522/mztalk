@@ -1,4 +1,4 @@
-package com.mztalk.auction.domain.dto;
+package com.mztalk.auction.domain.dto.comment;
 
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
@@ -13,32 +13,20 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommentResponseDto {
-    private Long cId;
-    private Long bId;
+    private Long commentId;
+    private Long boardId;
     private String content;
     private String writer;
     private Date createDate;
     private Long userNo;
 
-
-
-//    public Comment toEntity() {
-//        return Comment.builder()
-//                .board(board)
-//                .content(content)
-//                .createDate(createDate)
-//                .writer(writer)
-//                .status("Y")
-//                .build();
-//    }
-
     public CommentResponseDto(Comment comment){
-        this.cId = comment.getCommentId();
-        this.bId = comment.getBoard().getBoardId();
+        this.commentId = comment.getCommentId();
+        this.boardId = comment.getBoard().getBoardId();
         this.content = comment.getContent();
         this.writer = comment.getWriter();
         this.createDate = comment.getCreateDate();
-//        this.userNo = comment.getUserNo();
+        this.userNo = comment.getUserNo();
     }
 
 
