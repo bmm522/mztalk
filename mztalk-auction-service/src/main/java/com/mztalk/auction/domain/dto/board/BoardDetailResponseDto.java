@@ -1,5 +1,7 @@
-package com.mztalk.auction.domain.dto;
+package com.mztalk.auction.domain.dto.board;
 
+import com.mztalk.auction.domain.dto.ImageRestDto;
+import com.mztalk.auction.domain.dto.TimeDto;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 import lombok.AllArgsConstructor;

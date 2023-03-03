@@ -24,8 +24,9 @@ public class ImageRestDto {
     }
 
     public List<ImageRestDto> getImageRestDtoList(ResponseEntity<String> response) {
-        JSONArray imageRestDtoList = new JSONArray();
-        for(int i = 0; i < imageRestDtoList.length(); i++) {
+        JSONObject jsonObject = new JSONObject(response.getBody());
+        JSONArray data = jsonObject.getJSONArray("data");
+        for(int i = 0; i < data.length(); i++) {
             ImageRestDto imageRestDto = new ImageRestDto(response);
             this.imageRestDtoList.add(imageRestDto);
         }

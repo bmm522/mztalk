@@ -67,7 +67,7 @@ public class Board {
 
     private Long isbn;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OrderBy("commentId desc")
     @JsonBackReference
     private List<Comment> comment;
@@ -90,5 +90,11 @@ public class Board {
         this.isbn = isbn;
     }
 
+    public void addComment(Comment comment) {
+        this.comment.add(comment);
+        if(comment.getBoard() != this){
+            comment.addBoard(this);
+        }
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.mztalk.auction.domain.dto;
+package com.mztalk.auction.domain.dto.board;
 
 import com.mztalk.auction.domain.entity.Board;
 import lombok.*;
@@ -20,7 +20,6 @@ public class BoardRequestDto {
     private String content;
 
     private String writer;
-
 
     private Integer startPrice;
 
@@ -44,8 +43,6 @@ public class BoardRequestDto {
         java.util.Date date2 = new Date();
         date.setTime(timestamp2);
         String Datetime2 = sdf.format(date2);
-
-        System.out.println("결과값 = " + Datetime2);
         return Board.builder()
                 .title(title)
                 .content(content)

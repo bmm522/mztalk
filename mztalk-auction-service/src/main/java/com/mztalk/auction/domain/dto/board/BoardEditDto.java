@@ -1,4 +1,4 @@
-package com.mztalk.auction.domain.dto;
+package com.mztalk.auction.domain.dto.board;
 
 import com.mztalk.auction.domain.entity.Board;
 import lombok.AllArgsConstructor;

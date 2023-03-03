@@ -54,7 +54,7 @@ const mainLoad = (page) =>{
         .then(res=>{
             let i = 1;
             //document.getElementById('list-div').innerHTML = '<div class="row " id="auctionCard">';
-            for(let board of res.data){
+            for(let board of res.data.boardListResponseDtoList){
                 let title = board.title;
                 let timeLimitHour = -board.timeLimit.hour;
                 let timeLimitMinute = -board.timeLimit.minute;

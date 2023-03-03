@@ -18,8 +18,8 @@ function timeStandard(time) {
 }
 
 
-//글쓰기 insert
-function boardWrite() {
+//글 작성
+function boardWrite() { 
     const form = document.getElementById('image-form-form-form');
     const payload = new FormData(form);
 
@@ -92,7 +92,7 @@ window.onload = () => {
     const fileArea = document.getElementById("fileArea");
     
     document.getElementById("addFile").addEventListener('click', () => { 
-        if(document.getElementsByName("files").length < 2) {
+        if(document.getElementsByName("image").length < 4) {
             const newDiv = document.createElement('div');
             newDiv.classList.add('col-10');
             newDiv.innerHTML = '<input type = "file" class = "form-control" name = "image" accept="image/*"">';

@@ -1,5 +1,7 @@
-package com.mztalk.auction.domain.dto;
+package com.mztalk.auction.domain.dto.board;
 
+import com.mztalk.auction.domain.dto.ImageRestDto;
+import com.mztalk.auction.domain.dto.TimeDto;
 import com.mztalk.auction.domain.entity.Board;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @NoArgsConstructor
 public class BoardListResponseDto {
 
-    private String boardId;
+    private Long boardId;
     private String bookTitle;
     private String title;
     private String writer;
@@ -38,17 +40,17 @@ public class BoardListResponseDto {
     private Long userNo;
     private Long isbn;
 
-    public BoardListResponseDto(Board board, TimeDto duration, String imageUrl, String imageName) throws ParseException {
+    public BoardListResponseDto(Board board, TimeDto duration, ImageRestDto imageDto) throws ParseException {
 
-        this.boardId = String.valueOf(board.getBoardId());
+        this.boardId = board.getBoardId();
         this.bookTitle = board.getBookTitle();
         this.title = board.getTitle();
         this.writer = board.getWriter();
         this.timeLimit = duration;
         this.currentPrice = String.valueOf(board.getCurrentPrice());
         this.count = board.getCount();
-        this.imageUrl = imageUrl;
-        this.imageName = imageName;
+        this.imageUrl = imageDto.getImageUrl();
+        this.imageName = imageDto.getImageUrl();
         this.isClose = board.getIsClose();
         this.createdDate = board.getCreateDate();
         this.serviceName = "auction";
@@ -58,7 +60,7 @@ public class BoardListResponseDto {
     }
 
     public BoardListResponseDto(Board board) {
-        this.boardId = String.valueOf(board.getBoardId());
+        this.boardId = board.getBoardId();
         this.bookTitle = board.getBookTitle();
         this.title = board.getTitle();
         this.currentPrice = String.valueOf(board.getCurrentPrice());

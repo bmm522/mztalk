@@ -1,6 +1,9 @@
 package com.mztalk.auction.repository;
 
 import com.mztalk.auction.domain.dto.*;
+import com.mztalk.auction.domain.dto.board.BoardEditDto;
+import com.mztalk.auction.domain.dto.board.BoardPriceDto;
+import com.mztalk.auction.domain.dto.comment.CommentUpdateRequestDto;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 import com.mztalk.auction.domain.entity.Price;

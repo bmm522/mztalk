@@ -50,33 +50,34 @@ document.getElementById("priceSubmitBtn").addEventListener('click', function() {
 
 //댓글 작성
 document.getElementById('commInsertBtn').addEventListener('click', function() {
+    let writer = localStorage.getItem("userNickname");
+    let userNo = localStorage.getItem("userNo");
+
     if(document.getElementById('commInput').value == '') {
         alert('댓글 내용을 입력해 주세요.');
-        return false;
     }
     fetch(`${LOCALHOST_URL}/auction/comment`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            "content-type": "application/json;charset=UTF-8",
             Authorization:localStorage.getItem('authorization'),
             RefreshToken:localStorage.getItem('refreshToken'),
         },
-        body:JSON.stringify({
+        body: JSON.stringify({
             "boardId" : document.getElementById("hidden-bId").value,
             "content" : document.getElementById("commInput").value,
-            "writer": localStorage.getItem("userNickname"),
-            "userNo": localStorage.getItem("userNo")
+            "writer": writer,
+            "userNo": userNo
         }),
     })
     .then((res) => res.json())
     .then(res => {
+        console.log("댓글 작성: " + document.getElementById("hidden-bId").value + ", " + document.getElementById("commInput").value + ", " + localStorage.getItem("userNickname") + ", " + localStorage.getItem("userNo"));
         document.getElementById('commInput').value = "";
-        console.log("댓글 작성 성공");
-        let cId = res.cid;
+        let cId = res.commentId;
         let content = res.content;
         let writer = res.writer;
         let createDate = res.createDate;
-        //CommentResponseDto 반환받음
         document.getElementById('commentArea').innerHTML += `<div class="row" id = "comment${cId}Start"><div id = "commNickname" class = "col-3"><span class = "${cId}" id = "commNickname">${writer}</span></div><div id = "commContent" class = "col-5"><span id = "${cId}">${content}</span></div><div id = "comm${cId}Btn" class = "col-2"><span class = "${cId}" id = "commUpdate" style = "color: gray; font-size: small; margin-right: 20px;" onclick = "updateComment(${cId});">수정</span><span class = "${cId}" id = "commDelete" style = "color: gray; font-size: small;" onclick = "deleteComment(${cId});">삭제</span></div><div id = "commCreateDate" class = "col-2"><span class = "${cId}" style="color: gray; font-size: smaller;">${createDate}</span></div></div>`;
         if(writer != localStorage.getItem('userNickname')) {
             document.getElementById('comm' + cId + 'Btn').innerHTML = '';
@@ -191,13 +192,11 @@ window.onload = () => {
         localStorage.setItem("isbn", isbn);
         localStorage.setItem("currentPrice", currentPrice);
         localStorage.setItem("bookTitle", bookTitle);
-        // localStroage.setItem("createDate", createDate);
+
         for(let i = 0; i < imageInfo.length; i++) {
             localStorage.setItem("imageInfo", JSON.stringify(imageInfo));
         }
 
-        // console.log("auctionDetail getItem: " + localStorage.getItem("userNickname"));
-        // console.log("auctionDetail res: " + writer);
 
         //수정, 삭제, 신고, 홈 버튼 보이기
         if(localStorage.getItem("userNickname") == writer) {
@@ -219,7 +218,6 @@ window.onload = () => {
         }
 
         //alert
-        console.log("alert 조건 확인 buyer: " + buyer + ", writer: " + writer + ", isClose: " + isClose);
         if(buyer == null && writer != localStorage.getItem("userNickname")) {
             document.getElementById('alert').innerHTML = '<span style="color:gray; font-size: smaller; margin-left: 10px;">입찰에 참여해 보세요.</span>';
         } else if(buyer == null && writer == localStorage.getItem('userNickname') && isClose == 'N') {

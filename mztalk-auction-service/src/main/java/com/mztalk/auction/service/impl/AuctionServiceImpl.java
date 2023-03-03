@@ -2,6 +2,10 @@ package com.mztalk.auction.service.impl;
 
 import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.*;
+import com.mztalk.auction.domain.dto.board.*;
+import com.mztalk.auction.domain.dto.comment.CommentRequestDto;
+import com.mztalk.auction.domain.dto.comment.CommentResponseDto;
+import com.mztalk.auction.domain.dto.comment.CommentUpdateRequestDto;
 import com.mztalk.auction.domain.entity.Board;
 import com.mztalk.auction.domain.entity.Comment;
 import com.mztalk.auction.domain.entity.Price;
@@ -9,39 +13,21 @@ import com.mztalk.auction.repository.BoardRepository;
 import com.mztalk.auction.repository.CommentRepository;
 import com.mztalk.auction.repository.PriceRepository;
 import com.mztalk.auction.service.AuctionService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -66,8 +52,7 @@ public class AuctionServiceImpl implements AuctionService {
     @Transactional
     @Override
     public Long insertBoard(BoardRequestDto boardRequestDto) {
-       long bId = boardRepository.save(boardRequestDto.toEntity()).getBoardId();
-        return bId;
+       return boardRepository.save(boardRequestDto.toEntity()).getBoardId();
     }
 
     //게시글 수정
@@ -81,18 +66,18 @@ public class AuctionServiceImpl implements AuctionService {
     public Result<?> selectBoardList(int page) throws ParseException {
         Pageable pageable = PageRequest.of(page - 1, 6);
         Page<Board> boardPage = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
-        return new Result<>(new ListOfBoardListResponseDto(boardPage, getTimeDurationList(boardPage),getImageInfoList(boardPage)));
+        return new Result<>(new ListOfBoardListResponseDto(boardPage.getContent(), getTimeDurationList(boardPage),getImageInfoList(boardPage)));
+//        return new Result<>(new ListOfBoardListResponseDto(boardPage.getContent(), getTimeDurationList(boardPage),getImageInfoList(boardPage)));
     }
 
     //페이징
-    @Override
-    public Result<?> selectBoardListOfFront(int page) throws ParseException {
-        System.out.println("page : " + page);
-        Pageable pageable = PageRequest.of(page - 1, 3);
-        Page<Board> boardList = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
-
-        return new Result<>(new ListOfBoardListResponseDto(boardList, getTimeDurationList(boardList),getImageInfoList(boardList)));
-    }
+//    @Override
+//    public Result<?> selectBoardListOfFront(int page) throws ParseException {
+//        Pageable pageable = PageRequest.of(page - 1, 3);
+//        Page<Board> boardList = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
+//
+//        return new Result<>(new ListOfBoardListResponseDto(boardList, getTimeDurationList(boardList),getImageInfoList(boardList)));
+//    }
 
     //닉네임 변경
     @Override
@@ -118,7 +103,9 @@ public class AuctionServiceImpl implements AuctionService {
     public Result<?> searchBoard(String keyword, int page) throws ParseException {
         Pageable pageable = PageRequest.of(page - 1, 6);
         Page<Board> boardList =  boardRepository.searchBoard(keyword, pageable);
-        return new Result<>(new ListOfBoardListResponseDto(boardList, getTimeDurationList(boardList),getImageInfoList(boardList)));
+        return new Result<>(new ListOfBoardListResponseDto(boardList.getContent(), getTimeDurationList(boardList),getImageInfoList(boardList)));
+//        Page<Board> boardList = boardRepository.searchBoard(keyword, pageable);
+//        return new Result<>(new ListOfBoardListResponseDto(boardList.getContent(), getTimeDurationList(boardList),getImageInfoList(boardList)));
     }
 
 
@@ -182,24 +169,15 @@ public class AuctionServiceImpl implements AuctionService {
     //댓글 작성
     @Override
     public CommentResponseDto insertComment(CommentRequestDto commentRequestDto) {
-        Board board = boardRepository.findByBoardId(commentRequestDto.getBoardId());
-
-        Comment comment = Comment.builder()
-                .board(board)
-                .content(commentRequestDto.getContent())
-                .writer(commentRequestDto.getWriter())
-                .createDate(commentRequestDto.getCreateDate())
-                .status("Y")
-                .userNo(commentRequestDto.getUserNo())
-                .build();
-        return new CommentResponseDto(commentRepository.save(comment));
+        Board findBoard = boardRepository.findByBoardId(commentRequestDto.getBoardId());
+        Comment comment = commentRepository.save(commentRequestDto.toEntity().addBoard(findBoard));
+        return new CommentResponseDto(comment);
     }
 
     //댓글 수정
     @Override
     public CommentResponseDto updateComment(Long cId, CommentUpdateRequestDto commentUpdateRequestDto) {
         int result = commentRepository.updateComment(cId, commentUpdateRequestDto);
-        System.out.println(result);
         return selectComment(cId);
     }
 
@@ -235,13 +213,12 @@ public class AuctionServiceImpl implements AuctionService {
         Pageable pageable = PageRequest.of(page - 1, 6);
         Page<Board> boardList = boardRepository.findByIsCloseAndStatusOrderByBoardIdDesc("N", "Y", pageable);
 
-        return new Result<>(new ListOfBoardListResponseDto(boardList, getTimeDurationList(boardList), getImageInfoList(boardList)));
+        return new Result<>(new ListOfBoardListResponseDto(boardList.getContent(), getTimeDurationList(boardList), getImageInfoList(boardList)));
     }
 
 
     //리스트 시간 계산
     private List<TimeDto> getTimeDurationList(Page<Board> boardList) {
-//        LocalDateTime localDateTime = LocalDateTime.now();
         ArrayList<TimeDto> timeList = new ArrayList<>();
         for(Board board : boardList){
             TimeDto timeDto = getTimeDurationDto(board);
