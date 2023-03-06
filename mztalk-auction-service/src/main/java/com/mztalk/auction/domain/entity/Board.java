@@ -2,6 +2,7 @@ package com.mztalk.auction.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mztalk.auction.domain.dto.board.BoardEditDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -43,9 +44,6 @@ public class Board {
 
     @CreationTimestamp
     private Date modifyDate;
-
-    @OneToMany(mappedBy = "board")
-    private List<Images> images;
 
     private String status;
 
@@ -95,6 +93,16 @@ public class Board {
         if(comment.getBoard() != this){
             comment.addBoard(this);
         }
+    }
+
+    //게시글 수정
+    public Board updateBoard(BoardEditDto dto) {
+        this.title = dto.getTitle();
+        this.bookTitle = dto.getBookTitle();
+        this.content = dto.getContent();
+        this.isbn = dto.getIsbn();
+
+        return this;
     }
 
 }

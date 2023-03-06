@@ -57,8 +57,9 @@ public class AuctionServiceImpl implements AuctionService {
 
     //게시글 수정
     @Override
-    public int updateBoard(Long bId, BoardEditDto boardEditDto) {
-        return boardRepository.boardUpdate(bId, boardEditDto);
+    public void updateBoard(Long bId, BoardEditDto boardEditDto) {
+        Board findBoard = boardRepository.findByBoardId(bId);
+        boardRepository.save(findBoard.updateBoard(boardEditDto));
     }
 
     //전체 게시글 조회
@@ -67,7 +68,6 @@ public class AuctionServiceImpl implements AuctionService {
         Pageable pageable = PageRequest.of(page - 1, 6);
         Page<Board> boardPage = boardRepository.findByStatusOrderByBoardIdDesc("Y", pageable);
         return new Result<>(new ListOfBoardListResponseDto(boardPage.getContent(), getTimeDurationList(boardPage),getImageInfoList(boardPage)));
-//        return new Result<>(new ListOfBoardListResponseDto(boardPage.getContent(), getTimeDurationList(boardPage),getImageInfoList(boardPage)));
     }
 
     //페이징

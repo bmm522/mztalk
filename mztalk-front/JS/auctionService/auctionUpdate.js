@@ -86,38 +86,39 @@ function deleteFile(objectKey) {
 
 //*******수정하기
 function updateBoard() {
-    if(document.getElementById('inputFiles').value){
-        const form = document.getElementById('update-form');
-        const payload = new FormData(form);
+    // if(document.getElementById('inputFiles').value){
+    //     const form = document.getElementById('update-form');
+    //     const payload = new FormData(form);
 
-       fetch(`${LOCALHOST_URL}/resource/update-image`,{
-          method: 'POST',
-          body: payload
-         })
-     .then(res=>{
-         updateData();
-     })
-    } else {
-        updateData();
-    };
+    //    fetch(`${LOCALHOST_URL}/resource/update-image`,{
+    //       method: 'POST',
+    //       body: payload
+    //      })
+    //  .then(res=>{
+    //      updateData();
+    //  })
+    // } else {
+    //     updateData();
+    // };
+    updateData();
 }
 
 const updateData = () =>{
-    fetch(`${LOCALHOST_URL}/resource/image-detail?imageName=${objectKey}`, {
-        method: 'DELETE',
-        headers: {
-            "Content-Type": "text/html",
-            Authorization: localStorage.getItem('authorization'),
-            RefreshToken: localStorage.getItem('refreshToken'),
-        }
-    })
-    .then(res=>{
-        if(res.status == 200) {
-            console.log("이미지 삭제 완료");
-            checkFile();
-        }
+//     fetch(`${LOCALHOST_URL}/resource/image-detail?imageName=${objectKey}`, {
+//         method: 'DELETE',
+//         headers: {
+//             "Content-Type": "text/html",
+//             Authorization: localStorage.getItem('authorization'),
+//             RefreshToken: localStorage.getItem('refreshToken'),
+//         }
+//     })
+//     .then(res=>{
+//         if(res.status == 200) {
+//             console.log("이미지 삭제 완료");
+//             checkFile();
+//         }
 
-});
+// });
     fetch(`${LOCALHOST_URL}/auction/board/` + document.getElementById('hidden-bId').value, {
         method: "PATCH",
         headers: {
