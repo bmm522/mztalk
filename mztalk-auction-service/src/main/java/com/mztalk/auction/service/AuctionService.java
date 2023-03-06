@@ -15,7 +15,7 @@ public interface AuctionService {
 
     Long insertBoard(BoardRequestDto boardRequestDto);
 
-    int updateBoard(Long bId, BoardEditDto boardEditDtoDto);
+    void updateBoard(Long bId, BoardEditDto boardEditDtoDto);
 
     Result<?> selectBoardList(int page) throws ParseException;
 

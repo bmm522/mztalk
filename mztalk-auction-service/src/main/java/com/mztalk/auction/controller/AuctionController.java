@@ -37,15 +37,14 @@ public class AuctionController {
     //게시글 수정
     @ApiOperation(value = "게시글 수정")
     @PatchMapping("/board/{bId}")
-    public int updateBoard(@PathVariable Long bId, @RequestBody BoardEditDto boardEditDto) {
-        return auctionService.updateBoard(bId, boardEditDto);
+    public void updateBoard(@PathVariable Long bId, @RequestBody BoardEditDto boardEditDto) {
+        auctionService.updateBoard(bId, boardEditDto);
     }
 
     //게시글 검색
     @ApiOperation(value = "게시글 검색")
     @GetMapping("/board/keyword/{keyword}/{page}")
     public Result<?> searchBoard(@PathVariable("keyword") String keyword,@PathVariable("page")int page) throws ParseException, UnsupportedEncodingException {
-
         return auctionService.searchBoard(keyword, page);
     }
 

@@ -21,4 +21,13 @@ public class BoardEditDto {
         this.content = board.getContent();
         this.isbn = board.getIsbn();
     }
+
+    public Board toEntity() {
+        return Board.builder()
+                .title(title)
+                .bookTitle(bookTitle)
+                .content(content)
+                .isbn(isbn)
+                .build();
+    }
 }

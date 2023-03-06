@@ -248,7 +248,6 @@ window.onload = () => {
             slides.style.width = (slideWidth + slideMargin + slideMargin) * slideCount + 'px';
 
             function moveSlide(num) {
-                console.log("슬라이드개수: " + slideCount); 
                 slides.style.left = -num * 400 + 'px';
                 currentIdx = num;
             }
@@ -293,8 +292,8 @@ window.onload = () => {
 }
 function showCommentList(res) {
     for(let comment of res.data) {
-        console.log("onload cid: " + comment.cid); 
-        let cId = comment.cid;
+        console.log("onload cid: " + comment.commentId); 
+        let cId = comment.commentId;
         let content = comment.content;
         let writer = comment.writer;
         let createDate = comment.createDate;
