@@ -2,8 +2,10 @@ package com.mztalk.auction.service;
 
 import com.mztalk.auction.domain.Result;
 import com.mztalk.auction.domain.dto.*;
-import com.mztalk.auction.domain.entity.Board;
-import com.mztalk.auction.domain.entity.Comment;
+import com.mztalk.auction.domain.dto.board.*;
+import com.mztalk.auction.domain.dto.comment.CommentRequestDto;
+import com.mztalk.auction.domain.dto.comment.CommentResponseDto;
+import com.mztalk.auction.domain.dto.comment.CommentUpdateRequestDto;
 
 import java.text.ParseException;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,7 +15,7 @@ public interface AuctionService {
 
     Long insertBoard(BoardRequestDto boardRequestDto);
 
-    int updateBoard(Long bId, BoardEditDto boardEditDtoDto);
+    void updateBoard(Long bId, BoardEditDto boardEditDtoDto);
 
     Result<?> selectBoardList(int page) throws ParseException;
 
@@ -43,9 +45,7 @@ public interface AuctionService {
 
     int closeBoard(BoardCloseDto boardCloseDto);
 
-    void postChatRoom(BoardDto boardDto);
-
-    Result<?> selectBoardListOfFront(int page) throws ParseException;
+//    Result<?> selectBoardListOfFront(int page) throws ParseException;
 
     void changedNickname(ChangedNicknameDto changedNicknameDto);
 

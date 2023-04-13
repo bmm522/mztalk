@@ -6,7 +6,6 @@ import com.mztalk.loginservice.user.application.login.dto.response.JwtResponseDt
 import com.mztalk.loginservice.user.repository.entity.User;
 import com.mztalk.loginservice.user.properties.JwtProperties;
 import lombok.extern.slf4j.Slf4j;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

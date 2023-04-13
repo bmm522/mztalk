@@ -2,6 +2,7 @@ package com.mztalk.auction.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mztalk.auction.domain.dto.board.BoardEditDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -44,9 +45,6 @@ public class Board {
     @CreationTimestamp
     private Date modifyDate;
 
-    @OneToMany(mappedBy = "board")
-    private List<Images> images;
-
     private String status;
 
     private String isClose;
@@ -67,7 +65,7 @@ public class Board {
 
     private Long isbn;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OrderBy("commentId desc")
     @JsonBackReference
     private List<Comment> comment;
@@ -90,5 +88,21 @@ public class Board {
         this.isbn = isbn;
     }
 
+    public void addComment(Comment comment) {
+        this.comment.add(comment);
+        if(comment.getBoard() != this){
+            comment.addBoard(this);
+        }
+    }
+
+    //게시글 수정
+    public Board updateBoard(BoardEditDto dto) {
+        this.title = dto.getTitle();
+        this.bookTitle = dto.getBookTitle();
+        this.content = dto.getContent();
+        this.isbn = dto.getIsbn();
+
+        return this;
+    }
 
 }

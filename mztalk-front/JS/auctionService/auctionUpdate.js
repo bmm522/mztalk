@@ -10,7 +10,6 @@ window.onload = () => {
    //  document.getElementById("hidden-objectKey").innerHTML = imageInfo[i].objectKey;
         let objectKey = imageInfo[i].objectKey;
         let imageName = imageInfo[i].imageName;
-        console.log("찍히니 ? : " + objectKey);
         document.getElementById("fileList").innerHTML += `<div id="${objectKey}"><span class = "imageName">${imageInfo[i].imageName}</span><span class = "fileDelete" style="color: gray;margin-left: 5px; cursor: pointer;" onclick="deleteFile('${objectKey}');">X<br></span></div>`;
 
     }
@@ -66,46 +65,60 @@ function checkFile() {
 function deleteFile(objectKey) {
     document.getElementById(objectKey).remove();
     if(confirm('정말 삭제하시겠습니까?')) {
-        console.log("삭제시objectKey: " + objectKey);
-        fetch(`${LOCALHOST_URL}/resource/image-detail?imageName=${objectKey}`, {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": "text/html",
-                Authorization: localStorage.getItem('authorization'),
-                RefreshToken: localStorage.getItem('refreshToken'),
-            }
-        })
-        .then(res=>{
-            if(res.status == 200) {
-                console.log("이미지 삭제 완료");
-                checkFile();
-            }
+        // fetch(`${LOCALHOST_URL}/resource/image-detail?imageName=${objectKey}`, {
+        //     method: 'DELETE',
+        //     headers: {
+        //         "Content-Type": "text/html",
+        //         Authorization: localStorage.getItem('authorization'),
+        //         RefreshToken: localStorage.getItem('refreshToken'),
+        //     }
+        // })
+        // .then(res=>{
+        //     if(res.status == 200) {
+        //         console.log("이미지 삭제 완료");
+        //         checkFile();
+        //     }
 
-        })
+        // })
     }
 
 }
 
 //*******수정하기
 function updateBoard() {
-    if(document.getElementById('inputFiles').value){
-        const form = document.getElementById('update-form');
-        const payload = new FormData(form);
+    // if(document.getElementById('inputFiles').value){
+    //     const form = document.getElementById('update-form');
+    //     const payload = new FormData(form);
 
-       fetch(`${LOCALHOST_URL}/resource/update-image`,{
-          method: 'POST',
-          body: payload
-         })
-     .then(res=>{
-         updateData();
-     })
-    } else {
-        updateData();
-    };
+    //    fetch(`${LOCALHOST_URL}/resource/update-image`,{
+    //       method: 'POST',
+    //       body: payload
+    //      })
+    //  .then(res=>{
+    //      updateData();
+    //  })
+    // } else {
+    //     updateData();
+    // };
+    updateData();
 }
 
 const updateData = () =>{
-    console.log("수정하기 버튼 눌렀을 시 bId: " + document.getElementById("hidden-bId").value);
+//     fetch(`${LOCALHOST_URL}/resource/image-detail?imageName=${objectKey}`, {
+//         method: 'DELETE',
+//         headers: {
+//             "Content-Type": "text/html",
+//             Authorization: localStorage.getItem('authorization'),
+//             RefreshToken: localStorage.getItem('refreshToken'),
+//         }
+//     })
+//     .then(res=>{
+//         if(res.status == 200) {
+//             console.log("이미지 삭제 완료");
+//             checkFile();
+//         }
+
+// });
     fetch(`${LOCALHOST_URL}/auction/board/` + document.getElementById('hidden-bId').value, {
         method: "PATCH",
         headers: {
@@ -126,6 +139,8 @@ const updateData = () =>{
         }
         location.href="auctionDetail.html";
     });
+    
+
 }
 
 //지금 마감시키기

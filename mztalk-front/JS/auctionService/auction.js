@@ -54,7 +54,7 @@ const mainLoad = (page) =>{
         .then(res=>{
             let i = 1;
             //document.getElementById('list-div').innerHTML = '<div class="row " id="auctionCard">';
-            for(let board of res.data){
+            for(let board of res.data.boardListResponseDtoList){
                 let title = board.title;
                 let timeLimitHour = -board.timeLimit.hour;
                 let timeLimitMinute = -board.timeLimit.minute;
@@ -137,7 +137,7 @@ const mainLoad = (page) =>{
             }
             let timeLimitAlert = document.getElementsByClassName("timeLimitAlert");
             for(let i = 0; i < timeLimitAlert.length; i++) {
-                if(document.getElementsByClassName('timeLimitHour')[i].value == 0 && document.getElementsByClassName('timeLimitMinute')[i].value == 0) {
+                if(document.getElementsByClassName('timeLimitHour')[i].value < 0 && document.getElementsByClassName('timeLimitMinute')[i].value == 0) {
                     timeLimitAlert[i].innerHTML = '입찰마감';
                 }
             }
@@ -181,7 +181,7 @@ const searchLoad = (searchPage) =>{
     .then(res => {
         let i = 1;
             // document.getElementById('list-div').innerHTML = '<div class="row " id="auctionCard">';
-            for(let board of res.data){
+            for(let board of res.data.boardListResponseDtoList){
                 let title = board.title;
                 let timeLimit = board.timeLimit;
                 let currentPrice = board.currentPrice;
