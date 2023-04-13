@@ -57,9 +57,6 @@ public class ImageApiController {
 
     // 메인 이미지 업로드
     @ApiOperation(value="메인사진 업로드", notes = "메인이미지로 설정하고자 하는 곳에 요청을 보내면 자동으로 메인사진으로 등록됩니다.", consumes = "text/html", response = ResponseData.class)
- //           @ApiImplicitParam(name="image", value="이미지", dataType="MultipartFile", paramType = "param")
-//            @ApiImplicitParam(name="bNo", value="글번호", dataType = "String", paramType = "param")
-
     @PostMapping(value = "/main-image",  consumes = "multipart/form-data",  produces = "application/json")
     public ResponseEntity<?> insertMainImage(@RequestParam("image")MultipartFile multipartFile, ImagesRequestDto imagesRequestDto){
         return insertImageService.insertMainImage(multipartFile, imagesRequestDto);
