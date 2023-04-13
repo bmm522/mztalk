@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -26,7 +27,7 @@ public class Images {
     private String serviceName;
     private long bNo;
 
-    @CreationTimestamp
+    @CreatedDate
     private Timestamp createDate;
 
     private long imageLevel;

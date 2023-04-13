@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
@@ -42,7 +43,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Provider provider;
     private String providerId;
-    @CreationTimestamp
+    @CreatedDate
     private Timestamp createDate;
     private String status;
 
