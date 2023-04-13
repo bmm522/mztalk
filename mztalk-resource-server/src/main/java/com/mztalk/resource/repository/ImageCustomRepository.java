@@ -21,5 +21,7 @@ public interface ImageCustomRepository {
 
     String getObjectKey(String imageName);
 
-    int updateStatus(String objectKey);
+    int updateStatusBybNoAndServiceName(long bNo, String serviceName);
+
+    int updateStatusByObjectKey(String objectKey);
 }

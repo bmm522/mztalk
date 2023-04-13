@@ -63,7 +63,15 @@ public class ImageCustomRepositoryImpl implements ImageCustomRepository{
     }
 
     @Override
-    public int updateStatus(String objectKey) {
+    public int updateStatusBybNoAndServiceName(long bNo, String serviceName) {
+        return entityManager.createQuery("UPDATE Images i SET i.status = 'N' WHERE i.bNo = :bNo AND i.serviceName = :serviceName")
+                .setParameter("bNo", bNo)
+                .setParameter("serviceName", serviceName)
+                .executeUpdate();
+    }
+
+    @Override
+    public int updateStatusByObjectKey(String objectKey) {
         return entityManager.createQuery("UPDATE Images i SET i.status = 'N' WHERE i.objectKey = :objectKey")
                 .setParameter("objectKey", objectKey)
                 .executeUpdate();

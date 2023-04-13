@@ -24,31 +24,6 @@ public class UpdateImageServiceImpl implements UpdateImageService {
 
    private final ImageRepository imageRepository;
 
-//    @Override
-//    public ResponseEntity<?> changeMainImage(MultipartFile multipartFile, ImagesDto imagesDto) {
-//        try {
-//
-//            imageRepository.changeMainImageToSubImage(Long.parseLong(imagesDto.getBNo()), imagesDto.getServiceName());
-//            imageRepository.commit();
-//
-//            String imageName = multipartFile.getOriginalFilename();
-//            Images images = imagesDto.toImagesWhenMain(imageName, s3Factory.uploadImageToAwsS3(multipartFile));
-//            imageRepository.save(images);
-//        } catch (IOException e){
-//            return badRequestWhenUpdateMain();
-//        } catch (Exception e){
-//            return serverError();
-//        }
-//        return successWhenUpdateMain();
-//    }
-
-
-
-
-
-
-
-
     @Override
     public ResponseEntity<?> changeMainImage(long bNo, String serviceName, String objectKey) {
 

@@ -34,18 +34,12 @@ public class DeleteImageServiceImpl implements DeleteImageService {
 
     @Override
     public ResponseEntity deleteImage(long bNo, String serviceName) {
-        List<String> objectKeyList = imageRepository.getObjectKeyList(bNo, serviceName);
-
-        for(String objectKey : objectKeyList ){
-            try{
-           //     s3Factory.deleteImage(objectKey);
-                imageRepository.updateStatus(objectKey);
-            }
-            catch (AmazonServiceException e){
-                log.error("Fail Image Delete");
-                return serverError();
-            }
-
+        try{
+            imageRepository.updateStatusBybNoAndServiceName(bNo, serviceName);
+        }
+        catch (AmazonServiceException e){
+            log.error("Fail Image Delete");
+            return serverError();
         }
 
         return successWhenDelete();
@@ -55,7 +49,7 @@ public class DeleteImageServiceImpl implements DeleteImageService {
     public ResponseEntity deleteImageDetail(String objectKey) {
         try{
 //            s3Factory.deleteImage(objectKey);
-            imageRepository.updateStatus(objectKey);
+            imageRepository.updateStatusByObjectKey(objectKey);
         } catch (AmazonServiceException e){
             log.error("Fail Image Delete");
             return serverError();
